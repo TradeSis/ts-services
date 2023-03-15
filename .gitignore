@@ -1,0 +1,5 @@
+head.php
+conexao.php
+*.log
+*_log
+config.php

@@ -230,7 +230,7 @@ $cards = buscaCards("");
       <div class="card-header">
         <div class="row">
           <div class="col-sm" style="text-align: left">
-            <h3 class="col">Contrato JS</h3>
+            <h3 class="col">Contratos</h3>
           </div>
           <div class="row" style="text-align: right">
             <!--POPUP-->

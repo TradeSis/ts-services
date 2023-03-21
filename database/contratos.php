@@ -27,7 +27,7 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
 		'idCliente' => $idCliente
 	);
 	//echo json_encode(($apiEntrada));
-	$contrato = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'GET');
+	$contrato = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($contrato);
 	return $contrato;
@@ -40,7 +40,7 @@ function buscaCards($where)
 	$cards = array();
 	$apiEntrada = array();
 	//echo json_encode(($apiEntrada));
-	$cards = chamaAPI('', '/api/tsservices/contrato/totais', json_encode($apiEntrada), 'GET');
+	$cards = chamaAPI(null, '/api/services/contrato/totais', json_encode($apiEntrada), 'GET');
 
 	//echo "database=".json_encode ($cards);
 	return $cards;
@@ -66,7 +66,7 @@ if (isset($_GET['operacao'])) {
 			'valorContrato' => $_POST['valorContrato'],
 
 		);
-		$contratos = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'PUT');
+		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'PUT');
 	}
 
 
@@ -84,7 +84,7 @@ if (isset($_GET['operacao'])) {
 			'valorContrato' => $_POST['valorContrato'],
 
 		);
-		$contratos = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'POST');
+		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'POST');
 	}
 
 	if ($operacao == "finalizar") {
@@ -94,14 +94,14 @@ if (isset($_GET['operacao'])) {
 
 
 		);
-		$contratos = chamaAPI('', '/api/tsservices/contrato/finalizar', json_encode($apiEntrada), 'POST');
+		$contratos = chamaAPI(null, '/api/services/contrato/finalizar', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao == "excluir") {
 		$apiEntrada = array(
 			'idContrato' => $_POST['idContrato'],
 
 		);
-		$contratos = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'DELETE');
+		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'DELETE');
 	}
 
 	if ($operacao == "filtrar") {
@@ -125,7 +125,7 @@ if (isset($_GET['operacao'])) {
 		);
 		/* echo json_encode(($apiEntrada));
 		return; */
-		$contrato = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'GET');
+		$contrato = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'GET');
 
 		echo json_encode($contrato);
 		return $contrato;

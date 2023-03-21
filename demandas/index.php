@@ -133,7 +133,7 @@ $cards4 = buscaCards(""); */
       <div class="card-header">
         <div class="row">
           <div class="col-sm">
-            <h4 class="col">Demandas JS</h4>
+            <h4 class="col">Demandas</h4>
           </div>
           <div class="row" style="text-align: right">
 

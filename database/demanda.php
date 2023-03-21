@@ -1,4 +1,6 @@
 <?php
+// Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
+// Lucas 20032023 adicionado operação filtrar
 // gabriel 06032023 11:25 alteração de descricao demanda
 // gabriel 02032023 12:13 alteração de titulo demanda
 // Lucas 18022023 passado dois parametros na função buscaDemandas($idDemanda, $idTipoStatus)
@@ -96,6 +98,48 @@ if (isset($_GET['operacao'])) {
 			'comentario' => $_POST['comentario']
 		);
 		$comentario = chamaAPI('comentario', 'comentario', json_encode($apiEntrada), 'PUT');
+	}
+
+	if ($operacao == "filtrar") {
+
+		$idCliente = $_POST['idCliente'];
+		$idTipoStatus = $_POST['idTipoStatus'];
+		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+		$idUsuario = $_POST['idUsuario'];
+
+		if ($idCliente == ""){
+			$idCliente = null;
+		}
+
+		if ($idUsuario == ""){
+			$idUsuario = null;
+		}
+
+		if ($idTipoStatus == ""){
+			$idTipoStatus = null;
+		}
+
+
+		if ($idTipoOcorrencia == ""){
+			$idTipoOcorrencia = null;
+		}
+
+		
+	
+		$apiEntrada = array(
+			'idDemanda' => null,
+			'idCliente' => $idCliente,
+			'idUsuario' => $idUsuario,
+			'idTipoStatus' => $idTipoStatus,
+			'idTipoOcorrencia' => $idTipoOcorrencia,
+			
+		);
+		/* echo json_encode(($apiEntrada));
+		return */;
+		$demanda = chamaAPI('demanda', 'demanda', json_encode($apiEntrada), 'GET');
+
+		echo json_encode($demanda);
+		return $demanda;
 	}
 
 /*

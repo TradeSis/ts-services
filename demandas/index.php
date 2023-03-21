@@ -1,4 +1,9 @@
 <?php
+// Lucas 21032023 adicionado forms para filtro de cliente, responsavel, usuario e ocorrencia, fazendo a requisição via ajax.
+// Lucas 20032023 alterado select de idTipoStatus para acionar uma função js, botão "buscar" foi removido, 
+              //  alterado botão de limpar para usar função onclick="buscar(null)"
+// Lucas 20032023 Modificada a tabela ser construida via Javascript
+// Lucas 13032023 - adicionado novo modelo para os cards
 // helio 20022023 - Incluido class="table" no HTML <table>
 // Helio 20022023 - integrado modificações para receber idTipoStatus no $_POST
 // gabriel 06022023 ajuste na tabela
@@ -9,16 +14,28 @@
 
 include_once '../head.php';
 include_once '../database/demanda.php';
+include_once '../database/clientes.php';
+include_once '../database/usuario.php';
 include_once '../database/tipostatus.php';
+include_once '../database/tipoocorrencia.php';
 
 
+$clientes = buscaClientes();
+$usuarios = buscaUsuarios();
+$tiposstatus = buscaTipoStatus();
+$tipoocorrencias = buscaTipoOcorrencia();
+
+$idCliente = null;
+$idUsuario = null;
 $idTipoStatus = null;
+$idTipoOcorrencia = null;
 
-if (isset($_POST['idTipoStatus'])) {
+
+/* if (isset($_POST['idTipoStatus'])) {
   $idTipoStatus = $_POST['idTipoStatus'];
 }
-$demandas = buscaDemandas(null, $idTipoStatus);
-$tiposstatus = buscaTipoStatus();
+$demandas = buscaDemandas(null, $idTipoStatus, $idTipoOcorrencia, $idUsuario); */
+
 
 /*$cards1 = buscaCards("");
 $cards2 = buscaCards("WHERE idTipoStatus=4");
@@ -44,95 +61,74 @@ $cards4 = buscaCards(""); */
   <div class="container-fluid py-2">
     <div class="header-body">
       <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total de Chamados</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    <?php
-                    /*foreach ($cards1 as $card1)
+
+        <div class="col my-2">
+          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2 mb-2 p-1">
+                <div class="text-xs font-weight-bold text-secondary text-uppercase text-success">Total de Chamado</div>
+                <div class="h5 mb-0  text-gray-800"><?php
+                                                    /*foreach ($cards1 as $card1)
                     echo $card1['total'];*/
-                    ?>
-                    <span style="font-size: 10px"> / Demandas</span></h5>
-                  </div>
-                </div>
-                <div class="col-auto">
+                                                    ?>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-info shadow py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Abertos</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    <?php
-                    /*foreach ($cards2 as $card2)
-                    echo $card2['total']; */
-                    ?>
-                    <span style="font-size: 10px"> / Demandas</span></h5>
-                  </div>
-                </div>
-                <div class="col-auto">
+        <div class="col my-2">
+          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2 mb-2 p-1">
+                <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Abertos</div>
+                <div class="h5 mb-0  text-gray-800"><?php
+                                                    /*foreach ($cards2 as $card2)
+                    echo $card1['total'];*/
+                                                    ?>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Fechados</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    <?php
-                    /*foreach ($cards2 as $card2)
-                    echo $card2['total']; */
-                    ?>
-                    <span style="font-size: 10px"> / Demandas</span></h5>
-                  </div>
-                </div>
-                <div class="col-auto">
+        <div class="col my-2">
+          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2 mb-2 p-1">
+                <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Fechados</div>
+                <div class="h5 mb-0  text-gray-800"><?php
+                                                    /*foreach ($cards2 as $card2)
+                    echo $card2['total'];*/
+                                                    ?>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-danger shadow h-100 py-2">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Em Desenvolvimento</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    <?php
-                    /*foreach ($cards2 as $card2)
-                    echo $card2['total']; */
-                    ?>
-                    <span style="font-size: 10px"> / Demandas</span></h5>
-                  </div>
-                </div>
-                <div class="col-auto">
+        <div class="col my-2">
+          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2 mb-2 p-1">
+                <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Desenvolvimento</div>
+                <div class="h5 mb-0  text-gray-800"><?php
+                                                    /*foreach ($cards2 as $card2)
+                    echo $card2['total'];*/
+                                                    ?>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+
       </div>
     </div>
   </div>
 
 
-  <div class="container-fluid">
+  <div class="container-fluid pt-4">
     <div class="card shadow">
       <div class="card-header">
         <div class="row">
@@ -140,26 +136,81 @@ $cards4 = buscaCards(""); */
             <h4 class="col">Demandas</h4>
           </div>
           <div class="row" style="text-align: right">
-            <form class="d-flex" action="index.php" method="post" style="text-align: right;">
 
-            <select class="form-control" name="idTipoStatus" autocomplete="off">
-									<?php foreach ($tiposstatus as $tipostatus) { ?>
-										<option <?php
-                  if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                    echo "selected";
-                  }
-                  ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
-									<?php } ?>
-								</select>
+            <!--FORM CLIENTES-->
+            <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
-              <button type="submit" id="botao" class="btn btn-xl" style="margin-right: 10px"><i
-                  class="bi bi-search"></i>buscar</button>
+              <select class="form-control" name="idCliente" id="FiltroClientes">
+                <option value="<?php echo null ?>"><?php echo "selecione um Cliente"  ?></option>
+                <?php
+                foreach ($clientes as $cliente) {
+                ?>
+                  <option <?php
+                          if ($cliente['idCliente'] == $idCliente) {
+                            echo "selected";
+                          }
+                          ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
+                <?php  } ?>
+              </select>
 
-              <div class="col-sm" style="text-align:right">
-                <a href="index.php" role="button" class="btn btn-success btn-sm">Limpar</a>
+            </form>
+
+            <!--FORM USUARIO(responsavel)-->
+            <form class="d-flex" action="" method="post" style="text-align: right;">
+
+              <select class="form-control" name="idUsuario" id="FiltroUsuario">
+                <option value="<?php echo null ?>"><?php echo "selecione um Responsável"  ?></option>
+                <?php
+                foreach ($usuarios as $usuario) {
+                ?>
+                  <option <?php
+                          if ($usuario['idUsuario'] == $idUsuario) {
+                            echo "selected";
+                          }
+                          ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
+                <?php  } ?>
+              </select>
+
+            </form>
+
+            <!--FORM TIPO STATUS-->
+            <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
+
+              <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
+                <option value="<?php echo null ?>"><?php echo "selecione um Status"  ?></option>
+                <?php foreach ($tiposstatus as $tipostatus) { ?>
+                  <option <?php
+                          if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                            echo "selected";
+                          }
+                          ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
+                <?php } ?>
+              </select>
+
+            </form>
+
+            <!--FORM TIPO OCORRÊNCIA-->
+            <form class="d-flex" action="" method="post" style="text-align: right;">
+
+              <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                <option value="<?php echo null ?>"><?php echo "selecione uma Ocorrência"  ?></option>
+                <?php
+                foreach ($tipoocorrencias as $tipoocorrencia) {
+                ?>
+                  <option <?php
+                          if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                            echo "selected";
+                          }
+                          ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
+                <?php  } ?>
+              </select>
+
+              <div class="col-sm" style="text-align:right; color:#fff"">
+                <a onclick=" buscar(null, null, null, null)" role="button" class="btn btn-success btn-sm">Limpar</a>
               </div>
 
             </form>
+
           </div>
 
           <div class="col-sm" style="text-align:right">
@@ -171,66 +222,112 @@ $cards4 = buscaCards(""); */
         <table class="table">
           <thead class="thead-light">
             <tr>
-              <th class="text-center">Prioridade</th>
-              <th class="text-center">ID</th>
-              <th class="text-center">Cliente</th>
-              <th class="text-center">Demanda</th>
-              <th class="text-center">Responsável</th>
-              <th class="text-center">Data de Abertura</th>
-              <th class="text-center">Status</th>
-              <th class="text-center">Ocorrência</th>
-              <th class="text-center">Tamanho</th>
-              <th class="text-center">Previsão</th>
-              <th class="text-center">Ação</th>
+              <th>Prioridade</th>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Demanda</th>
+              <th>Responsável</th>
+              <th>Data de Abertura</th>
+              <th>Status</th>
+              <th>Ocorrência</th>
+              <th>Tamanho</th>
+              <th>Previsão</th>
+              <th>Ação</th>
             </tr>
           </thead>
 
-          <?php
-          foreach ($demandas as $demanda) {
-            ?>
-            <tr>
-              <td class="text-center">
-                <?php echo $demanda['prioridade'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['idDemanda'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['nomeCliente'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['tituloDemanda'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['nomeUsuario'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['dataAbertura'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['nomeTipoStatus'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['nomeTipoOcorrencia'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['tamanho'] ?>
-              </td>
-              <td class="text-center">
-                <?php echo $demanda['horasPrevisao'] ?>
-              </td>
-              <td class="text-center">
-                <a class="btn btn-primary btn-sm" href="visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>"
-                  role="button"><i class="bi bi-eye-fill"></i></a>
-              </td>
-            </tr>
-          <?php } ?>
+          <tbody id='dados'>
+
+          </tbody>
         </table>
       </div>
     </div>
   </div>
 
 
+
+  <script>
+    buscar(null, null, null, null);
+
+    function buscar(idCliente, idUsuario, idTipoStatus, idTipoOcorrencia) {
+       /* alert(idCliente);
+       alert(idUsuario); */
+      //O método $.ajax(); é o responsável pela requisição
+      $.ajax({
+        //Configurações
+        type: 'POST', //Método que está sendo utilizado.
+        dataType: 'html', //É o tipo de dado que a página vai retornar.
+        url: '../database/demanda.php?operacao=filtrar', //Indica a página que está sendo solicitada.
+        //função que vai ser executada assim que a requisição for enviada
+        beforeSend: function() {
+          $("#dados").html("Carregando...");
+        },
+        data: {
+          idCliente: idCliente,   
+          idUsuario: idUsuario,
+          idTipoStatus: idTipoStatus,
+          idTipoOcorrencia: idTipoOcorrencia
+
+        }, //Dados para consulta
+        //função que será executada quando a solicitação for finalizada.
+
+        success: function(msg) {
+          //alert("segundo alert: " + msg);
+          var json = JSON.parse(msg);
+          //alert("terceiro alert: " + JSON.stringify(json));
+          /* alert(JSON.stringify(msg)); */
+          /* $("#dados").html(msg); */
+
+          var linha = "";
+          // Loop over each object
+          for (var $i = 0; $i < json.length; $i++) {
+            var object = json[$i];
+
+            // alert("quarto alert: " + JSON.stringify(object))
+            /*  alert(object); */
+            linha = linha + "<TR>";
+            linha = linha + "<TD>" + object.prioridade + "</TD>";
+            linha = linha + "<TD>" + object.idDemanda + "</TD>";
+            linha = linha + "<TD>" + object.nomeCliente + "</TD>";
+            linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
+            linha = linha + "<TD>" + object.nomeUsuario + "</TD>";
+            linha = linha + "<TD>" + object.dataAbertura + "</TD>";
+            linha = linha + "<TD>" + object.nomeTipoStatus + "</TD>";
+            linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
+            linha = linha + "<TD>" + object.tamanho + "</TD>";
+            linha = linha + "<TD>" + object.horasPrevisao + "</TD>";;
+            linha = linha + "<TD>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</TD>";
+
+            linha = linha + "</TR>";
+          }
+
+
+          //alert(linha);
+          $("#dados").html(linha);
+
+
+        }
+      });
+    }
+
+
+    $("#FiltroTipoStatus").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val());
+    })
+    //alert($("#FiltroTipoStatus").val());
+
+    $("#FiltroClientes").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val());
+    })
+
+    $("#FiltroOcorrencia").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val());
+    })
+
+    $("#FiltroUsuario").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val());
+    })
+  </script>
 </body>
 
 </html>

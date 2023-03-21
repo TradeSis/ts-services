@@ -1,4 +1,5 @@
 <?php
+// helio 21032023 - compatibilidade chamada chamaApi
 // gabriel 06022023 calculo timediff
 // gabriel 15:10
 
@@ -11,7 +12,7 @@ function buscaTarefas($idTarefa = null)
     $apiEntrada = array(
         'idTarefa' => $idTarefa,
     );
-    $tarefas = chamaAPI('tarefas', 'tarefas', json_encode($apiEntrada), 'GET');
+    $tarefas = chamaAPI(null, '/api/services/tarefas', json_encode($apiEntrada), 'GET');
     return $tarefas;
 }
 function buscaHoras($idDemanda)
@@ -21,7 +22,7 @@ function buscaHoras($idDemanda)
     $apiEntrada = array(
         'idDemanda' => $idDemanda,
     );
-    $horas = chamaAPI('horas', 'horas', json_encode($apiEntrada), 'GET');
+    $horas = chamaAPI(null, '/api/services/horas', json_encode($apiEntrada), 'GET');
     return $horas;
 }
 
@@ -39,7 +40,7 @@ if (isset($_GET['operacao'])) {
             'dataExecucaoFinal' => $_POST['dataExecucaoFinal'],
             'idStatus' => $_POST['idStatus']
         );
-        $tarefas = chamaAPI('tarefas', 'tarefas', json_encode($apiEntrada), 'PUT');
+        $tarefas = chamaAPI(null, '/api/services/tarefas', json_encode($apiEntrada), 'PUT');
     }
 
 /*

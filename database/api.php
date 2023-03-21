@@ -1,64 +1,21 @@
 <?php
+// helio 21032023 - chamaAPI, mudanca definição do primeiro parametro, ele será a URL, caso passado
 // helio 03022023 alterado de if api para case(switch)
 // helio 01022023 usando padrao defineConexaoApi
 // helio 31012023 16:16 -  criado
 
-function chamaAPI ($api,$apiUrlParametros,$apiEntrada,$apiMethod) {
+function chamaAPI ($URL,$apiUrlParametros,$apiEntrada,$apiMethod) {
 
-	$apiIP = defineConexaoApi();
+	if ($URL) {
+		$apiIP=$URL;
+	} else {
+		$apiIP = defineConexaoApi();
+	}
 	
 	$apiRetorno = array();
     
-    switch ($api) {
-        case "clientes":
-            $apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-        break;
-
-		case "contratostatus":
-            $apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-        break;
-
-		case "contrato":
-            $apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-        break;
-
-        case "seguros":
-            $apiUrl = $apiIP.'/api/ts/' . $apiUrlParametros;
-        break;
-		case "tipostatus":
-			$apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-		  break;
-		  case "tipoocorrencia":
-			$apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-		  break;
-		  case "demanda":
-			$apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-		  break;
-		  case "usuario":
-			$apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-		  break;
-		  case "tarefas":
-			$apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-		  break;
-		  case "horas":
-			$apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-		  break;
-		  case "atendente":
-			$apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-		  break;
-		  case "comentario":
-			$apiUrl = $apiIP.'/api/services/' . $apiUrlParametros;
-		  break;
-  
-		case "relatorios":
-            $apiUrl = $apiIP.'/api/ts/' . $apiUrlParametros;
-        break;
-
-        default:
-            $apiUrl = $apiIP.$apiUrlParametros;   
-        break;
-    }
-
+	// retirado switch, que testava o primeiro parametro
+    $apiUrl = $apiIP.$apiUrlParametros;   
 	
 	$apiHeaders = array(
 		"Content-Type: application/json"

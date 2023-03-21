@@ -1,4 +1,5 @@
 <?php
+// helio 21032023 - compatibilidade chamada chamaApi
 // helio 01022023 alterado para include_once
 // helio 31012023 - eliminado funcao buscaCliente, ficou apenas buscaClientes,
 //					o parametro mudou para o idCliente, e não mais string(where)
@@ -15,7 +16,7 @@ function buscaClientes($idCliente=null)
 	$apiEntrada = array(
 		'idCliente' => $idCliente,
 	);
-	$clientes = chamaAPI('clientes', 'clientes', json_encode($apiEntrada), 'GET');
+	$clientes = chamaAPI(null, '/api/services/clientes', json_encode($apiEntrada), 'GET');
 	return $clientes;
 }
 
@@ -28,7 +29,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'nomeCliente' => $_POST['nomeCliente']
 		);
-		$clientes = chamaAPI('clientes', 'clientes', json_encode($apiEntrada), 'PUT');
+		$clientes = chamaAPI(null, '/api/services/clientes', json_encode($apiEntrada), 'PUT');
 	}
 
 	if ($operacao=="alterar") {
@@ -36,14 +37,14 @@ if (isset($_GET['operacao'])) {
 			'idCliente' => $_POST['idCliente'],
 			'nomeCliente' => $_POST['nomeCliente']
 		);
-		$clientes = chamaAPI('clientes', 'clientes', json_encode($apiEntrada), 'POST');
+		$clientes = chamaAPI(null, '/api/servives/clientes', json_encode($apiEntrada), 'POST');
 	}
 	
 	if ($operacao=="excluir") {
 		$apiEntrada = array(
 			'idCliente' => $_POST['idCliente']
 		);
-		$clientes = chamaAPI('clientes', 'clientes', json_encode($apiEntrada), 'DELETE');
+		$clientes = chamaAPI(null, '/api/services/clientes', json_encode($apiEntrada), 'DELETE');
 	}
 
 

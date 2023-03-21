@@ -1,4 +1,6 @@
 <?php
+// Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
+// Lucas 20032023 adicionado operação filtrar
 // gabriel 06032023 11:25 alteração de descricao demanda
 // gabriel 02032023 12:13 alteração de titulo demanda
 // Lucas 18022023 passado dois parametros na função buscaDemandas($idDemanda, $idTipoStatus)
@@ -20,7 +22,7 @@ function buscaDemandas($idDemanda=null, $idTipoStatus=null)
 		'idTipoStatus' => $idTipoStatus,
 	);
 //	echo json_encode(($apiEntrada));
-	$demanda = chamaAPI('demanda', 'demanda', json_encode($apiEntrada), 'GET');
+	$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($demanda);
 	return $demanda;
@@ -36,7 +38,7 @@ function buscaComentarios($idDemanda=null,$idComentario=null)
 		'idDemanda' => $idDemanda,
 		'idComentario' => $idComentario,
 	);
-	$comentario = chamaAPI('comentario', 'comentario', json_encode($apiEntrada), 'GET');
+	$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'GET');
 	return $comentario;
 }
 /*
@@ -81,13 +83,13 @@ if (isset($_GET['operacao'])) {
 			'tamanho' => $_POST['tamanho'],
 			'idAtendente' => $_POST['idAtendente']
 		);
-		$demanda = chamaAPI('', '/api/tsservices/demanda', json_encode($apiEntrada), 'POST');
+		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao == "encerrar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
 		);
-		$demanda = chamaAPI('', '/api/tsservices/demanda/encerrar', json_encode($apiEntrada), 'POST');
+		$demanda = chamaAPI(null, '/api/services/demanda/encerrar', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao == "comentar") {
 		$apiEntrada = array(
@@ -95,7 +97,49 @@ if (isset($_GET['operacao'])) {
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $_POST['comentario']
 		);
-		$comentario = chamaAPI('comentario', 'comentario', json_encode($apiEntrada), 'PUT');
+		$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'PUT');
+	}
+
+	if ($operacao == "filtrar") {
+
+		$idCliente = $_POST['idCliente'];
+		$idTipoStatus = $_POST['idTipoStatus'];
+		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+		$idUsuario = $_POST['idUsuario'];
+
+		if ($idCliente == ""){
+			$idCliente = null;
+		}
+
+		if ($idUsuario == ""){
+			$idUsuario = null;
+		}
+
+		if ($idTipoStatus == ""){
+			$idTipoStatus = null;
+		}
+
+
+		if ($idTipoOcorrencia == ""){
+			$idTipoOcorrencia = null;
+		}
+
+		
+	
+		$apiEntrada = array(
+			'idDemanda' => null,
+			'idCliente' => $idCliente,
+			'idUsuario' => $idUsuario,
+			'idTipoStatus' => $idTipoStatus,
+			'idTipoOcorrencia' => $idTipoOcorrencia,
+			
+		);
+		/* echo json_encode(($apiEntrada));
+		return */;
+		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
+
+		echo json_encode($demanda);
+		return $demanda;
 	}
 
 /*

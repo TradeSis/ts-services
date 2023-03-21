@@ -1,4 +1,5 @@
 <?php
+// helio 21032023 - compatibilidade chamada chamaApi
 // helio 14022023 - criado
 
 include_once('../conexao.php');
@@ -10,7 +11,8 @@ function buscaRelatorios($usercod=null)
 	$apiEntrada = array(
 		'usercod' => $usercod,
 	);
-	$relatorios = chamaAPI('relatorios', 'relatorios', json_encode($apiEntrada), 'GET');
+	
+	$relatorios = chamaAPI(null, '/api/ts/relatorios', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($relatorios);
 	return $relatorios;

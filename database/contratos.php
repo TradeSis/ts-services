@@ -1,4 +1,5 @@
 <?php
+// helio 21032023 - compatibilidade chamada chamaApi
 // Lucas 20022023 - buscaContratos ganhou parametro idContratoStatus
 // Lucas 14022023 - linha 96, modificado segundo parametro da chamda da api, adicionado "/api/tsservices/contrato/finalizar";
 // Lucas 09022023 - corrigido erro de sintaxa - "hora" para "horas"
@@ -24,7 +25,7 @@ function buscaContratos($idContrato=null, $idContratoStatus=null)
 		'idContratoStatus' => $idContratoStatus,
 	);
 	//echo json_encode(($apiEntrada));
-	$contrato = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'GET');
+	$contrato = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($contrato);
 	return $contrato;
@@ -39,7 +40,7 @@ function buscaCards($where)
 	$apiEntrada = array(
 	);
 	//echo json_encode(($apiEntrada));
-	$cards = chamaAPI('', '/api/tsservices/contrato/totais', json_encode($apiEntrada), 'GET');
+	$cards = chamaAPI(null, '/api/services/contrato/totais', json_encode($apiEntrada), 'GET');
 
 	//echo "database=".json_encode ($cards);
 	return $cards;
@@ -66,7 +67,7 @@ if (isset($_GET['operacao'])) {
 			'valorContrato' => $_POST['valorContrato'],
 			
 		);
-		$contratos = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'PUT');
+		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'PUT');
 
 	}
 
@@ -85,7 +86,7 @@ if (isset($_GET['operacao'])) {
 			'valorContrato' => $_POST['valorContrato'],
 			
 		);
-		$contratos = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'POST');
+		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'POST');
 
 	}
 
@@ -96,7 +97,7 @@ if (isset($_GET['operacao'])) {
 
 			
 		);
-		$contratos = chamaAPI('', '/api/tsservices/contrato/finalizar', json_encode($apiEntrada), 'POST');
+		$contratos = chamaAPI(null, '/api/services/contrato/finalizar', json_encode($apiEntrada), 'POST');
 
 /* 
 		//echo json_encode($_POST);
@@ -114,7 +115,7 @@ if (isset($_GET['operacao'])) {
 			'idContrato' => $_POST['idContrato'],
 			
 		);
-		$contratos = chamaAPI('contrato', 'contrato', json_encode($apiEntrada), 'DELETE');
+		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'DELETE');
 	}
 
 	

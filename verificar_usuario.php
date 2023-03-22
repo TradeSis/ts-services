@@ -1,4 +1,5 @@
 <?php
+//gabriel 220323 11:19 adicionado idcliente
 // helio 26012023 16:16
 
 
@@ -16,6 +17,7 @@ $password = $dados['password'];
 $statusUsuario = $dados['statusUsuario'];
 $user = $dados['nomeUsuario'];
 $idUsuario = $dados['idUsuario'];
+$idCliente = $dados['idCliente'];
 
 $senhaVerificada = md5($passwordDigitada);
 
@@ -28,8 +30,10 @@ if (!$user == "") {
 		session_start();
 		$_SESSION['usuario'] = $user;
 		$_SESSION['idUsuario'] = $idUsuario;
+		$_SESSION['idCliente'] = $idCliente;
 		header('Location: index.php');
-	} else {
+	}
+	else {
 		$mensagem = "senha errada!";
 		header('Location: login.php?mensagem='. $mensagem);
 	}

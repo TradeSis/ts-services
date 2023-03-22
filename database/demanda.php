@@ -1,4 +1,5 @@
 <?php
+// gabriel 220323 11:19 - adicionado operação retornar demanda
 // Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
 // Lucas 20032023 adicionado operação filtrar
 // gabriel 06032023 11:25 alteração de descricao demanda
@@ -90,6 +91,12 @@ if (isset($_GET['operacao'])) {
 			'idDemanda' => $_POST['idDemanda'],
 		);
 		$demanda = chamaAPI(null, '/api/services/demanda/encerrar', json_encode($apiEntrada), 'POST');
+	}
+	if ($operacao == "retornar") {
+		$apiEntrada = array(
+			'idDemanda' => $_POST['idDemanda'],
+		);
+		$demanda = chamaAPI(null, '/api/services/demanda/retornar', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao == "comentar") {
 		$apiEntrada = array(

@@ -1,4 +1,5 @@
 <?php
+// gabriel 220323 11:19 - adicionado IF para usuario cliente
 // Lucas 21032023 adicionado forms para filtro de cliente, responsavel, usuario e ocorrencia, fazendo a requisição via ajax.
 // Lucas 20032023 alterado select de idTipoStatus para acionar uma função js, botão "buscar" foi removido, 
               //  alterado botão de limpar para usar função onclick="buscar(null)"
@@ -135,83 +136,86 @@ $cards4 = buscaCards(""); */
           <div class="col-sm">
             <h4 class="col">Demandas</h4>
           </div>
-          <div class="row" style="text-align: right">
+          <?php
+					if ($_SESSION['idCliente'] == NULL) { ?>
+            <div class="row" style="text-align: right">
 
-            <!--FORM CLIENTES-->
-            <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
+              <!--FORM CLIENTES-->
+              <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
-              <select class="form-control" name="idCliente" id="FiltroClientes">
-                <option value="<?php echo null ?>"><?php echo "selecione um Cliente"  ?></option>
-                <?php
-                foreach ($clientes as $cliente) {
-                ?>
-                  <option <?php
-                          if ($cliente['idCliente'] == $idCliente) {
-                            echo "selected";
-                          }
-                          ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-                <?php  } ?>
-              </select>
+                <select class="form-control" name="idCliente" id="FiltroClientes">
+                  <option value="<?php echo null ?>"><?php echo "selecione um Cliente"  ?></option>
+                  <?php
+                  foreach ($clientes as $cliente) {
+                  ?>
+                    <option <?php
+                            if ($cliente['idCliente'] == $idCliente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
+                  <?php  } ?>
+                </select>
 
-            </form>
+              </form>
 
-            <!--FORM USUARIO(responsavel)-->
-            <form class="d-flex" action="" method="post" style="text-align: right;">
+              <!--FORM USUARIO(responsavel)-->
+              <form class="d-flex" action="" method="post" style="text-align: right;">
 
-              <select class="form-control" name="idUsuario" id="FiltroUsuario">
-                <option value="<?php echo null ?>"><?php echo "selecione um Responsável"  ?></option>
-                <?php
-                foreach ($usuarios as $usuario) {
-                ?>
-                  <option <?php
-                          if ($usuario['idUsuario'] == $idUsuario) {
-                            echo "selected";
-                          }
-                          ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
-                <?php  } ?>
-              </select>
+                <select class="form-control" name="idUsuario" id="FiltroUsuario">
+                  <option value="<?php echo null ?>"><?php echo "selecione um Responsável"  ?></option>
+                  <?php
+                  foreach ($usuarios as $usuario) {
+                  ?>
+                    <option <?php
+                            if ($usuario['idUsuario'] == $idUsuario) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
+                  <?php  } ?>
+                </select>
 
-            </form>
+              </form>
 
-            <!--FORM TIPO STATUS-->
-            <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
+              <!--FORM TIPO STATUS-->
+              <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
-              <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
-                <option value="<?php echo null ?>"><?php echo "selecione um Status"  ?></option>
-                <?php foreach ($tiposstatus as $tipostatus) { ?>
-                  <option <?php
-                          if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                            echo "selected";
-                          }
-                          ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
-                <?php } ?>
-              </select>
+                <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
+                  <option value="<?php echo null ?>"><?php echo "selecione um Status"  ?></option>
+                  <?php foreach ($tiposstatus as $tipostatus) { ?>
+                    <option <?php
+                            if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
+                  <?php } ?>
+                </select>
 
-            </form>
+              </form>
 
-            <!--FORM TIPO OCORRÊNCIA-->
-            <form class="d-flex" action="" method="post" style="text-align: right;">
+              <!--FORM TIPO OCORRÊNCIA-->
+              <form class="d-flex" action="" method="post" style="text-align: right;">
 
-              <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia">
-                <option value="<?php echo null ?>"><?php echo "selecione uma Ocorrência"  ?></option>
-                <?php
-                foreach ($tipoocorrencias as $tipoocorrencia) {
-                ?>
-                  <option <?php
-                          if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                            echo "selected";
-                          }
-                          ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
-                <?php  } ?>
-              </select>
+                <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                  <option value="<?php echo null ?>"><?php echo "selecione uma Ocorrência"  ?></option>
+                  <?php
+                  foreach ($tipoocorrencias as $tipoocorrencia) {
+                  ?>
+                    <option <?php
+                            if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
+                  <?php  } ?>
+                </select>
 
-              <div class="col-sm" style="text-align:right; color:#fff"">
-                <a onclick=" buscar(null, null, null, null)" role="button" class="btn btn-success btn-sm">Limpar</a>
-              </div>
+                <div class="col-sm" style="text-align:right; color:#fff"">
+                  <a onclick=" buscar(null, null, null, null)" role="button" class="btn btn-success btn-sm">Limpar</a>
+                </div>
 
-            </form>
+              </form>
 
-          </div>
+            </div>
+          <?php } ?>
 
           <div class="col-sm" style="text-align:right">
             <a href="demanda_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar Demanda</a>

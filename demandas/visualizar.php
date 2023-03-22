@@ -1,4 +1,5 @@
 <?php
+// gabriel 220323 11:19 - adicionado IF para usuario cliente, adicionado retornar demanda para cliente, recarregar pagina ao atualizar demanda
 // Lucas 10032023 - alterado buscaUsuarios($logado) para buscaUsuarios($_SESSION['idUsuario']), linha 27
 // gabriel 06032023 11:25 padronizado idatendente da demanda, adicionado alterar descrição
 // gabriel 02032023 12:13 alteração de titulo demanda
@@ -18,13 +19,11 @@ include_once '../database/tipostatus.php';
 include_once '../database/tipoocorrencia.php';
 
 $idDemanda = $_GET['idDemanda'];
-
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
 $horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
-$usuarios = buscaUsuarios($_SESSION['idUsuario']);
 
 ?>
 
@@ -48,7 +47,9 @@ $usuarios = buscaUsuarios($_SESSION['idUsuario']);
 
 			<div class="container mt-1 mb-3">
 				<form action="" method="post" id="form1">
-					<div class="row">
+				<?php
+					if ($_SESSION['idCliente'] == NULL) { ?>
+						<div class="row">
 						<div class="col-md-2">
 							<div class="form-group">
 								<label>Prioridade</label>
@@ -89,9 +90,10 @@ $usuarios = buscaUsuarios($_SESSION['idUsuario']);
 								<input type="text" class="form-control" value="<?php echo $horas['total'] ?>" readonly>
 								<label>Tamanho</label>
 								<select class="form-control" name="tamanho">
-									<option value="P">Pequena</option>
-									<option value="M">Media</option>
-									<option value="G">Grande</option>
+									<option value="<?php echo $demanda['tamanho'] ?>"><?php echo $demanda['tamanho'] ?></option>
+									<option value="P">P</option>
+									<option value="M">M</option>
+									<option value="G">G</option>
 								</select>
 								<label>Responsável</label>
 								<select class="form-control" name="idAtendente">
@@ -126,9 +128,76 @@ $usuarios = buscaUsuarios($_SESSION['idUsuario']);
 						</div>
 					</div>
 					<div class="card-footer bg-transparent">
-						<button type="submit" formaction="../database/demanda.php?operacao=encerrar" class="btn btn-danger btn-sm" style="float: left;">Fechar Demanda</button>
-						<button type="submit" formaction="../database/demanda.php?operacao=alterar" class="btn btn-success btn-sm" style="float: right;">Atualizar</button>
+						<input type="submit" name="submit" id="submit" class="btn btn-success btn-sm" style="float: right;" value="Atualizar"/>
 					</div>
+					<?php }
+					if ($_SESSION['idCliente'] >= 1) { ?>
+						<div class="row">
+						<div class="col-md-2">
+							<div class="form-group">
+								<label>Prioridade</label>
+								<input type="number" min="1" max="99" class="form-control" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
+							</div>
+						</div>
+						<div class="col-md-1">
+							<div class="form-group">
+								<label>ID</label>
+								<input type="text" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Demanda</label>
+								<input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" readonly>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>Data de Abertura</label>
+								<input type="text" class="form-control" name="dataabertura" value="<?php echo $demanda['dataAbertura'] ?>" readonly>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Descrição</label>
+								<textarea class="form-control" name="descricao" autocomplete="off" rows="10"><?php echo $demanda['descricao'] ?></textarea>
+							</div>
+						</div>
+						<div class="col-md">
+							<div class="form-group">
+								<label>Atualização Atendente</label>
+								<input type="text" class="form-control" name="dataAtualizacaoAtendente" value="<?php echo $demanda['dataAtualizacaoAtendente'] ?>" readonly>
+								<label>Horas Tarefa</label>
+								<input type="text" class="form-control" value="<?php echo $horas['total'] ?>" readonly>
+								<label>Tamanho</label>
+								<input type="text" class="form-control" name="tamanho" value="<?php echo $demanda['tamanho'] ?>" readonly>
+								<label>Responsável</label>
+								<input type="text" class="form-control" name="idAtendente" value="<?php echo $demanda['nomeUsuario'] ?>" readonly>
+							</div>
+						</div>
+						<div class="col-md">
+							<div class="form-group">
+								<label>Atualização Cliente</label>
+								<input type="text" class="form-control" name="dataAtualizacaoCliente" value="<?php echo $demanda['dataAtualizacaoCliente'] ?>" readonly>
+								<label>Data Fim</label>
+								<input type="text" class="form-control" name="dataFechamento" value="<?php echo $demanda['dataFechamento'] ?>" readonly>
+								<label>Status</label>
+								<input type="text" class="form-control" name="idTipoStatus" value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
+								<label>Ocorrência</label>
+								<input type="text" class="form-control" name="idTipoOcorrencia" value="<?php echo $demanda['nomeTipoOcorrencia'] ?>" readonly>
+
+							</div>
+						</div>
+					</div>
+					<div class="card-footer bg-transparent">
+						<button type="submit" formaction="../database/demanda.php?operacao=encerrar" class="btn btn-danger btn-sm" style="float: left;">Fechar Demanda</button>
+						<button type="submit" formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning btn-sm ml-3" style="float: left;">Retornar Demanda</button>
+						<input type="submit" name="submit" id="submit" class="btn btn-success btn-sm" style="float: right;" value="Atualizar"/>
+					</div>
+                	<?php } ?>
+					
 				</form>
 			</div>
 
@@ -165,6 +234,26 @@ $usuarios = buscaUsuarios($_SESSION['idUsuario']);
 
 		});
 	</script>
+	<script>
+        $(document).ready(function() {
+
+            $('#form').on('submit', function(event) {
+                event.preventDefault();
+                var form_data = $(this).serialize();
+                $.ajax({
+                    url: "../database/demanda.php?operacao=alterar",
+                    method: "POST",
+                    data: form_data,
+                    dataType: "JSON",
+                    success: refreshPage()
+                })
+            });
+
+            function refreshPage() {
+                window.location.reload();
+            }
+        });
+    </script>
 </body>
 
 </html>

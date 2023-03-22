@@ -1,4 +1,5 @@
 <?php
+// gabriel 220323 11:19 - adicionado IF para usuario cliente
 // Lucas 10032023 - alterado input value= php echo $logado " para value = ($_SESSION['usuario']). linha 42
 // Lucas 10032023 - alterado buscaUsuarios($logado) para buscaUsuarios($_SESSION['idUsuario'])
 // gabriel 09022023 14:20 removido alguns ifs redundantes, fechado div container
@@ -18,6 +19,8 @@ $comentarios = buscaComentarios($idDemanda);
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
+    <?php
+    if ($_SESSION['idCliente'] == NULL) { ?>
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
@@ -25,7 +28,16 @@ $comentarios = buscaComentarios($idDemanda);
             <li class="nav-item">
                 <a class="nav-link" href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
             </li>
-        </ul>
+        </ul>                             
+        <?php }
+    if ($_SESSION['idCliente'] >= 1) { ?>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
+            </li>
+        </ul>                             
+    <?php } ?>
+        
         <div>
             <div class="container-fluid mt-3">
                 <form method="post" id="form">

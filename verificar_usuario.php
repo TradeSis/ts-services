@@ -1,4 +1,5 @@
 <?php
+//gabriel 220323 11:19 adicionado idcliente
 // helio 26012023 16:16
 
 
@@ -10,12 +11,13 @@ $dados = array();
 $apiEntrada = array(
 	'usuario' => $usuario,
 );
-$dados = chamaAPI(null, '/api/services/usuario/verifica', json_encode($apiEntrada), 'GET');
+$dados = chamaAPI('', '/api/services/usuario/verifica', json_encode($apiEntrada), 'GET');
 
 $password = $dados['password'];
 $statusUsuario = $dados['statusUsuario'];
 $user = $dados['nomeUsuario'];
 $idUsuario = $dados['idUsuario'];
+$idCliente = $dados['idCliente'];
 
 $senhaVerificada = md5($passwordDigitada);
 
@@ -28,8 +30,10 @@ if (!$user == "") {
 		session_start();
 		$_SESSION['usuario'] = $user;
 		$_SESSION['idUsuario'] = $idUsuario;
+		$_SESSION['idCliente'] = $idCliente;
 		header('Location: index.php');
-	} else {
+	}
+	else {
 		$mensagem = "senha errada!";
 		header('Location: login.php?mensagem='. $mensagem);
 	}

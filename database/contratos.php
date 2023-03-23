@@ -108,6 +108,7 @@ if (isset($_GET['operacao'])) {
 
 		$idCliente = $_POST["idCliente"];
 		$idContratoStatus = $_POST["idContratoStatus"];
+		$tituloContrato = $_POST["tituloContrato"];
 
 		if ($idCliente == ""){
 			$idCliente = null;
@@ -117,11 +118,16 @@ if (isset($_GET['operacao'])) {
 			$idContratoStatus = null;
 		} 
 
+		if ($tituloContrato == ""){
+			$tituloContrato = null;
+		} 
+
 
 		$apiEntrada = array(
 			'idContrato' => null,
 			'idCliente' => $idCliente,
 			'idContratoStatus' => $idContratoStatus,
+			'tituloContrato' => $tituloContrato
 		);
 		/* echo json_encode(($apiEntrada));
 		return; */

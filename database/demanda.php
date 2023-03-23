@@ -113,6 +113,7 @@ if (isset($_GET['operacao'])) {
 		$idTipoStatus = $_POST['idTipoStatus'];
 		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
 		$idUsuario = $_POST['idUsuario'];
+		$tituloDemanda = $_POST['tituloDemanda'];
 
 		if ($idCliente == ""){
 			$idCliente = null;
@@ -131,6 +132,9 @@ if (isset($_GET['operacao'])) {
 			$idTipoOcorrencia = null;
 		}
 
+		if ($tituloDemanda == ""){
+			$tituloDemanda = null;
+		}
 		
 	
 		$apiEntrada = array(
@@ -139,7 +143,7 @@ if (isset($_GET['operacao'])) {
 			'idUsuario' => $idUsuario,
 			'idTipoStatus' => $idTipoStatus,
 			'idTipoOcorrencia' => $idTipoOcorrencia,
-			
+			'tituloDemanda' => $tituloDemanda
 		);
 		/* echo json_encode(($apiEntrada));
 		return */;

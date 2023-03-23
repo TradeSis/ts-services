@@ -1,4 +1,6 @@
 <?php
+// Lucas 22032023 ajustado função do botão de limpar
+// Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
 // Lucas 15032023 alterado select de idContratoStatus para acionar uma função js, botão "buscar" foi removido, 
 //  alterado botão de limpar para usar função onclick="buscar(null)"
 // Lucas 15032023 Modifica a tabela ser constrida com Javascript
@@ -46,6 +48,7 @@ if (isset($_POST['idCliente'])) {
 $cards = buscaCards("");
 
 ?>
+
 <style rel="stylesheet" type="text/css">
   .estilo1 {
     background-color: #2FB12B;
@@ -58,6 +61,7 @@ $cards = buscaCards("");
     overflow: auto;
   }
 </style>
+
 
 <body class="bg-transparent">
   <div class="container-fluid py-1">
@@ -222,7 +226,6 @@ $cards = buscaCards("");
   </div>
 
 
-
   <div class="container-fluid text-center pt-4">
     <div class="card shadow">
 
@@ -230,8 +233,18 @@ $cards = buscaCards("");
       <div class="card-header">
         <div class="row">
           <div class="col-sm" style="text-align: left">
-            <h3 class="col">Contratos</h3>
+            <h3 class="col">Contrato</h3>
           </div>
+
+          <div class="col-sm-2 text-align:right mr-2">
+            <div class="input-group">
+              <input type="text" class="form-control" id="tituloContrato" placeholder="Buscar por...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" id="buscar" type="button"><i class="bi bi-search"></i></button>
+              </span>
+            </div>
+          </div>
+
           <div class="row" style="text-align: right">
             <!--POPUP-->
             <div class="col-sm" style="text-align:right">
@@ -285,7 +298,7 @@ $cards = buscaCards("");
                           ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
                 <?php  } ?>
               </select>
-             
+
 
             </form>
 
@@ -304,9 +317,9 @@ $cards = buscaCards("");
                           ?> value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?></option>
                 <?php  } ?>
               </select>
-      
+
               <div class="col-sm" style="text-align:right; color: #fff">
-                <a onclick="buscar(null, null)" role="button" class="btn btn-success btn-sm">Limpar</a>
+                <a onClick="window.location.reload()"" role=" button" class="btn btn-success btn-sm">Limpar</a>
               </div>
 
 
@@ -350,9 +363,9 @@ $cards = buscaCards("");
   </div>
 
   <script>
-    buscar(null, null);
+    buscar(null, null, null);
 
-    function buscar(idCliente, idContratoStatus) {
+    function buscar(idCliente, idContratoStatus, tituloContrato) {
       /* alert(idCliente);
       alert(idContratoStatus); */
 
@@ -368,7 +381,8 @@ $cards = buscaCards("");
         },
         data: {
           idCliente: idCliente,
-          idContratoStatus: idContratoStatus
+          idContratoStatus: idContratoStatus,
+          tituloContrato: tituloContrato
         }, //Dados para consulta
         //função que será executada quando a solicitação for finalizada.
 
@@ -394,14 +408,14 @@ $cards = buscaCards("");
             linha = linha + "<TD>" + object.dataEntrega + "</TD>";
             linha = linha + "<TD>" + object.dataAtualizacao + "</TD>";
 
-            /* Teste de formatação de data, não está funcionando corretamente! */ 
-           /*  data = new Date(object.dataFechamento);
-            object.dataFormatada = data.toLocaleDateString('pt-br', {
-              timeZone: 'UTC'
-            }, {
-              dateStyle: "short"
-            });
-            linha = linha + "<TD>" + object.dataFormatada + "</TD>"; */
+            /* Teste de formatação de data, não está funcionando corretamente! */
+            /*  data = new Date(object.dataFechamento);
+             object.dataFormatada = data.toLocaleDateString('pt-br', {
+               timeZone: 'UTC'
+             }, {
+               dateStyle: "short"
+             });
+             linha = linha + "<TD>" + object.dataFormatada + "</TD>"; */
 
             linha = linha + "<TD>" + object.dataFechamento + "</TD>";
             linha = linha + "<TD>" + object.horas + "</TD>";
@@ -428,13 +442,22 @@ $cards = buscaCards("");
 
 
     $("#FiltroClientes").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
     })
 
     $("#FiltroContratoStatus").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
     })
 
+    $("#buscar").click(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+    })
+
+    document.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+      }
+    });
   </script>
 </body>
 

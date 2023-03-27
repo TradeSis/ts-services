@@ -248,9 +248,9 @@ $cards = buscaCards("");
         <ul>
 
             <li class="col-sm-12">
-                <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
+                <form class="d-flex" action="" method="post" style="text-align: right;">
 
-                    <select class="form-control" name="idCliente" id="FiltroClientes">
+                    <select class="form-control" name="idCliente" id="FiltroClientes"  style="font-size: 14px; width: 150px; height: 35px">
                         <option value="<?php echo null ?>"><?php echo "Cliente"  ?></option>
                         <?php
                         foreach ($clientes as $cliente) {
@@ -268,7 +268,7 @@ $cards = buscaCards("");
             </li>
             <li class="col-sm-12 mt-2">
                 <form class="d-flex" action="" id="idContratoStatus" method="post" style="text-align: right">
-                    <select class="form-control" name="idContratoStatus" id="FiltroContratoStatus">
+                    <select class="form-control" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px; width: 150px; height: 35px">
                         <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
                         <?php
 
@@ -294,7 +294,7 @@ $cards = buscaCards("");
     </nav>
 
 
-    <div class="container-fluid text-center pt-4"> <!-- IFRAME -->
+    <div class="container-fluid text-center pt-2"> 
         <div class="card shadow ">
 
             <!--TEST- INICIO-->

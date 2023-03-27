@@ -28,7 +28,7 @@
   /*   transition: left 3s; */
 }
 .diviFrame.mostra {
-    padding-left: 184px;
+    padding-left: 164px;
     
     /* transition: right 3s; */
 }
@@ -46,12 +46,12 @@
     background-color:#d3d3d3;
     /* background-color: #2bb81f; */ 
     /* width: var(--nav-width); */
-    width: 200px;
+    width: 180px;
    /*  height: 100%; */
     position: fixed;
     /* padding-left: -50px;
     padding-right: -5px; */
-    top: 212px;
+    top: 195px;
     left: -250px; /* menu desaparece */  
     transition: left 1s;
     transition: right 0.5s;
@@ -80,7 +80,7 @@
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
-    margin-right: 5px;
+    margin-right: 20px;
     width: 50px;
 }
 

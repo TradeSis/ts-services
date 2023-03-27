@@ -64,9 +64,9 @@ $idTipoOcorrencia = null;
 </style>
 
 <body class="bg-transparent">
-  <div class="container-fluid py-2">
+  <div class="container-fluid py-1">
     <div class="header-body">
-      <div class="row">
+      <div class="row row-cols-6">
 
         <div class="col my-2">
           <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
@@ -140,7 +140,7 @@ $idTipoOcorrencia = null;
       <li class="ls-label col-sm-12"> <!-- CLIENTE -->
         <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
-          <select class="form-control" name="idCliente" id="FiltroClientes">
+          <select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo " Cliente"  ?></option>
             <?php
             foreach ($clientes as $cliente) {
@@ -159,7 +159,7 @@ $idTipoOcorrencia = null;
       <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- RESPONSAVEL -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="idUsuario" id="FiltroUsuario">
+          <select class="form-control" name="idUsuario" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo " Responsável"  ?></option>
             <?php
             foreach ($usuarios as $usuario) {
@@ -178,7 +178,7 @@ $idTipoOcorrencia = null;
       <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- STATUS -->
         <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
-          <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
+          <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo " Status"  ?></option>
             <?php foreach ($tiposstatus as $tipostatus) { ?>
               <option <?php
@@ -195,7 +195,7 @@ $idTipoOcorrencia = null;
       <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- OCORRENCIA -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia">
+          <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo "Ocorrência"  ?></option>
             <?php
             foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -219,7 +219,7 @@ $idTipoOcorrencia = null;
   </nav>
 
 
-  <div class="container-fluid pt-4 " style="margin-top:-5px">
+  <div class="container-fluid text-center pt-2">
     <div class="card shadow">
 
       <div class="card-header">
@@ -240,13 +240,13 @@ $idTipoOcorrencia = null;
 
           </div>
 
-          <div class=" btnFiltroOff">
+       <!--    <div class=" btnFiltroOff">
             <a onClick="window.location.reload()">
               <span style="font-size: 25px" class="material-symbols-outlined">
                 filter_alt_off
               </span></a>
 
-          </div>
+          </div> -->
           <div class="col-sm-2" style="margin-right:80px">
 
           </div>
@@ -281,7 +281,7 @@ $idTipoOcorrencia = null;
               <th>Cliente</th>
               <th>Demanda</th>
               <th>Responsável</th>
-              <th>Data de Abertura</th>
+              <th>Abertura</th>
               <th>Status</th>
               <th>Ocorrência</th>
               <th>Tamanho</th>

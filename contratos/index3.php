@@ -299,16 +299,16 @@ $cards = buscaCards("");
 
             <!--TEST- INICIO-->
             <div class="card-header">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-sm" style="text-align: left">
                         <h3 class="col">Contrato</h3>
 
                     </div>
 
-                </div>
+                </div> -->
 
 
-                <div class="row" style="margin-top:-10px">
+                <div class="row" >
                     <div class=" btnAbre">
                         <span style="font-size: 25px" class="material-symbols-outlined">
                             filter_alt
@@ -316,7 +316,12 @@ $cards = buscaCards("");
 
                     </div>
 
-                  <!--   <div class=" btnFiltroOff">
+                    <div style="text-align: left">
+                        <h3 class="col">Contrato</h3>
+
+                    </div>
+
+                    <!-- <div class=" btnFiltroOff">
                         <a onClick="window.location.reload()">
                             <span style="font-size: 25px" class="material-symbols-outlined">
                                 filter_alt_off
@@ -387,10 +392,10 @@ $cards = buscaCards("");
             </div>
             
             <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-                <table class="table" id="myIframe" > <!-- table-striped -->
-                    <thead class="thead-light" >
+                <table class="table" id="myIframe"> <!-- table-striped -->
+                    <thead class="thead-light">
 
-                        <tr >
+                        <tr>
                             <th>Cliente</th>
                             <th>Titulo</th>
                             <th>Status</th>
@@ -404,7 +409,7 @@ $cards = buscaCards("");
                             <th colspan="2">Ação</th>
                         </tr>
                     </thead>
-                    <tbody id='dados' class="fonteCorpo">
+                    <tbody id='dados'>
 
                     </tbody>
                 </table>

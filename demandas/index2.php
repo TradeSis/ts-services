@@ -36,16 +36,31 @@ $idTipoOcorrencia = null;
 ?>
 <link rel="stylesheet" type="text/css" href="../css/filtroMenu.css">
 <style rel="stylesheet" type="text/css">
-  .estilo1 {
-    background-color: #2FB12B;
-    border: 0px solid;
-  }
+     .estilo1 {
+        background-color: #2FB12B;
+        border: 0px solid;
+    }
 
-  .my-custom-scrollbar {
-    position: relative;
-    height: 320px;
-    overflow: auto;
-  }
+ /*    .my-custom-scrollbar {
+        position: relative;
+        height: 350px;
+        overflow: auto;
+    } */
+
+    .my-custom-scrollbar {
+        position: relative;
+        height: 600px;
+        overflow: auto;
+    }
+  
+
+    @media (max-height: 768px) {
+        .my-custom-scrollbar {
+        position: relative;
+        height: 350px;
+        overflow: auto;
+    }
+    }
 </style>
 
 <body class="bg-transparent">
@@ -275,7 +290,7 @@ $idTipoOcorrencia = null;
             </tr>
           </thead>
 
-          <tbody id='dados'>
+          <tbody id='dados' class="fonteCorpo">
 
           </tbody>
         </table>

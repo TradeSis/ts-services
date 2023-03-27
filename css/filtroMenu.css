@@ -51,7 +51,7 @@
     position: fixed;
     /* padding-left: -50px;
     padding-right: -5px; */
-    top: 195px;
+    top: 165px;
     left: -250px; /* menu desaparece */  
     transition: left 1s;
     transition: right 0.5s;

@@ -297,18 +297,18 @@ $cards = buscaCards("");
     <div class="container-fluid text-center pt-2"> 
         <div class="card shadow ">
 
-            <!--TEST- INICIO-->
+            <!--INICIO-->
             <div class="card-header">
-                <div class="row">
+               <!--  <div class="row">
                     <div class="col-sm" style="text-align: left">
                         <h3 class="col">Contrato</h3>
 
                     </div>
 
-                </div>
+                </div> -->
 
 
-                <div class="row" style="margin-top:-10px">
+                <div class="row">
                     <div class=" btnAbre">
                         <span style="font-size: 25px" class="material-symbols-outlined">
                             filter_alt
@@ -316,14 +316,11 @@ $cards = buscaCards("");
 
                     </div>
 
-                  <!--   <div class=" btnFiltroOff">
-                        <a onClick="window.location.reload()">
-                            <span style="font-size: 25px" class="material-symbols-outlined">
-                                filter_alt_off
-                            </span></a>
+                    <div style="text-align: left; margin-left: -20px;">
+                        <h3 class="col">Contrato</h3>
 
-                    </div> -->
-                    <div class="col-sm-2" style="margin-right:80px">
+                    </div>
+                    <div class="col-sm-2">
 
                     </div>
 

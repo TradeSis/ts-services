@@ -49,17 +49,32 @@ if (isset($_POST['idCliente'])) {
 $cards = buscaCards("");
 
 ?>
-<link rel="stylesheet" type="text/css" href="../css/filtroMenuContrato.css">
+<link rel="stylesheet" type="text/css" href="../css/filtroMenu.css">
 <style rel="stylesheet" type="text/css">
     .estilo1 {
         background-color: #2FB12B;
         border: 0px solid;
     }
 
-    .my-custom-scrollbar {
+ /*    .my-custom-scrollbar {
         position: relative;
         height: 350px;
         overflow: auto;
+    } */
+
+    .my-custom-scrollbar {
+        position: relative;
+        height: 600px;
+        overflow: auto;
+    }
+  
+
+    @media (max-height: 768px) {
+        .my-custom-scrollbar {
+        position: relative;
+        height: 350px;
+        overflow: auto;
+    }
     }
 </style>
 
@@ -272,10 +287,14 @@ $cards = buscaCards("");
             </li>
 
         </ul>
+
+        <div class="col-sm" style="text-align:right; color: #fff">
+                <a onClick="window.location.reload()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+              </div>
     </nav>
 
 
-    <div class="container-fluid text-center pt-4 diviFrame"> <!-- IFRAME -->
+    <div class="container-fluid text-center pt-4"> <!-- IFRAME -->
         <div class="card shadow ">
 
             <!--TEST- INICIO-->
@@ -366,10 +385,10 @@ $cards = buscaCards("");
                 </div>
 
             </div>
-
-            <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar  ">
+            
+            <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
                 <table class="table" id="myIframe"> <!-- table-striped -->
-                    <thead>
+                    <thead class="thead-light">
 
                         <tr>
                             <th>Cliente</th>

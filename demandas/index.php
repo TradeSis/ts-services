@@ -297,7 +297,7 @@ $idTipoOcorrencia = null;
             linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
             linha = linha + "<TD>" + object.tamanho + "</TD>";
             linha = linha + "<TD>" + object.horasPrevisao + "</TD>";;
-            linha = linha + "<TD>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</TD>";
+            linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a>" + "</TD>";
 
             linha = linha + "</TR>";
           }

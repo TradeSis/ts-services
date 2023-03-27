@@ -34,7 +34,7 @@ $idTipoOcorrencia = null;
 
 
 ?>
-<link rel="stylesheet" type="text/css" href="../css/filtroMenuContrato.css">
+<link rel="stylesheet" type="text/css" href="../css/filtroMenu.css">
 <style rel="stylesheet" type="text/css">
   .estilo1 {
     background-color: #2FB12B;
@@ -197,10 +197,14 @@ $idTipoOcorrencia = null;
       </li>
 
     </ul>
+
+    <div class="col-sm" style="text-align:right; color: #fff">
+                <a onClick="window.location.reload()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+              </div>
   </nav>
 
 
-  <div class="container-fluid pt-4 diviFrame">
+  <div class="container-fluid pt-4 " style="margin-top:-5px">
     <div class="card shadow">
 
       <div class="card-header">
@@ -253,7 +257,7 @@ $idTipoOcorrencia = null;
       </div>
 
  
-      <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar ">
+      <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
           <thead class="thead-light">
             <tr>

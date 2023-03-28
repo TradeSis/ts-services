@@ -98,39 +98,13 @@ if (isset($_GET['operacao'])) {
 		);
 		$demanda = chamaAPI(null, '/api/services/demanda/retornar', json_encode($apiEntrada), 'POST');
 	}
-
 	if ($operacao == "comentar") {
-		
-
-			$nomeAnexoInicial = $_FILES['nomeAnexo'];
-			if($nomeAnexoInicial !== null) {
-			preg_match("/\.(png|jpg|jpeg|xlsx|xls|pdf){1}$/i", $nomeAnexoInicial["name"], $ext);
-				// Gera um nome Ãºnico para a imagem
-			if ($ext == true) {
-
-			$nomeAnexo = md5(uniqid(time())) . "." . $ext[1];
-
-			$caminho_arquivo = "../img/anexos/" . $nomeAnexo;
-
-			move_uploaded_file($nomeAnexoInicial["tmp_name"], $caminho_arquivo);
-
-
-			/* include 'conexao.php';
-			$sql = "INSERT INTO anexo (nomeAnexo) values ('$nomeAnexo')";
-			$inserir = mysqli_query($conexao,$sql); */
-			}
-			 }
-
 		$apiEntrada = array(
-			'nomeAnexo' => $nomeAnexo,
 			'idUsuario' => $_POST['idUsuario'],
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $_POST['comentario']
 		);
-		/* echo json_encode(($apiEntrada));
-		return; */
 		$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'PUT');
-		/* echo json_encode(($comentario)); */
 	}
 
 	if ($operacao == "filtrar") {

@@ -56,7 +56,7 @@ $comentarios = buscaComentarios($idDemanda);
                     </div>
 
                     <div class="col-sm">
-                        <form method="post" id="form">
+                        <form method="post" id="form" action="../database/demanda.php?operacao=comentar" enctype="multipart/form-data">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <?php
@@ -72,6 +72,8 @@ $comentarios = buscaComentarios($idDemanda);
                                 <div class="form-group">
                                     <textarea name="comentario" id="comentario" class="form-control" placeholder="Inserir Comentario" rows="5"></textarea>
                                     <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
+                                    <label for="formFileSm" class="form-label">Anexos</label>
+                                    <input class="form-control form-control-sm" name="nomeAnexo" id="formFileSm" type="file">
                                 </div>
 
 
@@ -91,6 +93,7 @@ $comentarios = buscaComentarios($idDemanda);
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Comentário de <b><?php echo $comentario['nomeUsuario'] ?></b> em <i><?php echo $comentario['dataComentario'] ?></i></div>
                                         <div class="panel-body"><?php echo $comentario['comentario'] ?></div>
+                                        <div class="panel-body"><?php echo $comentario['nomeAnexo'] ?></div>
                                     </div>
                                     <br />
                                 <?php } ?>
@@ -127,7 +130,7 @@ $comentarios = buscaComentarios($idDemanda);
             $('.Anexos').toggleClass('mostra');
         });
 
-
+/* 
         $(document).ready(function() {
 
             $('#form').on('submit', function(event) {
@@ -145,26 +148,8 @@ $comentarios = buscaComentarios($idDemanda);
             function refreshPage() {
                 window.location.reload();
             }
-        });
+        }) */;
 
-        $(document).ready(function() {
-
-            $('#form').on('submit', function(event) {
-                event.preventDefault();
-                var form_data = $(this).serialize();
-                $.ajax({
-                    url: "bdAnexos.php",
-                    method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage()
-                })
-            });
-
-            function refreshPage() {
-                window.location.reload();
-            }
-        });
     </script>
 </body>
 

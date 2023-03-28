@@ -46,7 +46,7 @@ $atendentes = buscaAtendente();
 
 
 			<div class="container mt-1 mb-3">
-				<form action="" method="post" id="form1">
+				<form action="" method="post" id="form">
 				<?php
 					if ($_SESSION['idCliente'] == NULL) { ?>
 						<div class="row">
@@ -240,6 +240,7 @@ $atendentes = buscaAtendente();
             $('#form').on('submit', function(event) {
                 event.preventDefault();
                 var form_data = $(this).serialize();
+				
                 $.ajax({
                     url: "../database/demanda.php?operacao=alterar",
                     method: "POST",

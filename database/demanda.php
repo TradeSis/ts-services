@@ -71,7 +71,8 @@ if (isset($_GET['operacao'])) {
 			'idTipoStatus' => $_POST['idTipoStatus'],
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
 		);
-		$demanda = chamaAPI('demanda', 'demanda', json_encode($apiEntrada), 'PUT');
+		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'PUT');
+		
 	}
 	if ($operacao == "alterar") {
 		$apiEntrada = array(

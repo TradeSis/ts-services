@@ -13,7 +13,7 @@
 
 include_once('../conexao.php');
 
-function buscaDemandas($idDemanda = null, $idTipoStatus = null)
+function buscaDemandas($idDemanda=null, $idTipoStatus=null)
 {
 
 	$demanda = array();
@@ -22,7 +22,7 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null)
 		'idDemanda' => $idDemanda,
 		'idTipoStatus' => $idTipoStatus,
 	);
-	//	echo json_encode(($apiEntrada));
+//	echo json_encode(($apiEntrada));
 	$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($demanda);
@@ -31,7 +31,7 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null)
 
 
 
-function buscaComentarios($idDemanda = null, $idComentario = null)
+function buscaComentarios($idDemanda=null,$idComentario=null)
 {
 
 	$comentario = array();
@@ -100,44 +100,29 @@ if (isset($_GET['operacao'])) {
 	}
 
 	if ($operacao == "comentar") {
+		
 
-
-		$anexo = $_FILES['nomeAnexo'];
-		if ($anexo['error']) // se gerar algum erro no upload
-			die("Falha ao enviar arquivo");
-
-		if ($anexo['size'] > 2097152) //limitando tamnho do aquivo
-			die("Aquivo muito grande!! MAX: 2MB");
-		//var_dump($_FILES['arquivo']);//inf do arquivo enviado
-
-		$pasta = "../img/anexos/";
-		$nomeAnexo = $anexo['name'];
-		$novoNomeDoAnexo = uniqid(); //gerar nome aleatorio para ser guardado na pasta 
-		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); //extensao do arquivo
-
-		if($extensao != "jpg" && $extensao != "png" && $extensao != "xlsx")
-        die("Tipo de aquivo não aceito");
-
-		$pathAnexo = $pasta . $novoNomeDoAnexo . "." . $extensao;
-		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
-
-
-	/* 	if ($nomeAnexoInicial !== null) {
+			$nomeAnexoInicial = $_FILES['nomeAnexo'];
+			if($nomeAnexoInicial !== null) {
 			preg_match("/\.(png|jpg|jpeg|xlsx|xls|pdf){1}$/i", $nomeAnexoInicial["name"], $ext);
-			// Gera um nome Ãºnico para a imagem
+				// Gera um nome Ãºnico para a imagem
 			if ($ext == true) {
 
-				$nomeAnexo = md5(uniqid(time())) . "." . $ext[1];
+			$nomeAnexo = md5(uniqid(time())) . "." . $ext[1];
 
-				$caminho_arquivo = "../img/anexos/" . $nomeAnexo;
+			$caminho_arquivo = "../img/anexos/" . $nomeAnexo;
 
-				move_uploaded_file($nomeAnexoInicial["tmp_name"], $caminho_arquivo);
+			move_uploaded_file($nomeAnexoInicial["tmp_name"], $caminho_arquivo);
+
+
+			/* include 'conexao.php';
+			$sql = "INSERT INTO anexo (nomeAnexo) values ('$nomeAnexo')";
+			$inserir = mysqli_query($conexao,$sql); */
 			}
-		} */
+			 }
 
 		$apiEntrada = array(
 			'nomeAnexo' => $nomeAnexo,
-			'pathAnexo' => $pathAnexo,
 			'idUsuario' => $_POST['idUsuario'],
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $_POST['comentario']
@@ -155,34 +140,34 @@ if (isset($_GET['operacao'])) {
 		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
 		$idUsuario = $_POST['idUsuario'];
 
-		if ($idCliente == "") {
+		if ($idCliente == ""){
 			$idCliente = null;
 		}
 
-		if ($idUsuario == "") {
+		if ($idUsuario == ""){
 			$idUsuario = null;
 		}
 
-		if ($idTipoStatus == "") {
+		if ($idTipoStatus == ""){
 			$idTipoStatus = null;
 		}
 
 
-		if ($idTipoOcorrencia == "") {
+		if ($idTipoOcorrencia == ""){
 			$idTipoOcorrencia = null;
 		}
 
-
-
+		
+	
 		$apiEntrada = array(
 			'idDemanda' => null,
 			'idCliente' => $idCliente,
 			'idUsuario' => $idUsuario,
 			'idTipoStatus' => $idTipoStatus,
 			'idTipoOcorrencia' => $idTipoOcorrencia,
-
+			
 		);
-			/* echo json_encode(($apiEntrada));
+		/* echo json_encode(($apiEntrada));
 		return */;
 		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
 
@@ -190,8 +175,10 @@ if (isset($_GET['operacao'])) {
 		return $demanda;
 	}
 
-	/*
+/*
 	include "../demandas/demanda_ok.php";
 */
-	header('Location: ../demandas/index.php');
+	header('Location: ../demandas/index.php'); 
 }
+
+?>

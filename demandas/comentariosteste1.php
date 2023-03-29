@@ -27,7 +27,7 @@ $comentarios = buscaComentarios($idDemanda);
 
 
     .custom-file-upload {
-    /* border: 1px solid #ccc; */
+    border: 1px solid #ccc;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
@@ -65,9 +65,9 @@ $comentarios = buscaComentarios($idDemanda);
             <div class="container-fluid mt-3">
 
                 <div class="row">
-                  <!--   <div class="col-sm-1">
+                    <div class="col-sm-1">
                         <button class="btnAnexos btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill"></i></button>
-                    </div> -->
+                    </div>
 
                     <div class="col-sm">
                         <form method="post" id="form" action="../database/demanda.php?operacao=comentar" enctype="multipart/form-data">
@@ -86,53 +86,36 @@ $comentarios = buscaComentarios($idDemanda);
                                 <div class="form-group">
                                     <textarea name="comentario" id="comentario" class="form-control" placeholder="Inserir Comentario" rows="5"></textarea>
                                     <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
-                                    <label for="formFileSm" class="form-label">Inserir Anexos</label>
-                                    <input class="form-control form-control-sm" name="nomeAnexo" id="formFileSm" type="file">
-                                    <p></p>
-
-
-                                  <!--   <input type="file" id="upload" name="nomeAnexo">
+                                    <input type="file" name="file" id="upload" >
                                     <label for="upload">
                                         <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a>
 
-                                    </label> -->
-                                    <p></p>
-                                    <div style="margin-left: 220px;">
-                                    <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo" multiple size="50" onchange="myFunction()">
-                                    <label for="myFile">
-                                        <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a>
-
                                     </label>
-                                    </div>
-                                    <p id="demo"></p>
+
+                                    <!-- <input type="file" name='arquivo' id="myFile" class="custom-file-upload" multiple size="50" onchange="myFunction()">
+ 
+                                    <p id="demo"></p> -->
                                 </div>
 
 
-                              <!--   <div class="row">
+                                <!--   <div class="row">
                                     <div class="mb-3">
                                         <label for="formFileSm" class="form-label">Small file input example</label>
                                         <input class="form-control form-control-sm" id="formFileSm" type="file">
                                     </div>
                                 </div> -->
-                                
+
 
                                 <div class="card-footer bg-transparent" style="text-align:right">
                                     <input type="submit" name="submit" id="submit" class="btn btn-info btn-sm" value="Comentar" />
                                 </div>
-
                                 <?php
                                 foreach ($comentarios as $comentario) { ?>
                                     <div class="panel panel-default">
-                                        
+                                        <div class="panel-heading">Comentário de <b><?php echo $comentario['nomeUsuario'] ?></b> em <i><?php echo $comentario['dataComentario'] ?></i></div>
                                         <div class="panel-body"><?php echo $comentario['comentario'] ?></div>
-                                    <div><a target="_blank" href="<?php echo $comentario['pathAnexo'];?>"><img height="50" src="<?php echo $comentario['pathAnexo'];?>" alt=""></a></div> 
-
-                                    <spam style="font-size: 10px"><?php echo $comentario['nomeAnexo'] ?></spam>
-                                       <!--  <div class="panel-body"><?php echo $comentario['nomeAnexo'] ?></div> -->
-                                       <div class="panel-heading">Comentário de <b><?php echo $comentario['nomeUsuario'] ?></b> em <i><?php echo $comentario['dataComentario'] ?></i></div>
-                                       <!-- <div>------------------------------------------------------</div> -->
-                                       <div class="card-footer bg-transparent"></div>
-
+                                        <div><img height="50" src="<?php echo $comentario['pathAnexo']; ?>" alt=""></div>
+                                        <div class="panel-body"><?php echo $comentario['nomeAnexo'] ?></div>
                                     </div>
                                     <br />
                                 <?php } ?>
@@ -140,13 +123,25 @@ $comentarios = buscaComentarios($idDemanda);
                         </form>
 
 
+
+                      <!--   <form action="" method="POST" enctype="multipart/form-data" class="body">
+
+
+                            <input type="file" name="file" id="upload" required style="opacity: 0;">
+                            <label for="upload">
+                                <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a>
+
+                            </label>
+
+                        </form> -->
+
                     </div>
                 </div>
 
 
 
                 <!--TESTE ANEXOS-->
-               <!--  <div class="container Anexos">
+                <div class="container Anexos">
                     <form action="bdAnexos.php" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="exampleFormControlFile1">Inserir Anexo</label>
@@ -155,7 +150,7 @@ $comentarios = buscaComentarios($idDemanda);
                         <button type="submit" class="btn btn-primary btn-sm">Anexar</button>
                     </form>
 
-                </div> -->
+                </div>
 
 
 
@@ -177,7 +172,7 @@ function myFunction(){
                 /* txt += "<br><strong>" + (i+1) + ". file</strong><br>"; */
                 var file = x.files[i];
                 if ('name' in file) {
-                    txt += "Arquivo a ser anexado: " + "</br>" + "<i>"+ file.name + "</i>" + "<br>";
+                    txt += "Name: " + file.name + "<br>";
                 }
             }
         }
@@ -185,30 +180,31 @@ function myFunction(){
     
     document.getElementById("demo").innerHTML = txt;
 }
-       /*  $('.btnAnexos').click(function() {
+
+        $('.btnAnexos').click(function() {
             $('.Anexos').toggleClass('mostra');
-        }); */
+        });
 
+        /* 
+                $(document).ready(function() {
 
-     /*    $(document).ready(function() {
+                    $('#form').on('submit', function(event) {
+                        event.preventDefault();
+                        var form_data = $(this).serialize();
+                        $.ajax({
+                            url: "../database/demanda.php?operacao=comentar",
+                            method: "POST",
+                            data: form_data,
+                            dataType: "JSON",
+                            success: refreshPage()
+                        })
+                    });
 
-            $('#form').on('submit', function(event) {
-                event.preventDefault();
-                var form_data = $(this).serialize();
-                $.ajax({
-                    url: "../database/demanda.php?operacao=comentar",
-                    method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage()
-                })
-            });
-
-            function refreshPage() {
-                window.location.reload();
-            }
-        }); */
-
+                    function refreshPage() {
+                        window.location.reload();
+                    }
+                }) */
+        ;
     </script>
 </body>
 

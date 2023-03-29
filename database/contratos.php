@@ -1,4 +1,5 @@
 <?php
+// Lucas 22032023 - adicionado a operação filtrar, tituloContrato
 // Lucas 21032023 - adicionado operação filtrar, idCliente e idContratoStatus
 // Lucas 20032023 - buscaContratos ganhou parametro idCliente
 // Lucas 20022023 - buscaContratos ganhou parametro idContratoStatus

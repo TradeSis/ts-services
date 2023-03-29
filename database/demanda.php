@@ -1,4 +1,5 @@
 <?php
+// Lucas 22032023 adicionado a operação filtrar, tituloDemanda
 // gabriel 220323 11:19 - adicionado operação retornar demanda
 // Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
 // Lucas 20032023 adicionado operação filtrar

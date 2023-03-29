@@ -1,4 +1,5 @@
 <?php
+// Lucas 22032023 - adicionado a operação filtrar, tituloContrato
 // Lucas 21032023 - adicionado operação filtrar, idCliente e idContratoStatus
 // Lucas 20032023 - buscaContratos ganhou parametro idCliente
 // Lucas 20022023 - buscaContratos ganhou parametro idContratoStatus
@@ -108,6 +109,7 @@ if (isset($_GET['operacao'])) {
 
 		$idCliente = $_POST["idCliente"];
 		$idContratoStatus = $_POST["idContratoStatus"];
+		$tituloContrato = $_POST["tituloContrato"];
 
 		if ($idCliente == ""){
 			$idCliente = null;
@@ -117,11 +119,16 @@ if (isset($_GET['operacao'])) {
 			$idContratoStatus = null;
 		} 
 
+		if ($tituloContrato == ""){
+			$tituloContrato = null;
+		} 
+
 
 		$apiEntrada = array(
 			'idContrato' => null,
 			'idCliente' => $idCliente,
 			'idContratoStatus' => $idContratoStatus,
+			'tituloContrato' => $tituloContrato
 		);
 		/* echo json_encode(($apiEntrada));
 		return; */

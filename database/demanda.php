@@ -1,4 +1,5 @@
 <?php
+// Lucas 22032023 adicionado a operação filtrar, tituloDemanda
 // gabriel 220323 11:19 - adicionado operação retornar demanda
 // Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
 // Lucas 20032023 adicionado operação filtrar
@@ -114,6 +115,7 @@ if (isset($_GET['operacao'])) {
 		$idTipoStatus = $_POST['idTipoStatus'];
 		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
 		$idUsuario = $_POST['idUsuario'];
+		$tituloDemanda = $_POST['tituloDemanda'];
 
 		if ($idCliente == ""){
 			$idCliente = null;
@@ -132,6 +134,9 @@ if (isset($_GET['operacao'])) {
 			$idTipoOcorrencia = null;
 		}
 
+		if ($tituloDemanda == ""){
+			$tituloDemanda = null;
+		}
 		
 	
 		$apiEntrada = array(
@@ -140,7 +145,7 @@ if (isset($_GET['operacao'])) {
 			'idUsuario' => $idUsuario,
 			'idTipoStatus' => $idTipoStatus,
 			'idTipoOcorrencia' => $idTipoOcorrencia,
-			
+			'tituloDemanda' => $tituloDemanda
 		);
 		/* echo json_encode(($apiEntrada));
 		return */;

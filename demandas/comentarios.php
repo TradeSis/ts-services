@@ -64,13 +64,8 @@ $comentarios = buscaComentarios($idDemanda);
         <div>
             <div class="container-fluid mt-3">
 
-                <div class="row">
-                  <!--   <div class="col-sm-1">
-                        <button class="btnAnexos btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill"></i></button>
-                    </div> -->
-
-                    <div class="col-sm">
-                        <form method="post" id="form" action="../database/demanda.php?operacao=comentar" enctype="multipart/form-data">
+ 
+                        <form method="post" id="form" enctype="multipart/form-data">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <?php
@@ -86,35 +81,19 @@ $comentarios = buscaComentarios($idDemanda);
                                 <div class="form-group">
                                     <textarea name="comentario" id="comentario" class="form-control" placeholder="Inserir Comentario" rows="5"></textarea>
                                     <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
-                                    <label for="formFileSm" class="form-label">Inserir Anexos</label>
-                                    <input class="form-control form-control-sm" name="nomeAnexo" id="formFileSm" type="file">
-                                    <p></p>
-
-
-                                  <!--   <input type="file" id="upload" name="nomeAnexo">
-                                    <label for="upload">
-                                        <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a>
-
-                                    </label> -->
-                                    <p></p>
-                                    <div style="margin-left: 220px;">
-                                    <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo" multiple size="50" onchange="myFunction()">
+                                   
+                                    
+                                    <div style="text-align:right">
+                                    <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo" onchange="myFunction()">
                                     <label for="myFile">
-                                        <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a>
+                                        <a class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a>
 
                                     </label>
                                     </div>
-                                    <p id="demo"></p>
+                                    <p id="mostraNomeAnexo"></p>
                                 </div>
 
 
-                              <!--   <div class="row">
-                                    <div class="mb-3">
-                                        <label for="formFileSm" class="form-label">Small file input example</label>
-                                        <input class="form-control form-control-sm" id="formFileSm" type="file">
-                                    </div>
-                                </div> -->
-                                
 
                                 <div class="card-footer bg-transparent" style="text-align:right">
                                     <input type="submit" name="submit" id="submit" class="btn btn-info btn-sm" value="Comentar" />
@@ -125,9 +104,11 @@ $comentarios = buscaComentarios($idDemanda);
                                     <div class="panel panel-default">
                                         
                                         <div class="panel-body"><?php echo $comentario['comentario'] ?></div>
-                                    <div><a target="_blank" href="<?php echo $comentario['pathAnexo'];?>"><img height="50" src="<?php echo $comentario['pathAnexo'];?>" alt=""></a></div> 
+                                    <div><img height="50" src="<?php echo $comentario['pathAnexo'];?>" alt=""></div> 
 
-                                    <spam style="font-size: 10px"><?php echo $comentario['nomeAnexo'] ?></spam>
+                                    <div><a target="_blank" href="<?php echo $comentario['pathAnexo'];?>"><?php echo $comentario['nomeAnexo'] ?></a></div>
+
+                                    <!-- <spam style="font-size: 10px"><?php echo $comentario['nomeAnexo'] ?></spam> -->
                                        <!--  <div class="panel-body"><?php echo $comentario['nomeAnexo'] ?></div> -->
                                        <div class="panel-heading">Comentário de <b><?php echo $comentario['nomeUsuario'] ?></b> em <i><?php echo $comentario['dataComentario'] ?></i></div>
                                        <!-- <div>------------------------------------------------------</div> -->
@@ -140,26 +121,9 @@ $comentarios = buscaComentarios($idDemanda);
                         </form>
 
 
-                    </div>
-                </div>
+                    
+                
 
-
-
-                <!--TESTE ANEXOS-->
-               <!--  <div class="container Anexos">
-                    <form action="bdAnexos.php" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="exampleFormControlFile1">Inserir Anexo</label>
-                            <input type="file" name='arquivo' class="form-control-file" id="exampleFormControlFile1">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm">Anexar</button>
-                    </form>
-
-                </div> -->
-
-
-
-                <!--TESTE ANEXOS-->
             </div>
         </div>
     </div>
@@ -183,14 +147,11 @@ function myFunction(){
         }
     } 
     
-    document.getElementById("demo").innerHTML = txt;
+    document.getElementById("mostraNomeAnexo").innerHTML = txt;
 }
-       /*  $('.btnAnexos').click(function() {
-            $('.Anexos').toggleClass('mostra');
-        }); */
 
 
-     /*    $(document).ready(function() {
+   /*       $(document).ready(function() {
 
             $('#form').on('submit', function(event) {
                 event.preventDefault();
@@ -207,7 +168,35 @@ function myFunction(){
             function refreshPage() {
                 window.location.reload();
             }
-        }); */
+        });  */
+
+        $("#form").submit(function() {
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: "../database/demanda.php?operacao=comentar",
+            type: 'POST',
+            data: formData,
+            success: function(data) {
+                alert(data)
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+            xhr: function() { // Custom XMLHttpRequest
+                var myXhr = $.ajaxSettings.xhr();
+                if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
+                    myXhr.upload.addEventListener('progress', function() {
+                        /* faz alguma coisa durante o progresso do upload */
+                    }, false);
+                }
+                return myXhr;
+            }
+            
+        });
+                window.location.reload();
+        
+    });
 
     </script>
 </body>

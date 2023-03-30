@@ -24,8 +24,7 @@ $comentarios = buscaComentarios($idDemanda);
     .Anexos.mostra {
         display: block;
     }
-
-
+    
     .custom-file-upload {
     /* border: 1px solid #ccc; */
     display: inline-block;
@@ -79,7 +78,7 @@ $comentarios = buscaComentarios($idDemanda);
                                     <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $nomeCliente ?>" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="comentario" id="comentario" class="form-control" placeholder="Inserir Comentario" rows="5"></textarea>
+                                    <textarea name="comentario" id="comentario" class="form-control" placeholder="Inserir Comentario" required rows="5"></textarea>
                                     <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
                                    
                                     
@@ -120,10 +119,6 @@ $comentarios = buscaComentarios($idDemanda);
                             </div>
                         </form>
 
-
-                    
-                
-
             </div>
         </div>
     </div>
@@ -145,17 +140,16 @@ function myFunction(){
                 }
             }
         }
-    } 
-    
+    }  
     document.getElementById("mostraNomeAnexo").innerHTML = txt;
 }
 
 
-   /*       $(document).ready(function() {
+        /*  $(document).ready(function() {
 
             $('#form').on('submit', function(event) {
                 event.preventDefault();
-                var form_data = $(this).serialize();
+                var formData = new FormData(this);
                 $.ajax({
                     url: "../database/demanda.php?operacao=comentar",
                     method: "POST",
@@ -170,33 +164,28 @@ function myFunction(){
             }
         });  */
 
-        $("#form").submit(function() {
-        var formData = new FormData(this);
-
-        $.ajax({
-            url: "../database/demanda.php?operacao=comentar",
-            type: 'POST',
-            data: formData,
-            success: function(data) {
-                alert(data)
-            },
-            cache: false,
-            contentType: false,
-            processData: false,
-            xhr: function() { // Custom XMLHttpRequest
-                var myXhr = $.ajaxSettings.xhr();
-                if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
-                    myXhr.upload.addEventListener('progress', function() {
-                        /* faz alguma coisa durante o progresso do upload */
-                    }, false);
-                }
-                return myXhr;
-            }
-            
-        });
-                window.location.reload();
         
-    });
+        $(document).ready(function() {
+            $("#form").submit(function() {
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: "../database/demanda.php?operacao=comentar",
+                    type: 'POST',
+                    data: formData,
+                    success: refreshPage(),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    
+                });
+
+            });
+
+            function refreshPage() {
+                window.location.reload();
+            }
+        });
 
     </script>
 </body>

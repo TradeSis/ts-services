@@ -39,8 +39,8 @@ $aplicativos = buscaAplicativos();
                         <td><?php echo $aplicativo['nomeAplicativo'] ?></td>
                         <td><?php echo $aplicativo['imgAplicativo'] ?></td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="aplicativo_alterar.php?nomeAplicativo=<?php echo $aplicativo['nomeAplicativo'] ?>" role="button">Editar</a>
-                            <!-- <a class="btn btn-danger btn-sm" href="tipostatus_excluir.php?idTipoStatus=<?php echo $aplicativo['idTipoStatus'] ?>" role="button">Excluir</a> -->
+                            <a class="btn btn-primary btn-sm" href="aplicativo_alterar.php?aplicativo=<?php echo $aplicativo['aplicativo'] ?>" role="button">Editar</a>
+                            <a class="btn btn-danger btn-sm" href="aplicativo_excluir.php?aplicativo=<?php echo $aplicativo['aplicativo'] ?>" role="button">Excluir</a>
                         </td>
                     </tr>
                 <?php } ?>

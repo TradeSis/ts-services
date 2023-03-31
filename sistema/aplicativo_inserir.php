@@ -94,27 +94,7 @@ include_once('../head.php');
                         <label>Nome Aplicativo</label>
                         <input type="text" name="nomeAplicativo" class="form-control" placeholder="Digite o nome do Cliente" autocomplete="off">
                         <label>Imagem</label>
-                        <!-- <input type="text" name="imgAplicativo" class="form-control" placeholder="Digite o nome do Cliente" autocomplete="off"> -->
-
-                        <!-- <form method="post" id="form" enctype="multipart/form-data">
-                            <div class="form-group"> -->
-
-                              <!--   <div style="text-align:left">
-                                    <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo" onchange="myFunction()">
-                                    <label for="myFile">
-                                        <a class="btn"><i class="bi bi-person-bounding-box iconeImg"></i></i></a>
-
-                                    </label>
-                                </div>
-                                <p id="mostraNomeAnexo"></p> -->
-                            <!-- </div>
-                            </form> -->
-                            <label class="picture" for="imgAplicativo" tabIndex="0"> <!-- AQUI -->
-                                <span class="picture__image"></span>
-                            </label>
-
-                            <input type="file" name="imgAplicativo" id="imgAplicativo">
-                        
+                        <input type="text" name="imgAplicativo" class="form-control" placeholder="Digite o nome do Cliente" autocomplete="off">    
                     </div>
                     <div class="card-footer bg-transparent" style="text-align:right">
 
@@ -124,55 +104,7 @@ include_once('../head.php');
             </div>
         </div>
     </div>
-    <script>
-        const inputFile = document.querySelector("#imgAplicativo");
-const pictureImage = document.querySelector(".picture__image");
-const pictureImageTxt = "Carregar imagem";
-pictureImage.innerHTML = pictureImageTxt;
 
-inputFile.addEventListener("change", function (e) {
-  const inputTarget = e.target;
-  const file = inputTarget.files[0];
-
-  if (file) {
-    const reader = new FileReader();
-
-    reader.addEventListener("load", function (e) {
-      const readerTarget = e.target;
-
-      const img = document.createElement("img");
-      img.src = readerTarget.result;
-      img.classList.add("picture__img");
-
-      pictureImage.innerHTML = "";
-      pictureImage.appendChild(img);
-    });
-
-    reader.readAsDataURL(file);
-  } else {
-    pictureImage.innerHTML = pictureImageTxt;
-  }
-});
-
-        function myFunction() {
-            var x = document.getElementById("myFile");
-            var txt = "";
-            if ('files' in x) {
-                if (x.files.length == 0) {
-                    txt = "";
-                } else {
-                    for (var i = 0; i < x.files.length; i++) {
-                        /* txt += "<br><strong>" + (i+1) + ". file</strong><br>"; */
-                        var file = x.files[i];
-                        if ('name' in file) {
-                            txt += "Arquivo a ser anexado: " + "</br>" + "<i>" + file.name + "</i>" + "<br>";
-                        }
-                    }
-                }
-            }
-            document.getElementById("mostraNomeAnexo").innerHTML = txt;
-        }
-    </script>
 
 </body>
 

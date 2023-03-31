@@ -3,21 +3,21 @@
 
 include_once('../conexao.php');
 
-function buscaAplicativos($nomeAplicativo=null)
+function buscaAplicativos($aplicativo=null)
 {
 
-	$aplicativo = array();
+	$app = array();
 	//echo json_encode($aplicativo);
 	//return;	
 	$apiEntrada = array(
-		'nomeAplicativo' => $nomeAplicativo,
+		'aplicativo' => $aplicativo,
 	);
 	
 	/* echo "-ENTRADA->".json_encode($apiEntrada)."\n";
-	return;	 */
-	$aplicativo = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'GET');
-	//echo json_encode($aplicativo);
-	return $aplicativo;
+	return; */	
+	$app = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'GET');
+	//echo json_encode($app);
+	return $app;
 }
 
 
@@ -36,7 +36,7 @@ if (isset($_GET['operacao'])) {
 		echo "\n";
 		echo json_encode($apiEntrada);
 		return;  */
-		$aplicativo = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'PUT');
+		$app = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'PUT');
 		
 	}
 
@@ -47,7 +47,17 @@ if (isset($_GET['operacao'])) {
 			'imgAplicativo' => $_POST['imgAplicativo'],
 			
 		);
-		$aplicativo = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'POST');
+
+		$app = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'POST');
+		
+	}
+
+	if ($operacao == "excluir") {
+		$apiEntrada = array(
+			'aplicativo' => $_POST['aplicativo']		
+		);
+
+		$app = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'DELETE');
 		
 	}
 

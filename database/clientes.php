@@ -13,10 +13,15 @@ function buscaClientes($idCliente=null)
 {
 	
 	$clientes = array();
+	//echo json_encode($clientes);
+	//return;
 	$apiEntrada = array(
 		'idCliente' => $idCliente,
 	);
+	/* echo "-ENTRADA->".json_encode($apiEntrada)."\n";
+	return; */
 	$clientes = chamaAPI(null, '/api/services/clientes', json_encode($apiEntrada), 'GET');
+	//echo json_encode($clientes);
 	return $clientes;
 }
 

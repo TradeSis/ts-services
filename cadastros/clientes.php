@@ -6,7 +6,7 @@ include_once('../head.php');
 include_once('../database/clientes.php');
 
 $clientes = buscaClientes();
-
+//echo json_encode($clientes);
 
 ?>
 

@@ -42,7 +42,8 @@
 }
 
 .picture__img {
-  max-width: 100%;
+  height: 120px;
+  border-radius: 50%;
 }
 </style>
 
@@ -53,7 +54,6 @@
 
 <input type="file" name="picture__input" id="picture__input">
 </div>
-
 
 
 <script>

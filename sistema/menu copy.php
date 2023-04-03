@@ -2,10 +2,8 @@
 
 include_once('../head.php');
 include_once ('../database/menu.php');
-include_once ('../database/aplicativo.php');
 
 $menus = buscaMenu();
-$aplicativos = buscaAplicativos();
 //echo json_encode($menus);
 ?>
 
@@ -38,7 +36,7 @@ $aplicativos = buscaAplicativos();
                 ?>
                     <tr>
                         <td><?php echo $menu['nomeMenu'] ?></td>
-                        <td><?php echo $menu['nomeAplicativo'] ?></td>
+                        <td><?php echo $menu['aplicativo'] ?></td>
                         <td><?php echo $menu['nivelMenu'] ?></td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="menu_alterar.php?IDMenu=<?php echo $menu['IDMenu'] ?>" role="button">Editar</a>

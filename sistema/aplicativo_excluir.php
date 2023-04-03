@@ -5,7 +5,7 @@
 include_once('../head.php');
 include_once('../database/aplicativo.php');
 
-$aplicativo = buscaAplicativos($_GET['aplicativo']);
+$aplicativo = buscaAplicativos($_GET['idAplicativo']);
 
 //echo json_encode($aplicativo);
 ?>
@@ -28,11 +28,11 @@ $aplicativo = buscaAplicativos($_GET['aplicativo']);
                 <form action="../database/aplicativo.php?operacao=excluir" method="post">
                     <div class="form-group" style="margin-top:10px">
                         <label>Aplicativo</label>
-                        <input type="text" class="form-control" name="aplicativo" value="<?php echo $aplicativo['aplicativo'] ?>">
-                        <!-- <input type="text" class="form-control" name="IDMenu" value="<?php echo $aplicativo['IDMenu'] ?>" style="display: none"> -->
+                        <input type="text" class="form-control" name="nomeAplicativo" value="<?php echo $aplicativo['nomeAplicativo'] ?>">
+                        <input type="text" class="form-control" name="idAplicativo" value="<?php echo $aplicativo['idAplicativo'] ?>" style="display: none">
                     </div>
                     <div class="card-footer bg-transparent" style="text-align:right">
-                        <button type="submit" class="btn btn-sm btn-success">Excluir</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
                     </div>
                 </form>
             </div>

@@ -24,7 +24,6 @@ $aplicativos = buscaAplicativos();
                 <thead>
                     <tr>
                         <th>Aplicativo</th>
-                        <th>nomeAplicativo</th>
                         <th>Imagem</th>
                         <th>Ação</th>
 
@@ -35,12 +34,14 @@ $aplicativos = buscaAplicativos();
                 foreach ($aplicativos as $aplicativo) {
                 ?>
                     <tr>
-                        <td><?php echo $aplicativo['aplicativo'] ?></td>
                         <td><?php echo $aplicativo['nomeAplicativo'] ?></td>
-                        <td><?php echo $aplicativo['imgAplicativo'] ?></td>
+                        <!-- <td><?php echo $aplicativo['imgAplicativo'] ?></td> -->
+
+                        <td><img height="50" src="<?php echo $aplicativo['pathImg'];?>" alt=""></td> 
+
                         <td>
-                            <a class="btn btn-primary btn-sm" href="aplicativo_alterar.php?aplicativo=<?php echo $aplicativo['aplicativo'] ?>" role="button">Editar</a>
-                            <a class="btn btn-danger btn-sm" href="aplicativo_excluir.php?aplicativo=<?php echo $aplicativo['aplicativo'] ?>" role="button">Excluir</a>
+                            <a class="btn btn-primary btn-sm" href="aplicativo_alterar.php?idAplicativo=<?php echo $aplicativo['idAplicativo'] ?>" role="button">Editar</a>
+                            <a class="btn btn-danger btn-sm" href="aplicativo_excluir.php?idAplicativo=<?php echo $aplicativo['idAplicativo'] ?>" role="button">Excluir</a>
                         </td>
                     </tr>
                 <?php } ?>

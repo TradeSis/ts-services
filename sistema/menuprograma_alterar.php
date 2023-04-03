@@ -2,9 +2,11 @@
 
 include_once('../head.php');
 include_once('../database/menuprograma.php');
+include_once('../database/menu.php');
+include_once('../database/aplicativo.php');
 
-
-
+$menus = buscaMenu();
+$aplicativos = buscaAplicativos();
 $menuProgr = buscaMenuProgramas($_GET['progrNome']);
 //echo json_encode($menuProgr);
 ?>
@@ -27,15 +29,40 @@ $menuProgr = buscaMenuProgramas($_GET['progrNome']);
                 <form action="../database/menuprograma.php?operacao=alterar" method="post">
                     <div class="form-group" style="margin-top:10px">
 
-                        <input type="text" name="IDMenu" class="form-control"  value="<?php echo $menuProgr['IDMenu'] ?>">
+                    <label>Menu</label>
+                      
+                            <select class="form-control" name="IDMenu" autocomplete="off">
+                                <option value="<?php echo $menuProgr['IDMenu'] ?>"><?php echo $menuProgr['nomeMenu'] ?></option>
+                                        <?php
+                                        foreach ($menus as $menu) {
+                                        ?>
+                                            <option value="<?php echo $menu['IDMenu'] ?>"><?php echo $menu['nomeMenu'] ?></option>
+                                        <?php } ?>
+                            </select>
+
+                        <!-- <input type="text" name="IDMenu" class="form-control"  value="<?php echo $menuProgr['IDMenu'] ?>"style="display: none"> -->
                         <label>Nome</label>
-                        <input type="text" name="progrNome" class="form-control"  value="<?php echo $menuProgr['progrNome'] ?>"style="display: none">
+                        <input type="text" name="progrNome" class="form-control"  value="<?php echo $menuProgr['progrNome'] ?>">
+
+                        <!-- <label>Aplicativo</label>
+                        <input type="text" name="aplicativo" class="form-control"  value="<?php echo $menuProgr['aplicativo'] ?>">  -->  
+
                         <label>Aplicativo</label>
-                        <input type="text" name="aplicativo" class="form-control"  value="<?php echo $menuProgr['aplicativo'] ?>">   
+                      
+                        <select class="form-control" name="idAplicativo" autocomplete="off">
+                            <option value="<?php echo $menuProgr['idAplicativo'] ?>"><?php echo $menuProgr['nomeAplicativo'] ?></option>
+                                    <?php
+                                    foreach ($aplicativos as $aplicativo) {
+                                    ?>
+                                        <option value="<?php echo $aplicativo['idAplicativo'] ?>"><?php echo $aplicativo['nomeAplicativo'] ?></option>
+                                    <?php } ?>
+                        </select>
+
+
                         <label>link</label>
                         <input type="text" name="progrLink" class="form-control"  value="<?php echo $menuProgr['progrLink'] ?>">
                         <label>Nivel</label>
-                        <input type="text" name="nivelMenu" class="form-control"  value="<?php echo $menuProgr['nivelMenu'] ?>"> 
+                        <input type="number" name="nivelMenu" class="form-control"  value="<?php echo $menuProgr['nivelMenu'] ?>"> 
 
                         
                     </div>

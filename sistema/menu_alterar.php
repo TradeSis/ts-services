@@ -2,8 +2,9 @@
 
 include_once('../head.php');
 include_once('../database/menu.php');
+include_once('../database/aplicativo.php');
 
-
+$aplicativos = buscaAplicativos();
 
 $menu = buscaMenu($_GET['IDMenu']);
 //echo json_encode($menu);
@@ -30,9 +31,17 @@ $menu = buscaMenu($_GET['IDMenu']);
                         <input type="text" class="form-control" name="nomeMenu" value="<?php echo $menu['nomeMenu'] ?>">
                         <input type="text" class="form-control" name="IDMenu" value="<?php echo $menu['IDMenu'] ?>" style="display: none">
 
-                            <label>Aplicativo</label>
-                            <input type="text" class="form-control" name="aplicativo" value="<?php echo $menu['aplicativo'] ?>">
+                            <!-- <label>Aplicativo</label>
+                            <input type="text" class="form-control" name="aplicativo" value="<?php echo $menu['aplicativo'] ?>"> -->
                         
+                            <label>Aplicativo</label>
+                            <select class="form-control" name="idAplicativo">
+                                <?php
+                                    foreach ($aplicativos as $aplicativo) {
+                                ?>
+                                <option value="<?php echo $aplicativo['idAplicativo'] ?>"><?php echo $aplicativo['nomeAplicativo']  ?></option>
+                                <?php  } ?>
+                            </select>
 
                         
                             <label>Nivel</label>

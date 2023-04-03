@@ -3,14 +3,14 @@
 
 include_once('../conexao.php');
 
-function buscaAplicativos($aplicativo=null)
+function buscaAplicativos($idAplicativo=null)
 {
 
 	$app = array();
 	//echo json_encode($aplicativo);
 	//return;	
 	$apiEntrada = array(
-		'aplicativo' => $aplicativo,
+		'idAplicativo' => $idAplicativo,
 	);
 	
 	/* echo "-ENTRADA->".json_encode($apiEntrada)."\n";
@@ -26,10 +26,26 @@ if (isset($_GET['operacao'])) {
 	$operacao = $_GET['operacao'];
 
 	if ($operacao == "inserir") {
+
+
+		$img = $_FILES['imgAplicativo'];
+		
+		$pasta = "../img/imgAplicativo/";
+		$imgAplicativo = $img['name'];
+		$novoNomeImg = uniqid(); //gerar nome aleatorio para ser guardado na pasta 
+		$extensao = strtolower(pathinfo($imgAplicativo,PATHINFO_EXTENSION)); //extensao do arquivo
+
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png")
+        die("Tipo de aquivo não aceito");
+
+		$pathImg = $pasta . $novoNomeImg . "." . $extensao;
+		move_uploaded_file($img["tmp_name"],$pathImg);
+
+
 		$apiEntrada = array(
-			'aplicativo' => $_POST['aplicativo'],
 			'nomeAplicativo' => $_POST['nomeAplicativo'],
-			'imgAplicativo' => $_POST['imgAplicativo'],
+			'imgAplicativo' => $imgAplicativo,
+			'pathImg'=> $pathImg,
 			
 		);
 		/*  echo json_encode($_POST);
@@ -41,11 +57,25 @@ if (isset($_GET['operacao'])) {
 	}
 
     if ($operacao == "alterar") {
+
+		$img = $_FILES['imgAplicativo'];
+		
+		$pasta = "../img/imgAplicativo/";
+		$imgAplicativo = $img['name'];
+		$novoNomeImg = uniqid(); //gerar nome aleatorio para ser guardado na pasta 
+		$extensao = strtolower(pathinfo($imgAplicativo,PATHINFO_EXTENSION)); //extensao do arquivo
+
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png")
+        die("Tipo de aquivo não aceito");
+
+		$pathImg = $pasta . $novoNomeImg . "." . $extensao;
+		move_uploaded_file($img["tmp_name"],$pathImg);
+		
 		$apiEntrada = array(
-			'aplicativo' => $_POST['aplicativo'],
+			'idAplicativo' => $_POST['idAplicativo'],
 			'nomeAplicativo' => $_POST['nomeAplicativo'],
 			'imgAplicativo' => $_POST['imgAplicativo'],
-			
+			'pathImg'=> $pathImg,
 		);
 
 		$app = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'POST');
@@ -54,7 +84,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "excluir") {
 		$apiEntrada = array(
-			'aplicativo' => $_POST['aplicativo']		
+			'idAplicativo' => $_POST['idAplicativo']		
 		);
 
 		$app = chamaAPI(null, '/api/services/aplicativo', json_encode($apiEntrada), 'DELETE');

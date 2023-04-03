@@ -29,7 +29,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'IDMenu' => $_POST['IDMenu'],
 			'progrNome' => $_POST['progrNome'],
-            'aplicativo' => $_POST['aplicativo'],
+            'idAplicativo' => $_POST['idAplicativo'],
             'progrLink' => $_POST['progrLink'],
             'nivelMenu' => $_POST['nivelMenu'],		
 		);
@@ -42,7 +42,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'IDMenu' => $_POST['IDMenu'],
 			'progrNome' => $_POST['progrNome'],
-            'aplicativo' => $_POST['aplicativo'],
+            'idAplicativo' => $_POST['idAplicativo'],
             'progrLink' => $_POST['progrLink'],
             'nivelMenu' => $_POST['nivelMenu'],
 			

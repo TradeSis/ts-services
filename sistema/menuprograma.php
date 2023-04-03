@@ -2,8 +2,12 @@
 
 include_once('../head.php');
 include_once ('../database/menuprograma.php');
+include_once('../database/menu.php');
+include_once('../database/aplicativo.php');
 
 $menuProgramas = buscaMenuProgramas();
+$menus= buscaMenu();
+$aplicativos= buscaAplicativos();
 //echo json_encode($menuProgr);
 ?>
 
@@ -23,11 +27,11 @@ $menuProgramas = buscaMenuProgramas();
             <table class="table">
                 <thead>
                     <tr>
-                        <th>IDMenu</th>
-                        <th>progrNome</th>
+                        <th>Menu</th>
+                        <th>Nome</th>
                         <th>Aplicativo</th>
-                        <th>progrLink</th>
-                        <th>nivelMenu</th>
+                        <th>Link</th>
+                        <th>Nivel</th>
                         <th>Ação</th>
 
                     </tr>
@@ -37,9 +41,9 @@ $menuProgramas = buscaMenuProgramas();
                 foreach ($menuProgramas as $menuProgr) {
                 ?>
                     <tr>
-                        <td><?php echo $menuProgr['IDMenu'] ?></td>
+                        <td><?php echo $menuProgr['nomeMenu'] ?></td>
                         <td><?php echo $menuProgr['progrNome'] ?></td>
-                        <td><?php echo $menuProgr['aplicativo'] ?></td>
+                        <td><?php echo $menuProgr['nomeAplicativo'] ?></td>
                         <td><?php echo $menuProgr['progrLink'] ?></td>
                         <td><?php echo $menuProgr['nivelMenu'] ?></td>
                         <td>

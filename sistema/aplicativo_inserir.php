@@ -5,69 +5,49 @@ include_once('../head.php');
 ?>
 
 <style>
-    .custom-file-upload {
-        /* border: 1px solid #ccc; */
-        display: inline-block;
-        padding: 6px 12px;
-        cursor: pointer;
-        color: #fff;
-    }
-
-    ::-webkit-file-upload-button {
-        opacity: 0;
-
-        padding: 0.5em;
-    }
-
-    .iconeImg {
-        font-size: 50px;
-        color: #000;
-        border: 1px solid #000;
-        border-radius: 25px;
-    }
-
     #imgAplicativo {
-  display: none;
-}
+        display: none;
+    }
 
-.picture {
-  width: 120px;
-  height: 120px;
-  background: #ddd;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  color: #aaa;
-  border: 1px dashed currentcolor;
-  border-radius: 100px;
-  cursor: pointer;
-  font-family: sans-serif;
-  transition: color 300ms ease-in-out, background 300ms ease-in-out;
-  outline: none;
-  overflow: hidden;
-}
+    .picture {
+        width: 100px;
+        height: 100px;
+        background: #ddd;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        color: #aaa;
+        border: 1px dashed currentcolor;
+        border-radius: 100px;
+        cursor: pointer;
+        font-family: sans-serif;
+        transition: color 300ms ease-in-out, background 300ms ease-in-out;
+        outline: none;
+        overflow: hidden;
+    }
 
-.picture:hover {
-  color: #777;
-  background: #ccc;
-}
+    .picture:hover {
+        color: #777;
+        background: #ccc;
+    }
 
-.picture:active {
-  border-color: turquoise;
-  color: turquoise;
-  background: #eee;
-}
+    .picture:active {
+        border-color: turquoise;
+        color: turquoise;
+        background: #eee;
+    }
 
-.picture:focus {
-  color: #777;
-  background: #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
+    .picture:focus {
+        color: #777;
+        background: #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
 
-.picture__img {
-  max-width: 100%;
-}
+    .picture__img {
+        height: 100px;
+        border-radius: 50%;
+    }
 </style>
 
 <body class="bg-transparent">
@@ -89,12 +69,18 @@ include_once('../head.php');
                 <form action="../database/aplicativo.php?operacao=inserir" method="post" enctype="multipart/form-data">
 
                     <div class="form-group" style="margin-top:10px">
+
                         <label>Aplicativo</label>
-                        <input type="text" name="aplicativo" class="form-control" placeholder="Digite o nome do Cliente" autocomplete="off">
-                        <label>Nome Aplicativo</label>
-                        <input type="text" name="nomeAplicativo" class="form-control" placeholder="Digite o nome do Cliente" autocomplete="off">
+                        <input type="text" name="nomeAplicativo" class="form-control" autocomplete="off">
+                        <!--  <label>Imagem</label>
+                        <input type="text" name="imgAplicativo" class="form-control" autocomplete="off"> -->
                         <label>Imagem</label>
-                        <input type="text" name="imgAplicativo" class="form-control" placeholder="Digite o nome do Cliente" autocomplete="off">    
+                        <label class="picture" for="imgAplicativo" tabIndex="0">
+                            <span class="picture__image"></span>
+                        </label>
+
+                        <input type="file" name="imgAplicativo" id="imgAplicativo">
+
                     </div>
                     <div class="card-footer bg-transparent" style="text-align:right">
 
@@ -105,6 +91,64 @@ include_once('../head.php');
         </div>
     </div>
 
+
+
+
+
+    <script>
+
+        $(document).ready(function() {
+            $("#form").submit(function() {
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: "../database/aplicativo.php?operacao=inserir",
+                    type: 'POST',
+                    data: formData,
+                    success: refreshPage(),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+
+                });
+
+            });
+
+            function refreshPage() {
+                window.location.reload();
+            }
+        });
+
+        //Carregar a imagem na tela
+        const inputFile = document.querySelector("#imgAplicativo");
+        const pictureImage = document.querySelector(".picture__image");
+        const pictureImageTxt = "Carregar imagem";
+        pictureImage.innerHTML = pictureImageTxt;
+
+        inputFile.addEventListener("change", function(e) {
+            const inputTarget = e.target;
+            const file = inputTarget.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.addEventListener("load", function(e) {
+                    const readerTarget = e.target;
+
+                    const img = document.createElement("img");
+                    img.src = readerTarget.result;
+                    img.classList.add("picture__img");
+
+                    pictureImage.innerHTML = "";
+                    pictureImage.appendChild(img);
+                });
+
+                reader.readAsDataURL(file);
+            } else {
+                pictureImage.innerHTML = pictureImageTxt;
+            }
+        });
+    </script>
 
 </body>
 

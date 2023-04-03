@@ -2,6 +2,11 @@
 
 
 include_once('../head.php');
+include_once('../database/menu.php');
+include_once('../database/aplicativo.php');
+
+$menus= buscaMenu();
+$aplicativos= buscaAplicativos();
 ?>
 
 
@@ -24,16 +29,30 @@ include_once('../head.php');
                 <form action="../database/menuprograma.php?operacao=inserir" method="post">
 
                     <div class="form-group" style="margin-top:10px">
-                        <label>IDMenu</label>
-                        <input type="text" name="IDMenu" class="form-control" autocomplete="off">
+                    <label>Menu</label>
+                        <select class="form-control" name="IDMenu">
+                            <?php
+                                foreach ($menus as $menu) {
+                            ?>
+                            <option value="<?php echo $menu['IDMenu'] ?>"><?php echo $menu['nomeMenu']  ?></option>
+                            <?php  } ?>
+                        </select>
                         <label>Nome</label>
                         <input type="text" name="progrNome" class="form-control" autocomplete="off">
+
                         <label>Aplicativo</label>
-                        <input type="text" name="aplicativo" class="form-control" autocomplete="off">   
+                        <select class="form-control" name="idAplicativo">
+                            <?php
+                                foreach ($aplicativos as $aplicativo) {
+                            ?>
+                            <option value="<?php echo $aplicativo['idAplicativo'] ?>"><?php echo $aplicativo['nomeAplicativo']  ?></option>
+                            <?php  } ?>
+                        </select> 
+
                         <label>link</label>
                         <input type="text" name="progrLink" class="form-control" autocomplete="off">
                         <label>Nivel</label>
-                        <input type="text" name="nivelMenu" class="form-control" autocomplete="off"> 
+                        <input type="number" name="nivelMenu" class="form-control" autocomplete="off"> 
                     </div>
                     <div class="card-footer bg-transparent" style="text-align:right">
 

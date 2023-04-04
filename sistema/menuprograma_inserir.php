@@ -51,7 +51,7 @@ $aplicativos= buscaAplicativos();
 
                         <label>link</label>
                         <input type="text" name="progrLink" class="form-control" autocomplete="off">
-                        <label>Nivel</label>
+                        <label>Nivel Menu</label>
                         <input type="number" name="nivelMenu" class="form-control" autocomplete="off"> 
                     </div>
                     <div class="card-footer bg-transparent" style="text-align:right">

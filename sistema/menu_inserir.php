@@ -42,7 +42,7 @@ $aplicativos= buscaAplicativos();
                             <?php  } ?>
                         </select>
 
-                        <label>Nível</label>
+                        <label>Nível Menu</label>
                         <input type="number" name="nivelMenu" class="form-control"  autocomplete="off">    
                     </div>
                     <div class="card-footer bg-transparent" style="text-align:right">

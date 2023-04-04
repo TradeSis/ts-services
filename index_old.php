@@ -3,10 +3,11 @@
 //Lucas 13032023 - criado versão 2 do menu.
 
 include_once 'head.php';
-include_once 'database/montaMenu.php';
+include_once 'conexao.php';
+include_once('database/menuGeral.php');
 
-$menus = buscaMenuGeral();
-echo json_encode($menus);
+$menuprogramas = buscaMenuGeral();
+$menus = buscaMenuGeral2();
 ?>
 
 
@@ -32,7 +33,7 @@ echo json_encode($menus);
             </div>
 
             <?php
-                if ($_SESSION['idCliente'] == NULL) { ?>
+            if ($_SESSION['idCliente'] == NULL) { ?>
                 <nav class=" col-md navbar navbar-expand  topbar me-4 ">
                     <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
                         <li class="nav-item dropdown ">
@@ -71,33 +72,33 @@ echo json_encode($menus);
 
                     </ul>
                 </nav>
-                <?php }
-                if ($_SESSION['idCliente']  >= 1) { ?>
-                    <nav class=" col-md navbar navbar-expand  topbar me-4 ">
-                        <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
-                            <li class="nav-item dropdown">
-                                <a src="demandas/" href="#" class="nav-link Menu " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="fs-5 text">Demandas</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ml-4" style="margin-right:30px">
-                            <li class="nav-item dropdown font-weight-bold ml-4" style="color:white">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color:white;">
-                                    <span class="fs-1 text">
-                                        <?php echo $logado ?>
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu mr-2" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>" src=""><i class="bi bi-person-circle"></i>&#32;<samp>Perfil</samp></a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-                                </div>
-                            </li>
-    
-                        </ul>
-                    </nav>                            
-                <?php } ?>
-                 
+            <?php }
+            if ($_SESSION['idCliente']  >= 1) { ?>
+                <nav class=" col-md navbar navbar-expand  topbar me-4 ">
+                    <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
+                        <li class="nav-item dropdown">
+                            <a src="demandas/" href="#" class="nav-link Menu " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fs-5 text">Demandas</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-4" style="margin-right:30px">
+                        <li class="nav-item dropdown font-weight-bold ml-4" style="color:white">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color:white;">
+                                <span class="fs-1 text">
+                                    <?php echo $logado ?>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu mr-2" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>" src=""><i class="bi bi-person-circle"></i>&#32;<samp>Perfil</samp></a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </nav>
+            <?php } ?>
+
             <!-- 
             <div class="col dropdown align-items-right mt-2 font-weight-bold"  style="text-align:right">
                 <a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -109,70 +110,114 @@ echo json_encode($menus);
 
         </div>
         <?php
-            if ($_SESSION['idCliente'] == NULL) { ?>
+        if ($_SESSION['idCliente'] == NULL) { ?>
             <nav id="menuLateral" class="menuLateral">
                 <div class="titulo"><span></span></div>
                 <ul id="novoMenu2">
-                    <li><a href="#" src="contratos/">Contratos</a></li>
+                    <!--  <li><a href="#" src="contratos/">Contratos</a></li>
                     <li><a href="#" src="demandas/">Demandas</a></li>
                     <li><a href="#" src="demandas/tarefas.php">Tarefas</a></li>
-
-                    <?php
-                    foreach ($menus as $menu) {
-                    ?>
-                        <li><a href="#" class="secao1"><?php echo $menu['nomeMenu'] ?><span class="material-symbols-outlined seta1">arrow_right</span></a>
-                    <?php } ?>
-
+                    <li><a href="#" class="secao1">Cadastros<span class="material-symbols-outlined seta1">arrow_right</span></a>
                         <ul class="itensSecao1">
-                            <?php
-                            foreach ($menus['menuPrograma'] as $menu) {
-                            ?>
-                            <li><a href="#" src="<?php echo $menu['progrLink'] ?>"><?php echo $menu['progrNome'] ?></a></li>
-                            <?php } ?>
-                            
                             <li><a href="#" src="cadastros/tipostatus.php">Tipo Status</a></li>
                             <li><a href="#" src="cadastros/tipoocorrencia.php">Tipo Ocorrências</a></li>
                             <li><a href="#" src="cadastros/clientes.php">Clientes</a></li>
                             <li><a href="#" src="usuario/usuario.php">Usuarios</a></li>
                             <li><a href="#" src="cadastros/contratoStatus.php">Contrato Status</a></li>
                         </ul>
+                    </li> -->
+
+                    
+
+                    <li>  
+                            <a href="#" class="secao1">Cadastros<span class="material-symbols-outlined seta1">arrow_right</span></a>
+                            <ul class="itensSecao1">
+                                <li>
+                                    <?php
+                                    foreach ($menuprogramas as $menuprograma) {
+                                    ?>
+                                        <a href="#" src="<?php echo $menuprograma['progrLink'] ?>"><?php echo $menuprograma['progrNome'] ?></a>
+                                    <?php } ?>
+
+                                </li>
+
+                            </ul>
                     </li>
 
-                  <!--   <li><a href="#" class="secao2">Outros<span class="material-symbols-outlined seta2">arrow_right</span></a>
-                        <ul class="itensSecao2">
-                            <li><a href="#" src="http://10.2.0.44/bsweb/erp/etiqueta/normalv2.html">Etiquetas</a>
-                            <li><a href="#" src="cadastros/relatorios.php">Relatórios</a>
-                            <li><a href="#" src="cadastros/seguros_parametros.php">Seguros</a>
-                        </ul>
-                    </li> -->
+                    <li>  
+                            <a href="#" class="secao2">Operações<span class="material-symbols-outlined seta2">arrow_right</span></a>
+                            <ul class="itensSecao2">
+                                <li>
+                                    <?php
+                                    foreach ($menus as $menu) {
+                                    ?>
+                                        <a href="#" src="http://10.2.0.44/bsweb/erp/etiqueta/normalv2.html"><?php echo $menu['progrNome'] ?></a>
+                                    <?php } ?>
+
+                                </li>
+
+                            </ul>
+                    </li>
+
+
+                   <!-- <li>
+                        <?php
+                        foreach ($menus as $menu) {
+                        ?>
+                            <a href="#" class="secao2"><?php echo $menu['nomeMenu'] ?><span class="material-symbols-outlined seta2">arrow_right</span></a>
+                            <ul class="itensSecao2">
+                                <li>
+                                    <?php
+                                    foreach ($menus as $menu) {
+                                    ?>
+                                        <a href="#" src="http://10.2.0.44/bsweb/erp/etiqueta/normalv2.html"><?php echo $menu['progrNome'] ?></a>
+                                    <?php } ?>
+
+                                </li>
+
+                            </ul>
+                        <?php } ?>
+
+                    </li> --> 
+ 
+
+
+
+
+
+
+
+
+
+
 
                     <li>
                         <a class="logout" href="#" data-toggle="modal" data-target="#logoutModal"><span class="material-symbols-outlined">logout</span></a>
                     </li>
                 </ul>
             </nav>
-            <?php }
-            if ($_SESSION['idCliente'] >= 1) { ?>
-                <nav id="menuLateral" class="menuLateral">
-                    <div class="titulo"><span></span></div>
-                    <ul id="novoMenu2">
-                        <li><a href="#" src="demandas/">Demandas</a></li>
-    
-                        <li><a href="#" class="secao2">Outros<span class="material-symbols-outlined seta2">arrow_right</span></a>
-                            <ul class="itensSecao2">
-                                <li><a href="#" src="http://10.2.0.44/bsweb/erp/etiqueta/normalv2.html">Etiquetas</a>
-                                <li><a href="#" src="cadastros/relatorios.php">Relatórios</a>
-                                <li><a href="#" src="cadastros/seguros_parametros.php">Seguros</a>
-                            </ul>
-                        </li>
-    
-                        <li>
-                            <a class="logout" href="#" data-toggle="modal" data-target="#logoutModal"><span class="material-symbols-outlined">logout</span></a>
-                        </li>
-                    </ul>
-                </nav>
+        <?php }
+        if ($_SESSION['idCliente'] >= 1) { ?>
+            <nav id="menuLateral" class="menuLateral">
+                <div class="titulo"><span></span></div>
+                <ul id="novoMenu2">
+                    <li><a href="#" src="demandas/">Demandas</a></li>
 
-            <?php } ?>
+                    <li><a href="#" class="secao2">Outros<span class="material-symbols-outlined seta2">arrow_right</span></a>
+                        <ul class="itensSecao2">
+                            <li><a href="#" src="http://10.2.0.44/bsweb/erp/etiqueta/normalv2.html">Etiquetas</a>
+                            <li><a href="#" src="cadastros/relatorios.php">Relatórios</a>
+                            <li><a href="#" src="cadastros/seguros_parametros.php">Seguros</a>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="logout" href="#" data-toggle="modal" data-target="#logoutModal"><span class="material-symbols-outlined">logout</span></a>
+                    </li>
+                </ul>
+            </nav>
+
+        <?php } ?>
 
         <nav id="menusecundario" class="menusecundario">
             <div class="titulo"><span>Cadastros</span></div>

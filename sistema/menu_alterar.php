@@ -44,7 +44,7 @@ $menu = buscaMenu($_GET['IDMenu']);
                             </select>
 
                         
-                            <label>Nivel</label>
+                            <label>Nivel Menu</label>
                             <input type="number" class="form-control" name="nivelMenu" value="<?php echo $menu['nivelMenu'] ?>">
                         
 

@@ -27,7 +27,7 @@ $aplicativos = buscaAplicativos();
                     <tr>
                         <th>Menu</th>
                         <th>Aplicativo</th>
-                        <th>Nivel</th>
+                        <th>Nivel Menu</th>
                         <th>Ação</th>
 
                     </tr>

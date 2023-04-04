@@ -27,11 +27,11 @@ $aplicativos= buscaAplicativos();
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Menu</th>
                         <th>Nome</th>
+                        <th>Menu</th>
                         <th>Aplicativo</th>
                         <th>Link</th>
-                        <th>Nivel</th>
+                        <th>Nivel Menu</th>
                         <th>Ação</th>
 
                     </tr>
@@ -41,8 +41,8 @@ $aplicativos= buscaAplicativos();
                 foreach ($menuProgramas as $menuProgr) {
                 ?>
                     <tr>
-                        <td><?php echo $menuProgr['nomeMenu'] ?></td>
                         <td><?php echo $menuProgr['progrNome'] ?></td>
+                        <td><?php echo $menuProgr['nomeMenu'] ?></td>                       
                         <td><?php echo $menuProgr['nomeAplicativo'] ?></td>
                         <td><?php echo $menuProgr['progrLink'] ?></td>
                         <td><?php echo $menuProgr['nivelMenu'] ?></td>

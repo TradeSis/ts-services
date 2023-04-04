@@ -29,6 +29,10 @@ $menuProgr = buscaMenuProgramas($_GET['progrNome']);
                 <form action="../database/menuprograma.php?operacao=alterar" method="post">
                     <div class="form-group" style="margin-top:10px">
 
+                    <label>Nome</label>
+                        <input type="text" name="progrNome" class="form-control"  value="<?php echo $menuProgr['progrNome'] ?>">
+                        <!-- <input type="text" class="form-control" name="" value="" style="display: none"> -->
+
                     <label>Menu</label>
                       
                             <select class="form-control" name="IDMenu" autocomplete="off">
@@ -40,12 +44,6 @@ $menuProgr = buscaMenuProgramas($_GET['progrNome']);
                                         <?php } ?>
                             </select>
 
-                        <!-- <input type="text" name="IDMenu" class="form-control"  value="<?php echo $menuProgr['IDMenu'] ?>"style="display: none"> -->
-                        <label>Nome</label>
-                        <input type="text" name="progrNome" class="form-control"  value="<?php echo $menuProgr['progrNome'] ?>">
-
-                        <!-- <label>Aplicativo</label>
-                        <input type="text" name="aplicativo" class="form-control"  value="<?php echo $menuProgr['aplicativo'] ?>">  -->  
 
                         <label>Aplicativo</label>
                       
@@ -61,7 +59,7 @@ $menuProgr = buscaMenuProgramas($_GET['progrNome']);
 
                         <label>link</label>
                         <input type="text" name="progrLink" class="form-control"  value="<?php echo $menuProgr['progrLink'] ?>">
-                        <label>Nivel</label>
+                        <label>Nivel Menu</label>
                         <input type="number" name="nivelMenu" class="form-control"  value="<?php echo $menuProgr['nivelMenu'] ?>"> 
 
                         

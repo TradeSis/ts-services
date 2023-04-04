@@ -5,9 +5,7 @@
 include_once 'head.php';
 include_once 'conexao.php';
 
-include_once ('database/menu.php');
 
-$menus = buscaMenu();
 ?>
 
 
@@ -134,24 +132,6 @@ $menus = buscaMenu();
                             <li><a href="#" src="cadastros/seguros_parametros.php">Seguros</a>
                         </ul>
                     </li>
-
-
-                    <li>
-                        <?php
-                    foreach ($menus as $menu) {
-                    ?>
-                            <a style="color:#fff"><?php echo $menu['nomeMenu'] ?></a>                       
-                    <?php } ?>
-
-                    </li>
-              
-
-                   
-                
-
-
-            
-
 
                     <li>
                         <a class="logout" href="#" data-toggle="modal" data-target="#logoutModal"><span class="material-symbols-outlined">logout</span></a>

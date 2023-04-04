@@ -86,8 +86,9 @@ $aplicativo = buscaAplicativos($_GET['idAplicativo']);
 
                         <input type="file" name="imgAplicativo" id="imgAplicativo" value="<?php echo $aplicativo['imgAplicativo'] ?>"> 
 
-                        <label>Imagem atual</label>
-                        <img height="50" src="<?php echo $aplicativo['pathImg'];?>" alt="">
+
+                        <!-- <label>Imagem atual</label>
+                        <img height="50" src="<?php echo $aplicativo['pathImg'];?>" alt=""> -->
                         
 
                         
@@ -106,7 +107,7 @@ $aplicativo = buscaAplicativos($_GET['idAplicativo']);
 const inputFile = document.querySelector("#imgAplicativo");
 const pictureImage = document.querySelector(".picture__image");
 const pictureImageTxt = "Carregar imagem";
-pictureImage.innerHTML = pictureImageTxt;
+pictureImage.innerHTML = "<img src='<?php echo $aplicativo['pathImg'];?>'>";
 
 inputFile.addEventListener("change", function(e) {
     const inputTarget = e.target;
@@ -128,7 +129,7 @@ inputFile.addEventListener("change", function(e) {
 
         reader.readAsDataURL(file);
     } else {
-        pictureImage.innerHTML = pictureImageTxt;
+        pictureImage.innerHTML = "";
     }
 });
 </script>

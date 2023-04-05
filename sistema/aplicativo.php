@@ -37,7 +37,7 @@ $aplicativos = buscaAplicativos();
                         <td><?php echo $aplicativo['nomeAplicativo'] ?></td>
                         <!-- <td><?php echo $aplicativo['imgAplicativo'] ?></td> -->
 
-                        <td><img height="50" src="<?php echo $aplicativo['pathImg'];?>" alt=""></td> 
+                        <td><img height="50" width="100" src="<?php echo $aplicativo['pathImg'];?>" alt=""></td> 
 
                         <td>
                             <a class="btn btn-primary btn-sm" href="aplicativo_alterar.php?idAplicativo=<?php echo $aplicativo['idAplicativo'] ?>" role="button">Editar</a>

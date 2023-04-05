@@ -22,6 +22,7 @@ $aplicativos = buscaAplicativos();
                     </div>
                 </div>
             </div>
+            
             <table class="table">
                 <thead>
                     <tr>

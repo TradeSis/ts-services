@@ -1,4 +1,5 @@
 <?php
+// Lucas 30032023 - modificado operação comentar para ser inserido anexos.
 // gabriel 220323 11:19 - adicionado operação retornar demanda
 // Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
 // Lucas 20032023 adicionado operação filtrar
@@ -102,21 +103,12 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "comentar") {
  
 		$anexo = $_FILES['nomeAnexo'];
-		
 
-		/* if ($anexo['error']) // se gerar algum erro no upload
-			die("Falha ao enviar arquivo"); */
-
-		 /* if ($anexo['size'] > 3145728) //limitando tamnho do aquivo
-			die("Aquivo muito grande!! MAX: 3MB"); */      
-			
-		//2MB:2097152-3MB:3145728
-		//var_dump($_FILES['arquivo']);//inf do arquivo enviado 
 
 		$pasta = "../img/anexos/";
 		$nomeAnexo = $anexo['name'];
-		$novoNomeDoAnexo = uniqid(); //gerar nome aleatorio para ser guardado na pasta 
-		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); //extensao do arquivo
+		$novoNomeDoAnexo = uniqid(); 
+		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
 
 		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf")
         die("Tipo de aquivo não aceito");
@@ -124,19 +116,6 @@ if (isset($_GET['operacao'])) {
 		$pathAnexo = $pasta . $novoNomeDoAnexo . "." . $extensao;
 		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
 
-
-	/* 	if ($nomeAnexoInicial !== null) {
-			preg_match("/\.(png|jpg|jpeg|xlsx|xls|pdf){1}$/i", $nomeAnexoInicial["name"], $ext);
-			// Gera um nome Ãºnico para a imagem
-			if ($ext == true) {
-
-				$nomeAnexo = md5(uniqid(time())) . "." . $ext[1];
-
-				$caminho_arquivo = "../img/anexos/" . $nomeAnexo;
-
-				move_uploaded_file($nomeAnexoInicial["tmp_name"], $caminho_arquivo);
-			}
-		} */
 
 		$apiEntrada = array(
 			'nomeAnexo' => $nomeAnexo,

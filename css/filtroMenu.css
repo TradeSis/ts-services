@@ -1,0 +1,127 @@
+
+:root{
+    --nav-width: 250px;
+    --nav-left: 0px;
+    
+}
+
+
+*{
+    margin: 0;
+    padding: 0;  
+    /* font-family: sans-serif; */ 
+    /* font: 14px sans-serif; */
+}
+
+
+.Menu {
+    background-color: #1e4ac2;
+    color: #FFF;
+}
+.Menu:hover {
+    
+    color: #FFF;
+}v
+
+.diviFrame {
+    padding-left: 0px;
+  /*   transition: left 3s; */
+}
+.diviFrame.mostra {
+    padding-left: 164px;
+    
+    /* transition: right 3s; */
+}
+
+.iFrame {
+    width: 100%;
+    height: 551px;
+    overflow: hidden;
+    overflow-x: hidden;
+    border: 0px solid #000;
+    
+}
+
+.menuFiltros{
+    background-color:#d3d3d3;
+    /* background-color: #2bb81f; */ 
+    /* width: var(--nav-width); */
+    width: 180px;
+   /*  height: 100%; */
+    position: fixed;
+    /* padding-left: -50px;
+    padding-right: -5px; */
+    top: 165px;
+    left: -250px; /* menu desaparece */  
+    transition: left 1s;
+    transition: right 0.5s;
+    z-index: 2;
+    border-radius: 2%;
+   /*  margin-right: -50px; */
+}
+
+
+.menuFiltros .titulo{
+    padding: 10px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btnAbre{
+    margin-top: 8px;
+   /* position: absolute;*/
+    /* top: 10px; */ /*15px*/
+    margin-left: 30px;
+  /*  background-color:  rgba(0, 0, 0, 0.3); */
+    align-items: center;
+    color: rgb(2, 2, 2);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 20px;
+    width: 50px;
+}
+
+.btnAbre span{
+    font-size: 35px;
+}
+
+.btnAbre:hover{
+    background-color: rgba(0, 0, 0, 0.103);;
+}
+
+.btnFiltroOff{
+    margin-top: 8px;
+  left: 5px;
+  align-items: center;
+  color: rgb(2, 2, 2);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  /* margin-right: 70px; */
+  width: 50px;
+}
+
+.btnFiltroOff:hover{
+  background-color: rgba(0, 0, 0, 0.103);;
+}
+
+ 
+
+.menuFiltros.mostra{
+    left: 0px; /* menu aparece */ 
+    /*left: var(--nav-left);*/
+}
+
+.menuFiltros.esconde{
+    left: -250px; /* menu aparece */ 
+    /*left: var(--nav-left);*/
+}
+
+
+.fonteCorpo{
+    font-size: 14px;
+}

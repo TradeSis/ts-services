@@ -1,4 +1,5 @@
 <?php
+// Lucas 29032023 - alterado link do botão voltar, para redirecionar para o index.php
 // helio 01022023 altereado para include_once
 // helio 26012023 16:16
 
@@ -29,7 +30,7 @@ $usuario = buscaUsuarios($_GET['idUsuario']);
                         <h3 class="col">Alterar Usuário</h3>
                     </div>
                     <div class="col-sm" style="text-align:right">
-                        <a href="usuario.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
+                        <a href="../index.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
                     </div>
                 </div>
             </div>

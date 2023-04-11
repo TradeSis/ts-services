@@ -72,7 +72,8 @@ if (isset($_GET['operacao'])) {
 			'idTipoStatus' => $_POST['idTipoStatus'],
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
 		);
-		$demanda = chamaAPI('demanda', 'demanda', json_encode($apiEntrada), 'PUT');
+		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'PUT');
+		
 	}
 	if ($operacao == "alterar") {
 		$apiEntrada = array(
@@ -136,6 +137,7 @@ if (isset($_GET['operacao'])) {
 		$idTipoStatus = $_POST['idTipoStatus'];
 		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
 		$idUsuario = $_POST['idUsuario'];
+		$tituloDemanda = $_POST['tituloDemanda'];
 
 		if ($idCliente == "") {
 			$idCliente = null;
@@ -155,6 +157,11 @@ if (isset($_GET['operacao'])) {
 		}
 
 
+		if ($tituloDemanda == ""){
+			$tituloDemanda = null;
+		}
+		
+	
 
 		$apiEntrada = array(
 			'idDemanda' => null,
@@ -162,7 +169,7 @@ if (isset($_GET['operacao'])) {
 			'idUsuario' => $idUsuario,
 			'idTipoStatus' => $idTipoStatus,
 			'idTipoOcorrencia' => $idTipoOcorrencia,
-
+			'tituloDemanda' => $tituloDemanda
 		);
 			/* echo json_encode(($apiEntrada));
 		return */;

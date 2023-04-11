@@ -1,11 +1,17 @@
 <?php
+// Lucas 29032023 - modificado tempo da seção
 // Lucas 09032023 -  linha 5, foi adicionado parametro de tempo 
 // helio 26012023 16:16
 
 
-$lifetime=900;
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    //Definindo o prazo para a cache expirar em 60 minutos.
+    session_cache_expire(60);
+    session_start();
+  }
+/* $lifetime=900;
 session_set_cookie_params($lifetime); // 30min
-session_start();
+session_start(); */
 
 if (!isset($_SESSION['usuario']) == true) {
 	unset($_SESSION['login']);

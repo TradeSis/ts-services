@@ -1,6 +1,5 @@
 <?php
-// helio 01022023 altereado para include_once
-// helio 26012023 16:16
+//Lucas 04042023 criado
 
 include_once('../head.php');
 include_once('../database/aplicativo.php');

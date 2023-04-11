@@ -1,4 +1,5 @@
 <?php
+//Lucas 04042023 criado
 
 include_once('../head.php');
 include_once ('../database/aplicativo.php');

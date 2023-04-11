@@ -6,13 +6,13 @@
 include_once 'head.php';
 include_once 'database/montaMenu.php';
 
-$menus = buscaMenuGeral();
+$menus = buscaMontaMenu();
 //echo json_encode($menus);
 ?>
 
 
 <body>
-    <link rel="stylesheet" type="text/css" href="menu.css">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 
@@ -29,7 +29,7 @@ $menus = buscaMenuGeral();
 
 
             <div class="col-sm-1">
-                <img src="img/brand/white.png" width="130">
+            <a href="painel2.php"><img src="img/brand/white.png" width="150"></a>
             </div>
 
             <?php
@@ -138,11 +138,9 @@ $menus = buscaMenuGeral();
                     </li>
                     <?php
                     $contador = $contador + 1;
+                    // echo $contador;
                      } ?>
 
-                    <li>
-                        <a class="logout" href="#" data-toggle="modal" data-target="#logoutModal"><span class="material-symbols-outlined">logout</span></a>
-                    </li>
                 </ul>
             </nav>
             <?php }
@@ -160,9 +158,6 @@ $menus = buscaMenuGeral();
                             </ul>
                         </li>
     
-                        <li>
-                            <a class="logout" href="#" data-toggle="modal" data-target="#logoutModal"><span class="material-symbols-outlined">logout</span></a>
-                        </li>
                     </ul>
                 </nav>
 

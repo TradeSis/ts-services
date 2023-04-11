@@ -1,8 +1,8 @@
 <?php
-
+//Lucas 06042023 criado
 include_once('conexao.php');
 
-function buscaMenuGeral($idAplicativo=null)
+function buscaMontaMenu($idAplicativo=null)
 {
 	
 	$menu = array();

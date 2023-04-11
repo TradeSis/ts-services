@@ -1,4 +1,5 @@
 <?php
+//Lucas 04042023 criado
 
 include_once('../head.php');
 include_once ('../database/menuprograma.php');
@@ -47,8 +48,8 @@ $aplicativos= buscaAplicativos();
                         <td><?php echo $menuProgr['progrLink'] ?></td>
                         <td><?php echo $menuProgr['nivelMenu'] ?></td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="menuprograma_alterar.php?progrNome=<?php echo $menuProgr['progrNome'] ?>" role="button">Editar</a>
-                            <a class="btn btn-danger btn-sm" href="menuprograma_excluir.php?progrNome=<?php echo $menuProgr['progrNome'] ?>" role="button">Excluir</a>
+                            <a class="btn btn-primary btn-sm" href="menuprograma_alterar.php?idMenuPrograma=<?php echo $menuProgr['idMenuPrograma'] ?>" role="button">Editar</a>
+                            <a class="btn btn-danger btn-sm" href="menuprograma_excluir.php?idMenuPrograma=<?php echo $menuProgr['idMenuPrograma'] ?>" role="button">Excluir</a>
                         </td>
                     </tr>
                 <?php } ?>

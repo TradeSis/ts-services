@@ -97,85 +97,7 @@
     display: none; /* sumir subimenus */
 }
 
-.menuLateral ul .itensSecao1.mostra{ /* mostra ao clicar usando a classe .mostra e JS subimenus */
-    display: block;
-}
 
-.menuLateral ul .itensSecao2.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao3.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao4.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao5.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao6.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao7.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao8.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao9.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao10.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao11.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao12.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao13.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao14.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao15.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao16.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao17.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao18.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao19.mostra{ 
-    display: block;
-}
-
-.menuLateral ul .itensSecao20.mostra{ 
-    display: block;
-}
 .btnAbre{
    /* position: absolute;*/
     top: 10px; /*15px*/
@@ -286,4 +208,3 @@
     margin-right: 180px;
     cursor: pointer;
 }
-

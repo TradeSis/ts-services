@@ -1,4 +1,5 @@
 <?php
+//Lucas 04042023 criado
 
 include_once('../head.php');
 include_once('../database/aplicativo.php');
@@ -8,51 +9,8 @@ include_once('../database/aplicativo.php');
 $aplicativo = buscaAplicativos($_GET['idAplicativo']);
 //echo json_encode($aplicativo);
 ?>
-<style>
-    #imgAplicativo {
-        display: none;
-    }
 
-    .picture {
-        width: 100px;
-        height: 100px;
-        background: #ddd;
-        display: flex;
-        align-items: center;
-        text-align: center;
-        justify-content: center;
-        color: #aaa;
-        border: 1px dashed currentcolor;
-        border-radius: 100px;
-        cursor: pointer;
-        font-family: sans-serif;
-        transition: color 300ms ease-in-out, background 300ms ease-in-out;
-        outline: none;
-        overflow: hidden;
-    }
-
-    .picture:hover {
-        color: #777;
-        background: #ccc;
-    }
-
-    .picture:active {
-        border-color: turquoise;
-        color: turquoise;
-        background: #eee;
-    }
-
-    .picture:focus {
-        color: #777;
-        background: #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .picture__img {
-        height: 100px;
-        border-radius: 50%;
-    }
-</style>
+<link rel="stylesheet" href="../css/aplicativo_alterar.css">
 
 <body class="bg-transparent">
 
@@ -78,7 +36,6 @@ $aplicativo = buscaAplicativos($_GET['idAplicativo']);
 
                         
                         <label>Imagem</label>
-                        <!-- <input type="text" class="form-control" name="imgAplicativo" value="<?php echo $aplicativo['imgAplicativo'] ?>"> -->
 
                         <label class="picture" for="imgAplicativo" tabIndex="0">
                             <span class="picture__image"></span>

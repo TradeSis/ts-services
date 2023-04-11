@@ -1,4 +1,5 @@
 <?php
+//Lucas 04042023 criado
 
 include_once('../head.php');
 include_once('../database/menuprograma.php');
@@ -7,7 +8,7 @@ include_once('../database/aplicativo.php');
 
 $menus = buscaMenu();
 $aplicativos = buscaAplicativos();
-$menuProgr = buscaMenuProgramas($_GET['progrNome']);
+$menuProgr = buscaMenuProgramas($_GET['idMenuPrograma']);
 //echo json_encode($menuProgr);
 ?>
 
@@ -31,7 +32,7 @@ $menuProgr = buscaMenuProgramas($_GET['progrNome']);
 
                     <label>Nome</label>
                         <input type="text" name="progrNome" class="form-control"  value="<?php echo $menuProgr['progrNome'] ?>">
-                        <!-- <input type="text" class="form-control" name="" value="" style="display: none"> -->
+                        <input type="text" class="form-control" name="idMenuPrograma" value="<?php echo $menuProgr['idMenuPrograma'] ?>" style="display: none">
 
                     <label>Menu</label>
                       

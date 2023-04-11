@@ -1,16 +1,16 @@
 <?php
-
+//Lucas 05042023 criado
 
 include_once('../conexao.php');
 
-function buscaMenuProgramas($progrNome=null)
+function buscaMenuProgramas($idMenuPrograma=null)
 {
 
 	$menuProgr = array();
-	//echo json_encode($progrNome);
+	//echo json_encode($idMenuPrograma);
 	//return;	
 	$apiEntrada = array(
-		'progrNome' => $progrNome,
+		'idMenuPrograma' => $idMenuPrograma,
 	);
 	
 	/* echo "-ENTRADA->".json_encode($apiEntrada)."\n";
@@ -40,6 +40,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "alterar") {
 		$apiEntrada = array(
+			'idMenuPrograma' => $_POST['idMenuPrograma'],
 			'IDMenu' => $_POST['IDMenu'],
 			'progrNome' => $_POST['progrNome'],
             'idAplicativo' => $_POST['idAplicativo'],
@@ -54,7 +55,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "excluir") {
 		$apiEntrada = array(
-			'progrNome' => $_POST['progrNome']		
+			'idMenuPrograma' => $_POST['idMenuPrograma']		
 		);
 
 		$menuProgr = chamaAPI(null, '/api/services/menuprograma', json_encode($apiEntrada), 'DELETE');

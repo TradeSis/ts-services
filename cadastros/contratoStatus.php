@@ -12,29 +12,24 @@ $contratoStatus = buscaContratoStatus();
 ?>
 
 
-<body>
+<body class="bg-transparent">
 
-    <div class="container-fluid" style="margin-top:10px">
+    <div class="container" style="margin-top:10px">
         <div class="card shadow">
-            <div class="card-header">
-                <h3 class="mb-0">Lista - status do Contrato</h3>
-
-                <div style="text-align:right">
-                    <a href="contratoStatus_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar Status</a>
+        <div class="card-header border-2">
+                <div class="row">
+                    <div class="col-sm">
+                        <h3 class="col">Contrato Status</h3>
+                    </div>
+                    <div class="col-sm" style="text-align:right">
+                        <a href="contratoStatus_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar</a>
+                    </div>
                 </div>
-
             </div>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Nome Status</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                         <th scope="col">Ação</th>
 
                     </tr>
@@ -49,13 +44,6 @@ $contratoStatus = buscaContratoStatus();
                             <?php echo $contratostatus['nomeContratoStatus'] ?>
                             <?php //echo json_encode($contratoStatus) ?>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="contratoStatus_alterar.php?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button">Editar</a>
                             <a class="btn btn-danger btn-sm" href="contratoStatus_excluir1.php?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button">Excluir</a>

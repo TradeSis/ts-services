@@ -1,4 +1,5 @@
 <?php
+//Lucas 10/04/2023 modificado a header para ser redirecionado para painel.php
 //gabriel 220323 11:19 adicionado idcliente
 // helio 26012023 16:16
 
@@ -31,7 +32,8 @@ if (!$user == "") {
 		$_SESSION['usuario'] = $user;
 		$_SESSION['idUsuario'] = $idUsuario;
 		$_SESSION['idCliente'] = $idCliente;
-		header('Location: index.php');
+		header('Location: painel.php');
+		/* header('Location: index.php'); */
 	}
 	else {
 		$mensagem = "senha errada!";

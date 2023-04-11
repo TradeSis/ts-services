@@ -97,13 +97,6 @@
     display: none; /* sumir subimenus */
 }
 
-.menuLateral ul .itensSecao1.mostra{ /* mostra ao clicar usando a classe .mostra e JS subimenus */
-    display: block;
-}
-
-.menuLateral ul .itensSecao2.mostra{ 
-    display: block;
-}
 
 .btnAbre{
    /* position: absolute;*/
@@ -215,4 +208,3 @@
     margin-right: 180px;
     cursor: pointer;
 }
-

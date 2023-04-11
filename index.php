@@ -1,16 +1,18 @@
 <?php
+//Lucas 05042023 - adicionado foreach para menuLateral.
 //gabriel 220323 11:19 - adicionado IF para usuario cliente
 //Lucas 13032023 - criado versão 2 do menu.
 
 include_once 'head.php';
-include_once 'conexao.php';
+include_once 'database/montaMenu.php';
 
-
+$menus = buscaMontaMenu();
+//echo json_encode($menus);
 ?>
 
 
 <body>
-    <link rel="stylesheet" type="text/css" href="menu.css">
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 
@@ -27,7 +29,7 @@ include_once 'conexao.php';
 
 
             <div class="col-sm-1">
-                <img src="img/brand/white.png" width="130">
+            <a href="painel2.php"><img src="img/brand/white.png" width="150"></a>
             </div>
 
             <?php
@@ -115,27 +117,30 @@ include_once 'conexao.php';
                     <li><a href="#" src="contratos/">Contratos</a></li>
                     <li><a href="#" src="demandas/">Demandas</a></li>
                     <li><a href="#" src="demandas/tarefas.php">Tarefas</a></li>
-                    <li><a href="#" class="secao1">Cadastros<span class="material-symbols-outlined seta1">arrow_right</span></a>
-                        <ul class="itensSecao1">
-                            <li><a href="#" src="cadastros/tipostatus.php">Tipo Status</a></li>
-                            <li><a href="#" src="cadastros/tipoocorrencia.php">Tipo Ocorrências</a></li>
-                            <li><a href="#" src="cadastros/clientes.php">Clientes</a></li>
-                            <li><a href="#" src="usuario/usuario.php">Usuarios</a></li>
-                            <li><a href="#" src="cadastros/contratoStatus.php">Contrato Status</a></li>
+
+
+                    <?php
+                    $contador = 1;
+                    foreach ($menus as $menu) {
+                    ?>
+                        <li><a href="#" class="secao<?php echo $contador ?>"><?php echo $menu['nomeMenu'] ?><span class="material-symbols-outlined seta<?php echo $contador ?>">arrow_right</span></a>
+                    
+
+                        <ul class="itensSecao<?php echo $contador ?>">
+                            <?php
+                            foreach ($menu['menuPrograma'] as $menuPrograma) {
+                            ?>
+                            <li><a href="#" src="<?php echo $menuPrograma['progrLink'] ?>"><?php echo $menuPrograma['progrNome'] ?></a></li>
+                            <?php } ?>
+                            
+                           
                         </ul>
                     </li>
+                    <?php
+                    $contador = $contador + 1;
+                    // echo $contador;
+                     } ?>
 
-                    <li><a href="#" class="secao2">Outros<span class="material-symbols-outlined seta2">arrow_right</span></a>
-                        <ul class="itensSecao2">
-                            <li><a href="#" src="http://10.2.0.44/bsweb/erp/etiqueta/normalv2.html">Etiquetas</a>
-                            <li><a href="#" src="cadastros/relatorios.php">Relatórios</a>
-                            <li><a href="#" src="cadastros/seguros_parametros.php">Seguros</a>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a class="logout" href="#" data-toggle="modal" data-target="#logoutModal"><span class="material-symbols-outlined">logout</span></a>
-                    </li>
                 </ul>
             </nav>
             <?php }
@@ -153,9 +158,6 @@ include_once 'conexao.php';
                             </ul>
                         </li>
     
-                        <li>
-                            <a class="logout" href="#" data-toggle="modal" data-target="#logoutModal"><span class="material-symbols-outlined">logout</span></a>
-                        </li>
                     </ul>
                 </nav>
 

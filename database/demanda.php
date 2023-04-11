@@ -1,5 +1,5 @@
 <?php
-// Lucas 22032023 adicionado a operação filtrar, tituloDemanda
+// Lucas 30032023 - modificado operação comentar para ser inserido anexos.
 // gabriel 220323 11:19 - adicionado operação retornar demanda
 // Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
 // Lucas 20032023 adicionado operação filtrar
@@ -14,7 +14,7 @@
 
 include_once('../conexao.php');
 
-function buscaDemandas($idDemanda=null, $idTipoStatus=null)
+function buscaDemandas($idDemanda = null, $idTipoStatus = null)
 {
 
 	$demanda = array();
@@ -23,7 +23,7 @@ function buscaDemandas($idDemanda=null, $idTipoStatus=null)
 		'idDemanda' => $idDemanda,
 		'idTipoStatus' => $idTipoStatus,
 	);
-//	echo json_encode(($apiEntrada));
+	//	echo json_encode(($apiEntrada));
 	$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($demanda);
@@ -32,7 +32,7 @@ function buscaDemandas($idDemanda=null, $idTipoStatus=null)
 
 
 
-function buscaComentarios($idDemanda=null,$idComentario=null)
+function buscaComentarios($idDemanda = null, $idComentario = null)
 {
 
 	$comentario = array();
@@ -100,13 +100,35 @@ if (isset($_GET['operacao'])) {
 		);
 		$demanda = chamaAPI(null, '/api/services/demanda/retornar', json_encode($apiEntrada), 'POST');
 	}
+
 	if ($operacao == "comentar") {
+ 
+		$anexo = $_FILES['nomeAnexo'];
+
+
+		$pasta = "../img/anexos/";
+		$nomeAnexo = $anexo['name'];
+		$novoNomeDoAnexo = uniqid(); 
+		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf")
+        die("Tipo de aquivo não aceito");
+
+		$pathAnexo = $pasta . $novoNomeDoAnexo . "." . $extensao;
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
+
+
 		$apiEntrada = array(
+			'nomeAnexo' => $nomeAnexo,
+			'pathAnexo' => $pathAnexo,
 			'idUsuario' => $_POST['idUsuario'],
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $_POST['comentario']
 		);
+		/* echo json_encode(($apiEntrada));
+		return; */
 		$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'PUT');
+		/* echo json_encode(($comentario)); */
 	}
 
 	if ($operacao == "filtrar") {
@@ -117,28 +139,30 @@ if (isset($_GET['operacao'])) {
 		$idUsuario = $_POST['idUsuario'];
 		$tituloDemanda = $_POST['tituloDemanda'];
 
-		if ($idCliente == ""){
+		if ($idCliente == "") {
 			$idCliente = null;
 		}
 
-		if ($idUsuario == ""){
+		if ($idUsuario == "") {
 			$idUsuario = null;
 		}
 
-		if ($idTipoStatus == ""){
+		if ($idTipoStatus == "") {
 			$idTipoStatus = null;
 		}
 
 
-		if ($idTipoOcorrencia == ""){
+		if ($idTipoOcorrencia == "") {
 			$idTipoOcorrencia = null;
 		}
+
 
 		if ($tituloDemanda == ""){
 			$tituloDemanda = null;
 		}
 		
 	
+
 		$apiEntrada = array(
 			'idDemanda' => null,
 			'idCliente' => $idCliente,
@@ -147,7 +171,7 @@ if (isset($_GET['operacao'])) {
 			'idTipoOcorrencia' => $idTipoOcorrencia,
 			'tituloDemanda' => $tituloDemanda
 		);
-		/* echo json_encode(($apiEntrada));
+			/* echo json_encode(($apiEntrada));
 		return */;
 		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
 
@@ -155,10 +179,8 @@ if (isset($_GET['operacao'])) {
 		return $demanda;
 	}
 
-/*
+	/*
 	include "../demandas/demanda_ok.php";
 */
-	header('Location: ../demandas/index.php'); 
+	header('Location: ../demandas/index.php');
 }
-
-?>

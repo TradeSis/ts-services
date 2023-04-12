@@ -44,14 +44,14 @@ include_once 'head.php';
             <img src="image/icon-1.png" alt="">
             <h3>Services</h3>
             
-            <a href="index.php" class="btn">acessar</a>
+            <a href="/ts/services" class="btn">acessar</a>
         </div>
 
         <div class="box">
             <img src="image/icon-2.png" alt="">
             <h3>Lojas</h3>
             
-            <a href="http://localhost/ts/lojas/" class="btn">acessar</a>
+            <a href="/ts/lojas/" class="btn">acessar</a>
         </div>
 
         
@@ -85,7 +85,7 @@ if ($_SESSION['idCliente']  == 1) { ?>
             <img src="image/icon-1.png" alt="">
             <h3>Services</h3>
             
-            <a href="index.php" class="btn">acessar</a>
+            <a href="/ts/services" class="btn">acessar</a>
         </div>
 
     </div>
@@ -100,7 +100,7 @@ if ($_SESSION['idCliente']  == 10) { ?>
             <img src="image/icon-1.png" alt="">
             <h3>Lojas</h3>
             
-            <a href="http://localhost/ts/lojas/" class="btn">acessar</a>
+            <a href="/ts/lojas/" class="btn">acessar</a>
         </div>
 
     </div>

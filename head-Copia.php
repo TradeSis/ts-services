@@ -3,23 +3,24 @@
 // Lucas 09032023 -  linha 5, foi adicionado parametro de tempo 
 // helio 26012023 16:16
 
+session_start();
 
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    //Definindo o prazo para a cache expirar em 60 minutos.
-    session_cache_expire(60);
-    session_start();
-  }
-/* $lifetime=900;
-session_set_cookie_params($lifetime); // 30min
-session_start(); */
+if (!isset($_SESSION['LAST_ACTIVITY']) || !isset($_SESSION['usuario'])) {
+    echo "<script>top.window.location = '/ts/services/login.php'</script>";
+} 
 
-if (!isset($_SESSION['usuario']) == true) {
-	unset($_SESSION['login']);
+    echo  "\n START=".date("Y-m-d h:i:sa", $_SESSION['START'])." FIM=".date("Y-m-d h:i:sa", $_SESSION['LAST_ACTIVITY'] + ( 36000 )).
+          "\n  LAST=". date("Y-m-d h:i:sa", $_SESSION['LAST_ACTIVITY'])." FIM=".date("Y-m-d h:i:sa", $_SESSION['LAST_ACTIVITY'] + ( 2 * 60 * 60  ))
+          ."\n";
 
-	header('location:login.php');
-}
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > ( 2 * 60 * 60  )   )) { // 60segundos * MINUTOS * HORAS
+    session_unset();
+    session_destroy();
+    echo "<script>top.window.location = '/ts/services/login.php'</script>";
+} 
+
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 $logado = $_SESSION['usuario'];
-
 
 ?>
 <!DOCTYPE html>
@@ -27,25 +28,25 @@ $logado = $_SESSION['usuario'];
 
 
 <head>
-	<title>TS/Services</title>
+        <title>TS/Services</title>
 
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<script src="/ts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<script src="/ts/vendor/animacoes/bodymovin.js"></script>
-		<script src="/ts/vendor/jquery/jquery.min.js"></script>
+                <script src="/ts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="/ts/vendor/animacoes/bodymovin.js"></script>
+                <script src="/ts/vendor/jquery/jquery.min.js"></script>
         <script src="/ts/vendor/jquery/jquery.mask.min.js" type="text/javascript" ></script>
-		<script src="/ts/vendor/jquery/tabletojson.min.js" type="text/javascript"  ></script>
-		<script src="/ts/vendor/jquery-easing/jquery.easing.min.js"></script>
+                <script src="/ts/vendor/jquery/tabletojson.min.js" type="text/javascript"  ></script>
+                <script src="/ts/vendor/jquery-easing/jquery.easing.min.js"></script>
 
         <script src="/ts/vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"  ></script>
         <script src="/ts/vendor/bootstrap/bootbox/bootbox.min.js" type="text/javascript" ></script>
 
-		<link  href="/ts/vendor/bootstrap/css/bootstrap.min.css" rel= "stylesheet" type="text/css"  >
-		
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-
+                <link  href="/ts/vendor/bootstrap/css/bootstrap.min.css" rel= "stylesheet" type="text/css"  >
+                
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
         
 </head>

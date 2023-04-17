@@ -29,9 +29,11 @@ include_once '../database/clientes.php';
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
 
+$filtroEntrada = $_SESSION['filtro_contrato'];
+
 // 2°
-$idCliente = null;
-$idContratoStatus = null;
+$idCliente = $filtroEntrada['idCliente'];
+$idContratoStatus = $filtroEntrada['idContratoStatus'];
 
 //echo json_encode($_GET);
 
@@ -289,7 +291,7 @@ $cards = buscaCards("");
         </ul>
 
         <div class="col-sm" style="text-align:right; color: #fff">
-                <a onClick="window.location.reload()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+                <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
               </div>
     </nav>
 
@@ -402,7 +404,12 @@ $cards = buscaCards("");
     </div>
 
     <script>
-        buscar(null, null, null);
+        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+        
+        function limpar() {
+            buscar(null, null, null);
+            window.location.reload();
+        }
 
         function buscar(idCliente, idContratoStatus, tituloContrato) {
             /* alert(idCliente);

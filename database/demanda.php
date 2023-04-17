@@ -11,7 +11,9 @@
 // gabriel 31012023 13:47 - nomeclaturas, operação encerrar
 // helio 26012023 16:16
 
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once('../conexao.php');
 
 function buscaDemandas($idDemanda = null, $idTipoStatus = null)
@@ -171,6 +173,8 @@ if (isset($_GET['operacao'])) {
 			'idTipoOcorrencia' => $idTipoOcorrencia,
 			'tituloDemanda' => $tituloDemanda
 		);
+
+		$_SESSION['filtro_demanda'] = $apiEntrada;
 			/* echo json_encode(($apiEntrada));
 		return */;
 		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');

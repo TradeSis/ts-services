@@ -111,7 +111,7 @@ if (isset($_GET['operacao'])) {
 		$novoNomeDoAnexo = uniqid(); 
 		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
 
-		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf")
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
         die("Tipo de aquivo não aceito");
 
 		$pathAnexo = $pasta . $novoNomeDoAnexo . "." . $extensao;

@@ -34,7 +34,8 @@ $menu = buscaMenu($_GET['IDMenu']);
 
                         
                             <label>Aplicativo</label>
-                            <select class="form-control" name="idAplicativo">
+                            <select class="form-control" name="idAplicativo" autocomplete="off">
+                            <option value="<?php echo $menu['idAplicativo'] ?>"><?php echo $menu['nomeAplicativo'] ?></option>
                                 <?php
                                     foreach ($aplicativos as $aplicativo) {
                                 ?>

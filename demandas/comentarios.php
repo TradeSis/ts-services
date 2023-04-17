@@ -14,6 +14,7 @@ include_once '../database/clientes.php';
 $idDemanda = $_GET['idDemanda'];
 $usuario = buscaUsuarios($_SESSION['idUsuario']);
 $comentarios = buscaComentarios($idDemanda);
+//echo json_encode($comentarios);
 
 ?>
 <style>

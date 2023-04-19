@@ -7,22 +7,21 @@
 include_once 'head.php';
 include_once 'database/montaMenu.php';
 
-$menus = buscaMontaMenu();
+$menus = buscaMontaMenu(1);
 //echo json_encode($menus);
 ?>
 
 <body>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    
 
     <nav class="Menu navbar navbar-expand topbar static-top shadow">
 
 
-        <div class="btnAbre mr-4">
+        <div class="hamburgerAbre mr-4">
             <span class="material-symbols-outlined">menu_open</span>
         </div>
 
-        <a href="painel.php" class="logo"><img src="img/brand/white.png" width="150"></a>
+        <a href="/ts/painel" class="logo"><img src="../img/brand/white.png" width="150"></a>
 
         <?php
         if ($_SESSION['idCliente'] == NULL) { ?>
@@ -191,7 +190,7 @@ $menus = buscaMontaMenu();
                 <div class="modal-body">Selecione "Logout" abaixo se você deseja encerrar sua sessão.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary logout" href="logout.php">Logout</a>
+                    <a class="btn btn-primary logout" href="/ts/painel/logout.php">Logout</a>
                 </div>
             </div>
         </div>

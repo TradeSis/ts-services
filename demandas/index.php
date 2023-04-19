@@ -27,22 +27,21 @@ $usuarios = buscaUsuarios();
 $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
 
+$filtroEntrada = null;
 $idCliente = null;
 $idUsuario = null;
 $idTipoStatus = null;
 $idTipoOcorrencia = null;
 
+if (isset($_SESSION['filtro_demanda'])) {
+    $filtroEntrada = $_SESSION['filtro_demanda'];
+    $idCliente = $filtroEntrada['idCliente'];
+    $idUsuario = $filtroEntrada['idUsuario'];
+    $idTipoStatus = $filtroEntrada['idTipoStatus'];
+    $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
+}
 
 ?>
-
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-<style>
-    .shadow {
-  box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-  -webkit-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-  -moz-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-}
-</style>
 
 <body class="bg-transparent">
   <div class="container-fluid py-1">
@@ -195,15 +194,15 @@ $idTipoOcorrencia = null;
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
-                <a onClick="window.location.reload()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+                <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
               </div>
   </nav>
 
 
-  <div class="container-fluid text-center pt-2 mt-3">
-    
+  <div class="container-fluid text-center pt-2">
+    <div class="card shadow">
 
-      <!-- <div class="card-header"> -->
+      <div class="card-header">
 
         <div class="row">
           <div class=" btnAbre">
@@ -213,16 +212,20 @@ $idTipoOcorrencia = null;
 
           </div>
 
+          <div style="text-align: left; margin-left: -20px;">
+                        <h3 class="col">Demandas</h3>
 
-          <div class="col-sm-3 ml-2">
-          <p class="tituloTabela">Demandas</p>
+                    </div>
+
+          <div class="col-sm-2">
+
           </div>
 
           <div class="col-sm-4">
             <div class="input-group">
               <input type="text" class="form-control" id="tituloDemanda" placeholder="Buscar por...">
               <span class="input-group-btn">
-                <button class="btn btn-primary" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
+                <button class="btn btn-default" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
                     search
                   </span></button>
               </span>
@@ -232,13 +235,13 @@ $idTipoOcorrencia = null;
 
 
           <div class="col-sm" style="text-align:right">
-            <a href="demanda_inserir.php" role="button" class="btn btn-success">Adicionar Demanda</a>
+            <a href="demanda_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar Demanda</a>
           </div>
         </div>
 
-      <!-- </div> -->
+      </div>
 
-    <div class="card  mt-2">
+ 
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
           <thead class="thead-light">
@@ -268,7 +271,12 @@ $idTipoOcorrencia = null;
 
 
   <script>
-    buscar(null, null, null, null, null);
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+
+    function limpar() {
+      buscar(null, null, null, null, null);
+      window.location.reload();
+    }
 
     function buscar(idCliente, idUsuario, idTipoStatus, idTipoOcorrencia, tituloDemanda) {
 

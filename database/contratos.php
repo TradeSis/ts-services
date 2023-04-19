@@ -15,6 +15,9 @@
 // Lucas 31012023 - Alterado "id" para "idContrato", linhas 79 e 93;
 // Lucas 31012023 20:34
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once '../conexao.php';
 
 function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente = null)
@@ -130,6 +133,8 @@ if (isset($_GET['operacao'])) {
 			'idContratoStatus' => $idContratoStatus,
 			'tituloContrato' => $tituloContrato
 		);
+		
+		$_SESSION['filtro_contrato'] = $apiEntrada;
 		/* echo json_encode(($apiEntrada));
 		return; */
 		$contrato = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'GET');

@@ -97,7 +97,7 @@ $clientes = buscaClientes();
     </div>
 
 
-<script src="../js/input.js"></script>
+
 </body>
 
 </html>

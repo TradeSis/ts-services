@@ -213,8 +213,7 @@ $atendentes = buscaAtendente();
 		<!-- </div> -->
 	</div>
 
-	<script src="../js/input.js"></script>
-	<script type="text/javascript">
+		<script type="text/javascript">
 		$(document).ready(function() {
 
 			// SELECT MENU

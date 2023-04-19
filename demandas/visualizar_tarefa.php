@@ -97,7 +97,7 @@ $cliente = buscaClientes($demanda["idCliente"]);
         </div>
     </div>
 
-<script src="../js/input.js"></script>
+
     <script>
         $(document).ready(function() {
 

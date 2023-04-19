@@ -38,7 +38,6 @@ include_once('../head.php');
 
     </div>
 
-    <script src="../js/input.js"></script>
-</body>
+    </body>
 
 </html>

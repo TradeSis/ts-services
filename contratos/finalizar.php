@@ -66,6 +66,6 @@ $cliente = buscaClientes($idCliente);
 			</div>		
 	</div>
 
-	<script src="input.js"></script>
+	
 </body>
 </html>

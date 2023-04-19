@@ -138,7 +138,6 @@ $cliente = buscaClientes($idCliente);
 
 	</div><!-- container -->
 
-<script src="../js/input.js"></script>
 
 </body>
 

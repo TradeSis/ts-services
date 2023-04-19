@@ -105,7 +105,7 @@ $clientes = buscaClientes();
 
 
 
-<script src="../js/input.js"></script>
+
 </body>
 
 </html>

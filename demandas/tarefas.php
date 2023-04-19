@@ -17,7 +17,6 @@ $cards4 = buscaCards(""); */
 
 ?>
 
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 
 <body class="bg-transparent">
   <div class="container-fluid py-2">

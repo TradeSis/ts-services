@@ -102,7 +102,7 @@ $('.secao20').click(function(){
     $('.menuLateral ul .seta20').toggleClass('gira');
 });
 
-$('.btnAbre').click(function(){
+$('.hamburgerAbre').click(function(){
     $('.menuLateral').toggleClass('mostra');
     $('.diviFrame').toggleClass('mostra');
     $('.menusecundario').removeClass('mostra');

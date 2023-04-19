@@ -7,17 +7,13 @@
 session_start();
 
 if (!isset($_SESSION['LAST_ACTIVITY']) || !isset($_SESSION['usuario'])) {
-    echo "<script>top.window.location = '/ts/services/login.php'</script>";
+    echo "<script>top.window.location = '/ts/painel/login.php'</script>";
 } 
-
-    echo  "\n START=".date("Y-m-d h:i:sa", $_SESSION['START'])." FIM=".date("Y-m-d h:i:sa", $_SESSION['LAST_ACTIVITY'] + ( 36000 )).
-          "\n  LAST=". date("Y-m-d h:i:sa", $_SESSION['LAST_ACTIVITY'])." FIM=".date("Y-m-d h:i:sa", $_SESSION['LAST_ACTIVITY'] + ( 2 * 60 * 60  ))
-          ."\n";
 
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > ( 2 * 60 * 60  )   )) { // 60segundos * MINUTOS * HORAS
     session_unset();
     session_destroy();
-    echo "<script>top.window.location = '/ts/services/login.php'</script>";
+    echo "<script>top.window.location = '/ts/painel/login.php'</script>";
 } 
 
 $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
@@ -29,7 +25,7 @@ $logado = $_SESSION['usuario'];
 
 
 <head>
-        <title>TS/Services</title>
+        <title>TS/painel</title>
 
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,9 +43,15 @@ $logado = $_SESSION['usuario'];
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-        
-        <link  href="/ts/services/css/bootstrap.css" rel= "stylesheet" type="text/css">
-        <link  href="/ts/services/css/padraoCss.css" rel= "stylesheet" type="text/css">
 
+        <link  href="/ts/painel/css/bootstrap.css" rel= "stylesheet" type="text/css">
+        <link  href="/ts/painel/css/padrao.css" rel= "stylesheet" type="text/css">
+        <link  href="/ts/painel/css/menu.css" rel="stylesheet" type="text/css" >
         
+        <script src="/ts/painel/js/input.js"></script>
+
 </head>
+
+
+
+	

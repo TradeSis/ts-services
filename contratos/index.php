@@ -28,36 +28,19 @@ include_once '../database/clientes.php';
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
+$cards = buscaCards("");
 
-// 2°
 $idCliente = null;
 $idContratoStatus = null;
 
-//echo json_encode($_GET);
-
-/* if (isset($_POST['idContratoStatus'])) {
-  
-  $idContratoStatus = $_POST['idContratoStatus'];
+if (isset($_SESSION['filtro_contrato'])) {
+    $filtroEntrada = $_SESSION['filtro_contrato'];
+    $idCliente = $filtroEntrada['idCliente'];
+    $idContratoStatus = $filtroEntrada['idContratoStatus'];
+   
 }
-if (isset($_POST['idCliente'])) {
-  
-  $idCliente = $_POST['idCliente'];
-} */
-//echo $idClientes;
-//$contratos = buscaContratos(null, $idContratoStatus, $idCliente);
-
-$cards = buscaCards("");
 
 ?>
-
-
-<style>
-    .shadow {
-  box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-  -webkit-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-  -moz-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-}
-</style>
 
 <body class="bg-transparent">
     <div class="container-fluid py-1">
@@ -269,7 +252,7 @@ $cards = buscaCards("");
         </ul>
 
         <div class="col-sm" style="text-align:right; color: #fff">
-                <a onClick="window.location.reload()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+                <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
               </div>
     </nav>
 
@@ -378,7 +361,12 @@ $cards = buscaCards("");
     </div>
 
     <script>
-        buscar(null, null, null);
+        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+        
+        function limpar() {
+            buscar(null, null, null);
+            window.location.reload();
+        }
 
         function buscar(idCliente, idContratoStatus, tituloContrato) {
             /* alert(idCliente);

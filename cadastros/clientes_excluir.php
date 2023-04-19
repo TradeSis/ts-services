@@ -38,7 +38,7 @@ $clientes = buscaClientes($_GET['idCliente']);
         
     </div>
 
-    <script src="../js/input.js"></script>
+
 </body>
 
 </html>

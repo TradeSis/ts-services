@@ -7,14 +7,6 @@ $('.secao1').click(function(){
 
 });
 
-/* $(".secao1").click(()=>{
-    var contador = 1;
-    $("li").each(function(){
-       contador = contador + 1;
-       // alert(contador);
-    })
-}) */
-
 $('.secao2').click(function(){
     $('.menuLateral ul .itensSecao2').slideToggle('slow');
     $('.menuLateral ul .seta2').toggleClass('gira');
@@ -110,7 +102,7 @@ $('.secao20').click(function(){
     $('.menuLateral ul .seta20').toggleClass('gira');
 });
 
-$('.btnAbre').click(function(){
+$('.hamburgerAbre').click(function(){
     $('.menuLateral').toggleClass('mostra');
     $('.diviFrame').toggleClass('mostra');
     $('.menusecundario').removeClass('mostra');

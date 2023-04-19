@@ -27,41 +27,21 @@ $usuarios = buscaUsuarios();
 $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
 
+$filtroEntrada = null;
 $idCliente = null;
 $idUsuario = null;
 $idTipoStatus = null;
 $idTipoOcorrencia = null;
 
+if (isset($_SESSION['filtro_demanda'])) {
+    $filtroEntrada = $_SESSION['filtro_demanda'];
+    $idCliente = $filtroEntrada['idCliente'];
+    $idUsuario = $filtroEntrada['idUsuario'];
+    $idTipoStatus = $filtroEntrada['idTipoStatus'];
+    $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
+}
 
 ?>
-<link rel="stylesheet" type="text/css" href="../css/filtroMenu.css">
-<style rel="stylesheet" type="text/css">
-     .estilo1 {
-        background-color: #2FB12B;
-        border: 0px solid;
-    }
-
- /*    .my-custom-scrollbar {
-        position: relative;
-        height: 350px;
-        overflow: auto;
-    } */
-
-    .my-custom-scrollbar {
-        position: relative;
-        height: 600px;
-        overflow: auto;
-    }
-  
-
-    @media (max-height: 768px) {
-        .my-custom-scrollbar {
-        position: relative;
-        height: 350px;
-        overflow: auto;
-    }
-    }
-</style>
 
 <body class="bg-transparent">
   <div class="container-fluid py-1">
@@ -214,7 +194,7 @@ $idTipoOcorrencia = null;
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
-                <a onClick="window.location.reload()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+                <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
               </div>
   </nav>
 
@@ -291,7 +271,12 @@ $idTipoOcorrencia = null;
 
 
   <script>
-    buscar(null, null, null, null, null);
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+
+    function limpar() {
+      buscar(null, null, null, null, null);
+      window.location.reload();
+    }
 
     function buscar(idCliente, idUsuario, idTipoStatus, idTipoOcorrencia, tituloDemanda) {
 

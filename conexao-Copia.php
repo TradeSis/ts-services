@@ -25,6 +25,16 @@ function defineConexaoMysql () {
 
 }
 
+function defineROOT () {
+
+  $ROOT = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+  $ROOTex = explode("/", $ROOT);
+  $ROOT = $_SERVER['DOCUMENT_ROOT']."/".$ROOTex[1];
+  return $ROOT;
+
+}
+
+
 include_once('database/mysql.php');
 include_once('database/api.php');
 

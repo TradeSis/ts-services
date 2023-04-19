@@ -28,56 +28,19 @@ include_once '../database/clientes.php';
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
+$cards = buscaCards("");
 
-// 2°
 $idCliente = null;
 $idContratoStatus = null;
 
-//echo json_encode($_GET);
-
-/* if (isset($_POST['idContratoStatus'])) {
-  
-  $idContratoStatus = $_POST['idContratoStatus'];
+if (isset($_SESSION['filtro_contrato'])) {
+    $filtroEntrada = $_SESSION['filtro_contrato'];
+    $idCliente = $filtroEntrada['idCliente'];
+    $idContratoStatus = $filtroEntrada['idContratoStatus'];
+   
 }
-if (isset($_POST['idCliente'])) {
-  
-  $idCliente = $_POST['idCliente'];
-} */
-//echo $idClientes;
-//$contratos = buscaContratos(null, $idContratoStatus, $idCliente);
-
-$cards = buscaCards("");
 
 ?>
-<link rel="stylesheet" type="text/css" href="../css/filtroMenu.css">
-<style rel="stylesheet" type="text/css">
-    .estilo1 {
-        background-color: #2FB12B;
-        border: 0px solid;
-    }
-
- /*    .my-custom-scrollbar {
-        position: relative;
-        height: 350px;
-        overflow: auto;
-    } */
-
-    .my-custom-scrollbar {
-        position: relative;
-        height: 600px;
-        overflow: auto;
-    }
-  
-
-    @media (max-height: 768px) {
-        .my-custom-scrollbar {
-        position: relative;
-        height: 350px;
-        overflow: auto;
-    }
-    }
-</style>
-
 
 <body class="bg-transparent">
     <div class="container-fluid py-1">
@@ -289,16 +252,16 @@ $cards = buscaCards("");
         </ul>
 
         <div class="col-sm" style="text-align:right; color: #fff">
-                <a onClick="window.location.reload()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+                <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
               </div>
     </nav>
 
 
-    <div class="container-fluid text-center pt-2"> 
-        <div class="card shadow ">
+    <div class="container-fluid text-center pt-2 mt-3"> 
+        
 
             <!--INICIO-->
-            <div class="card-header">         
+            <!-- <div class="card-header"> -->         
 
                 <div class="row">
                     <div class=" btnAbre">
@@ -308,19 +271,15 @@ $cards = buscaCards("");
 
                     </div>
 
-                    <div style="text-align: left; margin-left: -20px;">
-                        <h3 class="col">Contrato</h3>
-
-                    </div>
-                    <div class="col-sm-2">
-
+                    <div class="col-sm-3 ml-2">
+                        <p class="tituloTabela">Contrato</p>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="tituloContrato" placeholder="Buscar por...">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
+                                <button class="btn btn-primary" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
                                         search
                                     </span></button>
                             </span>
@@ -367,12 +326,12 @@ $cards = buscaCards("");
 
 
                     <div class="col-sm" style="text-align:right">
-                        <a href="inserir.php" role="button" class="btn btn-success btn-sm">Inserir Contrato</a>
+                        <a href="inserir.php" role="button" class="btn btn-success">Inserir Contrato</a>
                     </div>
                 </div>
 
-            </div>
-            
+            <!-- </div> -->
+        <div class="card mt-2">    
             <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
                 <table class="table" id="myIframe" > <!-- table-striped -->
                     <thead class="thead-light" >
@@ -402,7 +361,12 @@ $cards = buscaCards("");
     </div>
 
     <script>
-        buscar(null, null, null);
+        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+        
+        function limpar() {
+            buscar(null, null, null);
+            window.location.reload();
+        }
 
         function buscar(idCliente, idContratoStatus, tituloContrato) {
             /* alert(idCliente);
@@ -448,7 +412,7 @@ $cards = buscaCards("");
                         linha = linha + "<TD>" + object.valorHora + "</TD>";
                         linha = linha + "<TD>" + object.valorContrato + "</TD>";
                         linha = linha + "<TD>" + "<a class='btn btn-warning btn-sm' href='alterar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</TD>";
-                        linha = linha + "<TD>" + "<a class='btn btn-danger btn-sm' href='finalizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</TD>";
+                        linha = linha + "<TD>" + "<a class='btn btn-danger btn-sm' href='finalizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-calendar-check'></i></a>" + "</TD>";
                         linha = linha + "</TR>";
                     }
 

@@ -17,28 +17,6 @@ $comentarios = buscaComentarios($idDemanda);
 //echo json_encode($comentarios);
 
 ?>
-<style>
-    .Anexos {
-        display: none;
-    }
-
-    .Anexos.mostra {
-        display: block;
-    }
-    
-    .custom-file-upload {
-    /* border: 1px solid #ccc; */
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    color: #fff;
-}
-::-webkit-file-upload-button {
-    opacity: 0;
-  
-  padding: 0.5em;
-}
-</style>
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
@@ -86,7 +64,7 @@ $comentarios = buscaComentarios($idDemanda);
                                     <div style="text-align:right">
                                     <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo" onchange="myFunction()">
                                     <label for="myFile">
-                                        <a class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a>
+                                        <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a>
 
                                     </label>
                                     </div>
@@ -96,7 +74,7 @@ $comentarios = buscaComentarios($idDemanda);
 
 
                                 <div class="card-footer bg-transparent" style="text-align:right">
-                                    <input type="submit" name="submit" id="submit" class="btn btn-info btn-sm" value="Comentar" />
+                                    <input type="submit" name="submit" id="submit" class="btn btn-info" value="Comentar" />
                                 </div>
 
                                 <?php

@@ -7,25 +7,25 @@ include_once '../database/contratoStatus.php';
 $contratoStatus = buscaContratoStatus();
 
 
-
-
 ?>
-
 
 <body class="bg-transparent">
 
     <div class="container" style="margin-top:10px">
-        <div class="card shadow">
-        <div class="card-header border-2">
-                <div class="row">
-                    <div class="col-sm">
-                        <h3 class="col">Contrato Status</h3>
+        
+        
+            
+            <div class="row mt-4">
+                <div class="col-sm-8">
+                        <p class="tituloTabela">Contrato Status</p>
                     </div>
-                    <div class="col-sm" style="text-align:right">
-                        <a href="contratoStatus_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar</a>
+
+                <div class="col-sm-4" style="text-align:right">
+                        <a href="contratoStatus_inserir.php" role="button" class="btn btn-primary">Adicionar</a>
                     </div>
-                </div>
+          
             </div>
+        <div class="card shadow mt-2">
             <table class="table">
                 <thead>
                     <tr>
@@ -90,9 +90,9 @@ $contratoStatus = buscaContratoStatus();
                 <?php } ?>
 
             </table>
-
         </div>
-    </div>
+        
+   
 
 
 </body>

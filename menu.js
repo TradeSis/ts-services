@@ -7,14 +7,6 @@ $('.secao1').click(function(){
 
 });
 
-/* $(".secao1").click(()=>{
-    var contador = 1;
-    $("li").each(function(){
-       contador = contador + 1;
-       // alert(contador);
-    })
-}) */
-
 $('.secao2').click(function(){
     $('.menuLateral ul .itensSecao2').slideToggle('slow');
     $('.menuLateral ul .seta2').toggleClass('gira');

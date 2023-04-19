@@ -14,63 +14,69 @@ $menuProgr = buscaMenuProgramas($_GET['idMenuPrograma']);
 
 <body class="bg-transparent">
 
-    <div class="container" style="margin-top:10px">
-        <div class="card shadow">
-            <div class="card-header border-1">
-                <div class="row">
-                    <div class="col-sm">
-                        <h3 class="col">Alterar Menu Programa</h3>
-                    </div>
-                    <div class="col-sm" style="text-align:right">
-                        <a href="menuprograma.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
-                    </div>
+<div class="container" style="margin-top:10px">
+
+        <div class="col-sm mt-4" style="text-align:right">
+            <a href="menuprograma.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+        </div>
+        <div class="col-sm">
+            <spam class="col titulo">Alterar Menu Programa</spam>
+        </div>
+
+        <div class="container" style="margin-top: 10px">
+
+            <form action="../database/menuprograma.php?operacao=alterar" method="post">
+
+            <div class="row">
+
+                <div class="col-md-6 form-group">
+                    <label class="labelForm">Nome</label>
+                    <input type="text" name="progrNome" class="form-control" value="<?php echo $menuProgr['progrNome'] ?>">
+                    <input type="text" class="form-control" name="idMenuPrograma" value="<?php echo $menuProgr['idMenuPrograma'] ?>" style="display: none">
                 </div>
-            </div>
-            <div class="container" style="margin-top: 10px">
-                <form action="../database/menuprograma.php?operacao=alterar" method="post">
-                    <div class="form-group" style="margin-top:10px">
 
-                    <label>Nome</label>
-                        <input type="text" name="progrNome" class="form-control"  value="<?php echo $menuProgr['progrNome'] ?>">
-                        <input type="text" class="form-control" name="idMenuPrograma" value="<?php echo $menuProgr['idMenuPrograma'] ?>" style="display: none">
-
-                    <label>Menu</label>
-                      
-                            <select class="form-control" name="IDMenu" autocomplete="off">
-                                <option value="<?php echo $menuProgr['IDMenu'] ?>"><?php echo $menuProgr['nomeMenu'] ?></option>
+                <div class="col-md-3 form-group-select" style="margin-top: 30px;">
+                    <label class="labelForm">Menu</label>
+                    <select class="select form-control" name="IDMenu">
+                    <option value="<?php echo $menuProgr['IDMenu'] ?>"><?php echo $menuProgr['nomeMenu'] ?></option>
                                         <?php
                                         foreach ($menus as $menu) {
                                         ?>
                                             <option value="<?php echo $menu['IDMenu'] ?>"><?php echo $menu['nomeMenu'] ?></option>
                                         <?php } ?>
-                            </select>
+                    </select>
+                </div>
 
-
-                        <label>Aplicativo</label>
-                      
-                        <select class="form-control" name="idAplicativo" autocomplete="off">
-                            <option value="<?php echo $menuProgr['idAplicativo'] ?>"><?php echo $menuProgr['nomeAplicativo'] ?></option>
+                <div class="col-md-3 form-group-select" style="margin-top: 30px;"">
+                <label class="labelForm">Aplicativo</label>
+                    <select class="select form-control" name="idAplicativo">
+                    <option value="<?php echo $menuProgr['idAplicativo'] ?>"><?php echo $menuProgr['nomeAplicativo'] ?></option>
                                     <?php
                                     foreach ($aplicativos as $aplicativo) {
                                     ?>
                                         <option value="<?php echo $aplicativo['idAplicativo'] ?>"><?php echo $aplicativo['nomeAplicativo'] ?></option>
                                     <?php } ?>
-                        </select>
-
-
-                        <label>link</label>
-                        <input type="text" name="progrLink" class="form-control"  value="<?php echo $menuProgr['progrLink'] ?>">
-                        <label>Nivel Menu</label>
-                        <input type="number" name="nivelMenu" class="form-control"  value="<?php echo $menuProgr['nivelMenu'] ?>"> 
-
-                        
-                    </div>
-                    <div class="card-footer bg-transparent" style="text-align:right">
-                        <button type="submit" class="btn btn-sm btn-success">Alterar</button>
-                    </div>
-                </form>
+                    </select>
+                </div>
             </div>
+
+                    
+
+                    <label class="labelForm">link</label>
+                    <input type="text" name="progrLink" class="form-control" value="<?php echo $menuProgr['progrLink'] ?>">
+                    <div class="col-md-2" style="margin-left:-10px">
+                        <label class="labelForm mt-3">Nivel Menu</label>
+                        <input type="number" name="nivelMenu" class="form-control" value="<?php echo $menuProgr['nivelMenu'] ?>">
+                    </div>
+                </div>
+                <div style="text-align:right; margin-top:30px">
+
+                <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
+                    </div>
+                </div>
+            </form>
         </div>
+
     </div>
 
 

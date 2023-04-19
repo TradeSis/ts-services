@@ -11,31 +11,30 @@ $menuProgr = buscaMenuProgramas($_GET['idMenuPrograma']);
 
 <body class="bg-transparent">
 
-    <div class="container" style="margin-top:10px">
-        <div class="card shadow">
-            <div class="card-header border-1">
-                <div class="row">
-                    <div class="col-sm">
-                        <h3 class="col">Excluir Programa</h3>
-                    </div>
-                    <div class="col-sm" style="text-align:right">
-                        <a href="menuprograma.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
+    <div class="container" style="margin-top:30px">
+
+        <div class="col-sm mt-4" style="text-align:right">
+            <a href="menuprograma.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+        </div>
+        <div class="col-sm">
+            <spam class="col titulo">Excluir Programa</spam>
+        </div>
+
+        <div class="container" style="margin-top: 10px">
+            <form action="../database/menuprograma.php?operacao=excluir" method="post">
+
+                <div class="col-md-12 form-group">
+                    <label class="labelForm">Aplicativo</label>
+                    <input type="text" class="form-control" name="progrNome" value="<?php echo $menuProgr['progrNome'] ?>">
+                    <input type="text" class="form-control" name="idMenuPrograma" value="<?php echo $menuProgr['idMenuPrograma'] ?>" style="display: none">
+                </div>
+                <div style="text-align:right; margin-top:30px">
+                <button type="submit" id="botao" class="btn btn-danger"><i class="bi bi-x-octagon"></i>&#32;Excluir</button>
                     </div>
                 </div>
-            </div>
-            <div class="container" style="margin-top: 10px">
-                <form action="../database/menuprograma.php?operacao=excluir" method="post">
-                    <div class="form-group" style="margin-top:10px">
-                        <label>Aplicativo</label>
-                        <input type="text" class="form-control" name="progrNome" value="<?php echo $menuProgr['progrNome'] ?>">
-                        <input type="text" class="form-control" name="idMenuPrograma" value="<?php echo $menuProgr['idMenuPrograma'] ?>" style="display: none">
-                    </div>
-                    <div class="card-footer bg-transparent" style="text-align:right">
-                        <button type="submit" class="btn btn-sm btn-success">Excluir</button>
-                    </div>
-                </form>
-            </div>
+            </form>
         </div>
+    </div>
     </div>
 
 

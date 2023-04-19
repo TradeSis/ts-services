@@ -34,33 +34,14 @@ $idTipoOcorrencia = null;
 
 
 ?>
-<link rel="stylesheet" type="text/css" href="../css/filtroMenu.css">
-<style rel="stylesheet" type="text/css">
-     .estilo1 {
-        background-color: #2FB12B;
-        border: 0px solid;
-    }
 
- /*    .my-custom-scrollbar {
-        position: relative;
-        height: 350px;
-        overflow: auto;
-    } */
-
-    .my-custom-scrollbar {
-        position: relative;
-        height: 600px;
-        overflow: auto;
-    }
-  
-
-    @media (max-height: 768px) {
-        .my-custom-scrollbar {
-        position: relative;
-        height: 350px;
-        overflow: auto;
-    }
-    }
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<style>
+    .shadow {
+  box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+  -webkit-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+  -moz-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+}
 </style>
 
 <body class="bg-transparent">
@@ -219,10 +200,10 @@ $idTipoOcorrencia = null;
   </nav>
 
 
-  <div class="container-fluid text-center pt-2">
-    <div class="card shadow">
+  <div class="container-fluid text-center pt-2 mt-3">
+    
 
-      <div class="card-header">
+      <!-- <div class="card-header"> -->
 
         <div class="row">
           <div class=" btnAbre">
@@ -232,20 +213,16 @@ $idTipoOcorrencia = null;
 
           </div>
 
-          <div style="text-align: left; margin-left: -20px;">
-                        <h3 class="col">Demandas</h3>
 
-                    </div>
-
-          <div class="col-sm-2">
-
+          <div class="col-sm-3 ml-2">
+          <p class="tituloTabela">Demandas</p>
           </div>
 
           <div class="col-sm-4">
             <div class="input-group">
               <input type="text" class="form-control" id="tituloDemanda" placeholder="Buscar por...">
               <span class="input-group-btn">
-                <button class="btn btn-default" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
+                <button class="btn btn-primary" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
                     search
                   </span></button>
               </span>
@@ -255,13 +232,13 @@ $idTipoOcorrencia = null;
 
 
           <div class="col-sm" style="text-align:right">
-            <a href="demanda_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar Demanda</a>
+            <a href="demanda_inserir.php" role="button" class="btn btn-success">Adicionar Demanda</a>
           </div>
         </div>
 
-      </div>
+      <!-- </div> -->
 
- 
+    <div class="card  mt-2">
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
           <thead class="thead-light">

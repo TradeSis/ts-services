@@ -9,34 +9,34 @@ $menu = buscaMenu($_GET['IDMenu']);
 //echo json_encode($menu);
 ?>
 
+
 <body class="bg-transparent">
 
     <div class="container" style="margin-top:10px">
-        <div class="card shadow">
-            <div class="card-header border-1">
-                <div class="row">
-                    <div class="col-sm">
-                        <h3 class="col">Excluir Menu</h3>
-                    </div>
-                    <div class="col-sm" style="text-align:right">
-                        <a href="menu.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="container" style="margin-top: 10px">
-                <form action="../database/menu.php?operacao=excluir" method="post">
-                    <div class="form-group" style="margin-top:10px">
-                        <label>Menu</label>
-                        <input type="text" class="form-control" name="nomeMenu" value="<?php echo $menu['nomeMenu'] ?>">
-                        <input type="text" class="form-control" name="IDMenu" value="<?php echo $menu['IDMenu'] ?>" style="display: none">
-                    </div>
-                    <div class="card-footer bg-transparent" style="text-align:right">
-                        <button type="submit" class="btn btn-sm btn-success">Excluir</button>
-                    </div>
-                </form>
-            </div>
+
+        <div class="col-sm mt-4" style="text-align:right">
+            <a href="menu.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
         </div>
+        <div class="col-sm">
+            <spam class="col titulo">Excluir Menu</spam>
+        </div>
+
+        <div class="container" style="margin-top: 10px">
+            <form action="../database/menu.php?operacao=excluir" method="post">
+
+                <div class="col-md-12 form-group mb-4">
+                    <label  class='control-label' for='inputNormal'></label>
+                    <input type="text" class="form-control" name="nomeMenu" value="<?php echo $menu['nomeMenu'] ?>">
+                    <input type="text" class="form-control" name="IDMenu" value="<?php echo $menu['IDMenu'] ?>" style="display: none">
+                </div>
+                <div style="text-align:right; margin-top:30px">
+                    <button type="submit" id="botao" class="btn btn-danger"><i class="bi bi-x-octagon"></i>&#32;Excluir</button>
+                </div>
+        </div>
+        </form>
+
     </div>
+
 
 
 </body>

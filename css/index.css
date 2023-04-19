@@ -14,11 +14,12 @@
 .Menu {
     background-color: #12192C;
     color: #FFF;
+    height: 50px;
 }
 .Menu:hover {
     
     color: #FFF;
-}v
+}
 
 .diviFrame {
     padding-left: 0px;
@@ -37,6 +38,10 @@
     /* background-color: #0f5f08; */
    /*  //border-top: 3px solid white; */
    /*  border-bottom: 0.5px solid white; */
+}
+
+.logo{
+    margin-top: -5px;
 }
 
 .iFrame {
@@ -103,13 +108,70 @@
     top: 10px; /*15px*/
     /*left: 20px;*/
    /* background-color: black;*/
-    color: white;
+    color: rgb(255, 255, 255);
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
     margin-top: 7px;
+    margin-left: 50px;
+    margin-right: 30px;
 }
 
+/* @media (max-width: 576px) {
+    .btnAbre {
+      color:red;
+      text-align: left;
+      margin-bottom: -90px;
+      
+    }
+  }
+
+  @media (max-width: 576px) {
+    a.logo {
+      background-color: #000;
+     margin-left: 50px;
+    }
+  } */
+  
+  @media (max-width: 710px) {
+    .btnAbre{
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .navbar1 {
+      display: none;
+    }
+    .navbar-nav{
+        margin-left: 0px;
+    }
+    .email{
+        margin-bottom: -5px;
+        margin-left: 50px;
+    }
+
+    .no-arrow .dropdown-toggle::after {
+        display: none;
+      }
+  }
+
+  .navbar1 a:hover{
+    color: #fff;
+  }
+
+  .email a:hover{
+    color: #fff;
+  }
+
+
+  .topbar-divider{
+    width: 0;
+  border-right: 1px solid #fff;
+  height: calc(4.375rem - 2rem);
+  margin: auto 1rem;
+  }
+  .nav-link{
+    color: #FFF;
+  }
 .btnAbre span{
     font-size: 35px;
 }
@@ -207,4 +269,10 @@
     margin-bottom: 500px;
     margin-right: 180px;
     cursor: pointer;
+}
+
+.shadow {
+    box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+    -webkit-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+    -moz-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
 }

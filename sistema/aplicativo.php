@@ -9,18 +9,21 @@ $aplicativos = buscaAplicativos();
 ?>
 
 <body class="bg-transparent" >
-    <div class="container" style="margin-top:10px">
-        <div class="card shadow">
-            <div class="card-header border-1">
-                <div class="row">
-                    <div class="col-sm">
-                        <h3 class="col">Aplicativo</h3>
+    <div class="container" style="margin-top:30px">
+
+            
+            <div class="row mt-4">
+                <div class="col-sm-8">
+                        <p class="tituloTabela">Aplicativo</p>
                     </div>
-                    <div class="col-sm" style="text-align:right">
-                        <a href="aplicativo_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar</a>
+
+                <div class="col-sm-4" style="text-align:right">
+                        <a href="aplicativo_inserir.php" role="button" class="btn btn-primary">Adicionar</a>
                     </div>
-                </div>
+          
             </div>
+
+        <div class="card shadow mt-2">   
             <table class="table">
                 <thead>
                     <tr>
@@ -48,8 +51,8 @@ $aplicativos = buscaAplicativos();
                 <?php } ?>
 
             </table>
-
         </div>
+        
     </div>
 
 </body>

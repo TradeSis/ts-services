@@ -82,17 +82,17 @@ if (isset($_GET['operacao'])) {
 
 		$tituloEmail = $_POST['tituloDemanda'];
 		$corpoEmail = $_POST['descricao'];
-		$email = $_SESSION['email'];
+		
 
 		$arrayPara    = array(
-				array('email' => 'lucas.rosa@tradesis.com.br',
-				'nome'  => 'Lucas Rosa'),
-				array('email' => 'helio@tradesis.com.br',
-				'nome'  => 'Helio 2'),
-
+				
+				array('email' => 'tradesis@tradesis.com.br',
+				'nome'  => 'TradeSis'),
+				array('email' => $_SESSION['email'],
+				'nome'  => $_SESSION['usuario']),
 		);
 
-		$envio = emailEnviar(null,$email,$arrayPara,$tituloEmail,$corpoEmail);
+		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 		
 	}
 	if ($operacao == "alterar") {

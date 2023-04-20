@@ -15,6 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include_once('../conexao.php');
+include_once "../database/email.php";
 
 function buscaDemandas($idDemanda = null, $idTipoStatus = null)
 {
@@ -66,6 +67,7 @@ if (isset($_GET['operacao'])) {
 	$operacao = $_GET['operacao'];
 
 	if ($operacao == "inserir") {
+		
 		$apiEntrada = array(
 			'idCliente' => $_POST['idCliente'],
 			'idUsuario' => $_POST['idUsuario'],
@@ -74,7 +76,23 @@ if (isset($_GET['operacao'])) {
 			'idTipoStatus' => $_POST['idTipoStatus'],
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
 		);
+		/* echo json_encode($apiEntrada);
+		return; */
 		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'PUT');
+
+		$tituloEmail = $_POST['tituloDemanda'];
+		$corpoEmail = $_POST['descricao'];
+		$email = $_SESSION['email'];
+
+		$arrayPara    = array(
+				array('email' => 'lucas.rosa@tradesis.com.br',
+				'nome'  => 'Lucas Rosa'),
+				array('email' => 'helio@tradesis.com.br',
+				'nome'  => 'Helio 2'),
+
+		);
+
+		$envio = emailEnviar(null,$email,$arrayPara,$tituloEmail,$corpoEmail);
 		
 	}
 	if ($operacao == "alterar") {

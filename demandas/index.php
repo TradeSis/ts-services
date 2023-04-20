@@ -199,10 +199,10 @@ if (isset($_SESSION['filtro_demanda'])) {
   </nav>
 
 
-  <div class="container-fluid text-center pt-2">
-    <div class="card shadow">
+  <div class="container-fluid text-center mt-4">
+    
 
-      <div class="card-header">
+      
 
         <div class="row">
           <div class=" btnAbre">
@@ -212,22 +212,17 @@ if (isset($_SESSION['filtro_demanda'])) {
 
           </div>
 
-          <div style="text-align: left; margin-left: -20px;">
-                        <h3 class="col">Demandas</h3>
-
-                    </div>
-
-          <div class="col-sm-2">
-
+          <div class="col-sm-3 ml-2">
+            <p class="tituloTabela">Demandas</p>
           </div>
 
           <div class="col-sm-4">
             <div class="input-group">
               <input type="text" class="form-control" id="tituloDemanda" placeholder="Buscar por...">
               <span class="input-group-btn">
-                <button class="btn btn-default" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
-                    search
-                  </span></button>
+                <button class="btn btn-primary" id="buscar" type="button">
+                  <span style="font-size: 20px" class="material-symbols-outlined">search</span>
+                </button>
               </span>
             </div>
           </div>
@@ -235,13 +230,13 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
           <div class="col-sm" style="text-align:right">
-            <a href="demanda_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar Demanda</a>
+            <a href="demanda_inserir.php" role="button" class="btn btn-success">Adicionar Demanda</a>
           </div>
         </div>
 
-      </div>
+      
 
- 
+    <div class="card mt-2"> 
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
           <thead class="thead-light">

@@ -275,59 +275,61 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     function buscar(idCliente, idUsuario, idTipoStatus, idTipoOcorrencia, tituloDemanda) {
 
-      $.ajax({
-       
-        type: 'POST', 
-        dataType: 'html',
-        url: '../database/demanda.php?operacao=filtrar',
-        beforeSend: function() {
-          $("#dados").html("Carregando...");
-        },
-        data: {
-          idCliente: idCliente,
-          idUsuario: idUsuario,
-          idTipoStatus: idTipoStatus,
-          idTipoOcorrencia: idTipoOcorrencia,
-          tituloDemanda: tituloDemanda
+$.ajax({
+ 
+  type: 'POST', 
+  dataType: 'html',
+  url: '../database/demanda.php?operacao=filtrar',
+  beforeSend: function() {
+    $("#dados").html("Carregando...");
+  },
+  data: {
+    idCliente: idCliente,
+    idUsuario: idUsuario,
+    idTipoStatus: idTipoStatus,
+    idTipoOcorrencia: idTipoOcorrencia,
+    tituloDemanda: tituloDemanda
 
-        },
+  },
 
-        success: function(msg) {
-          var json = JSON.parse(msg);
-          //alert("terceiro alert: " + JSON.stringify(json));
-          /* alert(JSON.stringify(msg)); */
-          /* $("#dados").html(msg); */
+  success: function(msg) {
+    var json = JSON.parse(msg);
+    //alert("terceiro alert: " + JSON.stringify(json));
+    /* alert(JSON.stringify(msg)); */
+    /* $("#dados").html(msg); */
 
-          var linha = "";
-          for (var $i = 0; $i < json.length; $i++) {
-            var object = json[$i];
+    var linha = "";
+    for (var $i = 0; $i < json.length; $i++) {
+      var object = json[$i];
+      var dataAbertura = new Date(object.dataAbertura);
+      var dataFormatada = dataAbertura.toLocaleDateString("pt-BR") + " " + dataAbertura.toLocaleTimeString("pt-BR");
 
-            // alert("quarto alert: " + JSON.stringify(object))
-            /*  alert(object); */
-            linha = linha + "<TR>";
-            linha = linha + "<TD>" + object.prioridade + "</TD>";
-            linha = linha + "<TD>" + object.idDemanda + "</TD>";
-            linha = linha + "<TD>" + object.nomeCliente + "</TD>";
-            linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
-            linha = linha + "<TD>" + object.nomeUsuario + "</TD>";
-            linha = linha + "<TD>" + object.dataAbertura + "</TD>";
-            linha = linha + "<TD>" + object.nomeTipoStatus + "</TD>";
-            linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
-            linha = linha + "<TD>" + object.tamanho + "</TD>";
-            linha = linha + "<TD>" + object.horasPrevisao + "</TD>";;
-            linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
+      // alert("quarto alert: " + JSON.stringify(object))
+      /*  alert(object); */
+      linha = linha + "<TR>";
+      linha = linha + "<TD>" + object.prioridade + "</TD>";
+      linha = linha + "<TD>" + object.idDemanda + "</TD>";
+      linha = linha + "<TD>" + object.nomeCliente + "</TD>";
+      linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
+      linha = linha + "<TD>" + object.nomeUsuario + "</TD>";
+      linha = linha + "<TD>" + dataFormatada + "</TD>";
+      linha = linha + "<TD>" + object.nomeTipoStatus + "</TD>";
+      linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
+      linha = linha + "<TD>" + object.tamanho + "</TD>";
+      linha = linha + "<TD>" + object.horasPrevisao + "</TD>";;
+      linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
 
-            linha = linha + "</TR>";
-          }
-
-
-          //alert(linha);
-          $("#dados").html(linha);
-
-
-        }
-      });
+      linha = linha + "</TR>";
     }
+
+
+    //alert(linha);
+    $("#dados").html(linha);
+
+
+  }
+});
+}
 
 
     $("#FiltroTipoStatus").change(function() {

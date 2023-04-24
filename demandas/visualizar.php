@@ -64,7 +64,7 @@ $atendentes = buscaAtendente();
 						<div class="col-md-3 pr-4" style="margin-top: 35px;">
 							<div class="form-group">
 								<label class='control-label' for='inputNormal'>Data de Abertura</label>
-								<input type="text" class="data select form-control" name="dataabertura" value="<?php echo $demanda['dataAbertura'] ?>" readonly>
+								<input type="text" class="data select form-control" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
 							</div>
 						</div>
 					</div>
@@ -79,7 +79,7 @@ $atendentes = buscaAtendente();
 						<div class="col-md" >
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Atendente</label>
-								<input type="text" class="data select form-control" name="dataAtualizacaoAtendente" value="<?php echo $demanda['dataAtualizacaoAtendente'] ?>" readonly>
+								<input type="text" class="data select form-control" name="dataAtualizacaoAtendente" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAtualizacaoAtendente']))?>" readonly>
 								<label class="labelForm" >Horas Tarefa</label>
 								<input type="text" class="data select form-control" value="<?php echo $horas['total'] ?>" readonly>
 							</div>
@@ -107,9 +107,9 @@ $atendentes = buscaAtendente();
 						<div class="col-md">
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Cliente</label>
-								<input type="text" class="data select form-control" name="dataAtualizacaoCliente" value="<?php echo $demanda['dataAtualizacaoCliente'] ?>" readonly>
+								<input type="text" class="data select form-control" name="dataAtualizacaoCliente" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAtualizacaoCliente']))?>" readonly>
 								<label class="labelForm">Data Fim</label>
-								<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo $demanda['dataFechamento'] ?>" readonly>
+								<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataFechamento']))?>" readonly>
 							</div>
 
 							<div class="col-md-12 form-group-select" style="margin-top: -30px;">

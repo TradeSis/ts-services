@@ -397,6 +397,42 @@ if (isset($_SESSION['filtro_contrato'])) {
                     // Loop over each object
                     for (var $i = 0; $i < json.length; $i++) {
                         var object = json[$i];
+                        //dataAtualização
+                        if(object.dataAtualizacao == "0000-00-00 00:00:00"){
+                            var dataAtualizacaoFormatada = "<p>---</p>";
+                        }else{
+                            var dataAtualizacao = new Date(object.dataAtualizacao);
+                            dataAtualizacaoFormatada = dataAtualizacao.toLocaleDateString("pt-BR") + " " + dataAtualizacao.toLocaleTimeString("pt-BR");
+                        }
+
+                        //dataFechamento
+                        if(object.dataFechamento == "0000-00-00 00:00:00"){
+                            var dataFechamentoFormatada = "<p>---</p>";
+                        }else{
+                            var dataFechamento = new Date(object.dataFechamento);
+                            dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + " " + dataFechamento.toLocaleTimeString("pt-BR");
+                        }
+
+                        //dataPrevisao
+                        if(object.dataPrevisao == "0000-00-00"){
+                            var dataPrevisaoFormatada = "<p>---</p>";
+                        }else{
+                            var dataPrevisao = new Date(object.dataPrevisao);
+                            dataPrevisaoFormatada = dataPrevisao.toLocaleDateString("pt-BR");
+                        }
+
+                        //dataEntrega
+                        if(object.dataEntrega == "0000-00-00"){
+                            var dataEntregaFormatada = "<p>---</p>";
+                        }else{
+                            var dataEntrega = new Date(object.dataEntrega);
+                            dataEntregaFormatada = dataEntrega.toLocaleDateString("pt-BR");
+                        }
+
+
+
+                        
+                        
 
                         // alert("quarto alert: " + JSON.stringify(object))
                         /*  alert(object); */
@@ -404,10 +440,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                         linha = linha + "<TD>" + object.nomeCliente + "</TD>";
                         linha = linha + "<TD>" + object.tituloContrato + "</TD>";
                         linha = linha + "<TD>" + object.nomeContratoStatus + "</TD>";
-                        linha = linha + "<TD>" + object.dataPrevisao + "</TD>";
-                        linha = linha + "<TD>" + object.dataEntrega + "</TD>";
-                        linha = linha + "<TD>" + object.dataAtualizacao + "</TD>";
-                        linha = linha + "<TD>" + object.dataFechamento + "</TD>";
+                        linha = linha + "<TD>" + dataPrevisaoFormatada + "</TD>";
+                        linha = linha + "<TD>" + dataEntregaFormatada + "</TD>";
+                        linha = linha + "<TD>" + dataAtualizacaoFormatada + "</TD>";
+                        linha = linha + "<TD>" + dataFechamentoFormatada + "</TD>";
                         linha = linha + "<TD>" + object.horas + "</TD>";
                         linha = linha + "<TD>" + object.valorHora + "</TD>";
                         linha = linha + "<TD>" + object.valorContrato + "</TD>";

@@ -42,6 +42,50 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 ?>
 
+<style>
+[class="Orçamento"] { 
+  margin-top: 5px;
+  display: inline-block;
+  background: #5271FE;
+  color: #fff;
+}
+
+[class="Faturamento"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #FE5469;
+  color: #fff;
+}
+
+[class="Finalizado"] {
+  display: inline-block;
+  background: #C34A36;
+  color: #fff;
+}
+
+[class="Aprovação"] { 
+  margin-top: 5px;
+  display: inline-block;
+  background: #69419D;
+  color: #fff;
+}
+
+[class="Desenvolvimento"] {
+  margin-top: 5px;
+  display: inline-block; 
+  background: #FEA051;
+  color: #fff;
+}
+
+[class="Recebimento"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #18B376;
+  color: #fff;
+}
+
+</style>
+
 <body class="bg-transparent">
     <div class="container-fluid py-1">
         <div class="header-body">
@@ -359,8 +403,10 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         </div>
     </div>
-
+   
     <script>
+        
+
         buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
         
         function limpar() {
@@ -430,28 +476,26 @@ if (isset($_SESSION['filtro_contrato'])) {
                         }
 
 
-
-                        
-                        
-
                         // alert("quarto alert: " + JSON.stringify(object))
                         /*  alert(object); */
-                        linha = linha + "<TR>";
-                        linha = linha + "<TD>" + object.nomeCliente + "</TD>";
-                        linha = linha + "<TD>" + object.tituloContrato + "</TD>";
-                        linha = linha + "<TD>" + object.nomeContratoStatus + "</TD>";
-                        linha = linha + "<TD>" + dataPrevisaoFormatada + "</TD>";
-                        linha = linha + "<TD>" + dataEntregaFormatada + "</TD>";
-                        linha = linha + "<TD>" + dataAtualizacaoFormatada + "</TD>";
-                        linha = linha + "<TD>" + dataFechamentoFormatada + "</TD>";
-                        linha = linha + "<TD>" + object.horas + "</TD>";
-                        linha = linha + "<TD>" + object.valorHora + "</TD>";
-                        linha = linha + "<TD>" + object.valorContrato + "</TD>";
-                        linha = linha + "<TD>" + "<a class='btn btn-warning btn-sm' href='alterar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</TD>";
-                        linha = linha + "<TD>" + "<a class='btn btn-danger btn-sm' href='finalizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-calendar-check'></i></a>" + "</TD>";
-                        linha = linha + "</TR>";
-                    }
+                        linha = linha + "<tr>";
+                        linha = linha + "<td>" + object.nomeCliente + "</td>";
+                        linha = linha + "<td>" + object.tituloContrato + "</td>";
 
+                        linha = linha + "<td class='"+ object.nomeContratoStatus +"' data-status='Finalizado' >" + object.nomeContratoStatus +" </td>";
+
+
+                        linha = linha + "<td>" + dataPrevisaoFormatada + "</td>";
+                        linha = linha + "<td>" + dataEntregaFormatada + "</td>";
+                        linha = linha + "<td>" + dataAtualizacaoFormatada + "</td>";
+                        linha = linha + "<td>" + dataFechamentoFormatada + "</td>";
+                        linha = linha + "<td>" + object.horas + "</td>";
+                        linha = linha + "<td>" + object.valorHora + "</td>";
+                        linha = linha + "<td>" + object.valorContrato + "</td>";
+                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='alterar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
+                        linha = linha + "<td>" + "<a class='btn btn-danger btn-sm' href='finalizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-calendar-check'></i></a>" + "</td>";
+                        linha = linha + "</tr>";
+                    }
 
                     //alert(linha);
                     $("#dados").html(linha);
@@ -464,8 +508,8 @@ if (isset($_SESSION['filtro_contrato'])) {
                     return null;
                 }
             });
-        }
 
+        }
 
         $("#FiltroClientes").change(function() {
             buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());

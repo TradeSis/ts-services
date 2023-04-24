@@ -42,7 +42,62 @@ if (isset($_SESSION['filtro_demanda'])) {
 }
 
 ?>
+<style>
+[class="fila"] { 
+  margin-top: 5px;
+  display: inline-block;
+  background: #5271FE;
+  color: #fff;
+}
 
+[class="priorização"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #FE5469;
+  color: #fff;
+}
+
+[class="feito"] {
+  display: inline-block;
+  background: #C34A36;
+  color: #fff;
+}
+
+[class="fazendo"] { 
+  margin-top: 5px;
+  display: inline-block;
+  background: #69419D;
+  color: #fff;
+}
+
+[class="retorno"] {
+  margin-top: 5px;
+  display: inline-block; 
+  background: #FEA051;
+  color: #fff;
+}
+
+[class="validado"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #18B376;
+  color: #fff;
+}
+
+[class="aguardando informação"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: red;
+  color: #fff;
+}
+
+[class="fila desenv"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: blueviolet;
+  color: #fff;
+}
+</style>
 <body class="bg-transparent">
   <div class="container-fluid py-1">
     <div class="header-body">
@@ -313,7 +368,9 @@ $.ajax({
       linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
       linha = linha + "<TD>" + object.nomeUsuario + "</TD>";
       linha = linha + "<TD>" + dataFormatada + "</TD>";
-      linha = linha + "<TD>" + object.nomeTipoStatus + "</TD>";
+
+      linha = linha + "<TD class='"+ object.nomeTipoStatus +"' data-status='Finalizado' >" + object.nomeTipoStatus +" </TD>";
+
       linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
       linha = linha + "<TD>" + object.tamanho + "</TD>";
       linha = linha + "<TD>" + object.horasPrevisao + "</TD>";;

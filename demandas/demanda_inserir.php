@@ -13,6 +13,8 @@ include_once '../database/usuario.php';
 include_once '../database/clientes.php';
 include_once '../database/tipostatus.php';
 include_once '../database/tipoocorrencia.php';
+include_once "../database/email.php";
+
 
 $tiposstatus = buscaTipoStatus(1);
 $ocorrencias = buscaTipoOcorrencia(1);
@@ -24,7 +26,7 @@ $clientes = buscaClientes();
 <body class="bg-transparent">
 
     <div class="container" style="margin-top:10px">
-        <!-- <div class="card shadow"> -->
+       
            
                 
                    
@@ -37,7 +39,7 @@ $clientes = buscaClientes();
             
             <div class="container" style="margin-top: 10px">
 
-                <form action="../database/demanda.php?operacao=inserir" method="post">
+                <form id="form" method="post">
                     <div class="row">
                         <div class="col form-group">
                             <label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
@@ -93,11 +95,37 @@ $clientes = buscaClientes();
                     </div>
                 </form>
             </div>
-        <!-- </div> -->
+        
     </div>
 
 
+<script>
 
+
+$(document).ready(function() {
+            $("#form").submit(function() {
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: "../database/demanda.php?operacao=inserir",
+                    type: 'POST',
+                    data: formData,
+                    beforeSend: alert('ENVIADO...'),
+                    success: refreshPage(),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    
+                });
+
+            });
+
+            function refreshPage() {
+                alert('Email ENVIADO')
+                window.location.reload();
+            }
+        });
+</script>
 </body>
 
 </html>

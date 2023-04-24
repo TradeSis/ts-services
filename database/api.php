@@ -20,7 +20,7 @@ function chamaAPI ($URL,$apiUrlParametros,$apiEntrada,$apiMethod) {
 	$apiHeaders = array(
 		"Content-Type: application/json"
 	);
-	
+
  	$apiCurl = curl_init($apiUrl);
 	curl_setopt($apiCurl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($apiCurl, CURLOPT_CUSTOMREQUEST, $apiMethod);
@@ -28,14 +28,28 @@ function chamaAPI ($URL,$apiUrlParametros,$apiEntrada,$apiMethod) {
 	if (isset($apiEntrada)) { 
 		curl_setopt($apiCurl, CURLOPT_POSTFIELDS, $apiEntrada); 
 	}
-
+	curl_setopt($apiCurl, CURLOPT_ENCODING, '' );
+	curl_setopt($apiCurl, CURLOPT_MAXREDIRS, 10 );
+	curl_setopt($apiCurl, CURLOPT_TIMEOUT, 0 );
+	curl_setopt($apiCurl, CURLOPT_FOLLOWLOCATION, true );
+	curl_setopt($apiCurl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1 );
+	
 	$apiResponse = curl_exec($apiCurl);
 	$apiInfo     = curl_getinfo($apiCurl);
+    $erro = null;
+    if (curl_errno($apiCurl)) {
+       // $errno= curl_errno($apiCurl);
+        $erro = curl_error($apiCurl);
+    }
 
 	curl_close($apiCurl);
-          
+
 	if ($apiInfo['http_code'] == 200) {
 		$apiRetorno = json_decode($apiResponse, true);
+	} else {
+		$apiRetorno = 
+			array("http_code" => $apiInfo['http_code'],
+				  "erro"  => $erro);		
 	}
 	return $apiRetorno;
 

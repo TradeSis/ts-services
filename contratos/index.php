@@ -326,7 +326,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
                     <div class="col-sm" style="text-align:right">
-                        <a href="inserir.php" role="button" class="btn btn-success">Inserir Contrato</a>
+                        <a href="inserir.php" role="button" class="btn btn-success">Adicionar Contrato</a>
                     </div>
                 </div>
 

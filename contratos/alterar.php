@@ -65,8 +65,9 @@ $cliente = buscaClientes($idCliente);
 
 					<div class="col-md-3" style="margin-top: -10px;">
 						<label class="labelForm">Abertura</label>
-						<input type="text" class="data select form-control" name="dataAbertura" value="<?php echo $contrato['dataAbertura'] ?>" disabled>
+						<input type="text" class="data select form-control" name="dataAbertura" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataAbertura']))?>" disabled>
 					</div>
+
 
 					<div class="col-md-3" style="margin-top: -10px;">
 						<label class="labelForm">Previsao</label>

@@ -42,6 +42,56 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 ?>
 
+<style>
+[class="Orçamento"] { 
+  margin-top: 5px;
+  display: inline-block;
+  background: #5271FE;
+  color: #fff;
+  width: 160px;
+}
+
+[class="Faturamento"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #FE5469;
+  color: #fff;
+  width: 160px;
+}
+
+[class="Finalizado"] {
+  display: inline-block;
+  background: #C34A36;
+  color: #fff;
+  width: 160px;
+}
+
+[class="Aprovação"] { 
+  margin-top: 5px;
+  display: inline-block;
+  background: #69419D;
+  color: #fff;
+  width: 160px;
+}
+
+[class="Desenvolvimento"] {
+  margin-top: 5px;
+  display: inline-block; 
+  background: #FEA051;
+  color: #fff;
+  width: 160px;
+}
+
+[class="Recebimento"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #18B376;
+  color: #fff;
+  width: 160px;
+}
+
+</style>
+
 <body class="bg-transparent">
     <div class="container-fluid py-1">
         <div class="header-body">
@@ -359,8 +409,10 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         </div>
     </div>
-
+   
     <script>
+        
+
         buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
         
         function limpar() {
@@ -397,25 +449,59 @@ if (isset($_SESSION['filtro_contrato'])) {
                     // Loop over each object
                     for (var $i = 0; $i < json.length; $i++) {
                         var object = json[$i];
+                        //dataAtualização
+                        if(object.dataAtualizacao == "0000-00-00 00:00:00"){
+                            var dataAtualizacaoFormatada = "<p>---</p>";
+                        }else{
+                            var dataAtualizacao = new Date(object.dataAtualizacao);
+                            dataAtualizacaoFormatada = dataAtualizacao.toLocaleDateString("pt-BR") + " " + dataAtualizacao.toLocaleTimeString("pt-BR");
+                        }
+
+                        //dataFechamento
+                        if(object.dataFechamento == "0000-00-00 00:00:00"){
+                            var dataFechamentoFormatada = "<p>---</p>";
+                        }else{
+                            var dataFechamento = new Date(object.dataFechamento);
+                            dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + " " + dataFechamento.toLocaleTimeString("pt-BR");
+                        }
+
+                        //dataPrevisao
+                        if(object.dataPrevisao == "0000-00-00"){
+                            var dataPrevisaoFormatada = "<p>---</p>";
+                        }else{
+                            var dataPrevisao = new Date(object.dataPrevisao);
+                            dataPrevisaoFormatada = dataPrevisao.toLocaleDateString("pt-BR");
+                        }
+
+                        //dataEntrega
+                        if(object.dataEntrega == "0000-00-00"){
+                            var dataEntregaFormatada = "<p>---</p>";
+                        }else{
+                            var dataEntrega = new Date(object.dataEntrega);
+                            dataEntregaFormatada = dataEntrega.toLocaleDateString("pt-BR");
+                        }
+
 
                         // alert("quarto alert: " + JSON.stringify(object))
                         /*  alert(object); */
-                        linha = linha + "<TR>";
-                        linha = linha + "<TD>" + object.nomeCliente + "</TD>";
-                        linha = linha + "<TD>" + object.tituloContrato + "</TD>";
-                        linha = linha + "<TD>" + object.nomeContratoStatus + "</TD>";
-                        linha = linha + "<TD>" + object.dataPrevisao + "</TD>";
-                        linha = linha + "<TD>" + object.dataEntrega + "</TD>";
-                        linha = linha + "<TD>" + object.dataAtualizacao + "</TD>";
-                        linha = linha + "<TD>" + object.dataFechamento + "</TD>";
-                        linha = linha + "<TD>" + object.horas + "</TD>";
-                        linha = linha + "<TD>" + object.valorHora + "</TD>";
-                        linha = linha + "<TD>" + object.valorContrato + "</TD>";
-                        linha = linha + "<TD>" + "<a class='btn btn-warning btn-sm' href='alterar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</TD>";
-                        linha = linha + "<TD>" + "<a class='btn btn-danger btn-sm' href='finalizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-calendar-check'></i></a>" + "</TD>";
-                        linha = linha + "</TR>";
-                    }
+                        linha = linha + "<tr>";
+                        linha = linha + "<td>" + object.nomeCliente + "</td>";
+                        linha = linha + "<td>" + object.tituloContrato + "</td>";
 
+                        linha = linha + "<td class='"+ object.nomeContratoStatus +"' data-status='Finalizado' >" + object.nomeContratoStatus +" </td>";
+
+
+                        linha = linha + "<td>" + dataPrevisaoFormatada + "</td>";
+                        linha = linha + "<td>" + dataEntregaFormatada + "</td>";
+                        linha = linha + "<td>" + dataAtualizacaoFormatada + "</td>";
+                        linha = linha + "<td>" + dataFechamentoFormatada + "</td>";
+                        linha = linha + "<td>" + object.horas + "</td>";
+                        linha = linha + "<td>" + object.valorHora + "</td>";
+                        linha = linha + "<td>" + object.valorContrato + "</td>";
+                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='alterar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
+                        linha = linha + "<td>" + "<a class='btn btn-danger btn-sm' href='finalizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-calendar-check'></i></a>" + "</td>";
+                        linha = linha + "</tr>";
+                    }
 
                     //alert(linha);
                     $("#dados").html(linha);
@@ -428,8 +514,8 @@ if (isset($_SESSION['filtro_contrato'])) {
                     return null;
                 }
             });
-        }
 
+        }
 
         $("#FiltroClientes").change(function() {
             buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());

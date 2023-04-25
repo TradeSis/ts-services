@@ -42,7 +42,70 @@ if (isset($_SESSION['filtro_demanda'])) {
 }
 
 ?>
+<style>
+[class="fila"] { 
+  margin-top: 5px;
+  display: inline-block;
+  background: #5271FE;
+  color: #fff;
+  width: 160px;
+}
 
+[class="priorização"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #FE5469;
+  color: #fff;
+  width: 160px;
+}
+
+[class="feito"] {
+  display: inline-block;
+  background: #C34A36;
+  color: #fff;
+  width: 160px;
+}
+
+[class="fazendo"] { 
+  margin-top: 5px;
+  display: inline-block;
+  background: #69419D;
+  color: #fff;
+  width: 160px;
+}
+
+[class="retorno"] {
+  margin-top: 5px;
+  display: inline-block; 
+  background: #FEA051;
+  color: #fff;
+  width: 160px;
+}
+
+[class="validado"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #18B376;
+  color: #fff;
+  width: 160px;
+}
+
+[class="aguardando informação"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: #00C2A8;
+  width: 160px;
+  color: #fff;
+}
+
+[class="fila desenv"] {
+  margin-top: 5px;
+  display: inline-block;
+  background: blueviolet;
+  color: #fff;
+  width: 160px;
+}
+</style>
 <body class="bg-transparent">
   <div class="container-fluid py-1">
     <div class="header-body">
@@ -275,59 +338,63 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     function buscar(idCliente, idUsuario, idTipoStatus, idTipoOcorrencia, tituloDemanda) {
 
-      $.ajax({
-       
-        type: 'POST', 
-        dataType: 'html',
-        url: '../database/demanda.php?operacao=filtrar',
-        beforeSend: function() {
-          $("#dados").html("Carregando...");
-        },
-        data: {
-          idCliente: idCliente,
-          idUsuario: idUsuario,
-          idTipoStatus: idTipoStatus,
-          idTipoOcorrencia: idTipoOcorrencia,
-          tituloDemanda: tituloDemanda
+$.ajax({
+ 
+  type: 'POST', 
+  dataType: 'html',
+  url: '../database/demanda.php?operacao=filtrar',
+  beforeSend: function() {
+    $("#dados").html("Carregando...");
+  },
+  data: {
+    idCliente: idCliente,
+    idUsuario: idUsuario,
+    idTipoStatus: idTipoStatus,
+    idTipoOcorrencia: idTipoOcorrencia,
+    tituloDemanda: tituloDemanda
 
-        },
+  },
 
-        success: function(msg) {
-          var json = JSON.parse(msg);
-          //alert("terceiro alert: " + JSON.stringify(json));
-          /* alert(JSON.stringify(msg)); */
-          /* $("#dados").html(msg); */
+  success: function(msg) {
+    var json = JSON.parse(msg);
+    //alert("terceiro alert: " + JSON.stringify(json));
+    /* alert(JSON.stringify(msg)); */
+    /* $("#dados").html(msg); */
 
-          var linha = "";
-          for (var $i = 0; $i < json.length; $i++) {
-            var object = json[$i];
+    var linha = "";
+    for (var $i = 0; $i < json.length; $i++) {
+      var object = json[$i];
+      var dataAbertura = new Date(object.dataAbertura);
+      var dataFormatada = dataAbertura.toLocaleDateString("pt-BR") + " " + dataAbertura.toLocaleTimeString("pt-BR");
 
-            // alert("quarto alert: " + JSON.stringify(object))
-            /*  alert(object); */
-            linha = linha + "<TR>";
-            linha = linha + "<TD>" + object.prioridade + "</TD>";
-            linha = linha + "<TD>" + object.idDemanda + "</TD>";
-            linha = linha + "<TD>" + object.nomeCliente + "</TD>";
-            linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
-            linha = linha + "<TD>" + object.nomeUsuario + "</TD>";
-            linha = linha + "<TD>" + object.dataAbertura + "</TD>";
-            linha = linha + "<TD>" + object.nomeTipoStatus + "</TD>";
-            linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
-            linha = linha + "<TD>" + object.tamanho + "</TD>";
-            linha = linha + "<TD>" + object.horasPrevisao + "</TD>";;
-            linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
+      // alert("quarto alert: " + JSON.stringify(object))
+      /*  alert(object); */
+      linha = linha + "<TR>";
+      linha = linha + "<TD>" + object.prioridade + "</TD>";
+      linha = linha + "<TD>" + object.idDemanda + "</TD>";
+      linha = linha + "<TD>" + object.nomeCliente + "</TD>";
+      linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
+      linha = linha + "<TD>" + object.nomeUsuario + "</TD>";
+      linha = linha + "<TD>" + dataFormatada + "</TD>";
 
-            linha = linha + "</TR>";
-          }
+      linha = linha + "<TD class='"+ object.nomeTipoStatus +"' data-status='Finalizado' >" + object.nomeTipoStatus +" </TD>";
 
+      linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
+      linha = linha + "<TD>" + object.tamanho + "</TD>";
+      linha = linha + "<TD>" + object.horasPrevisao + "</TD>";;
+      linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
 
-          //alert(linha);
-          $("#dados").html(linha);
-
-
-        }
-      });
+      linha = linha + "</TR>";
     }
+
+
+    //alert(linha);
+    $("#dados").html(linha);
+
+
+  }
+});
+}
 
 
     $("#FiltroTipoStatus").change(function() {

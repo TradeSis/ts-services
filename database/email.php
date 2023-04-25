@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\Exception;
 //Load Composer's autoloader
 
 include_once '../conexao.php';
-require_once defineROOT().'./vendor/autoload.php';
+require_once defineROOT().'/vendor/autoload.php';
 
 
 function emailEnviar($from,$fromNome,$arrayPara,$assunto,$corpo)

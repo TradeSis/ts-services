@@ -87,7 +87,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 [class="aguardando informação"] {
   margin-top: 5px;
   display: inline-block;
-  background: red;
+  background: #00C2A8;
   color: #fff;
 }
 

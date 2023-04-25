@@ -48,6 +48,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   display: inline-block;
   background: #5271FE;
   color: #fff;
+  width: 160px;
 }
 
 [class="priorização"] {
@@ -55,12 +56,14 @@ if (isset($_SESSION['filtro_demanda'])) {
   display: inline-block;
   background: #FE5469;
   color: #fff;
+  width: 160px;
 }
 
 [class="feito"] {
   display: inline-block;
   background: #C34A36;
   color: #fff;
+  width: 160px;
 }
 
 [class="fazendo"] { 
@@ -68,6 +71,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   display: inline-block;
   background: #69419D;
   color: #fff;
+  width: 160px;
 }
 
 [class="retorno"] {
@@ -75,6 +79,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   display: inline-block; 
   background: #FEA051;
   color: #fff;
+  width: 160px;
 }
 
 [class="validado"] {
@@ -82,12 +87,14 @@ if (isset($_SESSION['filtro_demanda'])) {
   display: inline-block;
   background: #18B376;
   color: #fff;
+  width: 160px;
 }
 
 [class="aguardando informação"] {
   margin-top: 5px;
   display: inline-block;
   background: #00C2A8;
+  width: 160px;
   color: #fff;
 }
 
@@ -96,6 +103,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   display: inline-block;
   background: blueviolet;
   color: #fff;
+  width: 160px;
 }
 </style>
 <body class="bg-transparent">

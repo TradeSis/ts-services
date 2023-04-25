@@ -48,6 +48,7 @@ if (isset($_SESSION['filtro_contrato'])) {
   display: inline-block;
   background: #5271FE;
   color: #fff;
+  width: 160px;
 }
 
 [class="Faturamento"] {
@@ -55,12 +56,14 @@ if (isset($_SESSION['filtro_contrato'])) {
   display: inline-block;
   background: #FE5469;
   color: #fff;
+  width: 160px;
 }
 
 [class="Finalizado"] {
   display: inline-block;
   background: #C34A36;
   color: #fff;
+  width: 160px;
 }
 
 [class="Aprovação"] { 
@@ -68,6 +71,7 @@ if (isset($_SESSION['filtro_contrato'])) {
   display: inline-block;
   background: #69419D;
   color: #fff;
+  width: 160px;
 }
 
 [class="Desenvolvimento"] {
@@ -75,6 +79,7 @@ if (isset($_SESSION['filtro_contrato'])) {
   display: inline-block; 
   background: #FEA051;
   color: #fff;
+  width: 160px;
 }
 
 [class="Recebimento"] {
@@ -82,6 +87,7 @@ if (isset($_SESSION['filtro_contrato'])) {
   display: inline-block;
   background: #18B376;
   color: #fff;
+  width: 160px;
 }
 
 </style>

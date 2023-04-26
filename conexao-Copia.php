@@ -24,6 +24,25 @@ function defineConexaoMysql () {
                             );
 
 }
+function defineEmail () {
+
+  return        array(  "Host"      => 'smtp.hostinger.com', 
+                        "Port"      => 465, 
+                        "Username"  => 'tradesis@tradesis.com.br',
+                        "Password"  => '',
+                        "from"      => 'tradesis@tradesis.com.br',
+                        "fromNome"  => 'tradesis'
+                          );
+
+}
+
+function defineSenderWhatsapp () {
+  return        array(  'api_key' => '*47C1C75E4E85AA2209D0C4540C4BFDD3D05E0143', 
+                        'sender' => '5551992234364'
+                          );
+
+}
+
 
 function defineROOT () {
 

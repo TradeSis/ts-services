@@ -7,7 +7,7 @@
 include_once 'head.php';
 include_once 'database/montaMenu.php';
 
-$menus = buscaMontaMenu(1);
+$menus = buscaMontaMenu('Services',$_SESSION['idUsuario']);
 //echo json_encode($menus);
 ?>
 
@@ -96,6 +96,10 @@ $menus = buscaMontaMenu(1);
                     <a class="dropdown-item" href="usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>">
                         <i class="bi bi-person-circle"></i>&#32;
                         Perfil
+                    </a>
+                    <a class="dropdown-item" href="/ts/painel/">
+                        <i class="bi bi-display"></i>&#32;
+                        Painel
                     </a>
 
                     <div class="dropdown-divider"></div>

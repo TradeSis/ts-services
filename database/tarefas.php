@@ -5,12 +5,12 @@
 
 include_once('../conexao.php');
 
-function buscaTarefas($idTarefa = null)
+function buscaTarefas($idDemanda = null)
 {
 
     $tarefas = array();
     $apiEntrada = array(
-        'idTarefa' => $idTarefa,
+        'idDemanda' => $idDemanda,
     );
     $tarefas = chamaAPI(null, '/api/services/tarefas', json_encode($apiEntrada), 'GET');
     return $tarefas;

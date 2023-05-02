@@ -7,14 +7,16 @@
 
 include_once '../head.php';
 include_once '../database/demanda.php';
+include_once '../database/tarefas.php';
 include_once '../database/usuario.php';
 include_once '../database/clientes.php';
 
 $idDemanda = $_GET['idDemanda'];
-
+$idAtendente = $_SESSION['idUsuario'];
 $demanda = buscaDemandas($idDemanda);
 $atendentes = buscaAtendente();
 $cliente = buscaClientes($demanda["idCliente"]);
+$tarefas = buscaTarefas($idDemanda);
 
 ?>
 
@@ -22,10 +24,10 @@ $cliente = buscaClientes($demanda["idCliente"]);
     <div class="container-fluid full-width mt-3">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
+                <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
+                <a class="nav-link active" style="color:blue" href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
             </li>
         </ul>
         <div class="card">
@@ -63,9 +65,15 @@ $cliente = buscaClientes($demanda["idCliente"]);
                             <div class="form-group">
                                 <label class='control-label' for='inputNormal'>Reponsável</label>
                                 <select class="form-control" name="idAtendente">
-									<?php foreach ($atendentes as $atendente) { ?>
-										<option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
-									<?php } ?>
+                                <?php
+                                foreach ($atendentes as $atendente) {
+                                ?>
+                                <option <?php
+                                        if ($atendente['idUsuario'] == $idAtendente) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario']  ?></option>
+                                <?php  } ?>
 								</select>
                             </div>
                         </div>
@@ -95,6 +103,56 @@ $cliente = buscaClientes($demanda["idCliente"]);
                 </form>
             </div>
         </div>
+        <div class="card mt-2"> 
+            <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
+                <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th>Cliente</th>
+                    <th>Demanda</th>
+                    <th>Atendente</th>
+                    <th>Data Início</th>
+                    <th>Data Fim</th>
+                    <th>Duração</th>
+                    <th>Status</th>
+                  </tr>
+                  </thead>
+                    <tbody class="fonteCorpo">                           
+                        <?php
+                        if (count($tarefas) == 13) {;?>
+                            <tr>
+                                <td><?php echo $tarefas['idTarefa'] ?></td>
+                                <td><?php echo $tarefas['tituloTarefa'] ?></td>
+                                <td><?php echo $tarefas['nomeCliente'] ?></td>
+                                <td><?php echo $tarefas['tituloDemanda'] ?></td>
+                                <td><?php echo $tarefas['nomeUsuario'] ?></td>
+                                <td><?php echo date('d/m/Y H:i', strtotime($tarefas['dataExecucaoInicio'])) ?></td>
+                                <td><?php echo date('d/m/Y H:i', strtotime($tarefas['dataExecucaoFinal'])) ?></td>
+                                <td><?php echo $tarefas['tempo'] ?></td>
+                                <td><?php echo $tarefas['nomeTipoStatus'] ?></td>
+                            </tr>
+                            <?php } else {
+
+                        foreach ($tarefas as $tarefa) {
+                        ?>
+                        <tr>
+                            <td><?php echo $tarefa['idTarefa'] ?></td>
+                            <td><?php echo $tarefa['tituloTarefa'] ?></td>
+                            <td><?php echo $tarefa['nomeCliente'] ?></td>
+                            <td><?php echo $tarefa['tituloDemanda'] ?></td>
+                            <td><?php echo $tarefa['nomeUsuario'] ?></td>
+                            <td><?php echo date('d/m/Y H:i', strtotime($tarefa['dataExecucaoInicio'])) ?></td>
+                            <td><?php echo date('d/m/Y H:i', strtotime($tarefa['dataExecucaoFinal'])) ?></td>
+                            <td><?php echo $tarefa['tempo'] ?></td>
+                            <td><?php echo $tarefa['nomeTipoStatus'] ?></td>
+                        </tr>
+                        <?php }} ?>
+                    </tbody>  
+                </table>
+            </div>
+        </div>
     </div>
 
 
@@ -117,6 +175,16 @@ $cliente = buscaClientes($demanda["idCliente"]);
                 window.location.reload();
             }
         });
+
+        function updateInput() {
+            var comboBox = document.getElementById("myComboBox");
+            var otherInput = document.getElementById("otherInput");
+            if (comboBox.value === "other") {
+                otherInput.style.display = "block";
+            } else {
+                otherInput.style.display = "none";
+            }
+        }
     </script>
 </body>
 

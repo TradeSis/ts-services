@@ -24,10 +24,10 @@ $comentarios = buscaComentarios($idDemanda);
         if ($_SESSION['idCliente'] == NULL) { ?>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
+                    <a class="nav-link active" style="color:blue" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
+                    <a class="nav-link active" href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
                 </li>
             </ul>
         <?php }

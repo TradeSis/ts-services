@@ -5,12 +5,12 @@
 
 include_once('../conexao.php');
 
-function buscaTipoStatus($mudaStatusPara=null, $idTipoStatus=null)
+function buscaTipoStatus($statusInicial=null, $idTipoStatus=null)
 {
 	
 	$tipostatus = array();
 	$apiEntrada = array(
-		'mudaStatusPara' => $mudaStatusPara,
+		'statusInicial' => $statusInicial,
 		'idTipoStatus' => $idTipoStatus,
 	);
 	$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'GET');

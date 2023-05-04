@@ -15,7 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include_once('../conexao.php');
-include_once "../database/email.php";
+
 
 function buscaDemandas($idDemanda = null, $idTipoStatus = null)
 {

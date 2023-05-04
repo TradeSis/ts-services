@@ -40,7 +40,7 @@ if ($_SESSION['idCliente'] == null){
 } else {
   $idAtendente = null;
 }
-$mudaStatusPara = "1";  //ABERTO
+$statusDemanda = "1";  //ABERTO
 
 $filtroEntrada = null;
 $idTipoStatus = null;
@@ -53,7 +53,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     $idAtendente = $filtroEntrada['idAtendente'];
     $idTipoStatus = $filtroEntrada['idTipoStatus'];
     $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
-    $mudaStatusPara = $filtroEntrada['mudaStatusPara'];
+    $statusDemanda = $filtroEntrada['statusDemanda'];
 }
 ?>
 <style>
@@ -250,10 +250,10 @@ if (isset($_SESSION['filtro_demanda'])) {
       <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="mudaStatusPara" id="FiltroMudaStatus" style="font-size: 14px; width: 150px; height: 35px">
+          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo "Todos"  ?></option>
-            <option <?php if ($mudaStatusPara == "1") { echo "selected"; } ?> value="1">Aberto</option>
-            <option <?php if ($mudaStatusPara == "0") { echo "selected"; } ?> value="0">Fechado</option>
+            <option <?php if ($statusDemanda == "1") { echo "selected"; } ?> value="1">Aberto</option>
+            <option <?php if ($statusDemanda == "0") { echo "selected"; } ?> value="0">Fechado</option>
           </select>
 
         </form>
@@ -359,6 +359,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               <th>Status</th>
               <th>Ocorrência</th>
               <th>Tamanho</th>
+              <th>Situação</th>
               <th>Ação</th>
             </tr>
           </thead>
@@ -374,7 +375,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroMudaStatus").val(), $("#tituloDemanda").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
 
     function limparTrade() {
       buscar(null, null, null, null, null, null);
@@ -386,7 +387,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       window.location.reload();
     }
 
-    function buscar(idCliente, idAtendente, idTipoStatus, idTipoOcorrencia, mudaStatusPara, tituloDemanda) {
+    function buscar(idCliente, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda) {
 
 $.ajax({
  
@@ -401,7 +402,7 @@ $.ajax({
     idAtendente: idAtendente,
     idTipoStatus: idTipoStatus,
     idTipoOcorrencia: idTipoOcorrencia,
-    mudaStatusPara: mudaStatusPara,
+    statusDemanda: statusDemanda,
     tituloDemanda: tituloDemanda
 
   },
@@ -432,6 +433,7 @@ $.ajax({
 
       linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
       linha = linha + "<TD>" + object.tamanho + "</TD>";
+      linha = linha + "<TD>" + (object.statusDemanda == 0 ? "Fechado" : "Aberto") + "</TD>";
       linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
 
       linha = linha + "</TR>";
@@ -448,32 +450,32 @@ $.ajax({
 
 
     $("#FiltroTipoStatus").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroMudaStatus").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroClientes").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroMudaStatus").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroOcorrencia").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroMudaStatus").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroUsuario").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroMudaStatus").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
-    $("#FiltroMudaStatus").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroMudaStatus").val(), $("#tituloDemanda").val());
+    $("#FiltroStatusDemanda").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#buscar").click(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroMudaStatus").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroMudaStatus").val(), $("#tituloDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
       }
     });
 

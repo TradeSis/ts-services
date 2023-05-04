@@ -157,7 +157,7 @@ if (isset($_GET['operacao'])) {
 		$idTipoStatus = $_POST['idTipoStatus'];
 		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
 		$idAtendente = $_POST['idAtendente'];
-		$mudaStatusPara = $_POST['mudaStatusPara'];
+		$statusDemanda = $_POST['statusDemanda'];
 		$tituloDemanda = $_POST['tituloDemanda'];
 
 		if ($idCliente == "") {
@@ -178,8 +178,8 @@ if (isset($_GET['operacao'])) {
 		}
 
 
-		if ($mudaStatusPara == "") {
-			$mudaStatusPara = null;
+		if ($statusDemanda == "") {
+			$statusDemanda = null;
 		}
 
 
@@ -196,7 +196,7 @@ if (isset($_GET['operacao'])) {
 			'idAtendente' => $idAtendente,
 			'idTipoStatus' => $idTipoStatus,
 			'idTipoOcorrencia' => $idTipoOcorrencia,
-			'mudaStatusPara' => $mudaStatusPara,
+			'statusDemanda' => $statusDemanda,
 			'tituloDemanda' => $tituloDemanda
 		);
 

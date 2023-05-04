@@ -359,7 +359,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               <th>Status</th>
               <th>Ocorrência</th>
               <th>Tamanho</th>
-              <th>Situação</th>
+              <th>Previsão</th>
               <th>Ação</th>
             </tr>
           </thead>
@@ -433,7 +433,7 @@ $.ajax({
 
       linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
       linha = linha + "<TD>" + object.tamanho + "</TD>";
-      linha = linha + "<TD>" + (object.statusDemanda == 0 ? "Fechado" : "Aberto") + "</TD>";
+      linha = linha + "<TD>" + object.horasPrevisao + "</TD>";
       linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
 
       linha = linha + "</TR>";

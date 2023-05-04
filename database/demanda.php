@@ -156,15 +156,16 @@ if (isset($_GET['operacao'])) {
 		$idCliente = $_POST['idCliente'];
 		$idTipoStatus = $_POST['idTipoStatus'];
 		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
-		$idUsuario = $_POST['idUsuario'];
+		$idAtendente = $_POST['idAtendente'];
+		$statusDemanda = $_POST['statusDemanda'];
 		$tituloDemanda = $_POST['tituloDemanda'];
 
 		if ($idCliente == "") {
 			$idCliente = null;
 		}
 
-		if ($idUsuario == "") {
-			$idUsuario = null;
+		if ($idAtendente == "") {
+			$idAtendente = null;
 		}
 
 		if ($idTipoStatus == "") {
@@ -177,18 +178,25 @@ if (isset($_GET['operacao'])) {
 		}
 
 
+		if ($statusDemanda == "") {
+			$statusDemanda = null;
+		}
+
+
 		if ($tituloDemanda == ""){
 			$tituloDemanda = null;
 		}
+		
 		
 	
 
 		$apiEntrada = array(
 			'idDemanda' => null,
 			'idCliente' => $idCliente,
-			'idUsuario' => $idUsuario,
+			'idAtendente' => $idAtendente,
 			'idTipoStatus' => $idTipoStatus,
 			'idTipoOcorrencia' => $idTipoOcorrencia,
+			'statusDemanda' => $statusDemanda,
 			'tituloDemanda' => $tituloDemanda
 		);
 

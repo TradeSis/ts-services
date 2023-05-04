@@ -79,7 +79,13 @@ $atendentes = buscaAtendente();
 						<div class="col-md" >
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Atendente</label>
-								<input type="text" class="data select form-control" name="dataAtualizacaoAtendente" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAtualizacaoAtendente']))?>" readonly>
+								<?php
+									$dataAtualizacaoAtendente = $demanda['dataAtualizacaoAtendente'];
+									if ($dataAtualizacaoAtendente != "0000-00-00 00:00:00") {
+										$dataAtualizacaoAtendente = date('d/m/Y H:i', strtotime($dataAtualizacaoAtendente));
+									}
+								?>
+								<input type="text" class="data select form-control" name="dataAtualizacaoAtendente" value="<?php echo $dataAtualizacaoAtendente ?>" readonly>
 								<label class="labelForm" >Horas Tarefa</label>
 								<input type="text" class="data select form-control" value="<?php echo $horas['total'] ?>" readonly>
 							</div>
@@ -107,9 +113,21 @@ $atendentes = buscaAtendente();
 						<div class="col-md">
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Cliente</label>
-								<input type="text" class="data select form-control" name="dataAtualizacaoCliente" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAtualizacaoCliente']))?>" readonly>
+								<?php
+									$dataAtualizacaoCliente = $demanda['dataAtualizacaoCliente'];
+									if ($dataAtualizacaoCliente != "0000-00-00 00:00:00") {
+										$dataAtualizacaoCliente = date('d/m/Y H:i', strtotime($dataAtualizacaoCliente));
+									}
+								?>
+								<input type="text" class="data select form-control" name="dataAtualizacaoCliente" value="<?php echo $dataAtualizacaoCliente ?>" readonly>
 								<label class="labelForm">Data Fim</label>
-								<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataFechamento']))?>" readonly>
+								<?php
+									$dataFechamento = $demanda['dataFechamento'];
+									if ($dataFechamento != "0000-00-00 00:00:00") {
+										$dataFechamento = date('d/m/Y H:i', strtotime($dataFechamento));
+									}
+								?>
+								<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo $dataFechamento ?>" readonly>
 							</div>
 
 							<div class="col-md-12 form-group-select" style="margin-top: -30px;">

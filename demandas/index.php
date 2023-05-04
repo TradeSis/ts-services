@@ -22,25 +22,39 @@ include_once '../database/tipostatus.php';
 include_once '../database/tipoocorrencia.php';
 
 
+
 $clientes = buscaClientes();
-$usuarios = buscaUsuarios();
+$atendentes = buscaAtendente();
 $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
 
+
+if ($_SESSION['idCliente'] == null){
+  $idCliente = null;
+} else {
+  $idCliente = $_SESSION['idCliente'];
+}
+
+if ($_SESSION['idCliente'] == null){
+  $idAtendente = $_SESSION['idUsuario'];
+} else {
+  $idAtendente = null;
+}
+$statusDemanda = "1";  //ABERTO
+
 $filtroEntrada = null;
-$idCliente = null;
-$idUsuario = null;
 $idTipoStatus = null;
 $idTipoOcorrencia = null;
+
 
 if (isset($_SESSION['filtro_demanda'])) {
     $filtroEntrada = $_SESSION['filtro_demanda'];
     $idCliente = $filtroEntrada['idCliente'];
-    $idUsuario = $filtroEntrada['idUsuario'];
+    $idAtendente = $filtroEntrada['idAtendente'];
     $idTipoStatus = $filtroEntrada['idTipoStatus'];
     $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
+    $statusDemanda = $filtroEntrada['statusDemanda'];
 }
-
 ?>
 <style>
 [class="fila"] { 
@@ -183,6 +197,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       <li class="ls-label col-sm-12"> <!-- CLIENTE -->
         <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
+          <?php if ($_SESSION['idCliente'] == null){ ?>
           <select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo " Cliente"  ?></option>
             <?php
@@ -195,6 +210,20 @@ if (isset($_SESSION['filtro_demanda'])) {
                       ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
             <?php  } ?>
           </select>
+          <?php  } else { ?>
+            <select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px" disabled>
+            <?php
+            foreach ($clientes as $cliente) {
+            ?>
+              <option <?php
+                      if ($cliente['idCliente'] == $idCliente) {
+                        echo "selected";
+                      }
+                      ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
+            <?php  } ?>
+          </select>
+          <?php  } ?>
+
 
         </form>
       </li>
@@ -202,17 +231,29 @@ if (isset($_SESSION['filtro_demanda'])) {
       <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- RESPONSAVEL -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="idUsuario" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
+          <select class="form-control" name="idAtendente" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo " Responsável"  ?></option>
             <?php
-            foreach ($usuarios as $usuario) {
+            foreach ($atendentes as $atendente) {
             ?>
               <option <?php
-                      if ($usuario['idUsuario'] == $idUsuario) {
+                      if ($atendente['idUsuario'] == $idAtendente) {
                         echo "selected";
                       }
-                      ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
+                      ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario']  ?></option>
             <?php  } ?>
+          </select>
+
+        </form>
+      </li>
+
+      <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- ABERTO/FECHADO -->
+        <form class="d-flex" action="" method="post" style="text-align: right;">
+
+          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" style="font-size: 14px; width: 150px; height: 35px">
+            <option value="<?php echo null ?>"><?php echo "Todos"  ?></option>
+            <option <?php if ($statusDemanda == "1") { echo "selected"; } ?> value="1">Aberto</option>
+            <option <?php if ($statusDemanda == "0") { echo "selected"; } ?> value="0">Fechado</option>
           </select>
 
         </form>
@@ -254,10 +295,15 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
+
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
-                <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+                <?php if ($_SESSION['idCliente'] == null){ ?>
+                  <a onClick="limparTrade()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+                <?php  } else { ?>
+                  <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+                <?php  } ?>
               </div>
   </nav>
 
@@ -329,14 +375,19 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
 
+    function limparTrade() {
+      buscar(null, null, null, null, null, null);
+      window.location.reload();
+    }
     function limpar() {
-      buscar(null, null, null, null, null);
+      var idClienteOriginal = $("#FiltroClientes").val();
+      buscar(idClienteOriginal, null, null, null, null, null);
       window.location.reload();
     }
 
-    function buscar(idCliente, idUsuario, idTipoStatus, idTipoOcorrencia, tituloDemanda) {
+    function buscar(idCliente, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda) {
 
 $.ajax({
  
@@ -348,9 +399,10 @@ $.ajax({
   },
   data: {
     idCliente: idCliente,
-    idUsuario: idUsuario,
+    idAtendente: idAtendente,
     idTipoStatus: idTipoStatus,
     idTipoOcorrencia: idTipoOcorrencia,
+    statusDemanda: statusDemanda,
     tituloDemanda: tituloDemanda
 
   },
@@ -365,7 +417,7 @@ $.ajax({
     for (var $i = 0; $i < json.length; $i++) {
       var object = json[$i];
       var dataAbertura = new Date(object.dataAbertura);
-      var dataFormatada = dataAbertura.toLocaleDateString("pt-BR") + " " + dataAbertura.toLocaleTimeString("pt-BR");
+      var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
 
       // alert("quarto alert: " + JSON.stringify(object))
       /*  alert(object); */
@@ -381,7 +433,7 @@ $.ajax({
 
       linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
       linha = linha + "<TD>" + object.tamanho + "</TD>";
-      linha = linha + "<TD>" + object.horasPrevisao + "</TD>";;
+      linha = linha + "<TD>" + object.horasPrevisao + "</TD>";
       linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
 
       linha = linha + "</TR>";
@@ -398,28 +450,32 @@ $.ajax({
 
 
     $("#FiltroTipoStatus").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroClientes").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroOcorrencia").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroUsuario").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+    })
+
+    $("#FiltroStatusDemanda").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#buscar").click(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#tituloDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
       }
     });
 

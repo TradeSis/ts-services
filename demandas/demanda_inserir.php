@@ -110,7 +110,6 @@ $(document).ready(function() {
                     url: "../database/demanda.php?operacao=inserir",
                     type: 'POST',
                     data: formData,
-                    beforeSend: alert('ENVIADO...'),
                     success: refreshPage(),
                     cache: false,
                     contentType: false,
@@ -121,7 +120,6 @@ $(document).ready(function() {
             });
 
             function refreshPage() {
-                alert('Email ENVIADO')
                 window.location.reload();
             }
         });

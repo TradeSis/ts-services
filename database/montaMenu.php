@@ -1,15 +1,15 @@
 <?php
 //Lucas 06042023 criado
 include_once('conexao.php');
-
-function buscaMontaMenu($idAplicativo=null)
+function buscaMontaMenu($nomeAplicativo,$idUsuario)
 {
 	
 	$menu = array();
 	//echo json_encode($menu);
 	//return;
 	$apiEntrada = array(
-		'idAplicativo' => $idAplicativo,
+		'nomeAplicativo' => $nomeAplicativo, 
+		'idUsuario' => $idUsuario,
 	);
 	/* echo "-ENTRADA->".json_encode($apiEntrada)."\n";
 	return; */

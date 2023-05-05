@@ -93,7 +93,7 @@ $menus = buscaMontaMenu('Services',$_SESSION['idUsuario']);
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>">
+                    <a class="dropdown-item" href="/ts/sistema/usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>">
                         <i class="bi bi-person-circle"></i>&#32;
                         Perfil
                     </a>

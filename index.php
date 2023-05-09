@@ -7,8 +7,10 @@
 include_once 'head.php';
 include_once 'database/montaMenu.php';
 
-$menus = buscaMontaMenu('Services',$_SESSION['idUsuario']);
-//echo json_encode($menus);
+$montamenu = buscaMontaMenu('Services',$_SESSION['idUsuario']);
+$menus = $montamenu['menu'];
+$menusAtalho = $montamenu['menuAtalho'];
+$menuHeader = $montamenu['menuHeader'][0];
 ?>
 
 <body>
@@ -23,45 +25,26 @@ $menus = buscaMontaMenu('Services',$_SESSION['idUsuario']);
 
         <a href="/ts/painel" class="logo"><img src="../img/brand/white.png" width="150"></a>
 
-        <?php
-        if ($_SESSION['idCliente'] == NULL) { ?>
             <div class=" col-md navbar navbar-expand navbar1">
                 <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
-                    <li>
-                        <a src="contratos/" href="#" class="nav-link" role="button">
-                            <span class="fs-5 text">Contratos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a src="demandas/" href="#" class="nav-link" role="button">
-                            <span class="fs-5 text">Demandas</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a src="demandas/tarefas.php" href="#" class="nav-link" role="button">
-                            <span class="fs-5 text">Tarefas</span>
-                        </a>
-                    </li>
+                    <?php
+                     foreach ($menusAtalho as $menuAtalho) {
+                    ?>
+                        <li>
+                            <a src="<?php echo $menuAtalho['progrLink'] ?>" href="#" class="nav-link" role="button">
+                                <span class="fs-5 text"><?php echo $menuAtalho['progrNome'] ?></span>
+                            </a>
+                        </li>
+                    <?php } ?>
                     <li class="nav-item">
                         <a href="#" class="nav-link  btnCadastros" role="button">
-                            <span class="fs-5 text">Cadastros</span>
+                            <span class="fs-5 text"><?php echo $menuHeader['nomeMenu'] ?></span>
                         </a>
                     </li>
                 </ul>
 
             </div>
-        <?php }
-        if ($_SESSION['idCliente']  >= 1) { ?>
-            <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
-
-                <li>
-                    <a src="demandas/" href="#" class="nav-link" role="button">
-                        <span class="fs-5 text">Demandas</span>
-                    </a>
-                </li>
-
-            </ul>
-        <?php } ?>
+        
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ">
 
@@ -114,16 +97,14 @@ $menus = buscaMontaMenu('Services',$_SESSION['idUsuario']);
 
     </nav>
 
-    <?php
-    if ($_SESSION['idCliente'] == NULL) { ?>
         <nav id="menuLateral" class="menuLateral">
             <div class="titulo"><span></span></div>
             <ul id="novoMenu2">
-                <li><a href="#" src="contratos/">Contratos</a></li>
-                <li><a href="#" src="demandas/">Demandas</a></li>
-                <li><a href="#" src="demandas/tarefas.php">Tarefas</a></li>
-
                 <?php
+                foreach ($menusAtalho as $menuAtalho) {
+                ?>
+                <li><a href="#" src="<?php echo $menuAtalho['progrLink'] ?>"><?php echo $menuAtalho['progrNome'] ?></a></li>
+                <?php }
                 $contador = 1;
                 foreach ($menus as $menu) {
                 ?>
@@ -147,36 +128,17 @@ $menus = buscaMontaMenu('Services',$_SESSION['idUsuario']);
             </ul>
         </nav>
 
-    <?php }
-    if ($_SESSION['idCliente'] >= 1) { ?>
-        <nav id="menuLateral" class="menuLateral">
-            <div class="titulo"><span></span></div>
-            <ul id="novoMenu2">
-                <li><a href="#" src="demandas/">Demandas</a></li>
-
-                <li><a href="#" class="secao2">Outros<span class="material-symbols-outlined seta2">arrow_right</span></a>
-                    <ul class="itensSecao2">
-                        <li><a href="#" src="http://10.2.0.44/bsweb/erp/etiqueta/normalv2.html">Etiquetas</a>
-                        <li><a href="#" src="cadastros/relatorios.php">Relatórios</a>
-                        <li><a href="#" src="cadastros/seguros_parametros.php">Seguros</a>
-                    </ul>
-                </li>
-
-            </ul>
-        </nav>
-
-    <?php } ?>
+   
 
     <nav id="menusecundario" class="menusecundario">
-        <div class="titulo"><span>Cadastros</span></div>
+        <div class="titulo"><span><?php echo $menuHeader['nomeMenu'] ?></span></div>
         <li>
             <ul class="itenscadastro" id="novoMenu2">
-                <li><a href="#" src="cadastros/tipostatus.php">Tipo Status</a></li>
-                <li><a href="#" src="cadastros/tipoocorrencia.php">Tipo Ocorrências</a></li>
-                <li><a href="#" src="cadastros/clientes.php">Clientes</a></li>
-                <li><a href="#" src="usuario/usuario.php">Usuarios</a></li>
-                <li><a href="#" src="cadastros/contratoStatus.php">Contrato Status</a></li>
-
+                <?php
+                foreach ($menuHeader['headerPrograma'] as $headerPrograma) {
+                ?>
+                    <li><a href="#" src="<?php echo $headerPrograma['progrLink'] ?>"><?php echo $headerPrograma['progrNome'] ?></a></li>
+                <?php } ?>
             </ul>
         </li>
     </nav>

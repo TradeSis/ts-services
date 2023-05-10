@@ -100,11 +100,7 @@ $menuHeader = $montamenu['menuHeader'][0];
         <nav id="menuLateral" class="menuLateral">
             <div class="titulo"><span></span></div>
             <ul id="novoMenu2">
-                <?php
-                foreach ($menusAtalho as $menuAtalho) {
-                ?>
-                <li><a href="#" src="<?php echo $menuAtalho['progrLink'] ?>"><?php echo $menuAtalho['progrNome'] ?></a></li>
-                <?php }
+                <?php 
                 $contador = 1;
                 foreach ($menus as $menu) {
                 ?>

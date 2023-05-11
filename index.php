@@ -25,25 +25,29 @@ $menuHeader = $montamenu['menuHeader'][0];
 
         <a href="/ts/painel" class="logo"><img src="../img/brand/white.png" width="150"></a>
 
-            <div class=" col-md navbar navbar-expand navbar1">
-                <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
-                    <?php
-                     foreach ($menusAtalho as $menuAtalho) {
+        <div class=" col-md navbar navbar-expand navbar1">
+            <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
+                <?php
+                foreach ($menusAtalho as $menuAtalho) {
                     ?>
-                        <li>
-                            <a src="<?php echo $menuAtalho['progrLink'] ?>" href="#" class="nav-link" role="button">
-                                <span class="fs-5 text"><?php echo $menuAtalho['progrNome'] ?></span>
-                            </a>
-                        </li>
-                    <?php } ?>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link  btnCadastros" role="button">
-                            <span class="fs-5 text"><?php echo $menuHeader['nomeMenu'] ?></span>
+                    <li>
+                        <a src="<?php echo $menuAtalho['progrLink'] ?>" href="#" class="nav-link" role="button">
+                            <span class="fs-5 text">
+                                <?php echo $menuAtalho['progrNome'] ?>
+                            </span>
                         </a>
                     </li>
-                </ul>
+                <?php } //*********menuHeader único por aplicativo ?>
+                <li class="nav-item">
+                    <a href="#" class="nav-link  btnCadastros" role="button">
+                        <span class="fs-5 text">
+                            <?php echo $menuHeader['nomeMenu'] ?>
+                        </span>
+                    </a>
+                </li>
+            </ul>
 
-            </div>
+        </div>
         
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ">

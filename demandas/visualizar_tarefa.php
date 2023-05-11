@@ -121,7 +121,7 @@ $tarefas = buscaTarefas($idDemanda);
                   </thead>
                     <tbody class="fonteCorpo">                           
                         <?php
-                        if (count($tarefas) == 13) {;?>
+                        if (count($tarefas) == 13) { ?>
                             <tr>
                                 <td><?php echo $tarefas['idTarefa'] ?></td>
                                 <td><?php echo $tarefas['tituloTarefa'] ?></td>

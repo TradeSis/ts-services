@@ -12,7 +12,7 @@ $menus = $montamenu['menu'];
 if (!empty($montamenu['menuAtalho'])) {
     $menusAtalho = $montamenu['menuAtalho'];
 }    
-if (!empty($montamenu['menuAtalho'])){
+if (!empty($montamenu['menuHeader'])){
     $menuHeader = $montamenu['menuHeader'][0];
 }
 ?>
@@ -32,17 +32,26 @@ if (!empty($montamenu['menuAtalho'])){
         <div class=" col-md navbar navbar-expand navbar1">
             <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
                 <?php if (!empty($montamenu['menuAtalho'])){
-                foreach ($menusAtalho as $menuAtalho) {
+                    if (isset($menuAtalho['progrNome'])) { ?>
+                        <li>
+                            <a src="<?php echo $menuAtalho[0]['progrLink'] ?>" href="#" class="nav-link" role="button">
+                                <span class="fs-5 text">
+                                    <?php echo $menuAtalho[0]['progrNome'] ?>
+                                </span>
+                            </a>
+                        </li>
+                    <?php } else {
+                    foreach ($menusAtalho as $menuAtalho) {
                     ?>
-                    <li>
-                        <a src="<?php echo $menuAtalho['progrLink'] ?>" href="#" class="nav-link" role="button">
-                            <span class="fs-5 text">
-                                <?php echo $menuAtalho['progrNome'] ?>
-                            </span>
-                        </a>
-                    </li>
-                <?php }} //*********menuHeader único por aplicativo 
-                if (!empty($montamenu['menuAtalho'])){ ?>
+                        <li>
+                            <a src="<?php echo $menuAtalho['progrLink'] ?>" href="#" class="nav-link" role="button">
+                                <span class="fs-5 text">
+                                    <?php echo $menuAtalho['progrNome'] ?>
+                                </span>
+                            </a>
+                        </li>
+                <?php }}} //*********menuHeader único por aplicativo 
+                if (isset($menuHeader['nomeMenu'])){ ?>
                     <li class="nav-item">
                         <a href="#" class="nav-link  btnCadastros" role="button">
                             <span class="fs-5 text">
@@ -138,7 +147,7 @@ if (!empty($montamenu['menuAtalho'])){
 
     <nav id="menusecundario" class="menusecundario">
         <div class="titulo"><span>
-            <?php if (!empty($montamenu['menuAtalho'])){
+            <?php if (isset($menuHeader['nomeMenu'])){
                 echo $menuHeader['nomeMenu'] ?>
             </span></div>
         <li>

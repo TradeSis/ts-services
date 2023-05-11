@@ -9,8 +9,12 @@ include_once 'database/montaMenu.php';
 
 $montamenu = buscaMontaMenu('Services',$_SESSION['idUsuario']);
 $menus = $montamenu['menu'];
-$menusAtalho = $montamenu['menuAtalho'];
-$menuHeader = $montamenu['menuHeader'][0];
+if (!empty($montamenu['menuAtalho'])) {
+    $menusAtalho = $montamenu['menuAtalho'];
+}    
+if (!empty($montamenu['menuAtalho'])){
+    $menuHeader = $montamenu['menuHeader'][0];
+}
 ?>
 
 <body>
@@ -27,7 +31,7 @@ $menuHeader = $montamenu['menuHeader'][0];
 
         <div class=" col-md navbar navbar-expand navbar1">
             <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
-                <?php
+                <?php if (!empty($montamenu['menuAtalho'])){
                 foreach ($menusAtalho as $menuAtalho) {
                     ?>
                     <li>
@@ -37,14 +41,16 @@ $menuHeader = $montamenu['menuHeader'][0];
                             </span>
                         </a>
                     </li>
-                <?php } //*********menuHeader único por aplicativo ?>
-                <li class="nav-item">
-                    <a href="#" class="nav-link  btnCadastros" role="button">
-                        <span class="fs-5 text">
-                            <?php echo $menuHeader['nomeMenu'] ?>
-                        </span>
-                    </a>
-                </li>
+                <?php }} //*********menuHeader único por aplicativo 
+                if (!empty($montamenu['menuAtalho'])){ ?>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link  btnCadastros" role="button">
+                            <span class="fs-5 text">
+                                <?php echo $menuHeader['nomeMenu'] ?>
+                            </span>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
 
         </div>
@@ -131,14 +137,17 @@ $menuHeader = $montamenu['menuHeader'][0];
    
 
     <nav id="menusecundario" class="menusecundario">
-        <div class="titulo"><span><?php echo $menuHeader['nomeMenu'] ?></span></div>
+        <div class="titulo"><span>
+            <?php if (!empty($montamenu['menuAtalho'])){
+                echo $menuHeader['nomeMenu'] ?>
+            </span></div>
         <li>
             <ul class="itenscadastro" id="novoMenu2">
                 <?php
                 foreach ($menuHeader['headerPrograma'] as $headerPrograma) {
-                ?>
+                    ?>
                     <li><a href="#" src="<?php echo $headerPrograma['progrLink'] ?>"><?php echo $headerPrograma['progrNome'] ?></a></li>
-                <?php } ?>
+                <?php }} ?>
             </ul>
         </li>
     </nav>

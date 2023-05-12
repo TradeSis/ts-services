@@ -13,7 +13,6 @@ include_once '../database/usuario.php';
 include_once '../database/clientes.php';
 include_once '../database/tipostatus.php';
 include_once '../database/tipoocorrencia.php';
-include_once "../database/email.php";
 
 
 $tiposstatus = buscaTipoStatus(1);

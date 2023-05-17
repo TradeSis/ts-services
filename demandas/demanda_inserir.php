@@ -60,6 +60,7 @@ $clientes = buscaClientes();
                                 <?php
                                     if ($usuario['idCliente'] == NULL) { ?>
                                         <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                                        <input type="hidden" class="form-control" name="solicitante" value="<?php echo $_SESSION['usuario'] ?>" readonly>
                                         <select class="select form-control" name="idCliente" autocomplete="off" style="margin-top: -10px;">
                                             <?php
                                             foreach ($clientes as $cliente) {
@@ -71,6 +72,7 @@ $clientes = buscaClientes();
                                     if ($usuario['idCliente']  >= 1) { ?>
                                         <input type="hidden" class="form-control" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
                                         <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                                        <input type="hidden" class="form-control" name="solicitante" value="<?php echo $_SESSION['usuario'] ?>" readonly>
                                         <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
                                     <?php } ?>
                             </div>

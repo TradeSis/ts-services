@@ -42,8 +42,8 @@ $atendentes = buscaAtendente();
 				<form action="" method="post" id="form">
 				<?php
 					if ($_SESSION['idCliente'] == NULL) { ?>
-					<div class="row">
-						<div class="col-md-2">
+					<div class="row" style="margin-right:1px;">
+						<div class="col-md-1">
 							<div class="form-group">
 								<label class='control-label' for='inputNormal'>Prioridade</label>
 								<input type="number" min="1" max="99" class="form-control" name="prioridade" value="<?php echo $demanda['prioridade'] ?>" style="margin-top: 50px;">
@@ -61,7 +61,13 @@ $atendentes = buscaAtendente();
 								<input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
 							</div>
 						</div>
-						<div class="col-md-3 pr-4" style="margin-top: 35px;">
+						<div class="col-md-2" style="margin-top:36px;">
+							<div class="form-group">
+								<label class='control-label' for='inputNormal'>Solicitante</label>
+								<input type="text" class="data select form-control" name="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
+							</div>
+						</div>
+						<div class="col-md-2" style="margin-top:36px;">
 							<div class="form-group">
 								<label class='control-label' for='inputNormal'>Data de Abertura</label>
 								<input type="text" class="data select form-control" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
@@ -103,7 +109,7 @@ $atendentes = buscaAtendente();
 								<div class="col-md-12 form-group-select" style="margin-top: 20px;">
 									<label class="labelForm">Responsável</label>
 									<select class="select form-control" name="idAtendente">
-										<option value="<?php echo $demanda['idAtendente'] ?>"><?php echo $demanda['nomeUsuario'] ?></option>
+										<option value="<?php echo $demanda['idAtendente'] ?>"><?php echo $demanda['nomeAtendente'] ?></option>
 										<?php foreach ($atendentes as $atendente) { ?>
 											<option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
 										<?php } ?>

@@ -25,6 +25,7 @@ include_once '../database/tipoocorrencia.php';
 
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
+$usuarios = buscaUsuarios();
 $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
 
@@ -45,16 +46,18 @@ $statusDemanda = "1";  //ABERTO
 $filtroEntrada = null;
 $idTipoStatus = null;
 $idTipoOcorrencia = null;
+$idSolicitante = null;
 
 
 if (isset($_SESSION['filtro_demanda'])) {
     $filtroEntrada = $_SESSION['filtro_demanda'];
     $idCliente = $filtroEntrada['idCliente'];
+    $idSolicitante = $filtroEntrada['idSolicitante'];
     $idAtendente = $filtroEntrada['idAtendente'];
     $idTipoStatus = $filtroEntrada['idTipoStatus'];
     $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
     $statusDemanda = $filtroEntrada['statusDemanda'];
-}
+  }
 ?>
 <style>
 [class="fila"] { 
@@ -247,6 +250,25 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
+      <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- RESPONSAVEL -->
+        <form class="d-flex" action="" method="post" style="text-align: right;">
+
+          <select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
+            <option value="<?php echo null ?>"><?php echo " Solicitante"  ?></option>
+            <?php
+            foreach ($usuarios as $usuario) {
+            ?>
+              <option <?php
+                      if ($usuario['idUsuario'] == $idSolicitante) {
+                        echo "selected";
+                      }
+                      ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
+            <?php  } ?>
+          </select>
+
+        </form>
+      </li>
+
       <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
@@ -353,13 +375,13 @@ if (isset($_SESSION['filtro_demanda'])) {
               <th>Prioridade</th>
               <th>ID</th>
               <th>Cliente</th>
+              <th>Solicitante</th>
               <th>Demanda</th>
               <th>Responsável</th>
               <th>Abertura</th>
               <th>Status</th>
               <th>Ocorrência</th>
               <th>Tamanho</th>
-              <th>Previsão</th>
               <th>Ação</th>
             </tr>
           </thead>
@@ -375,19 +397,19 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
 
     function limparTrade() {
-      buscar(null, null, null, null, null, null);
+      buscar(null, null, null, null, null, null, null);
       window.location.reload();
     }
     function limpar() {
       var idClienteOriginal = $("#FiltroClientes").val();
-      buscar(idClienteOriginal, null, null, null, null, null);
+      buscar(idClienteOriginal, null, null, null, null, null, null);
       window.location.reload();
     }
 
-    function buscar(idCliente, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda) {
+    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda) {
 
 $.ajax({
  
@@ -399,6 +421,7 @@ $.ajax({
   },
   data: {
     idCliente: idCliente,
+    idSolicitante: idSolicitante,
     idAtendente: idAtendente,
     idTipoStatus: idTipoStatus,
     idTipoOcorrencia: idTipoOcorrencia,
@@ -425,15 +448,15 @@ $.ajax({
       linha = linha + "<TD>" + object.prioridade + "</TD>";
       linha = linha + "<TD>" + object.idDemanda + "</TD>";
       linha = linha + "<TD>" + object.nomeCliente + "</TD>";
+      linha = linha + "<TD>" + object.nomeSolicitante + "</TD>";
       linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
-      linha = linha + "<TD>" + object.nomeUsuario + "</TD>";
+      linha = linha + "<TD>" + object.nomeAtendente + "</TD>";
       linha = linha + "<TD>" + dataFormatada + "</TD>";
 
       linha = linha + "<TD class='"+ object.nomeTipoStatus +"' data-status='Finalizado' >" + object.nomeTipoStatus +" </TD>";
 
       linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
       linha = linha + "<TD>" + object.tamanho + "</TD>";
-      linha = linha + "<TD>" + object.horasPrevisao + "</TD>";
       linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
 
       linha = linha + "</TR>";
@@ -450,32 +473,36 @@ $.ajax({
 
 
     $("#FiltroTipoStatus").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroClientes").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+    })
+
+    $("#FiltroSolicitante").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroOcorrencia").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroUsuario").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#FiltroStatusDemanda").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     $("#buscar").click(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
     })
 
     document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val());
       }
     });
 

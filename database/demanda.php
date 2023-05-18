@@ -71,6 +71,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'idCliente' => $_POST['idCliente'],
 			'idUsuario' => $_POST['idUsuario'],
+			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
 			'idTipoStatus' => $_POST['idTipoStatus'],
@@ -154,6 +155,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "filtrar") {
 
 		$idCliente = $_POST['idCliente'];
+		$idSolicitante = $_POST['idSolicitante'];
 		$idTipoStatus = $_POST['idTipoStatus'];
 		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
 		$idAtendente = $_POST['idAtendente'];
@@ -162,6 +164,10 @@ if (isset($_GET['operacao'])) {
 
 		if ($idCliente == "") {
 			$idCliente = null;
+		}
+
+		if ($idSolicitante == "") {
+			$idSolicitante = null;
 		}
 
 		if ($idAtendente == "") {
@@ -193,6 +199,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'idDemanda' => null,
 			'idCliente' => $idCliente,
+			'idSolicitante' => $idSolicitante,
 			'idAtendente' => $idAtendente,
 			'idTipoStatus' => $idTipoStatus,
 			'idTipoOcorrencia' => $idTipoOcorrencia,

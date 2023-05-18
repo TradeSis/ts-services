@@ -64,7 +64,7 @@ $atendentes = buscaAtendente();
 						<div class="col-md-2" style="margin-top:36px;">
 							<div class="form-group">
 								<label class='control-label' for='inputNormal'>Solicitante</label>
-								<input type="text" class="data select form-control" name="solicitante" value="<?php echo $demanda['solicitante'] ?>" readonly>
+								<input type="text" class="data select form-control" name="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
 							</div>
 						</div>
 						<div class="col-md-2" style="margin-top:36px;">
@@ -109,7 +109,7 @@ $atendentes = buscaAtendente();
 								<div class="col-md-12 form-group-select" style="margin-top: 20px;">
 									<label class="labelForm">Responsável</label>
 									<select class="select form-control" name="idAtendente">
-										<option value="<?php echo $demanda['idAtendente'] ?>"><?php echo $demanda['nomeUsuario'] ?></option>
+										<option value="<?php echo $demanda['idAtendente'] ?>"><?php echo $demanda['nomeAtendente'] ?></option>
 										<?php foreach ($atendentes as $atendente) { ?>
 											<option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
 										<?php } ?>

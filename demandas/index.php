@@ -46,13 +46,13 @@ $statusDemanda = "1";  //ABERTO
 $filtroEntrada = null;
 $idTipoStatus = null;
 $idTipoOcorrencia = null;
-$solicitante = null;
+$idSolicitante = null;
 
 
 if (isset($_SESSION['filtro_demanda'])) {
     $filtroEntrada = $_SESSION['filtro_demanda'];
     $idCliente = $filtroEntrada['idCliente'];
-    $solicitante = $filtroEntrada['solicitante'];
+    $idSolicitante = $filtroEntrada['idSolicitante'];
     $idAtendente = $filtroEntrada['idAtendente'];
     $idTipoStatus = $filtroEntrada['idTipoStatus'];
     $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
@@ -253,13 +253,13 @@ if (isset($_SESSION['filtro_demanda'])) {
       <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- RESPONSAVEL -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="solicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
+          <select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo " Solicitante"  ?></option>
             <?php
             foreach ($usuarios as $usuario) {
             ?>
               <option <?php
-                      if ($usuario['idUsuario'] == $solicitante) {
+                      if ($usuario['idUsuario'] == $idSolicitante) {
                         echo "selected";
                       }
                       ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
@@ -409,7 +409,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       window.location.reload();
     }
 
-    function buscar(idCliente, solicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda) {
+    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda) {
 
 $.ajax({
  
@@ -421,7 +421,7 @@ $.ajax({
   },
   data: {
     idCliente: idCliente,
-    solicitante: solicitante,
+    idSolicitante: idSolicitante,
     idAtendente: idAtendente,
     idTipoStatus: idTipoStatus,
     idTipoOcorrencia: idTipoOcorrencia,
@@ -448,9 +448,9 @@ $.ajax({
       linha = linha + "<TD>" + object.prioridade + "</TD>";
       linha = linha + "<TD>" + object.idDemanda + "</TD>";
       linha = linha + "<TD>" + object.nomeCliente + "</TD>";
-      linha = linha + "<TD>" + object.solicitante + "</TD>";
+      linha = linha + "<TD>" + object.nomeSolicitante + "</TD>";
       linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
-      linha = linha + "<TD>" + object.nomeUsuario + "</TD>";
+      linha = linha + "<TD>" + object.nomeAtendente + "</TD>";
       linha = linha + "<TD>" + dataFormatada + "</TD>";
 
       linha = linha + "<TD class='"+ object.nomeTipoStatus +"' data-status='Finalizado' >" + object.nomeTipoStatus +" </TD>";

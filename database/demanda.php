@@ -126,29 +126,34 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "comentar") {
  
 		$anexo = $_FILES['nomeAnexo'];
+	
+		$pasta    = ROOT    . "/img/anexos/";
+		$pastaURL = URLROOT . "/img/anexos/";
 
-
-		$pasta = "../../..". URLROOT . "/img/anexos/";    // URLROOT."/img/anexos/"
 		$nomeAnexo = $anexo['name'];
-		$novoNomeDoAnexo = uniqid(); 
+		//$novoNomeDoAnexo = uniqid(); 
+		$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
 		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
 
 		/* if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
         die("Tipo de aquivo não aceito"); */
 
-		$pathAnexo = $pasta . $novoNomeDoAnexo . "." . $extensao;
+		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
 		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
 
 
 		$apiEntrada = array(
 			'nomeAnexo' => $nomeAnexo,
-			'pathAnexo' => $pathAnexo,
+			'pathAnexo' => $pathURL,
 			'idUsuario' => $_POST['idUsuario'],
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $_POST['comentario']
 		);
-		/* echo json_encode(($apiEntrada));
-		return; */
+		
+
 		$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'PUT');
 		/* echo json_encode(($comentario)); */
 	}

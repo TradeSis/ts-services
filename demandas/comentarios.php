@@ -164,6 +164,7 @@ function myFunction(){
             });
 
             function refreshPage() {
+            
                 window.location.reload();
             }
         });

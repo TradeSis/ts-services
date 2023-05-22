@@ -105,7 +105,8 @@ if (isset($_GET['operacao'])) {
 			'idTipoStatus' => $_POST['idTipoStatus'],
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
 			'tamanho' => $_POST['tamanho'],
-			'idAtendente' => $_POST['idAtendente']
+			'idAtendente' => $_POST['idAtendente'],
+			'horasPrevisao' => $_POST['horasPrevisao'],
 		);
 		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'POST');
 	}
@@ -127,13 +128,13 @@ if (isset($_GET['operacao'])) {
 		$anexo = $_FILES['nomeAnexo'];
 
 
-		$pasta = "../img/anexos/";
+		$pasta = "../../..". URLROOT . "/img/anexos/";    // URLROOT."/img/anexos/"
 		$nomeAnexo = $anexo['name'];
 		$novoNomeDoAnexo = uniqid(); 
 		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
 
-		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
-        die("Tipo de aquivo não aceito");
+		/* if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+        die("Tipo de aquivo não aceito"); */
 
 		$pathAnexo = $pasta . $novoNomeDoAnexo . "." . $extensao;
 		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
@@ -161,6 +162,7 @@ if (isset($_GET['operacao'])) {
 		$idAtendente = $_POST['idAtendente'];
 		$statusDemanda = $_POST['statusDemanda'];
 		$tituloDemanda = $_POST['tituloDemanda'];
+		$tamanho = $_POST['tamanho'];
 
 		if ($idCliente == "") {
 			$idCliente = null;
@@ -192,6 +194,10 @@ if (isset($_GET['operacao'])) {
 		if ($tituloDemanda == ""){
 			$tituloDemanda = null;
 		}
+
+		if ($tamanho == ""){
+			$tamanho = null;
+		}
 		
 		
 	
@@ -204,12 +210,13 @@ if (isset($_GET['operacao'])) {
 			'idTipoStatus' => $idTipoStatus,
 			'idTipoOcorrencia' => $idTipoOcorrencia,
 			'statusDemanda' => $statusDemanda,
-			'tituloDemanda' => $tituloDemanda
+			'tituloDemanda' => $tituloDemanda,
+			'tamanho' => $tamanho
 		);
 
 		$_SESSION['filtro_demanda'] = $apiEntrada;
 			/* echo json_encode(($apiEntrada));
-		return */;
+		return; */
 		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
 
 		echo json_encode($demanda);

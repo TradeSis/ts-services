@@ -84,7 +84,9 @@ $comentarios = buscaComentarios($idDemanda);
                                         <div class="panel-body"><?php echo $comentario['comentario'] ?></div>
                                     <div><img height="50" src="<?php echo $comentario['pathAnexo'];?>" alt=""></div> 
 
-                                    <div><a target="_blank" href="<?php echo $comentario['pathAnexo'];?>"><?php echo $comentario['nomeAnexo'] ?></a></div>
+                                    <a class="btn btn-primary btn-sm" target="_blank" href="<?php echo $comentario['pathAnexo'];?>" style="margin-top:5px;margin-right:10px"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i></a><?php echo $comentario['nomeAnexo'] ?>
+
+                                  
 
                                     <!-- <spam style="font-size: 10px"><?php echo $comentario['nomeAnexo'] ?></spam> -->
                                        <!--  <div class="panel-body"><?php echo $comentario['nomeAnexo'] ?></div> -->

@@ -22,6 +22,7 @@ $idDemanda = $_GET['idDemanda'];
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
+
 $horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
 
@@ -146,7 +147,7 @@ $atendentes = buscaAtendente();
 								</select>
 							</div>
 
-							<div class="col-md-12 form-group-select" style="margin-top: 20px;">
+							<div class="col-md-12 form-group-select" style="margin-top: 20px; margin-bottom: 10px">
 								<label class="labelForm">Ocorrência</label>
 								<select class="select form-control" name="idTipoOcorrencia">
 									<option value="<?php echo $demanda['idTipoOcorrencia'] ?>"><?php echo $demanda['nomeTipoOcorrencia'] ?></option>
@@ -154,6 +155,11 @@ $atendentes = buscaAtendente();
 										<option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
 									<?php } ?>
 								</select>
+							</div>
+
+							<div class="col-md-12 form-group mt-4" >
+								<label class="labelForm">Hora Previsão</label>
+								<input type="text" class="form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
 							</div>
 
 						</div>
@@ -223,6 +229,7 @@ $atendentes = buscaAtendente();
 							</div>
 						</div>
 					</div>
+										
 					<div class="card-footer bg-transparent" style="margin-top: 50px;">
 						<button type="submit" formaction="../database/demanda.php?operacao=encerrar" class="btn btn-danger " style="float: left;">Fechar Demanda</button>
 						<button type="submit" formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning  ml-3" style="float: left;">Retornar Demanda</button>

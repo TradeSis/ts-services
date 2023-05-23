@@ -56,7 +56,7 @@ $atendentes = buscaAtendente();
 								<input type="text" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly style="margin-top: 50px;">
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-8">
 							<div class="form-group">
 								<label class='control-label' for='inputNormal'>Demanda</label>
 								<input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
@@ -68,22 +68,16 @@ $atendentes = buscaAtendente();
 								<input type="text" class="data select form-control" name="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
 							</div>
 						</div>
-						<div class="col-md-2" style="margin-top:36px;">
-							<div class="form-group">
-								<label class='control-label' for='inputNormal'>Data de Abertura</label>
-								<input type="text" class="data select form-control" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
-							</div>
-						</div>
 					</div>
 					<div class="row" style="margin-top: -30px;">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class='labelForm'>Descrição</label>
-								<textarea class="form-control" name="descricao" autocomplete="off" rows="10"><?php echo $demanda['descricao'] ?></textarea>
+								<textarea class="form-control" name="descricao" autocomplete="off" rows="12"><?php echo $demanda['descricao'] ?></textarea>
 							</div>
 						</div>
 						
-						<div class="col-md" >
+						<div class="col-md">
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Atendente</label>
 								<?php
@@ -93,11 +87,14 @@ $atendentes = buscaAtendente();
 									}
 								?>
 								<input type="text" class="data select form-control" name="dataAtualizacaoAtendente" value="<?php echo $dataAtualizacaoAtendente ?>" readonly>
-								<label class="labelForm" >Horas Tarefa</label>
-								<input type="text" class="data select form-control" value="<?php echo $horas['total'] ?>" readonly>
+								<label class='control-label' for='inputNormal'>Data de Abertura</label>
+								<input type="text" class="data select form-control" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
 							</div>
-
-								<div class="col-md-12 form-group-select" style="margin-top: -30px;">
+							<div class="col-md-12 form-group" style="margin-top: -20px;">
+								<label class="labelForm" >Horas Tarefa</label>
+								<input type="text" class="data select form-control" value="<?php echo $horas['tempo'] ?>" readonly>
+							</div>
+								<div class="col-md-12 form-group-select" style="margin-top: -20px;">
 									<label class="labelForm">Tamanho</label>
 									<select class="select form-control" name="tamanho">
 										<option value="<?php echo $demanda['tamanho'] ?>"><?php echo $demanda['tamanho'] ?></option>
@@ -127,6 +124,8 @@ $atendentes = buscaAtendente();
 									}
 								?>
 								<input type="text" class="data select form-control" name="dataAtualizacaoCliente" value="<?php echo $dataAtualizacaoCliente ?>" readonly>
+							</div>
+							<div class="col-md-12 form-group" style="margin-top: -24px;">
 								<label class="labelForm">Data Fim</label>
 								<?php
 									$dataFechamento = $demanda['dataFechamento'];
@@ -136,8 +135,11 @@ $atendentes = buscaAtendente();
 								?>
 								<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo $dataFechamento ?>" readonly>
 							</div>
-
-							<div class="col-md-12 form-group-select" style="margin-top: -30px;">
+							<div class="col-md-12 form-group" style="margin-top: -20px;">
+								<label class="labelForm" >Horas Tarefa</label>
+								<input type="text" class="data select form-control" value="<?php echo $horas['duracao'] ?>" readonly>
+							</div>
+							<div class="col-md-12 form-group-select" style="margin-top: -20px;">
 								<label class="labelForm">Status</label>
 								<select class="select form-control" name="idTipoStatus" autocomplete="off">
 									<option value="<?php echo $demanda['idTipoStatus'] ?>"><?php echo $demanda['nomeTipoStatus'] ?></option>
@@ -168,39 +170,45 @@ $atendentes = buscaAtendente();
 					<div class="card-footer bg-transparent" style="margin-top: 80px;">
 						<input type="submit" name="submit" id="submit" class="btn btn-success btn-sm" style="float: right;" value="Atualizar"/>
 					</div>
-					<?php }
+					<?php } //*************** visão cliente
 					if ($_SESSION['idCliente'] >= 1) { ?>
-						<div class="row">
-						<div class="col-md-2">
-						<div class="form-group">
-								<label class="labelForm">Prioridade</label>
-								<input type="number" min="1" max="99" class="form-control" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
+					<div class="row" >
+						<div class="col-md-1">
+							<div class="form-group">
+								<label class='control-label' for='inputNormal'>Prioridade</label>
+								<input type="number" min="1" max="99" class="form-control" name="prioridade" value="<?php echo $demanda['prioridade'] ?>" style="margin-top: 50px;">
 							</div>
 						</div>
 						<div class="col-md-1">
 							<div class="form-group">
-								<label class="labelForm">ID</label>
-								<input type="text" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
+								<label class='control-label' for='inputNormal'>ID</label>
+								<input type="text" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly style="margin-top: 50px;">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="labelForm">Demanda</label>
-								<input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" readonly>
+								<label class='control-label' for='inputNormal'>Demanda</label>
+								<input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
 							</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2" style="margin-top:36px;">
 							<div class="form-group">
-								<label class="labelForm" style="margin-bottom: 18px;">Data de Abertura</label>
-								<input type="text" class="data select form-control" name="dataabertura" value="<?php echo $demanda['dataAbertura'] ?>" readonly>
+								<label class='control-label' for='inputNormal'>Solicitante</label>
+								<input type="text" class="data select form-control" name="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
+							</div>
+						</div>
+						<div class="col-md-2" style="margin-top:36px;">
+							<div class="form-group">
+								<label class='control-label' for='inputNormal'>Data de Abertura</label>
+								<input type="text" class="data select form-control" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" style="margin-top: -30px;">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="labelForm">Descrição</label>
-								<textarea class="text-area" name="descricao" autocomplete="off" rows="10"><?php echo $demanda['descricao'] ?></textarea>
+								<label class='labelForm'>Descrição</label>
+								<textarea class="form-control" name="descricao" autocomplete="off" rows="10"><?php echo $demanda['descricao'] ?></textarea>
 							</div>
 						</div>
 						<div class="col-md">
@@ -208,11 +216,11 @@ $atendentes = buscaAtendente();
 								<label class="labelForm">Atualização Atendente</label>
 								<input type="text" class="form-control" name="dataAtualizacaoAtendente" value="<?php echo $demanda['dataAtualizacaoAtendente'] ?>" readonly>
 								<label class="labelForm">Horas Tarefa</label>
-								<input type="text" class="form-control" value="<?php echo $horas['total'] ?>" readonly>
+								<input type="text" class="form-control" value="<?php echo $horas['tempo'] ?>" readonly>
 								<label class="labelForm">Tamanho</label>
 								<input type="text" class="form-control" name="tamanho" value="<?php echo $demanda['tamanho'] ?>" readonly>
 								<label class="labelForm">Responsável</label>
-								<input type="text" class="form-control" name="idAtendente" value="<?php echo $demanda['nomeUsuario'] ?>" readonly>
+								<input type="text" class="form-control" name="idAtendente" value="<?php echo $demanda['nomeAtendente'] ?>" readonly>
 							</div>
 						</div>
 						<div class="col-md">

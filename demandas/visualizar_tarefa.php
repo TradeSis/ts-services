@@ -236,7 +236,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $tarefas['nomeTipoOcorrencia'] ?></td>
                                     <?php
                                     $data = $tarefas['dataExecucaoInicio'];
-                                    if ($data != "0000-00-00 00:00:00") {
+                                    if ($data != null) {
                                         $data = date('d/m/Y', strtotime($data));
                                     } else {
                                         $data = "00/00/0000";
@@ -244,7 +244,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $data ?></td>
                                     <?php
                                     $dataExecucaoInicio = $tarefas['dataExecucaoInicio'];
-                                    if ($dataExecucaoInicio != "0000-00-00 00:00:00") {
+                                    if ($dataExecucaoInicio != null) {
                                         $dataExecucaoInicio = date('H:i', strtotime($dataExecucaoInicio));
                                     } else {
                                         $dataExecucaoInicio = "00:00";
@@ -252,7 +252,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $dataExecucaoInicio ?></td>
                                     <?php
                                     $dataExecucaoFinal = $tarefas['dataExecucaoFinal'];
-                                    if ($dataExecucaoFinal != "0000-00-00 00:00:00") {
+                                    if ($dataExecucaoFinal != null) {
                                         $dataExecucaoFinal = date('H:i', strtotime($dataExecucaoFinal));
                                     } else {
                                         $dataExecucaoFinal = "00:00";
@@ -261,13 +261,15 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $tarefas['tempo'] ?></td>
                                     <?php
                                     $dataStart = $tarefas['dataStart'];
-                                    if ($dataStart != "0000-00-00 00:00:00") {
+                                    if ($dataStart != null) {
                                         $dataStart = date('d/m/Y H:i', strtotime($dataStart));
-                                    } ?>
+                                    } else {
+                                        $dataStart = "00/00/0000 00:00";
+                                    }?>
                                     <td class="text-center"><?php echo $dataStart ?></td>
                                     <?php
                                     $dataStop = $tarefas['dataStop'];
-                                    if ($dataStop != "0000-00-00 00:00:00") {
+                                    if ($dataStop != null) {
                                         $dataStop = date('H:i', strtotime($dataStop));
                                     } else {
                                         $dataStop = "00:00";
@@ -275,7 +277,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $dataStop ?></td>
                                     <td class="text-center"><?php echo $tarefas['duracao'] ?></td>
                                 <td class="text-center">
-                                    <?php if ($dataStart != "0000-00-00 00:00:00" && $dataStop == "00:00") { ?>
+                                    <?php if ($dataStart != null && $dataStop == "00:00") { ?>
                                         <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-id="<?php echo $tarefas['idTarefa'] ?>" data-data-execucao="<?php echo $tarefas['dataStart'] ?>" />
                                     <?php } ?>
                                     <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefas['idTarefa'] ?>&idDemanda=<?php echo $idDemanda ?>" role="button">Alterar</a>
@@ -291,7 +293,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $tarefa['nomeTipoOcorrencia'] ?></td>
                                     <?php
                                     $data = $tarefa['dataExecucaoInicio'];
-                                    if ($data != "0000-00-00 00:00:00") {
+                                    if ($data != null) {
                                         $data = date('d/m/Y', strtotime($data));
                                     }else {
                                         $data = "00/00/0000";
@@ -299,7 +301,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $data ?></td>
                                     <?php
                                     $dataExecucaoInicio = $tarefa['dataExecucaoInicio'];
-                                    if ($dataExecucaoInicio != "0000-00-00 00:00:00") {
+                                    if ($dataExecucaoInicio != null) {
                                         $dataExecucaoInicio = date('H:i', strtotime($dataExecucaoInicio));
                                     } else {
                                         $dataExecucaoInicio = "00:00";
@@ -307,7 +309,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $dataExecucaoInicio ?></td>
                                     <?php
                                     $dataExecucaoFinal = $tarefa['dataExecucaoFinal'];
-                                    if ($dataExecucaoFinal != "0000-00-00 00:00:00") {
+                                    if ($dataExecucaoFinal != null) {
                                         $dataExecucaoFinal = date('H:i', strtotime($dataExecucaoFinal));
                                     } else {
                                         $dataExecucaoFinal = "00:00";
@@ -316,13 +318,15 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $tarefa['tempo'] ?></td>
                                     <?php
                                     $dataStart = $tarefa['dataStart'];
-                                    if ($dataStart != "0000-00-00 00:00:00") {
+                                    if ($dataStart != null) {
                                         $dataStart = date('d/m/Y H:i', strtotime($dataStart));
-                                    } ?>
+                                    } else {
+                                        $dataStart = "00/00/0000 00:00";
+                                    }?>
                                     <td class="text-center"><?php echo $dataStart ?></td>
                                     <?php
                                     $dataStop = $tarefa['dataStop'];
-                                    if ($dataStop != "0000-00-00 00:00:00") {
+                                    if ($dataStop != null) {
                                         $dataStop = date('H:i', strtotime($dataStop));
                                     } else {
                                         $dataStop = "00:00";
@@ -330,7 +334,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $dataStop ?></td>
                                     <td class="text-center"><?php echo $tarefa['duracao'] ?></td>
                                     <td class="text-center">
-                                        <?php if ($dataStart != "0000-00-00 00:00:00" && $dataStop == "00:00") { ?>
+                                        <?php if ($dataStart != "00/00/0000 00:00" && $dataStop == "00:00") { ?>
                                             <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-id="<?php echo $tarefa['idTarefa'] ?>" data-data-execucao="<?php echo $tarefa['dataStart'] ?>" />
                                         <?php } ?>
                                         <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&idDemanda=<?php echo $idDemanda ?>" role="button">Alterar</a>

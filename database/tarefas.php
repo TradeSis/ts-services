@@ -39,7 +39,7 @@ if (isset($_GET['operacao'])) {
             'idAtendente' => $_POST['idAtendente'],
             'dataExecucaoInicio' => $_POST['dataExecucaoInicio'],
             'dataExecucaoFinal' => $_POST['dataExecucaoFinal'],
-            'idStatus' => $_POST['idStatus']
+            'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
         );
         $tarefas = chamaAPI(null, '/api/services/tarefas', json_encode($apiEntrada), 'PUT');
     }
@@ -50,7 +50,7 @@ if (isset($_GET['operacao'])) {
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
-            'idStatus' => $_POST['idStatus']
+            'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
         );
         $tarefas = chamaAPI(null, '/api/services/tarefas/start', json_encode($apiEntrada), 'PUT');
     }
@@ -71,6 +71,13 @@ if (isset($_GET['operacao'])) {
             'dataExecucaoInicio' => $_POST['dataExecucaoInicio']
         );
         $tarefas = chamaAPI(null, '/api/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+    }
+
+    if ($operacao == "startAlterar") {
+        $apiEntrada = array(
+            'idTarefa' => $_POST['idTarefa'],
+        );
+        $tarefas = chamaAPI(null, '/api/services/tarefas/startAlterar', json_encode($apiEntrada), 'POST');
     }
 
 /*

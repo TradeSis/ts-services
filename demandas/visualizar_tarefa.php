@@ -276,12 +276,12 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     } ?>
                                     <td class="text-center"><?php echo $dataStop ?></td>
                                     <td class="text-center"><?php echo $tarefas['duracao'] ?></td>
-                                <td class="text-center">
-                                    <?php if ($dataStart != null && $dataStop == "00:00") { ?>
-                                        <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-id="<?php echo $tarefas['idTarefa'] ?>" data-data-execucao="<?php echo $tarefas['dataStart'] ?>" />
-                                    <?php } ?>
-                                    <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefas['idTarefa'] ?>&idDemanda=<?php echo $idDemanda ?>" role="button">Alterar</a>
-                                </td>
+                                    <td class="text-center">
+                                        <?php if ($dataStart != "00/00/0000 00:00" && $dataStop == "00:00") { ?>
+                                            <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-id="<?php echo $tarefa['idTarefa'] ?>" data-data-execucao="<?php echo $tarefa['dataStart'] ?>" />
+                                        <?php } ?>
+                                        <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&idDemanda=<?php echo $idDemanda ?>" role="button">Alterar</a>
+                                    </td>
                             </tr>
                         <?php } else {
                             foreach ($tarefas as $tarefa) {

@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once('../conexao.php');
 
 
-function buscaDemandas($idDemanda = null, $idTipoStatus = null)
+function buscaDemandas($idDemanda=null,$idTipoStatus=null,$idContrato=null)
 {
 
 	$demanda = array();
@@ -99,6 +99,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "alterar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
+			'idContrato' => $_POST['idContrato'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
 			'prioridade' => $_POST['prioridade'],

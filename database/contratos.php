@@ -36,6 +36,20 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
 	//echo json_encode ($contrato);
 	return $contrato;
 }
+function buscaContratosAbertos()
+{
+
+	$contrato = array();
+	//echo json_encode ($contrato);
+	$apiEntrada = array(
+		'dataFechamento' => 'null'
+	);
+	//echo json_encode(($apiEntrada));
+	$contrato = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'GET');
+
+	//echo json_encode ($contrato);
+	return $contrato;
+}
 
 
 function buscaCards($where)

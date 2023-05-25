@@ -12,6 +12,7 @@ include_once '../database/contratoStatus.php';
 include_once '../database/clientes.php';
 include_once '../database/contratos.php';
 include_once '../database/demanda.php';
+include_once '../database/tarefas.php';
 
 $idContrato = $_GET['idContrato'];
 $contratoStatusTodos = buscaContratoStatus();
@@ -160,7 +161,6 @@ $cliente = buscaClientes($idCliente);
 						<tr>
 							<th class="text-center">Prioridade</th>
 							<th class="text-center">ID</th>
-							<th class="text-center">Cliente</th>
 							<th class="text-center">Solicitante</th>
 							<th class="text-center">Demanda</th>
 							<th class="text-center">Responsável</th>
@@ -168,18 +168,19 @@ $cliente = buscaClientes($idCliente);
 							<th class="text-center">Status</th>
 							<th class="text-center">Ocorrência</th>
 							<th class="text-center">Tamanho</th>
-							<th class="text-center">Hora Previsão</th>
+							<th class="text-center">Tempo</th>
+							<th class="text-center">Horas Previsão</th>
 							<th class="text-center">Ação</th>
 						</tr>
 					</thead>
 					<tbody class="fonteCorpo">
 						<?php
 						foreach ($demandas as $demanda) {
+							$horas = buscaHoras($demanda['idDemanda']);
 							?>
 							<tr>
 								<td class="text-center"><?php echo $demanda['prioridade'] ?></td>
 								<td class="text-center"><?php echo $demanda['idDemanda'] ?></td>
-								<td class="text-center"><?php echo $demanda['nomeCliente'] ?></td>
 								<td class="text-center"><?php echo $demanda['nomeSolicitante'] ?></td>
 								<td class="text-center"><?php echo $demanda['tituloDemanda'] ?></td>
 								<td class="text-center"><?php echo $demanda['nomeAtendente'] ?></td>
@@ -187,6 +188,7 @@ $cliente = buscaClientes($idCliente);
 								<td class="text-center<?php echo $demanda['nomeTipoStatus'] ?>" data-status='Finalizado' ><?php echo $demanda['nomeTipoStatus'] ?></td>
 								<td class="text-center"><?php echo $demanda['nomeTipoOcorrencia'] ?></td>
 								<td class="text-center"><?php echo $demanda['tamanho'] ?></td>
+								<td class="text-center"><?php echo $horas['tempo'] ?></td>
 								<td class="text-center"><?php echo $demanda['horasPrevisao'] ?></td>
 								<td>
 									<a class='btn btn-primary btn-sm' href='../demandas/visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>' role='button'><i class='bi bi-eye-fill'></i></i></a>

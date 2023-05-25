@@ -175,7 +175,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <label class='control-label' for='inputNormal'>Status</label>
                                     <input type="hidden" class="form-control" name="idTipoOcorrencia"
                                         value="<?php echo $demanda['idTipoOcorrencia'] ?>">
                                     <input type="text" class="form-control" value="<?php echo $demanda['nomeTipoOcorrencia'] ?>"
@@ -227,7 +227,63 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                         </tr>
                     </thead>
                     <tbody class="fonteCorpo">
-                        <?php 
+                        <?php
+                        if (isset($tarefas['idTarefa'])) { ?>
+                            <tr>
+                            <td class="text-center"><?php echo $tarefas['idTarefa'] ?></td>
+                                    <td class="text-center"><?php echo $tarefas['tituloTarefa'] ?></td>
+                                    <td class="text-center"><?php echo $tarefas['nomeUsuario'] ?></td>
+                                    <td class="text-center"><?php echo $tarefas['nomeTipoOcorrencia'] ?></td>
+                                    <?php
+                                    $data = $tarefas['dataExecucaoInicio'];
+                                    if ($data != null) {
+                                        $data = date('d/m/Y', strtotime($data));
+                                    } else {
+                                        $data = "00/00/0000";
+                                    } ?>
+                                    <td class="text-center"><?php echo $data ?></td>
+                                    <?php
+                                    $dataExecucaoInicio = $tarefas['dataExecucaoInicio'];
+                                    if ($dataExecucaoInicio != null) {
+                                        $dataExecucaoInicio = date('H:i', strtotime($dataExecucaoInicio));
+                                    } else {
+                                        $dataExecucaoInicio = "00:00";
+                                    }?>
+                                    <td class="text-center"><?php echo $dataExecucaoInicio ?></td>
+                                    <?php
+                                    $dataExecucaoFinal = $tarefas['dataExecucaoFinal'];
+                                    if ($dataExecucaoFinal != null) {
+                                        $dataExecucaoFinal = date('H:i', strtotime($dataExecucaoFinal));
+                                    } else {
+                                        $dataExecucaoFinal = "00:00";
+                                    }?>
+                                    <td class="text-center"><?php echo $dataExecucaoFinal ?></td>
+                                    <td class="text-center"><?php echo $tarefas['tempo'] ?></td>
+                                    <?php
+                                    $dataStart = $tarefas['dataStart'];
+                                    if ($dataStart != null) {
+                                        $dataStart = date('d/m/Y H:i', strtotime($dataStart));
+                                    } else {
+                                        $dataStart = "00/00/0000 00:00";
+                                    }?>
+                                    <td class="text-center"><?php echo $dataStart ?></td>
+                                    <?php
+                                    $dataStop = $tarefas['dataStop'];
+                                    if ($dataStop != null) {
+                                        $dataStop = date('H:i', strtotime($dataStop));
+                                    } else {
+                                        $dataStop = "00:00";
+                                    } ?>
+                                    <td class="text-center"><?php echo $dataStop ?></td>
+                                    <td class="text-center"><?php echo $tarefas['duracao'] ?></td>
+                                <td class="text-center">
+                                    <?php if ($dataStart != null && $dataStop == "00:00") { ?>
+                                        <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-id="<?php echo $tarefas['idTarefa'] ?>" data-data-execucao="<?php echo $tarefas['dataStart'] ?>" />
+                                    <?php } ?>
+                                    <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefas['idTarefa'] ?>&idDemanda=<?php echo $idDemanda ?>" role="button">Alterar</a>
+                                </td>
+                            </tr>
+                        <?php } else {
                             foreach ($tarefas as $tarefa) {
                                 ?>
                                 <tr>
@@ -284,7 +340,8 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                         <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&idDemanda=<?php echo $idDemanda ?>" role="button">Alterar</a>
                                     </td>
                                 </tr>
-                        <?php } ?>
+                        <?php }
+                        } ?>
                     </tbody>
                 </table>
             </div>

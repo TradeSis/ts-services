@@ -23,7 +23,7 @@ $idDemanda = $_GET['idDemanda'];
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
-$contratos = buscaContratos();
+$contratos = buscaContratosAbertos();
 
 $horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
@@ -103,12 +103,12 @@ $atendentes = buscaAtendente();
 									value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
-								<label class="labelForm">Horas Tarefa</label>
+								<label class="labelForm">Tempo</label>
 								<input type="text" class="data select form-control" value="<?php echo $horas['tempo'] ?>"
 									readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -19px;">
-								<label class="labelForm">Hora Previsão</label>
+								<label class="labelForm">Horas Previsão</label>
 								<input type="text" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
 							</div>
 							<div class="col-md-12 form-group-select" style="margin-top: -29px;">
@@ -157,7 +157,7 @@ $atendentes = buscaAtendente();
 									value="<?php echo $dataFechamento ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
-								<label class="labelForm">Horas Tarefa</label>
+								<label class="labelForm">Duração</label>
 								<input type="text" class="data select form-control" value="<?php echo $horas['duracao'] ?>"
 									readonly>
 							</div>

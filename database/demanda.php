@@ -25,6 +25,7 @@ function buscaDemandas($idDemanda=null,$idTipoStatus=null,$idContrato=null)
 	$apiEntrada = array(
 		'idDemanda' => $idDemanda,
 		'idTipoStatus' => $idTipoStatus,
+		'idContrato' => $idContrato
 	);
 	//	echo json_encode(($apiEntrada));
 	$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
@@ -46,6 +47,7 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 	$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'GET');
 	return $comentario;
 }
+
 /*
 function buscaCards($where)
 {

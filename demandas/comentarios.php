@@ -12,6 +12,7 @@ include_once '../database/usuario.php';
 include_once '../database/clientes.php';
 
 $idDemanda = $_GET['idDemanda'];
+$idTipoOcorrencia = $_GET['idTipoOcorrencia'];
 $usuario = buscaUsuarios($_SESSION['idUsuario']);
 $comentarios = buscaComentarios($idDemanda);
 //echo json_encode($comentarios);
@@ -24,10 +25,10 @@ $comentarios = buscaComentarios($idDemanda);
         if ($_SESSION['idCliente'] == NULL) { ?>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" style="color:blue" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
+                    <a class="nav-link active" style="color:blue" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $idTipoOcorrencia ?>">Comentarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
+                    <a class="nav-link active" href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $idTipoOcorrencia ?>">Tarefas</a>
                 </li>
             </ul>
         <?php }

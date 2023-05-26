@@ -294,7 +294,7 @@ $atendentes = buscaAtendente();
 			</form>
 		</div>
 
-		<iframe class="container-fluid" id="myIframe" src="comentarios.php?idDemanda=<?php echo $idDemanda ?>"
+		<iframe class="container-fluid" id="myIframe" src="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $demanda['idTipoOcorrencia'] ?>"
 			frameborder="0" scrolling="yes" height="740"></iframe>
 		<!-- </div> -->
 	</div>

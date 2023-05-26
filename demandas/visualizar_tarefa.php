@@ -10,12 +10,15 @@ include_once '../database/demanda.php';
 include_once '../database/tarefas.php';
 include_once '../database/usuario.php';
 include_once '../database/clientes.php';
+include_once '../database/tipoocorrencia.php';
 
 $idDemanda = $_GET['idDemanda'];
+$idTipoOcorrencia = $_GET['idTipoOcorrencia'];
 $idAtendente = $_SESSION['idUsuario'];
 $idTarefa = null;
 $demanda = buscaDemandas($idDemanda);
 $atendentes = buscaAtendente();
+$ocorrencias = buscaTipoOcorrencia();
 $cliente = buscaClientes($demanda["idCliente"]);
 if (isset($_GET['idTarefa'])) {
     $idTarefa = $_GET['idTarefa'];
@@ -28,11 +31,11 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
     <div class="container-fluid full-width mt-3">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
+                <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $idTipoOcorrencia ?>">Comentarios</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" style="color:blue"
-                    href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
+                    href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $idTipoOcorrencia ?>">Tarefas</a>
             </li>
         </ul>
         <div class="card">
@@ -84,9 +87,18 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Status</label>
-                                    <input type="text" class="form-control" value="<?php echo $tarefas['nomeTipoOcorrencia'] ?>"
-                                        readonly>
+                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <select class="form-control" name="idTipoOcorrencia">
+                                        <?php
+                                        foreach ($ocorrencias as $ocorrencia) {
+                                            ?>
+                                            <option <?php
+                                            if ($ocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                                                echo "selected";
+                                            }
+                                            ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md">
@@ -114,7 +126,9 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                         class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                             </div>
                             <div class="col-sm" style="text-align:right">
-                                <input type="button" id="startAlterarButton" class="btn btn-success" value="Start" />
+                                <?php if ($tarefas['dataStart'] == null) { ?>
+                                    <input type="button" id="startAlterarButton" class="btn btn-success" value="Start" />
+                                <?php } ?>
                                 <input type="submit" name="submit" id="submit" class="btn btn-warning" value="Atualizar Tarefa" />
                             </div>
                         </div>
@@ -175,11 +189,18 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Status</label>
-                                    <input type="hidden" class="form-control" name="idTipoOcorrencia"
-                                        value="<?php echo $demanda['idTipoOcorrencia'] ?>">
-                                    <input type="text" class="form-control" value="<?php echo $demanda['nomeTipoOcorrencia'] ?>"
-                                        readonly>
+                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <select class="form-control" name="idTipoOcorrencia">
+                                        <?php
+                                        foreach ($ocorrencias as $ocorrencia) {
+                                            ?>
+                                            <option <?php
+                                            if ($ocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                                                echo "selected";
+                                            }
+                                            ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md">
@@ -278,9 +299,9 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <td class="text-center"><?php echo $tarefas['duracao'] ?></td>
                                     <td class="text-center">
                                         <?php if ($dataStart != "00/00/0000 00:00" && $dataStop == "00:00") { ?>
-                                            <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-id="<?php echo $tarefa['idTarefa'] ?>" data-data-execucao="<?php echo $tarefa['dataStart'] ?>" />
+                                            <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-id="<?php echo $tarefas['idTarefa'] ?>" data-data-execucao="<?php echo $tarefas['dataStart'] ?>" />
                                         <?php } ?>
-                                        <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&idDemanda=<?php echo $idDemanda ?>" role="button">Alterar</a>
+                                        <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $idTipoOcorrencia ?>" role="button">Alterar</a>
                                     </td>
                             </tr>
                         <?php } else {
@@ -337,7 +358,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                         <?php if ($dataStart != "00/00/0000 00:00" && $dataStop == "00:00") { ?>
                                             <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-id="<?php echo $tarefa['idTarefa'] ?>" data-data-execucao="<?php echo $tarefa['dataStart'] ?>" />
                                         <?php } ?>
-                                        <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&idDemanda=<?php echo $idDemanda ?>" role="button">Alterar</a>
+                                        <a class="btn btn-primary btn-sm" href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $idTipoOcorrencia ?>" role="button">Alterar</a>
                                     </td>
                                 </tr>
                         <?php }

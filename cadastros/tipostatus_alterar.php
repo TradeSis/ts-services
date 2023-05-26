@@ -6,7 +6,7 @@ include_once '../database/tipostatus.php';
 
 $idTipoStatus = $_GET['idTipoStatus'];
 
-$status = buscaTipoStatus($idTipoStatus);
+$status = buscaTipoStatus(null,$idTipoStatus);
 
 ?>
 
@@ -33,6 +33,7 @@ $status = buscaTipoStatus($idTipoStatus);
                         <div class="col-md-6">
                             <label class="labelForm">Atendimento(0=Atendente 1=Cliente)</label>
                             <select class="form-control" name="mudaPosicaoPara">
+                                <option value="<?php echo $status['mudaPosicaoPara'] ?>"><?php echo $status['mudaPosicaoPara'] ?></option>
                                 <option>0</option>
                                 <option>1</option>
                             </select>
@@ -40,6 +41,7 @@ $status = buscaTipoStatus($idTipoStatus);
                         <div class="col-md-6">
                             <label class="labelForm">Situação (0=Fechado 1=Aberto)</label>
                             <select class="form-control" name="mudaStatusPara">
+                                <option value="<?php echo $status['mudaStatusPara'] ?>"><?php echo $status['mudaStatusPara'] ?></option>
                                 <option>0</option>
                                 <option>1</option>
                             </select>

@@ -26,7 +26,8 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao=="inserir") {
 		$apiEntrada = array(
-			'nomeContratoStatus' => $_POST['nomeContratoStatus']
+			'nomeContratoStatus' => $_POST['nomeContratoStatus'],
+			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
 		
 		$contratoStatus = chamaAPI(null, '/api/services/contratostatus', json_encode($apiEntrada), 'PUT');
@@ -36,7 +37,8 @@ if (isset($_GET['operacao'])) {
 
 		$apiEntrada = array(
 			'idContratoStatus' => $_POST['idContratoStatus'],
-			'nomeContratoStatus' => $_POST['nomeContratoStatus']
+			'nomeContratoStatus' => $_POST['nomeContratoStatus'],
+			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
 		$contratoStatus = chamaAPI(null, '/api/services/contratostatus', json_encode($apiEntrada), 'POST');
 

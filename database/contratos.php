@@ -24,30 +24,24 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
 {
 
 	$contrato = array();
-	//echo json_encode ($contrato);
 	$apiEntrada = array(
 		'idContrato' => $idContrato,
 		'idContratoStatus' => $idContratoStatus,
 		'idCliente' => $idCliente
 	);
-	//echo json_encode(($apiEntrada));
 	$contrato = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'GET');
 
-	//echo json_encode ($contrato);
 	return $contrato;
 }
 function buscaContratosAbertos()
 {
 
 	$contrato = array();
-	//echo json_encode ($contrato);
 	$apiEntrada = array(
-		'dataFechamento' => 'null'
+		'statusContrato' => '1' //Aberto
 	);
-	//echo json_encode(($apiEntrada));
 	$contrato = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'GET');
 
-	//echo json_encode ($contrato);
 	return $contrato;
 }
 
@@ -57,10 +51,8 @@ function buscaCards($where)
 
 	$cards = array();
 	$apiEntrada = array();
-	//echo json_encode(($apiEntrada));
 	$cards = chamaAPI(null, '/api/services/contrato/totais', json_encode($apiEntrada), 'GET');
 
-	//echo "database=".json_encode ($cards);
 	return $cards;
 }
 
@@ -85,6 +77,8 @@ if (isset($_GET['operacao'])) {
 
 		);
 		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../contratos/index.php');
 	}
 
 
@@ -96,13 +90,13 @@ if (isset($_GET['operacao'])) {
 			'idContratoStatus' => $_POST['idContratoStatus'],
 			'dataPrevisao' => $_POST['dataPrevisao'],
 			'dataEntrega' => $_POST['dataEntrega'],
-			'idCliente' => $_POST['idCliente'],
 			'horas' => $_POST['horas'],
 			'valorHora' => $_POST['valorHora'],
 			'valorContrato' => $_POST['valorContrato'],
 
 		);
 		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'POST');
+		header('Location: ../contratos/index.php');
 	}
 
 	if ($operacao == "finalizar") {
@@ -113,6 +107,8 @@ if (isset($_GET['operacao'])) {
 
 		);
 		$contratos = chamaAPI(null, '/api/services/contrato/finalizar', json_encode($apiEntrada), 'POST');
+
+		header('Location: ../contratos/index.php');
 	}
 	if ($operacao == "excluir") {
 		$apiEntrada = array(
@@ -120,6 +116,8 @@ if (isset($_GET['operacao'])) {
 
 		);
 		$contratos = chamaAPI(null, '/api/services/contrato', json_encode($apiEntrada), 'DELETE');
+
+		header('Location: ../contratos/index.php');
 	}
 
 	if ($operacao == "filtrar") {
@@ -155,11 +153,13 @@ if (isset($_GET['operacao'])) {
 
 		echo json_encode($contrato);
 		return $contrato;
+
+		header('Location: ../contratos/index.php');
 	}
 	
-
-
-	header('Location: ../contratos/index.php');
+	
+	
+	
 
 	//include "../contratos/contrato_ok.php";
 

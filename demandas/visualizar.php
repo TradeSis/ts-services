@@ -83,6 +83,7 @@ $atendentes = buscaAtendente();
 							<div class="form-group">
 								<label class='labelForm'>Descrição</label>
 								<textarea class="form-control" name="descricao" autocomplete="off"
+
 									rows="15"><?php echo $demanda['descricao'] ?></textarea>
 							</div>
 						</div>
@@ -103,11 +104,13 @@ $atendentes = buscaAtendente();
 									value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
+
 								<label class="labelForm">Tempo</label>
 								<input type="text" class="data select form-control" value="<?php echo $horas['tempo'] ?>"
 									readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -19px;">
+
 								<label class="labelForm">Horas Previsão</label>
 								<input type="text" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
 							</div>
@@ -157,6 +160,7 @@ $atendentes = buscaAtendente();
 									value="<?php echo $dataFechamento ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
+
 								<label class="labelForm">Duração</label>
 								<input type="text" class="data select form-control" value="<?php echo $horas['duracao'] ?>"
 									readonly>
@@ -290,6 +294,7 @@ $atendentes = buscaAtendente();
 							value="Atualizar" />
 					</div>
 				<?php } ?>
+
 
 			</form>
 		</div>

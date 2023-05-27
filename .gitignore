@@ -1,5 +1,14 @@
-head.php
-conexao.php
+config.php
+.htaccess
 *.log
 *_log
-config.php
+img
+img/*
+*.sh
+*.code-workspace
+work
+work/*
+relat
+relat/*
+.vscode
+.vscode/*

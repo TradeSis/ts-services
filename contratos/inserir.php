@@ -17,90 +17,95 @@ $clientes = buscaClientes();
 
 ?>
 
+
 <body class="bg-transparent">
 
-    <div class="container text-center card shadow" style="margin-top: 10px;">
-        <div class="row">
-                <div class="col card-header border-1">
-                    <div class="row">
-                        <div class="col-sm">
-                            <h3 class="col">Inserir Contrato</h3>
-                        </div>
+    <div class="container" style="margin-top:10px; margin-bottom: 50px">
+        <!-- <div class="card shadow pb-4"> -->
+ 
+            <div class="col-sm mt-4" style="text-align:right">
+                        <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                    </div>
+                    <div class="col-sm">
+                        <spam class="col titulo">Inserir Contrato</spam>
+                    </div>
+            <div class="container" style="margin-top: 10px">
 
-                        <div class="col-sm" style="text-align:right">
-                            <a href="index.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
-                        </div>
+            <form action="../database/contratos.php?operacao=inserir" method="post">
+            <div class="row gy-4">
+
+                <div class="col-md-12 form-group">
+
+                    <label class='control-label' for='inputNormal' style="margin-top: 4px;">Titulo</label>
+                    <div class="for-group">
+                        <input type="text" class="form-control" name="tituloContrato" required>
                     </div>
                 </div>
-        </div>
 
-        <form action="../database/contratos.php?operacao=inserir" method="post" style="margin-top: 20px; padding: 10px; text-align: left">
-            <div class="row">
-                <label>Titulo</label>
-                    <input type="text" class="form-control" name="tituloContrato" required>
-                <label>Descrição</label>
-                    <textarea class="form-control" name="descricao" autocomplete="off"></textarea>
-            </div>
+                <div class="col-md-12 form-group">
+                    <label class="labelForm">Descrição</label>
+                    <textarea class="form-control" name="descricao" autocomplete="off" rows="4"></textarea>
+                </div>
 
-            <div class="row">
-                <div class="col">
-                    <label>Status</label>
-                        <select class="form-control" name="idContratoStatus">
-                            <?php
-                                foreach ($contratoStatusTodos as $contratoStatus) {
-                            ?>
+                <div class="col-md-4 form-group-select">
+                    <label class="labelForm">Status</label>
+                    <select class="select form-control" name="idContratoStatus">
+                        <?php
+                        foreach ($contratoStatusTodos as $contratoStatus) {
+                        ?>
                             <option value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?></option>
-                            <?php  } ?>
-                        </select>
+                        <?php  } ?>
+                    </select>
                 </div>
 
-                <div class="col">
-                    <label>Previsão</label>
-                        <input type="datetime-local" class="form-control" name="dataPrevisao">
+                <div class="col-md-4">
+                    <label class="labelForm">Previsão</label>
+                    <input type="datetime-local" class="data select form-control" name="dataPrevisao">
                 </div>
 
-                <div class="col">
-                    <label>Entrega</label>
-                        <input type="datetime-local" class="form-control" name="dataEntrega">
+                <div class="col-md-4">
+                    <label class="labelForm">Entrega</label>
+                    <input type="datetime-local" class="data select form-control" name="dataEntrega">
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-4">
-                    <label>Cliente</label>
-                        <select class="form-control" name="idCliente">
-                             <?php
-                                foreach ($clientes as $cliente) { // ABRE o 
-                            ?>
+                <div class="col-md-3 form-group-select">
+                    <label class="labelForm">Cliente</label>
+                    <select class="select form-control" name="idCliente">
+                        <?php
+                        foreach ($clientes as $cliente) { // ABRE o 
+                        ?>
                             <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
-                            <?php  } ?> <!--FECHA while-->
-                        </select>
+                        <?php  } ?> <!--FECHA while-->
+                    </select>
                 </div>
 
-                <div class="col">
-                    <label>Horas</label>
-                        <input type="number" class="form-control" name="horas" placeholder="horas" autocomplete="off">
-
+                <div class="col-md-3 form-group" style="margin-top: 6px;">
+                    <label class='control-label' for='inputNormal' style="margin-top: 2px;">Horas</label>
+                    <input type="number" class="form-control" name="horas" autocomplete="off" >
                 </div>
 
-                <div class="col">
-                    <label>Valor Hora</label>
-                        <input type="number" class="form-control" name="valorHora" placeholder="valor Hora" autocomplete="off">
-                </div>
-                
-                <div class="col">
-                    <label>Valor Contrato</label>
-                        <input type="number" class="form-control" name="valorContrato" placeholder="valor Contrato" autocomplete="off">
+                <div class="col-md-3 form-group" style="margin-top: 6px;">
+                    <label class='control-label' for='inputNormal' style="margin-top: 2px;">Valor Hora</label>
+                    <input type="number" class="form-control" name="valorHora" autocomplete="off" >
                 </div>
 
-                <div class="col-12" style="text-align: right; padding-top: 20px">
-                    <button type="submit" class="btn btn-sm btn-success">Cadastrar</button>
+                <div class="col-md-3 form-group" style="margin-top: 6px;">
+                    <label class='control-label' for='inputNormal' style="margin-top: 2px;">Valor Contrato</label>
+                    <input type="number" class="form-control" name="valorContrato" autocomplete="off" >
                 </div>
-            </div>
+                <div class="col-md-12 mt-4">
+                    <div style="text-align:right">
+                    <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
+                    </div>
+                </div>
+                </form>
+                </div>
+        <!-- </div> -->
+    </div>
 
-        </form>
-                
-    </div><!-- container -->
+
+
 
 </body>
+
 </html>

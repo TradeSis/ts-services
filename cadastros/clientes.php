@@ -6,23 +6,24 @@ include_once('../head.php');
 include_once('../database/clientes.php');
 
 $clientes = buscaClientes();
-
+//echo json_encode($clientes);
 
 ?>
 
 <body class="bg-transparent">
-    <div class="container" style="margin-top:10px"> 
-        <div class="card shadow">
-            <div class="card-header border-2">
-                <div class="row">
-                    <div class="col-sm">
-                        <h3 class="col">Clientes</h3>
+    <div class="container" style="margin-top:30px"> 
+        
+            <div class="row mt-4">
+                <div class="col-sm-8">
+                        <p class="tituloTabela">Clientes</p>
                     </div>
-                    <div class="col-sm" style="text-align:right">
-                        <a href="clientes_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar Cliente</a>
+
+                <div class="col-sm-4" style="text-align:right">
+                        <a href="clientes_inserir.php" role="button" class="btn btn-primary">Adicionar Cliente</a>
                     </div>
-                </div>
+          
             </div>
+        <div class="card shadow mt-2">
             <table class="table">
                 <thead>
                     <tr>

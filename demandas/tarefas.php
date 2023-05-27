@@ -17,6 +17,7 @@ $cards4 = buscaCards(""); */
 
 ?>
 
+
 <body class="bg-transparent">
   <div class="container-fluid py-2">
     <div class="header-body">
@@ -105,25 +106,25 @@ $cards4 = buscaCards(""); */
   </div>
 
 
-  <div class="container-fluid">
-    <div class="card shadow">
-      <div class="card-header">
-        <h3 class="col">Tarefas</h3>
+  <div class="container-fluid text-center pt-2 mt-3">
+    
+      <div class="col-sm-3 ml-2">
+        <p class="tituloTabela">Tarefas</p>
       </div>
       <div class="table table-sm table-hover table-bordered">
         <table class="table">
           <thead class="thead-light">
             <tr>
-              <th class="text-center">ID</th>
-              <th class="text-center">Titulo</th>
-              <th class="text-center">Cliente</th>
-              <th class="text-center">Demanda</th>
-              <th class="text-center">Atendente</th>
-              <th class="text-center">Data Início</th>
-              <th class="text-center">Data Fim</th>
-              <th class="text-center">Duração</th>
-              <th class="text-center">Status</th>
-              <th class="text-center">Ação</th>
+              <th>ID</th>
+              <th>Titulo</th>
+              <th>Cliente</th>
+              <th>Demanda</th>
+              <th>Atendente</th>
+              <th>Data Início</th>
+              <th>Data Fim</th>
+              <th>Duração</th>
+              <th>Status</th>
+              <th>Ação</th>
             </tr>
           </thead>
 
@@ -131,23 +132,23 @@ $cards4 = buscaCards(""); */
           foreach ($tarefas as $tarefa) {
           ?>
             <tr>
-              <td class="text-center"><?php echo $tarefa['idTarefa'] ?></td>
-              <td class="text-center"><?php echo $tarefa['tituloTarefa'] ?></td>
-              <td class="text-center"><?php echo $tarefa['nomeCliente'] ?></td>
-              <td class="text-center"><?php echo $tarefa['tituloDemanda'] ?></td>
-              <td class="text-center"><?php echo $tarefa['nomeUsuario'] ?></td>
-              <td class="text-center"><?php echo $tarefa['dataExecucaoInicio'] ?></td>
-              <td class="text-center"><?php echo $tarefa['dataExecucaoFinal'] ?></td>
-              <td class="text-center"><?php echo $tarefa['tempo'] ?></td>
-              <td class="text-center"><?php echo $tarefa['nomeTipoStatus'] ?></td>
-              <td class="text-center">
+              <td><?php echo $tarefa['idTarefa'] ?></td>
+              <td><?php echo $tarefa['tituloTarefa'] ?></td>
+              <td><?php echo $tarefa['nomeCliente'] ?></td>
+              <td><?php echo $tarefa['tituloDemanda'] ?></td>
+              <td><?php echo $tarefa['nomeUsuario'] ?></td>
+              <td><?php echo $tarefa['dataExecucaoInicio'] ?></td>
+              <td><?php echo $tarefa['dataExecucaoFinal'] ?></td>
+              <td><?php echo $tarefa['tempo'] ?></td>
+              <td><?php echo $tarefa['nomeTipoStatus'] ?></td>
+              <td>
                 <a class="btn btn-primary btn-sm" href="visualizar.php?idDemanda=<?php echo $tarefa['idDemanda'] ?>" role="button"><i class="bi bi-eye-fill"></i></a>
               </td>
             </tr>
           <?php } ?>
         </table>
       </div>
-    </div>
+    
   </div>
 
 

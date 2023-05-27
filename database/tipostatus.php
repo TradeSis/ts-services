@@ -1,18 +1,19 @@
 <?php
+// helio 21032023 - compatibilidade chamada chamaApi
 // helio 01022023 altereado para include_once, usando funcao conectaMysql
 // helio 26012023 16:16
 
 include_once('../conexao.php');
 
-function buscaTipoStatus($mudaStatusPara=null, $idTipoStatus=null)
+function buscaTipoStatus($statusInicial=null, $idTipoStatus=null)
 {
 	
 	$tipostatus = array();
 	$apiEntrada = array(
-		'mudaStatusPara' => $mudaStatusPara,
+		'statusInicial' => $statusInicial,
 		'idTipoStatus' => $idTipoStatus,
 	);
-	$tipostatus = chamaAPI('tipostatus', 'tipostatus', json_encode($apiEntrada), 'GET');
+	$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'GET');
 	return $tipostatus;
 }
 
@@ -27,7 +28,7 @@ if (isset($_GET['operacao'])) {
 			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
-		$tipostatus = chamaAPI('tipostatus', 'tipostatus', json_encode($apiEntrada), 'PUT');
+		$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'PUT');
 	}
 
 	if ($operacao=="alterar") {
@@ -37,13 +38,13 @@ if (isset($_GET['operacao'])) {
 			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
-		$tipostatus = chamaAPI('tipostatus', 'tipostatus', json_encode($apiEntrada), 'POST');
+		$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao=="excluir") {
 		$apiEntrada = array(
 			'idTipoStatus' => $_POST['idTipoStatus']
 		);
-		$tipostatus = chamaAPI('tipostatus', 'tipostatus', json_encode($apiEntrada), 'DELETE');
+		$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'DELETE');
 	}
 
 /*

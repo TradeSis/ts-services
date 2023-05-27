@@ -7,34 +7,29 @@ include_once '../database/contratoStatus.php';
 $contratoStatus = buscaContratoStatus();
 
 
-
-
 ?>
 
+<body class="bg-transparent">
 
-<body>
+    <div class="container" style="margin-top:10px">
+        
+        
+            
+            <div class="row mt-4">
+                <div class="col-sm-8">
+                        <p class="tituloTabela">Contrato Status</p>
+                    </div>
 
-    <div class="container-fluid" style="margin-top:10px">
-        <div class="card shadow">
-            <div class="card-header">
-                <h3 class="mb-0">Lista - status do Contrato</h3>
-
-                <div style="text-align:right">
-                    <a href="contratoStatus_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar Status</a>
-                </div>
-
+                <div class="col-sm-4" style="text-align:right">
+                        <a href="contratoStatus_inserir.php" role="button" class="btn btn-primary">Adicionar</a>
+                    </div>
+          
             </div>
+        <div class="card shadow mt-2">
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Nome Status</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                         <th scope="col">Ação</th>
 
                     </tr>
@@ -49,13 +44,6 @@ $contratoStatus = buscaContratoStatus();
                             <?php echo $contratostatus['nomeContratoStatus'] ?>
                             <?php //echo json_encode($contratoStatus) ?>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="contratoStatus_alterar.php?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button">Editar</a>
                             <a class="btn btn-danger btn-sm" href="contratoStatus_excluir1.php?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button">Excluir</a>
@@ -102,9 +90,9 @@ $contratoStatus = buscaContratoStatus();
                 <?php } ?>
 
             </table>
-
         </div>
-    </div>
+        
+   
 
 
 </body>

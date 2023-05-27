@@ -14,47 +14,53 @@ include_once '../database/clientes.php';
 include_once '../database/tipostatus.php';
 include_once '../database/tipoocorrencia.php';
 
+
 $tiposstatus = buscaTipoStatus(1);
 $ocorrencias = buscaTipoOcorrencia(1);
 $usuario = buscaUsuarios($_SESSION['idUsuario']);
 $clientes = buscaClientes();
 ?>
 
+
 <body class="bg-transparent">
 
     <div class="container" style="margin-top:10px">
-        <div class="card shadow">
-            <div class="card-header border-1">
-                <div class="row">
+       
+           
+                
+                   
+                    <div class="col-sm mt-4" style="text-align:right">
+                        <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                    </div>
                     <div class="col-sm">
-                        <h3 class="col">Inserir Demanda</h3>
+                        <spam class="col titulo">Inserir Demanda</spam>
                     </div>
-                    <div class="col-sm" style="text-align:right">
-                        <a href="index.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
-                    </div>
-                </div>
-            </div>
+            
             <div class="container" style="margin-top: 10px">
 
-                <form action="../database/demanda.php?operacao=inserir" method="post">
+                <form id="form" method="post">
                     <div class="row">
-                        <div class="col">
-                            <label>Demanda</label>
-                            <input type="text" class="form-control" name="tituloDemanda" placeholder="Nome do incidente" autocomplete="off" required>
+                        <div class="col form-group">
+                            <label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
+                            <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Descrição</label>
-                        <textarea class="form-control" name="descricao" placeholder="Insira o problema" autocomplete="off" rows="3"></textarea>
-                    </div>
+
                     <div class="row">
-                        <div class="col-md">
+                        <div class="col form-group">
+                        <label class="labelForm">Descrição</label>
+                            <textarea class="form-control" name="descricao" autocomplete="off" rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md form-group-select">
                             <div class="form-group">
-                                <label>Cliente</label>
+                                <label class="labelForm">Cliente</label>
                                 <?php
                                     if ($usuario['idCliente'] == NULL) { ?>
-                                        <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                                        <select class="form-control" name="idCliente" autocomplete="off">
+                                        <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                                        <select class="select form-control" name="idCliente" autocomplete="off" style="margin-top: -10px;">
                                             <?php
                                             foreach ($clientes as $cliente) {
                                             ?>
@@ -64,15 +70,15 @@ $clientes = buscaClientes();
                                     <?php }
                                     if ($usuario['idCliente']  >= 1) { ?>
                                         <input type="hidden" class="form-control" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
-                                        <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                                        <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
                                         <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
                                     <?php } ?>
                             </div>
                         </div>
-                        <div class="col-md">
+                        <div class="col-md form-group-select" style="margin-bottom: 80px;">
                             <div class="form-group">
-                                <label>Status</label>
-                                <select class="form-control" name="idTipoStatus">
+                                <label class="labelForm">Status</label>
+                                <select class="select form-control" name="idTipoStatus" style="margin-top: -10px;">
                                     <?php
                                     foreach ($tiposstatus as $tipostatus) {
                                     ?>
@@ -83,16 +89,40 @@ $clientes = buscaClientes();
                         </div>
                     </div>
                     <input type="hidden" class="form-control" name="idTipoOcorrencia" value="<?php echo $ocorrencias['idTipoOcorrencia'] ?>" readonly>
-                    <div class="card-footer bg-transparent" style="text-align:right">
-                        <button type="submit" class="btn btn-sm btn-success">Cadastrar</button>
+                    <div  style="text-align:right">
+                        <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
                     </div>
                 </form>
             </div>
-        </div>
+        
     </div>
 
 
+<script>
 
+
+$(document).ready(function() {
+            $("#form").submit(function() {
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: "../database/demanda.php?operacao=inserir",
+                    type: 'POST',
+                    data: formData,
+                    success: refreshPage(),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    
+                });
+
+            });
+
+            function refreshPage() {
+                window.location.reload();
+            }
+        });
+</script>
 </body>
 
 </html>

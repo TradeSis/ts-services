@@ -9,17 +9,19 @@ $tiposstatus = buscaTipoStatus();
 
 <body class="bg-transparent" >
     <div class="container" style="margin-top:10px">
-        <div class="card shadow">
-            <div class="card-header border-1">
-                <div class="row">
-                    <div class="col-sm">
-                        <h3 class="col">Tipos de Status</h3>
+
+            <div class="row mt-4">
+                <div class="col-sm-8">
+                        <p class="tituloTabela">Tipos de Status</p>
                     </div>
-                    <div class="col-sm" style="text-align:right">
-                        <a href="tipostatus_inserir.php" role="button" class="btn btn-success btn-sm">Adicionar Status</a>
+
+                <div class="col-sm-4" style="text-align:right">
+                        <a href="tipostatus_inserir.php" role="button" class="btn btn-primary">Adicionar Status</a>
                     </div>
-                </div>
+          
             </div>
+
+        <div class="card shadow mt-2">
             <table class="table">
                 <thead>
                     <tr>
@@ -42,8 +44,8 @@ $tiposstatus = buscaTipoStatus();
                 <?php } ?>
 
             </table>
-
         </div>
+        
     </div>
 
 </body>

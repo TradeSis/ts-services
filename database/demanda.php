@@ -17,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once('../conexao.php');
 
 
-function buscaDemandas($idDemanda = null, $idTipoStatus = null)
+function buscaDemandas($idDemanda=null,$idTipoStatus=null,$idContrato=null)
 {
 
 	$demanda = array();
@@ -25,6 +25,7 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null)
 	$apiEntrada = array(
 		'idDemanda' => $idDemanda,
 		'idTipoStatus' => $idTipoStatus,
+		'idContrato' => $idContrato
 	);
 	//	echo json_encode(($apiEntrada));
 	$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
@@ -46,6 +47,7 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 	$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'GET');
 	return $comentario;
 }
+
 /*
 function buscaCards($where)
 {
@@ -99,6 +101,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "alterar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
+			'idContrato' => $_POST['idContrato'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
 			'prioridade' => $_POST['prioridade'],

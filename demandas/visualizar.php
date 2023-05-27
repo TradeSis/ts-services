@@ -13,6 +13,7 @@
 
 include_once '../head.php';
 include_once '../database/demanda.php';
+include_once '../database/contratos.php';
 include_once '../database/tarefas.php';
 include_once '../database/usuario.php';
 include_once '../database/tipostatus.php';
@@ -22,6 +23,7 @@ $idDemanda = $_GET['idDemanda'];
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
+$contratos = buscaContratosAbertos();
 
 $horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
@@ -81,7 +83,8 @@ $atendentes = buscaAtendente();
 							<div class="form-group">
 								<label class='labelForm'>Descrição</label>
 								<textarea class="form-control" name="descricao" autocomplete="off"
-									rows="12"><?php echo $demanda['descricao'] ?></textarea>
+
+									rows="15"><?php echo $demanda['descricao'] ?></textarea>
 							</div>
 						</div>
 
@@ -101,12 +104,14 @@ $atendentes = buscaAtendente();
 									value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
-								<label class="labelForm">Horas Tarefa</label>
+
+								<label class="labelForm">Tempo</label>
 								<input type="text" class="data select form-control" value="<?php echo $horas['tempo'] ?>"
 									readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -19px;">
-								<label class="labelForm">Hora Previsão</label>
+
+								<label class="labelForm">Horas Previsão</label>
 								<input type="text" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
 							</div>
 							<div class="col-md-12 form-group-select" style="margin-top: -29px;">
@@ -155,12 +160,23 @@ $atendentes = buscaAtendente();
 									value="<?php echo $dataFechamento ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
-								<label class="labelForm">Horas Tarefa</label>
+
+								<label class="labelForm">Duração</label>
 								<input type="text" class="data select form-control" value="<?php echo $horas['duracao'] ?>"
 									readonly>
 							</div>
 
 							<div class="col-md-12 form-group-select" style="margin-top: -20px;">
+								<label class="labelForm">Contrato Vinculado</label>
+								<select class="select form-control" name="idContrato" autocomplete="off">
+									<option value="<?php echo $demanda['idContrato'] ?>"><?php echo $demanda['tituloContrato'] ?></option>
+									<?php foreach ($contratos as $contrato) { ?>
+										<option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?></option>
+									<?php } ?>
+								</select>
+							</div>
+							
+							<div class="col-md-12 form-group-select" style="margin-top: 21px;">
 								<label class="labelForm">Status</label>
 								<select class="select form-control" name="idTipoStatus" autocomplete="off">
 									<option value="<?php echo $demanda['idTipoStatus'] ?>"><?php echo $demanda['nomeTipoStatus'] ?></option>
@@ -279,10 +295,11 @@ $atendentes = buscaAtendente();
 					</div>
 				<?php } ?>
 
+
 			</form>
 		</div>
 
-		<iframe class="container-fluid" id="myIframe" src="comentarios.php?idDemanda=<?php echo $idDemanda ?>"
+		<iframe class="container-fluid" id="myIframe" src="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $demanda['idTipoOcorrencia'] ?>"
 			frameborder="0" scrolling="yes" height="740"></iframe>
 		<!-- </div> -->
 	</div>
@@ -328,13 +345,14 @@ $atendentes = buscaAtendente();
 					data: form_data,
 					dataType: "JSON",
 					success: refreshPage()
-				})
+				});
 			});
 
-			function refreshPage() {
-				window.location.reload();
-			}
 		});
+
+		function refreshPage() {
+			window.location.reload();
+		}
 	</script>
 </body>
 

@@ -458,7 +458,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         }
 
                         //dataFechamento
-                        if(object.dataFechamento == "0000-00-00 00:00:00"){
+                        if(object.dataFechamento == null){
                             var dataFechamentoFormatada = "<p>---</p>";
                         }else{
                             var dataFechamento = new Date(object.dataFechamento);

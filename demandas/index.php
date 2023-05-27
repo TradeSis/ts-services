@@ -232,7 +232,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
-      <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- RESPONSAVEL -->
+      <li class="ls-label col-sm-12 mr-1"> <!-- RESPONSAVEL -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
           <select class="form-control" name="idAtendente" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
@@ -251,7 +251,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
-      <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- RESPONSAVEL -->
+      <li class="ls-label col-sm-12 mr-1"> <!-- RESPONSAVEL -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
           <select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
@@ -270,7 +270,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
-      <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- ABERTO/FECHADO -->
+      <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
           <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" style="font-size: 14px; width: 150px; height: 35px">
@@ -282,7 +282,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
-      <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- STATUS -->
+      <li class="ls-label col-sm-12 mr-1"> <!-- STATUS -->
         <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
           <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
@@ -299,7 +299,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
-      <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- OCORRENCIA -->
+      <li class="ls-label col-sm-12 mr-1"> <!-- OCORRENCIA -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
           <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
@@ -318,7 +318,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
-      <li class="ls-label col-sm-12 mt-2 mr-1"> <!-- TAMANHO -->
+      <li class="ls-label col-sm-12 mr-1"> <!-- TAMANHO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
           <select class="form-control" name="tamanho" id="FiltroTamanho" style="font-size: 14px; width: 150px; height: 35px">

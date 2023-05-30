@@ -48,21 +48,12 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 	return $comentario;
 }
 
-/*
-function buscaCards($where)
+function buscaCardsDemanda()
 {
-	$conexao = conectaMysql();
-
-	$sql = "SELECT COUNT(*) AS total FROM demanda" . $where;
-	$buscar = mysqli_query($conexao, $sql);
-	$demandas = array();
-	while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
-		array_push($demandas, $row);
-	}
-
-	return $demandas;
+	$cards = array();
+	$cards = chamaAPI(null, '/api/services/demandas/totais', null, 'GET');
+	return $cards;
 }
-*/
 
 if (isset($_GET['operacao'])) {
 

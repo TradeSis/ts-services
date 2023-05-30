@@ -16,6 +16,35 @@ function buscaTarefas($idDemanda=null,$idTarefa=null)
     $tarefas = chamaAPI(null, '/api/services/tarefas', json_encode($apiEntrada), 'GET');
     return $tarefas;
 }
+function buscaTarefasGrafico1()
+{
+
+    $dadosGrafico1 = array();
+    $dadosGrafico1 = chamaAPI(null, '/api/services/tarefas/grafico1', null, 'GET');
+    return $dadosGrafico1;
+}
+function buscaTarefasGrafico2()
+{
+
+    $dadosGrafico2 = array();
+    $dadosGrafico2 = chamaAPI(null, '/api/services/tarefas/grafico2', null, 'GET');
+    return $dadosGrafico2;
+}
+function buscaTarefasGrafico3()
+{
+
+    $dadosGrafico3 = array();
+    $dadosGrafico3 = chamaAPI(null, '/api/services/tarefas/grafico3', null, 'GET');
+    return $dadosGrafico3;
+}
+
+function buscaTarefasGrafico4()
+{
+
+    $dadosGrafico4 = array();
+    $dadosGrafico4 = chamaAPI(null, '/api/services/tarefas/grafico4', null, 'GET');
+    return $dadosGrafico4;
+}
 function buscaHoras($idDemanda)
 {
 

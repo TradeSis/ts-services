@@ -28,6 +28,7 @@ $atendentes = buscaAtendente();
 $usuarios = buscaUsuarios();
 $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
+$cards = buscaCardsDemanda();
 
 
 if ($_SESSION['idCliente'] == null){
@@ -134,11 +135,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-uppercase text-success">Total de Chamado</div>
-                <div class="h5 mb-0  text-gray-800"><?php
-                                                    /*foreach ($cards1 as $card1)
-                    echo $card1['total'];*/
-                                                    ?>
-                </div>
+                <div class="h5 mb-0  text-gray-800 ml-1"><?php echo $cards['totalDemandas'] ?></div>
               </div>
             </div>
           </div>
@@ -149,11 +146,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Abertos</div>
-                <div class="h5 mb-0  text-gray-800"><?php
-                                                    /*foreach ($cards2 as $card2)
-                    echo $card1['total'];*/
-                                                    ?>
-                </div>
+                <div class="h5 mb-0  text-gray-800 ml-1"><?php echo $cards['totalAbertos'] ?></div>
               </div>
             </div>
           </div>
@@ -163,12 +156,8 @@ if (isset($_SESSION['filtro_demanda'])) {
           <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Fechados</div>
-                <div class="h5 mb-0  text-gray-800"><?php
-                                                    /*foreach ($cards2 as $card2)
-                    echo $card2['total'];*/
-                                                    ?>
-                </div>
+                <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Encerrados</div>
+                <div class="h5 mb-0  text-gray-800 ml-1"><?php echo $cards['totalFechados'] ?></div>
               </div>
             </div>
           </div>
@@ -178,12 +167,8 @@ if (isset($_SESSION['filtro_demanda'])) {
           <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Desenvolvimento</div>
-                <div class="h5 mb-0  text-gray-800"><?php
-                                                    /*foreach ($cards2 as $card2)
-                    echo $card2['total'];*/
-                                                    ?>
-                </div>
+                <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Aguardando</div>
+                <div class="h5 mb-0  text-gray-800 ml-1"><?php echo $cards['totalAguardando'] ?></div>
               </div>
             </div>
           </div>

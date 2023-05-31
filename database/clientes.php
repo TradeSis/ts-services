@@ -20,7 +20,7 @@ function buscaClientes($idCliente=null)
 	);
 	/* echo "-ENTRADA->".json_encode($apiEntrada)."\n";
 	return; */
-	$clientes = chamaAPI(null, '/api/services/clientes', json_encode($apiEntrada), 'GET');
+	$clientes = chamaAPI(null, '/services/clientes', json_encode($apiEntrada), 'GET');
 	//echo json_encode($clientes);
 	return $clientes;
 }
@@ -34,7 +34,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'nomeCliente' => $_POST['nomeCliente']
 		);
-		$clientes = chamaAPI(null, '/api/services/clientes', json_encode($apiEntrada), 'PUT');
+		$clientes = chamaAPI(null, '/services/clientes', json_encode($apiEntrada), 'PUT');
 	}
 
 	if ($operacao=="alterar") {
@@ -49,7 +49,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'idCliente' => $_POST['idCliente']
 		);
-		$clientes = chamaAPI(null, '/api/services/clientes', json_encode($apiEntrada), 'DELETE');
+		$clientes = chamaAPI(null, '/services/clientes', json_encode($apiEntrada), 'DELETE');
 	}
 
 

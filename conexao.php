@@ -23,7 +23,7 @@ function defineConexaoMysql () {
 
 function defineEmail () {
 
-  return        array(  "Host"      => eMAIL_HOST, 
+  return        array(  "Host"      => EMAIL_HOST, 
                         "Port"      => EMAIL_PORT, 
                         "Username"  => EMAIL_USERNAME,
                         "Password"  => EMAIL_PASSWORD,

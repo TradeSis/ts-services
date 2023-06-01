@@ -12,7 +12,7 @@ function buscaRelatorios($usercod=null)
 		'usercod' => $usercod,
 	);
 	
-	$relatorios = chamaAPI(null, 'ts/relatorios', json_encode($apiEntrada), 'GET');
+	$relatorios = chamaAPI(null, '/api/ts/relatorios', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($relatorios);
 	return $relatorios;

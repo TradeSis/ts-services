@@ -42,7 +42,7 @@ if (isset($_GET['operacao'])) {
 			'idCliente' => $_POST['idCliente'],
 			'nomeCliente' => $_POST['nomeCliente']
 		);
-		$clientes = chamaAPI(null, '/api/servives/clientes', json_encode($apiEntrada), 'POST');
+		$clientes = chamaAPI(null, 'servives/clientes', json_encode($apiEntrada), 'POST');
 	}
 	
 	if ($operacao=="excluir") {

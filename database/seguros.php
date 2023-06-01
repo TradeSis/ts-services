@@ -13,7 +13,7 @@ function buscaSeguros($codigoCliente,$codigoFilial,$recID)/* ($recID=null) */
         'codigoCliente' => $codigoCliente,
 		'codigoFilial' => $codigoFilial
 	);
-	$seguros = chamaAPI(null, '/api/ts/seguros', json_encode($apiEntrada), 'GET');
+	$seguros = chamaAPI(null, 'ts/seguros', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($seguros);
 

@@ -3,7 +3,7 @@
 // Lucas 21032023 - adicionado operação filtrar, idCliente e idContratoStatus
 // Lucas 20032023 - buscaContratos ganhou parametro idCliente
 // Lucas 20022023 - buscaContratos ganhou parametro idContratoStatus
-// Lucas 14022023 - linha 96, modificado segundo parametro da chamda da api, adicionado "/api/tsservices/contrato/finalizar";
+// Lucas 14022023 - linha 96, modificado segundo parametro da chamda da api, adicionado "/tsservices/contrato/finalizar";
 // Lucas 09022023 - corrigido erro de sintaxa - "hora" para "horas"
 // Helio 01022023 - compatibilidade com conectaMysql
 // Helio 01022023 alterado para include_once

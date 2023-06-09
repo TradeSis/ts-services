@@ -22,7 +22,7 @@ function buscaUsuarios($idUsuario=null)
 	
 	//echo "-ENTRADA->".json_encode($apiEntrada)."\n";
 	//return;	
-	$usuario = chamaAPI(null, '/api/services/usuario', json_encode($apiEntrada), 'GET');
+	$usuario = chamaAPI(null, '/services/usuario', json_encode($apiEntrada), 'GET');
 	// echo json_encode($usuario);
 	return $usuario;
 }
@@ -35,7 +35,7 @@ function buscaAtendente($idUsuario=null)
 		'idUsuario' => $idUsuario,
 	);
 	
-	$atendente = chamaAPI(null, '/api/services/atendente', json_encode($apiEntrada), 'GET');
+	$atendente = chamaAPI(null, '/services/atendente', json_encode($apiEntrada), 'GET');
 	return $atendente;
 }
 
@@ -62,7 +62,7 @@ if (isset($_GET['operacao'])) {
 		echo "\n";
 		echo json_encode($apiEntrada);
 		return;  */
-		$usuario = chamaAPI(null, '/api/services/usuario', json_encode($apiEntrada), 'PUT');
+		$usuario = chamaAPI(null, '/services/usuario', json_encode($apiEntrada), 'PUT');
 		
 	}
 
@@ -80,7 +80,7 @@ if (isset($_GET['operacao'])) {
 		//echo json_encode($apiEntrada);
 		//return;
 		
-		$usuario = chamaAPI(null, '/api/services/usuario', json_encode($apiEntrada), 'POST');
+		$usuario = chamaAPI(null, '/services/usuario', json_encode($apiEntrada), 'POST');
 	}
 
 
@@ -88,7 +88,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'idUsuario' => $_POST['idUsuario']
 		);
-		$usuario = chamaAPI(null, '/api/services/usuario', json_encode($apiEntrada), 'DELETE');
+		$usuario = chamaAPI(null, '/services/usuario', json_encode($apiEntrada), 'DELETE');
 	}
 
 

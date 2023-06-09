@@ -36,7 +36,7 @@ if (!empty($montamenu['menuHeader'])){
             <span class="material-symbols-outlined">menu_open</span>
         </div>
 
-        <a href="/ts/painel" class="logo"><img src="../img/brand/white.png" width="150"></a>
+        <a href="<?php echo URLROOT ?>/painel" class="logo"><img src="../img/brand/white.png" width="150"></a>
 
         <div class=" col-md navbar navbar-expand navbar1">
             <ul class="navbar-nav mx-auto ml-4" id="novoMenu2">
@@ -104,11 +104,11 @@ if (!empty($montamenu['menuHeader'])){
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="/ts/sistema/usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>">
+                    <a class="dropdown-item" href="<?php echo URLROOT ?>/sistema/usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>">
                         <i class="bi bi-person-circle"></i>&#32;
                         Perfil
                     </a>
-                    <a class="dropdown-item" href="/ts/painel/">
+                    <a class="dropdown-item" href="<?php echo URLROOT ?>/painel/">
                         <i class="bi bi-display"></i>&#32;
                         Painel
                     </a>
@@ -183,7 +183,7 @@ if (!empty($montamenu['menuHeader'])){
                 <div class="modal-body">Selecione "Logout" abaixo se você deseja encerrar sua sessão.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary logout" href="/ts/painel/logout.php">Logout</a>
+                    <a class="btn btn-primary logout" href="<?php echo URLROOT ?>/painel/logout.php">Logout</a>
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@ function buscaMontaMenu($nomeAplicativo,$idUsuario)
 	);
 	/* echo "-ENTRADA->".json_encode($apiEntrada)."\n";
 	return; */
-	$menu = chamaAPI(null, '/api/services/montaMenu', json_encode($apiEntrada), 'GET');
+	$menu = chamaAPI(null, '/services/montaMenu', json_encode($apiEntrada), 'GET');
 	//echo json_encode($menu);
 	return $menu;
 }

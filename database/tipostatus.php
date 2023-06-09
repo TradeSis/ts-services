@@ -13,7 +13,7 @@ function buscaTipoStatus($statusInicial=null, $idTipoStatus=null)
 		'statusInicial' => $statusInicial,
 		'idTipoStatus' => $idTipoStatus,
 	);
-	$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'GET');
+	$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'GET');
 	return $tipostatus;
 }
 
@@ -28,7 +28,7 @@ if (isset($_GET['operacao'])) {
 			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
-		$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'PUT');
+		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'PUT');
 	}
 
 	if ($operacao=="alterar") {
@@ -38,13 +38,13 @@ if (isset($_GET['operacao'])) {
 			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
-		$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'POST');
+		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao=="excluir") {
 		$apiEntrada = array(
 			'idTipoStatus' => $_POST['idTipoStatus']
 		);
-		$tipostatus = chamaAPI(null, '/api/services/tipostatus', json_encode($apiEntrada), 'DELETE');
+		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'DELETE');
 	}
 
 /*

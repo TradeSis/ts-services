@@ -28,7 +28,7 @@ function buscaDemandas($idDemanda=null,$idTipoStatus=null,$idContrato=null)
 		'idContrato' => $idContrato
 	);
 	//	echo json_encode(($apiEntrada));
-	$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
+	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($demanda);
 	return $demanda;
@@ -44,14 +44,14 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 		'idDemanda' => $idDemanda,
 		'idComentario' => $idComentario,
 	);
-	$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'GET');
+	$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'GET');
 	return $comentario;
 }
 
 function buscaCardsDemanda()
 {
 	$cards = array();
-	$cards = chamaAPI(null, '/api/services/demandas/totais', null, 'GET');
+	$cards = chamaAPI(null, '/services/demandas/totais', null, 'GET');
 	return $cards;
 }
 
@@ -63,7 +63,7 @@ if (isset($_GET['operacao'])) {
 		
 		$apiEntrada = array(
 			'idCliente' => $_POST['idCliente'],
-			'idUsuario' => $_POST['idUsuario'],
+			//'idUsuario' => $_POST['idUsuario'],
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
@@ -72,7 +72,7 @@ if (isset($_GET['operacao'])) {
 		);
 		/* echo json_encode($apiEntrada);
 		return; */
-		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'PUT');
+		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 
 		$tituloEmail = $_POST['tituloDemanda'];
 		$corpoEmail = $_POST['descricao'];
@@ -86,7 +86,7 @@ if (isset($_GET['operacao'])) {
 				'nome'  => $_SESSION['usuario']),
 		);
 
-		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
+		//$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 		
 	}
 	if ($operacao == "alterar") {
@@ -102,19 +102,19 @@ if (isset($_GET['operacao'])) {
 			'idAtendente' => $_POST['idAtendente'],
 			'horasPrevisao' => $_POST['horasPrevisao'],
 		);
-		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'POST');
+		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao == "encerrar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
 		);
-		$demanda = chamaAPI(null, '/api/services/demanda/encerrar', json_encode($apiEntrada), 'POST');
+		$demanda = chamaAPI(null, '/services/demanda/encerrar', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao == "retornar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
 		);
-		$demanda = chamaAPI(null, '/api/services/demanda/retornar', json_encode($apiEntrada), 'POST');
+		$demanda = chamaAPI(null, '/services/demanda/retornar', json_encode($apiEntrada), 'POST');
 	}
 
 	if ($operacao == "comentar") {
@@ -148,7 +148,7 @@ if (isset($_GET['operacao'])) {
 		);
 		
 
-		$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'PUT');
+		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
 		/* echo json_encode(($comentario)); */
 	}
 
@@ -216,7 +216,7 @@ if (isset($_GET['operacao'])) {
 		$_SESSION['filtro_demanda'] = $apiEntrada;
 			/* echo json_encode(($apiEntrada));
 		return; */
-		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
+		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 
 		echo json_encode($demanda);
 		return $demanda;

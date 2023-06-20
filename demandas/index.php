@@ -183,7 +183,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     <div class="titulo"><span>Filtrar por:</span></div>
     <ul>
 
-      <li class="ls-label col-sm-12"> <!-- CLIENTE -->
+      <?php /*<li class="ls-label col-sm-12"> <!-- CLIENTE -->
         <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
           <?php if ($_SESSION['idCliente'] == null){ ?>
@@ -236,7 +236,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
-      <li class="ls-label col-sm-12 mr-1"> <!-- RESPONSAVEL -->
+      <li class="ls-label col-sm-12 mr-1"> <!-- SOLICITANTE -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
           <select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
@@ -255,24 +255,12 @@ if (isset($_SESSION['filtro_demanda'])) {
         </form>
       </li>
 
-      <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
-
-          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" style="font-size: 14px; width: 150px; height: 35px">
-            <option value="<?php echo null ?>"><?php echo "Todos"  ?></option>
-            <option <?php if ($statusDemanda == "1") { echo "selected"; } ?> value="1">Aberto</option>
-            <option <?php if ($statusDemanda == "0") { echo "selected"; } ?> value="0">Fechado</option>
-          </select>
-
-        </form>
-      </li>
-
       <li class="ls-label col-sm-12 mr-1"> <!-- STATUS -->
-        <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
-
-          <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
-            <option value="<?php echo null ?>"><?php echo " Status"  ?></option>
-            <?php foreach ($tiposstatus as $tipostatus) { ?>
+      <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
+        
+      <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
+        <option value="<?php echo null ?>"><?php echo " Status"  ?></option>
+        <?php foreach ($tiposstatus as $tipostatus) { ?>
               <option <?php
                       if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
                         echo "selected";
@@ -280,18 +268,19 @@ if (isset($_SESSION['filtro_demanda'])) {
                       ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
             <?php } ?>
           </select>
-
+          
         </form>
       </li>
 
+      
       <li class="ls-label col-sm-12 mr-1"> <!-- OCORRENCIA -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
+      <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
-            <option value="<?php echo null ?>"><?php echo "Ocorrência"  ?></option>
-            <?php
+      <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
+        <option value="<?php echo null ?>"><?php echo "Ocorrência"  ?></option>
+        <?php
             foreach ($tipoocorrencias as $tipoocorrencia) {
-            ?>
+              ?>
               <option <?php
                       if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
                         echo "selected";
@@ -299,23 +288,34 @@ if (isset($_SESSION['filtro_demanda'])) {
                       ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
             <?php  } ?>
           </select>
-
+          
         </form>
       </li>
-
+      
       <li class="ls-label col-sm-12 mr-1"> <!-- TAMANHO -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
+      <form class="d-flex" action="" method="post" style="text-align: right;">
+        
+      <select class="form-control" name="tamanho" id="FiltroTamanho" style="font-size: 14px; width: 150px; height: 35px">
+        <option value="<?php echo null ?>"><?php echo "Tamanho"  ?></option>
+        <option  value="P">P</option>
+        <option  value="M">M</option>
+        <option  value="G">G</option>
+      </select>
+      
+    </form>
+  </li> */?>
+  
+  <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+    <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="tamanho" id="FiltroTamanho" style="font-size: 14px; width: 150px; height: 35px">
-            <option value="<?php echo null ?>"><?php echo "Tamanho"  ?></option>
-            <option  value="P">P</option>
-            <option  value="M">M</option>
-            <option  value="G">G</option>
-          </select>
+      <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" style="font-size: 14px; width: 150px; height: 35px">
+        <option value="<?php echo null ?>"><?php echo "Todos"  ?></option>
+        <option <?php if ($statusDemanda == "1") { echo "selected"; } ?> value="1">Aberto</option>
+        <option <?php if ($statusDemanda == "0") { echo "selected"; } ?> value="0">Fechado</option>
+      </select>
 
-        </form>
-      </li>
-
+    </form>
+  </li>
 
     </ul>
 
@@ -356,6 +356,9 @@ if (isset($_SESSION['filtro_demanda'])) {
               </span>
             </div>
           </div>
+          <div class="col-sm-3" style="margin-left:-100px;">
+            <button class="btn btn-warning" id="export" name="export" type="submit">Gerar CSV</button>
+          </div>
 
 
 
@@ -370,19 +373,123 @@ if (isset($_SESSION['filtro_demanda'])) {
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
           <thead class="thead-light">
-            <tr>
-              <th>Prioridade</th>
-              <th>ID</th>
-              <th>Cliente</th>
-              <th>Solicitante</th>
-              <th>Demanda</th>
-              <th>Responsável</th>
-              <th>Abertura</th>
-              <th>Status</th>
-              <th>Ocorrência</th>
-              <th>Tamanho</th>
-              <th>Hora Previsão</th>
-              <th>Ação</th>
+          <tr>
+              <th class="text-center" style="width: 1%;">Prioridade</th>
+              <th class="text-center" style="width: 1%;">ID</th>
+              <th class="text-center" style="width: 10%;">
+                <form action="" method="post">
+                  <?php if ($_SESSION['idCliente'] == null) { ?>
+                    <select class="form-control text-center" name="idCliente" id="FiltroClientes"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo " Cliente" ?></option>
+                      <?php
+                      foreach ($clientes as $cliente) {
+                        ?>
+                        <option <?php
+                        if ($cliente['idCliente'] == $idCliente) {
+                          echo "selected";
+                        }
+                        ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                      <?php } ?>
+                    </select>
+                  <?php } else { ?>
+                    <select class="form-control text-center" name="idCliente" id="FiltroClientes"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;" disabled>
+                      <?php
+                      foreach ($clientes as $cliente) {
+                        ?>
+                        <option <?php
+                        if ($cliente['idCliente'] == $idCliente) {
+                          echo "selected";
+                        }
+                        ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                      <?php } ?>
+                    </select>
+                  <?php } ?>
+                </form>
+              </th>
+              <th class="text-center" style="width: 10%;">
+                <form action="" method="post">
+                  <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
+                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                    <option value="<?php echo null ?>"><?php echo " Solicitante" ?></option>
+                    <?php
+                    foreach ($usuarios as $usuario) {
+                      ?>
+                      <option <?php
+                      if ($usuario['idUsuario'] == $idSolicitante) {
+                        echo "selected";
+                      }
+                      ?>              value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario'] ?></option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th class="text-center" style="width: 15%;">Demanda</th>
+              <th class="text-center" style="width: 11%;">
+                <form action="" method="post">
+                  <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
+                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                    <option value="<?php echo null ?>"><?php echo " Responsável" ?></option>
+                    <?php
+                    foreach ($atendentes as $atendente) {
+                      ?>
+                      <option <?php
+                      if ($atendente['idUsuario'] == $idAtendente) {
+                        echo "selected";
+                      }
+                      ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th class="text-center" style="width: 1%;">Abertura</th>
+              <th class="text-center" style="width: 1%;">
+                <form action="" method="post">
+                  <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
+                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                    <option value="<?php echo null ?>"><?php echo " Status" ?></option>
+                    <?php foreach ($tiposstatus as $tipostatus) { ?>
+                      <option <?php
+                      if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                        echo "selected";
+                      }
+                      ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th class="text-center" style="width: 10%;">
+                <form action="" method="post">
+                  <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
+                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                    <option value="<?php echo null ?>"><?php echo "Ocorrência" ?></option>
+                    <?php
+                    foreach ($tipoocorrencias as $tipoocorrencia) {
+                      ?>
+                      <option <?php
+                      if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                        echo "selected";
+                      }
+                      ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th class="text-center" style="width: 10%;">
+                <form action="" method="post">
+                  <select class="form-control text-center" name="tamanho" id="FiltroTamanho"
+                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                    <option value="<?php echo null ?>"><?php echo "Tamanho" ?></option>
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                  </select>
+                </form>
+              </th>
+              <th class="text-center" style="width: 1%;">Previsão</th>
+              <th class="text-center" style="width: 1%;">Ação</th>
             </tr>
           </thead>
 
@@ -433,9 +540,6 @@ $.ajax({
 
   success: function(msg) {
     var json = JSON.parse(msg);
-    //alert("terceiro alert: " + JSON.stringify(json));
-    /* alert(JSON.stringify(msg)); */
-    /* $("#dados").html(msg); */
 
     var linha = "";
     for (var $i = 0; $i < json.length; $i++) {
@@ -443,8 +547,6 @@ $.ajax({
       var dataAbertura = new Date(object.dataAbertura);
       var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
 
-      // alert("quarto alert: " + JSON.stringify(object))
-      /*  alert(object); */
       linha = linha + "<TR>";
       linha = linha + "<TD>" + object.prioridade + "</TD>";
       linha = linha + "<TD>" + object.idDemanda + "</TD>";
@@ -465,7 +567,6 @@ $.ajax({
     }
 
 
-    //alert(linha);
     $("#dados").html(linha);
 
 
@@ -516,6 +617,62 @@ $.ajax({
       $('.menuFiltros').toggleClass('mostra');
       $('.diviFrame').toggleClass('mostra');
     });
+
+    function exportToCSV() {
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '../database/demanda.php?operacao=filtrar',
+        data: {
+          idCliente: $("#FiltroClientes").val(),
+          idSolicitante: $("#FiltroSolicitante").val(),
+          idAtendente: $("#FiltroUsuario").val(),
+          idTipoStatus: $("#FiltroTipoStatus").val(),
+          idTipoOcorrencia: $("#FiltroOcorrencia").val(),
+          statusDemanda: $("#FiltroStatusDemanda").val(),
+          tituloDemanda: $("#tituloDemanda").val(),
+          tamanho: $("#FiltroTamanho").val()
+        },
+        success: function (json) {
+          var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+          csvContent += "Prioridade,ID,Cliente,Solicitante,Demanda,Responsavel,Abertura,Status,Ocorrencia,Tamanho,Previsao\n";
+
+          for (var i = 0; i < json.length; i++) {
+            var object = json[i];
+            csvContent += object.prioridade + "," +
+              object.idDemanda + "," +
+              object.nomeCliente + "," +
+              object.nomeSolicitante + "," +
+              object.tituloDemanda + "," +
+              object.nomeAtendente + "," +
+              object.dataAbertura + "," +
+              object.nomeTipoStatus + "," +
+              object.nomeTipoOcorrencia + "," +
+              object.tamanho + "," +
+              object.horasPrevisao + "\n";
+          }
+
+          var encodedUri = encodeURI(csvContent);
+          var link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", "data.csv");
+          document.body.appendChild(link);
+
+          link.click();
+
+          document.body.removeChild(link);
+        },
+        error: function (e) {
+          alert('Erro: ' + JSON.stringify(e));
+        }
+      });
+    }
+
+    $("#export").click(function () {
+      exportToCSV();
+    });
+
+
   </script>
 </body>
 

@@ -63,8 +63,8 @@ if (isset($_GET['operacao'])) {
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
-			'idTipoStatus' => $_POST['idTipoStatus'],
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+			'idTipoStatus' => Fila
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 
@@ -90,27 +90,46 @@ if (isset($_GET['operacao'])) {
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
 			'prioridade' => $_POST['prioridade'],
-			'idTipoStatus' => $_POST['idTipoStatus'],
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+			'idServico' => $_POST['idServico'],
 			'tamanho' => $_POST['tamanho'],
 			'idAtendente' => $_POST['idAtendente'],
-			'horasPrevisao' => $_POST['horasPrevisao'],
+			'horasPrevisao' => $_POST['horasPrevisao']
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 
 		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
-	if ($operacao == "encerrar") {
+	if ($operacao == "validar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
+			'idTipoStatus' => Validado
+
 		);
-		$demanda = chamaAPI(null, '/services/demanda/encerrar', json_encode($apiEntrada), 'POST');
+		$demanda = chamaAPI(null, '/services/demanda/validar', json_encode($apiEntrada), 'POST');
+
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
+
+	if ($operacao == "realizado") {
+		$apiEntrada = array(
+			'idDemanda' => $_POST['idDemanda'],
+			'idTipoStatus' => Realizado
+
+		);
+		$demanda = chamaAPI(null, '/services/demanda/realizado', json_encode($apiEntrada), 'POST');
+
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
 	if ($operacao == "retornar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
+			'idTipoStatus' => Retorno
 		);
 		$demanda = chamaAPI(null, '/services/demanda/retornar', json_encode($apiEntrada), 'POST');
+
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
 	if ($operacao == "comentar") {
@@ -139,12 +158,56 @@ if (isset($_GET['operacao'])) {
 			'nomeAnexo' => $nomeAnexo,
 			'pathAnexo' => $pathURL,
 			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
-			'comentario' => $_POST['comentario']
+			'comentario' => $_POST['comentario'],
+			'idTipoStatus' => Respondido
+
 		);
 		
 
 		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/comentarios.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "comentarAtendente") {
+ 
+		$anexo = $_FILES['nomeAnexo'];
+	
+		$pasta    = ROOT    . "/img/anexos/";
+		$pastaURL = URLROOT . "/img/anexos/";
+
+		$nomeAnexo = $anexo['name'];
+		//$novoNomeDoAnexo = uniqid(); 
+		$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
+		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+		/* if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+        die("Tipo de aquivo não aceito"); */
+
+		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
+
+
+		$apiEntrada = array(
+			'nomeAnexo' => $nomeAnexo,
+			'pathAnexo' => $pathURL,
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $_POST['comentario'],
+			'idTipoStatus' => AguardandoSolicitante
+
+		);
+		
+
+		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/comentarios.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
 	if ($operacao == "filtrar") {

@@ -40,21 +40,11 @@ $clientes = buscaClientes();
 
                 <form id="form" method="post">
                     <div class="row">
-                        <div class="col form-group">
+                        <div class="col-md form-group" style="margin-top: 25px;">
                             <label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
                             <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col form-group">
-                        <label class="labelForm">Descrição</label>
-                            <textarea class="form-control" name="descricao" autocomplete="off" rows="3"></textarea>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md form-group-select">
+                        <div class="col-md-2 form-group-select">
                             <div class="form-group">
                                 <label class="labelForm">Cliente</label>
                                 <?php
@@ -75,19 +65,15 @@ $clientes = buscaClientes();
                                     <?php } ?>
                             </div>
                         </div>
-                        <div class="col-md form-group-select" style="margin-bottom: 80px;">
-                            <div class="form-group">
-                                <label class="labelForm">Status</label>
-                                <select class="select form-control" name="idTipoStatus" style="margin-top: -10px;">
-                                    <?php
-                                    foreach ($tiposstatus as $tipostatus) {
-                                    ?>
-                                        <option value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col form-group">
+                        <label class="labelForm">Descrição</label>
+                            <textarea class="form-control" name="descricao" autocomplete="off" rows="10"></textarea>
                         </div>
                     </div>
+                    
                     <input type="hidden" class="form-control" name="idTipoOcorrencia" value="<?php echo $ocorrencias['idTipoOcorrencia'] ?>" readonly>
                     <div  style="text-align:right">
                         <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>

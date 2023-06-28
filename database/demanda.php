@@ -64,6 +64,7 @@ if (isset($_GET['operacao'])) {
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+			'idServico' => ServicoPadrao,
 			'idTipoStatus' => Fila
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');

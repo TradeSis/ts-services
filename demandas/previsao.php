@@ -82,24 +82,21 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                 <div class="form-group">
                                     <label class="labelForm">Data Previsão</label>
                                     <input type="date" class="data select form-control"
-                                        value="<?php echo $tarefas['dataPrevisto'] ?>" name="dataPrevisto"
-                                        autocomplete="off" required>
+                                        value="<?php echo $tarefas['dataPrevisto'] ?>" name="dataPrevisto" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Inicio</label>
                                     <input type="time" class="data select form-control"
-                                        value="<?php echo $tarefas['previsaoInicio'] ?>" name="previsaoInicio"
-                                        autocomplete="off" required>
+                                        value="<?php echo $tarefas['previsaoInicio'] ?>" name="previsaoInicio" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Fim</label>
                                     <input type="time" class="data select form-control"
-                                        value="<?php echo $tarefas['previsaoFim'] ?>" name="previsaoFim" autocomplete="off"
-                                        required>
+                                        value="<?php echo $tarefas['previsaoFim'] ?>" name="previsaoFim" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -211,7 +208,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <?php echo $tarefas['nomeUsuario'] ?>
                                 </td>
                                 <?php
-                                if ($tarefas['dataPrevisto'] != null) {
+                                if ($tarefas['dataPrevisto'] != null && $tarefas['dataPrevisto'] != "0000-00-00") {
                                     $dataPrevisto = date('d/m/Y', strtotime($tarefas['dataPrevisto']));
                                 } else {
                                     $dataPrevisto = "Previsão não definida";
@@ -254,7 +251,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                         <?php echo $tarefa['nomeUsuario'] ?>
                                     </td>
                                     <?php
-                                    if ($tarefa['dataPrevisto'] != null) {
+                                    if ($tarefa['dataPrevisto'] != null && $tarefa['dataPrevisto'] != "0000-00-00") {
                                         $dataPrevisto = date('d/m/Y', strtotime($tarefa['dataPrevisto']));
                                     } else {
                                         $dataPrevisto = "Previsão não definida";

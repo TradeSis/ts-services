@@ -92,6 +92,7 @@ if (isset($_GET['operacao'])) {
         $apiEntrada = array(
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
+            'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
             'idTipoStatus' => Fazendo
         );
         $tarefas = chamaAPI(null, '/services/tarefas/startAlterar', json_encode($apiEntrada), 'POST');

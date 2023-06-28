@@ -85,7 +85,6 @@ $atendentes = buscaAtendente();
 							<div class="form-group">
 								<label class='labelForm'>Descrição</label>
 								<textarea class="form-control" name="descricao" autocomplete="off"
-
 									rows="17"><?php echo $demanda['descricao'] ?></textarea>
 							</div>
 						</div>
@@ -95,7 +94,7 @@ $atendentes = buscaAtendente();
 								<label class="labelForm">Atualização Atendente</label>
 								<?php
 								$dataAtualizacaoAtendente = $demanda['dataAtualizacaoAtendente'];
-								if ($dataAtualizacaoAtendente != "0000-00-00 00:00:00") {
+								if ($dataAtualizacaoAtendente != "0000-00-00 00:00:00" && $dataAtualizacaoAtendente != null) {
 									$dataAtualizacaoAtendente = date('d/m/Y H:i', strtotime($dataAtualizacaoAtendente));
 								}
 								?>
@@ -108,18 +107,18 @@ $atendentes = buscaAtendente();
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
 
 								<label class="labelForm">Tempo Cobrado</label>
-								<input type="text" class="data select form-control" value="<?php echo $horas['horasCobrado'] ?>"
-									readonly>
+								<input type="text" class="data select form-control"
+									value="<?php echo $horas['horasCobrado'] ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
-								<label class="labelForm">Previsão</label>
-								<input type="text" class="data select form-control" value="<?php echo $demanda['horasPrevisao'] ?>"
-									readonly>
-								</div>
-							<div class="col-md-12 form-group" style="margin-top: -25px;" >
 								<label class="labelForm">Quantidade Retornos</label>
-								<input type="text" class="data select form-control" value="<?php echo $demanda['QtdRetornos'] ?>"
-									readonly>
+								<input type="text" class="data select form-control"
+									value="<?php echo $demanda['QtdRetornos'] ?>" readonly>
+							</div>
+							<div class="col-md-12 form-group" style="margin-top: -25px;">
+								<label class="labelForm">Previsão</label>
+								<input type="time" class="data select form-control" name="horasPrevisao"
+									value="<?php echo $demanda['horasPrevisao'] ?>">
 							</div>
 							<div class="col-md-12 form-group-select" style="margin-top: -29px;">
 								<label class="labelForm">Tamanho</label>
@@ -148,7 +147,7 @@ $atendentes = buscaAtendente();
 								<label class="labelForm">Atualização Cliente</label>
 								<?php
 								$dataAtualizacaoCliente = $demanda['dataAtualizacaoCliente'];
-								if ($dataAtualizacaoCliente != "0000-00-00 00:00:00") {
+								if ($dataAtualizacaoCliente != "0000-00-00 00:00:00" && $dataAtualizacaoCliente != null) {
 									$dataAtualizacaoCliente = date('d/m/Y H:i', strtotime($dataAtualizacaoCliente));
 								}
 								?>
@@ -159,7 +158,7 @@ $atendentes = buscaAtendente();
 								<label class="labelForm">Data Fim</label>
 								<?php
 								$dataFechamento = $demanda['dataFechamento'];
-								if ($dataFechamento != "0000-00-00 00:00:00") {
+								if ($dataFechamento != "0000-00-00 00:00:00" && $dataFechamento != null) {
 									$dataFechamento = date('d/m/Y H:i', strtotime($dataFechamento));
 								}
 								?>
@@ -169,20 +168,20 @@ $atendentes = buscaAtendente();
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
 
 								<label class="labelForm">Tempo Real</label>
-								<input type="text" class="data select form-control" value="<?php echo $horas['horasReal'] ?>"
-									readonly>
+								<input type="text" class="data select form-control"
+									value="<?php echo $horas['horasReal'] ?>" readonly>
 							</div>
 
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
 								<label class="labelForm">Status</label>
-								<input type="text" class="data select form-control" value="<?php echo $demanda['nomeTipoStatus'] ?>"
-									readonly>
+								<input type="text" class="data select form-control"
+									value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
 							</div>
 
-							<div class="col-md-12 form-group" style="margin-top: -25px;" >
+							<div class="col-md-12 form-group" style="margin-top: -25px;">
 								<label class="labelForm">Ocorrência</label>
-								<input type="text" class="data select form-control" value="<?php echo $demanda['nomeTipoOcorrencia'] ?>"
-									readonly>
+								<input type="text" class="data select form-control"
+									value="<?php echo $demanda['nomeTipoOcorrencia'] ?>" readonly>
 							</div>
 
 							<div class="col-md-12 form-group-select" style="margin-top: -30px; margin-bottom: 10px">
@@ -204,7 +203,7 @@ $atendentes = buscaAtendente();
 									<?php } ?>
 								</select>
 							</div>
-							
+
 
 
 
@@ -216,8 +215,8 @@ $atendentes = buscaAtendente();
 							style="float: left;">Validar Demanda</button>
 						<button type="submit" formaction="../database/demanda.php?operacao=retornar"
 							class="btn btn-warning  ml-3" style="float: left;">Retornar Demanda</button>
-							<input type="submit" name="submit" id="submit" class="btn btn-success" style="float: right;"
-								value="Atualizar" />
+						<input type="submit" name="submit" id="submit" class="btn btn-success" style="float: right;"
+							value="Atualizar" />
 						<button type="submit" formaction="../database/demanda.php?operacao=realizado"
 							class="btn btn-warning" style="margin-right:20px;float: right;">Encerrar</button>
 					</div>
@@ -274,7 +273,8 @@ $atendentes = buscaAtendente();
 								<input type="text" class="form-control" name="dataAtualizacaoAtendente"
 									value="<?php echo $demanda['dataAtualizacaoAtendente'] ?>" readonly>
 								<label class="labelForm">Horas Tarefa</label>
-								<input type="text" class="form-control" value="<?php echo $horas['horasCobrado'] ?>" readonly>
+								<input type="text" class="form-control" value="<?php echo $horas['horasCobrado'] ?>"
+									readonly>
 								<label class="labelForm">Tamanho</label>
 								<input type="text" class="form-control" name="tamanho"
 									value="<?php echo $demanda['tamanho'] ?>" readonly>
@@ -316,7 +316,8 @@ $atendentes = buscaAtendente();
 			</form>
 		</div>
 
-		<iframe class="container-fluid mt-2" id="myIframe" src="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $demanda['idTipoOcorrencia'] ?>"
+		<iframe class="container-fluid mt-2" id="myIframe"
+			src="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $demanda['idTipoOcorrencia'] ?>"
 			frameborder="0" scrolling="yes" height="740"></iframe>
 		<!-- </div> -->
 	</div>
@@ -349,7 +350,7 @@ $atendentes = buscaAtendente();
 
 		});
 	</script>
-	
+
 </body>
 
 </html>

@@ -110,23 +110,21 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                 <div class="form-group">
                                     <label class="labelForm">Data</label>
                                     <input type="date" class="data select form-control"
-                                        value="<?php echo $tarefas['data'] ?>" name="data" autocomplete="off" required>
+                                        value="<?php echo $tarefas['data'] ?>" name="data" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Inicio</label>
                                     <input type="time" class="data select form-control"
-                                        value="<?php echo $tarefas['horaInicio'] ?>" name="horaInicio" autocomplete="off"
-                                        required>
+                                        value="<?php echo $tarefas['horaInicio'] ?>" name="horaInicio" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Fim</label>
                                     <input type="time" class="data select form-control"
-                                        value="<?php echo $tarefas['horaFinal'] ?>" name="horaFinal" autocomplete="off"
-                                        required>
+                                        value="<?php echo $tarefas['horaFinal'] ?>" name="horaFinal" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -277,7 +275,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <?php echo $tarefas['nomeTipoOcorrencia'] ?>
                                 </td>
                                 <?php
-                                if ($tarefas['data'] != null) {
+                                if ($tarefas['data'] != null && $tarefas['data'] != "0000-00-00") {
                                     $data = date('d/m/Y', strtotime($tarefas['data']));
                                 } else {
                                     $data = "00/00/0000";
@@ -360,7 +358,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                         <?php echo $tarefa['nomeTipoOcorrencia'] ?>
                                     </td>
                                     <?php
-                                    if ($tarefa['data'] != null) {
+                                    if ($tarefa['data'] != null && $tarefa['data'] != "0000-00-00") {
                                         $data = date('d/m/Y', strtotime($tarefa['data']));
                                     } else {
                                         $data = "00/00/0000";

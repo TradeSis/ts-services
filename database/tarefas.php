@@ -66,9 +66,9 @@ if (isset($_GET['operacao'])) {
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
-            'data' => $_POST['data'],
-            'horaInicio' => $_POST['horaInicio'],
-            'horaFinal' => $_POST['horaFinal'],
+            'dataCobrado' => $_POST['dataCobrado'],
+            'horaInicioCobrado' => $_POST['horaInicioCobrado'],
+            'horaFinalCobrado' => $_POST['horaFinalCobrado'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
@@ -80,9 +80,9 @@ if (isset($_GET['operacao'])) {
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
-            'data' => $_POST['data'],
+            'dataReal' => $_POST['dataReal'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
-            'idTipoStatus' => Fazendo
+            'idTipoStatus' => TIPOSTATUS_FAZENDO
 
         );
         $tarefas = chamaAPI(null, '/services/tarefas/start', json_encode($apiEntrada), 'PUT');
@@ -93,7 +93,7 @@ if (isset($_GET['operacao'])) {
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
-            'idTipoStatus' => Fazendo
+            'idTipoStatus' => TIPOSTATUS_FAZENDO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/startAlterar', json_encode($apiEntrada), 'POST');
     }
@@ -103,10 +103,10 @@ if (isset($_GET['operacao'])) {
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tituloTarefa' => $_POST['tituloTarefa'],
-            'data' => $_POST['data'],
-            'horaInicio' => $_POST['horaInicio'],
+            'dataCobrado' => $_POST['dataCobrado'],
+            'horaInicioCobrado' => $_POST['horaInicioCobrado'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
-            'horaFinal' => $_POST['horaFinal']
+            'horaFinalCobrado' => $_POST['horaFinalCobrado']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'POST');
     }
@@ -115,8 +115,7 @@ if (isset($_GET['operacao'])) {
         $apiEntrada = array(
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
-            'horaInicio' => $_POST['horaInicio'],
-            'idTipoStatus' => Pausado
+            'idTipoStatus' => TIPOSTATUS_PAUSADO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
     }
@@ -126,10 +125,10 @@ if (isset($_GET['operacao'])) {
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
-            'dataPrevisto' => $_POST['dataPrevisto'],
-            'previsaoInicio' => $_POST['previsaoInicio'],
-            'previsaoFim' => $_POST['previsaoFim'],
-            'idTipoStatus' => Agendado
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'idTipoStatus' => TIPOSTATUS_AGENDADO
         );
         $tarefas = chamaAPI(null, '/services/previsao', json_encode($apiEntrada), 'PUT');
     }
@@ -138,10 +137,10 @@ if (isset($_GET['operacao'])) {
         $apiEntrada = array(
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
-            'dataPrevisto' => $_POST['dataPrevisto'],
-            'previsaoInicio' => $_POST['previsaoInicio'],
-            'previsaoFim' => $_POST['previsaoFim'],
-            'idTipoStatus' => Agendado
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'idTipoStatus' => TIPOSTATUS_AGENDADO
         );
         $tarefas = chamaAPI(null, '/services/previsao', json_encode($apiEntrada), 'POST');
     }

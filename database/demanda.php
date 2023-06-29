@@ -64,8 +64,8 @@ if (isset($_GET['operacao'])) {
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
-			'idServico' => ServicoPadrao,
-			'idTipoStatus' => Fila
+			'idServico' => SERVICOS_PADRAO,
+			'idTipoStatus' => TIPOSTATUS_FILA
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 
@@ -104,7 +104,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "validar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
-			'idTipoStatus' => Validado
+			'idTipoStatus' => TIPOSTATUS_VALIDADO
 
 		);
 		$demanda = chamaAPI(null, '/services/demanda/validar', json_encode($apiEntrada), 'POST');
@@ -115,7 +115,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "realizado") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
-			'idTipoStatus' => Realizado
+			'idTipoStatus' => TIPOSTATUS_REALIZADO
 
 		);
 		$demanda = chamaAPI(null, '/services/demanda/realizado', json_encode($apiEntrada), 'POST');
@@ -126,7 +126,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "retornar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
-			'idTipoStatus' => Retorno
+			'idTipoStatus' => TIPOSTATUS_RETORN0
 		);
 		$demanda = chamaAPI(null, '/services/demanda/retornar', json_encode($apiEntrada), 'POST');
 
@@ -162,7 +162,7 @@ if (isset($_GET['operacao'])) {
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $_POST['comentario'],
-			'idTipoStatus' => Respondido
+			'idTipoStatus' => TIPOSTATUS_RESPONDIDO
 
 		);
 		
@@ -201,7 +201,7 @@ if (isset($_GET['operacao'])) {
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $_POST['comentario'],
-			'idTipoStatus' => AguardandoSolicitante
+			'idTipoStatus' => TIPOSTATUS_AGUARDANDOSOLICITANTE
 
 		);
 		

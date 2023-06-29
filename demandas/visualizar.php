@@ -93,13 +93,13 @@ $atendentes = buscaAtendente();
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Atendente</label>
 								<?php
-								$dataAtualizacaoAtendente = $demanda['dataAtualizacaoAtendente'];
-								if ($dataAtualizacaoAtendente != "0000-00-00 00:00:00" && $dataAtualizacaoAtendente != null) {
-									$dataAtualizacaoAtendente = date('d/m/Y H:i', strtotime($dataAtualizacaoAtendente));
+								$dataCobradoAtualizacaoAtendente = $demanda['dataAtualizacaoAtendente'];
+								if ($dataCobradoAtualizacaoAtendente != "0000-00-00 00:00:00" && $dataCobradoAtualizacaoAtendente != null) {
+									$dataCobradoAtualizacaoAtendente = date('d/m/Y H:i', strtotime($dataCobradoAtualizacaoAtendente));
 								}
 								?>
 								<input type="text" class="data select form-control" name="dataAtualizacaoAtendente"
-									value="<?php echo $dataAtualizacaoAtendente ?>" readonly>
+									value="<?php echo $dataCobradoAtualizacaoAtendente ?>" readonly>
 								<label class='control-label' for='inputNormal'>Data de Abertura</label>
 								<input type="text" class="data select form-control" name="dataabertura"
 									value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
@@ -117,7 +117,7 @@ $atendentes = buscaAtendente();
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -25px;">
 								<label class="labelForm">Previsão</label>
-								<input type="time" class="data select form-control" name="horasPrevisao"
+								<input type="number" class="data select form-control" name="horasPrevisao"
 									value="<?php echo $demanda['horasPrevisao'] ?>">
 							</div>
 							<div class="col-md-12 form-group-select" style="margin-top: -29px;">
@@ -146,24 +146,24 @@ $atendentes = buscaAtendente();
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Cliente</label>
 								<?php
-								$dataAtualizacaoCliente = $demanda['dataAtualizacaoCliente'];
-								if ($dataAtualizacaoCliente != "0000-00-00 00:00:00" && $dataAtualizacaoCliente != null) {
-									$dataAtualizacaoCliente = date('d/m/Y H:i', strtotime($dataAtualizacaoCliente));
+								$dataCobradoAtualizacaoCliente = $demanda['dataAtualizacaoCliente'];
+								if ($dataCobradoAtualizacaoCliente != "0000-00-00 00:00:00" && $dataCobradoAtualizacaoCliente != null) {
+									$dataCobradoAtualizacaoCliente = date('d/m/Y H:i', strtotime($dataCobradoAtualizacaoCliente));
 								}
 								?>
 								<input type="text" class="data select form-control" name="dataAtualizacaoCliente"
-									value="<?php echo $dataAtualizacaoCliente ?>" readonly>
+									value="<?php echo $dataCobradoAtualizacaoCliente ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -24px;">
 								<label class="labelForm">Data Fim</label>
 								<?php
-								$dataFechamento = $demanda['dataFechamento'];
-								if ($dataFechamento != "0000-00-00 00:00:00" && $dataFechamento != null) {
-									$dataFechamento = date('d/m/Y H:i', strtotime($dataFechamento));
+								$dataCobradoFechamento = $demanda['dataFechamento'];
+								if ($dataCobradoFechamento != "0000-00-00 00:00:00" && $dataCobradoFechamento != null) {
+									$dataCobradoFechamento = date('d/m/Y H:i', strtotime($dataCobradoFechamento));
 								}
 								?>
 								<input type="text" class="data select form-control" name="dataFechamento"
-									value="<?php echo $dataFechamento ?>" readonly>
+									value="<?php echo $dataCobradoFechamento ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
 

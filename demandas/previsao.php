@@ -82,21 +82,21 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                 <div class="form-group">
                                     <label class="labelForm">Data Previsão</label>
                                     <input type="date" class="data select form-control"
-                                        value="<?php echo $tarefas['dataPrevisto'] ?>" name="dataPrevisto" autocomplete="off">
+                                        value="<?php echo $tarefas['Previsto'] ?>" name="Previsto" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Inicio</label>
                                     <input type="time" class="data select form-control"
-                                        value="<?php echo $tarefas['previsaoInicio'] ?>" name="previsaoInicio" autocomplete="off">
+                                        value="<?php echo $tarefas['horaInicioPrevisto'] ?>" name="horaInicioPrevisto" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Fim</label>
                                     <input type="time" class="data select form-control"
-                                        value="<?php echo $tarefas['previsaoFim'] ?>" name="previsaoFim" autocomplete="off">
+                                        value="<?php echo $tarefas['horaFinalPrevisto'] ?>" name="horaFinalPrevisto" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -158,21 +158,21 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" name="dataPrevisto"
+                                    <input type="date" class="data select form-control" name="Previsto"
                                         autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" name="previsaoInicio"
+                                    <input type="time" class="data select form-control" name="horaInicioPrevisto"
                                         autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" name="previsaoFim"
+                                    <input type="time" class="data select form-control" name="horaFinalPrevisto"
                                         autocomplete="off" required>
                                 </div>
                             </div>
@@ -208,31 +208,31 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                     <?php echo $tarefas['nomeUsuario'] ?>
                                 </td>
                                 <?php
-                                if ($tarefas['dataPrevisto'] != null && $tarefas['dataPrevisto'] != "0000-00-00") {
-                                    $dataPrevisto = date('d/m/Y', strtotime($tarefas['dataPrevisto']));
+                                if ($tarefas['Previsto'] != null && $tarefas['Previsto'] != "0000-00-00") {
+                                    $dataCobradoPrevisto = date('d/m/Y', strtotime($tarefas['Previsto']));
                                 } else {
-                                    $dataPrevisto = "Previsão não definida";
+                                    $dataCobradoPrevisto = "Previsão não definida";
                                 } ?>
                                 <td class="text-center">
-                                    <?php echo $dataPrevisto ?>
+                                    <?php echo $dataCobradoPrevisto ?>
                                 </td>
                                 <?php
-                                if ($tarefas['previsaoInicio'] != null) {
-                                    $previsaoInicio = date('H:i', strtotime($tarefas['previsaoInicio']));
+                                if ($tarefas['horaInicioPrevisto'] != null) {
+                                    $horaInicioPrevisto = date('H:i', strtotime($tarefas['horaInicioPrevisto']));
                                 } else {
-                                    $previsaoInicio = "00:00";
+                                    $horaInicioPrevisto = "00:00";
                                 } ?>
                                 <td class="text-center">
-                                    <?php echo $previsaoInicio ?>
+                                    <?php echo $horaInicioPrevisto ?>
                                 </td>
                                 <?php
-                                if ($tarefas['previsaoFim'] != null) {
-                                    $previsaoFim = date('H:i', strtotime($tarefas['previsaoFim']));
+                                if ($tarefas['horaFinalPrevisto'] != null) {
+                                    $horaFinalPrevisto = date('H:i', strtotime($tarefas['horaFinalPrevisto']));
                                 } else {
-                                    $previsaoFim = "00:00";
+                                    $horaFinalPrevisto = "00:00";
                                 } ?>
                                 <td class="text-center">
-                                    <?php echo $previsaoFim ?>
+                                    <?php echo $horaFinalPrevisto ?>
                                 </td>
                                 <td class="text-center">
                                     <a class="btn btn-primary btn-sm"
@@ -251,31 +251,31 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                         <?php echo $tarefa['nomeUsuario'] ?>
                                     </td>
                                     <?php
-                                    if ($tarefa['dataPrevisto'] != null && $tarefa['dataPrevisto'] != "0000-00-00") {
-                                        $dataPrevisto = date('d/m/Y', strtotime($tarefa['dataPrevisto']));
+                                    if ($tarefa['Previsto'] != null && $tarefa['Previsto'] != "0000-00-00") {
+                                        $dataCobradoPrevisto = date('d/m/Y', strtotime($tarefa['Previsto']));
                                     } else {
-                                        $dataPrevisto = "Previsão não definida";
+                                        $dataCobradoPrevisto = "Previsão não definida";
                                     } ?>
                                     <td class="text-center">
-                                        <?php echo $dataPrevisto ?>
+                                        <?php echo $dataCobradoPrevisto ?>
                                     </td>
                                     <?php
-                                    if ($tarefa['previsaoInicio'] != null) {
-                                        $previsaoInicio = date('H:i', strtotime($tarefa['previsaoInicio']));
+                                    if ($tarefa['horaInicioPrevisto'] != null) {
+                                        $horaInicioPrevisto = date('H:i', strtotime($tarefa['horaInicioPrevisto']));
                                     } else {
-                                        $previsaoInicio = "00:00";
+                                        $horaInicioPrevisto = "00:00";
                                     } ?>
                                     <td class="text-center">
-                                        <?php echo $previsaoInicio ?>
+                                        <?php echo $horaInicioPrevisto ?>
                                     </td>
                                     <?php
-                                    if ($tarefa['previsaoFim'] != null) {
-                                        $previsaoFim = date('H:i', strtotime($tarefa['previsaoFim']));
+                                    if ($tarefa['horaFinalPrevisto'] != null) {
+                                        $horaFinalPrevisto = date('H:i', strtotime($tarefa['horaFinalPrevisto']));
                                     } else {
-                                        $previsaoFim = "00:00";
+                                        $horaFinalPrevisto = "00:00";
                                     } ?>
                                     <td class="text-center">
-                                        <?php echo $previsaoFim ?>
+                                        <?php echo $horaFinalPrevisto ?>
                                     </td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm"

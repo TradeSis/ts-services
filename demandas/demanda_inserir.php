@@ -11,12 +11,8 @@
 include_once '../head.php';
 include_once '../database/usuario.php';
 include_once '../database/clientes.php';
-include_once '../database/tipostatus.php';
-include_once '../database/tipoocorrencia.php';
 
 
-$tiposstatus = buscaTipoStatus(1);
-$ocorrencias = buscaTipoOcorrencia(1);
 $usuario = buscaUsuarios($_SESSION['idUsuario']);
 $clientes = buscaClientes();
 ?>
@@ -74,7 +70,6 @@ $clientes = buscaClientes();
                         </div>
                     </div>
                     
-                    <input type="hidden" class="form-control" name="idTipoOcorrencia" value="<?php echo $ocorrencias['idTipoOcorrencia'] ?>" readonly>
                     <div  style="text-align:right">
                         <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
                     </div>

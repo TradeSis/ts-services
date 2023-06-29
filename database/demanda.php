@@ -63,7 +63,7 @@ if (isset($_GET['operacao'])) {
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
-			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+			'idTipoOcorrencia' => OCORRENCIA_PADRAO,
 			'idServico' => SERVICOS_PADRAO,
 			'idTipoStatus' => TIPOSTATUS_FILA
 		);
@@ -208,7 +208,7 @@ if (isset($_GET['operacao'])) {
 
 		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
 
-		header('Location: ../demandas/comentarios.php?idDemanda=' . $apiEntrada['idDemanda']);
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
 	if ($operacao == "filtrar") {

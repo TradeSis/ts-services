@@ -169,7 +169,7 @@ if (isset($_GET['operacao'])) {
 
 		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
 
-		header('Location: ../demandas/comentarios.php?idDemanda=' . $apiEntrada['idDemanda']);
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
 	if ($operacao == "comentarAtendente") {

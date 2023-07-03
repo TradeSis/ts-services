@@ -30,18 +30,22 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" style="color:blue"
-                    href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="previsao.php?idDemanda=<?php echo $idDemanda ?>">Previsão</a>
-            </li>
-        </ul>
+        <?php /*
+
+   <ul class="nav nav-tabs">
+       <li class="nav-item">
+           <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link active" style="color:blue"
+               href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
+       </li>
+       <li class="nav-item">
+           <a class="nav-link active" href="previsao.php?idDemanda=<?php echo $idDemanda ?>">Previsão</a>
+       </li>
+   </ul>
+           <?php }  */?>
+
         <div class="card">
             <div class="container-fluid mt-1 mb-3">
                 <?php
@@ -214,8 +218,8 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Data</label>
-                                    <input type="date" class="data select form-control" name="dataCobrado" autocomplete="off"
-                                        required>
+                                    <input type="date" class="data select form-control" name="dataCobrado"
+                                        autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="col-md-4">

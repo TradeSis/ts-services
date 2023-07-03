@@ -32,12 +32,46 @@ $atendentes = buscaAtendente();
 
 ?>
 
+<style>
+	#tabs .tab {
+		display: inline-block;
+
+		padding: 5px 10px;
+		cursor: pointer;
+		position: relative;
+		z-index: 5;
+	}
+
+	#tabs .whiteborder {
+		border: 1px solid #707070;
+		border-bottom: 1px solid #fff;
+		border-radius: 3px 3px 0 0;
+		color: blue;
+
+	}
+
+	#tabs .tabContent {
+		position: relative;
+		top: -1px;
+		z-index: 1;
+		padding: 10px;
+		border-radius: 0 0 3px 3px
+	}
+
+	#tabs .hide {
+		display: none;
+	}
+
+	#tabs .show {
+		display: block;
+	}
+</style>
 
 <body class="bg-transparent">
 	<div class="container-fluid">
 
 		<div class="col-sm mt-4" style="text-align:right">
-			<a href="index.php" role="button" class="btn btn-primary"><i
+			<a href="#" onclick="history.back()" role="button" class="btn btn-primary"><i
 					class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
 		</div>
 		<div class="col-sm">
@@ -315,42 +349,68 @@ $atendentes = buscaAtendente();
 
 			</form>
 		</div>
-
-		<iframe class="container-fluid mt-2" id="myIframe"
-			src="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $demanda['idTipoOcorrencia'] ?>"
-			frameborder="0" scrolling="yes" height="740"></iframe>
-		<!-- </div> -->
+		<div id="tabs" style="margin-top:40px;">
+			<div class="tab whiteborder" style="margin-left:30px;">Comentarios</div>
+			<div class="tab">Tarefas</div>
+			<div class="tab">Previsão</div>
+			<div class="tabContent">
+				<?php include_once 'comentarios.php'; ?>
+			</div>
+			<div class="tabContent">
+				<?php include_once 'visualizar_tarefa.php'; ?>
+			</div>
+			<div class="tabContent">
+				<?php include_once 'previsao.php'; ?>
+			</div>
+		</div>
 	</div>
 
-	<script type="text/javascript">
-		$(document).ready(function () {
 
-			// SELECT MENU
-			$("#novoMenu a").click(function () {
 
-				var value = $(this).text();
-				value = $(this).attr('idDemanda');
-
-				//IFRAME TAG
-
-				$("#myIframe").attr('src', value);
-			})
-			// SELECT MENU
-			$("#novoMenu2 a").click(function () {
-
-				var value = $(this).text();
-				value = $(this).attr('src');
-
-				//IFRAME TAG
-				if (value != '') {
-					$("#myIframe").attr('src', value);
-				}
-
-			})
-
-		});
-	</script>
 
 </body>
 
 </html>
+
+<script>
+
+	var tab;
+	var tabContent;
+
+
+	window.onload = function () {
+		tabContent = document.getElementsByClassName('tabContent');
+		tab = document.getElementsByClassName('tab');
+		hideTabsContent(1);
+	}
+
+	document.getElementById('tabs').onclick = function (event) {
+		var target = event.target;
+		if (target.className == 'tab') {
+			for (var i = 0; i < tab.length; i++) {
+				if (target == tab[i]) {
+					showTabsContent(i);
+					break;
+				}
+			}
+		}
+	}
+
+	function hideTabsContent(a) {
+		for (var i = a; i < tabContent.length; i++) {
+			tabContent[i].classList.remove('show');
+			tabContent[i].classList.add("hide");
+			tab[i].classList.remove('whiteborder');
+		}
+	}
+
+	function showTabsContent(b) {
+		if (tabContent[b].classList.contains('hide')) {
+			hideTabsContent(0);
+			tab[b].classList.add('whiteborder');
+			tabContent[b].classList.remove('hide');
+			tabContent[b].classList.add('show');
+		}
+	}
+
+</script>

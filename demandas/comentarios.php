@@ -21,30 +21,30 @@ $comentarios = buscaComentarios($idDemanda);
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
-        <?php
-        if ($_SESSION['idCliente'] == NULL) { ?>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" style="color:blue"
-                        href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active"
-                        href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active"
-                        href="previsao.php?idDemanda=<?php echo $idDemanda ?>">Previsão</a>
-                </li>
-            </ul>
-        <?php }
-        if ($_SESSION['idCliente'] >= 1) { ?>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
-                </li>
-            </ul>
-        <?php } ?>
+        <?php /*
+   if ($_SESSION['idCliente'] == NULL) { ?>
+       <ul class="nav nav-tabs">
+           <li class="nav-item">
+               <a class="nav-link active" style="color:blue"
+                   href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
+           </li>
+           <li class="nav-item">
+               <a class="nav-link active"
+                   href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
+           </li>
+           <li class="nav-item">
+               <a class="nav-link active"
+                   href="previsao.php?idDemanda=<?php echo $idDemanda ?>">Previsão</a>
+           </li>
+       </ul>
+   <?php }
+   if ($_SESSION['idCliente'] >= 1) { ?>
+       <ul class="nav nav-tabs">
+           <li class="nav-item">
+               <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
+           </li>
+       </ul>
+   <?php }  */?>
 
         <div>
             <div class="container-fluid mt-3">

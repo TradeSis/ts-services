@@ -30,22 +30,6 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
-        <?php /*
-
-   <ul class="nav nav-tabs">
-       <li class="nav-item">
-           <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link active" style="color:blue"
-               href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link active" href="previsao.php?idDemanda=<?php echo $idDemanda ?>">Previsão</a>
-       </li>
-   </ul>
-           <?php }  */?>
-
         <div class="card">
             <div class="container-fluid mt-1 mb-3">
                 <?php
@@ -141,11 +125,8 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                         class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                             </div>
                             <div class="col-sm" style="text-align:right">
-                                <?php if ($tarefas['horaInicioReal'] == null) { ?>
-                                    <input type="button" id="startAlterarButton" class="btn btn-success" value="Start" />
-                                <?php } ?>
-                                <input type="submit" name="submit" id="submit" class="btn btn-warning"
-                                    value="Atualizar Tarefa" />
+                                <button type="submit" formaction="../database/tarefas.php?operacao=alterar"
+                                    class="btn btn-warning">Atualizar Tarefa</button>
                             </div>
                         </div>
                     </form>
@@ -239,7 +220,8 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
                             <input type="button" id="startButton" class="btn btn-success" value="Start" />
-                            <input type="button" id="inserirButton" class="btn btn-info" value="Inserir Tarefa" />
+                            <button type="submit" formaction="../database/tarefas.php?operacao=inserir"
+                                class="btn btn-info">Inserir Tarefa</button>
                         </div>
                     </form>
                 <?php } ?>
@@ -354,9 +336,15 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                             data-id="<?php echo $tarefas['idTarefa'] ?>"
                                             data-data-execucao="<?php echo $tarefas['horaInicioReal'] ?>"
                                             data-demanda="<?php echo $tarefas['idDemanda'] ?>" />
+                                    <?php }
+                                    if ($horaInicioReal == "00:00") { ?>
+                                        <input type="button" class="startAlterarButton btn btn-sm btn-success" value="Start"
+                                            data-id="<?php echo $tarefas['idTarefa'] ?>"
+                                            data-ocorrencia="<?php echo $tarefas['idTipoOcorrencia'] ?>"
+                                            data-demanda="<?php echo $tarefas['idDemanda'] ?>" />
                                     <?php } ?>
                                     <a class="btn btn-primary btn-sm"
-                                        href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
+                                        href="visualizar_tarefa.php?idTarefa=<?php echo $tarefas['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
                                         role="button">Alterar</a>
                                 </td>
                             </tr>
@@ -455,6 +443,12 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                                 data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>"
                                                 data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
                                         <?php } ?>
+                                        <?php if ($horaInicioReal == "00:00") { ?>
+                                            <input type="button" class="startAlterarButton btn btn-sm btn-success" value="Start"
+                                                data-id="<?php echo $tarefa['idTarefa'] ?>"
+                                                data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>"
+                                                data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
+                                        <?php } ?>
                                         <a class="btn btn-primary btn-sm"
                                             href="visualizar_tarefa.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
                                             role="button">Alterar</a>
@@ -473,29 +467,6 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
 
     <script>
         $(document).ready(function () {
-
-            $('#editar').on('submit', function (event) {
-                event.preventDefault();
-                var form_data = $(this).serialize();
-                $.ajax({
-                    url: "../database/tarefas.php?operacao=alterar",
-                    method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage()
-                })
-            });
-
-            $('#inserirButton').click(function () {
-                var form_data = $('#form1').serialize();
-                $.ajax({
-                    url: "../database/tarefas.php?operacao=inserir",
-                    method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage()
-                });
-            });
 
             $('#startButton').click(function () {
                 var form_data = $('#form1').serialize();
@@ -526,6 +497,20 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                 var form_data = { idTarefa: idTarefa, horaInicioCobrado: horaInicioCobrado, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=stop",
+                    method: "POST",
+                    data: form_data,
+                    dataType: "JSON",
+                    success: refreshPage()
+                });
+            });
+
+            $('.startAlterarButton').click(function () {
+                var idTarefa = $(this).data('id');
+                var idTipoOcorrencia = $(this).data('data-ocorrencia');
+                var idDemanda = $(this).data('demanda');
+                var form_data = { idTarefa: idTarefa, idTipoOcorrencia: idTipoOcorrencia, idDemanda: idDemanda };
+                $.ajax({
+                    url: "../database/tarefas.php?operacao=startAlterar",
                     method: "POST",
                     data: form_data,
                     dataType: "JSON",

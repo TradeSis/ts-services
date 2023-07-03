@@ -30,23 +30,6 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
-        <?php /*
-
-   <ul class="nav nav-tabs">
-       <li class="nav-item">
-           <a class="nav-link active" href="comentarios.php?idDemanda=<?php echo $idDemanda ?>">Comentarios</a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link active" href="visualizar_tarefa.php?idDemanda=<?php echo $idDemanda ?>">Tarefas</a>
-       </li>
-       <li class="nav-item">
-           <a class="nav-link active" style="color:blue"
-               href="previsao.php?idDemanda=<?php echo $idDemanda ?>">Previsão</a>
-       </li>
-   </ul>
-
-   <?php }  */?>
-
         <div class="card">
             <div class="container-fluid mt-1 mb-3">
                 <?php
@@ -114,8 +97,8 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                                         class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                             </div>
                             <div class="col-sm" style="text-align:right">
-                                <input type="submit" name="submit" id="submit" class="btn btn-warning"
-                                    value="Atualizar Previsão" />
+                                <button type="submit" formaction="../database/tarefas.php?operacao=alterarPrevisao"
+                                    class="btn btn-warning">Atualizar Previsão</button>
                             </div>
                         </div>
                     </form>
@@ -185,7 +168,8 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                             </div>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <input type="button" id="inserirButton" class="btn btn-info" value="Inserir Previsão" />
+                            <button type="submit" formaction="../database/tarefas.php?operacao=previsao"
+                                class="btn btn-info">Inserir Previsão</button>
                         </div>
                     </form>
                 <?php } ?>
@@ -299,42 +283,6 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
     </div>
 
 
-
-
-    <script>
-        $(document).ready(function () {
-
-            $('#editar').on('submit', function (event) {
-                event.preventDefault();
-                var form_data = $(this).serialize();
-                $.ajax({
-                    url: "../database/tarefas.php?operacao=alterarPrevisao",
-                    method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage()
-                });
-            });
-
-
-            $('#inserirButton').click(function () {
-                var form_data = $('#form1').serialize();
-                $.ajax({
-                    url: "../database/tarefas.php?operacao=previsao",
-                    method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage()
-                });
-            });
-
-        });
-
-        function refreshPage() {
-            window.location.reload();
-        }
-
-    </script>
 </body>
 
 </html>

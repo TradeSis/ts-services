@@ -72,6 +72,8 @@ if (isset($_GET['operacao'])) {
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
+
+        header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
     }
 
     if ($operacao == "start") {
@@ -109,6 +111,8 @@ if (isset($_GET['operacao'])) {
             'horaFinalCobrado' => $_POST['horaFinalCobrado']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'POST');
+
+        header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
     }
 
     if ($operacao == "stop") {
@@ -131,6 +135,8 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_AGENDADO
         );
         $tarefas = chamaAPI(null, '/services/previsao', json_encode($apiEntrada), 'PUT');
+
+        header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
     }
 
     if ($operacao == "alterarPrevisao") {
@@ -143,6 +149,8 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_AGENDADO
         );
         $tarefas = chamaAPI(null, '/services/previsao', json_encode($apiEntrada), 'POST');
+
+        header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
     }
 
 

@@ -91,7 +91,7 @@ if (isset($_GET['operacao'])) {
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
 			'prioridade' => $_POST['prioridade'],
-			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+			// HELIO 'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
 			'idServico' => $_POST['idServico'],
 			'tamanho' => $_POST['tamanho'],
 			'idAtendente' => $_POST['idAtendente'],

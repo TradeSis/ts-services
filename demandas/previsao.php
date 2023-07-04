@@ -1,33 +1,3 @@
-<?php
-// gabriel 06032023 11:25 adicionado required nas datas da tarefa
-// gabriel 28022023 16:25 alterado para selecionar responsável
-// gabriel 03022023 18:07 adicionado script, form alterado para inserir tarefa
-// helio 01022023 alterado para include_once
-// gabriel 01022023 15:04 - nav adicionada, tarefas adicionadas
-
-include_once '../head.php';
-include_once '../database/demanda.php';
-include_once '../database/tarefas.php';
-include_once '../database/usuario.php';
-include_once '../database/clientes.php';
-include_once '../database/tipoocorrencia.php';
-
-$idDemanda = $_GET['idDemanda'];
-$idAtendente = $_SESSION['idUsuario'];
-$demanda = buscaDemandas($idDemanda);
-$atendentes = buscaAtendente();
-$ocorrencias = buscaTipoOcorrencia();
-$cliente = buscaClientes($demanda["idCliente"]);
-$idTarefa = null;
-
-if (isset($_GET['idTarefa'])) {
-    $idTarefa = $_GET['idTarefa'];
-}
-
-$tarefas = buscaTarefas($idDemanda, $idTarefa);
-
-?>
-
 <body class="bg-transparent">
     <div class="container-fluid mb-3">
         <div>

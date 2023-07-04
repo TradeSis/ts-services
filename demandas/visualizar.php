@@ -10,10 +10,10 @@
 // gabriel 31012023 13:47 - nomeclaturas, botão encerrar
 // helio 26012023 16:16
 
-
 include_once '../head.php';
 include_once '../database/demanda.php';
 include_once '../database/contratos.php';
+include_once '../database/clientes.php';
 include_once '../database/tarefas.php';
 include_once '../database/usuario.php';
 include_once '../database/tipostatus.php';
@@ -21,6 +21,7 @@ include_once '../database/tipoocorrencia.php';
 include_once '../database/servicos.php';
 
 $idDemanda = $_GET['idDemanda'];
+$idAtendente = $_SESSION['idUsuario'];
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
@@ -29,14 +30,23 @@ $servicos = buscaServicos();
 $idTipoStatus = $demanda['idTipoStatus'];
 $horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
+$usuario = buscaUsuarios($_SESSION['idUsuario']);
+$comentarios = buscaComentarios($idDemanda);
+$cliente = buscaClientes($demanda["idCliente"]);
+$idTarefa = null;
+
+if (isset($_GET['idTarefa'])) {
+    $idTarefa = $_GET['idTarefa'];
+}
+
+$tarefas = buscaTarefas($idDemanda, $idTarefa);
 
 ?>
 
+
 <style>
-	/* Updated styles */
 	body {
 		margin-bottom: 30px;
-		/* Add margin bottom for the line */
 	}
 
 	.line {
@@ -51,9 +61,7 @@ $atendentes = buscaAtendente();
 		position: relative;
 		z-index: 5;
 		background-color: lightgray;
-		/* Updated background color */
 		color: black;
-		/* Updated text color */
 	}
 
 	#tabs .whiteborder {
@@ -83,80 +91,75 @@ $atendentes = buscaAtendente();
 </style>
 
 <body class="bg-transparent">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
-				<span class="titulo">Chamado -
-					<?php echo $idDemanda ?>
-				</span>
-			</div>
-			<div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-				<a href="#" onclick="history.back()" role="button" class="btn btn-primary"><i
-						class="bi bi-arrow-left-square"></i>&#32;Voltar</a>
-			</div>
-		</div>
-		<div id="tabs">
-			<div class="tab whiteborder">Demanda</div>
-			<div class="tab">Comentarios</div>
-			<div class="tab">Tarefas</div>
-			<div class="tab">Previsão</div>
-			<div class="line"></div>
-			<div class="tabContent">
-				<?php include_once 'visualizar_demanda.php'; ?>
-			</div>
-			<div class="tabContent">
-				<?php include_once 'comentarios.php'; ?>
-			</div>
-			<div class="tabContent">
-				<?php include_once 'visualizar_tarefa.php'; ?>
-			</div>
-			<div class="tabContent">
-				<?php include_once 'previsao.php'; ?>
-			</div>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
+                <span class="titulo">Chamado - <?php echo $idDemanda ?></span>
+            </div>
+            <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
+                <a href="#" onclick="history.back()" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i>&#32;Voltar</a>
+            </div>
+        </div>
+        <div id="tabs">
+            <div class="tab whiteborder">Demanda</div>
+            <div class="tab">Comentarios</div>
+            <div class="tab">Tarefas</div>
+            <div class="tab">Previsão</div>
+            <div class="line"></div>
+            <div class="tabContent">
+                <?php include_once 'visualizar_demanda.php'; ?>
+            </div>
+            <div class="tabContent">
+                <?php include_once 'comentarios.php'; ?>
+            </div>
+            <div class="tabContent">
+                <?php include_once 'visualizar_tarefa.php'; ?>
+            </div>
+            <div class="tabContent">
+                <?php include_once 'previsao.php'; ?>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        var tab;
+        var tabContent;
 
-	<script>
-		var tab;
-		var tabContent;
+        window.onload = function () {
+            tabContent = document.getElementsByClassName('tabContent');
+            tab = document.getElementsByClassName('tab');
+            hideTabsContent(1);
+        }
 
+        document.getElementById('tabs').onclick = function (event) {
+            var target = event.target;
+            if (target.className == 'tab') {
+                for (var i = 0; i < tab.length; i++) {
+                    if (target == tab[i]) {
+                        showTabsContent(i);
+                        break;
+                    }
+                }
+            }
+        }
 
-		window.onload = function () {
-			tabContent = document.getElementsByClassName('tabContent');
-			tab = document.getElementsByClassName('tab');
-			hideTabsContent(1);
-		}
+        function hideTabsContent(a) {
+            for (var i = a; i < tabContent.length; i++) {
+                tabContent[i].classList.remove('show');
+                tabContent[i].classList.add("hide");
+                tab[i].classList.remove('whiteborder');
+            }
+        }
 
-		document.getElementById('tabs').onclick = function (event) {
-			var target = event.target;
-			if (target.className == 'tab') {
-				for (var i = 0; i < tab.length; i++) {
-					if (target == tab[i]) {
-						showTabsContent(i);
-						break;
-					}
-				}
-			}
-		}
-
-		function hideTabsContent(a) {
-			for (var i = a; i < tabContent.length; i++) {
-				tabContent[i].classList.remove('show');
-				tabContent[i].classList.add("hide");
-				tab[i].classList.remove('whiteborder');
-			}
-		}
-
-		function showTabsContent(b) {
-			if (tabContent[b].classList.contains('hide')) {
-				hideTabsContent(0);
-				tab[b].classList.add('whiteborder');
-				tabContent[b].classList.remove('hide');
-				tabContent[b].classList.add('show');
-			}
-		}
-	</script>
+        function showTabsContent(b) {
+            if (tabContent[b].classList.contains('hide')) {
+                hideTabsContent(0);
+                tab[b].classList.add('whiteborder');
+                tabContent[b].classList.remove('hide');
+                tabContent[b].classList.add('show');
+            }
+        }
+    </script>
 </body>
 
 </html>

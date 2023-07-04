@@ -1,38 +1,3 @@
-<?php
-// gabriel 220323 11:19 - adicionado IF para usuario cliente, adicionado retornar demanda para cliente, recarregar pagina ao atualizar demanda
-// Lucas 10032023 - alterado buscaUsuarios($logado) para buscaUsuarios($_SESSION['idUsuario']), linha 27
-// gabriel 06032023 11:25 padronizado idatendente da demanda, adicionado alterar descrição
-// gabriel 02032023 12:13 alteração de titulo demanda
-// gabriel 06022023 adicionado contador de horas(tarefa), prioridade, data atualização atendente/cliente
-// gabriel 03022023 16:00 adicionado iframe
-// helio 01022023 alterado para include_once
-// gabriel 01022023 15:04 - nav adicionada, comentarios.php separado
-// gabriel 31012023 13:47 - nomeclaturas, botão encerrar
-// helio 26012023 16:16
-
-
-include_once '../head.php';
-include_once '../database/demanda.php';
-include_once '../database/contratos.php';
-include_once '../database/tarefas.php';
-include_once '../database/usuario.php';
-include_once '../database/tipostatus.php';
-include_once '../database/tipoocorrencia.php';
-include_once '../database/servicos.php';
-
-$idDemanda = $_GET['idDemanda'];
-$ocorrencias = buscaTipoOcorrencia();
-$tiposstatus = buscaTipoStatus();
-$demanda = buscaDemandas($idDemanda);
-$contratos = buscaContratosAbertos();
-$servicos = buscaServicos();
-$idTipoStatus = $demanda['idTipoStatus'];
-$horas = buscaHoras($idDemanda);
-$atendentes = buscaAtendente();
-
-?>
-
-
 <body class="bg-transparent">
 
     <div class="container-fluid mb-3">
@@ -306,5 +271,3 @@ $atendentes = buscaAtendente();
 
 
 </body>
-
-</html>

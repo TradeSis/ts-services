@@ -1,26 +1,4 @@
-<?php
-// gabriel 220323 11:19 - adicionado IF para usuario cliente
-// Lucas 10032023 - alterado input value= php echo $logado " para value = ($_SESSION['usuario']). linha 42
-// Lucas 10032023 - alterado buscaUsuarios($logado) para buscaUsuarios($_SESSION['idUsuario'])
-// gabriel 09022023 14:20 removido alguns ifs redundantes, fechado div container
-// gabriel 03022023 17:04 - nav adicionada, comentarios.php separado, nomeclaturas alteradas
-// helio 01022023 alterado para include_once
-
-include_once '../head.php';
-include_once '../database/demanda.php';
-include_once '../database/usuario.php';
-include_once '../database/clientes.php';
-
-
-$idDemanda = $_GET['idDemanda'];
-$usuario = buscaUsuarios($_SESSION['idUsuario']);
-$comentarios = buscaComentarios($idDemanda);
-
-
-?>
-
 <body class="bg-transparent">
-    
     <div class="container-fluid mb-3">
         <form method="post" id="form" enctype="multipart/form-data">
             <div class="col-md-8">
@@ -84,15 +62,11 @@ $comentarios = buscaComentarios($idDemanda);
                         <?php echo $comentario['nomeAnexo'] ?>
 
 
-
-                        <!-- <spam style="font-size: 10px"><?php echo $comentario['nomeAnexo'] ?></spam> -->
-                        <!--  <div class="panel-body"><?php echo $comentario['nomeAnexo'] ?></div> -->
                         <div class="panel-heading">Comentário de <b>
                                 <?php echo $comentario['nomeUsuario'] ?>
                             </b> em <i>
                                 <?php echo $comentario['dataComentario'] ?>
                             </i></div>
-                        <!-- <div>------------------------------------------------------</div> -->
                         <div class="card-footer bg-transparent"></div>
 
                     </div>
@@ -124,9 +98,6 @@ $comentarios = buscaComentarios($idDemanda);
             document.getElementById("mostraNomeAnexo").innerHTML = txt;
         }
 
-
-
     </script>
 </body>
 
-</html>

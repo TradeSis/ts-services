@@ -18,12 +18,14 @@ include_once '../database/tarefas.php';
 include_once '../database/usuario.php';
 include_once '../database/tipostatus.php';
 include_once '../database/tipoocorrencia.php';
+include_once '../database/servicos.php';
 
 $idDemanda = $_GET['idDemanda'];
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
 $contratos = buscaContratosAbertos();
+$servicos = buscaServicos();
 
 $horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
@@ -32,7 +34,7 @@ $atendentes = buscaAtendente();
 
 
 <body class="bg-transparent">
-	<div class="container mt-3">
+	<div class="container-fluid">
 
 		<div class="col-sm mt-4" style="text-align:right">
 			<a href="index.php" role="button" class="btn btn-primary"><i
@@ -44,7 +46,7 @@ $atendentes = buscaAtendente();
 			</spam>
 		</div>
 
-		<div class="container mt-4 mb-3">
+		<div class="container-fluid mt-4 mb-3">
 			<form action="../database/demanda.php?operacao=alterar" method="post" id="form">
 				<?php
 				if ($_SESSION['idCliente'] == NULL) { ?>
@@ -83,8 +85,7 @@ $atendentes = buscaAtendente();
 							<div class="form-group">
 								<label class='labelForm'>Descrição</label>
 								<textarea class="form-control" name="descricao" autocomplete="off"
-
-									rows="15"><?php echo $demanda['descricao'] ?></textarea>
+									rows="17"><?php echo $demanda['descricao'] ?></textarea>
 							</div>
 						</div>
 
@@ -92,27 +93,32 @@ $atendentes = buscaAtendente();
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Atendente</label>
 								<?php
-								$dataAtualizacaoAtendente = $demanda['dataAtualizacaoAtendente'];
-								if ($dataAtualizacaoAtendente != "0000-00-00 00:00:00") {
-									$dataAtualizacaoAtendente = date('d/m/Y H:i', strtotime($dataAtualizacaoAtendente));
+								$dataCobradoAtualizacaoAtendente = $demanda['dataAtualizacaoAtendente'];
+								if ($dataCobradoAtualizacaoAtendente != "0000-00-00 00:00:00" && $dataCobradoAtualizacaoAtendente != null) {
+									$dataCobradoAtualizacaoAtendente = date('d/m/Y H:i', strtotime($dataCobradoAtualizacaoAtendente));
 								}
 								?>
 								<input type="text" class="data select form-control" name="dataAtualizacaoAtendente"
-									value="<?php echo $dataAtualizacaoAtendente ?>" readonly>
+									value="<?php echo $dataCobradoAtualizacaoAtendente ?>" readonly>
 								<label class='control-label' for='inputNormal'>Data de Abertura</label>
 								<input type="text" class="data select form-control" name="dataabertura"
 									value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
 
-								<label class="labelForm">Tempo</label>
-								<input type="text" class="data select form-control" value="<?php echo $horas['tempo'] ?>"
-									readonly>
+								<label class="labelForm">Tempo Cobrado</label>
+								<input type="text" class="data select form-control"
+									value="<?php echo $horas['horasCobrado'] ?>" readonly>
 							</div>
-							<div class="col-md-12 form-group" style="margin-top: -19px;">
-
-								<label class="labelForm">Horas Previsão</label>
-								<input type="text" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+							<div class="col-md-12 form-group" style="margin-top: -20px;">
+								<label class="labelForm">Quantidade Retornos</label>
+								<input type="text" class="data select form-control"
+									value="<?php echo $demanda['QtdRetornos'] ?>" readonly>
+							</div>
+							<div class="col-md-12 form-group" style="margin-top: -25px;">
+								<label class="labelForm">Previsão</label>
+								<input type="number" class="data select form-control" name="horasPrevisao"
+									value="<?php echo $demanda['horasPrevisao'] ?>">
 							</div>
 							<div class="col-md-12 form-group-select" style="margin-top: -29px;">
 								<label class="labelForm">Tamanho</label>
@@ -140,33 +146,55 @@ $atendentes = buscaAtendente();
 							<div class="col-md-12 form-group">
 								<label class="labelForm">Atualização Cliente</label>
 								<?php
-								$dataAtualizacaoCliente = $demanda['dataAtualizacaoCliente'];
-								if ($dataAtualizacaoCliente != "0000-00-00 00:00:00") {
-									$dataAtualizacaoCliente = date('d/m/Y H:i', strtotime($dataAtualizacaoCliente));
+								$dataCobradoAtualizacaoCliente = $demanda['dataAtualizacaoCliente'];
+								if ($dataCobradoAtualizacaoCliente != "0000-00-00 00:00:00" && $dataCobradoAtualizacaoCliente != null) {
+									$dataCobradoAtualizacaoCliente = date('d/m/Y H:i', strtotime($dataCobradoAtualizacaoCliente));
 								}
 								?>
 								<input type="text" class="data select form-control" name="dataAtualizacaoCliente"
-									value="<?php echo $dataAtualizacaoCliente ?>" readonly>
+									value="<?php echo $dataCobradoAtualizacaoCliente ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -24px;">
 								<label class="labelForm">Data Fim</label>
 								<?php
-								$dataFechamento = $demanda['dataFechamento'];
-								if ($dataFechamento != "0000-00-00 00:00:00") {
-									$dataFechamento = date('d/m/Y H:i', strtotime($dataFechamento));
+								$dataCobradoFechamento = $demanda['dataFechamento'];
+								if ($dataCobradoFechamento != "0000-00-00 00:00:00" && $dataCobradoFechamento != null) {
+									$dataCobradoFechamento = date('d/m/Y H:i', strtotime($dataCobradoFechamento));
 								}
 								?>
 								<input type="text" class="data select form-control" name="dataFechamento"
-									value="<?php echo $dataFechamento ?>" readonly>
+									value="<?php echo $dataCobradoFechamento ?>" readonly>
 							</div>
 							<div class="col-md-12 form-group" style="margin-top: -20px;">
 
-								<label class="labelForm">Duração</label>
-								<input type="text" class="data select form-control" value="<?php echo $horas['duracao'] ?>"
-									readonly>
+								<label class="labelForm">Tempo Real</label>
+								<input type="text" class="data select form-control"
+									value="<?php echo $horas['horasReal'] ?>" readonly>
 							</div>
 
-							<div class="col-md-12 form-group-select" style="margin-top: -20px;">
+							<div class="col-md-12 form-group" style="margin-top: -20px;">
+								<label class="labelForm">Status</label>
+								<input type="text" class="data select form-control"
+									value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
+							</div>
+
+							<div class="col-md-12 form-group" style="margin-top: -25px;">
+								<label class="labelForm">Ocorrência</label>
+								<input type="text" class="data select form-control"
+									value="<?php echo $demanda['nomeTipoOcorrencia'] ?>" readonly>
+							</div>
+
+							<div class="col-md-12 form-group-select" style="margin-top: -30px; margin-bottom: 10px">
+								<label class="labelForm">Serviço</label>
+								<select class="select form-control" name="idServico" autocomplete="off">
+									<option value="<?php echo $demanda['idServico'] ?>"><?php echo $demanda['nomeServico'] ?></option>
+									<?php foreach ($servicos as $servico) { ?>
+										<option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?></option>
+									<?php } ?>
+								</select>
+							</div>
+
+							<div class="col-md-12 form-group-select" style="margin-top: 10px; margin-bottom: 10px">
 								<label class="labelForm">Contrato Vinculado</label>
 								<select class="select form-control" name="idContrato" autocomplete="off">
 									<option value="<?php echo $demanda['idContrato'] ?>"><?php echo $demanda['tituloContrato'] ?></option>
@@ -175,34 +203,22 @@ $atendentes = buscaAtendente();
 									<?php } ?>
 								</select>
 							</div>
-							
-							<div class="col-md-12 form-group-select" style="margin-top: 21px;">
-								<label class="labelForm">Status</label>
-								<select class="select form-control" name="idTipoStatus" autocomplete="off">
-									<option value="<?php echo $demanda['idTipoStatus'] ?>"><?php echo $demanda['nomeTipoStatus'] ?></option>
-									<?php foreach ($tiposstatus as $tipostatus) { ?>
-										<option value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
-									<?php } ?>
-								</select>
-							</div>
 
-							<div class="col-md-12 form-group-select" style="margin-top: 20px; margin-bottom: 10px">
-								<label class="labelForm">Ocorrência</label>
-								<select class="select form-control" name="idTipoOcorrencia">
-									<option value="<?php echo $demanda['idTipoOcorrencia'] ?>"><?php echo $demanda['nomeTipoOcorrencia'] ?></option>
-									<?php foreach ($ocorrencias as $ocorrencia) { ?>
-										<option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
-									<?php } ?>
-								</select>
-							</div>
+
 
 
 						</div>
 					</div>
 
-					<div class="card-footer bg-transparent" style="margin-top: 80px;">
-						<input type="submit" name="submit" id="submit" class="btn btn-success btn-sm" style="float: right;"
+					<div class="card-footer bg-transparent" style="margin-top: 50px;">
+						<button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger "
+							style="float: left;">Validar Demanda</button>
+						<button type="submit" formaction="../database/demanda.php?operacao=retornar"
+							class="btn btn-warning  ml-3" style="float: left;">Retornar Demanda</button>
+						<input type="submit" name="submit" id="submit" class="btn btn-success" style="float: right;"
 							value="Atualizar" />
+						<button type="submit" formaction="../database/demanda.php?operacao=realizado"
+							class="btn btn-warning" style="margin-right:20px;float: right;">Encerrar</button>
 					</div>
 				<?php } //*************** visão cliente
 				if ($_SESSION['idCliente'] >= 1) { ?>
@@ -248,7 +264,7 @@ $atendentes = buscaAtendente();
 							<div class="form-group">
 								<label class='labelForm'>Descrição</label>
 								<textarea class="form-control" name="descricao" autocomplete="off"
-									rows="10"><?php echo $demanda['descricao'] ?></textarea>
+									rows="17"><?php echo $demanda['descricao'] ?></textarea>
 							</div>
 						</div>
 						<div class="col-md">
@@ -257,7 +273,8 @@ $atendentes = buscaAtendente();
 								<input type="text" class="form-control" name="dataAtualizacaoAtendente"
 									value="<?php echo $demanda['dataAtualizacaoAtendente'] ?>" readonly>
 								<label class="labelForm">Horas Tarefa</label>
-								<input type="text" class="form-control" value="<?php echo $horas['tempo'] ?>" readonly>
+								<input type="text" class="form-control" value="<?php echo $horas['horasCobrado'] ?>"
+									readonly>
 								<label class="labelForm">Tamanho</label>
 								<input type="text" class="form-control" name="tamanho"
 									value="<?php echo $demanda['tamanho'] ?>" readonly>
@@ -286,7 +303,7 @@ $atendentes = buscaAtendente();
 					</div>
 
 					<div class="card-footer bg-transparent" style="margin-top: 50px;">
-						<button type="submit" formaction="../database/demanda.php?operacao=encerrar" class="btn btn-danger "
+						<button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger "
 							style="float: left;">Fechar Demanda</button>
 						<button type="submit" formaction="../database/demanda.php?operacao=retornar"
 							class="btn btn-warning  ml-3" style="float: left;">Retornar Demanda</button>
@@ -299,7 +316,8 @@ $atendentes = buscaAtendente();
 			</form>
 		</div>
 
-		<iframe class="container-fluid" id="myIframe" src="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $demanda['idTipoOcorrencia'] ?>"
+		<iframe class="container-fluid mt-2" id="myIframe"
+			src="comentarios.php?idDemanda=<?php echo $idDemanda ?>&&idTipoOcorrencia=<?php echo $demanda['idTipoOcorrencia'] ?>"
 			frameborder="0" scrolling="yes" height="740"></iframe>
 		<!-- </div> -->
 	</div>
@@ -332,7 +350,7 @@ $atendentes = buscaAtendente();
 
 		});
 	</script>
-	
+
 </body>
 
 </html>

@@ -126,7 +126,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "retornar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
-			'idTipoStatus' => TIPOSTATUS_RETORN0
+			'idTipoStatus' => TIPOSTATUS_RETORNO
 		);
 		$demanda = chamaAPI(null, '/services/demanda/retornar', json_encode($apiEntrada), 'POST');
 
@@ -162,17 +162,57 @@ if (isset($_GET['operacao'])) {
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $_POST['comentario'],
+			'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
 			'idTipoStatus' => TIPOSTATUS_RESPONDIDO
 
 		);
 		
 
-		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
+		$comentario = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada), 'PUT');
 
-		header('Location: ../demandas/comentarios.php?idDemanda=' . $apiEntrada['idDemanda']);
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
 	if ($operacao == "comentarAtendente") {
+ 
+		$anexo = $_FILES['nomeAnexo'];
+	
+		$pasta    = ROOT    . "/img/anexos/";
+		$pastaURL = URLROOT . "/img/anexos/";
+
+		$nomeAnexo = $anexo['name'];
+		//$novoNomeDoAnexo = uniqid(); 
+		$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
+		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+		/* if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+        die("Tipo de aquivo não aceito"); */
+
+		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
+
+
+		$apiEntrada = array(
+			'nomeAnexo' => $nomeAnexo,
+			'pathAnexo' => $pathURL,
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $_POST['comentario'],
+			'idTipoStatus' => null
+
+		);
+		
+
+		$comentario = chamaAPI(null, '/services/comentario/atendente', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "solicitar") {
  
 		$anexo = $_FILES['nomeAnexo'];
 	
@@ -206,7 +246,7 @@ if (isset($_GET['operacao'])) {
 		);
 		
 
-		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
+		$comentario = chamaAPI(null, '/services/comentario/atendente', json_encode($apiEntrada), 'PUT');
 
 		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}

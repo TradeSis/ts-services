@@ -126,7 +126,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "retornar") {
 		$apiEntrada = array(
 			'idDemanda' => $_POST['idDemanda'],
-			'idTipoStatus' => TIPOSTATUS_RETORN0
+			'idTipoStatus' => TIPOSTATUS_RETORNO
 		);
 		$demanda = chamaAPI(null, '/services/demanda/retornar', json_encode($apiEntrada), 'POST');
 

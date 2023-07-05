@@ -8,6 +8,12 @@
                     <div class="row">
 
                         <div class="col-md-6 form-group">
+                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
+                            <div class="for-group" style="margin-top: 22px;">
+                                <input type="text" class="form-control" name="tituloTarefa" value="<?php echo $tarefas['tituloTarefa'] ?>" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
                             <label class='control-label' for='inputNormal'>ID/Demanda
                                 Relacionada</label>
                             <input type="hidden" class="form-control" name="idDemanda"
@@ -18,7 +24,7 @@
                                 value="<?php echo $tarefas['idDemanda'] ?> - <?php echo $tarefas['tituloDemanda'] ?>"
                                 readonly>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group" style="margin-top: 32px;">
                                 <label class='control-label' for='inputNormal'>Cliente</label>
                                 <?php
@@ -35,14 +41,14 @@
                                     readonly>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="labelForm">Data Previsão</label>
                                 <input type="date" class="data select form-control"
                                     value="<?php echo $tarefas['Previsto'] ?>" name="Previsto" autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label class="labelForm">Inicio</label>
                                 <input type="time" class="data select form-control"
@@ -50,7 +56,7 @@
                                     autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label class="labelForm">Fim</label>
                                 <input type="time" class="data select form-control"
@@ -61,10 +67,6 @@
                     </div>
                     <div class="row card-footer bg-transparent">
                         <hr>
-                        <div class="col-sm" style="text-align:left">
-                            <a href="#" onclick="history.back()" role="button" class="btn btn-primary"><i
-                                    class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
-                        </div>
                         <div class="col-sm" style="text-align:right">
                             <button type="submit" formaction="../database/tarefas.php?operacao=alterarPrevisao"
                                 class="btn btn-warning">Atualizar Previsão</button>
@@ -78,6 +80,12 @@
                     <div class="row">
 
                         <div class="col-md-6 form-group">
+                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
+                            <div class="for-group" style="margin-top: 22px;">
+                                <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
                             <label class='control-label' for='inputNormal'>ID/Demanda
                                 Relacionada</label>
                             <input type="hidden" class="form-control" name="idDemanda"
@@ -86,7 +94,7 @@
                                 value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>"
                                 readonly>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group" style="margin-top: 32px;">
                                 <label class='control-label' for='inputNormal'>Cliente</label>
                                 <?php
@@ -114,21 +122,21 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="labelForm">Data Previsão</label>
                                 <input type="date" class="data select form-control" name="Previsto" autocomplete="off"
                                     required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label class="labelForm">Inicio</label>
                                 <input type="time" class="data select form-control" name="horaInicioPrevisto"
                                     autocomplete="off" required>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label class="labelForm">Fim</label>
                                 <input type="time" class="data select form-control" name="horaFinalPrevisto"
@@ -148,6 +156,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th class="text-center">ID</th>
+                        <th class="text-center">Titulo</th>
                         <th class="text-center">Atendente</th>
                         <th class="text-center">Data</th>
                         <th class="text-center">Início</th>
@@ -161,6 +170,9 @@
                         <tr>
                             <td class="text-center">
                                 <?php echo $tarefas['idTarefa'] ?>
+                            </td>
+                            <td class="text-center">
+                                <?php echo $tarefas['tituloTarefa'] ?>
                             </td>
                             <td class="text-center">
                                 <?php echo $tarefas['nomeUsuario'] ?>
@@ -194,7 +206,7 @@
                             </td>
                             <td class="text-center">
                                 <a class="btn btn-primary btn-sm"
-                                    href="previsao.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
+                                    href="visualizar.php?id=previsao&&idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
                                     role="button">Alterar</a>
                             </td>
                         </tr>
@@ -204,6 +216,9 @@
                             <tr>
                                 <td class="text-center">
                                     <?php echo $tarefa['idTarefa'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $tarefa['tituloTarefa'] ?>
                                 </td>
                                 <td class="text-center">
                                     <?php echo $tarefa['nomeUsuario'] ?>
@@ -237,7 +252,7 @@
                                 </td>
                                 <td class="text-center">
                                     <a class="btn btn-primary btn-sm"
-                                        href="previsao.php?idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
+                                        href="visualizar.php?id=previsao&&idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
                                         role="button">Alterar</a>
                                 </td>
                             </tr>

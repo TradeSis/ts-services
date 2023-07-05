@@ -1,14 +1,4 @@
 <?php
-// gabriel 220323 11:19 - adicionado IF para usuario cliente, adicionado retornar demanda para cliente, recarregar pagina ao atualizar demanda
-// Lucas 10032023 - alterado buscaUsuarios($logado) para buscaUsuarios($_SESSION['idUsuario']), linha 27
-// gabriel 06032023 11:25 padronizado idatendente da demanda, adicionado alterar descrição
-// gabriel 02032023 12:13 alteração de titulo demanda
-// gabriel 06022023 adicionado contador de horas(tarefa), prioridade, data atualização atendente/cliente
-// gabriel 03022023 16:00 adicionado iframe
-// helio 01022023 alterado para include_once
-// gabriel 01022023 15:04 - nav adicionada, comentarios.php separado
-// gabriel 31012023 13:47 - nomeclaturas, botão encerrar
-// helio 26012023 16:16
 
 include_once '../head.php';
 include_once '../database/demanda.php';
@@ -45,66 +35,69 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
 
 
 <style>
-	body {
-		margin-bottom: 30px;
-	}
+    body {
+        margin-bottom: 30px;
+    }
 
-	.line {
-		width: 100%;
-		border-bottom: 1px solid #707070;
-	}
+    .line {
+        width: 100%;
+        border-bottom: 1px solid #707070;
+    }
 
-	#tabs .tab {
-		display: inline-block;
-		padding: 5px 10px;
-		cursor: pointer;
-		position: relative;
-		z-index: 5;
-		background-color: lightgray;
-		color: black;
-	}
+    #tabs .tab {
+        display: inline-block;
+        padding: 5px 10px;
+        cursor: pointer;
+        position: relative;
+        z-index: 5;
+        background-color: lightgray;
+        color: black;
+    }
 
-	#tabs .whiteborder {
-		border: 1px solid #707070;
-		border-bottom: 1px solid #fff;
-		border-radius: 3px 3px 0 0;
-		background-color: lightblue;
-		color: white;
-	}
+    #tabs .whiteborder {
+        border: 1px solid #707070;
+        border-bottom: 1px solid #fff;
+        border-radius: 3px 3px 0 0;
+        background-color: lightblue;
+        color: white;
+    }
 
-	#tabs .tabContent {
-		position: relative;
-		top: -1px;
-		z-index: 1;
-		padding: 10px;
-		border-radius: 0 0 3px 3px;
-		color: black;
-	}
+    #tabs .tabContent {
+        position: relative;
+        top: -1px;
+        z-index: 1;
+        padding: 10px;
+        border-radius: 0 0 3px 3px;
+        color: black;
+    }
 
-	#tabs .hide {
-		display: none;
-	}
+    #tabs .hide {
+        display: none;
+    }
 
-	#tabs .show {
-		display: block;
-	}
+    #tabs .show {
+        display: block;
+    }
 </style>
 
 <body class="bg-transparent">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
-                <span class="titulo">Chamado - <?php echo $idDemanda ?></span>
+                <span class="titulo">Chamado -
+                    <?php echo $idDemanda ?>
+                </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-                <a href="#" onclick="history.back()" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i>&#32;Voltar</a>
+                <a href="#" onclick="history.back()" role="button" class="btn btn-primary"><i
+                        class="bi bi-arrow-left-square"></i>&#32;Voltar</a>
             </div>
         </div>
         <div id="tabs">
-            <div class="tab whiteborder">Demanda</div>
-            <div class="tab">Comentarios</div>
-            <div class="tab">Tarefas</div>
-            <div class="tab">Previsão</div>
+            <div class="tab whiteborder" id="tab-demanda">Demanda</div>
+            <div class="tab" id="tab-comentarios">Comentarios</div>
+            <div class="tab" id="tab-tarefas">Tarefas</div>
+            <div class="tab" id="tab-previsao">Previsão</div>
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'visualizar_demanda.php'; ?>
@@ -129,6 +122,18 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
             tabContent = document.getElementsByClassName('tabContent');
             tab = document.getElementsByClassName('tab');
             hideTabsContent(1);
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var id = urlParams.get('id');
+            if (id === 'comentarios') {
+                showTabsContent(1);
+            }
+            if (id === 'tarefas') {
+                showTabsContent(2); 
+            }
+            if (id === 'previsao') {
+                showTabsContent(3); 
+            }
         }
 
         document.getElementById('tabs').onclick = function (event) {

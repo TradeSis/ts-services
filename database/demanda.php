@@ -135,7 +135,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "comentar") {
  
-		$anexo = $_FILES['nomeAnexo'];
+		/*$anexo = $_FILES['nomeAnexo'];
 	
 		$pasta    = ROOT    . "/img/anexos/";
 		$pastaURL = URLROOT . "/img/anexos/";
@@ -146,18 +146,18 @@ if (isset($_GET['operacao'])) {
 
 		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
 
-		/* if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
-        die("Tipo de aquivo não aceito"); */
+		 if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+        die("Tipo de aquivo não aceito"); 
 
 		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
 		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
 
-		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
 
 
 		$apiEntrada = array(
-			'nomeAnexo' => $nomeAnexo,
-			'pathAnexo' => $pathURL,
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -175,7 +175,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "comentarAtendente") {
  
-		$anexo = $_FILES['nomeAnexo'];
+		/*$anexo = $_FILES['nomeAnexo'];
 	
 		$pasta    = ROOT    . "/img/anexos/";
 		$pastaURL = URLROOT . "/img/anexos/";
@@ -186,18 +186,18 @@ if (isset($_GET['operacao'])) {
 
 		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
 
-		/* if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
-        die("Tipo de aquivo não aceito"); */
+		 if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+        die("Tipo de aquivo não aceito"); 
 
 		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
 		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
 
-		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
 
 
 		$apiEntrada = array(
-			'nomeAnexo' => $nomeAnexo,
-			'pathAnexo' => $pathURL,
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -214,7 +214,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "solicitar") {
  
-		$anexo = $_FILES['nomeAnexo'];
+		/*$anexo = $_FILES['nomeAnexo'];
 	
 		$pasta    = ROOT    . "/img/anexos/";
 		$pastaURL = URLROOT . "/img/anexos/";
@@ -225,18 +225,18 @@ if (isset($_GET['operacao'])) {
 
 		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
 
-		/* if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
-        die("Tipo de aquivo não aceito"); */
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+        die("Tipo de aquivo não aceito"); 
 
 		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
 		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
 
-		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
 
 
 		$apiEntrada = array(
-			'nomeAnexo' => $nomeAnexo,
-			'pathAnexo' => $pathURL,
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],

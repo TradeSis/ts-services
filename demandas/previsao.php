@@ -206,7 +206,7 @@
                             </td>
                             <td class="text-center">
                                 <a class="btn btn-primary btn-sm"
-                                    href="visualizar.php?id=previsao&&idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
+                                    href="visualizar.php?id=previsao&&idTarefa=<?php echo $tarefas['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
                                     role="button">Alterar</a>
                             </td>
                         </tr>

@@ -1,3 +1,7 @@
+<?php
+include_once '../head.php';
+?>
+
 <body class="bg-transparent">
     <div class="container-fluid mb-3">
         <div>
@@ -43,8 +47,17 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class='control-label' for='inputNormal'>Reponsável</label>
-                                <input type="text" class="form-control" value="<?php echo $tarefas['nomeUsuario'] ?>"
-                                    readonly>
+                                <select class="form-control" name="idAtendente">
+                                    <?php
+                                    foreach ($atendentes as $atendente) {
+                                        ?>
+                                        <option <?php
+                                        if ($atendente['idUsuario'] == $tarefas['idAtendente']) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -66,7 +79,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="labelForm">Data</label>
+                                <label class="labelForm">Data Cobrado</label>
                                 <input type="date" class="data select form-control"
                                     value="<?php echo $tarefas['dataCobrado'] ?>" name="dataCobrado" autocomplete="off">
                             </div>
@@ -92,7 +105,7 @@
                         <hr>
                         <div class="col-sm" style="text-align:right">
                             <button type="submit" formaction="../database/tarefas.php?operacao=alterar"
-                                class="btn btn-warning">Atualizar Tarefa</button>
+                                class="btn btn-warning">Atualiza</button>
                         </div>
                     </div>
                 </form>
@@ -164,7 +177,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="labelForm">Data</label>
+                                <label class="labelForm">Data Cobrado</label>
                                 <input type="date" class="data select form-control" name="dataCobrado" autocomplete="off"
                                     required>
                             </div>
@@ -186,7 +199,7 @@
                     </div>
                     <div class="card-footer bg-transparent" style="text-align:right">
                         <button type="submit" formaction="../database/tarefas.php?operacao=inserir"
-                            class="btn btn-info">Inserir Tarefa</button>
+                            class="btn btn-info">Nova</button>
                     </div>
                 </form>
             <?php } ?>
@@ -297,12 +310,14 @@
                                 <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
                                     <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop"
                                         data-id="<?php echo $tarefas['idTarefa'] ?>"
+                                        data-status="<?php echo $idTipoStatus ?>"
                                         data-data-execucao="<?php echo $tarefas['horaInicioReal'] ?>"
                                         data-demanda="<?php echo $tarefas['idDemanda'] ?>" />
                                 <?php }
                                 if ($horaInicioReal == "00:00") { ?>
                                     <input type="button" class="startButton btn btn-success btn-sm" value="Start"
                                         data-id="<?php echo $tarefas['idTarefa'] ?>"
+                                        data-status="<?php echo $idTipoStatus ?>"
                                         data-demanda="<?php echo $tarefas['idDemanda'] ?>" />
                                 <?php } ?>
                                 <a class="btn btn-primary btn-sm"
@@ -402,12 +417,14 @@
                                     <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
                                         <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
+                                            data-status="<?php echo $idTipoStatus ?>"
                                             data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>"
                                             data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
                                     <?php } ?>
                                     <?php if ($horaInicioReal == "00:00") { ?>
                                         <input type="button" class="startButton btn btn-success btn-sm" value="Start"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
+                                            data-status="<?php echo $idTipoStatus ?>"
                                             data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
                                     <?php } ?>
                                     <a class="btn btn-primary btn-sm"
@@ -430,9 +447,10 @@
 
             $('.stopButton').click(function () {
                 var idTarefa = $(this).data('id');
+                var tipoStatusDemanda = $(this).data('status');
                 var horaInicioCobrado = $(this).data('data-execucao');
                 var idDemanda = $(this).data('demanda');
-                var form_data = { idTarefa: idTarefa, horaInicioCobrado: horaInicioCobrado, idDemanda: idDemanda };
+                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, horaInicioCobrado: horaInicioCobrado, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=stop",
                     method: "POST",
@@ -444,14 +462,15 @@
 
             $('.startButton').click(function () {
                 var idTarefa = $(this).data('id');
+                var tipoStatusDemanda = $(this).data('status');
                 var idDemanda = $(this).data('demanda');
-                var form_data = { idTarefa: idTarefa, idDemanda: idDemanda };
+                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=start",
                     method: "POST",
                     data: form_data,
                     dataType: "JSON",
-                    success: refreshPage('tarefas', idDemanda)
+                    success: alert(JSON.stringify(form_data))
                 });
             });
 

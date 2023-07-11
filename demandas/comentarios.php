@@ -1,3 +1,7 @@
+<?php
+include_once '../head.php';
+?>
+
 <body class="bg-transparent">
     <div class="container-fluid">
         <form method="post" id="form" enctype="multipart/form-data">
@@ -37,23 +41,32 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-5 ml-auto">
+                        <div class="col-md ml-auto">
+                            <?php
+                            if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
+                                <button type="submit" formaction="../database/demanda.php?operacao=validar"
+                                    class="btn btn-danger" style="margin-right:10px;float: left;">Validar</button>
+                            <?php }
+                            if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
+                                <button type="submit" formaction="../database/demanda.php?operacao=retornar"
+                                    class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
+                            <?php } ?>
                             <?php
                             if ($_SESSION['idCliente'] == NULL) { ?>
                                 <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente"
                                     class="btn btn-info" style="margin-right:10px;float: right;">Comentar</button>
                                 <button type="submit" formaction="../database/demanda.php?operacao=solicitar"
-                                    class="btn btn-warning" style="margin-right:10px;float: right;">Solicitar</button>
+                                    class="btn btn-warning" style="margin-right:10px;float: right;">Encaminhar</button>
                             <?php } //*************** visão cliente
                             if ($_SESSION['idCliente'] >= 1) { ?>
                                 <button type="submit" formaction="../database/demanda.php?operacao=comentar"
-                                    class="btn btn-info" style="margin-right:20px;float: right;">Comentar</button>
+                                    class="btn btn-info" style="margin-right:20px;float: right;">Enviar</button>
                             <?php } ?>
                         </div>
                     </div>
 
-                    <h4 class="mt-5">Anexos:</h4>   
-                    <div class="card"></div>         
+                    <h4 class="mt-5">Anexos:</h4>
+                    <div class="card"></div>
 
                 </div>
                 <div class="container mt-3 col-md-6" style="float:left">

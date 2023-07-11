@@ -97,7 +97,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
             <div class="tab whiteborder" id="tab-demanda">Demanda</div>
             <div class="tab" id="tab-comentarios">Comentarios</div>
             <div class="tab" id="tab-tarefas">Tarefas</div>
-            <div class="tab" id="tab-previsao">Previsão</div>
+            <div class="tab" id="tab-previsao">Agenda</div>
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'visualizar_demanda.php'; ?>

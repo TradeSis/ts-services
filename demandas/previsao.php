@@ -1,3 +1,7 @@
+<?php
+include_once '../head.php';
+?>
+
 <body class="bg-transparent">
     <div class="container-fluid mb-3">
         <div>
@@ -6,26 +10,33 @@
             if (isset($_GET['idTarefa'])) { ?>
                 <form method="post" id="editar">
                     <div class="row">
-
                         <div class="col-md-6 form-group">
+
                             <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
                             <div class="for-group" style="margin-top: 22px;">
-                                <input type="text" class="form-control" name="tituloTarefa" value="<?php echo $tarefas['tituloTarefa'] ?>" autocomplete="off">
+                                <input type="text" class="form-control" name="tituloTarefa"
+                                    value="<?php echo $tarefas['tituloTarefa'] ?>" autocomplete="off">
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 form-group">
+
+                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
+                                Relacionada</label>
+                            <div class="for-group" style="margin-top: 22px;">
+                                <input type="hidden" class="form-control" name="idTarefa"
+                                    value="<?php echo $tarefas['idTarefa'] ?>" style="margin-bottom: -20px;">
+                                <input type="hidden" class="form-control" name="idDemanda"
+                                    value="<?php echo $tarefas['idDemanda'] ?>" style="margin-bottom: -20px;">
+                                <input type="text" class="form-control"
+                                    value="<?php echo $tarefas['idDemanda'] ?> - <?php echo $tarefas['tituloDemanda'] ?>"
+                                    readonly>
+                                <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
                             </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label class='control-label' for='inputNormal'>ID/Demanda
-                                Relacionada</label>
-                            <input type="hidden" class="form-control" name="idDemanda"
-                                value="<?php echo $tarefas['idDemanda'] ?>">
-                            <input type="hidden" class="form-control" name="idTarefa"
-                                value="<?php echo $tarefas['idTarefa'] ?>">
-                            <input type="text" class="form-control"
-                                value="<?php echo $tarefas['idDemanda'] ?> - <?php echo $tarefas['tituloDemanda'] ?>"
-                                readonly>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group" style="margin-top: 32px;">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label class='control-label' for='inputNormal'>Cliente</label>
                                 <?php
                                 ?>
@@ -34,21 +45,47 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group" style="margin-top: 29px;">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label class='control-label' for='inputNormal'>Reponsável</label>
-                                <input type="text" class="form-control" value="<?php echo $tarefas['nomeUsuario'] ?>"
-                                    readonly>
+                                <select class="form-control" name="idAtendente">
+                                    <?php
+                                    foreach ($atendentes as $atendente) {
+                                        ?>
+                                        <option <?php
+                                        if ($atendente['idUsuario'] == $tarefas['idAtendente']) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label class="labelForm">Data Previsão</label>
+                                <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                <select class="form-control" name="idTipoOcorrencia">
+                                    <?php
+                                    foreach ($ocorrencias as $ocorrencia) {
+                                        ?>
+                                        <option <?php
+                                        if ($ocorrencia['idTipoOcorrencia'] == $tarefas['idTipoOcorrencia']) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="labelForm">Data Cobrado</label>
                                 <input type="date" class="data select form-control"
                                     value="<?php echo $tarefas['Previsto'] ?>" name="Previsto" autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label class="labelForm">Inicio</label>
                                 <input type="time" class="data select form-control"
@@ -56,7 +93,7 @@
                                     autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label class="labelForm">Fim</label>
                                 <input type="time" class="data select form-control"
@@ -69,7 +106,7 @@
                         <hr>
                         <div class="col-sm" style="text-align:right">
                             <button type="submit" formaction="../database/tarefas.php?operacao=alterarPrevisao"
-                                class="btn btn-warning">Atualizar Previsão</button>
+                                class="btn btn-warning">Atualiza</button>
                         </div>
                     </div>
                 </form>
@@ -78,24 +115,30 @@
             else { ?>
                 <form method="post" id="form1">
                     <div class="row">
-
                         <div class="col-md-6 form-group">
+
                             <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
                             <div class="for-group" style="margin-top: 22px;">
                                 <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
                             </div>
+
                         </div>
+
                         <div class="col-md-6 form-group">
-                            <label class='control-label' for='inputNormal'>ID/Demanda
+
+                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
                                 Relacionada</label>
-                            <input type="hidden" class="form-control" name="idDemanda"
-                                value="<?php echo $demanda['idDemanda'] ?>">
-                            <input type="text" class="form-control"
-                                value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>"
-                                readonly>
+                            <div class="for-group" style="margin-top: 22px;">
+                                <input type="hidden" class="form-control" name="idDemanda"
+                                    value="<?php echo $demanda['idDemanda'] ?>" style="margin-bottom: -20px;">
+                                <input type="text" class="form-control"
+                                    value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>"
+                                    readonly>
+                                <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-group" style="margin-top: 32px;">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label class='control-label' for='inputNormal'>Cliente</label>
                                 <?php
                                 ?>
@@ -106,8 +149,8 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group" style="margin-top: 29px;">
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label class='control-label' for='inputNormal'>Reponsável</label>
                                 <select class="form-control" name="idAtendente">
                                     <?php
@@ -122,21 +165,33 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label class="labelForm">Data Previsão</label>
+                                <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                <select class="form-control" name="idTipoOcorrencia">
+                                    <?php
+                                    foreach ($ocorrencias as $ocorrencia) {
+                                        ?>
+                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="labelForm">Data Cobrado</label>
                                 <input type="date" class="data select form-control" name="Previsto" autocomplete="off"
                                     required>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label class="labelForm">Inicio</label>
                                 <input type="time" class="data select form-control" name="horaInicioPrevisto"
                                     autocomplete="off" required>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label class="labelForm">Fim</label>
                                 <input type="time" class="data select form-control" name="horaFinalPrevisto"
@@ -146,7 +201,7 @@
                     </div>
                     <div class="card-footer bg-transparent" style="text-align:right">
                         <button type="submit" formaction="../database/tarefas.php?operacao=previsao"
-                            class="btn btn-info">Inserir Previsão</button>
+                            class="btn btn-info">Nova</button>
                     </div>
                 </form>
             <?php } ?>
@@ -179,12 +234,12 @@
                             </td>
                             <?php
                             if ($tarefas['Previsto'] != null && $tarefas['Previsto'] != "0000-00-00") {
-                                $dataCobradoPrevisto = date('d/m/Y', strtotime($tarefas['Previsto']));
+                                $PrevistoPrevisto = date('d/m/Y', strtotime($tarefas['Previsto']));
                             } else {
-                                $dataCobradoPrevisto = "Previsão não definida";
+                                $PrevistoPrevisto = "Previsão não definida";
                             } ?>
                             <td class="text-center">
-                                <?php echo $dataCobradoPrevisto ?>
+                                <?php echo $PrevistoPrevisto ?>
                             </td>
                             <?php
                             if ($tarefas['horaInicioPrevisto'] != null) {
@@ -225,12 +280,12 @@
                                 </td>
                                 <?php
                                 if ($tarefa['Previsto'] != null && $tarefa['Previsto'] != "0000-00-00") {
-                                    $dataCobradoPrevisto = date('d/m/Y', strtotime($tarefa['Previsto']));
+                                    $PrevistoPrevisto = date('d/m/Y', strtotime($tarefa['Previsto']));
                                 } else {
-                                    $dataCobradoPrevisto = "Previsão não definida";
+                                    $PrevistoPrevisto = "Previsão não definida";
                                 } ?>
                                 <td class="text-center">
-                                    <?php echo $dataCobradoPrevisto ?>
+                                    <?php echo $PrevistoPrevisto ?>
                                 </td>
                                 <?php
                                 if ($tarefa['horaInicioPrevisto'] != null) {

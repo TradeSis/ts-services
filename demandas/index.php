@@ -62,7 +62,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 }
 ?>
 <style>
-  [class="Fila"] {
+  [class="<?php echo TIPOSTATUS_FILA ?>"] {
     margin-top: 5px;
     display: inline-block;
     background: #5271FE;
@@ -70,7 +70,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 160px;
   }
 
-  [class="Pausado"] {
+  [class="<?php echo TIPOSTATUS_AGENDADO ?>"] {
     margin-top: 5px;
     display: inline-block;
     background: #FE5469;
@@ -78,14 +78,14 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 160px;
   }
 
-  [class="Realizado"] {
+  [class="<?php echo TIPOSTATUS_REALIZADO ?>"] {
     display: inline-block;
     background: #C34A36;
     color: #fff;
     width: 160px;
   }
 
-  [class="Fazendo"] {
+  [class="<?php echo TIPOSTATUS_FAZENDO ?>"] {
     margin-top: 5px;
     display: inline-block;
     background: #69419D;
@@ -93,7 +93,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 160px;
   }
 
-  [class="Retorno"] {
+  [class="<?php echo TIPOSTATUS_RETORNO ?>"] {
     margin-top: 5px;
     display: inline-block;
     background: #FEA051;
@@ -101,7 +101,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 160px;
   }
 
-  [class="Validado"] {
+  [class="<?php echo TIPOSTATUS_VALIDADO ?>"] {
     margin-top: 5px;
     display: inline-block;
     background: #18B376;
@@ -109,7 +109,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 160px;
   }
 
-  [class="Aguardando Solicitante"] {
+  [class="<?php echo TIPOSTATUS_AGUARDANDOSOLICITANTE ?>"] {
     margin-top: 5px;
     display: inline-block;
     background: #00C2A8;
@@ -117,7 +117,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     color: #fff;
   }
 
-  [class="Respondido"] {
+  [class="<?php echo TIPOSTATUS_RESPONDIDO ?>"] {
     margin-top: 5px;
     display: inline-block;
     background: blueviolet;
@@ -125,10 +125,10 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 160px;
   }
 
-  [class="Agendado"] {
+  [class="<?php echo TIPOSTATUS_PAUSADO ?>"] {
     margin-top: 5px;
     display: inline-block;
-    background: #FFC107; 
+    background: #FFC107;
     color: #fff;
     width: 160px;
   }
@@ -201,126 +201,126 @@ if (isset($_SESSION['filtro_demanda'])) {
     <ul>
 
       <?php /*<li class="ls-label col-sm-12"> <!-- CLIENTE -->
-        <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
+<form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
-        <?php if ($_SESSION['idCliente'] == null){ ?>
-        <select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
-        <option value="<?php echo null ?>"><?php echo " Cliente"  ?></option>
-        <?php
-        foreach ($clientes as $cliente) {
-        ?>
-        <option <?php
-          if ($cliente['idCliente'] == $idCliente) {
-            echo "selected";
-          }
-          ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-        <?php  } ?>
-        </select>
-        <?php  } else { ?>
-        <select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px" disabled>
-        <?php
-        foreach ($clientes as $cliente) {
-        ?>
-        <option <?php
-          if ($cliente['idCliente'] == $idCliente) {
-            echo "selected";
-          }
-          ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-        <?php  } ?>
-        </select>
-        <?php  } ?>
-
-
-        </form>
-        </li>
-
-        <li class="ls-label col-sm-12 mr-1"> <!-- RESPONSAVEL -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
-
-        <select class="form-control" name="idAtendente" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
-        <option value="<?php echo null ?>"><?php echo " Responsável"  ?></option>
-        <?php
-        foreach ($atendentes as $atendente) {
-        ?>
-        <option <?php
-          if ($atendente['idUsuario'] == $idAtendente) {
-            echo "selected";
-          }
-          ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario']  ?></option>
-        <?php  } ?>
-        </select>
-
-        </form>
-        </li>
-
-        <li class="ls-label col-sm-12 mr-1"> <!-- SOLICITANTE -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
-
-        <select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
-        <option value="<?php echo null ?>"><?php echo " Solicitante"  ?></option>
-        <?php
-        foreach ($usuarios as $usuario) {
-        ?>
-        <option <?php
-          if ($usuario['idUsuario'] == $idSolicitante) {
-            echo "selected";
-          }
-          ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
-        <?php  } ?>
-        </select>
-
-        </form>
-        </li>
-
-        <li class="ls-label col-sm-12 mr-1"> <!-- STATUS -->
-        <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
-
-        <select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
-        <option value="<?php echo null ?>"><?php echo " Status"  ?></option>
-        <?php foreach ($tiposstatus as $tipostatus) { ?>
-        <option <?php
-          if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-            echo "selected";
-          }
-          ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
-        <?php } ?>
-        </select>
-
-        </form>
-        </li>
+<?php if ($_SESSION['idCliente'] == null){ ?>
+<select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
+<option value="<?php echo null ?>"><?php echo " Cliente"  ?></option>
+<?php
+foreach ($clientes as $cliente) {
+?>
+<option <?php
+if ($cliente['idCliente'] == $idCliente) {
+echo "selected";
+}
+?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
+<?php  } ?>
+</select>
+<?php  } else { ?>
+<select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px" disabled>
+<?php
+foreach ($clientes as $cliente) {
+?>
+<option <?php
+if ($cliente['idCliente'] == $idCliente) {
+echo "selected";
+}
+?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
+<?php  } ?>
+</select>
+<?php  } ?>
 
 
-        <li class="ls-label col-sm-12 mr-1"> <!-- OCORRENCIA -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
+</form>
+</li>
 
-        <select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
-        <option value="<?php echo null ?>"><?php echo "Ocorrência"  ?></option>
-        <?php
-        foreach ($tipoocorrencias as $tipoocorrencia) {
-        ?>
-        <option <?php
-          if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-            echo "selected";
-          }
-          ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
-        <?php  } ?>
-        </select>
+<li class="ls-label col-sm-12 mr-1"> <!-- RESPONSAVEL -->
+<form class="d-flex" action="" method="post" style="text-align: right;">
 
-        </form>
-        </li>
+<select class="form-control" name="idAtendente" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
+<option value="<?php echo null ?>"><?php echo " Responsável"  ?></option>
+<?php
+foreach ($atendentes as $atendente) {
+?>
+<option <?php
+if ($atendente['idUsuario'] == $idAtendente) {
+echo "selected";
+}
+?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario']  ?></option>
+<?php  } ?>
+</select>
 
-        <li class="ls-label col-sm-12 mr-1"> <!-- TAMANHO -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
+</form>
+</li>
 
-        <select class="form-control" name="tamanho" id="FiltroTamanho" style="font-size: 14px; width: 150px; height: 35px">
-        <option value="<?php echo null ?>"><?php echo "Tamanho"  ?></option>
-        <option  value="P">P</option>
-        <option  value="M">M</option>
-        <option  value="G">G</option>
-        </select>
+<li class="ls-label col-sm-12 mr-1"> <!-- SOLICITANTE -->
+<form class="d-flex" action="" method="post" style="text-align: right;">
 
-        </form>
-        </li> */?>
+<select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
+<option value="<?php echo null ?>"><?php echo " Solicitante"  ?></option>
+<?php
+foreach ($usuarios as $usuario) {
+?>
+<option <?php
+if ($usuario['idUsuario'] == $idSolicitante) {
+echo "selected";
+}
+?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
+<?php  } ?>
+</select>
+
+</form>
+</li>
+
+<li class="ls-label col-sm-12 mr-1"> <!-- STATUS -->
+<form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
+
+<select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
+<option value="<?php echo null ?>"><?php echo " Status"  ?></option>
+<?php foreach ($tiposstatus as $tipostatus) { ?>
+<option <?php
+if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+echo "selected";
+}
+?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
+<?php } ?>
+</select>
+
+</form>
+</li>
+
+
+<li class="ls-label col-sm-12 mr-1"> <!-- OCORRENCIA -->
+<form class="d-flex" action="" method="post" style="text-align: right;">
+
+<select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
+<option value="<?php echo null ?>"><?php echo "Ocorrência"  ?></option>
+<?php
+foreach ($tipoocorrencias as $tipoocorrencia) {
+?>
+<option <?php
+if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+echo "selected";
+}
+?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
+<?php  } ?>
+</select>
+
+</form>
+</li>
+
+<li class="ls-label col-sm-12 mr-1"> <!-- TAMANHO -->
+<form class="d-flex" action="" method="post" style="text-align: right;">
+
+<select class="form-control" name="tamanho" id="FiltroTamanho" style="font-size: 14px; width: 150px; height: 35px">
+<option value="<?php echo null ?>"><?php echo "Tamanho"  ?></option>
+<option  value="P">P</option>
+<option  value="M">M</option>
+<option  value="G">G</option>
+</select>
+
+</form>
+</li> */?>
 
       <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
@@ -404,26 +404,25 @@ if (isset($_SESSION['filtro_demanda'])) {
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
           <thead class="thead-light">
-            <tr>
-              <th class="text-center">Prioridade</th>
-              <th class="text-center">ID</th>
-              <th class="text-center">Cliente</th>
-              <th class="text-center">Solicitante</th>
-              <th class="text-center">Demanda</th>
-              <th class="text-center">Responsavel</th>
-              <th class="text-center">Abertura</th>
-              <th class="text-center">Status</th>
-              <th class="text-center">Ocorrência</th>
-              <th class="text-center">Tamanho</th>
-              <th class="text-center">Previsão</th>
-              <th class="text-center">Ação</th>
-            </tr>
-            <tr>
-              <th class="text-center"></th>
-              <th class="text-center"></th>
-              <th class="text-center" style="width: 10%;">
-                <form action="" method="post">
-                  <?php if ($_SESSION['idCliente'] == null) { ?>
+            <?php if ($_SESSION['idCliente'] == NULL) { ?>
+              <tr>
+                <th class="text-center">Prioridade</th>
+                <th class="text-center">ID</th>
+                <th class="text-center">Cliente</th>
+                <th class="text-center">Solicitante</th>
+                <th class="text-center">Demanda</th>
+                <th class="text-center">Responsavel</th>
+                <th class="text-center">Abertura</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Ocorrência</th>
+                <th class="text-center">Tamanho</th>
+                <th class="text-center">Ação</th>
+              </tr>
+              <tr>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center" style="width: 10%;">
+                  <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
                       style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
@@ -437,7 +436,109 @@ if (isset($_SESSION['filtro_demanda'])) {
                         ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
                       <?php } ?>
                     </select>
-                  <?php } else { ?>
+                  </form>
+                </th>
+                <th class="text-center" style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php
+                      foreach ($usuarios as $usuario) {
+                        ?>
+                        <option <?php
+                        if ($usuario['idUsuario'] == $idSolicitante) {
+                          echo "selected";
+                        }
+                        ?>    value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </form>
+                </th>
+                <th class="text-center"></th>
+                <th class="text-center">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php
+                      foreach ($atendentes as $atendente) {
+                        ?>
+                        <option <?php
+                        if ($atendente['idUsuario'] == $idAtendente) {
+                          echo "selected";
+                        }
+                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </form>
+                </th>
+                <th class="text-center"></th>
+                <th class="text-center">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php foreach ($tiposstatus as $tipostatus) { ?>
+                        <option <?php
+                        if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                          echo "selected";
+                        }
+                        ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </form>
+                </th>
+                <th class="text-center" style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php
+                      foreach ($tipoocorrencias as $tipoocorrencia) {
+                        ?>
+                        <option <?php
+                        if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                          echo "selected";
+                        }
+                        ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </form>
+                </th>
+                <th class="text-center" style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="tamanho" id="FiltroTamanho"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <option value="P">P</option>
+                      <option value="M">M</option>
+                      <option value="G">G</option>
+                    </select>
+                  </form>
+                </th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+              </tr>
+
+            <?php } //******************visão do Cliente 
+            else { ?>
+              <tr>
+                <th class="text-center">Prioridade</th>
+                <th class="text-center">ID</th>
+                <th class="text-center">Cliente</th>
+                <th class="text-center">Solicitante</th>
+                <th class="text-center">Demanda</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Ocorrência</th>
+                <th class="text-center">Ação</th>
+              </tr>
+              <tr>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center" style="width: 10%;">
+                  <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
                       style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;" disabled>
                       <?php
@@ -450,92 +551,62 @@ if (isset($_SESSION['filtro_demanda'])) {
                         ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
                       <?php } ?>
                     </select>
-                  <?php } ?>
-                </form>
-              </th>
-              <th class="text-center" style="width: 10%;">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                    <?php
-                    foreach ($usuarios as $usuario) {
-                      ?>
-                      <option <?php
-                      if ($usuario['idUsuario'] == $idSolicitante) {
-                        echo "selected";
-                      }
-                      ?>              value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario'] ?></option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th class="text-center"></th>
-              <th class="text-center">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                    <?php
-                    foreach ($atendentes as $atendente) {
-                      ?>
-                      <option <?php
-                      if ($atendente['idUsuario'] == $idAtendente) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th class="text-center"></th>
-              <th class="text-center">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
-                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                    <?php foreach ($tiposstatus as $tipostatus) { ?>
-                      <option <?php
-                      if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th class="text-center" style="width: 10%;">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                    <?php
-                    foreach ($tipoocorrencias as $tipoocorrencia) {
-                      ?>
-                      <option <?php
-                      if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th class="text-center" style="width: 10%;">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="tamanho" id="FiltroTamanho"
-                    style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                    <option value="P">P</option>
-                    <option value="M">M</option>
-                    <option value="G">G</option>
-                  </select>
-                </form>
-              </th>
-              <th class="text-center"></th>
-              <th class="text-center"></th>
-            </tr>
+                  </form>
+                </th>
+                <th class="text-center" style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php
+                      foreach ($usuarios as $usuario) {
+                        ?>
+                        <option <?php
+                        if ($usuario['idUsuario'] == $idSolicitante) {
+                          echo "selected";
+                        }
+                        ?>              value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </form>
+                </th>
+                <th class="text-center"></th>
+                <th class="text-center">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php foreach ($tiposstatus as $tipostatus) { ?>
+                        <option <?php
+                        if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                          echo "selected";
+                        }
+                        ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </form>
+                </th>
+                <th class="text-center" style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php
+                      foreach ($tipoocorrencias as $tipoocorrencia) {
+                        ?>
+                        <option <?php
+                        if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                          echo "selected";
+                        }
+                        ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </form>
+                </th>
+                <th class="text-center"></th>
+              </tr>
+            <?php } ?>
           </thead>
 
           <tbody id='dados' class="fonteCorpo">
@@ -549,12 +620,102 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+    <?php if ($_SESSION['idCliente'] === NULL): ?>
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
 
-    function limparTrade() {
-      buscar(null, null, null, null, null, null, null, null);
-      window.location.reload();
-    }
+      function limparTrade() {
+        buscar(null, null, null, null, null, null, null, null);
+        window.location.reload();
+      }
+
+
+      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
+        $.ajax({
+          type: 'POST',
+          dataType: 'html',
+          url: '../database/demanda.php?operacao=filtrar',
+          beforeSend: function () {
+            $("#dados").html("Carregando...");
+          },
+          data: {
+            idCliente: idCliente,
+            idSolicitante: idSolicitante,
+            idAtendente: idAtendente,
+            idTipoStatus: idTipoStatus,
+            idTipoOcorrencia: idTipoOcorrencia,
+            statusDemanda: statusDemanda,
+            tituloDemanda: tituloDemanda,
+            tamanho: tamanho
+          },
+          success: function (msg) {
+            var json = JSON.parse(msg);
+            var linha = "";
+            for (var $i = 0; $i < json.length; $i++) {
+              var object = json[$i];
+              var dataAbertura = new Date(object.dataAbertura);
+              var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
+
+              linha += "<tr>";
+              linha += "<td>" + object.prioridade + "</td>";
+              linha += "<td>" + object.idDemanda + "</td>";
+              linha += "<td>" + object.nomeCliente + "</td>";
+              linha += "<td>" + object.nomeSolicitante + "</td>";
+              linha += "<td>" + object.tituloDemanda + "</td>";
+              linha += "<td>" + object.nomeAtendente + "</td>";
+              linha += "<td>" + dataFormatada + "</td>";
+              linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
+              linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
+              linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
+              linha += "<td><a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+              linha += "</tr>";
+            }
+
+            $("#dados").html(linha);
+          }
+        });
+      }
+
+      $("#FiltroTipoStatus").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      });
+
+      $("#FiltroClientes").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      });
+
+      $("#FiltroSolicitante").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      });
+
+      $("#FiltroOcorrencia").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      });
+
+      $("#FiltroUsuario").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      });
+
+      $("#FiltroStatusDemanda").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      });
+
+      $("#buscar").click(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      });
+
+      $("#FiltroTamanho").click(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      });
+
+      document.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+        }
+      });
+  <?php else: ?>
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+
+
     function limpar() {
       var idClienteOriginal = $("#FiltroClientes").val();
       buscar(idClienteOriginal, null, null, null, null, null, null, null);
@@ -562,9 +723,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     }
 
     function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
-
       $.ajax({
-
         type: 'POST',
         dataType: 'html',
         url: '../database/demanda.php?operacao=filtrar',
@@ -580,92 +739,81 @@ if (isset($_SESSION['filtro_demanda'])) {
           statusDemanda: statusDemanda,
           tituloDemanda: tituloDemanda,
           tamanho: tamanho
-
         },
-
         success: function (msg) {
           var json = JSON.parse(msg);
-
           var linha = "";
           for (var $i = 0; $i < json.length; $i++) {
             var object = json[$i];
-            var dataAbertura = new Date(object.dataAbertura);
-            var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
 
-            linha = linha + "<TR>";
-            linha = linha + "<TD>" + object.prioridade + "</TD>";
-            linha = linha + "<TD>" + object.idDemanda + "</TD>";
-            linha = linha + "<TD>" + object.nomeCliente + "</TD>";
-            linha = linha + "<TD>" + object.nomeSolicitante + "</TD>";
-            linha = linha + "<TD>" + object.tituloDemanda + "</TD>";
-            linha = linha + "<TD>" + object.nomeAtendente + "</TD>";
-            linha = linha + "<TD>" + dataFormatada + "</TD>";
-
-            linha = linha + "<TD class='" + object.nomeTipoStatus + "' data-status='Finalizado' >" + object.nomeTipoStatus + " </TD>";
-
-            linha = linha + "<TD>" + object.nomeTipoOcorrencia + "</TD>";
-            linha = linha + "<TD>" + object.tamanho + "</TD>";
-            linha = linha + "<TD>" + object.horasPrevisao + "</TD>";
-            linha = linha + "<TD>" + "<a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></i></a>" + "</TD>";
-
-            linha = linha + "</TR>";
+            linha += "<tr>";
+            linha += "<td>" + object.prioridade + "</td>";
+            linha += "<td>" + object.idDemanda + "</td>";
+            linha += "<td>" + object.nomeCliente + "</td>";
+            linha += "<td>" + object.nomeSolicitante + "</td>";
+            linha += "<td>" + object.tituloDemanda + "</td>";
+            linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
+            linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
+            linha += "<td><a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+            linha += "</tr>";
           }
 
-
           $("#dados").html(linha);
-
-
         }
       });
     }
 
-
     $("#FiltroTipoStatus").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
-    })
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+    });
 
     $("#FiltroClientes").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
-    })
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+    });
 
     $("#FiltroSolicitante").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
-    })
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+    });
 
     $("#FiltroOcorrencia").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
-    })
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+    });
 
     $("#FiltroUsuario").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
-    })
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+    });
 
     $("#FiltroStatusDemanda").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
-    })
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+    });
 
     $("#buscar").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
-    })
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+    });
 
     $("#FiltroTamanho").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
-    })
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+    });
 
     document.addEventListener("keypress", function (e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
       }
     });
+  <?php endif; ?>
 
-    $('.btnAbre').click(function () {
-      $('.menuFiltros').toggleClass('mostra');
-      $('.diviFrame').toggleClass('mostra');
-    });
+      $('.btnAbre').click(function () {
+        $('.menuFiltros').toggleClass('mostra');
+        $('.diviFrame').toggleClass('mostra');
+      });
+
+
 
 
     //**************exporta excel 
     function exportToExcel() {
+      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -673,12 +821,12 @@ if (isset($_SESSION['filtro_demanda'])) {
         data: {
           idCliente: $("#FiltroClientes").val(),
           idSolicitante: $("#FiltroSolicitante").val(),
-          idAtendente: $("#FiltroUsuario").val(),
+          idAtendente: idAtendenteValue,
           idTipoStatus: $("#FiltroTipoStatus").val(),
           idTipoOcorrencia: $("#FiltroOcorrencia").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
           tituloDemanda: $("#tituloDemanda").val(),
-          tamanho: $("#FiltroTamanho").val()
+          tamanho: tamanhoValue
         },
         success: function (json) {
           var excelContent =
@@ -726,6 +874,8 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     //**************exporta csv
     function exportToCSV() {
+      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -733,12 +883,12 @@ if (isset($_SESSION['filtro_demanda'])) {
         data: {
           idCliente: $("#FiltroClientes").val(),
           idSolicitante: $("#FiltroSolicitante").val(),
-          idAtendente: $("#FiltroUsuario").val(),
+          idAtendente: idAtendenteValue,
           idTipoStatus: $("#FiltroTipoStatus").val(),
           idTipoOcorrencia: $("#FiltroOcorrencia").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
           tituloDemanda: $("#tituloDemanda").val(),
-          tamanho: $("#FiltroTamanho").val()
+          tamanho: tamanhoValue
         },
         success: function (json) {
           var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
@@ -777,6 +927,8 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     //**************exporta PDF
     function exportToPDF() {
+      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -784,12 +936,12 @@ if (isset($_SESSION['filtro_demanda'])) {
         data: {
           idCliente: $("#FiltroClientes").val(),
           idSolicitante: $("#FiltroSolicitante").val(),
-          idAtendente: $("#FiltroUsuario").val(),
+          idAtendente: idAtendenteValue,
           idTipoStatus: $("#FiltroTipoStatus").val(),
           idTipoOcorrencia: $("#FiltroOcorrencia").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
           tituloDemanda: $("#tituloDemanda").val(),
-          tamanho: $("#FiltroTamanho").val()
+          tamanho: tamanhoValue
         },
         success: function (json) {
           var tableContent =

@@ -10,7 +10,6 @@
 // Helio 20022023 - integrado modificações para receber idTipoStatus no $_POST
 // gabriel 06022023 ajuste na tabela
 // helio 01022023 alterado para include_once
-// gabriel 01022023 15:07 - order by alterado, visual da tabela linha 119
 // helio 26012023 16:16
 
 

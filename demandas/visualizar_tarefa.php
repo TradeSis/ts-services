@@ -470,7 +470,7 @@ include_once '../head.php';
                     method: "POST",
                     data: form_data,
                     dataType: "JSON",
-                    success: alert(JSON.stringify(form_data))
+                    success: refreshPage('tarefas', idDemanda)
                 });
             });
 

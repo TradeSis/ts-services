@@ -10,7 +10,6 @@ $tarefas = buscaTarefas();
 <head>
     <link rel="stylesheet" type="text/css" href="./fullcalendar.min.css">
     <script type="text/javascript" src="./moment.min.js"></script>
-    <script type="text/javascript" src="./popper.min.js"></script>
     <script type="text/javascript" src="./fullcalendar.min.js"></script>
     <script type="text/javascript" src="./pt-br.min.js"></script>
     <style>
@@ -27,13 +26,6 @@ $tarefas = buscaTarefas();
             width: 0;
             background-color: transparent;
         }
-
-        .event-data {
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #f9f9f9;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 
@@ -47,7 +39,7 @@ $tarefas = buscaTarefas();
 
     <div class="modal fade" id="eventDetailsModal" tabindex="-1" role="dialog" aria-labelledby="eventDetailsModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="eventDetailsModalLabel">
@@ -58,28 +50,29 @@ $tarefas = buscaTarefas();
                     </button>
                 </div>
                 <div class="modal-body">
-                    <label>Título</label>
-                    <p id="eventTitle" class="event-data"></p>
+                    <label class="labelForm">Título</label>
+                    <input type="text" class="data select form-control" id="eventTitle" readonly>
                     <div class="row">
                         <div class="col-md">
                             <label>Data</label>
-                            <p id="eventDate" class="event-data"></p>
+                            <input type="text" class="data select form-control" id="eventDate" readonly>
                         </div>
                         <div class="col-md">
                             <label>Início</label>
-                            <p id="eventStart" class="event-data"></p>
+                            <input type="text" class="data select form-control" id="eventStart" readonly>
                         </div>
                         <div class="col-md">
                             <label>Fim</label>
-                            <p id="eventEnd" class="event-data"></p>
+                            <input type="text" class="data select form-control" id="eventEnd" readonly>
                         </div>
                     </div>
                     <hr>
-                    <a id="visualizarDemandaButton" class="btn btn-primary" style="float:right">Visualizar Demanda</a>
+                    <a id="visualizarDemandaButton" class="btn btn-primary" style="float:right">Visualizar</a>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -87,7 +80,7 @@ $tarefas = buscaTarefas();
                 header: {
                     left: "prev,next today",
                     center: "title",
-                    right: "month,agendaWeek,agendaDay"
+                    right: "month,agendaWeek,agendaDay,schedule"
                 },
                 locale: 'pt-br',
                 defaultView: "month",
@@ -96,31 +89,59 @@ $tarefas = buscaTarefas();
                 eventLimit: false,
                 selectable: true,
                 selectHelper: false,
+                views: {
+                    month: {
+                        timeFormat: 'HH:mm',
+                    },
+                    agendaWeek: {
+                        minTime: "06:00:00"
+                    },
+                    agendaDay: {
+                        minTime: "06:00:00"
+                    },
+                    schedule: {
+                        type: 'list',
+                        duration: { months: 1 },
+                        buttonText: 'Programação'
+                    }
+                },
                 events: [
-                    <?php foreach ($tarefas as $tarefa) { ?>
+                    <?php
+                    $colors = array('#FF6B6B', '#77DD77', '#6CA6CD', '#FFD700', '#FF69B4', '#00CED1');
+                    $colorIndex = 0;
+                    foreach ($tarefas as $tarefa) {
+                        $color = $colors[$colorIndex % count($colors)];
+                        $colorIndex++;
+                        ?>
                         {
                         _id: '<?php echo $tarefa['idTarefa']; ?>',
                         title: '<?php echo $tarefa['tituloDemanda']; ?>',
                         start: '<?php echo $tarefa['Previsto'] . ' ' . $tarefa['horaInicioPrevisto']; ?>',
                         end: '<?php echo $tarefa['Previsto'] . ' ' . $tarefa['horaFinalPrevisto']; ?>',
-                        idDemanda: '<?php echo $tarefa['idDemanda']; ?>'
+                        idDemanda: '<?php echo $tarefa['idDemanda']; ?>',
+                        color: '<?php echo $color; ?>'
                     },
                     <?php } ?>
                 ],
+                eventRender: function (event, element) {
+                    element.css('font-weight', 'bold'); // Make event text bold
+                },
                 eventClick: function (calEvent, jsEvent, view) {
                     $("#eventID").text("Tarefa " + calEvent._id);
-                    $("#eventTitle").text(calEvent.title);
-                    $("#eventDate").text(moment(calEvent.start).format('DD/MM/YYYY'));
-                    $("#eventStart").text(moment(calEvent.start).format('HH:mm'));
-                    $("#eventEnd").text(moment(calEvent.end).format('HH:mm'));
+                    $("#eventTitle").val(calEvent.title);
+                    $("#eventDate").val(moment(calEvent.start).format('DD/MM/YYYY'));
+                    $("#eventStart").val(moment(calEvent.start).format('HH:mm'));
+                    $("#eventEnd").val(moment(calEvent.end).format('HH:mm'));
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + calEvent.idDemanda;
                     $("#visualizarDemandaButton").attr("href", "javascript:void(0);");
                     $("#visualizarDemandaButton").attr("onclick", "loadPage('" + visualizarDemandaUrl + "')");
                     $("#eventDetailsModal").modal();
                 }
             });
+            $('#scheduleButton').on('click', function () {
+                $('#calendar').fullCalendar('changeView', 'schedule');
+            });
         });
-
         function loadPage(url) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", url, false);

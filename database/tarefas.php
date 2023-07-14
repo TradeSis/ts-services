@@ -66,48 +66,86 @@ if (isset($_GET['operacao'])) {
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
-            'dataExecucaoInicio' => $_POST['dataExecucaoInicio'],
-            'dataExecucaoFinal' => $_POST['dataExecucaoFinal'],
+            'dataCobrado' => $_POST['dataCobrado'],
+            'horaInicioCobrado' => $_POST['horaInicioCobrado'],
+            'horaFinalCobrado' => $_POST['horaFinalCobrado'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
-    }
 
-    if ($operacao == "start") {
-        $apiEntrada = array(
-            'tituloTarefa' => $_POST['tituloTarefa'],
-            'idCliente' => $_POST['idCliente'],
-            'idDemanda' => $_POST['idDemanda'],
-            'idAtendente' => $_POST['idAtendente'],
-            'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
-        );
-        $tarefas = chamaAPI(null, '/services/tarefas/start', json_encode($apiEntrada), 'PUT');
+        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
     }
 
     if ($operacao == "alterar") {
         $apiEntrada = array(
             'idTarefa' => $_POST['idTarefa'],
+            'idDemanda' => $_POST['idDemanda'],
+            'idAtendente' => $_POST['idAtendente'],
             'tituloTarefa' => $_POST['tituloTarefa'],
-            'dataExecucaoInicio' => $_POST['dataExecucaoInicio'],
-            'dataExecucaoFinal' => $_POST['dataExecucaoFinal']
+            'dataCobrado' => $_POST['dataCobrado'],
+            'horaInicioCobrado' => $_POST['horaInicioCobrado'],
+            'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+            'horaFinalCobrado' => $_POST['horaFinalCobrado']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'POST');
+        
+        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+    }
+
+    if ($operacao == "start") {
+        $apiEntrada = array(
+            'idTarefa' => $_POST['idTarefa'],
+            'idDemanda' => $_POST['idDemanda'],
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_FAZENDO
+        );
+        $tarefas = chamaAPI(null, '/services/tarefas/start', json_encode($apiEntrada), 'POST');
     }
 
     if ($operacao == "stop") {
         $apiEntrada = array(
             'idTarefa' => $_POST['idTarefa'],
-            'dataExecucaoInicio' => $_POST['dataExecucaoInicio']
+            'idDemanda' => $_POST['idDemanda'],
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_PAUSADO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
     }
 
-    if ($operacao == "startAlterar") {
+    if ($operacao == "previsao") {
+        $apiEntrada = array(
+            'idCliente' => $_POST['idCliente'],
+            'idDemanda' => $_POST['idDemanda'],
+            'idAtendente' => $_POST['idAtendente'],
+            'tituloTarefa' => $_POST['tituloTarefa'],
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_AGENDADO
+        );
+        $tarefas = chamaAPI(null, '/services/previsao', json_encode($apiEntrada), 'PUT');
+
+        header('Location: ../demandas/visualizar.php?id=previsao&&idDemanda=' . $apiEntrada['idDemanda']);
+    }
+
+    if ($operacao == "alterarPrevisao") {
         $apiEntrada = array(
             'idTarefa' => $_POST['idTarefa'],
+            'idDemanda' => $_POST['idDemanda'],
+            'tituloTarefa' => $_POST['tituloTarefa'],
+            'idAtendente' => $_POST['idAtendente'],
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_AGENDADO
         );
-        $tarefas = chamaAPI(null, '/services/tarefas/startAlterar', json_encode($apiEntrada), 'POST');
+        $tarefas = chamaAPI(null, '/services/previsao', json_encode($apiEntrada), 'POST');
+
+        header('Location: ../demandas/visualizar.php?id=previsao&&idDemanda=' . $apiEntrada['idDemanda']);
     }
+
 
 /*
     include "../demandas/tarefas_ok.php";

@@ -51,7 +51,7 @@ if (isset($_GET['operacao'])) {
 
 	}
 
-	header('Location: ../cadastros/contratoStatus.php');
+	header('Location: ../configuracao/contratoStatus.php');
 	
 }
 

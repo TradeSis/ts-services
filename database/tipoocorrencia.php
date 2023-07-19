@@ -43,9 +43,9 @@ if (isset($_GET['operacao'])) {
 	}
 
 /*
-	include "../cadastros/tipoocorrencia_ok.php";
+	include "../configuracao/tipoocorrencia_ok.php";
 */
-	header('Location: ../cadastros/tipoocorrencia.php');	
+	header('Location: ../configuracao/tipoocorrencia.php');	
 	
 }
 

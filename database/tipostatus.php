@@ -48,8 +48,8 @@ if (isset($_GET['operacao'])) {
 	}
 
 /*
-	include "../cadastros/tipostatus_ok.php";
+	include "../configuracao/tipostatus_ok.php";
 */
-	header('Location: ../cadastros/tipostatus.php');	
+	header('Location: ../configuracao/tipostatus.php');	
 	
 }

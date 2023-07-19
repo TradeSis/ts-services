@@ -5,7 +5,7 @@
 //Lucas 13032023 - criado versão 2 do menu.
 
 include_once 'head.php';
-include_once 'database/montaMenu.php';
+include_once __DIR__ . "/../sistema/database/montaMenu.php";
 
 $montamenu = buscaMontaMenu('Services',$_SESSION['idUsuario']);
 $menus = $montamenu['menu'];
@@ -104,11 +104,11 @@ if (!empty($montamenu['menuHeader'])){
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="<?php echo URLROOT ?>/sistema/usuario/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>">
+                    <a class="dropdown-item" href="<?php echo URLROOT ?>/sistema/configuracao/usuario_alterar.php?idUsuario=<?php echo $_SESSION['idUsuario'] ?>">
                         <i class="bi bi-person-circle"></i>&#32;
                         Perfil
                     </a>
-                    <a class="dropdown-item" href="<?php echo URLROOT ?>/painel/">
+                    <a class="dropdown-item" href="<?php echo URLROOT ?>/sistema/">
                         <i class="bi bi-display"></i>&#32;
                         Painel
                     </a>
@@ -183,7 +183,7 @@ if (!empty($montamenu['menuHeader'])){
                 <div class="modal-body">Selecione "Logout" abaixo se você deseja encerrar sua sessão.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary logout" href="<?php echo URLROOT ?>/painel/logout.php">Logout</a>
+                    <a class="btn btn-primary logout" href="<?php echo URLROOT ?>/sistema/logout.php">Logout</a>
                 </div>
             </div>
         </div>

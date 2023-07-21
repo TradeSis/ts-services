@@ -1,7 +1,9 @@
 <?php
+/*
 include_once '../head.php';
 include_once '../database/tarefas.php';
 $tarefas = buscaTarefas();
+*/
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +36,7 @@ $tarefas = buscaTarefas();
         <h3 class="text-center">Agenda - Tradesis</h3>
     </div>
     </div>
-    <hr>
+    <!-- <hr> -->
     <div id="calendar"></div>
 
     <div class="modal fade" id="eventDetailsModal" tabindex="-1" role="dialog" aria-labelledby="eventDetailsModalLabel"

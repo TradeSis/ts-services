@@ -1,10 +1,10 @@
 <?php
 // helio 01022023 altereado para include_once
 // helio 26012023 16:16
-include_once('../head.php');
+/* include_once('../head.php');
 include_once '../database/tipostatus.php';
 
-$tiposstatus = buscaTipoStatus();
+$tiposstatus = buscaTipoStatus(); */
 ?>
 
 <body class="bg-transparent" >

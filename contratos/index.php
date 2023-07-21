@@ -21,6 +21,7 @@
 
 
 //
+/*
 include_once '../head.php';
 include_once '../database/contratos.php';
 include_once '../database/contratoStatus.php';
@@ -39,7 +40,7 @@ if (isset($_SESSION['filtro_contrato'])) {
     $idContratoStatus = $filtroEntrada['idContratoStatus'];
    
 }
-
+*/
 ?>
 
 <style>

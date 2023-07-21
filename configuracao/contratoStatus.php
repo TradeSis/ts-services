@@ -1,10 +1,10 @@
 <?php
 // helio 26012023 16:16
-
+/* 
 include_once '../head.php';
 include_once '../database/contratoStatus.php';
 
-$contratoStatus = buscaContratoStatus();
+$contratoStatus = buscaContratoStatus(); */
 
 
 ?>
@@ -91,7 +91,7 @@ $contratoStatus = buscaContratoStatus();
 
             </table>
         </div>
-        
+    </div>  
    
 
 

@@ -1,9 +1,8 @@
 <?php
-/*
-include_once '../head.php';
-include_once '../database/tarefas.php';
+
+include_once(__DIR__ . '/../database/tarefas.php');
 $tarefas = buscaTarefas();
-*/
+
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +34,7 @@ $tarefas = buscaTarefas();
     <div class="container mt-1">
         <h3 class="text-center">Agenda - Tradesis</h3>
     </div>
-    </div>
+   
     <!-- <hr> -->
     <div id="calendar"></div>
 
@@ -74,7 +73,6 @@ $tarefas = buscaTarefas();
             </div>
         </div>
     </div>
-
 
     <script type="text/javascript">
         $(document).ready(function () {

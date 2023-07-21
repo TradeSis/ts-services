@@ -1,10 +1,9 @@
 <?php
 // helio 01022023 altereado para include_once
 // helio 26012023 16:16
-/* include_once('../head.php');
-include_once '../database/tipoocorrencia.php';
+include_once(__DIR__ . '/../database/tipoocorrencia.php');
 
-$ocorrencias = buscaTipoOcorrencia(); */
+$ocorrencias = buscaTipoOcorrencia();
 
 ?>
 

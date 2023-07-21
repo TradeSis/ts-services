@@ -12,14 +12,16 @@
 // helio 01022023 alterado para include_once
 // helio 26012023 16:16
 
-/*
 
-include_once '../head.php';
-include_once '../database/demanda.php';
+
+include_once(__DIR__ . '/../database/demanda.php');
+//include_once '../database/demanda.php';
 include_once(ROOT.'/sistema/database/clientes.php');
 include_once(ROOT.'/sistema/database/usuario.php');
-include_once '../database/tipostatus.php';
-include_once '../database/tipoocorrencia.php';
+include_once(__DIR__ . '/../database/tipostatus.php');
+include_once(__DIR__ . '/../database/tipoocorrencia.php');
+//include_once '../database/tipostatus.php';
+//include_once '../database/tipoocorrencia.php';
 
 
 
@@ -60,7 +62,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   $statusDemanda = $filtroEntrada['statusDemanda'];
   $tamanho = $filtroEntrada['tamanho'];
 }
-*/
+
 ?>
 <style>
   [class="<?php echo TIPOSTATUS_FILA ?>"] {

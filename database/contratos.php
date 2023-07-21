@@ -18,7 +18,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-include_once '../conexao.php';
+include_once __DIR__ . "/../conexao.php";
 
 function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente = null)
 {

@@ -28,10 +28,10 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 <div class="container-fluid mt-1">
     <div class="row">
         <div class="col-md-12 d-flex justify-content-center">
-            <ul class="nav nav-pills" id="myTab" role="tablist">
+            <ul class="nav nav-pills" id="myTabs" role="tablist">
                 <?php foreach ($menusAtalho as $menuAtalho) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" id="<?php echo $menuAtalho['progrNome'] ?>-tab" data-toggle="tab" href="#<?php echo $menuAtalho['progrNome'] ?>" role="tab" aria-controls="<?php echo $menuAtalho['progrNome'] ?>" aria-selected="true" style="color:black"><?php echo $menuAtalho['progrNome'] ?></a>
+                        <a class="nav-link" id="<?php echo $menuAtalho['progrNome'] ?>-tab" data-toggle="tab" href="#<?php echo $menuAtalho['progrNome'] ?>" data-url="<?php echo $menuAtalho['progrLink'] ?>" role="tab" aria-controls="<?php echo $menuAtalho['progrNome'] ?>" aria-selected="true" style="color:black"><?php echo $menuAtalho['progrNome'] ?></a>
                     </li>
                 <?php } ?>
 
@@ -48,7 +48,7 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
                 <?php foreach ($menusAtalho as $menuAtalho) { ?>
 
                     <div class="tab-pane fade" id="<?php echo $menuAtalho['progrNome'] ?>" role="tabpanel" aria-labelledby="<?php echo $menuAtalho['progrNome'] ?>-tab">
-                        <?php include $menuAtalho['progrLink'] ?>
+                        <?php //include $menuAtalho['progrLink'] ?>
                     </div>
                 <?php } ?>
 
@@ -65,3 +65,34 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 
 
 </div>
+
+<script>
+    
+$('#myTabs a').click(function (e) {
+    
+	e.preventDefault();
+  
+	var url = $(this).attr("data-url");
+    
+
+  	var href = this.hash;
+    
+
+  	var pane = $(this);
+	
+	// ajax load from data-url
+	$(href).load(url,function(result){      
+	    pane.tab('show');
+	});
+});
+
+// load first tab content
+$('#home').load($('.active a').attr("data-url"),function(result){
+  $('.active a').tab('show');
+});
+
+ </script>
+
+</body>
+
+</html>

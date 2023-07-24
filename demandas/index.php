@@ -13,7 +13,7 @@
 // helio 26012023 16:16
 
 
-
+include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/demanda.php');
 //include_once '../database/demanda.php';
 include_once(ROOT.'/sistema/database/clientes.php');

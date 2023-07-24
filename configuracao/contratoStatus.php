@@ -1,5 +1,6 @@
 <?php
 // helio 26012023 16:16
+include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');
 
 $contratoStatus = buscaContratoStatus();

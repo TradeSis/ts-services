@@ -37,7 +37,7 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 
                 <?php if ($configuracao == 1) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" id="configuracao-tab" data-toggle="tab" href="#configuracao" role="tab" aria-controls="configuracao" aria-selected="true" style="color:black" data-toggle="tooltip" data-placement="top" title="Configurações"><i class="bi bi-gear" style="font-size: 18px;"></i></a>
+                        <a class="nav-link" id="configuracao-tab" data-toggle="tab" href="#configuracao" data-url="configuracao/index.php" role="tab" aria-controls="configuracao" aria-selected="true" style="color:black" data-toggle="tooltip" data-placement="top" title="Configurações"><i class="bi bi-gear" style="font-size: 18px;"></i></a>
                     </li>
                 <?php } ?>
             </ul>
@@ -48,13 +48,13 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
                 <?php foreach ($menusAtalho as $menuAtalho) { ?>
 
                     <div class="tab-pane fade" id="<?php echo $menuAtalho['progrNome'] ?>" role="tabpanel" aria-labelledby="<?php echo $menuAtalho['progrNome'] ?>-tab">
-                        <?php //include $menuAtalho['progrLink'] ?>
+                        <?php include $menuAtalho['progrLink'] ?>
                     </div>
                 <?php } ?>
 
                 <?php if ($configuracao == 1) { ?>
                     <div class="tab-pane fade" id="configuracao" role="tabpanel" aria-labelledby="configuracao-tab">
-                        <?php include 'configuracao.php' ?>
+                        <?php  include 'configuracao/index.php' ?>
                     </div>
                 <?php } ?>
             </div>
@@ -66,32 +66,7 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 
 </div>
 
-<script>
-    
-$('#myTabs a').click(function (e) {
-    
-	e.preventDefault();
-  
-	var url = $(this).attr("data-url");
-    
 
-  	var href = this.hash;
-    
-
-  	var pane = $(this);
-	
-	// ajax load from data-url
-	$(href).load(url,function(result){      
-	    pane.tab('show');
-	});
-});
-
-// load first tab content
-$('#home').load($('.active a').attr("data-url"),function(result){
-  $('.active a').tab('show');
-});
-
- </script>
 
 </body>
 

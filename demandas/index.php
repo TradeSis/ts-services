@@ -633,10 +633,11 @@ echo "selected";
 
 
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
+        
         $.ajax({
           type: 'POST',
           dataType: 'html',
-          url: '../database/demanda.php?operacao=filtrar',
+          url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
           beforeSend: function () {
             $("#dados").html("Carregando...");
           },
@@ -651,6 +652,7 @@ echo "selected";
             tamanho: tamanho
           },
           success: function (msg) {
+            
             var json = JSON.parse(msg);
             var linha = "";
             for (var $i = 0; $i < json.length; $i++) {
@@ -726,10 +728,11 @@ echo "selected";
     }
 
     function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
+        alert("buscar");
       $.ajax({
         type: 'POST',
         dataType: 'html',
-        url: '../database/demanda.php?operacao=filtrar',
+        url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
         beforeSend: function () {
           $("#dados").html("Carregando...");
         },
@@ -744,6 +747,7 @@ echo "selected";
           tamanho: tamanho
         },
         success: function (msg) {
+          alert("buscar="+msg);
           var json = JSON.parse(msg);
           var linha = "";
           for (var $i = 0; $i < json.length; $i++) {

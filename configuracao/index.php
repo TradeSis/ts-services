@@ -1,3 +1,8 @@
+
+<?php
+include_once(__DIR__ . '/../head.php');
+?>
+
 <style>
   .temp{
     color:black
@@ -25,13 +30,13 @@
     <div class="col-md-10">
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="contratoStatus" role="tabpanel" aria-labelledby="contratoStatus-tab">
-          <?php include 'configuracao/contratoStatus.php' ?>
+          <?php include 'contratoStatus.php' ?>
         </div>
         <div class="tab-pane fade" id="tipoocorrencia" role="tabpanel" aria-labelledby="tipoocorrencia-tab">
-        <?php include 'configuracao/tipoocorrencia.php' ?>
+        <?php include 'tipoocorrencia.php' ?>
         </div>
         <div class="tab-pane fade" id="tipostatus" role="tabpanel" aria-labelledby="tipostatus-tab">
-        <?php include 'configuracao/tipostatus.php' ?>
+        <?php include 'tipostatus.php' ?>
         </div>
        
       </div>

@@ -429,7 +429,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             $.ajax({
                 type: 'POST', 
                 dataType: 'html', 
-                url: '../database/contratos.php?operacao=filtrar', 
+                url: '<?php echo URLROOT ?>/services/database/contratos.php?operacao=filtrar', 
                 beforeSend: function() {
                     $("#dados").html("Carregando...");
                 },
@@ -441,7 +441,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 
 
                 success: function(msg) {
-                    //alert("segundo alert: " + msg);
+                    alert("segundo alert: " + msg);
                     var json = JSON.parse(msg);
                     //alert("terceiro alert: " + JSON.stringify(json));
                     /* alert(JSON.stringify(msg)); */

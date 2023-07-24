@@ -441,7 +441,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 
 
                 success: function(msg) {
-                    alert("segundo alert: " + msg);
+                    //alert("segundo alert: " + msg);
                     var json = JSON.parse(msg);
                     //alert("terceiro alert: " + JSON.stringify(json));
                     /* alert(JSON.stringify(msg)); */

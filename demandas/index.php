@@ -728,7 +728,7 @@ echo "selected";
     }
 
     function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
-        alert("buscar");
+        
       $.ajax({
         type: 'POST',
         dataType: 'html',
@@ -747,7 +747,7 @@ echo "selected";
           tamanho: tamanho
         },
         success: function (msg) {
-          alert("buscar="+msg);
+         
           var json = JSON.parse(msg);
           var linha = "";
           for (var $i = 0; $i < json.length; $i++) {

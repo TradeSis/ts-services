@@ -1,50 +1,59 @@
-
 <?php
 include_once(__DIR__ . '/../head.php');
 ?>
 
 <style>
-  .temp{
-    color:black
+  .temp {
+    color: black
   }
 </style>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-2 mb-3">
       <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+        <?php
+        $stab = '';
+        if (isset($_GET['stab'])) {
+          $stab = $_GET['stab'];
+        }
+        echo "<HR>stab=".$stab;
+        ?>
+        <li class="nav-item ">
+          <a  class="nav-link <?php if ($stab == "contratoStatus") { echo " active "; } ?>" 
+              href="?tab=configuracao&stab=contratoStatus" role="tab"
+              style="color:black">Contrato Status</a>
+        </li>
+        <li class="nav-item ">
+          <a  class="nav-link <?php if ($stab == "tipoocorrencia") { echo " active "; } ?>" 
+              href="?tab=configuracao&stab=tipoocorrencia" role="tab"
+              style="color:black">Tipo Ocorrencia</a>
+        </li>
+        <li class="nav-item ">
+          <a  class="nav-link <?php if ($stab == "tipostatus") { echo " active "; } ?>" 
+              href="?tab=configuracao&stab=tipostatus" role="tab"
+              style="color:black">Tipo Status</a>
+        </li>
 
-        <li class="nav-item">
-          <a class="nav-link active temp" id="contratoStatus-tab" data-toggle="tab" href="#contratoStatus" role="tab" aria-controls="contratoStatus" aria-selected="true">contratoStatus</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link temp" id="tipoocorrencia-tab" data-toggle="tab" href="#tipoocorrencia" role="tab" aria-controls="tipoocorrencia" aria-selected="true">tipoocorrencia</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link temp" id="tipostatus-tab" data-toggle="tab" href="#tipostatus" role="tab" aria-controls="tipostatus" aria-selected="false">tipostatus</a>
-        </li>
-        
       </ul>
     </div>
-    <!-- /.col-md-4 -->
-    <div class="col-md-10">
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="contratoStatus" role="tabpanel" aria-labelledby="contratoStatus-tab">
-          <?php include 'contratoStatus.php' ?>
-        </div>
-        <div class="tab-pane fade" id="tipoocorrencia" role="tabpanel" aria-labelledby="tipoocorrencia-tab">
-        <?php include 'tipoocorrencia.php' ?>
-        </div>
-        <div class="tab-pane fade" id="tipostatus" role="tabpanel" aria-labelledby="tipostatus-tab">
-        <?php include 'tipostatus.php' ?>
-        </div>
-       
-      </div>
-    </div>
-    <!-- /.col-md-8 -->
+
   </div>
 
 
 
 </div>
 <!-- /.container -->
+
+<?php
+    $ssrc="";
+
+    if ($stab=="contratoStatus") {$ssrc="contratoStatus.php";}
+    if ($stab=="tipoocorrencia") {$ssrc="tipoocorrencia.php";}
+    if ($stab=="tipostatus") {$ssrc="tipostatus.php";}
+    
+if ($ssrc!=="") {
+    echo $ssrc;
+    include ($ssrc);
+}
+
+?>

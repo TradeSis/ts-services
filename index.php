@@ -17,7 +17,7 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 ?>
 
 <style>
-    .nav-link.active.show {
+    .nav-link.active {
         border-bottom: 3px solid #2E59D9;
         border-radius: 3px 3px 0 0;
         color: #1B4D60;
@@ -28,45 +28,87 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 <div class="container-fluid mt-1">
     <div class="row">
         <div class="col-md-12 d-flex justify-content-center">
-            <ul class="nav nav-pills" id="myTabs" role="tablist">
-                <?php foreach ($menusAtalho as $menuAtalho) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" id="<?php echo $menuAtalho['progrNome'] ?>-tab" data-toggle="tab" href="#<?php echo $menuAtalho['progrNome'] ?>" data-url="<?php echo $menuAtalho['progrLink'] ?>" role="tab" aria-controls="<?php echo $menuAtalho['progrNome'] ?>" aria-selected="true" style="color:black"><?php echo $menuAtalho['progrNome'] ?></a>
-                    </li>
-                <?php } ?>
+            <ul class="nav a" id="myTabs">
 
-                <?php if ($configuracao == 1) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" id="configuracao-tab" data-toggle="tab" href="#configuracao" data-url="configuracao/index.php" role="tab" aria-controls="configuracao" aria-selected="true" style="color:black" data-toggle="tooltip" data-placement="top" title="Configurações"><i class="bi bi-gear" style="font-size: 18px;"></i></a>
-                    </li>
-                <?php } ?>
+
+                <?php
+                $tab = '';
+
+                if (isset($_GET['tab'])) {$tab = $_GET['tab'];}
+
+                //$tab=$_REQUEST['tab'];
+                ?>    
+                <li class="nav-item ">
+                    <a class="nav-link <?php if ($tab=="demandas") {echo " active ";} ?>" 
+                        href="?tab=demandas" 
+                        role="tab"                        
+                        style="color:black">Demandas</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link <?php if ($tab=="contratos") {echo " active ";} ?>" 
+                        href="?tab=contratos" 
+                        role="tab"                        
+                        style="color:black">Contratos</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link <?php if ($tab=="tarefas") {echo " active ";} ?>" 
+                        href="?tab=tarefas" 
+                        role="tab"                        
+                        style="color:black">Tarefas</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link <?php if ($tab=="agenda") {echo " active ";} ?>" 
+                        href="?tab=agenda" 
+                        role="tab"                        
+                        style="color:black">Agenda</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link <?php if ($tab=="configuracao") {echo " active ";} ?>" 
+                        href="?tab=configuracao" 
+                        role="tab"                        
+                        style="color:black">Configuracao</a>
+                </li>
+
+
+                           
             </ul>
-        </div>
 
-        <div class="col-md-12 mt-3">
-            <div class="tab-content" id="myTabContent">
-                <?php foreach ($menusAtalho as $menuAtalho) { ?>
+            <!-- assuming you are putting the content of the page here -->
 
-                    <div class="tab-pane fade" id="<?php echo $menuAtalho['progrNome'] ?>" role="tabpanel" aria-labelledby="<?php echo $menuAtalho['progrNome'] ?>-tab">
-                        <?php include $menuAtalho['progrLink'] ?>
-                    </div>
-                <?php } ?>
 
-                <?php if ($configuracao == 1) { ?>
-                    <div class="tab-pane fade" id="configuracao" role="tabpanel" aria-labelledby="configuracao-tab">
-                        <?php  include 'configuracao/index.php' ?>
-                    </div>
-                <?php } ?>
-            </div>
+
+
         </div>
 
     </div>
 
-
-
 </div>
 
+<?php
+    $src="";
 
+    if ($tab=="demandas") {$src="demandas/";}
+    if ($tab=="contratos") {$src="contratos/";}
+    if ($tab=="tarefas") {$src="demandas/tarefas.php";}
+    if ($tab=="agenda") {$src="demandas/agenda.php";}
+    if ($tab=="configuracao") {
+            $src="configuracao/";
+            if (isset($_GET['stab'])) {
+                $src = $src . "?stab=".$_GET['stab'];
+            }
+
+            
+    }
+    
+if ($src!=="") {
+    echo URLROOT ."/services/". $src;
+?>
+    <div class="" style="overflow:hidden;">
+        <iframe class="iFrame container-fluid " id="iFrameTab" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
+    </div>
+<?php
+}
+?>
 
 </body>
 

@@ -38,7 +38,7 @@ $tiposstatus = buscaTipoStatus();
                     <tr>
                         <td class="text-center"><?php echo $tipostatus['nomeTipoStatus'] ?></td>
                         <td class="text-center">
-                            <a class="btn btn-primary btn-sm" href="configuracao/tipostatus_alterar.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button">Editar</a>
+                            <a class="btn btn-primary btn-sm" href="tipostatus_alterar.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button">Editar</a>
                             <a class="btn btn-danger btn-sm" href="tipostatus_excluir.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button">Excluir</a>
                         </td>
                     </tr>

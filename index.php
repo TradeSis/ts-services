@@ -111,7 +111,7 @@ $nivelUsuario   =   4;
 if ($src!=="") {
     //echo URLROOT ."/services/". $src;
 ?>
-    <div class="diviFrame" style="overflow:hidden;">
+    <div class="diviFrame" style="overflow:hidden; height: 85vh">
         <iframe class="iFrame container-fluid " id="iFrameTab" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
     </div>
 <?php

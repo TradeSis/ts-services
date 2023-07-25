@@ -66,7 +66,7 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
                     <a class="nav-link <?php if ($tab=="configuracao") {echo " active ";} ?>" 
                         href="?tab=configuracao" 
                         role="tab"                        
-                        style="color:black">Configuracao</a>
+                        style="color:black">Configurações</a>
                 </li>
 
 

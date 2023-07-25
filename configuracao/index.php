@@ -16,7 +16,7 @@ include_once(__DIR__ . '/../head.php');
         if (isset($_GET['stab'])) {
           $stab = $_GET['stab'];
         }
-        echo "<HR>stab=" . $stab;
+        //echo "<HR>stab=" . $stab;
         ?>
         <li class="nav-item ">
           <a class="nav-link <?php if ($stab == "contratoStatus") {
@@ -54,7 +54,7 @@ include_once(__DIR__ . '/../head.php');
           }
 
           if ($ssrc !== "") {
-            echo $ssrc;
+            //echo $ssrc;
             include($ssrc);
           }
 

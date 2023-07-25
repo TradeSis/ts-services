@@ -50,8 +50,7 @@ if (isset($_GET['operacao'])) {
 
 	}
 
-	header('Location: ../configuracao/contratoStatus.php');
-	
+	header('Location: ../configuracao?stab=contratoStatus');
 }
 
 

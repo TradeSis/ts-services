@@ -12,10 +12,10 @@ if (!empty($montamenu['menuAtalho'])) {
 if (!empty($montamenu['menuHeader'])) {
     $menuHeader = $montamenu['menuHeader'][0];
 }
-//echo json_encode($menusAtalho);
-$configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 
-$nivelUsuario   =   3;
+$configuracao = 1; 
+
+$nivelUsuario   =   4;
 
 
 
@@ -51,40 +51,39 @@ $nivelUsuario   =   3;
                         role="tab"                        
                         style="color:black">Dashboard</a>
                 </li>
-            <?php } ?>                
-
+            <?php } if ($nivelUsuario>=3) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="demandas") {echo " active ";} ?>" 
                         href="?tab=demandas" 
                         role="tab"                        
                         style="color:black">Demandas</a>
                 </li>
+            <?php } if ($nivelUsuario>=3) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="contratos") {echo " active ";} ?>" 
                         href="?tab=contratos" 
                         role="tab"                        
                         style="color:black">Contratos</a>
                 </li>
+            <?php } if ($nivelUsuario>=3) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="agenda") {echo " active ";} ?>" 
                         href="?tab=agenda" 
                         role="tab"                        
                         style="color:black">Agenda</a>
                 </li>
+            <?php } if ($nivelUsuario>=4) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="configuracao") {echo " active ";} ?>" 
                         href="?tab=configuracao" 
                         role="tab"                        
-                        style="color:black">Configurações</a>
+                        data-toggle="tooltip" data-placement="top" title="Configurações"                   
+                        style="color:black"><i class="bi bi-gear" style="font-size: 18px;"></i></a>
                 </li>
-
+            <?php } ?>
 
                            
             </ul>
-
-            <!-- assuming you are putting the content of the page here -->
-
-
 
 
         </div>
@@ -110,7 +109,7 @@ $nivelUsuario   =   3;
     }
     
 if ($src!=="") {
-    echo URLROOT ."/services/". $src;
+    //echo URLROOT ."/services/". $src;
 ?>
     <div class="diviFrame" style="overflow:hidden;">
         <iframe class="iFrame container-fluid " id="iFrameTab" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>

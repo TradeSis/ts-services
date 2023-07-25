@@ -6,7 +6,7 @@ include_once '../database/tipoocorrencia.php';
 
 $idTipoOcorrencia = $_GET['idTipoOcorrencia'];
 
-$ocorrencias = buscaTipoOcorrencia($idTipoOcorrencia);
+$ocorrencias = buscaTipoOcorrencia(null, $idTipoOcorrencia);
 
 ?>
 

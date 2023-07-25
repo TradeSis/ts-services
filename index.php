@@ -14,6 +14,11 @@ if (!empty($montamenu['menuHeader'])) {
 }
 //echo json_encode($menusAtalho);
 $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
+
+$nivelUsuario   =   3;
+
+
+
 ?>
 
 <style>
@@ -32,12 +37,22 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 
 
                 <?php
-                $tab = '';
+                    $tab = '';
 
-                if (isset($_GET['tab'])) {$tab = $_GET['tab'];}
-
-                //$tab=$_REQUEST['tab'];
+                    if (isset($_GET['tab'])) {$tab = $_GET['tab'];}
+               
                 ?>    
+
+
+            <?php if ($nivelUsuario>=3) { ?>
+                <li class="nav-item ">
+                    <a class="nav-link <?php if ($tab=="dashboard") {echo " active ";} ?>" 
+                        href="?tab=dashboard" 
+                        role="tab"                        
+                        style="color:black">Dashboard</a>
+                </li>
+            <?php } ?>                
+
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="demandas") {echo " active ";} ?>" 
                         href="?tab=demandas" 
@@ -49,12 +64,6 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
                         href="?tab=contratos" 
                         role="tab"                        
                         style="color:black">Contratos</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link <?php if ($tab=="tarefas") {echo " active ";} ?>" 
-                        href="?tab=tarefas" 
-                        role="tab"                        
-                        style="color:black">Tarefas</a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="agenda") {echo " active ";} ?>" 
@@ -89,7 +98,7 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 
     if ($tab=="demandas") {$src="demandas/";}
     if ($tab=="contratos") {$src="contratos/";}
-    if ($tab=="tarefas") {$src="demandas/tarefas.php";}
+    if ($tab=="dashboard") {$src="demandas/tarefas.php";}
     if ($tab=="agenda") {$src="demandas/agenda.php";}
     if ($tab=="configuracao") {
             $src="configuracao/";
@@ -103,7 +112,7 @@ $configuracao = 1; // configurações poderia ficaria no lugar menuHeader
 if ($src!=="") {
     echo URLROOT ."/services/". $src;
 ?>
-    <div class="" style="overflow:hidden;">
+    <div class="diviFrame" style="overflow:hidden;">
         <iframe class="iFrame container-fluid " id="iFrameTab" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
     </div>
 <?php

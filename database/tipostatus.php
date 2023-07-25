@@ -50,6 +50,8 @@ if (isset($_GET['operacao'])) {
 /*
 	include "../configuracao/tipostatus_ok.php";
 */
-	header('Location: ../configuracao/tipostatus.php');	
+	//header('Location: ../configuracao/tipostatus.php');	
+	header('Location: ../configuracao?stab=tipostatus');	
+	
 	
 }

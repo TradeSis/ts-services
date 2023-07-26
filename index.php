@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . "/../config.php";
-include_once ROOT . "/painel/index.php";
+include_once ROOT . "/sistema/painel.php";
 include_once ROOT . "/sistema/database/montaMenu.php";
 $montamenu = buscaMontaMenu('Services', $_SESSION['idUsuario']);
 //echo json_encode($montamenu);

@@ -1,21 +1,14 @@
 <?php
 include_once __DIR__ . "/../config.php";
 include_once ROOT . "/sistema/painel.php";
-include_once ROOT . "/sistema/database/montaMenu.php";
-$montamenu = buscaMontaMenu('Services', $_SESSION['idUsuario']);
-//echo json_encode($montamenu);
+include_once ROOT . "/sistema/database/usuarioAplicativo.php";
 
-$menus = $montamenu['menu'];
-if (!empty($montamenu['menuAtalho'])) {
-    $menusAtalho = $montamenu['menuAtalho'];
-}
-if (!empty($montamenu['menuHeader'])) {
-    $menuHeader = $montamenu['menuHeader'][0];
-}
+$nivelMenuUsuario =  buscaUsuarioAplicativo($_SESSION['idUsuario'],'2'); //Services
+
 
 $configuracao = 1; 
 
-$nivelUsuario   =   4;
+$nivelMenu   =  $nivelMenuUsuario['nivelMenu'];
 
 
 
@@ -44,35 +37,35 @@ $nivelUsuario   =   4;
                 ?>    
 
 
-            <?php if ($nivelUsuario>=3) { ?>
+            <?php if ($nivelMenu>=3) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="dashboard") {echo " active ";} ?>" 
                         href="?tab=dashboard" 
                         role="tab"                        
                         style="color:black">Dashboard</a>
                 </li>
-            <?php } if ($nivelUsuario>=3) { ?>
+            <?php } if ($nivelMenu>=3) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="demandas") {echo " active ";} ?>" 
                         href="?tab=demandas" 
                         role="tab"                        
                         style="color:black">Demandas</a>
                 </li>
-            <?php } if ($nivelUsuario>=3) { ?>
+            <?php } if ($nivelMenu>=3) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="contratos") {echo " active ";} ?>" 
                         href="?tab=contratos" 
                         role="tab"                        
                         style="color:black">Contratos</a>
                 </li>
-            <?php } if ($nivelUsuario>=3) { ?>
+            <?php } if ($nivelMenu>=3) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="agenda") {echo " active ";} ?>" 
                         href="?tab=agenda" 
                         role="tab"                        
                         style="color:black">Agenda</a>
                 </li>
-            <?php } if ($nivelUsuario>=4) { ?>
+            <?php } if ($nivelMenu>=4) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="configuracao") {echo " active ";} ?>" 
                         href="?tab=configuracao" 

@@ -1,17 +1,19 @@
 <?php
-include_once '../head.php';
-include_once '../database/tarefas.php';
+include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../database/tarefas.php');
 $tarefas = buscaTarefas();
+
+
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="./fullcalendar.min.css">
-    <script type="text/javascript" src="./moment.min.js"></script>
-    <script type="text/javascript" src="./fullcalendar.min.js"></script>
-    <script type="text/javascript" src="./pt-br.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/services/demandas/fullcalendar.min.css">
+    <script type="text/javascript" src="<?php echo URLROOT ?>/services/demandas/moment.min.js"></script>
+    <script type="text/javascript" src="<?php echo URLROOT ?>/services/demandas/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="<?php echo URLROOT ?>/services/demandas/pt-br.min.js"></script>
     <style>
         ::-webkit-scrollbar {
             width: 0.5em;
@@ -33,8 +35,8 @@ $tarefas = buscaTarefas();
     <div class="container mt-1">
         <h3 class="text-center">Agenda - Tradesis</h3>
     </div>
-    </div>
-    <hr>
+   
+    <!-- <hr> -->
     <div id="calendar"></div>
 
     <div class="modal fade" id="eventDetailsModal" tabindex="-1" role="dialog" aria-labelledby="eventDetailsModalLabel"
@@ -72,7 +74,6 @@ $tarefas = buscaTarefas();
             </div>
         </div>
     </div>
-
 
     <script type="text/javascript">
         $(document).ready(function () {

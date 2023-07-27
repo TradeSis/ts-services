@@ -3,7 +3,7 @@
 // gabriel 06022023 calculo timediff
 // gabriel 15:10
 
-include_once('../conexao.php');
+include_once __DIR__ . "/../conexao.php";
 
 function buscaTarefas($idDemanda=null,$idTarefa=null)
 {

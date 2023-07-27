@@ -9,7 +9,7 @@ include_once('../head.php');
     <div class="container" style="margin-top:10px">
 
         <div class="col-sm mt-4" style="text-align:right">
-            <a href="tipoocorrencia.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+            <a href="../configuracao/?tab=configuracao&stab=tipoocorrencia" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
         </div>
         <div class="col-sm">
             <spam class="col titulo">Tipo de Ocorrência</spam>

@@ -3,7 +3,12 @@
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 
-$conexao = conectaMysql();
+$idCliente = null;
+	if (isset($jsonEntrada["idCliente"])) {
+    	$idCliente = $jsonEntrada["idCliente"];
+	}
+
+$conexao = conectaMysql($idCliente);
 $tipoocorrencia = array();
 
 $sql = "SELECT * FROM tipoocorrencia ";

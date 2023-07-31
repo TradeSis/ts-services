@@ -1,7 +1,12 @@
 <?php
 // Lucas 07022023 criacao
 
-$conexao = conectaMysql();
+$idCliente = null;
+	if (isset($jsonEntrada["idCliente"])) {
+    	$idCliente = $jsonEntrada["idCliente"];
+	}
+
+$conexao = conectaMysql($idCliente);
 $contratostatus = array();
 
 

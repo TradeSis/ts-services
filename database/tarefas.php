@@ -9,9 +9,16 @@ function buscaTarefas($idDemanda=null,$idTarefa=null)
 {
 
     $tarefas = array();
+
+    $idCliente = null;
+	if (isset($_SESSION['idCliente'])) {
+    	$idCliente = $_SESSION['idCliente'];
+	}
+
     $apiEntrada = array(
         'idDemanda' => $idDemanda,
         'idTarefa' => $idTarefa,
+        'idCliente' => $idCliente,
     );
     $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');
     return $tarefas;
@@ -20,7 +27,14 @@ function buscaTarefasGrafico1()
 {
 
     $dadosGrafico1 = array();
-    $dadosGrafico1 = chamaAPI(null, '/services/tarefas/grafico1', null, 'GET');
+    $idCliente = null;
+	if (isset($_SESSION['idCliente'])) {
+    	$idCliente = $_SESSION['idCliente'];
+	}
+    $apiEntrada = array(
+        'idCliente' => $idCliente,
+    );
+    $dadosGrafico1 = chamaAPI(null, '/services/tarefas/grafico1', json_encode($apiEntrada), 'GET');
     return $dadosGrafico1;
 }
 function buscaTarefasGrafico2()

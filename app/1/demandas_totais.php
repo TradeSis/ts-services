@@ -2,8 +2,12 @@
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
+$idCliente = null;
+	if (isset($jsonEntrada["idCliente"])) {
+    	$idCliente = $jsonEntrada["idCliente"];
+	}
 
-$conexao = conectaMysql();
+$conexao = conectaMysql($idCliente);
 $card = array();
 
 

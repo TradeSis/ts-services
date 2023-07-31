@@ -9,8 +9,14 @@ function buscaContratoStatus($idContratoStatus=null)
 	
 	$contratoStatus = array();
 	
+	$idCliente = null;
+	if (isset($_SESSION['idCliente'])) {
+    	$idCliente = $_SESSION['idCliente'];
+	}
+
 	$apiEntrada = array(
 		'idContratoStatus' => $idContratoStatus,
+		'idCliente' => $idCliente,
 	);
 	$contratoStatus = chamaAPI(null, '/services/contratostatus', json_encode($apiEntrada), 'GET');
 

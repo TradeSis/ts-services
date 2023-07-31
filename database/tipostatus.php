@@ -9,9 +9,16 @@ function buscaTipoStatus($statusInicial=null, $idTipoStatus=null)
 {
 	
 	$tipostatus = array();
+
+	$idCliente = null;
+	if (isset($_SESSION['idCliente'])) {
+    	$idCliente = $_SESSION['idCliente'];
+	}
+
 	$apiEntrada = array(
 		'statusInicial' => $statusInicial,
 		'idTipoStatus' => $idTipoStatus,
+		'idCliente' => $idCliente,
 	);
 	$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'GET');
 	return $tipostatus;

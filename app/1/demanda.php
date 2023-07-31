@@ -7,7 +7,12 @@
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 
-$conexao = conectaMysql();
+$idCliente = null;
+	if (isset($jsonEntrada["idCliente"])) {
+    	$idCliente = $jsonEntrada["idCliente"];
+	}
+
+$conexao = conectaMysql($idCliente);
 $demanda = array();
 
 $sql = "SELECT demanda.*, cliente.nomeCliente, tipoocorrencia.nomeTipoOcorrencia, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
@@ -71,9 +76,10 @@ if (isset($jsonEntrada["idDemanda"])) {
 
 
 }
-//echo "-SQL->".$sql."\n";
+
 
 $sql = $sql . " order by ordem, prioridade, idDemanda";
+//echo "-SQL->".$sql."\n";
 $rows = 0;
 $buscar = mysqli_query($conexao, $sql);
 while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {

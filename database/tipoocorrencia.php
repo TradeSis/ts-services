@@ -9,9 +9,16 @@ function buscaTipoOcorrencia($ocorrenciaInicial=null,$idTipoOcorrencia=null)
 {
 	
 	$tipoocorrencia = array();
+
+	$idCliente = null;
+	if (isset($_SESSION['idCliente'])) {
+    	$idCliente = $_SESSION['idCliente'];
+	}
+	
 	$apiEntrada = array(
 		'ocorrenciaInicial' => $ocorrenciaInicial,
 		'idTipoOcorrencia' => $idTipoOcorrencia,
+		'idCliente' => $idCliente,
 	);
 	$tipoocorrencia = chamaAPI(null, '/services/tipoocorrencia', json_encode($apiEntrada), 'GET');
 	return $tipoocorrencia;

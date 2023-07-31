@@ -21,10 +21,17 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = nu
 {
 
 	$demanda = array();
+
+	$idCliente = null;
+	if (isset($_SESSION['idCliente'])) {
+    	$idCliente = $_SESSION['idCliente'];
+	}
+
 	$apiEntrada = array(
 		'idDemanda' => $idDemanda,
 		'idTipoStatus' => $idTipoStatus,
-		'idContrato' => $idContrato
+		'idContrato' => $idContrato,
+		'idCliente' => $idCliente,
 	);
 	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 
@@ -48,7 +55,14 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 function buscaCardsDemanda()
 {
 	$cards = array();
-	$cards = chamaAPI(null, '/services/demandas/totais', null, 'GET');
+	$idCliente = null;
+	if (isset($_SESSION['idCliente'])) {
+    	$idCliente = $_SESSION['idCliente'];
+	}
+	$apiEntrada = array(
+		'idCliente' => $idCliente,
+	);
+	$cards = chamaAPI(null, '/services/demandas/totais', json_encode($apiEntrada), 'GET');
 	return $cards;
 }
 

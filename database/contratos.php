@@ -24,6 +24,7 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
 {
 
 	$contrato = array();
+
 	$apiEntrada = array(
 		'idContrato' => $idContrato,
 		'idContratoStatus' => $idContratoStatus,
@@ -50,7 +51,13 @@ function buscaCards($where)
 {
 
 	$cards = array();
-	$apiEntrada = array();
+	$idCliente = null;
+	if (isset($_SESSION['idCliente'])) {
+    	$idCliente = $_SESSION['idCliente'];
+	}
+	$apiEntrada = array(
+		'idCliente' => $idCliente,
+	);
 	$cards = chamaAPI(null, '/services/contrato/totais', json_encode($apiEntrada), 'GET');
 
 	return $cards;

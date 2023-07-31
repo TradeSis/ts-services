@@ -7,8 +7,12 @@
 		"idTipoStatus" : null
 }
 */
+$idCliente = null;
+	if (isset($jsonEntrada["idCliente"])) {
+    	$idCliente = $jsonEntrada["idCliente"];
+	}
 
-$conexao = conectaMysql();
+$conexao = conectaMysql($idCliente);
 $tipostatus = array();
 
 

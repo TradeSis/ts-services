@@ -70,7 +70,7 @@ $statusEncerrar = array(
                     <div class="col-md-12 form-group" style="margin-top: -20px;">
 
                         <label class="labelForm">Tempo Cobrado</label>
-                        <input type="text" class="data select form-control" value="<?php echo $horas['horasCobrado'] ?>"
+                        <input type="text" class="data select form-control" value="<?php echo $horas['totalHoraCobrado'] ?>"
                             readonly>
                     </div>
                     <div class="col-md-12 form-group" style="margin-top: -20px;">
@@ -131,7 +131,7 @@ $statusEncerrar = array(
                     <div class="col-md-12 form-group" style="margin-top: -20px;">
 
                         <label class="labelForm">Tempo Real</label>
-                        <input type="text" class="data select form-control" value="<?php echo $horas['horasReal'] ?>"
+                        <input type="text" class="data select form-control" value="<?php echo $horas['totalHorasReal'] ?>"
                             readonly>
                     </div>
 

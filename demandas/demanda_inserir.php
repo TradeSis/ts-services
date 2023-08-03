@@ -71,7 +71,7 @@ $clientes = buscaClientes();
                     </div>
                     
                     <div  style="text-align:right">
-                        <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
+                        <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
                     </div>
                 </form>
             </div>
@@ -82,28 +82,7 @@ $clientes = buscaClientes();
 <script>
 
 
-$(document).ready(function() {
-            $("#form").submit(function() {
-                var formData = new FormData(this);
 
-                $.ajax({
-                    url: "../database/demanda.php?operacao=inserir",
-                    type: 'POST',
-                    data: formData,
-                    success: refreshPage(),
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    
-                });
-
-            });
-
-            function refreshPage() {
-                window.location.reload();
-            }
-        });
-</script>
 </body>
 
 </html>

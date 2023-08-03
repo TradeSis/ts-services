@@ -218,6 +218,11 @@ if ($metodo == "POST") {
     $parametro = null;
   }
 
+  if ($funcao == "tarefas" && $parametro == "realizado") {
+    $funcao = "tarefas/realizado";
+    $parametro = null;
+  }
+
   if ($funcao == "tarefas" && $parametro == "start") {
     $funcao = "tarefas/start";
     $parametro = null;
@@ -264,6 +269,10 @@ if ($metodo == "POST") {
 
     case "tarefas/stop":
       include 'tarefas_stop.php';
+      break;
+
+    case "tarefas/realizado":
+      include 'tarefas_realizado.php';
       break;
 
     case "tarefas/start":

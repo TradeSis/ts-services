@@ -188,7 +188,7 @@ $cliente = buscaClientes($idCliente);
 								<td class="text-center<?php echo $demanda['nomeTipoStatus'] ?>" data-status='Finalizado' ><?php echo $demanda['nomeTipoStatus'] ?></td>
 								<td class="text-center"><?php echo $demanda['nomeTipoOcorrencia'] ?></td>
 								<td class="text-center"><?php echo $demanda['tamanho'] ?></td>
-								<td class="text-center"><?php echo $horas['tempo'] ?></td>
+								<td class="text-center"><?php echo $horas['totalHoraCobrado'] ?></td>
 								<td class="text-center"><?php echo $demanda['horasPrevisao'] ?></td>
 								<td>
 									<a class='btn btn-primary btn-sm' href='../demandas/visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>' role='button'><i class='bi bi-eye-fill'></i></i></a>

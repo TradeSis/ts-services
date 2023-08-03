@@ -3,28 +3,24 @@ include_once '../head.php';
 ?>
 
 <body class="bg-transparent">
-    <div class="container-fluid mb-3">
+    <div class="container-fluid">
         <div>
             <?php
             //******************* Alterar Tarefa *******************
             if (isset($_GET['idTarefa'])) { ?>
                 <form method="post" id="editar">
                     <div class="row">
-                        <div class="col-md-6 form-group">
-
+                        <div class="col-md-4 form-group">
                             <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                            <div class="for-group" style="margin-top: 22px;">
+                            <div class="form-group" style="margin-top: 22px;">
                                 <input type="text" class="form-control" name="tituloTarefa"
                                     value="<?php echo $tarefas['tituloTarefa'] ?>" autocomplete="off">
                             </div>
-
                         </div>
-
-                        <div class="col-md-6 form-group">
-
+                        <div class="col-md-4 form-group">
                             <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
                                 Relacionada</label>
-                            <div class="for-group" style="margin-top: 22px;">
+                            <div class="form-group" style="margin-top: 22px;">
                                 <input type="hidden" class="form-control" name="idTarefa"
                                     value="<?php echo $tarefas['idTarefa'] ?>" style="margin-bottom: -20px;">
                                 <input type="hidden" class="form-control" name="idDemanda"
@@ -34,14 +30,11 @@ include_once '../head.php';
                                     readonly>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class='control-label' for='inputNormal'>Cliente</label>
-                                <?php
-                                ?>
-                                <input type="text" class="form-control" value="<?php echo $tarefas['nomeCliente'] ?>"
-                                    readonly>
-
+                        <div class="col-md-4 form-group">
+                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">Cliente</label>
+                            <div class="form-group" style="margin-top: 22px;">
+                                <input type="text" class="form-control" 
+                                    value="<?php echo $tarefas['nomeCliente'] ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -77,29 +70,61 @@ include_once '../head.php';
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="margin-top: -14px;">
                             <div class="form-group">
-                                <label class="labelForm">Data Cobrado</label>
-                                <input type="date" class="data select form-control"
-                                    value="<?php echo $tarefas['dataCobrado'] ?>" name="dataCobrado" autocomplete="off">
+                                <label class="labelForm">Horas Cobrado</label>
+                                <input type="time" class="data select form-control"
+                                    value="<?php echo $tarefas['horaCobrado'] ?>" name="horaCobrado"
+                                    autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="margin-top: -30px;">
+                            <div class="form-group">
+                                <label class="labelForm">Data Real</label>
+                                <input type="date" class="data select form-control"
+                                    value="<?php echo $tarefas['dataReal'] ?>" name="dataReal" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="margin-top: -30px;">
                             <div class="form-group">
                                 <label class="labelForm">Inicio</label>
                                 <input type="time" class="data select form-control"
-                                    value="<?php echo $tarefas['horaInicioCobrado'] ?>" name="horaInicioCobrado"
+                                    value="<?php echo $tarefas['horaInicioReal'] ?>" name="horaInicioReal"
                                     autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="margin-top: -30px;">
                             <div class="form-group">
                                 <label class="labelForm">Fim</label>
                                 <input type="time" class="data select form-control"
-                                    value="<?php echo $tarefas['horaFinalCobrado'] ?>" name="horaFinalCobrado"
+                                    value="<?php echo $tarefas['horaFinalReal'] ?>" name="horaFinalReal"
                                     autocomplete="off">
                             </div>
                         </div>
+                        <div class="col-md-4" style="margin-top: -30px;">
+                            <div class="form-group">
+                                <label class="labelForm">Data Previsão</label>
+                                <input type="date" class="data select form-control"
+                                    value="<?php echo $tarefas['Previsto'] ?>" name="Previsto" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="margin-top: -30px;">
+                            <div class="form-group">
+                                <label class="labelForm">Inicio</label>
+                                <input type="time" class="data select form-control"
+                                    value="<?php echo $tarefas['horaInicioPrevisto'] ?>" name="horaInicioPrevisto"
+                                    autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="margin-top: -30px;">
+                            <div class="form-group">
+                                <label class="labelForm">Fim</label>
+                                <input type="time" class="data select form-control"
+                                    value="<?php echo $tarefas['horaFinalPrevisto'] ?>" name="horaFinalPrevisto"
+                                    autocomplete="off">
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="row card-footer bg-transparent">
                         <hr>
@@ -112,96 +137,13 @@ include_once '../head.php';
             <?php }
             //******************* Criar Tarefa *******************
             else { ?>
-                <form method="post" id="form1">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
+            <div class="mb-2" style="text-align:right">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#iniciarModal">Iniciar</button>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#agendarModal">Agendar</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inserirModal">Nova</button>
+            </div>
+            
 
-                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                            <div class="for-group" style="margin-top: 22px;">
-                                <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-6 form-group">
-
-                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
-                                Relacionada</label>
-                            <div class="for-group" style="margin-top: 22px;">
-                                <input type="hidden" class="form-control" name="idDemanda"
-                                    value="<?php echo $demanda['idDemanda'] ?>" style="margin-bottom: -20px;">
-                                <input type="text" class="form-control"
-                                    value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>"
-                                    readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class='control-label' for='inputNormal'>Cliente</label>
-                                <?php
-                                ?>
-                                <input type="hidden" class="form-control" name="idCliente"
-                                    value="<?php echo $demanda['idCliente'] ?>">
-                                <input type="text" class="form-control" value="<?php echo $cliente['nomeCliente'] ?>"
-                                    readonly>
-
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class='control-label' for='inputNormal'>Reponsável</label>
-                                <select class="form-control" name="idAtendente">
-                                    <?php
-                                    foreach ($atendentes as $atendente) {
-                                        ?>
-                                        <option <?php
-                                        if ($atendente['idUsuario'] == $idAtendente) {
-                                            echo "selected";
-                                        }
-                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class='control-label' for='inputNormal'>Ocorrência</label>
-                                <select class="form-control" name="idTipoOcorrencia">
-                                    <?php
-                                    foreach ($ocorrencias as $ocorrencia) {
-                                        ?>
-                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="labelForm">Data Cobrado</label>
-                                <input type="date" class="data select form-control" name="dataCobrado" autocomplete="off"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="labelForm">Inicio</label>
-                                <input type="time" class="data select form-control" name="horaInicioCobrado"
-                                    autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="labelForm">Fim</label>
-                                <input type="time" class="data select form-control" name="horaFinalCobrado"
-                                    autocomplete="off" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-transparent" style="text-align:right">
-                        <button type="submit" formaction="../database/tarefas.php?operacao=inserir"
-                            class="btn btn-info">Nova</button>
-                    </div>
-                </form>
             <?php } ?>
         </div>
         <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
@@ -251,12 +193,17 @@ include_once '../head.php';
                                 $horaFinalPrevisto = date('H:i', strtotime($horaFinalPrevisto));
                             } else {
                                 $horaFinalPrevisto = "00:00";
+                            } 
+                            $horasPrevisto = $tarefas['horasPrevisto'];
+                            if ($horasPrevisto != null) {
+                                $horasPrevisto = date('H:i', strtotime($tarefas['horasPrevisto']));
+                            } else {
+                                $horasPrevisto = "00:00";
                             } ?>
                             <td class="text-center">
                                 <?php echo $Previsto ?>
                                 <?php echo $horaInicioPrevisto ?>
-                                <?php echo $horaFinalPrevisto ?> (
-                                <?php echo $tarefas['horasPrevisto'] ?>)
+                                <?php echo $horaFinalPrevisto ?> (<?php echo $horasPrevisto?>)
                             </td>
                             <?php
                             if ($tarefas['dataReal'] != null && $tarefas['dataReal'] != "0000-00-00") {
@@ -275,36 +222,27 @@ include_once '../head.php';
                                 $horaFinalReal = date('H:i', strtotime($horaFinalReal));
                             } else {
                                 $horaFinalReal = "00:00";
+                            } 
+                            $horasReal = $tarefas['horasReal'];
+                            if ($horasReal != null) {
+                                $horasReal = date('H:i', strtotime($tarefas['horasReal']));
+                            } else {
+                                $horasReal = "00:00";
                             } ?>
                             <td class="text-center">
                                 <?php echo $dataReal ?>
                                 <?php echo $horaInicioReal ?>
-                                <?php echo $horaFinalReal ?> (
-                                <?php echo $tarefas['horasReal'] ?>)
-                            </td>
+                                <?php echo $horaFinalReal ?> (<?php echo $horasReal?>)
+                            </td>                            
                             <?php
-                            if ($tarefas['dataCobrado'] != null && $tarefas['dataCobrado'] != "0000-00-00") {
-                                $dataCobrado = date('d/m/Y', strtotime($tarefas['dataCobrado']));
+                            $horaCobrado = $tarefas['horaCobrado'];
+                            if ($horaCobrado != null) {
+                                $horaCobrado = date('H:i', strtotime($tarefas['horaCobrado']));
                             } else {
-                                $dataCobrado = "00/00/0000";
-                            }
-                            $horaInicioCobrado = $tarefas['horaInicioCobrado'];
-                            if ($horaInicioCobrado != null) {
-                                $horaInicioCobrado = date('H:i', strtotime($horaInicioCobrado));
-                            } else {
-                                $horaInicioCobrado = "00:00";
-                            }
-                            $horaFinalCobrado = $tarefas['horaFinalCobrado'];
-                            if ($horaFinalCobrado != null) {
-                                $horaFinalCobrado = date('H:i', strtotime($horaFinalCobrado));
-                            } else {
-                                $horaFinalCobrado = "00:00";
+                                $horaCobrado = "00:00";
                             } ?>
                             <td class="text-center">
-                                <?php echo $dataCobrado ?>
-                                <?php echo $horaInicioCobrado ?>
-                                <?php echo $horaFinalCobrado ?> (
-                                <?php echo $tarefas['horasCobrado'] ?>)
+                            <?php echo $horaCobrado ?>
                             </td>
                             <td class="text-center">
                                 <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
@@ -358,12 +296,17 @@ include_once '../head.php';
                                     $horaFinalPrevisto = date('H:i', strtotime($horaFinalPrevisto));
                                 } else {
                                     $horaFinalPrevisto = "00:00";
+                                } 
+                                $horasPrevisto = $tarefa['horasPrevisto'];
+                                if ($horasPrevisto != null) {
+                                    $horasPrevisto = date('H:i', strtotime($tarefa['horasPrevisto']));
+                                } else {
+                                    $horasPrevisto = "00:00";
                                 } ?>
                                 <td class="text-center">
                                     <?php echo $Previsto ?>
                                     <?php echo $horaInicioPrevisto ?>
-                                    <?php echo $horaFinalPrevisto ?> (
-                                    <?php echo $tarefa['horasPrevisto'] ?>)
+                                    <?php echo $horaFinalPrevisto ?> (<?php echo $horasPrevisto?>)
                                 </td>
                                 <?php
                                 if ($tarefa['dataReal'] != null && $tarefa['dataReal'] != "0000-00-00") {
@@ -382,36 +325,27 @@ include_once '../head.php';
                                     $horaFinalReal = date('H:i', strtotime($horaFinalReal));
                                 } else {
                                     $horaFinalReal = "00:00";
+                                } 
+                                $horasReal = $tarefa['horasReal'];
+                                if ($horasReal != null) {
+                                    $horasReal = date('H:i', strtotime($tarefa['horasReal']));
+                                } else {
+                                    $horasReal = "00:00";
                                 } ?>
                                 <td class="text-center">
                                     <?php echo $dataReal ?>
                                     <?php echo $horaInicioReal ?>
-                                    <?php echo $horaFinalReal ?> (
-                                    <?php echo $tarefa['horasReal'] ?>)
-                                </td>
+                                    <?php echo $horaFinalReal ?> (<?php echo $horasReal?>)
+                                </td> 
                                 <?php
-                                if ($tarefa['dataCobrado'] != null && $tarefa['dataCobrado'] != "0000-00-00") {
-                                    $dataCobrado = date('d/m/Y', strtotime($tarefa['dataCobrado']));
+                                $horaCobrado = $tarefa['horaCobrado'];
+                                if ($horaCobrado != null) {
+                                    $horaCobrado = date('H:i', strtotime($tarefa['horaCobrado']));
                                 } else {
-                                    $dataCobrado = "00/00/0000";
-                                }
-                                $horaInicioCobrado = $tarefa['horaInicioCobrado'];
-                                if ($horaInicioCobrado != null) {
-                                    $horaInicioCobrado = date('H:i', strtotime($horaInicioCobrado));
-                                } else {
-                                    $horaInicioCobrado = "00:00";
-                                }
-                                $horaFinalCobrado = $tarefa['horaFinalCobrado'];
-                                if ($horaFinalCobrado != null) {
-                                    $horaFinalCobrado = date('H:i', strtotime($horaFinalCobrado));
-                                } else {
-                                    $horaFinalCobrado = "00:00";
+                                    $horaCobrado = "00:00";
                                 } ?>
                                 <td class="text-center">
-                                    <?php echo $dataCobrado ?>
-                                    <?php echo $horaInicioCobrado ?>
-                                    <?php echo $horaFinalCobrado ?> (
-                                    <?php echo $tarefa['horasCobrado'] ?>)
+                                    <?php echo $horaCobrado ?>
                                 </td>
                                 <td class="text-center">
                                     <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
@@ -423,6 +357,10 @@ include_once '../head.php';
                                     <?php } ?>
                                     <?php if ($horaInicioReal == "00:00") { ?>
                                         <input type="button" class="startButton btn btn-success btn-sm" value="Start"
+                                            data-id="<?php echo $tarefa['idTarefa'] ?>"
+                                            data-status="<?php echo $idTipoStatus ?>"
+                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
+                                        <input type="button" class="realizadoButton btn btn-warning btn-sm" value="Realizado"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
@@ -474,6 +412,20 @@ include_once '../head.php';
                 });
             });
 
+            $('.realizadoButton').click(function () {
+                var idTarefa = $(this).data('id');
+                var tipoStatusDemanda = $(this).data('status');
+                var idDemanda = $(this).data('demanda');
+                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, idDemanda: idDemanda };
+                $.ajax({
+                    url: "../database/tarefas.php?operacao=realizado",
+                    method: "POST",
+                    data: form_data,
+                    dataType: "JSON",
+                    success: refreshPage('tarefas', idDemanda)
+                });
+            });
+
         });
 
         function refreshPage(tab, idDemanda) {
@@ -482,7 +434,41 @@ include_once '../head.php';
             var newUrl = url + '?id=' + tab + '&&idDemanda=' + idDemanda;
             window.location.href = newUrl;
         }
-    </script>
+
+        var agendarModal = document.getElementById("agendarModal");
+        var iniciarModal = document.getElementById("iniciarModal");
+        var inserirModal = document.getElementById("inserirModal");
+
+        var iniciarBtn = document.querySelector("button[data-target='#agendarModal']");
+        var iniciarBtn = document.querySelector("button[data-target='#iniciarModal']");
+        var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
+
+        agendarBtn.onclick = function () {
+            agendarModal.style.display = "block";
+        };
+
+        iniciarBtn.onclick = function () {
+            iniciarModal.style.display = "block";
+        };
+
+        inserirBtn.onclick = function () {
+            inserirModal.style.display = "block";
+        };
+
+        window.onclick = function (event) {
+            if (event.target == agendarModal) {
+                agendarModal.style.display = "none";
+            }
+
+            if (event.target == iniciarModal) {
+                iniciarModal.style.display = "none";
+            }
+
+            if (event.target == inserirModal) {
+                inserirModal.style.display = "none";
+            }
+        };
+</script>
 </body>
 
 </html>

@@ -10,9 +10,9 @@ if (isset($jsonEntrada['idDemanda'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
     $idAtendente = $jsonEntrada['idAtendente'];
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
-    $horaCobrado = $jsonEntrada['horaCobrado'];
 
-    $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, horaCobrado) VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, '$horaCobrado')";
+
+    $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia) VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia)";
     $atualizar = mysqli_query($conexao, $sql);
 
     $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";

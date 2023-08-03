@@ -7,7 +7,6 @@
 $conexao = conectaMysql();
 $tarefa = array();
 $sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda, tipoocorrencia.nomeTipoOcorrencia,
-        TIMEDIFF(tarefa.horaFinalCobrado, tarefa.horaInicioCobrado) AS horasCobrado, 
         TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal, 
         TIMEDIFF(tarefa.horaFinalPrevisto, tarefa.horaInicioPrevisto) AS horasPrevisto FROM tarefa
         LEFT JOIN usuario ON tarefa.idAtendente = usuario.idUsuario 

@@ -3,12 +3,12 @@
 include_once '../head.php';
 include_once '../database/demanda.php';
 include_once '../database/contratos.php';
-include_once '../database/clientes.php';
 include_once '../database/tarefas.php';
-include_once '../database/usuario.php';
 include_once '../database/tipostatus.php';
 include_once '../database/tipoocorrencia.php';
-include_once '../database/servicos.php';
+include_once(ROOT.'/sistema/database/clientes.php');
+include_once(ROOT.'/sistema/database/usuario.php');
+include_once(ROOT.'/sistema/database/servicos.php');
 
 $idDemanda = $_GET['idDemanda'];
 $idAtendente = $_SESSION['idUsuario'];

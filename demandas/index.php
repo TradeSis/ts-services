@@ -13,12 +13,15 @@
 // helio 26012023 16:16
 
 
-include_once '../head.php';
-include_once '../database/demanda.php';
-include_once '../database/clientes.php';
-include_once '../database/usuario.php';
-include_once '../database/tipostatus.php';
-include_once '../database/tipoocorrencia.php';
+include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../database/demanda.php');
+//include_once '../database/demanda.php';
+include_once(ROOT.'/sistema/database/clientes.php');
+include_once(ROOT.'/sistema/database/usuario.php');
+include_once(__DIR__ . '/../database/tipostatus.php');
+include_once(__DIR__ . '/../database/tipoocorrencia.php');
+//include_once '../database/tipostatus.php';
+//include_once '../database/tipoocorrencia.php';
 
 
 
@@ -59,6 +62,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   $statusDemanda = $filtroEntrada['statusDemanda'];
   $tamanho = $filtroEntrada['tamanho'];
 }
+
 ?>
 <style>
   [class="<?php echo TIPOSTATUS_FILA ?>"] {
@@ -629,10 +633,11 @@ echo "selected";
 
 
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
+        
         $.ajax({
           type: 'POST',
           dataType: 'html',
-          url: '../database/demanda.php?operacao=filtrar',
+          url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
           beforeSend: function () {
             $("#dados").html("Carregando...");
           },
@@ -647,6 +652,7 @@ echo "selected";
             tamanho: tamanho
           },
           success: function (msg) {
+            
             var json = JSON.parse(msg);
             var linha = "";
             for (var $i = 0; $i < json.length; $i++) {
@@ -722,10 +728,11 @@ echo "selected";
     }
 
     function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
+        
       $.ajax({
         type: 'POST',
         dataType: 'html',
-        url: '../database/demanda.php?operacao=filtrar',
+        url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
         beforeSend: function () {
           $("#dados").html("Carregando...");
         },
@@ -740,6 +747,7 @@ echo "selected";
           tamanho: tamanho
         },
         success: function (msg) {
+         
           var json = JSON.parse(msg);
           var linha = "";
           for (var $i = 0; $i < json.length; $i++) {

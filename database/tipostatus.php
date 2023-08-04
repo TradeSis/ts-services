@@ -3,7 +3,7 @@
 // helio 01022023 altereado para include_once, usando funcao conectaMysql
 // helio 26012023 16:16
 
-include_once('../conexao.php');
+include_once __DIR__ . "/../conexao.php";
 
 function buscaTipoStatus($statusInicial=null, $idTipoStatus=null)
 {
@@ -48,8 +48,10 @@ if (isset($_GET['operacao'])) {
 	}
 
 /*
-	include "../cadastros/tipostatus_ok.php";
+	include "../configuracao/tipostatus_ok.php";
 */
-	header('Location: ../cadastros/tipostatus.php');	
+	//header('Location: ../configuracao/tipostatus.php');	
+	header('Location: ../configuracao?stab=tipostatus');	
+	
 	
 }

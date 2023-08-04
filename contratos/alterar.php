@@ -9,7 +9,7 @@
 
 include_once '../head.php';
 include_once '../database/contratoStatus.php';
-include_once '../database/clientes.php';
+include_once(ROOT.'/sistema/database/clientes.php');
 include_once '../database/contratos.php';
 include_once '../database/demanda.php';
 include_once '../database/tarefas.php';

@@ -3,7 +3,7 @@
 // helio 01022023 altereado para include_once, usando funcao conectaMysql
 // helio 26012023 16:16
 
-include_once('../conexao.php');
+include_once __DIR__ . "/../conexao.php";
 
 function buscaTipoOcorrencia($ocorrenciaInicial=null,$idTipoOcorrencia=null)
 {
@@ -13,7 +13,7 @@ function buscaTipoOcorrencia($ocorrenciaInicial=null,$idTipoOcorrencia=null)
 		'ocorrenciaInicial' => $ocorrenciaInicial,
 		'idTipoOcorrencia' => $idTipoOcorrencia,
 	);
-	$tipoocorrencia = chamaAPI(null, '/api/services/tipoocorrencia', json_encode($apiEntrada), 'GET');
+	$tipoocorrencia = chamaAPI(null, '/services/tipoocorrencia', json_encode($apiEntrada), 'GET');
 	return $tipoocorrencia;
 }
 
@@ -25,7 +25,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'nomeTipoOcorrencia' => $_POST['nomeTipoOcorrencia']
 		);
-		$tipoocorrencia = chamaAPI(null, '/api/services/tipoocorrencia', json_encode($apiEntrada), 'PUT');
+		$tipoocorrencia = chamaAPI(null, '/services/tipoocorrencia', json_encode($apiEntrada), 'PUT');
 	}
 
 	if ($operacao=="alterar") {
@@ -33,19 +33,19 @@ if (isset($_GET['operacao'])) {
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
 			'nomeTipoOcorrencia' => $_POST['nomeTipoOcorrencia']
 		);
-		$tipoocorrencia = chamaAPI(null, '/api/services/tipoocorrencia', json_encode($apiEntrada), 'POST');
+		$tipoocorrencia = chamaAPI(null, '/services/tipoocorrencia', json_encode($apiEntrada), 'POST');
 	}
 	if ($operacao=="excluir") {
 		$apiEntrada = array(
 			'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
 		);
-		$tipoocorrencia = chamaAPI(null, '/api/services/tipoocorrencia', json_encode($apiEntrada), 'DELETE');
+		$tipoocorrencia = chamaAPI(null, '/services/tipoocorrencia', json_encode($apiEntrada), 'DELETE');
 	}
 
 /*
-	include "../cadastros/tipoocorrencia_ok.php";
+	include "../configuracao/tipoocorrencia_ok.php";
 */
-	header('Location: ../cadastros/tipoocorrencia.php');	
+	header('Location: ../configuracao?stab=tipoocorrencia');
 	
 }
 

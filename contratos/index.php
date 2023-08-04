@@ -21,10 +21,12 @@
 
 
 //
-include_once '../head.php';
-include_once '../database/contratos.php';
-include_once '../database/contratoStatus.php';
-include_once '../database/clientes.php';
+include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../database/contratos.php');
+//include_once '../database/contratos.php';
+include_once(__DIR__ . '/../database/contratoStatus.php');
+//include_once '../database/contratoStatus.php';
+include_once(ROOT.'/sistema/database/clientes.php');
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
@@ -427,7 +429,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             $.ajax({
                 type: 'POST', 
                 dataType: 'html', 
-                url: '../database/contratos.php?operacao=filtrar', 
+                url: '<?php echo URLROOT ?>/services/database/contratos.php?operacao=filtrar', 
                 beforeSend: function() {
                     $("#dados").html("Carregando...");
                 },

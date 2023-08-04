@@ -12,25 +12,22 @@
 // helio 26012023 16:16
 
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+	session_start();
 }
-include_once('../conexao.php');
 
+include_once __DIR__ . "/../conexao.php";
 
-function buscaDemandas($idDemanda=null,$idTipoStatus=null,$idContrato=null)
+function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = null)
 {
 
 	$demanda = array();
-	//echo json_encode ($demanda);
 	$apiEntrada = array(
 		'idDemanda' => $idDemanda,
 		'idTipoStatus' => $idTipoStatus,
 		'idContrato' => $idContrato
 	);
-	//	echo json_encode(($apiEntrada));
-	$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
+	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 
-	//echo json_encode ($demanda);
 	return $demanda;
 }
 
@@ -44,59 +41,52 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 		'idDemanda' => $idDemanda,
 		'idComentario' => $idComentario,
 	);
-	$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'GET');
+	$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'GET');
 	return $comentario;
 }
 
-/*
-function buscaCards($where)
+function buscaCardsDemanda()
 {
-	$conexao = conectaMysql();
-
-	$sql = "SELECT COUNT(*) AS total FROM demanda" . $where;
-	$buscar = mysqli_query($conexao, $sql);
-	$demandas = array();
-	while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
-		array_push($demandas, $row);
-	}
-
-	return $demandas;
+	$cards = array();
+	$cards = chamaAPI(null, '/services/demandas/totais', null, 'GET');
+	return $cards;
 }
-*/
 
 if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];
 
 	if ($operacao == "inserir") {
-		
+
 		$apiEntrada = array(
 			'idCliente' => $_POST['idCliente'],
-			'idUsuario' => $_POST['idUsuario'],
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
-			'idTipoStatus' => $_POST['idTipoStatus'],
-			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+			'idTipoOcorrencia' => OCORRENCIA_PADRAO,
+			'idServico' => SERVICOS_PADRAO,
+			'idTipoStatus' => TIPOSTATUS_FILA
 		);
-		/* echo json_encode($apiEntrada);
-		return; */
-		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'PUT');
+		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 
 		$tituloEmail = $_POST['tituloDemanda'];
 		$corpoEmail = $_POST['descricao'];
-		
 
-		$arrayPara    = array(
-				
-				array('email' => 'tradesis@tradesis.com.br',
-				'nome'  => 'TradeSis'),
-				array('email' => $_SESSION['email'],
-				'nome'  => $_SESSION['usuario']),
+
+		$arrayPara = array(
+
+			array(
+				'email' => 'tradesis@tradesis.com.br',
+				'nome' => 'TradeSis'
+			),
+			array(
+				'email' => $_SESSION['email'],
+				'nome' => $_SESSION['usuario']
+			),
 		);
 
-		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
-		
+		//$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
+
 	}
 	if ($operacao == "alterar") {
 		$apiEntrada = array(
@@ -105,60 +95,214 @@ if (isset($_GET['operacao'])) {
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
 			'prioridade' => $_POST['prioridade'],
-			'idTipoStatus' => $_POST['idTipoStatus'],
-			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+			'idServico' => $_POST['idServico'],
 			'tamanho' => $_POST['tamanho'],
 			'idAtendente' => $_POST['idAtendente'],
-			'horasPrevisao' => $_POST['horasPrevisao'],
+			'horasPrevisao' => $_POST['horasPrevisao']
 		);
-		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'POST');
-	}
-	if ($operacao == "encerrar") {
-		$apiEntrada = array(
-			'idDemanda' => $_POST['idDemanda'],
-		);
-		$demanda = chamaAPI(null, '/api/services/demanda/encerrar', json_encode($apiEntrada), 'POST');
-	}
-	if ($operacao == "retornar") {
-		$apiEntrada = array(
-			'idDemanda' => $_POST['idDemanda'],
-		);
-		$demanda = chamaAPI(null, '/api/services/demanda/retornar', json_encode($apiEntrada), 'POST');
-	}
+		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 
-	if ($operacao == "comentar") {
- 
-		$anexo = $_FILES['nomeAnexo'];
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
 	
+	if ($operacao == "realizado") {
+		$apiEntrada = array(
+			'idDemanda' => $_POST['idDemanda'],
+			'idTipoStatus' => TIPOSTATUS_REALIZADO
+			
+		);
+		$demanda = chamaAPI(null, '/services/demanda/realizado', json_encode($apiEntrada), 'POST');
+		
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
+	
+	if ($operacao == "validar") {
+		/*$anexo = $_FILES['nomeAnexo'];
+		
 		$pasta    = ROOT    . "/img/anexos/";
 		$pastaURL = URLROOT . "/img/anexos/";
-
+		
 		$nomeAnexo = $anexo['name'];
 		//$novoNomeDoAnexo = uniqid(); 
 		$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
-
+		
 		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
-
-		/* if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
-        die("Tipo de aquivo não aceito"); */
-
+		
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+		die("Tipo de aquivo não aceito"); 
+		
 		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
 		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+		
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
 
-		move_uploaded_file($anexo["tmp_name"],$pathAnexo);
+		$apiEntrada = array(
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $_POST['comentario'],
+			'idTipoStatus' => TIPOSTATUS_VALIDADO
+
+		);
+
+		$comentario = chamaAPI(null, '/services/demanda/validar', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "retornar") {
+		/*$anexo = $_FILES['nomeAnexo'];
+		
+		$pasta    = ROOT    . "/img/anexos/";
+		$pastaURL = URLROOT . "/img/anexos/";
+		
+		$nomeAnexo = $anexo['name'];
+		//$novoNomeDoAnexo = uniqid(); 
+		$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+		
+		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+		
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+		die("Tipo de aquivo não aceito"); 
+		
+		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+		
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
+
+		$apiEntrada = array(
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $_POST['comentario'],
+			'idTipoStatus' => TIPOSTATUS_RETORNO
+
+		);
+
+		$comentario = chamaAPI(null, '/services/demanda/retornar', json_encode($apiEntrada), 'PUT');
+		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "comentar") {
+
+		/*$anexo = $_FILES['nomeAnexo'];
+							
+								$pasta    = ROOT    . "/img/anexos/";
+								$pastaURL = URLROOT . "/img/anexos/";
+
+								$nomeAnexo = $anexo['name'];
+								//$novoNomeDoAnexo = uniqid(); 
+								$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
+								$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+								 if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+								die("Tipo de aquivo não aceito"); 
+
+								$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+								$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
+								move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
 
 
 		$apiEntrada = array(
-			'nomeAnexo' => $nomeAnexo,
-			'pathAnexo' => $pathURL,
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
 			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
-			'comentario' => $_POST['comentario']
-		);
-		
+			'comentario' => $_POST['comentario'],
+			'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+			'idTipoStatus' => TIPOSTATUS_RESPONDIDO
 
-		$comentario = chamaAPI(null, '/api/services/comentario', json_encode($apiEntrada), 'PUT');
-		/* echo json_encode(($comentario)); */
+		);
+
+
+		$comentario = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "comentarAtendente") {
+
+		/*$anexo = $_FILES['nomeAnexo'];
+							
+								$pasta    = ROOT    . "/img/anexos/";
+								$pastaURL = URLROOT . "/img/anexos/";
+
+								$nomeAnexo = $anexo['name'];
+								//$novoNomeDoAnexo = uniqid(); 
+								$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
+								$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+								 if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+								die("Tipo de aquivo não aceito"); 
+
+								$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+								$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
+								move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
+
+
+		$apiEntrada = array(
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $_POST['comentario'],
+			'idTipoStatus' => null
+
+		);
+
+
+		$comentario = chamaAPI(null, '/services/comentario/atendente', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "solicitar") {
+
+		/*$anexo = $_FILES['nomeAnexo'];
+							
+								$pasta    = ROOT    . "/img/anexos/";
+								$pastaURL = URLROOT . "/img/anexos/";
+
+								$nomeAnexo = $anexo['name'];
+								//$novoNomeDoAnexo = uniqid(); 
+								$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
+								$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+								if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+								die("Tipo de aquivo não aceito"); 
+
+								$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+								$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
+								move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
+
+
+		$apiEntrada = array(
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $_POST['comentario'],
+			'idTipoStatus' => TIPOSTATUS_AGUARDANDOSOLICITANTE
+
+		);
+
+
+		$comentario = chamaAPI(null, '/services/comentario/atendente', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
 	if ($operacao == "filtrar") {
@@ -199,19 +343,18 @@ if (isset($_GET['operacao'])) {
 		}
 
 
-		if ($tituloDemanda == ""){
+		if ($tituloDemanda == "") {
 			$tituloDemanda = null;
 		}
 
-		if ($tamanho == ""){
+		if ($tamanho == "") {
 			$tamanho = null;
 		}
-		
-		
-	
+
+
+
 
 		$apiEntrada = array(
-			'idDemanda' => null,
 			'idCliente' => $idCliente,
 			'idSolicitante' => $idSolicitante,
 			'idAtendente' => $idAtendente,
@@ -223,16 +366,10 @@ if (isset($_GET['operacao'])) {
 		);
 
 		$_SESSION['filtro_demanda'] = $apiEntrada;
-			/* echo json_encode(($apiEntrada));
-		return; */
-		$demanda = chamaAPI(null, '/api/services/demanda', json_encode($apiEntrada), 'GET');
+		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 
 		echo json_encode($demanda);
 		return $demanda;
 	}
 
-	/*
-	include "../demandas/demanda_ok.php";
-*/
-	header('Location: ../demandas/index.php');
 }

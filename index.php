@@ -30,7 +30,7 @@ $nivelMenu   =  $nivelMenuUsuario['nivelMenu'];
 
 
                 <?php
-                    $tab = '';
+                    $tab = 'dashboard'; // default
 
                     if (isset($_GET['tab'])) {$tab = $_GET['tab'];}
                

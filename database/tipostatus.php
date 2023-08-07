@@ -22,6 +22,17 @@ if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];
 
+	if ($operacao=="GET_JSON") {
+		$apiEntrada = array(
+			'idTipoStatus' => $_GET['idTipoStatus']
+		);
+		
+		
+		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'GET');
+		echo json_encode($tipostatus);
+		return $tipostatus;
+	}
+
 	if ($operacao=="inserir") {
 		$apiEntrada = array(
 			'nomeTipoStatus' => $_POST['nomeTipoStatus'],

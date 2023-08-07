@@ -157,6 +157,7 @@ $tiposstatus = buscaTipoStatus();
 
         editForm.reset();
         popTipoStatusModal.hide();
+        top.window.location = "<?php echo URLROOT ?>/services/?tab=configuracao&stab=tipostatus";
 
     });
 

@@ -3,7 +3,7 @@ include_once __DIR__ . "/../config.php";
 include_once ROOT . "/sistema/painel.php";
 include_once ROOT . "/sistema/database/loginAplicativo.php";
 
-$nivelMenuLogin =  buscaLoginAplicativo($_SESSION['idLogin'],'2'); //Services
+$nivelMenuLogin =  buscaLoginAplicativo($_SESSION['idLogin'],'Services');
 
 
 $configuracao = 1; 

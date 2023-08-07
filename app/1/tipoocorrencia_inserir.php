@@ -2,8 +2,8 @@
 //gabriel 06022023 16:52
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
-
-$conexao = conectaMysql();
+$idEmpresa = $jsonEntrada["idEmpresa"];
+$conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['nomeTipoOcorrencia'])) {
     $nomeTipoOcorrencia = $jsonEntrada['nomeTipoOcorrencia'];
     $sql = "INSERT INTO tipoocorrencia (nomeTipoOcorrencia) values ('$nomeTipoOcorrencia')";

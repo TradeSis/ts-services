@@ -8,8 +8,8 @@ $arqlog = defineCaminhoLog()."/api/php_errors.log";
 $arquivo = fopen($arqlog,"a");
 fwrite($arquivo,"jsonEntrada->".json_encode($jsonEntrada)."\n");   
 */
-
-$conexao = conectaMysql();
+$idEmpresa = $jsonEntrada["idEmpresa"];
+$conexao = conectaMysql($idEmpresa);
 
 if (isset($jsonEntrada['idTarefa'])) {
     $idTarefa = $jsonEntrada['idTarefa'];

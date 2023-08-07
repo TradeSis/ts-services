@@ -10,15 +10,15 @@ function buscaTipoStatus($statusInicial=null, $idTipoStatus=null)
 	
 	$tipostatus = array();
 
-	$idCliente = null;
-	if (isset($_SESSION['idCliente'])) {
-    	$idCliente = $_SESSION['idCliente'];
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
 	}
 
 	$apiEntrada = array(
 		'statusInicial' => $statusInicial,
 		'idTipoStatus' => $idTipoStatus,
-		'idCliente' => $idCliente,
+		'idEmpresa' => $idEmpresa,
 	);
 	$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'GET');
 	return $tipostatus;
@@ -31,6 +31,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao=="inserir") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'nomeTipoStatus' => $_POST['nomeTipoStatus'],
 			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
@@ -40,6 +41,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao=="alterar") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idTipoStatus' => $_POST['idTipoStatus'],
 			'nomeTipoStatus' => $_POST['nomeTipoStatus'],
 			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
@@ -49,6 +51,7 @@ if (isset($_GET['operacao'])) {
 	}
 	if ($operacao=="excluir") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idTipoStatus' => $_POST['idTipoStatus']
 		);
 		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'DELETE');

@@ -52,13 +52,13 @@ include_once '../head.php';
                                     class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
                             <?php } ?>
                             <?php
-                            if ($_SESSION['idCliente'] == NULL) { ?>
+                            if ($_SESSION['idEmpresa'] == NULL) { ?>
                                 <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente"
                                     class="btn btn-info" style="margin-right:10px;float: right;">Comentar</button>
                                 <button type="submit" formaction="../database/demanda.php?operacao=solicitar"
                                     class="btn btn-warning" style="margin-right:10px;float: right;">Encaminhar</button>
                             <?php } //*************** visão cliente
-                            if ($_SESSION['idCliente'] >= 1) { ?>
+                            if ($_SESSION['idEmpresa'] >= 1) { ?>
                                 <button type="submit" formaction="../database/demanda.php?operacao=comentar"
                                     class="btn btn-info" style="margin-right:20px;float: right;">Enviar</button>
                             <?php } ?>
@@ -70,7 +70,7 @@ include_once '../head.php';
 
                 </div>
                 <div class="container mt-3 col-md-6" style="float:left">
-                    <?php foreach ($comentarios as $comentario) { ?>
+                    <?php foreach ($comentarios as $comentario) {  ?>
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="row">

@@ -9,14 +9,14 @@ function buscaContratoStatus($idContratoStatus=null)
 	
 	$contratoStatus = array();
 	
-	$idCliente = null;
-	if (isset($_SESSION['idCliente'])) {
-    	$idCliente = $_SESSION['idCliente'];
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
 	}
 
 	$apiEntrada = array(
 		'idContratoStatus' => $idContratoStatus,
-		'idCliente' => $idCliente,
+		'idEmpresa' => $idEmpresa,
 	);
 	$contratoStatus = chamaAPI(null, '/services/contratostatus', json_encode($apiEntrada), 'GET');
 
@@ -31,6 +31,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao=="inserir") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'nomeContratoStatus' => $_POST['nomeContratoStatus'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
@@ -41,6 +42,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao=="alterar") {
 
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idContratoStatus' => $_POST['idContratoStatus'],
 			'nomeContratoStatus' => $_POST['nomeContratoStatus'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
@@ -50,6 +52,7 @@ if (isset($_GET['operacao'])) {
 	}
 	if ($operacao=="excluir") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idContratoStatus' => $_POST['idContratoStatus']
 		);
 		$contratoStatus = chamaAPI(null, '/services/contratostatus', json_encode($apiEntrada), 'DELETE');

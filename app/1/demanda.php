@@ -7,12 +7,12 @@
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 
-$idCliente = null;
-	if (isset($jsonEntrada["idCliente"])) {
-    	$idCliente = $jsonEntrada["idCliente"];
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
 	}
 
-$conexao = conectaMysql($idCliente);
+$conexao = conectaMysql($idEmpresa);
 $demanda = array();
 
 $sql = "SELECT demanda.*, cliente.nomeCliente, tipoocorrencia.nomeTipoOcorrencia, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda

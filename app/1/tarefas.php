@@ -4,12 +4,12 @@
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 
-$idCliente = null;
-	if (isset($jsonEntrada["idCliente"])) {
-    	$idCliente = $jsonEntrada["idCliente"];
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
 	}
 
-$conexao = conectaMysql($idCliente);
+$conexao = conectaMysql($idEmpresa);
 $tarefa = array();
 $sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda, tipoocorrencia.nomeTipoOcorrencia,
         TIMEDIFF(tarefa.horaFinalCobrado, tarefa.horaInicioCobrado) AS horasCobrado, 

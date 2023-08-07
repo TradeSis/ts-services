@@ -18,12 +18,47 @@ $tiposstatus = buscaTipoStatus();
         const popTipoStatus = new bootstrap.Modal(document.getElementById("popTipoStatus"));
         popTipoStatus.show();
         document.getElementById("idTipoStatus").innerHTML = resposta.idTipoStatus;
-        document.getElementById("nomeTipoStatus").innerHTML = resposta.nomeTipoStatus;
+      //  document.getElementById("nomeTipoStatus").innerHTML = resposta.nomeTipoStatus;
+       // document.getElementById("mudaPosicaoPara").innerHTML = resposta.mudaPosicaoPara;
+       
+
         document.getElementById("nomeTipoStatus").value = resposta.nomeTipoStatus;
+        document.getElementById("mudaPosicaoPara").value = resposta.mudaPosicaoPara;
+        document.getElementById("mudaStatusPara").value = resposta.mudaStatusPara;
 
     }
      
+    const editForm = document.getElementById("edit-form");
     
+    editForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        document.getElementById("edit-btn").value = "Salvando...";
+
+        const dadosForm = new FormData(editForm);
+        //console.log(dadosForm);
+        /*for (var dadosFormEdit of dadosForm.entries()){
+            console.log(dadosFormEdit[0] + " - " + dadosFormEdit[1]);
+        }*/
+
+        const dados = await fetch("editar.php", {
+            method: "POST",
+            body:dadosForm
+        });
+
+        const resposta = await dados.json();
+        //console.log(resposta);
+
+        if(resposta['erro']){
+            msgAlertaErroEdit.innerHTML = resposta['msg'];
+        }else{
+            msgAlertaErroEdit.innerHTML = resposta['msg'];
+            listarUsuarios(1);
+        }
+
+        document.getElementById("edit-btn").value = "Salvar";
+    });
+
 
 </script>
 
@@ -69,25 +104,51 @@ $tiposstatus = buscaTipoStatus();
         </div>
         
     </div>
+
+
     // MODAIS
     <div class="modal fade" id="popTipoStatus" tabindex="-1" aria-labelledby="popTipoStatusLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="popTipoStatusLabel">Tipos de Status</h5>
+                    <h5 class="modal-title" id="editUsuarioModalLabel">Tipo de Status</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="edit-usuario-form">
+                    <form id="edit-form">
                         <span id="msgAlertaErroEdit"></span>
 
                         <span id="idTipoStatus"></span>
 
                         <div class="mb-3">
-                            <label for="nomeTipoStatus" class="col-form-label">Nome:</label>
+                           
                             <input type="text" name="nomeTipoStatus" class="form-control" id="nomeTipoStatus" placeholder="">
                         </div>
+                        <div class="row">  
+                                <div class="col-md-6">
+                                    <label class="labelForm">Atendimento(0=Atendente 1=Cliente)</label>
+                                    <select class="form-control" name="mudaPosicaoPara">
+                                       
+                                        <option>0</option>
+                                        <option>1</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labelForm">Situação (0=Fechado 1=Aberto)</label>
+                                    <select class="form-control" name="mudaStatusPara">
+                                       
+                                        <option>0</option>
+                                        <option>1</option>
+                                    </select>
+                                </div>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
+                            <input type="submit" class="btn btn-outline-warning btn-sm" id="edit-usuario-btn" value="Salvar" />
+                        </div>
+
                     </form>
+
                 </div>
             </div>
         </div>

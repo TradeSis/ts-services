@@ -32,6 +32,21 @@ if (isset($_GET['operacao'])) {
 		echo json_encode($tipostatus);
 		return $tipostatus;
 	}
+	if ($operacao=="JSON_alterar") {
+		//echo json_encode($_POST);
+	
+		$apiEntrada = array(
+			'idTipoStatus' => $_POST['idTipoStatus'],
+			'nomeTipoStatus' => $_POST['nomeTipoStatus'],
+			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
+			'mudaStatusPara' => $_POST['mudaStatusPara']
+		);
+		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'POST');
+		echo json_encode($tipostatus);
+		
+		return;
+		
+	}
 
 	if ($operacao=="inserir") {
 		$apiEntrada = array(
@@ -50,6 +65,7 @@ if (isset($_GET['operacao'])) {
 			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
 		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'POST');
+
 	}
 	if ($operacao=="excluir") {
 		$apiEntrada = array(

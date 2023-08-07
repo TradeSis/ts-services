@@ -9,58 +9,6 @@ include_once(__DIR__ . '/../database/tipostatus.php');
 $tiposstatus = buscaTipoStatus(); 
 ?>
 
-<script>
-    // Logica para Visualizar via Modal
-    async function popTipoStatus(idTipoStatus){
-        
-        const dados = await fetch("<?php echo URLROOT ?>/services/database/tipostatus.php?operacao=GET_JSON&idTipoStatus=" + idTipoStatus);
-        const resposta = await dados.json();
-        const popTipoStatus = new bootstrap.Modal(document.getElementById("popTipoStatus"));
-        popTipoStatus.show();
-        document.getElementById("idTipoStatus").innerHTML = resposta.idTipoStatus;
-      //  document.getElementById("nomeTipoStatus").innerHTML = resposta.nomeTipoStatus;
-       // document.getElementById("mudaPosicaoPara").innerHTML = resposta.mudaPosicaoPara;
-       
-
-        document.getElementById("nomeTipoStatus").value = resposta.nomeTipoStatus;
-        document.getElementById("mudaPosicaoPara").value = resposta.mudaPosicaoPara;
-        document.getElementById("mudaStatusPara").value = resposta.mudaStatusPara;
-
-    }
-     
-    const editForm = document.getElementById("edit-form");
-    
-    editForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        document.getElementById("edit-btn").value = "Salvando...";
-
-        const dadosForm = new FormData(editForm);
-        //console.log(dadosForm);
-        /*for (var dadosFormEdit of dadosForm.entries()){
-            console.log(dadosFormEdit[0] + " - " + dadosFormEdit[1]);
-        }*/
-
-        const dados = await fetch("editar.php", {
-            method: "POST",
-            body:dadosForm
-        });
-
-        const resposta = await dados.json();
-        //console.log(resposta);
-
-        if(resposta['erro']){
-            msgAlertaErroEdit.innerHTML = resposta['msg'];
-        }else{
-            msgAlertaErroEdit.innerHTML = resposta['msg'];
-            listarUsuarios(1);
-        }
-
-        document.getElementById("edit-btn").value = "Salvar";
-    });
-
-
-</script>
 
 <body class="bg-transparent" >
     <div class="container" style="margin-top:10px">
@@ -118,8 +66,8 @@ $tiposstatus = buscaTipoStatus();
                     <form id="edit-form">
                         <span id="msgAlertaErroEdit"></span>
 
-                        <span id="idTipoStatus"></span>
-
+                        
+                        <input type="text"  id="idTipoStatus" name="idTipoStatus" class="form-control"  placeholder="">
                         <div class="mb-3">
                            
                             <input type="text" name="nomeTipoStatus" class="form-control" id="nomeTipoStatus" placeholder="">
@@ -127,7 +75,7 @@ $tiposstatus = buscaTipoStatus();
                         <div class="row">  
                                 <div class="col-md-6">
                                     <label class="labelForm">Atendimento(0=Atendente 1=Cliente)</label>
-                                    <select class="form-control" name="mudaPosicaoPara">
+                                    <select class="form-control" id="mudaPosicaoPara" name="mudaPosicaoPara">
                                        
                                         <option>0</option>
                                         <option>1</option>
@@ -135,7 +83,7 @@ $tiposstatus = buscaTipoStatus();
                                 </div>
                                 <div class="col-md-6">
                                     <label class="labelForm">Situação (0=Fechado 1=Aberto)</label>
-                                    <select class="form-control" name="mudaStatusPara">
+                                    <select class="form-control" id="mudaStatusPara" name="mudaStatusPara">
                                        
                                         <option>0</option>
                                         <option>1</option>
@@ -144,7 +92,7 @@ $tiposstatus = buscaTipoStatus();
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
-                            <input type="submit" class="btn btn-outline-warning btn-sm" id="edit-usuario-btn" value="Salvar" />
+                            <input type="submit" class="btn btn-outline-warning btn-sm" id="edit-btn" value="Salvar" />
                         </div>
 
                     </form>
@@ -156,5 +104,63 @@ $tiposstatus = buscaTipoStatus();
 
 
 </body>
+
+<script>
+    const editForm = document.getElementById("edit-form");
+    const popTipoStatusModal = new bootstrap.Modal(document.getElementById("popTipoStatus"));
+
+    // Logica para Visualizar via Modal
+    async function popTipoStatus(idTipoStatus){
+        
+        const dados = await fetch("<?php echo URLROOT ?>/services/database/tipostatus.php?operacao=GET_JSON&idTipoStatus=" + idTipoStatus);
+        const resposta = await dados.json();
+        //const popTipoStatus = new bootstrap.Modal(document.getElementById("popTipoStatus"));
+        popTipoStatusModal.show();
+        document.getElementById("idTipoStatus").innerHTML = resposta.idTipoStatus;
+      //  document.getElementById("nomeTipoStatus").innerHTML = resposta.nomeTipoStatus;
+       // document.getElementById("mudaPosicaoPara").innerHTML = resposta.mudaPosicaoPara;
+       
+        document.getElementById("idTipoStatus").value = resposta.idTipoStatus;
+        document.getElementById("nomeTipoStatus").value = resposta.nomeTipoStatus;
+        document.getElementById("mudaPosicaoPara").value = resposta.mudaPosicaoPara;
+        document.getElementById("mudaStatusPara").value = resposta.mudaStatusPara;
+
+    }
+     
+    
+    
+    editForm.addEventListener("submit", async (e) => {
+    
+        e.preventDefault();
+
+        document.getElementById("edit-btn").value = "Salvando...";
+
+        const dadosForm = new FormData(editForm);
+        var str = $("edit-form").serialize();
+        //console.log(str);
+        //console.log(editForm);
+        //console.log(dadosForm);
+        
+        /*for (var dadosFormEdit of dadosForm.entries()){
+            console.log(dadosFormEdit[0] + " - " + dadosFormEdit[1]);
+        }*/
+
+        const dados = await fetch("<?php echo URLROOT ?>/services/database/tipostatus.php?operacao=JSON_alterar", {
+            method: "POST",
+            body:dadosForm
+        });
+
+        const resposta = await dados.json();
+        console.log(resposta);
+
+        document.getElementById("edit-btn").value = "Salvar";
+
+        editForm.reset();
+        popTipoStatusModal.hide();
+
+    });
+
+
+</script>
 
 </html>

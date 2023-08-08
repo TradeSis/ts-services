@@ -7,7 +7,8 @@ $conexao = conectaMysql();
 if (isset($jsonEntrada['idTipoOcorrencia'])) {
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
     $nomeTipoOcorrencia = $jsonEntrada['nomeTipoOcorrencia'];
-    $sql = "UPDATE tipoocorrencia SET nomeTipoOcorrencia='$nomeTipoOcorrencia' WHERE idTipoOcorrencia = $idTipoOcorrencia";
+    $ocorrenciaInicial = $jsonEntrada['ocorrenciaInicial'];
+    $sql = "UPDATE tipoocorrencia SET nomeTipoOcorrencia='$nomeTipoOcorrencia', ocorrenciaInicial='$ocorrenciaInicial' WHERE idTipoOcorrencia = $idTipoOcorrencia";
     if ($atualizar = mysqli_query($conexao, $sql)) {
         $jsonSaida = array(
             "status" => 200,

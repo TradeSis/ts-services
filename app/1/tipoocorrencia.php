@@ -7,12 +7,16 @@ $conexao = conectaMysql();
 $tipoocorrencia = array();
 
 $sql = "SELECT * FROM tipoocorrencia ";
+$where = " where ";
 if (isset($jsonEntrada["idTipoOcorrencia"])) {
-  $sql = $sql . " where tipoocorrencia.idTipoOcorrencia = " . $jsonEntrada["idTipoOcorrencia"];
-} else {
+  $sql = $sql . $where ." tipoocorrencia.idTipoOcorrencia = " . $jsonEntrada["idTipoOcorrencia"];
+  $where = " and ";
+}
 if (isset($jsonEntrada["ocorrenciaInicial"])) {
-  $sql = $sql . " where tipoocorrencia.ocorrenciaInicial = " . $jsonEntrada["ocorrenciaInicial"];
-}}
+  $sql = $sql . $where ." tipoocorrencia.ocorrenciaInicial = " . $jsonEntrada["ocorrenciaInicial"];
+  $where = " and ";
+}
+
 $rows = 0;
 $buscar = mysqli_query($conexao, $sql);
 while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
@@ -20,10 +24,7 @@ while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
   $rows = $rows + 1;
 }
 
-if (isset($jsonEntrada["idTipoOcorrencia"]) && $rows==1) {
-  $tipoocorrencia = $tipoocorrencia[0];
-}
-if (isset($jsonEntrada["ocorrenciaInicial"]) && $rows==1) {
+if (isset($jsonEntrada["idTipoOcorrencia"]) && $rows==1 ||isset($jsonEntrada["ocorrenciaInicial"]) && $rows==1) {
   $tipoocorrencia = $tipoocorrencia[0];
 }
 $jsonSaida = $tipoocorrencia;

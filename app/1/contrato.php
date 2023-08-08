@@ -5,7 +5,13 @@
 // Lucas 17022023 adicionado condição else para idContratoStatus
 // Lucas 07022023 criacao
 
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+
+$conexao = conectaMysql($idEmpresa);
+
 $contrato = array();
 
 $sql = "SELECT contrato.*, cliente.*, contratostatus.* FROM contrato				

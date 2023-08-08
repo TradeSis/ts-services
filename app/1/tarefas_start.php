@@ -9,7 +9,8 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . $ROOTex[0]);
 require_once ROOT . '/config.php';
 
 date_default_timezone_set('America/Sao_Paulo');
-$conexao = conectaMysql();
+$idEmpresa = $jsonEntrada["idEmpresa"];
+$conexao = conectaMysql($idEmpresa);
 
 $statusStart = array(
     TIPOSTATUS_FILA,

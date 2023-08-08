@@ -21,10 +21,17 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = nu
 {
 
 	$demanda = array();
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+
 	$apiEntrada = array(
 		'idDemanda' => $idDemanda,
 		'idTipoStatus' => $idTipoStatus,
-		'idContrato' => $idContrato
+		'idContrato' => $idContrato,
+		'idEmpresa' => $idEmpresa,
 	);
 	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 
@@ -37,9 +44,16 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 {
 
 	$comentario = array();
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+
 	$apiEntrada = array(
 		'idDemanda' => $idDemanda,
 		'idComentario' => $idComentario,
+		'idEmpresa' => $idEmpresa,
 	);
 	$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'GET');
 	return $comentario;
@@ -48,7 +62,16 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 function buscaCardsDemanda()
 {
 	$cards = array();
-	$cards = chamaAPI(null, '/services/demandas/totais', null, 'GET');
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+	
+	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
+	);
+	$cards = chamaAPI(null, '/services/demandas/totais', json_encode($apiEntrada), 'GET');
 	return $cards;
 }
 
@@ -59,6 +82,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "inserir") {
 
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idCliente' => $_POST['idCliente'],
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
@@ -90,6 +114,7 @@ if (isset($_GET['operacao'])) {
 	}
 	if ($operacao == "alterar") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idDemanda' => $_POST['idDemanda'],
 			'idContrato' => $_POST['idContrato'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
@@ -107,6 +132,7 @@ if (isset($_GET['operacao'])) {
 	
 	if ($operacao == "realizado") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idDemanda' => $_POST['idDemanda'],
 			'idTipoStatus' => TIPOSTATUS_REALIZADO
 			
@@ -139,6 +165,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			//'nomeAnexo' => $nomeAnexo,
 			//'pathAnexo' => $pathURL,
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -175,6 +202,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			//'nomeAnexo' => $nomeAnexo,
 			//'pathAnexo' => $pathURL,
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -212,6 +240,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			//'nomeAnexo' => $nomeAnexo,
 			//'pathAnexo' => $pathURL,
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -252,6 +281,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			//'nomeAnexo' => $nomeAnexo,
 			//'pathAnexo' => $pathURL,
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -291,6 +321,7 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			//'nomeAnexo' => $nomeAnexo,
 			//'pathAnexo' => $pathURL,
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -352,9 +383,13 @@ if (isset($_GET['operacao'])) {
 		}
 
 
-
+		$idEmpresa = null;
+		if (isset($_SESSION['idEmpresa'])) {
+			$idEmpresa = $_SESSION['idEmpresa'];
+		}
 
 		$apiEntrada = array(
+			'idEmpresa' => $idEmpresa,
 			'idCliente' => $idCliente,
 			'idSolicitante' => $idSolicitante,
 			'idAtendente' => $idAtendente,

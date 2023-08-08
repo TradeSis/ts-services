@@ -1,9 +1,12 @@
 <?php
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
+$idEmpresa = null;
+if (isset($jsonEntrada["idEmpresa"])) {
+    $idEmpresa = $jsonEntrada["idEmpresa"];
+}
 
-
-$conexao = conectaMysql();
+$conexao = conectaMysql($idEmpresa);
 $tarefa = array();
 
 $mes = date('m');

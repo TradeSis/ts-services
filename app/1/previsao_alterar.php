@@ -12,8 +12,12 @@ $statusTarefa = array(
     TIPOSTATUS_FILA,
     TIPOSTATUS_RESPONDIDO,
 );
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
 
-$conexao = conectaMysql();
+$conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idDemanda'])) {
     $idTarefa = $jsonEntrada['idTarefa'];
     $idDemanda = $jsonEntrada['idDemanda'];

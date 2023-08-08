@@ -19,6 +19,7 @@ $statusEncerrar = array(
                         <label class='control-label' for='inputNormal'>Prioridade</label>
                         <input type="number" min="1" max="99" class="form-control" name="prioridade"
                             value="<?php echo $demanda['prioridade'] ?>" style="margin-top: 50px;">
+                        
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -175,7 +176,7 @@ $statusEncerrar = array(
                 </div>
             </div>
 
-            <?php if ($_SESSION['idCliente'] == NULL) { ?>
+            <?php if ($_SESSION['idEmpresa'] == NULL) { ?>
                 <div class="card-footer bg-transparent" style="margin-top: 50px;">
 
                     <input type="submit" name="submit" id="submit" class="btn btn-success" style="float: right;"

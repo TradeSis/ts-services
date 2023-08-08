@@ -2,8 +2,12 @@
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
+$idEmpresa = null;
+if (isset($jsonEntrada["idEmpresa"])) {
+    $idEmpresa = $jsonEntrada["idEmpresa"];
+}
 
-$conexao = conectaMysql();
+$conexao = conectaMysql($idEmpresa);
 $horas = array();
 $sql = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(horasCobrado))) AS horasCobrado, SEC_TO_TIME(SUM(TIME_TO_SEC(horasReal))) AS horasReal 
   FROM  (SELECT TIMEDIFF(tarefa.horaFinalCobrado, tarefa.horaInicioCobrado) AS horasCobrado, 

@@ -23,10 +23,8 @@
 //
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
-//include_once '../database/contratos.php';
 include_once(__DIR__ . '/../database/contratoStatus.php');
-//include_once '../database/contratoStatus.php';
-include_once(ROOT.'/sistema/database/clientes.php');
+include_once(ROOT.'/cadastros/database/clientes.php');
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();

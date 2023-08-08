@@ -10,7 +10,7 @@
 
 include '../head.php';
 include '../database/contratoStatus.php';
-include_once(ROOT.'/sistema/database/clientes.php');
+include_once(ROOT.'/cadastros/database/clientes.php');
 
 $contratoStatusTodos = buscaContratoStatus();
 $clientes = buscaClientes();

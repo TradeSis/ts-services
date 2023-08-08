@@ -3,7 +3,8 @@
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 
-$conexao = conectaMysql();
+$idEmpresa = $jsonEntrada["idEmpresa"];
+$conexao = conectaMysql($idEmpresa);
 $posicao = null;
 $statusDemanda = null;
 

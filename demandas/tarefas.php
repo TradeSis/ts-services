@@ -4,6 +4,7 @@
 
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/tarefas.php');
+include_once(__DIR__ . '/../database/demanda.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
 include_once(ROOT . '/sistema/database/clientes.php');
 include_once(ROOT . '/sistema/database/usuario.php');
@@ -13,6 +14,7 @@ include_once(ROOT . '/sistema/database/usuario.php');
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
+$demandas = buscaDemandasAbertas();
 
 ?>
 
@@ -327,8 +329,8 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
       </div>
     </div>
-
   </div>
+
   <!--------- ALTERAR --------->
   <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog"
     aria-labelledby="alterarmodalLabel" aria-hidden="true">
@@ -350,11 +352,19 @@ $ocorrencias = buscaTipoOcorrencia();
                     autocomplete="off">
                 </div>
               </div>
-              <div class="col-md-4" style="margin-top: 10px;">
-                <div class="form-group">
+              <div class="col-md-4" style="margin-top: -10px;">
+                <div class="form-group" id="demandaContainer">
                   <label class="labelForm">ID/Demanda Relacionada</label>
-                  <input type="text" class="data select form-control" id="tituloDemanda" name="tituloDemanda"
+                  <input type="text" class="data select form-control" id="tituloDemanda" name="tituloDemanda" style="margin-top: 18px;"
                     autocomplete="off" readonly>
+                  <select class="form-control" name="idDemanda" id="idDemanda">
+                    <?php
+                    foreach ($demandas as $demanda) {
+                      ?>
+                    <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                    </option>
+                    <?php } ?>
+                  </select>
                 </div>
               </div>
               <input type="hidden" class="form-control" name="idTarefa" id="idTarefa" />
@@ -540,36 +550,51 @@ $ocorrencias = buscaTipoOcorrencia();
     }
 
     $(document).on('click', 'button[data-target="#alterarmodal"]', function () {
-      var idTarefa = $(this).attr("data-idtarefa");
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-        data: {
-          idTarefa: idTarefa
-        },
-        success: function (data) {
-          $('#idTarefa').val(data.idTarefa);
-          $('#tituloTarefa').val(data.tituloTarefa);
-          $('#idCliente').val(data.idCliente);
-          $('#nomeCliente').val(data.nomeCliente);
-          $('#idDemanda').val(data.idDemanda);
-          $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
-          $('#idAtendente').val(data.idAtendente);
-          $('#nomeUsuario').val(data.nomeUsuario);
-          $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
-          $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);
-          $('#Previsto').val(data.Previsto);
-          $('#horaInicioPrevisto').val(data.horaInicioPrevisto);
-          $('#horaFinalPrevisto').val(data.horaFinalPrevisto);
-          $('#dataReal').val(data.dataReal);
-          $('#horaInicioReal').val(data.horaInicioReal);
-          $('#horaFinalReal').val(data.horaFinalReal);
-          $('#horaCobrado').val(data.horaCobrado);
-          $('#alterarmodal').modal('show');
+    var idTarefa = $(this).attr("data-idtarefa");
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
+      data: {
+        idTarefa: idTarefa
+      },
+      success: function (data) {
+        $('#idTarefa').val(data.idTarefa);
+        $('#tituloTarefa').val(data.tituloTarefa);
+        $('#idCliente').val(data.idCliente);
+        $('#nomeCliente').val(data.nomeCliente);
+        $('#idDemanda').val(data.idDemanda);
+        $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
+        $('#idAtendente').val(data.idAtendente);
+        $('#nomeUsuario').val(data.nomeUsuario);
+        $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
+        $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);
+        $('#Previsto').val(data.Previsto);
+        $('#horaInicioPrevisto').val(data.horaInicioPrevisto);
+        $('#horaFinalPrevisto').val(data.horaFinalPrevisto);
+        $('#dataReal').val(data.dataReal);
+        $('#horaInicioReal').val(data.horaInicioReal);
+        $('#horaFinalReal').val(data.horaFinalReal);
+        $('#horaCobrado').val(data.horaCobrado);
+
+        if (data.idCliente !== null) {
+          $('#idCliente').prop('disabled', true);
+        } else {
+          $('#idCliente').prop('disabled', false);
         }
-      });
+
+        if (data.idDemanda !== null) {
+          $('#idDemanda').hide(); // Hide #idDemanda
+          $('#tituloDemanda').show(); // Show #tituloDemanda
+        } else {
+          $('#idDemanda').show(); // Show #idDemanda
+          $('#tituloDemanda').hide(); // Hide #tituloDemanda
+        }
+
+        $('#alterarmodal').modal('show');
+      }
     });
+  });
 
     $('.btnAbre').click(function () {
       $('.menuFiltros').toggleClass('mostra');

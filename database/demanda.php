@@ -50,6 +50,18 @@ function buscaCardsDemanda()
 	return $cards;
 }
 
+function buscaDemandasAbertas($statusDemanda=1) //Aberto
+{
+
+	$demanda = array();
+	$apiEntrada = array(
+		'statusDemanda' => $statusDemanda
+	);
+	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
+
+	return $demanda;
+}
+
 if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];

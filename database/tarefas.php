@@ -83,8 +83,9 @@ if (isset($_GET['operacao'])) {
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
         );
         $tarefas = chamaAPI(null, '/services/tarefas/iniciar', json_encode($apiEntrada), 'PUT');
+        echo json_encode($apiEntrada);
 
-        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        //header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
     }
 
     if ($operacao == "alterar") {
@@ -172,6 +173,68 @@ if (isset($_GET['operacao'])) {
 
         header('Location: ../demandas/visualizar.php?id=previsao&&idDemanda=' . $apiEntrada['idDemanda']);
     }
+
+    if ($operacao == "filtrar") {
+
+		$idCliente = $_POST['idCliente'];
+		$idAtendente = $_POST['idAtendente'];
+		$tituloTarefa = $_POST['tituloTarefa'];
+		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+		$idDemanda = $_POST['idDemanda'];
+
+		if ($idCliente == "") {
+			$idCliente = null;
+		}
+		if ($idAtendente == "") {
+			$idAtendente = null;
+		}
+        if ($tituloTarefa == "") {
+            $tituloTarefa = null;
+        }
+		if ($idTipoOcorrencia == "") {
+			$idTipoOcorrencia = null;
+		}
+		if ($idDemanda == "") {
+			$idDemanda = null;
+		}
+
+
+
+
+		$apiEntrada = array(
+			'idCliente' => $idCliente,
+			'idAtendente' => $idAtendente,
+			'tituloTarefa' => $tituloTarefa,
+			'idTipoOcorrencia' => $idTipoOcorrencia,
+			'idDemanda' => $idDemanda
+		);
+
+		$_SESSION['filtro_tarefas'] = $apiEntrada;
+		//$tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');
+
+        //teste
+		$tarefas = chamaAPI(null, '/services/tarefas', null, 'GET');
+
+		echo json_encode($tarefas);
+		return $tarefas;
+	}
+
+    if ($operacao == "buscar") {
+
+		$idTarefa = $_POST['idTarefa'];
+		if ($idTarefa == "") {
+			$idTarefa = null;
+		}
+
+		$apiEntrada = array(
+			'idTarefa' => $idTarefa
+		);
+		$tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');
+
+		echo json_encode($tarefas);
+		return $tarefas;
+	}
+
 
 
 /*

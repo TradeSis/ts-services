@@ -142,6 +142,11 @@ if ($metodo == "PUT") {
     $parametro = null;
   }
 
+  if ($funcao == "tarefas" && $parametro == "iniciar") {
+    $funcao = "tarefas/iniciar";
+    $parametro = null;
+  }
+
   switch ($funcao) {
     case "contratostatus":
       include 'contratostatus_inserir.php';
@@ -185,6 +190,10 @@ if ($metodo == "PUT") {
 
     case "demanda/retornar":
       include 'demanda_retornar.php';
+      break;
+
+    case "tarefas/iniciar":
+      include 'tarefas_iniciar.php';
       break;
 
     default:

@@ -47,6 +47,22 @@ if (isset($_GET['operacao'])) {
 		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'DELETE');
 	}
 
+	if ($operacao == "buscar") {
+
+		$idTipoStatus = $_POST['idTipoStatus'];
+		if ($idTipoStatus == "") {
+			$idTipoStatus = null;
+		}
+
+		$apiEntrada = array(
+			'idTipoStatus' => $idTipoStatus
+		);
+		$status = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'GET');
+
+		echo json_encode($status);
+		return $status;
+	}
+
 /*
 	include "../configuracao/tipostatus_ok.php";
 */

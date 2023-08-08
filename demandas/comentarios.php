@@ -23,7 +23,7 @@ include_once '../head.php';
                     </div>
                     <div class="form-group">
                         <textarea name="comentario" id="comentario" class="form-control"
-                            placeholder="Inserir Comentario" required rows="5"></textarea>
+                            placeholder="Inserir Comentario" rows="5"></textarea>
                         <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
                         <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
 

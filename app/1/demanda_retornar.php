@@ -13,8 +13,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     //$pathAnexo = $jsonEntrada['pathAnexo'];
     //$nomeAnexo = $jsonEntrada['nomeAnexo'];
 
-    $sql = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";
-    $atualizar = mysqli_query($conexao, $sql);
+    if($comentario==''){$comentario=null;}
 
     // busca dados tipostatus    
     $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -22,10 +21,14 @@ if (isset($jsonEntrada['idDemanda'])) {
     $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
     $posicao = $row["mudaPosicaoPara"];
     $statusDemanda = $row["mudaStatusPara"];
-
-
-    $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataFechamento=NULL, statusDemanda=$statusDemanda, dataAtualizacaoCliente=CURRENT_TIMESTAMP(), QtdRetornos=QtdRetornos+1 WHERE idDemanda = $idDemanda;";
-    $atualizar3 = mysqli_query($conexao, $sql3);
+    
+    $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataFechamento=NULL, statusDemanda=$statusDemanda, dataAtualizacaoCliente=CURRENT_TIMESTAMP(), QtdRetornos=QtdRetornos+1 WHERE idDemanda = $idDemanda;";
+    $atualizar = mysqli_query($conexao, $sql);
+    
+    if ($comentario!=null) {
+    $sql3 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";
+    $atualizar3 = mysqli_query($conexao, $sql3); }
+    
 
     if ($atualizar && $atualizar3) {
         $jsonSaida = array(

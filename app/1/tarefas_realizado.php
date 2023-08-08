@@ -6,6 +6,7 @@ $conexao = conectaMysql();
 
 if (isset($jsonEntrada['idTarefa'])) {
     $idTarefa = $jsonEntrada['idTarefa'];
+    $dataReal = date('Y-m-d');
     $horaInicioReal = date('H:i:00');
     $horaFinalReal = date('H:i:00');
     $idDemanda = $jsonEntrada['idDemanda'];
@@ -13,7 +14,7 @@ if (isset($jsonEntrada['idTarefa'])) {
     $tipoStatusDemanda = $jsonEntrada['tipoStatusDemanda'];
 
 
-    $sql = "UPDATE `tarefa` SET `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal', `horaCobrado`=TIMEDIFF(`horaFinalReal`, `horaInicioReal`) WHERE idTarefa = $idTarefa";
+    $sql = "UPDATE `tarefa` SET `dataReal`='$dataReal', `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal', `horaCobrado`=TIMEDIFF(`horaFinalReal`, `horaInicioReal`) WHERE idTarefa = $idTarefa";
     $atualizar = mysqli_query($conexao, $sql);
 
     // busca dados tipostatus    

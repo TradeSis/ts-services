@@ -31,8 +31,6 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = nu
 	return $demanda;
 }
 
-
-
 function buscaComentarios($idDemanda = null, $idComentario = null)
 {
 

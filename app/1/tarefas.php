@@ -13,11 +13,14 @@ $sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.titul
         LEFT JOIN demanda ON tarefa.idDemanda = demanda.idDemanda 
         LEFT JOIN tipoocorrencia ON tarefa.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
         LEFT JOIN cliente ON tarefa.idCliente = cliente.idCliente";
-if (isset($jsonEntrada["idDemanda"])) {
-  $sql = $sql . " where tarefa.idDemanda = " . $jsonEntrada["idDemanda"];
-}
+$where = " where ";
 if (isset($jsonEntrada["idTarefa"])) {
-  $sql = $sql . " and tarefa.idTarefa = " . $jsonEntrada["idTarefa"];
+  $sql = $sql . $where . " tarefa.idTarefa = " . $jsonEntrada["idTarefa"];
+  $where = " and ";
+}
+if (isset($jsonEntrada["idDemanda"])) {
+  $sql = $sql . $where . " tarefa.idDemanda = " . $jsonEntrada["idDemanda"];
+  $where = " and ";
 }
 //echo "-SQL->".json_encode($sql)."\n";
 $rows = 0;

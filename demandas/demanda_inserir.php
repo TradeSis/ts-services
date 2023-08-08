@@ -21,19 +21,13 @@ $clientes = buscaClientes();
 <body class="bg-transparent">
 
     <div class="container" style="margin-top:10px">
-       
-           
-                
-                   
-                    <div class="col-sm mt-4" style="text-align:right">
-                        <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
-                    </div>
-                    <div class="col-sm">
-                        <spam class="col titulo">Inserir Demanda</spam>
-                    </div>
-            
-            <div class="container" style="margin-top: 10px">
-
+            <div class="col-sm mt-4" style="text-align:right">
+                <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+            </div>
+            <div class="col-sm">
+                <spam class="col titulo">Inserir Demanda</spam>
+            </div>
+        <div class="container" style="margin-top: 10px">
                 <form id="form" method="post">
                     <div class="row">
                         <div class="col-md form-group" style="margin-top: 25px;">
@@ -62,25 +56,18 @@ $clientes = buscaClientes();
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col form-group">
                         <label class="labelForm">Descrição</label>
                             <textarea class="form-control" name="descricao" autocomplete="off" rows="10"></textarea>
                         </div>
                     </div>
-                    
                     <div  style="text-align:right">
                         <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
                     </div>
                 </form>
             </div>
-        
     </div>
-
-
-<script>
-
 
 
 </body>

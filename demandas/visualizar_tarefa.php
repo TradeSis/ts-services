@@ -4,147 +4,10 @@ include_once '../head.php';
 
 <body class="bg-transparent">
     <div class="container-fluid">
-        <div>
-            <?php
-            //******************* Alterar Tarefa *******************
-            if (isset($_GET['idTarefa'])) { ?>
-                <form method="post" id="editar">
-                    <div class="row">
-                        <div class="col-md-4 form-group">
-                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                            <div class="form-group" style="margin-top: 22px;">
-                                <input type="text" class="form-control" name="tituloTarefa"
-                                    value="<?php echo $tarefas['tituloTarefa'] ?>" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
-                                Relacionada</label>
-                            <div class="form-group" style="margin-top: 22px;">
-                                <input type="hidden" class="form-control" name="idTarefa"
-                                    value="<?php echo $tarefas['idTarefa'] ?>" style="margin-bottom: -20px;">
-                                <input type="hidden" class="form-control" name="idDemanda"
-                                    value="<?php echo $tarefas['idDemanda'] ?>" style="margin-bottom: -20px;">
-                                <input type="text" class="form-control"
-                                    value="<?php echo $tarefas['idDemanda'] ?> - <?php echo $tarefas['tituloDemanda'] ?>"
-                                    readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label class='control-label' for='inputNormal' style="margin-top: 10px;">Cliente</label>
-                            <div class="form-group" style="margin-top: 22px;">
-                                <input type="text" class="form-control" 
-                                    value="<?php echo $tarefas['nomeCliente'] ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class='control-label' for='inputNormal'>Reponsável</label>
-                                <select class="form-control" name="idAtendente">
-                                    <?php
-                                    foreach ($atendentes as $atendente) {
-                                        ?>
-                                        <option <?php
-                                        if ($atendente['idUsuario'] == $tarefas['idAtendente']) {
-                                            echo "selected";
-                                        }
-                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class='control-label' for='inputNormal'>Ocorrência</label>
-                                <select class="form-control" name="idTipoOcorrencia">
-                                    <?php
-                                    foreach ($ocorrencias as $ocorrencia) {
-                                        ?>
-                                        <option <?php
-                                        if ($ocorrencia['idTipoOcorrencia'] == $tarefas['idTipoOcorrencia']) {
-                                            echo "selected";
-                                        }
-                                        ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-top: -14px;">
-                            <div class="form-group">
-                                <label class="labelForm">Horas Cobrado</label>
-                                <input type="time" class="data select form-control"
-                                    value="<?php echo $tarefas['horaCobrado'] ?>" name="horaCobrado"
-                                    autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-top: -30px;">
-                            <div class="form-group">
-                                <label class="labelForm">Data Real</label>
-                                <input type="date" class="data select form-control"
-                                    value="<?php echo $tarefas['dataReal'] ?>" name="dataReal" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-top: -30px;">
-                            <div class="form-group">
-                                <label class="labelForm">Inicio</label>
-                                <input type="time" class="data select form-control"
-                                    value="<?php echo $tarefas['horaInicioReal'] ?>" name="horaInicioReal"
-                                    autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-top: -30px;">
-                            <div class="form-group">
-                                <label class="labelForm">Fim</label>
-                                <input type="time" class="data select form-control"
-                                    value="<?php echo $tarefas['horaFinalReal'] ?>" name="horaFinalReal"
-                                    autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-top: -30px;">
-                            <div class="form-group">
-                                <label class="labelForm">Data Previsão</label>
-                                <input type="date" class="data select form-control"
-                                    value="<?php echo $tarefas['Previsto'] ?>" name="Previsto" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-top: -30px;">
-                            <div class="form-group">
-                                <label class="labelForm">Inicio</label>
-                                <input type="time" class="data select form-control"
-                                    value="<?php echo $tarefas['horaInicioPrevisto'] ?>" name="horaInicioPrevisto"
-                                    autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4" style="margin-top: -30px;">
-                            <div class="form-group">
-                                <label class="labelForm">Fim</label>
-                                <input type="time" class="data select form-control"
-                                    value="<?php echo $tarefas['horaFinalPrevisto'] ?>" name="horaFinalPrevisto"
-                                    autocomplete="off">
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="row card-footer bg-transparent">
-                        <hr>
-                        <div class="col-sm" style="text-align:right">
-                            <button type="submit" formaction="../database/tarefas.php?operacao=alterar"
-                                class="btn btn-warning">Atualiza</button>
-                        </div>
-                    </div>
-                </form>
-            <?php }
-            //******************* Criar Tarefa *******************
-            else { ?>
-            <div class="mb-2" style="text-align:right">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#iniciarModal">Iniciar</button>
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#agendarModal">Agendar</button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inserirModal">Nova</button>
-            </div>
-            
-
-            <?php } ?>
+        <div class="mb-2" style="text-align:right">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#iniciarModal">Iniciar</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#agendarModal">Agendar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inserirModal">Nova</button>
         </div>
         <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
             <table class="table">
@@ -258,9 +121,9 @@ include_once '../head.php';
                                         data-status="<?php echo $idTipoStatus ?>"
                                         data-demanda="<?php echo $tarefas['idDemanda'] ?>" />
                                 <?php } ?>
-                                <a class="btn btn-primary btn-sm"
-                                    href="visualizar.php?id=tarefas&&idTarefa=<?php echo $tarefas['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
-                                    role="button">Alterar</a>
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                data-target="#alterarmodal"
+                                data-idTarefa="<?php echo $tarefas['idTarefa'] ?>">Alterar</button>
                             </td>
                         </tr>
                     <?php } else {
@@ -365,9 +228,9 @@ include_once '../head.php';
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
                                     <?php } ?>
-                                    <a class="btn btn-primary btn-sm"
-                                        href="visualizar.php?id=tarefas&&idTarefa=<?php echo $tarefa['idTarefa'] ?>&&idDemanda=<?php echo $idDemanda ?>"
-                                        role="button">Alterar</a>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#alterarmodal"
+                                    data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">Alterar</button>
                                 </td>
                             </tr>
                         <?php }
@@ -376,6 +239,8 @@ include_once '../head.php';
             </table>
         </div>
     </div>
+
+    
 
 
 
@@ -423,6 +288,38 @@ include_once '../head.php';
                     data: form_data,
                     dataType: "JSON",
                     success: refreshPage('tarefas', idDemanda)
+                });
+            });
+
+            $('button[data-target="#alterarmodal"]').click(function () {
+                var idTarefa = $(this).attr("data-idTarefa");
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
+                    data: {
+                    idTarefa: idTarefa
+                    },
+                    success: function (data) {
+                        $('#idTarefa').val(data.idTarefa);
+                        $('#tituloTarefa').val(data.tituloTarefa);
+                        $('#idCliente').val(data.idCliente);
+                        $('#nomeCliente').val(data.nomeCliente);
+                        $('#idDemanda').val(data.idDemanda);
+                        $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
+                        $('#idAtendente').val(data.idAtendente);
+                        $('#nomeUsuario').val(data.nomeUsuario);
+                        $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
+                        $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);
+                        $('#Previsto').val(data.Previsto);
+                        $('#horaInicioPrevisto').val(data.horaInicioPrevisto);
+                        $('#horaFinalPrevisto').val(data.horaFinalPrevisto);
+                        $('#dataReal').val(data.dataReal);
+                        $('#horaInicioReal').val(data.horaInicioReal);
+                        $('#horaFinalReal').val(data.horaFinalReal);
+                        $('#horaCobrado').val(data.horaCobrado);
+                        $('#alterarmodal').modal('show');
+                    }
                 });
             });
 

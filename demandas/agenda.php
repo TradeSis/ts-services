@@ -125,7 +125,7 @@ $tarefas = buscaTarefas();
                     <?php } ?>
                 ],
                 eventRender: function (event, element) {
-                    element.css('font-weight', 'bold'); // Make event text bold
+                    element.css('font-weight', 'bold'); 
                 },
                 eventClick: function (calEvent, jsEvent, view) {
                     $("#eventID").text("Tarefa " + calEvent._id);

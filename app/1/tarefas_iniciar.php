@@ -4,7 +4,7 @@
 
 
 $conexao = conectaMysql();
-if (isset($jsonEntrada['idDemanda'])) {
+if (isset($jsonEntrada['idAtendente'])) {
     $tituloTarefa = $jsonEntrada['tituloTarefa'];
     $idCliente = $jsonEntrada['idCliente'];
     $idDemanda = $jsonEntrada['idDemanda'];

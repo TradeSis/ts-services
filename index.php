@@ -46,11 +46,20 @@ $nivelMenu   =  $nivelMenuUsuario['nivelMenu'];
                 </li>
             <?php } if ($nivelMenu>=3) { ?>
                 <li class="nav-item ">
+                    <a class="nav-link <?php if ($tab=="tarefas") {echo " active ";} ?>" 
+                        href="?tab=tarefas" 
+                        role="tab"                        
+                        style="color:black">Tarefas</a>
+                </li>
+            
+            <?php } if ($nivelMenu>=3) { ?>
+                <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="demandas") {echo " active ";} ?>" 
                         href="?tab=demandas" 
                         role="tab"                        
                         style="color:black">Demandas</a>
                 </li>
+                
             <?php } if ($nivelMenu>=3) { ?>
                 <li class="nav-item ">
                     <a class="nav-link <?php if ($tab=="contratos") {echo " active ";} ?>" 
@@ -90,7 +99,8 @@ $nivelMenu   =  $nivelMenuUsuario['nivelMenu'];
 
     if ($tab=="demandas") {$src="demandas/";}
     if ($tab=="contratos") {$src="contratos/";}
-    if ($tab=="dashboard") {$src="demandas/tarefas.php";}
+    if ($tab=="tarefas") {$src="demandas/tarefas.php";}
+    if ($tab=="dashboard") {$src="demandas/dashboard.php";}
     if ($tab=="agenda") {$src="demandas/agenda.php";}
     if ($tab=="configuracao") {
             $src="configuracao/";

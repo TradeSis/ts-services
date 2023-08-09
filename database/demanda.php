@@ -75,9 +75,13 @@ function buscaCardsDemanda()
 
 function buscaDemandasAbertas($statusDemanda=1) //Aberto
 {
-
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
 	$demanda = array();
 	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
 		'statusDemanda' => $statusDemanda
 	);
 	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');

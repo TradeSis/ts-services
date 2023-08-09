@@ -3,7 +3,13 @@
 // helio 01022023 altereado para include_once, usando funcao conectaMysql
 // helio 26012023 16:16
 
+if (session_status() === PHP_SESSION_NONE) {
+	session_start();
+}
+
+
 include_once __DIR__ . "/../conexao.php";
+
 
 function buscaTipoOcorrencia($ocorrenciaInicial=null,$idTipoOcorrencia=null)
 {

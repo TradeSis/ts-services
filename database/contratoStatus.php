@@ -2,7 +2,13 @@
 // helio 21032023 - compatibilidade chamada chamaApi
 // helio 01022023 altereado para include_once, usando funcao conectaMysql
 
+if (session_status() === PHP_SESSION_NONE) {
+	session_start();
+}
+
+
 include_once __DIR__ . "/../conexao.php";
+
 
 function buscaContratoStatus($idContratoStatus=null)
 {

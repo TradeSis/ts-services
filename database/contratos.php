@@ -30,10 +30,11 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
     	$idEmpresa = $_SESSION['idEmpresa'];
 	}
 	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
 		'idContrato' => $idContrato,
 		'idContratoStatus' => $idContratoStatus,
 		'idCliente' => $idCliente,
-		'idEmpresa' => $idEmpresa
+		
 	);
 	$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
 
@@ -41,9 +42,13 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
 }
 function buscaContratosAbertos()
 {
-
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
 	$contrato = array();
 	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
 		'statusContrato' => '1' //Aberto
 	);
 	$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
@@ -73,11 +78,14 @@ function buscaCards($where)
 if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];
-
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
 	if ($operacao == "inserir") {
 
 		$apiEntrada = array(
-			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idEmpresa' => $idEmpresa,
 			'tituloContrato' => $_POST['tituloContrato'],
 			'descricao' => $_POST['descricao'],
 			'idContratoStatus' => $_POST['idContratoStatus'],
@@ -97,7 +105,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "alterar") {
 		$apiEntrada = array(
-			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idEmpresa' => $idEmpresa,
 			'idContrato' => $_POST['idContrato'],
 			'tituloContrato' => $_POST['tituloContrato'],
 			'descricao' => $_POST['descricao'],
@@ -115,7 +123,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "finalizar") {
 		$apiEntrada = array(
-			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idEmpresa' => $idEmpresa,
 			'idContrato' => $_POST['idContrato'],
 			'dataFechamento' => $_POST['dataFechamento'],
 
@@ -127,7 +135,7 @@ if (isset($_GET['operacao'])) {
 	}
 	if ($operacao == "excluir") {
 		$apiEntrada = array(
-			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idEmpresa' => $idEmpresa,
 			'idContrato' => $_POST['idContrato'],
 
 		);
@@ -154,11 +162,7 @@ if (isset($_GET['operacao'])) {
 			$tituloContrato = null;
 		} 
 
-		$idEmpresa = null;
-		if (isset($_SESSION['idEmpresa'])) {
-			$idEmpresa = $_SESSION['idEmpresa'];
-		}
-
+	
 		$apiEntrada = array(
 			'idEmpresa' => $idEmpresa,
 			'idContrato' => null,

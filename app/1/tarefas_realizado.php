@@ -2,7 +2,12 @@
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 date_default_timezone_set('America/Sao_Paulo');
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
+
 
 if (isset($jsonEntrada['idTarefa'])) {
     $idTarefa = $jsonEntrada['idTarefa'];

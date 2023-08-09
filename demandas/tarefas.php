@@ -6,8 +6,8 @@ include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/tarefas.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
-include_once(ROOT . '/sistema/database/clientes.php');
-include_once(ROOT . '/sistema/database/usuario.php');
+include_once(ROOT . '/cadastros/database/clientes.php');
+include_once(ROOT . '/cadastros/database/usuario.php');
 
 
 

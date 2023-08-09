@@ -7,8 +7,13 @@
 if (session_status() === PHP_SESSION_NONE) {
 	session_start();
 }
+
 include_once __DIR__."/../config.php";
 
+function defineCaminhoLog() {
+	$pasta = '/ws/tslog/';
+	return $pasta;
+}
 
 
 include_once(ROOT.'/sistema/database/mysql.php');

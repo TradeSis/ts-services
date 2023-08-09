@@ -53,7 +53,7 @@ function buscaTarefasGrafico2()
         'idEmpresa' => $idEmpresa
     );
     $dadosGrafico2 = array();
-    $dadosGrafico2 = chamaAPI(null, '/services/tarefas/grafico2', $apiEntrada, 'GET');
+    $dadosGrafico2 = chamaAPI(null, '/services/tarefas/grafico2', json_encode($apiEntrada), 'GET');
     return $dadosGrafico2;
 }
 function buscaTarefasGrafico3()
@@ -68,7 +68,7 @@ function buscaTarefasGrafico3()
         'idEmpresa' => $idEmpresa
     );
     $dadosGrafico3 = array();
-    $dadosGrafico3 = chamaAPI(null, '/services/tarefas/grafico3', $apiEntrada, 'GET');
+    $dadosGrafico3 = chamaAPI(null, '/services/tarefas/grafico3', json_encode($apiEntrada), 'GET');
     return $dadosGrafico3;
 }
 
@@ -84,7 +84,7 @@ function buscaTarefasGrafico4()
     );
 
     $dadosGrafico4 = array();
-    $dadosGrafico4 = chamaAPI(null, '/services/tarefas/grafico4', $apiEntrada, 'GET');
+    $dadosGrafico4 = chamaAPI(null, '/services/tarefas/grafico4', json_encode($apiEntrada), 'GET');
     return $dadosGrafico4;
 }
 function buscaHoras($idDemanda)
@@ -271,10 +271,7 @@ if (isset($_GET['operacao'])) {
 		);
 
 		$_SESSION['filtro_tarefas'] = $apiEntrada;
-		//$tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');
-
-        //teste
-		$tarefas = chamaAPI(null, '/services/tarefas', null, 'GET');
+		$tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');
 
 		echo json_encode($tarefas);
 		return $tarefas;

@@ -3,11 +3,6 @@
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
-$arqlog = defineCaminhoLog()."services_tarefas.log";
-$arquivo = fopen($arqlog,"a");
-fwrite($arquivo,"jsonEntrada->".json_encode($jsonEntrada)."\n");   
-
-
 $idEmpresa = null;
 	if (isset($jsonEntrada["idEmpresa"])) {
     	$idEmpresa = $jsonEntrada["idEmpresa"];

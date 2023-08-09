@@ -9,7 +9,10 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . $ROOTex[0]);
 require_once ROOT . '/config.php';
 
 date_default_timezone_set('America/Sao_Paulo');
-$idEmpresa = $jsonEntrada["idEmpresa"];
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
 $conexao = conectaMysql($idEmpresa);
 
 $statusStart = array(

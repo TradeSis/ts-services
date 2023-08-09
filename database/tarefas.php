@@ -83,9 +83,8 @@ if (isset($_GET['operacao'])) {
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
         );
         $tarefas = chamaAPI(null, '/services/tarefas/iniciar', json_encode($apiEntrada), 'PUT');
-        echo json_encode($apiEntrada);
 
-        //header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
     }
 
     if ($operacao == "alterar") {

@@ -95,7 +95,7 @@ if (isset($_GET['operacao'])) {
 			),
 		);
 
-		//$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
+		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 		
 		header('Location: ../demandas/index.php');
 	}

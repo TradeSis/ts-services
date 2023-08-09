@@ -80,10 +80,13 @@ function buscaHoras($idDemanda)
 if (isset($_GET['operacao'])) {
 
     $operacao = $_GET['operacao'];
-
+    $idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
     if ($operacao == "inserir") {
         $apiEntrada = array(
-            'idEmpresa' => $_SESSION['idEmpresa'],
+            'idEmpresa' => $idEmpresa,
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
@@ -100,7 +103,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "alterar") {
         $apiEntrada = array(
-            'idEmpresa' => $_SESSION['idEmpresa'],
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
@@ -117,7 +120,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "start") {
         $apiEntrada = array(
-            'idEmpresa' => $_SESSION['idEmpresa'],
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
@@ -128,7 +131,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "stop") {
         $apiEntrada = array(
-            'idEmpresa' => $_SESSION['idEmpresa'],
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
@@ -139,7 +142,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "previsao") {
         $apiEntrada = array(
-            'idEmpresa' => $_SESSION['idEmpresa'],
+            'idEmpresa' => $idEmpresa,
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
@@ -157,7 +160,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "alterarPrevisao") {
         $apiEntrada = array(
-            'idEmpresa' => $_SESSION['idEmpresa'],
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tituloTarefa' => $_POST['tituloTarefa'],

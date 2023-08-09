@@ -8,6 +8,7 @@ $conexao = conectaMysql();
 if (isset($jsonEntrada['idTarefa'])) {
     $idTarefa = $jsonEntrada['idTarefa'];
     $idDemanda = $jsonEntrada['idDemanda'];
+    $idDemandaSelect = $jsonEntrada['idDemandaSelect'];
     $tituloTarefa = $jsonEntrada['tituloTarefa'];
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
     $idAtendente = $jsonEntrada['idAtendente'];
@@ -20,19 +21,34 @@ if (isset($jsonEntrada['idTarefa'])) {
     $horaFinalPrevisto = $jsonEntrada['horaFinalPrevisto'];
   
     /* TESTE ZERADO */
-    if($horaCobrado==''){$horaCobrado='0000-00-00';}
-    if($dataReal==''){$dataReal='0000-00-00';}
-    if($horaInicioReal==''){$horaInicioReal='00:00';}
-    if($horaFinalReal==''){$horaFinalReal='00:00';}
-    if($Previsto==''){$Previsto='0000-00-00';}
-    if($horaInicioPrevisto==''){$horaInicioPrevisto='00:00';}
-    if($horaFinalPrevisto==''){$horaFinalPrevisto='00:00';}
+    if($horaCobrado==''){$horaCobrado=null;}
+    if($dataReal==''){$dataReal=null;}
+    if($horaInicioReal==''){$horaInicioReal=null;}
+    if($horaFinalReal==''){$horaFinalReal=null;}
+    if($Previsto==''){$Previsto=null;}
+    if($horaInicioPrevisto==''){$horaInicioPrevisto=null;}
+    if($horaFinalPrevisto==''){$horaFinalPrevisto=null;} 
 
+    echo json_encode($jsonEntrada);
+    // busca dados idCliente
+    if ($idDemandaSelect!== null) {    
+    $sql2 = "SELECT * FROM demanda WHERE idDemanda = $idDemandaSelect"; 
+    $buscar2 = mysqli_query($conexao, $sql2);
+    $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
+    $idCliente = $row["idCliente"];
+    
 
     $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `idTipoOcorrencia`=$idTipoOcorrencia, `idAtendente`=$idAtendente, `horaCobrado`='$horaCobrado',
-    `dataReal`='$dataReal', `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal', 
+    `dataReal`='$dataReal', `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal', `idDemanda`=$idDemandaSelect, `idCliente`=$idCliente,
     `Previsto`='$Previsto', `horaInicioPrevisto`='$horaInicioPrevisto', `horaFinalPrevisto`='$horaFinalPrevisto' 
-    WHERE `idTarefa` = $idTarefa";
+    WHERE `idTarefa` = $idTarefa"; 
+    } else {
+        $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `idTipoOcorrencia`=$idTipoOcorrencia, `idAtendente`=$idAtendente, `horaCobrado`='$horaCobrado',
+        `dataReal`='$dataReal', `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal',
+        `Previsto`='$Previsto', `horaInicioPrevisto`='$horaInicioPrevisto', `horaFinalPrevisto`='$horaFinalPrevisto' 
+        WHERE `idTarefa` = $idTarefa"; 
+    }
+    
     $atualizar = mysqli_query($conexao, $sql);
 
     $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";

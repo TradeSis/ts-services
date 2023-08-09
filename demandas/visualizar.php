@@ -398,20 +398,28 @@ $tarefas = buscaTarefas($idDemanda);
                                         name="tituloTarefa" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-md-4" style="margin-top: 10px;">
-                                <div class="form-group">
+                            <div class="col-md-4" style="margin-top: -10px;">
+                                <div class="form-group" id="demandaContainer">
                                     <label class="labelForm">ID/Demanda Relacionada</label>
                                     <input type="text" class="data select form-control" id="tituloDemanda"
-                                        name="tituloDemanda" autocomplete="off" readonly>
+                                        style="margin-top: 18px;" autocomplete="off" readonly>
+                                    <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
+                                        <?php
+                                        foreach ($demandas as $demanda) {
+                                            ?>
+                                        <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                             <input type="hidden" class="form-control" name="idTarefa" id="idTarefa" />
                             <input type="hidden" class="form-control" name="idDemanda" id="idDemanda" />
-                            <div class="col-md-4" style="margin-top: 10px;">
+                            <div class="col-md-4" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="labelForm">Cliente</label>
                                     <input type="text" class="data select form-control" id="nomeCliente"
-                                        name="nomeCliente" autocomplete="off" readonly>
+                                        style="margin-top: 18px;" autocomplete="off" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -468,10 +476,16 @@ $tarefas = buscaTarefas($idDemanda);
                                         name="horaFinalPrevisto" autocomplete="off">
                                 </div>
                             </div>
+                            <input type="date" class="data select form-control" id="dataReal" name="dataReal"
+                                autocomplete="off" hidden>
+                            <input type="time" class="data select form-control" id="horaInicioReal"
+                                name="horaInicioReal" autocomplete="off" hidden>
+                            <input type="time" class="data select form-control" id="horaFinalReal" name="horaFinalReal"
+                                autocomplete="off" hidden>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
                             <button type="submit" formaction="../database/tarefas.php?operacao=alterar"
-                                class="btn btn-info">Agendar</button>
+                                class="btn btn-info">Atualizar</button>
                         </div>
                     </form>
                 </div>

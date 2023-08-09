@@ -306,6 +306,7 @@ include_once '../head.php';
                         $('#idCliente').val(data.idCliente);
                         $('#nomeCliente').val(data.nomeCliente);
                         $('#idDemanda').val(data.idDemanda);
+                        $('#idDemandaSelect').val(data.idDemanda);
                         $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
                         $('#idAtendente').val(data.idAtendente);
                         $('#nomeUsuario').val(data.nomeUsuario);
@@ -318,6 +319,15 @@ include_once '../head.php';
                         $('#horaInicioReal').val(data.horaInicioReal);
                         $('#horaFinalReal').val(data.horaFinalReal);
                         $('#horaCobrado').val(data.horaCobrado);
+
+                        if (data.idDemanda !== null) {
+                            $('#idDemandaSelect').hide();
+                            $('#tituloDemanda').show();
+                        } else {
+                            $('#idDemandaSelect').show();
+                            $('#tituloDemanda').hide();
+                        }
+
                         $('#alterarmodal').modal('show');
                     }
                 });

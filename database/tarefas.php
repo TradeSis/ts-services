@@ -92,6 +92,7 @@ if (isset($_GET['operacao'])) {
         $apiEntrada = array(
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
+            'idDemandaSelect' => $_POST['idDemandaSelect'],
             'idAtendente' => $_POST['idAtendente'],
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
@@ -104,7 +105,7 @@ if (isset($_GET['operacao'])) {
             'horaFinalPrevisto' => $_POST['horaFinalPrevisto']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'POST');
-        
+
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
     }
 

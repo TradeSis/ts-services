@@ -355,9 +355,9 @@ $demandas = buscaDemandasAbertas();
               <div class="col-md-4" style="margin-top: -10px;">
                 <div class="form-group" id="demandaContainer">
                   <label class="labelForm">ID/Demanda Relacionada</label>
-                  <input type="text" class="data select form-control" id="tituloDemanda" name="tituloDemanda" style="margin-top: 18px;"
+                  <input type="text" class="data select form-control" id="tituloDemanda" style="margin-top: 18px;"
                     autocomplete="off" readonly>
-                  <select class="form-control" name="idDemanda" id="idDemanda">
+                  <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
                     <?php
                     foreach ($demandas as $demanda) {
                       ?>
@@ -372,14 +372,8 @@ $demandas = buscaDemandasAbertas();
               <div class="col-md-4" style="margin-top: -10px;">
                 <div class="form-group">
                   <label class="labelForm">Cliente</label>
-                  <select class="form-control" name="idCliente" id="idCliente">
-                    <?php
-                    foreach ($clientes as $cliente) {
-                      ?>
-                    <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
-                    </option>
-                    <?php } ?>
-                  </select>
+                  <input type="text" class="data select form-control" id="nomeCliente" style="margin-top: 18px;"
+                    autocomplete="off" readonly>
                 </div>
               </div>
               <div class="col-md-4">
@@ -398,7 +392,7 @@ $demandas = buscaDemandasAbertas();
               <div class="col-md-4">
                 <div class="form-group">
                   <label class='control-label' for='inputNormal'>Ocorrência</label>
-                  <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
+                  <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia" required>
                     <?php
                     foreach ($ocorrencias as $ocorrencia) {
                       ?>
@@ -550,51 +544,46 @@ $demandas = buscaDemandasAbertas();
     }
 
     $(document).on('click', 'button[data-target="#alterarmodal"]', function () {
-    var idTarefa = $(this).attr("data-idtarefa");
-    $.ajax({
-      type: 'POST',
-      dataType: 'json',
-      url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-      data: {
-        idTarefa: idTarefa
-      },
-      success: function (data) {
-        $('#idTarefa').val(data.idTarefa);
-        $('#tituloTarefa').val(data.tituloTarefa);
-        $('#idCliente').val(data.idCliente);
-        $('#nomeCliente').val(data.nomeCliente);
-        $('#idDemanda').val(data.idDemanda);
-        $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
-        $('#idAtendente').val(data.idAtendente);
-        $('#nomeUsuario').val(data.nomeUsuario);
-        $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
-        $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);
-        $('#Previsto').val(data.Previsto);
-        $('#horaInicioPrevisto').val(data.horaInicioPrevisto);
-        $('#horaFinalPrevisto').val(data.horaFinalPrevisto);
-        $('#dataReal').val(data.dataReal);
-        $('#horaInicioReal').val(data.horaInicioReal);
-        $('#horaFinalReal').val(data.horaFinalReal);
-        $('#horaCobrado').val(data.horaCobrado);
+      var idTarefa = $(this).attr("data-idtarefa");
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
+        data: {
+          idTarefa: idTarefa
+        },
+        success: function (data) {
+          $('#idTarefa').val(data.idTarefa);
+          $('#tituloTarefa').val(data.tituloTarefa);
+          $('#idCliente').val(data.idCliente);
+          $('#nomeCliente').val(data.nomeCliente);
+          $('#idDemanda').val(data.idDemanda);
+          $('#idDemandaSelect').val(data.idDemanda);
+          $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
+          $('#idAtendente').val(data.idAtendente);
+          $('#nomeUsuario').val(data.nomeUsuario);
+          $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
+          $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);
+          $('#Previsto').val(data.Previsto);
+          $('#horaInicioPrevisto').val(data.horaInicioPrevisto);
+          $('#horaFinalPrevisto').val(data.horaFinalPrevisto);
+          $('#dataReal').val(data.dataReal);
+          $('#horaInicioReal').val(data.horaInicioReal);
+          $('#horaFinalReal').val(data.horaFinalReal);
+          $('#horaCobrado').val(data.horaCobrado);
 
-        if (data.idCliente !== null) {
-          $('#idCliente').prop('disabled', true);
-        } else {
-          $('#idCliente').prop('disabled', false);
+          if (data.idDemanda !== null) {
+            $('#idDemandaSelect').hide();
+            $('#tituloDemanda').show();
+          } else {
+            $('#idDemandaSelect').show();
+            $('#tituloDemanda').hide();
+          }
+
+          $('#alterarmodal').modal('show');
         }
-
-        if (data.idDemanda !== null) {
-          $('#idDemanda').hide(); // Hide #idDemanda
-          $('#tituloDemanda').show(); // Show #tituloDemanda
-        } else {
-          $('#idDemanda').show(); // Show #idDemanda
-          $('#tituloDemanda').hide(); // Hide #tituloDemanda
-        }
-
-        $('#alterarmodal').modal('show');
-      }
+      });
     });
-  });
 
     $('.btnAbre').click(function () {
       $('.menuFiltros').toggleClass('mostra');

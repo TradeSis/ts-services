@@ -2,6 +2,10 @@
 // helio 21032023 - compatibilidade chamada chamaApi
 // gabriel 06022023 calculo timediff
 // gabriel 15:10
+if (session_status() === PHP_SESSION_NONE) {
+	session_start();
+}
+
 
 include_once __DIR__ . "/../conexao.php";
 

@@ -9,11 +9,11 @@
 
 
 include_once '../head.php';
-include_once(ROOT.'/sistema/database/usuario.php');
-include_once(ROOT.'/sistema/database/clientes.php');
+include_once(ROOT.'/cadastros/database/usuario.php');
+include_once(ROOT.'/cadastros/database/clientes.php');
 
 
-$usuario = buscaUsuarios($_SESSION['idUsuario']);
+$usuario = buscaUsuarios($_SESSION['idLogin']);
 $clientes = buscaClientes();
 ?>
 

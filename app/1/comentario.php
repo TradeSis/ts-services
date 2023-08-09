@@ -2,8 +2,12 @@
 //gabriel 08022023 10:48
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
 
-$conexao = conectaMysql();
+$conexao = conectaMysql($idEmpresa);
 $demanda = array();
 $sql = "SELECT comentario.*, usuario.nomeUsuario, demanda.idDemanda FROM comentario  
         INNER JOIN usuario on comentario.idUsuario = usuario.idUsuario 

@@ -2,8 +2,11 @@
 //gabriel 06022023 16:52
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
-
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idTipoOcorrencia'])) {
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
     $nomeTipoOcorrencia = $jsonEntrada['nomeTipoOcorrencia'];

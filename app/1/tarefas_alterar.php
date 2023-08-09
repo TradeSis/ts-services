@@ -3,7 +3,17 @@
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
-$conexao = conectaMysql();
+
+/* LOG em arquivo
+$arqlog = defineCaminhoLog()."/api/php_errors.log";
+$arquivo = fopen($arqlog,"a");
+fwrite($arquivo,"jsonEntrada->".json_encode($jsonEntrada)."\n");   
+*/
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 
 if (isset($jsonEntrada['idTarefa'])) {
     $idTarefa = $jsonEntrada['idTarefa'];

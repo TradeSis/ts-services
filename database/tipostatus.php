@@ -9,9 +9,17 @@ function buscaTipoStatus($statusInicial=null, $idTipoStatus=null)
 {
 	
 	$tipostatus = array();
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+
 	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
 		'statusInicial' => $statusInicial,
 		'idTipoStatus' => $idTipoStatus,
+		
 	);
 	$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'GET');
 	return $tipostatus;
@@ -21,6 +29,37 @@ function buscaTipoStatus($statusInicial=null, $idTipoStatus=null)
 if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+	if ($operacao=="GET_JSON") {
+		$apiEntrada = array(
+			'idEmpresa' => $idEmpresa,
+			'idTipoStatus' => $_GET['idTipoStatus']
+		);
+		
+		
+		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'GET');
+		echo json_encode($tipostatus);
+		return $tipostatus;
+	}
+	if ($operacao=="JSON_alterar") {
+		//echo json_encode($_POST);
+	
+		$apiEntrada = array(
+			'idEmpresa' => $idEmpresa,
+			'idTipoStatus' => $_POST['idTipoStatus'],
+			'nomeTipoStatus' => $_POST['nomeTipoStatus'],
+			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
+			'mudaStatusPara' => $_POST['mudaStatusPara']
+		);
+		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'POST');
+		echo json_encode($tipostatus);
+		
+		return;
+		
+	}
 
 	if ($operacao=="GET_JSON") {
 		$apiEntrada = array(
@@ -50,6 +89,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao=="inserir") {
 		$apiEntrada = array(
+			'idEmpresa' => $idEmpresa,
 			'nomeTipoStatus' => $_POST['nomeTipoStatus'],
 			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
@@ -59,6 +99,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao=="alterar") {
 		$apiEntrada = array(
+			'idEmpresa' => $idEmpresa,
 			'idTipoStatus' => $_POST['idTipoStatus'],
 			'nomeTipoStatus' => $_POST['nomeTipoStatus'],
 			'mudaPosicaoPara' => $_POST['mudaPosicaoPara'],
@@ -69,6 +110,7 @@ if (isset($_GET['operacao'])) {
 	}
 	if ($operacao=="excluir") {
 		$apiEntrada = array(
+			'idEmpresa' => $idEmpresa,
 			'idTipoStatus' => $_POST['idTipoStatus']
 		);
 		$tipostatus = chamaAPI(null, '/services/tipostatus', json_encode($apiEntrada), 'DELETE');

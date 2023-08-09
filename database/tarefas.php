@@ -9,9 +9,16 @@ function buscaTarefas($idDemanda=null,$idTarefa=null)
 {
 
     $tarefas = array();
+
+    $idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+
     $apiEntrada = array(
         'idDemanda' => $idDemanda,
         'idTarefa' => $idTarefa,
+        'idEmpresa' => $idEmpresa,
     );
     $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');
     return $tarefas;
@@ -20,36 +27,74 @@ function buscaTarefasGrafico1()
 {
 
     $dadosGrafico1 = array();
-    $dadosGrafico1 = chamaAPI(null, '/services/tarefas/grafico1', null, 'GET');
+    $idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+    $apiEntrada = array(
+        'idEmpresa' => $idEmpresa,
+    );
+    $dadosGrafico1 = chamaAPI(null, '/services/tarefas/grafico1', json_encode($apiEntrada), 'GET');
     return $dadosGrafico1;
 }
 function buscaTarefasGrafico2()
 {
 
+    $idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+
+    $apiEntrada = array(
+        'idEmpresa' => $idEmpresa
+    );
     $dadosGrafico2 = array();
-    $dadosGrafico2 = chamaAPI(null, '/services/tarefas/grafico2', null, 'GET');
+    $dadosGrafico2 = chamaAPI(null, '/services/tarefas/grafico2', $apiEntrada, 'GET');
     return $dadosGrafico2;
 }
 function buscaTarefasGrafico3()
 {
 
+    $idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+
+    $apiEntrada = array(
+        'idEmpresa' => $idEmpresa
+    );
     $dadosGrafico3 = array();
-    $dadosGrafico3 = chamaAPI(null, '/services/tarefas/grafico3', null, 'GET');
+    $dadosGrafico3 = chamaAPI(null, '/services/tarefas/grafico3', $apiEntrada, 'GET');
     return $dadosGrafico3;
 }
 
 function buscaTarefasGrafico4()
 {
+    $idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+
+    $apiEntrada = array(
+        'idEmpresa' => $idEmpresa
+    );
 
     $dadosGrafico4 = array();
-    $dadosGrafico4 = chamaAPI(null, '/services/tarefas/grafico4', null, 'GET');
+    $dadosGrafico4 = chamaAPI(null, '/services/tarefas/grafico4', $apiEntrada, 'GET');
     return $dadosGrafico4;
 }
 function buscaHoras($idDemanda)
 {
 
     $horas = array();
+
+    $idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+
     $apiEntrada = array(
+        'idEmpresa' => $idEmpresa,
         'idDemanda' => $idDemanda
     );
     $horas = chamaAPI(null, '/services/horas', json_encode($apiEntrada), 'GET');
@@ -59,9 +104,13 @@ function buscaHoras($idDemanda)
 if (isset($_GET['operacao'])) {
 
     $operacao = $_GET['operacao'];
-
+    $idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
     if ($operacao == "inserir") {
         $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
@@ -76,6 +125,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "iniciar") {
         $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
@@ -89,6 +139,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "alterar") {
         $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'idDemandaSelect' => $_POST['idDemandaSelect'],
@@ -110,6 +161,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "start") {
         $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
@@ -120,6 +172,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "realizado") {
         $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
@@ -130,6 +183,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "stop") {
         $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
@@ -140,6 +194,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "previsao") {
         $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
@@ -158,6 +213,7 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "alterarPrevisao") {
         $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tituloTarefa' => $_POST['tituloTarefa'],
@@ -202,6 +258,7 @@ if (isset($_GET['operacao'])) {
 
 
 		$apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
 			'idCliente' => $idCliente,
 			'idAtendente' => $idAtendente,
 			'tituloTarefa' => $tituloTarefa,
@@ -227,6 +284,7 @@ if (isset($_GET['operacao'])) {
 		}
 
 		$apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
 			'idTarefa' => $idTarefa
 		);
 		$tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');

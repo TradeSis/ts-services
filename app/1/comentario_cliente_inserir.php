@@ -3,7 +3,11 @@
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 include_once __DIR__ . "/../config.php";
 
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idDemanda'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
     $comentario = $jsonEntrada['comentario'];

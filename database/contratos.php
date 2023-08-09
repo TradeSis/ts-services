@@ -24,10 +24,16 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
 {
 
 	$contrato = array();
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
 	$apiEntrada = array(
 		'idContrato' => $idContrato,
 		'idContratoStatus' => $idContratoStatus,
-		'idCliente' => $idCliente
+		'idCliente' => $idCliente,
+		'idEmpresa' => $idEmpresa
 	);
 	$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
 
@@ -50,7 +56,13 @@ function buscaCards($where)
 {
 
 	$cards = array();
-	$apiEntrada = array();
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
+	);
 	$cards = chamaAPI(null, '/services/contrato/totais', json_encode($apiEntrada), 'GET');
 
 	return $cards;
@@ -65,6 +77,7 @@ if (isset($_GET['operacao'])) {
 	if ($operacao == "inserir") {
 
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'tituloContrato' => $_POST['tituloContrato'],
 			'descricao' => $_POST['descricao'],
 			'idContratoStatus' => $_POST['idContratoStatus'],
@@ -84,6 +97,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "alterar") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idContrato' => $_POST['idContrato'],
 			'tituloContrato' => $_POST['tituloContrato'],
 			'descricao' => $_POST['descricao'],
@@ -101,6 +115,7 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "finalizar") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idContrato' => $_POST['idContrato'],
 			'dataFechamento' => $_POST['dataFechamento'],
 
@@ -112,6 +127,7 @@ if (isset($_GET['operacao'])) {
 	}
 	if ($operacao == "excluir") {
 		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idContrato' => $_POST['idContrato'],
 
 		);
@@ -138,8 +154,13 @@ if (isset($_GET['operacao'])) {
 			$tituloContrato = null;
 		} 
 
+		$idEmpresa = null;
+		if (isset($_SESSION['idEmpresa'])) {
+			$idEmpresa = $_SESSION['idEmpresa'];
+		}
 
 		$apiEntrada = array(
+			'idEmpresa' => $idEmpresa,
 			'idContrato' => null,
 			'idCliente' => $idCliente,
 			'idContratoStatus' => $idContratoStatus,

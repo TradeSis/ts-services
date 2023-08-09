@@ -1,9 +1,11 @@
 <?php
 // Lucas 07022023 criacao
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
-
-
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idContrato'])) {
         $idContrato = $jsonEntrada['idContrato'];
         $dataFechamento = $jsonEntrada['dataFechamento'];

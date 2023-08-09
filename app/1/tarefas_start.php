@@ -3,7 +3,11 @@
 
 
 date_default_timezone_set('America/Sao_Paulo');
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 
 $statusStart = array(
     TIPOSTATUS_FILA,

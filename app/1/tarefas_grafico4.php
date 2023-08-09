@@ -16,8 +16,12 @@ $meses = array(
     11 => 'Novembro',
     12 => 'Dezembro'
 );
+$idEmpresa = null;
+if (isset($jsonEntrada["idEmpresa"])) {
+    $idEmpresa = $jsonEntrada["idEmpresa"];
+}
 
-$conexao = conectaMysql();
+$conexao = conectaMysql($idEmpresa);
 $tarefa = array();
 $sql = "SELECT * FROM (SELECT YEAR(horaInicioReal) AS Ano, MONTH(horaInicioReal) AS Mes, tipoocorrencia.nomeTipoOcorrencia, SEC_TO_TIME(SUM(TIME_TO_SEC(horasCobrado))) AS total FROM tarefa
         INNER JOIN demanda ON demanda.idDemanda = tarefa.idDemanda

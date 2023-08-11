@@ -28,7 +28,7 @@ $demandas = buscaDemandasAbertas();
 
     <div class="row">
       <div class=" btnAbre">
-        <span style="font-size: 25px" class="material-symbols-outlined">
+        <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
           filter_alt
         </span>
 

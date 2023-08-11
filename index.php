@@ -21,6 +21,31 @@ $nivelMenu   =  $nivelMenuLogin['nivelMenu'];
         color: #1B4D60;
         background-color: transparent;
     }
+
+    .nav-link1{
+        background-color: #567381;
+        color: #FFF;
+        border-radius: 3px 3px 0 0;
+    }
+
+    .nav-link1 a{
+        color: #FFF;
+    }
+
+    a.nav-link.nav-link1:hover{
+        color: #FFF;
+    }
+
+    a.nav-link.nav-link1.active:hover{
+        color: #567381;
+    }
+
+    .nav-link1.active{
+        background-color: #EEEEEE;
+        border-radius: 3px 3px 0 0;
+        border-bottom: 3px solid #EEEEEE;
+    }
+    
 </style>
 
 <div class="container-fluid mt-1">
@@ -38,49 +63,49 @@ $nivelMenu   =  $nivelMenuLogin['nivelMenu'];
 
 
             <?php if ($nivelMenu>=3) { ?>
-                <li class="nav-item ">
-                    <a class="nav-link <?php if ($tab=="dashboard") {echo " active ";} ?>" 
+                <li class="nav-item mr-1">
+                    <a class="nav-link1 nav-link <?php if ($tab=="dashboard") {echo " active ";} ?>" 
                         href="?tab=dashboard" 
                         role="tab"                        
-                        style="color:black">Dashboard</a>
+                        >Dashboard</a>
                 </li>
             <?php } if ($nivelMenu>=3) { ?>
-                <li class="nav-item ">
-                    <a class="nav-link <?php if ($tab=="tarefas") {echo " active ";} ?>" 
+                <li class="nav-item mr-1">
+                    <a class="nav-link1 nav-link <?php if ($tab=="tarefas") {echo " active ";} ?>" 
                         href="?tab=tarefas" 
                         role="tab"                        
-                        style="color:black">Tarefas</a>
+                        >Tarefas</a>
                 </li>
             
             <?php } if ($nivelMenu>=3) { ?>
-                <li class="nav-item ">
-                    <a class="nav-link <?php if ($tab=="demandas") {echo " active ";} ?>" 
+                <li class="nav-item mr-1">
+                    <a class="nav-link1 nav-link <?php if ($tab=="demandas") {echo " active ";} ?>" 
                         href="?tab=demandas" 
                         role="tab"                        
-                        style="color:black">Demandas</a>
+                        >Demandas</a>
                 </li>
                 
             <?php } if ($nivelMenu>=3) { ?>
-                <li class="nav-item ">
-                    <a class="nav-link <?php if ($tab=="contratos") {echo " active ";} ?>" 
+                <li class="nav-item mr-1">
+                    <a class="nav-link1 nav-link <?php if ($tab=="contratos") {echo " active ";} ?>" 
                         href="?tab=contratos" 
                         role="tab"                        
-                        style="color:black">Contratos</a>
+                        >Contratos</a>
                 </li>
             <?php } if ($nivelMenu>=3) { ?>
-                <li class="nav-item ">
-                    <a class="nav-link <?php if ($tab=="agenda") {echo " active ";} ?>" 
+                <li class="nav-item mr-1">
+                    <a class="nav-link1 nav-link <?php if ($tab=="agenda") {echo " active ";} ?>" 
                         href="?tab=agenda" 
                         role="tab"                        
-                        style="color:black">Agenda</a>
+                        >Agenda</a>
                 </li>
             <?php } if ($nivelMenu>=4) { ?>
-                <li class="nav-item ">
-                    <a class="nav-link <?php if ($tab=="configuracao") {echo " active ";} ?>" 
+                <li class="nav-item mr-1">
+                    <a class="nav-link1 nav-link <?php if ($tab=="configuracao") {echo " active ";} ?>" 
                         href="?tab=configuracao" 
                         role="tab"                        
                         data-toggle="tooltip" data-placement="top" title="Configurações"                   
-                        style="color:black"><i class="bi bi-gear" style="font-size: 18px;"></i></a>
+                        ><i class="bi bi-gear"></i></a>
                 </li>
             <?php } ?>
 
@@ -114,7 +139,7 @@ $nivelMenu   =  $nivelMenuLogin['nivelMenu'];
 if ($src!=="") {
     //echo URLROOT ."/services/". $src;
 ?>
-    <div class="diviFrame" style="overflow:hidden; height: 85vh">
+    <div class="diviFrame" style="overflow:hidden; height: 85vh;background-color: #EEEEEE;">
         <iframe class="iFrame container-fluid " id="iFrameTab" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
     </div>
 <?php

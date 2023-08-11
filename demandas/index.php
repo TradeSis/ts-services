@@ -135,6 +135,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     color: #fff;
     width: 160px;
   }
+
 </style>
 
 <body class="bg-transparent">
@@ -361,7 +362,7 @@ echo "selected";
 
     <div class="row">
       <div class=" btnAbre">
-        <span style="font-size: 25px" class="material-symbols-outlined">
+        <span style="font-size: 25px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
           filter_alt
         </span>
 
@@ -376,7 +377,7 @@ echo "selected";
           <input type="text" class="form-control" id="tituloDemanda" placeholder="Buscar por...">
           <span class="input-group-btn">
             <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
-              <span style="font-size: 20px" class="material-symbols-outlined">search</span>
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
             </button>
           </span>
         </div>

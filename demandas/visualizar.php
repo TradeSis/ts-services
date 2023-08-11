@@ -81,6 +81,7 @@ $tarefas = buscaTarefas($idDemanda);
     .modal-backdrop {
         background-color: rgba(200, 200, 200, 0.5);
     }
+
 </style>
 
 <body class="bg-transparent">

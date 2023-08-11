@@ -315,7 +315,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
                 <div class="row">
                     <div class=" btnAbre">
-                        <span style="font-size: 25px" class="material-symbols-outlined">
+                        <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                             filter_alt
                         </span>
 
@@ -329,7 +329,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         <div class="input-group">
                             <input type="text" class="form-control" id="tituloContrato" placeholder="Buscar por...">
                             <span class="input-group-btn">
-                                <button class="btn btn-primary" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
+                                <button class="btn btn-primary" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                                         search
                                     </span></button>
                             </span>

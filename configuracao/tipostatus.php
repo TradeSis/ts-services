@@ -15,21 +15,21 @@ $tiposstatus = buscaTipoStatus();
 
             <div class="row mt-4">
                 <div class="col-sm-8">
-                        <p class="tituloTabela">Tipos de Status</p>
+                        <h2 class="tituloTabela" style="color:#12192C">Tipos de Status</h2>
                     </div>
 
                 <div class="col-sm-4" style="text-align:right">
-                        <a href="tipostatus_inserir.php" role="button" class="btn btn-primary">Adicionar Status</a>
+                        <a href="tipostatus_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
                     </div>
           
             </div>
 
-        <div class="card shadow mt-2">
+        <div class="card mt-2 text-center">
             <table class="table">
-                <thead>
+                <thead class="thead-light">
                     <tr>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Ação</th>
+                        <th style="color:#12192C">Status</th>
+                        <th style="color:#12192C">Ação</th>
 
                     </tr>
                 </thead>
@@ -38,10 +38,10 @@ $tiposstatus = buscaTipoStatus();
                 foreach ($tiposstatus as $tipostatus) {
                 ?>
                     <tr>
-                        <td class="text-center"><?php echo $tipostatus['nomeTipoStatus'] ?></td>
-                        <td class="text-center">
-                            <a class="btn btn-primary btn-sm" href="tipostatus_alterar.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button">Editar</a>
-                            <a class="btn btn-danger btn-sm" href="tipostatus_excluir.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button">Excluir</a>
+                        <td style="color:#12192C"><?php echo $tipostatus['nomeTipoStatus'] ?></td>
+                        <td style="color:#12192C">
+                            <a class="btn btn-warning btn-sm" href="tipostatus_alterar.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-pencil-square"></i></a>
+                            <a class="btn btn-danger btn-sm" href="tipostatus_excluir.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-trash3"></i></a>
                             
                             <button id="<?php echo $tipostatus['idTipoStatus'] ?>" class='btn btn-outline-warning btn-sm' onclick="popTipoStatus(<?php echo $tipostatus['idTipoStatus'] ?>)">Editar</button>
                         </td>

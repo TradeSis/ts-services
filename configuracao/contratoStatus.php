@@ -16,20 +16,20 @@ $contratoStatus = buscaContratoStatus();
             
             <div class="row mt-4">
                 <div class="col-sm-8">
-                        <p class="tituloTabela">Contrato Status</p>
+                        <h2 class="tituloTabela" style="color:#12192C">Contrato Status</h2>
                     </div>
 
                 <div class="col-sm-4" style="text-align:right">
-                        <a href="contratoStatus_inserir.php" role="button" class="btn btn-primary">Adicionar</a>
+                        <a href="contratoStatus_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
                     </div>
           
             </div>
-        <div class="card shadow mt-2">
+        <div class="card mt-2 text-center">
             <table class="table">
-                <thead>
+                <thead class="thead-light">
                     <tr>
-                        <th scope="col">Nome Status</th>
-                        <th scope="col">Ação</th>
+                        <th style="color:#12192C" scope="col">Nome Status</th>
+                        <th style="color:#12192C" scope="col">Ação</th>
 
                     </tr>
                 </thead>
@@ -44,8 +44,8 @@ $contratoStatus = buscaContratoStatus();
                             <?php //echo json_encode($contratoStatus) ?>
                         </td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="contratoStatus_alterar.php?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button">Editar</a>
-                            <a class="btn btn-danger btn-sm" href="contratoStatus_excluir1.php?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button">Excluir</a>
+                            <a class="btn btn-warning btn-sm" href="contratoStatus_alterar.php?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button"><i class="bi bi-pencil-square"></i></a>
+                            <a class="btn btn-danger btn-sm" href="contratoStatus_excluir1.php?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button"><i class="bi bi-trash3"></i></a>
 
                             <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#?idContratoStatus=<?php echo $contratostatus['idContratoStatus'] ?>" role="button">Excluir</a>
 

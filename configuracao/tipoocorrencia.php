@@ -11,34 +11,34 @@ $ocorrencias = buscaTipoOcorrencia();
     <div class="container" style="margin-top:10px">
         <div class="row mt-4">
             <div class="col-sm-8">
-                <p class="tituloTabela">Ocorrências</p>
+                <h2 class="tituloTabela" style="color:#12192C">Tipo Ocorrência</h2>
             </div>
             <div class="col-sm-4" style="text-align:right">
-                <a href="tipoocorrencia_inserir.php" role="button" class="btn btn-primary">Adicionar Ocorrência</a>
+                <a href="tipoocorrencia_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
             </div>
         </div>
-        <div class="card shadow mt-2">
+        <div class="card mt-2 text-center" >
             <table class="table">
-                <thead>
+                <thead class="thead-light">
                     <tr>
-                        <th class="text-center">Ocorrência</th>
-                        <th class="text-center">Ação</th>
+                        <th style="color:#12192C">Ocorrência</th>
+                        <th style="color:#12192C">Ação</th>
                     </tr>
                 </thead>
                 <?php
                 foreach ($ocorrencias as $ocorrencia) {
                     ?>
                     <tr>
-                        <td class="text-center">
+                        <td style="color:#12192C">
                             <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
                         </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        <td style="color:#12192C">
+                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                 data-target="#alterarModal"
-                                data-idTipoOcorrencia="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">Editar</button>
+                                data-idTipoOcorrencia="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><i class="bi bi-pencil-square"></i></button>
                             <a class="btn btn-danger btn-sm"
                                 href="tipoocorrencia_excluir.php?idTipoOcorrencia=<?php echo $ocorrencia['idTipoOcorrencia'] ?>"
-                                role="button">Excluir</a>
+                                role="button"><i class="bi bi-trash3"></i></a>
                         </td>
                     </tr>
                 <?php } ?>

@@ -369,7 +369,7 @@ echo "selected";
       </div>
 
       <div class="col-sm-3 ml-2">
-        <p class="tituloTabela">Demandas</p>
+        <h2 class="tituloTabela" style="color:#12192C">Demandas</h2>
       </div>
 
       <div class="col-sm-4" style="margin-top:-10px;">
@@ -398,7 +398,7 @@ echo "selected";
 
 
       <div class="col-sm" style="text-align:right">
-        <a href="demanda_inserir.php" role="button" class="btn btn-success">Adicionar Demanda</a>
+        <a href="demanda_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
       </div>
     </div>
 
@@ -410,22 +410,22 @@ echo "selected";
           <thead class="thead-light">
             <?php if ($_SESSION['idEmpresa'] == NULL) { ?>
               <tr>
-                <th class="text-center">Prioridade</th>
-                <th class="text-center">ID</th>
-                <th class="text-center">Cliente</th>
-                <th class="text-center">Solicitante</th>
-                <th class="text-center">Demanda</th>
-                <th class="text-center">Responsavel</th>
-                <th class="text-center">Abertura</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Ocorrência</th>
-                <th class="text-center">Tamanho</th>
-                <th class="text-center">Ação</th>
+                <th style="color:#12192C" >Prioridade</th>
+                <th style="color:#12192C">ID</th>
+                <th style="color:#12192C">Cliente</th>
+                <th style="color:#12192C">Solicitante</th>
+                <th style="color:#12192C">Demanda</th>
+                <th style="color:#12192C">Responsavel</th>
+                <th style="color:#12192C">Abertura</th>
+                <th style="color:#12192C">Status</th>
+                <th style="color:#12192C">Ocorrência</th>
+                <th style="color:#12192C">Tamanho</th>
+                <th style="color:#12192C">Ação</th>
               </tr>
               <tr>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-                <th class="text-center" style="width: 10%;">
+                <th style="color:#12192C"></th>
+                <th style="color:#12192C"></th>
+                <th style="color:#12192C" style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
                       style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
@@ -442,10 +442,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="color:#12192C" style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
@@ -459,11 +459,11 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
-                <th class="text-center">
+                <th style="color:#12192C"></th>
+                <th style="color:#12192C">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($atendentes as $atendente) {
@@ -477,8 +477,8 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
-                <th class="text-center">
+                <th style="color:#12192C"></th>
+                <th style="color:#12192C">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
                       style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
@@ -494,10 +494,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="color:#12192C" style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -511,7 +511,7 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="color:#12192C" style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="tamanho" id="FiltroTamanho"
                       style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
@@ -522,26 +522,26 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
+                <th style="color:#12192C"></th>
+                <th style="color:#12192C"></th>
               </tr>
 
             <?php } //******************visão do Cliente 
             else { ?>
               <tr>
-                <th class="text-center">Prioridade</th>
-                <th class="text-center">ID</th>
-                <th class="text-center">Cliente</th>
-                <th class="text-center">Solicitante</th>
-                <th class="text-center">Demanda</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Ocorrência</th>
-                <th class="text-center">Ação</th>
+                <th style="color:#12192C">Prioridade</th>
+                <th style="color:#12192C">ID</th>
+                <th style="color:#12192C">Cliente</th>
+                <th style="color:#12192C">Solicitante</th>
+                <th style="color:#12192C">Demanda</th>
+                <th style="color:#12192C">Status</th>
+                <th style="color:#12192C">Ocorrência</th>
+                <th style="color:#12192C">Ação</th>
               </tr>
               <tr>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-                <th class="text-center" style="width: 10%;">
+                <th style="color:#12192C"></th>
+                <th style="color:#12192C"></th>
+                <th style="color:#12192C" style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
                       style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;" disabled>
@@ -557,10 +557,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="color:#12192C" style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px; background-color:#E9ECEF">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
@@ -574,11 +574,11 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
-                <th class="text-center">
+                <th style="color:#12192C"></th>
+                <th style="color:#12192C">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
@@ -591,10 +591,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="color:#12192C" style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -608,7 +608,7 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
+                <th style="color:#12192C"></th>
               </tr>
             <?php } ?>
           </thead>
@@ -672,7 +672,7 @@ echo "selected";
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
-              linha += "<td><a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+              linha += "<td><a class='btn btn-info btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -762,7 +762,7 @@ echo "selected";
             linha += "<td>" + object.tituloDemanda + "</td>";
             linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
             linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td><a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+            linha += "<td><a class='btn btn-info btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
             linha += "</tr>";
           }
 

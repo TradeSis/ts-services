@@ -384,20 +384,20 @@ if (isset($_SESSION['filtro_contrato'])) {
         <div class="card mt-2">    
             <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
                 <table class="table" id="myIframe" > <!-- table-striped -->
-                    <thead class="thead-light">
+                    <thead  style="background-color: #12192C; color:#fff">
 
                         <tr>
-                            <th style="color:#12192C">Cliente</th>
-                            <th style="color:#12192C">Titulo</th>
-                            <th style="color:#12192C">Status</th>
-                            <th style="color:#12192C">Previsão</th>
-                            <th style="color:#12192C">Entrega</th>
-                            <th style="color:#12192C">Atualização</th>
-                            <th style="color:#12192C">Fechamento</th>
-                            <th style="color:#12192C">Horas</th>
-                            <th style="color:#12192C">hora</th>
-                            <th style="color:#12192C">Contrato</th>
-                            <th colspan="2" style="color:#12192C">Ação</th>
+                            <th>Cliente</th>
+                            <th>Titulo</th>
+                            <th>Status</th>
+                            <th>Previsão</th>
+                            <th>Entrega</th>
+                            <th>Atualização</th>
+                            <th>Fechamento</th>
+                            <th>Horas</th>
+                            <th>hora</th>
+                            <th>Contrato</th>
+                            <th colspan="2">Ação</th>
                         </tr>
                     </thead>
                     <tbody id='dados' class="fonteCorpo">

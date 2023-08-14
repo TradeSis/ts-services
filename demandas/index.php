@@ -407,28 +407,28 @@ echo "selected";
     <div class="card mt-2">
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
-          <thead class="thead-light">
+          <thead style="background-color: #12192C; color:#fff">
             <?php if ($_SESSION['idEmpresa'] == NULL) { ?>
               <tr>
-                <th style="color:#12192C" >Prioridade</th>
-                <th style="color:#12192C">ID</th>
-                <th style="color:#12192C">Cliente</th>
-                <th style="color:#12192C">Solicitante</th>
-                <th style="color:#12192C">Demanda</th>
-                <th style="color:#12192C">Responsavel</th>
-                <th style="color:#12192C">Abertura</th>
-                <th style="color:#12192C">Status</th>
-                <th style="color:#12192C">Ocorrência</th>
-                <th style="color:#12192C">Tamanho</th>
-                <th style="color:#12192C">Ação</th>
+                <th >Prioridade</th>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Solicitante</th>
+                <th>Demanda</th>
+                <th>Responsavel</th>
+                <th>Abertura</th>
+                <th>Status</th>
+                <th>Ocorrência</th>
+                <th>Tamanho</th>
+                <th>Ação</th>
               </tr>
               <tr>
-                <th style="color:#12192C"></th>
-                <th style="color:#12192C"></th>
-                <th style="color:#12192C" style="width: 10%;">
+                <th></th>
+                <th></th>
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($clientes as $cliente) {
@@ -442,10 +442,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
@@ -459,11 +459,11 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C"></th>
-                <th style="color:#12192C">
+                <th></th>
+                <th>
                   <form action="" method="post">
                     <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($atendentes as $atendente) {
@@ -477,11 +477,11 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C"></th>
-                <th style="color:#12192C">
+                <th></th>
+                <th>
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
@@ -494,10 +494,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -511,10 +511,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="tamanho" id="FiltroTamanho"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <option value="P">P</option>
                       <option value="M">M</option>
@@ -522,29 +522,29 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C"></th>
-                <th style="color:#12192C"></th>
+                <th></th>
+                <th></th>
               </tr>
 
             <?php } //******************visão do Cliente 
             else { ?>
               <tr>
-                <th style="color:#12192C">Prioridade</th>
-                <th style="color:#12192C">ID</th>
-                <th style="color:#12192C">Cliente</th>
-                <th style="color:#12192C">Solicitante</th>
-                <th style="color:#12192C">Demanda</th>
-                <th style="color:#12192C">Status</th>
-                <th style="color:#12192C">Ocorrência</th>
-                <th style="color:#12192C">Ação</th>
+                <th>Prioridade</th>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Solicitante</th>
+                <th>Demanda</th>
+                <th>Status</th>
+                <th>Ocorrência</th>
+                <th>Ação</th>
               </tr>
               <tr>
-                <th style="color:#12192C"></th>
-                <th style="color:#12192C"></th>
-                <th style="color:#12192C" style="width: 10%;">
+                <th></th>
+                <th></th>
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;" disabled>
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C" disabled>
                       <?php
                       foreach ($clientes as $cliente) {
                         ?>
@@ -557,10 +557,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px; background-color:#E9ECEF">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
@@ -574,11 +574,11 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C"></th>
-                <th style="color:#12192C">
+                <th></th>
+                <th>
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
@@ -591,10 +591,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;background-color:#E9ECEF">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -608,7 +608,7 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th style="color:#12192C"></th>
+                <th></th>
               </tr>
             <?php } ?>
           </thead>

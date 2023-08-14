@@ -26,10 +26,10 @@ $tiposstatus = buscaTipoStatus();
 
         <div class="card mt-2 text-center">
             <table class="table">
-                <thead class="thead-light">
+                <thead style="background-color: #12192C; color:#fff">
                     <tr>
-                        <th style="color:#12192C">Status</th>
-                        <th style="color:#12192C">Ação</th>
+                        <th>Status</th>
+                        <th>Ação</th>
 
                     </tr>
                 </thead>
@@ -38,8 +38,8 @@ $tiposstatus = buscaTipoStatus();
                 foreach ($tiposstatus as $tipostatus) {
                 ?>
                     <tr>
-                        <td style="color:#12192C"><?php echo $tipostatus['nomeTipoStatus'] ?></td>
-                        <td style="color:#12192C">
+                        <td><?php echo $tipostatus['nomeTipoStatus'] ?></td>
+                        <td>
                             <a class="btn btn-warning btn-sm" href="tipostatus_alterar.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-pencil-square"></i></a>
                             <a class="btn btn-danger btn-sm" href="tipostatus_excluir.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-trash3"></i></a>
                             

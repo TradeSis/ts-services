@@ -26,10 +26,10 @@ $contratoStatus = buscaContratoStatus();
             </div>
         <div class="card mt-2 text-center">
             <table class="table">
-                <thead class="thead-light">
+                <thead style="background-color: #12192C; color:#fff">
                     <tr>
-                        <th style="color:#12192C" scope="col">Nome Status</th>
-                        <th style="color:#12192C" scope="col">Ação</th>
+                        <th scope="col">Nome Status</th>
+                        <th scope="col">Ação</th>
 
                     </tr>
                 </thead>

@@ -14,39 +14,6 @@ $nivelMenu   =  $nivelMenuLogin['nivelMenu'];
 
 ?>
 
-<style>
-    .nav-link.active {
-        border-bottom: 3px solid #2E59D9;
-        border-radius: 3px 3px 0 0;
-        color: #1B4D60;
-        background-color: transparent;
-    }
-
-    .nav-link1{
-        background-color: #567381;
-        color: #FFF;
-        border-radius: 3px 3px 0 0;
-    }
-
-    .nav-link1 a{
-        color: #FFF;
-    }
-
-    a.nav-link.nav-link1:hover{
-        color: #FFF;
-    }
-
-    a.nav-link.nav-link1.active:hover{
-        color: #567381;
-    }
-
-    .nav-link1.active{
-        background-color: #EEEEEE;
-        border-radius: 3px 3px 0 0;
-        border-bottom: 3px solid #EEEEEE;
-    }
-    
-</style>
 
 <div class="container-fluid mt-1">
     <div class="row">
@@ -139,7 +106,7 @@ $nivelMenu   =  $nivelMenuLogin['nivelMenu'];
 if ($src!=="") {
     //echo URLROOT ."/services/". $src;
 ?>
-    <div class="diviFrame" style="overflow:hidden; height: 85vh;background-color: #EEEEEE;">
+    <div class="diviFrame" style="overflow:hidden; height: 85vh;">
         <iframe class="iFrame container-fluid " id="iFrameTab" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
     </div>
 <?php

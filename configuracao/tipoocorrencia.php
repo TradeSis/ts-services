@@ -19,20 +19,20 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
         <div class="card mt-2 text-center" >
             <table class="table">
-                <thead class="thead-light">
+                <thead style="background-color: #12192C; color:#fff">
                     <tr>
-                        <th style="color:#12192C">Ocorrência</th>
-                        <th style="color:#12192C">Ação</th>
+                        <th>Ocorrência</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <?php
                 foreach ($ocorrencias as $ocorrencia) {
                     ?>
                     <tr>
-                        <td style="color:#12192C">
+                        <td>
                             <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
                         </td>
-                        <td style="color:#12192C">
+                        <td>
                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                 data-target="#alterarModal"
                                 data-idTipoOcorrencia="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><i class="bi bi-pencil-square"></i></button>

@@ -11,7 +11,7 @@ $ocorrencias = buscaTipoOcorrencia();
     <div class="container" style="margin-top:10px">
         <div class="row mt-4">
             <div class="col-sm-8">
-                <h2 class="tituloTabela" style="color:#12192C">Tipo Ocorrência</h2>
+                <h2 class="tituloTabela">Tipo Ocorrência</h2>
             </div>
             <div class="col-sm-4" style="text-align:right">
                 <a href="tipoocorrencia_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
@@ -19,7 +19,7 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
         <div class="card mt-2 text-center" >
             <table class="table">
-                <thead style="background-color: #12192C; color:#fff">
+                <thead class="cabecalhoTabela">
                     <tr>
                         <th>Ocorrência</th>
                         <th>Ação</th>

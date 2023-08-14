@@ -35,7 +35,7 @@ $demandas = buscaDemandasAbertas();
       </div>
 
       <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela" style="color:#12192C">Tarefas</h2>
+        <h2 class="tituloTabela">Tarefas</h2>
       </div>
 
       <div class="col-sm-4" style="margin-top:-10px;">
@@ -61,7 +61,7 @@ $demandas = buscaDemandasAbertas();
     <div class="card mt-2 text-center">
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
-          <thead style="background-color: #12192C; color:#fff">
+          <thead class="cabecalhoTabela">
             <tr>
               <th>ID</th>
               <th>Tarefa</th>

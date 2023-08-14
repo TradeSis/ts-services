@@ -3,14 +3,10 @@ include_once(__DIR__ . '/../head.php');
 ?>
 
 <style>
-  .temp {
-    color: black
-  }
+
   .nav-link.active:any-link{
-    font-weight: 700;
     background-color: transparent;
     border: 2px solid #DFDFDF;
-    /* border-right: 2px solid #002C53; */
     border-radius: 5px 5px 0px 0px;
     color: #1B4D60;
   }
@@ -21,10 +17,9 @@ include_once(__DIR__ . '/../head.php');
     border-radius: 5px 5px 0px 0px;
     color: #fff;
   }
-
   
 </style>
-<div class="container">
+<div class="container-fluid">
   <div class="row mt-3" ><!-- style="border: 1px solid #DFDFDF;" -->
     <div class="col-md-2 ">
       <ul class="nav nav-pills flex-column" id="myTab" role="tablist">

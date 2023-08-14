@@ -407,10 +407,10 @@ echo "selected";
     <div class="card mt-2" style="background-color: #EEEEEE">
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
-          <thead style="background-color: #12192C; color:#fff">
+          <thead class="cabecalhoTabela">
             <?php if ($_SESSION['idEmpresa'] == NULL) { ?>
               <tr>
-                <th >Prioridade</th>
+                <th>Prioridade</th>
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>

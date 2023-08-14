@@ -16,7 +16,7 @@ $contratoStatus = buscaContratoStatus();
             
             <div class="row mt-4">
                 <div class="col-sm-8">
-                        <h2 class="tituloTabela" style="color:#12192C">Contrato Status</h2>
+                        <h2 class="tituloTabela">Contrato Status</h2>
                     </div>
 
                 <div class="col-sm-4" style="text-align:right">
@@ -26,7 +26,7 @@ $contratoStatus = buscaContratoStatus();
             </div>
         <div class="card mt-2 text-center">
             <table class="table">
-                <thead style="background-color: #12192C; color:#fff">
+                <thead class="cabecalhoTabela">
                     <tr>
                         <th scope="col">Nome Status</th>
                         <th scope="col">Ação</th>

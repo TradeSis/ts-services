@@ -15,7 +15,7 @@ $tiposstatus = buscaTipoStatus();
 
             <div class="row mt-4">
                 <div class="col-sm-8">
-                        <h2 class="tituloTabela" style="color:#12192C">Tipos de Status</h2>
+                        <h2 class="tituloTabela">Tipos de Status</h2>
                     </div>
 
                 <div class="col-sm-4" style="text-align:right">
@@ -26,7 +26,7 @@ $tiposstatus = buscaTipoStatus();
 
         <div class="card mt-2 text-center">
             <table class="table">
-                <thead style="background-color: #12192C; color:#fff">
+                <thead class="cabecalhoTabela">
                     <tr>
                         <th>Status</th>
                         <th>Ação</th>

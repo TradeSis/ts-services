@@ -49,16 +49,17 @@ $tarefas = buscaTarefas($idDemanda);
         cursor: pointer;
         position: relative;
         z-index: 5;
-        background-color: lightgray;
-        color: black;
+        border-radius: 3px 3px 0 0;
+        background-color: #567381;
+        color: #EEEEEE;
     }
 
     #tabs .whiteborder {
         border: 1px solid #707070;
         border-bottom: 1px solid #fff;
         border-radius: 3px 3px 0 0;
-        background-color: lightblue;
-        color: white;
+        background-color: #EEEEEE;
+        color: #567381;
     }
 
     #tabs .tabContent {

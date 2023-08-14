@@ -381,7 +381,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
             <!-- </div> -->
-        <div class="card mt-2">    
+        <div class="card mt-2" style="background-color: #EEEEEE">    
             <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
                 <table class="table" id="myIframe" > <!-- table-striped -->
                     <thead  style="background-color: #12192C; color:#fff">

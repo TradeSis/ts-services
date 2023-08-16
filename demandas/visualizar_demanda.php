@@ -176,7 +176,7 @@ $statusEncerrar = array(
                 </div>
             </div>
 
-            <?php if ($_SESSION['idEmpresa'] == NULL) { ?>
+            <?php if ($ClienteSession == NULL) { ?>
                 <div class="card-footer bg-transparent" style="margin-top: 50px;">
 
                     <input type="submit" name="submit" id="submit" class="btn btn-success" style="float: right;"

@@ -26,9 +26,12 @@ $usuario = buscaUsuarios($_SESSION['idLogin']);
 $comentarios = buscaComentarios($idDemanda);
 $cliente = buscaClientes($demanda["idCliente"]);
 $clientes = buscaClientes();
-
-
 $tarefas = buscaTarefas($idDemanda);
+
+$ClienteSession = null;
+if (isset($_SESSION['idCliente'])) {
+  $ClienteSession = $_SESSION['idCliente'];
+}
 
 ?>
 

@@ -15,15 +15,15 @@
 
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/demanda.php');
-//include_once '../database/demanda.php';
 include_once(ROOT.'/cadastros/database/clientes.php');
 include_once(ROOT.'/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipostatus.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
-//include_once '../database/tipostatus.php';
-//include_once '../database/tipoocorrencia.php';
 
-
+$ClienteSession = null;
+if (isset($_SESSION['idCliente'])) {
+  $ClienteSession = $_SESSION['idCliente'];
+}
 
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
@@ -33,13 +33,13 @@ $tipoocorrencias = buscaTipoOcorrencia();
 $cards = buscaCardsDemanda();
 
 
-if ($_SESSION['idEmpresa'] == null) {
+if ($_SESSION['idCliente'] == null) {
   $idCliente = null;
 } else {
-  $idCliente = $_SESSION['idEmpresa'];
+  $idCliente = $_SESSION['idCliente'];
 }
 
-if ($_SESSION['idEmpresa'] == null) {
+if ($_SESSION['idCliente'] == null) {
   $idAtendente = $_SESSION['idLogin'];
 } else {
   $idAtendente = null;
@@ -207,7 +207,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       <?php /*<li class="ls-label col-sm-12"> <!-- CLIENTE -->
 <form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
 
-<?php if ($_SESSION['idEmpresa'] == null){ ?>
+<?php if ($_SESSION['idCliente'] == null){ ?>
 <select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
 <option value="<?php echo null ?>"><?php echo " Cliente"  ?></option>
 <?php
@@ -346,7 +346,7 @@ echo "selected";
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
-      <?php if ($_SESSION['idEmpresa'] == null) { ?>
+      <?php if ($ClienteSession == null) { ?>
         <a onClick="limparTrade()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
       <?php } else { ?>
         <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
@@ -408,7 +408,7 @@ echo "selected";
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
           <thead class="cabecalhoTabela">
-            <?php if ($_SESSION['idEmpresa'] == NULL) { ?>
+            <?php if ($ClienteSession == NULL) { ?>
               <tr>
                 <th>Prioridade</th>
                 <th>ID</th>
@@ -624,7 +624,7 @@ echo "selected";
 
 
   <script>
-    <?php if ($_SESSION['idEmpresa'] === NULL): ?>
+    <?php if ($ClienteSession === NULL): ?>
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
 
       function limparTrade() {
@@ -820,8 +820,8 @@ echo "selected";
 
     //**************exporta excel 
     function exportToExcel() {
-      var idAtendenteValue = <?php echo $_SESSION['idEmpresa'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
-      var tamanhoValue = <?php echo $_SESSION['idEmpresa'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
+      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -882,8 +882,8 @@ echo "selected";
 
     //**************exporta csv
     function exportToCSV() {
-      var idAtendenteValue = <?php echo $_SESSION['idEmpresa'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
-      var tamanhoValue = <?php echo $_SESSION['idEmpresa'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
+      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -935,8 +935,8 @@ echo "selected";
 
     //**************exporta PDF
     function exportToPDF() {
-      var idAtendenteValue = <?php echo $_SESSION['idEmpresa'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
-      var tamanhoValue = <?php echo $_SESSION['idEmpresa'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
+      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',

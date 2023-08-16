@@ -54,7 +54,6 @@ $tiposstatus = buscaTipoStatus();
     </div>
 
 
-    // MODAIS
     <div class="modal fade" id="popTipoStatus" tabindex="-1" aria-labelledby="popTipoStatusLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -52,13 +52,13 @@ include_once '../head.php';
                                     class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
                             <?php } ?>
                             <?php
-                            if ($_SESSION['idEmpresa'] == NULL) { ?>
+                            if ($ClienteSession == NULL) { ?>
                                 <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente"
                                     class="btn btn-info" style="margin-right:10px;float: right;">Comentar</button>
                                 <button type="submit" formaction="../database/demanda.php?operacao=solicitar"
                                     class="btn btn-warning" style="margin-right:10px;float: right;">Encaminhar</button>
                             <?php } //*************** visão cliente
-                            if ($_SESSION['idEmpresa'] >= 1) { ?>
+                            if ($ClienteSession >= 1) { ?>
                                 <button type="submit" formaction="../database/demanda.php?operacao=comentar"
                                     class="btn btn-info" style="margin-right:20px;float: right;">Enviar</button>
                             <?php } ?>

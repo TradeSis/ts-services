@@ -20,7 +20,7 @@ $clientes = buscaClientes();
 
 <body class="bg-transparent">
 
-    <div class="container" style="margin-top:10px">
+    <div class="container formContainer">
             <div class="col-sm mt-4" style="text-align:right">
                 <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>

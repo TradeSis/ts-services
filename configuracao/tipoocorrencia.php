@@ -17,32 +17,30 @@ $ocorrencias = buscaTipoOcorrencia();
                 <a href="tipoocorrencia_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
             </div>
         </div>
-        <div class="card mt-2 text-center" >
-            <table class="table">
-                <thead class="cabecalhoTabela">
-                    <tr>
-                        <th>Ocorrência</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <?php
-                foreach ($ocorrencias as $ocorrencia) {
+        <div class="card mt-2 text-center">
+            <div class="table scrollbar-tabela">
+                <table class="table">
+                    <thead class="cabecalhoTabela">
+                        <tr>
+                            <th>Ocorrência</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    foreach ($ocorrencias as $ocorrencia) {
                     ?>
-                    <tr>
-                        <td>
-                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                data-target="#alterarModal"
-                                data-idTipoOcorrencia="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><i class="bi bi-pencil-square"></i></button>
-                            <a class="btn btn-danger btn-sm"
-                                href="tipoocorrencia_excluir.php?idTipoOcorrencia=<?php echo $ocorrencia['idTipoOcorrencia'] ?>"
-                                role="button"><i class="bi bi-trash3"></i></a>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </table>
+                        <tr>
+                            <td>
+                                <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#alterarModal" data-idTipoOcorrencia="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><i class="bi bi-pencil-square"></i></button>
+                                <a class="btn btn-danger btn-sm" href="tipoocorrencia_excluir.php?idTipoOcorrencia=<?php echo $ocorrencia['idTipoOcorrencia'] ?>" role="button"><i class="bi bi-trash3"></i></a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -58,8 +56,7 @@ $ocorrencias = buscaTipoOcorrencia();
                         <div class="row">
                             <div class="col-md-6 mt-1">
                                 <label class="labelForm">Ocorrência</label>
-                                <input type="text" name="nomeTipoOcorrencia" id="nomeTipoOcorrencia"
-                                    class="form-control" />
+                                <input type="text" name="nomeTipoOcorrencia" id="nomeTipoOcorrencia" class="form-control" />
                             </div>
                             <div class="col-md-6">
                                 <label class="labelForm">Inicial</label>
@@ -72,8 +69,7 @@ $ocorrencias = buscaTipoOcorrencia();
 
                         <input type="hidden" name="idTipoOcorrencia" id="idTipoOcorrencia" />
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success"><i
-                                    class="bi bi-sd-card-fill"></i>&#32;Salvar</button>
+                            <button type="submit" class="btn btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -82,8 +78,8 @@ $ocorrencias = buscaTipoOcorrencia();
     </div>
 
     <script>
-        $(document).ready(function () {
-            $('button[data-target="#alterarModal"]').click(function () {
+        $(document).ready(function() {
+            $('button[data-target="#alterarModal"]').click(function() {
                 var idTipoOcorrencia = $(this).attr("data-idTipoOcorrencia");
                 $.ajax({
                     type: 'POST',
@@ -92,7 +88,7 @@ $ocorrencias = buscaTipoOcorrencia();
                     data: {
                         idTipoOcorrencia: idTipoOcorrencia
                     },
-                    success: function (data) {
+                    success: function(data) {
                         //alert(JSON.stringify(data, null, 2));
 
                         $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);

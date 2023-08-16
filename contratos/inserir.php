@@ -20,7 +20,7 @@ $clientes = buscaClientes();
 
 <body class="bg-transparent">
 
-    <div class="container" style="margin-top:10px; margin-bottom: 50px">
+    <div class="container formContainer">
         <!-- <div class="card shadow pb-4"> -->
  
             <div class="col-sm mt-4" style="text-align:right">

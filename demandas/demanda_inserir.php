@@ -12,8 +12,12 @@ include_once '../head.php';
 include_once(ROOT.'/cadastros/database/usuario.php');
 include_once(ROOT.'/cadastros/database/clientes.php');
 
+$ClienteSession = null;
+if (isset($_SESSION['idCliente'])) {
+  $ClienteSession = $_SESSION['idCliente'];
+}
 
-$usuario = buscaUsuarios($_SESSION['idLogin']);
+$usuario = buscaUsuarios(null,$_SESSION['idLogin']);
 $clientes = buscaClientes();
 ?>
 
@@ -38,7 +42,7 @@ $clientes = buscaClientes();
                             <div class="form-group">
                                 <label class="labelForm">Cliente</label>
                                 <?php
-                                    if ($usuario['idCliente'] == NULL) { ?>
+                                    if ($ClienteSession == NULL) { ?>
                                         <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
                                         <select class="select form-control" name="idCliente" autocomplete="off" style="margin-top: -10px;">
                                             <?php
@@ -47,11 +51,10 @@ $clientes = buscaClientes();
                                                 <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
                                             <?php } ?>
                                         </select>
-                                    <?php }
-                                    if ($usuario['idCliente']  >= 1) { ?>
+                                    <?php } else { ?>
+                                        <input type="text" class="form-control" style="margin-top: -8px;" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
                                         <input type="hidden" class="form-control" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
                                         <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                                        <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
                                     <?php } ?>
                             </div>
                         </div>

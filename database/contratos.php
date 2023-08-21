@@ -95,7 +95,7 @@ if (isset($_GET['operacao'])) {
 			'horas' => $_POST['horas'],
 			'valorHora' => $_POST['valorHora'],
 			'valorContrato' => $_POST['valorContrato'],
-
+			'statusContrato' => 1
 		);
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'PUT');
 
@@ -126,7 +126,8 @@ if (isset($_GET['operacao'])) {
 			'idEmpresa' => $idEmpresa,
 			'idContrato' => $_POST['idContrato'],
 			'dataFechamento' => $_POST['dataFechamento'],
-
+			'statusContrato' => 0,
+			'idContratoStatus' => 6
 
 		);
 		$contratos = chamaAPI(null, '/services/contrato/finalizar', json_encode($apiEntrada), 'POST');

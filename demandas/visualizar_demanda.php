@@ -19,7 +19,7 @@ $statusEncerrar = array(
                         <label class='control-label' for='inputNormal'>Prioridade</label>
                         <input type="number" min="1" max="99" class="form-control" name="prioridade"
                             value="<?php echo $demanda['prioridade'] ?>" style="margin-top: 50px;">
-                        
+
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -71,8 +71,8 @@ $statusEncerrar = array(
                     <div class="col-md-12 form-group" style="margin-top: -20px;">
 
                         <label class="labelForm">Tempo Cobrado</label>
-                        <input type="text" class="data select form-control" value="<?php echo $horas['totalHoraCobrado'] ?>"
-                            readonly>
+                        <input type="text" class="data select form-control"
+                            value="<?php echo $horas['totalHoraCobrado'] ?>" readonly>
                     </div>
                     <div class="col-md-12 form-group" style="margin-top: -20px;">
                         <label class="labelForm">Quantidade Retornos</label>
@@ -132,8 +132,8 @@ $statusEncerrar = array(
                     <div class="col-md-12 form-group" style="margin-top: -20px;">
 
                         <label class="labelForm">Tempo Real</label>
-                        <input type="text" class="data select form-control" value="<?php echo $horas['totalHorasReal'] ?>"
-                            readonly>
+                        <input type="text" class="data select form-control"
+                            value="<?php echo $horas['totalHorasReal'] ?>" readonly>
                     </div>
 
                     <div class="col-md-12 form-group" style="margin-top: -20px;">
@@ -169,22 +169,19 @@ $statusEncerrar = array(
                             <?php } ?>
                         </select>
                     </div>
-
-
-
-
                 </div>
             </div>
 
             <?php if ($ClienteSession == NULL) { ?>
-                <div class="card-footer bg-transparent" style="margin-top: 50px;">
-
-                    <input type="submit" name="submit" id="submit" class="btn btn-success" style="float: right;"
-                        value="Atualizar" />
-                    <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) {?>
-                        <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning"
-                            style="margin-right:20px;float: right;">Encerrar</button>
-                    <?php } ?>
+                <!-- Button Container -->
+                <div class="row mt-2 mb-5">
+                    <div class="col-md-12 text-right">
+                        <input type="submit" name="submit" id="submit" class="btn btn-success" value="Atualizar" />
+                        <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
+                            <button type="submit" formaction="../database/demanda.php?operacao=realizado"
+                                class="btn btn-warning ml-2">Encerrar</button>
+                        <?php } ?>
+                    </div>
                 </div>
             <?php } ?>
         </form>

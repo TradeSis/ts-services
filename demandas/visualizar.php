@@ -30,11 +30,10 @@ $tarefas = buscaTarefas($idDemanda);
 
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
-  $ClienteSession = $_SESSION['idCliente'];
+    $ClienteSession = $_SESSION['idCliente'];
 }
 
 ?>
-
 
 <style>
     body {
@@ -85,7 +84,6 @@ if (isset($_SESSION['idCliente'])) {
     .modal-backdrop {
         background-color: rgba(200, 200, 200, 0.5);
     }
-
 </style>
 
 <body class="bg-transparent">
@@ -104,7 +102,9 @@ if (isset($_SESSION['idCliente'])) {
         <div id="tabs">
             <div class="tab whiteborder" id="tab-demanda">Demanda</div>
             <div class="tab" id="tab-comentarios">Comentarios</div>
-            <div class="tab" id="tab-tarefas">Tarefas</div>
+            <?php if ($ClienteSession == NULL) { ?>
+                <div class="tab" id="tab-tarefas">Tarefas</div>
+            <?php } ?>
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'visualizar_demanda.php'; ?>
@@ -112,9 +112,11 @@ if (isset($_SESSION['idCliente'])) {
             <div class="tabContent">
                 <?php include_once 'comentarios.php'; ?>
             </div>
-            <div class="tabContent">
-                <?php include_once 'visualizar_tarefa.php'; ?>
-            </div>
+            <?php if ($ClienteSession == NULL) { ?>
+                <div class="tabContent">
+                    <?php include_once 'visualizar_tarefa.php'; ?>
+                </div>
+            <?php } ?>
         </div>
     </div>
 

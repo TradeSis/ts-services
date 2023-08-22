@@ -101,9 +101,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase ">
                                     Total</div>
+                                    
                                 <div class="h5 mb-0  text-gray-800"><?php
                                                                     foreach ($cards as $card)
                                                                         if ($card["idContratoStatus"] == "0") {
@@ -126,7 +127,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
                                     Orçamento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -151,7 +152,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1 ">
+                            <div class="col p-1 ">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
                                     Aprovação</div>
                                 <div class="h5 mb-0 text-gray-800"><?php
@@ -176,7 +177,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase ">
                                     Desenvolvimento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -203,7 +204,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
                                     Faturamento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -228,7 +229,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
                                     Recebimento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -334,44 +335,6 @@ if (isset($_SESSION['filtro_contrato'])) {
                                     </span></button>
                             </span>
                         </div>
-                    </div>
-
-                    <div class="row" style="text-align: right">
-                        <!--POPUP-->
-                        <div class="col-sm" style="text-align:right">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                                Popup
-                            </button>
-                        </div>
-
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-
-                                    <div class="modal-body">
-                                        <form class="d-flex" action="index.php" method="post" style="text-align: right;">
-
-                                            <select class="form-control" name="idContratoStatus">
-                                                <?php
-                                                foreach ($contratoStatusTodos as $contratoStatus) {
-                                                ?>
-                                                    <option value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?>
-
-
-                                                    </option>
-                                                <?php  } ?>
-                                            </select>
-                                            <button type="submit" id="botao" class="btn btn-xl" style="margin-right: 30px"><i class="bi bi-search"></i></button>
-
-
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!--POPUP-->
-
                     </div>
 
 

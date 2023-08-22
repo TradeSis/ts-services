@@ -3,7 +3,6 @@ include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/tarefas.php');
 $tarefas = buscaTarefas();
 
-
 ?>
 
 <!DOCTYPE html>
@@ -116,7 +115,7 @@ $tarefas = buscaTarefas();
                         ?>
                         {
                         _id: '<?php echo $tarefa['idTarefa']; ?>',
-                        title: '<?php echo $tarefa['tituloDemanda']; ?>',
+                        title: '<?php echo $tarefa['tituloTarefa']; ?>',
                         start: '<?php echo $tarefa['Previsto'] . ' ' . $tarefa['horaInicioPrevisto']; ?>',
                         end: '<?php echo $tarefa['Previsto'] . ' ' . $tarefa['horaFinalPrevisto']; ?>',
                         idDemanda: '<?php echo $tarefa['idDemanda']; ?>',

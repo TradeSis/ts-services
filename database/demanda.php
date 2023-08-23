@@ -48,6 +48,7 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 function buscaCardsDemanda()
 {
 	$cards = array();
+
 	$cards = chamaAPI(null, '/services/demandas/totais', null, 'GET');
 	return $cards;
 }

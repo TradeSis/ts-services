@@ -20,6 +20,7 @@ function buscaTarefasGrafico1()
 {
 
     $dadosGrafico1 = array();
+
     $dadosGrafico1 = chamaAPI(null, '/services/tarefas/grafico1', null, 'GET');
     return $dadosGrafico1;
 }
@@ -34,6 +35,7 @@ function buscaTarefasGrafico3()
 {
 
     $dadosGrafico3 = array();
+
     $dadosGrafico3 = chamaAPI(null, '/services/tarefas/grafico3', null, 'GET');
     return $dadosGrafico3;
 }

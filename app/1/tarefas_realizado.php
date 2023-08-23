@@ -1,26 +1,25 @@
 <?php
-//gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
-include_once __DIR__ . "/../config.php";
 
+date_default_timezone_set('America/Sao_Paulo');
 $idEmpresa = null;
 	if (isset($jsonEntrada["idEmpresa"])) {
     	$idEmpresa = $jsonEntrada["idEmpresa"];
 	}
 $conexao = conectaMysql($idEmpresa);
-if (isset($jsonEntrada['idDemanda'])) {
+
+
+if (isset($jsonEntrada['idTarefa'])) {
+    $idTarefa = $jsonEntrada['idTarefa'];
+    $dataReal = date('Y-m-d');
+    $horaInicioReal = date('H:i:00');
+    $horaFinalReal = date('H:i:00');
     $idDemanda = $jsonEntrada['idDemanda'];
-    $comentario = $jsonEntrada['comentario'];
-    $idUsuario = $jsonEntrada['idUsuario'];
-    $idCliente = $jsonEntrada['idCliente'];
-    //$idAnexo = $jsonEntrada['idAnexo'];
-    //$pathAnexo = $jsonEntrada['pathAnexo'];
-    //$nomeAnexo = $jsonEntrada['nomeAnexo'];
     $idTipoStatus = $jsonEntrada['idTipoStatus'];
     $tipoStatusDemanda = $jsonEntrada['tipoStatusDemanda'];
 
 
-    $sql = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";
+    $sql = "UPDATE `tarefa` SET `dataReal`='$dataReal', `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal', `horaCobrado`=TIMEDIFF(`horaFinalReal`, `horaInicioReal`) WHERE idTarefa = $idTarefa";
     $atualizar = mysqli_query($conexao, $sql);
 
     // busca dados tipostatus    
@@ -31,13 +30,9 @@ if (isset($jsonEntrada['idDemanda'])) {
     $statusDemanda = $row["mudaStatusPara"];
 
 
-    if ($tipoStatusDemanda == TIPOSTATUS_AGUARDANDOSOLICITANTE) {
-        $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-        $atualizar3 = mysqli_query($conexao, $sql3);
-    } else {
-        $sql3 = "UPDATE demanda SET posicao=$posicao, dataAtualizacaoCliente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-        $atualizar3 = mysqli_query($conexao, $sql3);
-    }
+    $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+    $atualizar3 = mysqli_query($conexao, $sql3);
+
     if ($atualizar && $atualizar3) {
         $jsonSaida = array(
             "status" => 200,

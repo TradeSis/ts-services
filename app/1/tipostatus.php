@@ -7,8 +7,12 @@
 		"idTipoStatus" : null
 }
 */
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
 
-$conexao = conectaMysql();
+$conexao = conectaMysql($idEmpresa);
 $tipostatus = array();
 
 

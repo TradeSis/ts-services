@@ -266,7 +266,6 @@ if (isset($_GET['operacao'])) {
 
 		);
 
-
 		$comentario = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada), 'PUT');
 
 		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
@@ -274,6 +273,9 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "comentarAtendente") {
 
+		/* echo json_encode($_FILES);
+		//echo json_encode($_POST);
+		return; */
 		/*$anexo = $_FILES['nomeAnexo'];
 							
 								$pasta    = ROOT    . "/img/anexos/";
@@ -293,10 +295,28 @@ if (isset($_GET['operacao'])) {
 
 								move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
 
+								$anexo = $_FILES['nomeAnexo'];
+
+								if($anexo !== null) {
+									preg_match("/\.(png|jpg|jpeg|txt|xlsx|pdf|csv|doc|docx|zip){1}$/i", $anexo["name"],$ext);
+								
+									if($ext == true) {
+										$pasta = ROOT . "/img/";
+										
+										$novoNomeAnexo = $_POST['idDemanda']. "_" .$anexo["name"];
+										$pathAnexo = 'http://' . $_SERVER["HTTP_HOST"] .'/img/' . $novoNomeAnexo;
+										move_uploaded_file($anexo['tmp_name'], $pasta.$novoNomeAnexo);
+								
+										
+									}else{
+										$novoNomeAnexo = " ";
+									}
+							
+								}
 
 		$apiEntrada = array(
-			//'nomeAnexo' => $nomeAnexo,
-			//'pathAnexo' => $pathURL,
+			'nomeAnexo' => $novoNomeAnexo,
+			'pathAnexo' => $pathAnexo,
 			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
@@ -306,7 +326,7 @@ if (isset($_GET['operacao'])) {
 
 		);
 
-
+		
 		$comentario = chamaAPI(null, '/services/comentario/atendente', json_encode($apiEntrada), 'PUT');
 
 		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);

@@ -161,6 +161,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Abertos</div>
+
                 <div class="h5 mb-0  text-gray-800 ml-1">
                   <?php echo $cards['totalAbertos'] ?>
                 </div>
@@ -174,6 +175,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Encerrados</div>
+
                 <div class="h5 mb-0  text-gray-800 ml-1">
                   <?php echo $cards['totalFechados'] ?>
                 </div>
@@ -187,6 +189,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Aguardando</div>
+
                 <div class="h5 mb-0  text-gray-800 ml-1">
                   <?php echo $cards['totalAguardando'] ?>
                 </div>

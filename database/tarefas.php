@@ -31,6 +31,7 @@ function buscaTarefasGrafico1()
 {
 
     $dadosGrafico1 = array();
+
     $idEmpresa = null;
 	if (isset($_SESSION['idEmpresa'])) {
     	$idEmpresa = $_SESSION['idEmpresa'];
@@ -68,6 +69,7 @@ function buscaTarefasGrafico3()
         'idEmpresa' => $idEmpresa
     );
     $dadosGrafico3 = array();
+
     $dadosGrafico3 = chamaAPI(null, '/services/tarefas/grafico3', json_encode($apiEntrada), 'GET');
     return $dadosGrafico3;
 }

@@ -5,8 +5,11 @@
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
-
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 
 
 if (isset($jsonEntrada['idDemanda'])) {
@@ -15,15 +18,12 @@ if (isset($jsonEntrada['idDemanda'])) {
     $descricao = $jsonEntrada['descricao'];
     $prioridade = $jsonEntrada['prioridade'];
     $idServico = $jsonEntrada['idServico'];
-    $tamanho = $jsonEntrada['tamanho'];
-    $idAtendente = $jsonEntrada['idAtendente'];
+    $tamanho = isset($jsonEntrada['tamanho']) && $jsonEntrada['tamanho'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['tamanho']) . "'" : "NULL";
+    $idAtendente = isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== "" ? $jsonEntrada['idAtendente'] : "NULL";
     $horasPrevisao = $jsonEntrada['horasPrevisao'];
-    $idContrato = $jsonEntrada['idContrato'];
-    if ($idContrato === "") {
-        $idContrato = "null";
-    }
+    $idContrato = isset($jsonEntrada['idContrato']) && $jsonEntrada['idContrato'] !== "" ? $jsonEntrada['idContrato'] : "NULL";
 
-    $sql = "UPDATE demanda SET prioridade=$prioridade, tituloDemanda='$tituloDemanda', descricao='$descricao', idServico=$idServico, tamanho='$tamanho', idAtendente=$idAtendente, horasPrevisao='$horasPrevisao', idContrato=$idContrato, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+    $sql = "UPDATE demanda SET prioridade=$prioridade, tituloDemanda='$tituloDemanda', descricao='$descricao', idServico=$idServico, tamanho=$tamanho, idAtendente=$idAtendente, horasPrevisao='$horasPrevisao', idContrato=$idContrato, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
     //echo "-SQL->" . json_encode($sql) . "\n";
     if ($atualizar = mysqli_query($conexao, $sql)) {
         $jsonSaida = array(

@@ -15,15 +15,15 @@
 
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/demanda.php');
-//include_once '../database/demanda.php';
-include_once(ROOT.'/sistema/database/clientes.php');
-include_once(ROOT.'/sistema/database/usuario.php');
+include_once(ROOT.'/cadastros/database/clientes.php');
+include_once(ROOT.'/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipostatus.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
-//include_once '../database/tipostatus.php';
-//include_once '../database/tipoocorrencia.php';
 
-
+$ClienteSession = null;
+if (isset($_SESSION['idCliente'])) {
+  $ClienteSession = $_SESSION['idCliente'];
+}
 
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
@@ -40,7 +40,7 @@ if ($_SESSION['idCliente'] == null) {
 }
 
 if ($_SESSION['idCliente'] == null) {
-  $idAtendente = $_SESSION['idUsuario'];
+  $idAtendente = $_SESSION['idLogin'];
 } else {
   $idAtendente = null;
 }
@@ -135,6 +135,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     color: #fff;
     width: 160px;
   }
+
 </style>
 
 <body class="bg-transparent">
@@ -348,7 +349,7 @@ echo "selected";
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
-      <?php if ($_SESSION['idCliente'] == null) { ?>
+      <?php if ($ClienteSession == null) { ?>
         <a onClick="limparTrade()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
       <?php } else { ?>
         <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
@@ -364,14 +365,14 @@ echo "selected";
 
     <div class="row">
       <div class=" btnAbre">
-        <span style="font-size: 25px" class="material-symbols-outlined">
+        <span style="font-size: 25px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
           filter_alt
         </span>
 
       </div>
 
       <div class="col-sm-3 ml-2">
-        <p class="tituloTabela">Demandas</p>
+        <h2 class="tituloTabela" style="color:#12192C">Demandas</h2>
       </div>
 
       <div class="col-sm-4" style="margin-top:-10px;">
@@ -379,7 +380,7 @@ echo "selected";
           <input type="text" class="form-control" id="tituloDemanda" placeholder="Buscar por...">
           <span class="input-group-btn">
             <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
-              <span style="font-size: 20px" class="material-symbols-outlined">search</span>
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
             </button>
           </span>
         </div>
@@ -400,37 +401,37 @@ echo "selected";
 
 
       <div class="col-sm" style="text-align:right">
-        <a href="demanda_inserir.php" role="button" class="btn btn-success">Adicionar Demanda</a>
+        <a href="demanda_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
       </div>
     </div>
 
 
 
-    <div class="card mt-2">
+    <div class="card mt-2" style="background-color: #EEEEEE">
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
         <table class="table">
-          <thead class="thead-light">
-            <?php if ($_SESSION['idCliente'] == NULL) { ?>
+          <thead class="cabecalhoTabela">
+            <?php if ($ClienteSession == NULL) { ?>
               <tr>
-                <th class="text-center">Prioridade</th>
-                <th class="text-center">ID</th>
-                <th class="text-center">Cliente</th>
-                <th class="text-center">Solicitante</th>
-                <th class="text-center">Demanda</th>
-                <th class="text-center">Responsavel</th>
-                <th class="text-center">Abertura</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Ocorrência</th>
-                <th class="text-center">Tamanho</th>
-                <th class="text-center">Ação</th>
+                <th>Prioridade</th>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Solicitante</th>
+                <th>Demanda</th>
+                <th>Responsavel</th>
+                <th>Abertura</th>
+                <th>Status</th>
+                <th>Ocorrência</th>
+                <th>Tamanho</th>
+                <th>Ação</th>
               </tr>
               <tr>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-                <th class="text-center" style="width: 10%;">
+                <th></th>
+                <th></th>
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($clientes as $cliente) {
@@ -444,10 +445,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
@@ -461,11 +462,11 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
-                <th class="text-center">
+                <th></th>
+                <th>
                   <form action="" method="post">
                     <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($atendentes as $atendente) {
@@ -479,11 +480,11 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
-                <th class="text-center">
+                <th></th>
+                <th>
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
@@ -496,10 +497,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -513,10 +514,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="tamanho" id="FiltroTamanho"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                     style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <option value="P">P</option>
                       <option value="M">M</option>
@@ -524,29 +525,29 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
+                <th></th>
+                <th></th>
               </tr>
 
             <?php } //******************visão do Cliente 
             else { ?>
               <tr>
-                <th class="text-center">Prioridade</th>
-                <th class="text-center">ID</th>
-                <th class="text-center">Cliente</th>
-                <th class="text-center">Solicitante</th>
-                <th class="text-center">Demanda</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Ocorrência</th>
-                <th class="text-center">Ação</th>
+                <th>Prioridade</th>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Solicitante</th>
+                <th>Demanda</th>
+                <th>Status</th>
+                <th>Ocorrência</th>
+                <th>Ação</th>
               </tr>
               <tr>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-                <th class="text-center" style="width: 10%;">
+                <th></th>
+                <th></th>
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;" disabled>
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C" disabled>
                       <?php
                       foreach ($clientes as $cliente) {
                         ?>
@@ -559,10 +560,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
@@ -576,11 +577,11 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
-                <th class="text-center">
+                <th></th>
+                <th>
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
@@ -593,10 +594,10 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center" style="width: 10%;">
+                <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                      style="font-size: 14px; font-weight: bold; margin-top:-10px; margin-bottom:-6px;">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -610,7 +611,7 @@ echo "selected";
                     </select>
                   </form>
                 </th>
-                <th class="text-center"></th>
+                <th></th>
               </tr>
             <?php } ?>
           </thead>
@@ -626,7 +627,7 @@ echo "selected";
 
 
   <script>
-    <?php if ($_SESSION['idCliente'] === NULL): ?>
+    <?php if ($ClienteSession === NULL): ?>
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
 
       function limparTrade() {
@@ -674,7 +675,7 @@ echo "selected";
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
-              linha += "<td><a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+              linha += "<td><a class='btn btn-info btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -764,7 +765,7 @@ echo "selected";
             linha += "<td>" + object.tituloDemanda + "</td>";
             linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
             linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td><a class='btn btn-primary btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+            linha += "<td><a class='btn btn-info btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
             linha += "</tr>";
           }
 

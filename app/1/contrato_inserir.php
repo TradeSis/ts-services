@@ -2,9 +2,11 @@
 // Lucas 20022023 alterado if para resultar no $valorHora e adicionado o else para $valorContrato;
 // Lucas 07022023 criacao
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
-
-
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['tituloContrato'])) {
         $tituloContrato = $jsonEntrada['tituloContrato'];
         $descricao = $jsonEntrada['descricao'];
@@ -15,7 +17,7 @@ if (isset($jsonEntrada['tituloContrato'])) {
         $horas = $jsonEntrada['horas'];
         $valorHora = $jsonEntrada['valorHora'];
 		$valorContrato = $jsonEntrada['valorContrato'];
-		$statusContrato = 0; //Fechado
+		$statusContrato = $jsonEntrada['statusContrato']; 
 
     
 

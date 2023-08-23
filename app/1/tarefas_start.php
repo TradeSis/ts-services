@@ -1,15 +1,13 @@
 <?php
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
-$ROOT = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-$ROOTex = explode("/", $ROOT);
-$ROOTex = array_values(array_filter($ROOTex)); 
 
-define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . $ROOTex[0]);
-
-require_once ROOT . '/config.php';
 
 date_default_timezone_set('America/Sao_Paulo');
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 
 $statusStart = array(
     TIPOSTATUS_FILA,

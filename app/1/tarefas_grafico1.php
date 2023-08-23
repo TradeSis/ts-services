@@ -5,7 +5,12 @@
 $mes = date('m');
 $ano = date('Y');
 
-$conexao = conectaMysql();
+$idEmpresa = null;
+if (isset($jsonEntrada["idEmpresa"])) {
+    $idEmpresa = $jsonEntrada["idEmpresa"];
+}
+
+$conexao = conectaMysql($idEmpresa);
 $tarefa = array();
 $sql = "SELECT
         SUM(CASE WHEN demanda.statusDemanda = 1 THEN 1 ELSE 0 END) AS totalAbertos,

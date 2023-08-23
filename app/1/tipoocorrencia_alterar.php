@@ -2,12 +2,16 @@
 //gabriel 06022023 16:52
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
-
-$conexao = conectaMysql();
+$idEmpresa = null;
+	if (isset($jsonEntrada["idEmpresa"])) {
+    	$idEmpresa = $jsonEntrada["idEmpresa"];
+	}
+$conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idTipoOcorrencia'])) {
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
     $nomeTipoOcorrencia = $jsonEntrada['nomeTipoOcorrencia'];
-    $sql = "UPDATE tipoocorrencia SET nomeTipoOcorrencia='$nomeTipoOcorrencia' WHERE idTipoOcorrencia = $idTipoOcorrencia";
+    $ocorrenciaInicial = $jsonEntrada['ocorrenciaInicial'];
+    $sql = "UPDATE tipoocorrencia SET nomeTipoOcorrencia='$nomeTipoOcorrencia', ocorrenciaInicial='$ocorrenciaInicial' WHERE idTipoOcorrencia = $idTipoOcorrencia";
     if ($atualizar = mysqli_query($conexao, $sql)) {
         $jsonSaida = array(
             "status" => 200,

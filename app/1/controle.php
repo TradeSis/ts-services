@@ -142,6 +142,11 @@ if ($metodo == "PUT") {
     $parametro = null;
   }
 
+  if ($funcao == "tarefas" && $parametro == "iniciar") {
+    $funcao = "tarefas/iniciar";
+    $parametro = null;
+  }
+
   switch ($funcao) {
     case "contratostatus":
       include 'contratostatus_inserir.php';
@@ -187,6 +192,10 @@ if ($metodo == "PUT") {
       include 'demanda_retornar.php';
       break;
 
+    case "tarefas/iniciar":
+      include 'tarefas_iniciar.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -215,6 +224,11 @@ if ($metodo == "POST") {
 
   if ($funcao == "tarefas" && $parametro == "stop") {
     $funcao = "tarefas/stop";
+    $parametro = null;
+  }
+
+  if ($funcao == "tarefas" && $parametro == "realizado") {
+    $funcao = "tarefas/realizado";
     $parametro = null;
   }
 
@@ -264,6 +278,10 @@ if ($metodo == "POST") {
 
     case "tarefas/stop":
       include 'tarefas_stop.php';
+      break;
+
+    case "tarefas/realizado":
+      include 'tarefas_realizado.php';
       break;
 
     case "tarefas/start":

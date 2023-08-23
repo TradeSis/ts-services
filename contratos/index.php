@@ -23,10 +23,8 @@
 //
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
-//include_once '../database/contratos.php';
 include_once(__DIR__ . '/../database/contratoStatus.php');
-//include_once '../database/contratoStatus.php';
-include_once(ROOT.'/sistema/database/clientes.php');
+include_once(ROOT.'/cadastros/database/clientes.php');
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
@@ -103,9 +101,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase ">
                                     Total</div>
+                                    
                                 <div class="h5 mb-0  text-gray-800"><?php
                                                                     foreach ($cards as $card)
                                                                         if ($card["idContratoStatus"] == "0") {
@@ -128,7 +127,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
                                     Orçamento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -153,7 +152,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1 ">
+                            <div class="col p-1 ">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
                                     Aprovação</div>
                                 <div class="h5 mb-0 text-gray-800"><?php
@@ -178,7 +177,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase ">
                                     Desenvolvimento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -205,7 +204,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
                                     Faturamento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -230,7 +229,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col mr-2 mb-2 p-1">
+                            <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
                                     Recebimento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -317,78 +316,40 @@ if (isset($_SESSION['filtro_contrato'])) {
 
                 <div class="row">
                     <div class=" btnAbre">
-                        <span style="font-size: 25px" class="material-symbols-outlined">
+                        <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                             filter_alt
                         </span>
 
                     </div>
 
                     <div class="col-sm-3 ml-2">
-                        <p class="tituloTabela">Contrato</p>
+                        <h2 class="tituloTabela" style="color:#12192C">Contrato</h2>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="input-group">
                             <input type="text" class="form-control" id="tituloContrato" placeholder="Buscar por...">
                             <span class="input-group-btn">
-                                <button class="btn btn-primary" id="buscar" type="button"><span style="font-size: 20px" class="material-symbols-outlined">
+                                <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                                         search
                                     </span></button>
                             </span>
                         </div>
                     </div>
 
-                    <div class="row" style="text-align: right">
-                        <!--POPUP-->
-                        <div class="col-sm" style="text-align:right">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                                Popup
-                            </button>
-                        </div>
-
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-
-                                    <div class="modal-body">
-                                        <form class="d-flex" action="index.php" method="post" style="text-align: right;">
-
-                                            <select class="form-control" name="idContratoStatus">
-                                                <?php
-                                                foreach ($contratoStatusTodos as $contratoStatus) {
-                                                ?>
-                                                    <option value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?>
-
-
-                                                    </option>
-                                                <?php  } ?>
-                                            </select>
-                                            <button type="submit" id="botao" class="btn btn-xl" style="margin-right: 30px"><i class="bi bi-search"></i></button>
-
-
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!--POPUP-->
-
-                    </div>
-
 
                     <div class="col-sm" style="text-align:right">
-                        <a href="inserir.php" role="button" class="btn btn-success">Adicionar Contrato</a>
+                        <a href="inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
                     </div>
                 </div>
 
             <!-- </div> -->
-        <div class="card mt-2">    
+        <div class="card mt-2" style="background-color: #EEEEEE">    
             <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
                 <table class="table" id="myIframe" > <!-- table-striped -->
-                    <thead class="thead-light" >
+                    <thead  class="cabecalhoTabela">
 
-                        <tr >
+                        <tr>
                             <th>Cliente</th>
                             <th>Titulo</th>
                             <th>Status</th>

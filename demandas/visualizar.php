@@ -6,12 +6,14 @@ include_once '../database/contratos.php';
 include_once '../database/tarefas.php';
 include_once '../database/tipostatus.php';
 include_once '../database/tipoocorrencia.php';
-include_once(ROOT.'/sistema/database/clientes.php');
-include_once(ROOT.'/sistema/database/usuario.php');
-include_once(ROOT.'/sistema/database/servicos.php');
+
+include_once(ROOT.'/cadastros/database/clientes.php');
+include_once(ROOT.'/cadastros/database/usuario.php');
+include_once(ROOT.'/cadastros/database/servicos.php');
+
 
 $idDemanda = $_GET['idDemanda'];
-$idAtendente = $_SESSION['idUsuario'];
+$idAtendente = $_SESSION['idLogin'];
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
@@ -20,19 +22,18 @@ $servicos = buscaServicos();
 $idTipoStatus = $demanda['idTipoStatus'];
 $horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
-$usuario = buscaUsuarios($_SESSION['idUsuario']);
+$usuario = buscaUsuarios(null,$_SESSION['idLogin']);
 $comentarios = buscaComentarios($idDemanda);
 $cliente = buscaClientes($demanda["idCliente"]);
-$idTarefa = null;
+$clientes = buscaClientes();
+$tarefas = buscaTarefas($idDemanda);
 
-if (isset($_GET['idTarefa'])) {
-    $idTarefa = $_GET['idTarefa'];
+$ClienteSession = null;
+if (isset($_SESSION['idCliente'])) {
+    $ClienteSession = $_SESSION['idCliente'];
 }
 
-$tarefas = buscaTarefas($idDemanda, $idTarefa);
-
 ?>
-
 
 <style>
     body {
@@ -50,16 +51,17 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
         cursor: pointer;
         position: relative;
         z-index: 5;
-        background-color: lightgray;
-        color: black;
+        border-radius: 3px 3px 0 0;
+        background-color: #567381;
+        color: #EEEEEE;
     }
 
     #tabs .whiteborder {
         border: 1px solid #707070;
         border-bottom: 1px solid #fff;
         border-radius: 3px 3px 0 0;
-        background-color: lightblue;
-        color: white;
+        background-color: #EEEEEE;
+        color: #567381;
     }
 
     #tabs .tabContent {
@@ -78,6 +80,10 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
     #tabs .show {
         display: block;
     }
+
+    .modal-backdrop {
+        background-color: rgba(200, 200, 200, 0.5);
+    }
 </style>
 
 <body class="bg-transparent">
@@ -89,15 +95,16 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                 </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-                <a href="#" onclick="history.back()" role="button" class="btn btn-primary"><i
-                        class="bi bi-arrow-left-square"></i>&#32;Voltar</a>
+                <a href="index.php" role="button" class="btn btn-primary"><i
+                        class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
         <div id="tabs">
             <div class="tab whiteborder" id="tab-demanda">Demanda</div>
             <div class="tab" id="tab-comentarios">Comentarios</div>
-            <div class="tab" id="tab-tarefas">Tarefas</div>
-            <div class="tab" id="tab-previsao">Agenda</div>
+            <?php if ($ClienteSession == NULL) { ?>
+                <div class="tab" id="tab-tarefas">Tarefas</div>
+            <?php } ?>
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'visualizar_demanda.php'; ?>
@@ -105,11 +112,392 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
             <div class="tabContent">
                 <?php include_once 'comentarios.php'; ?>
             </div>
-            <div class="tabContent">
-                <?php include_once 'visualizar_tarefa.php'; ?>
+            <?php if ($ClienteSession == NULL) { ?>
+                <div class="tabContent">
+                    <?php include_once 'visualizar_tarefa.php'; ?>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+    <!--------- INICIAR --------->
+    <div class="modal fade bd-example-modal-lg" id="iniciarModal" tabindex="-1" role="dialog"
+        aria-labelledby="iniciarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Iniciar Tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <form method="post" id="form1">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
+                                <div class="form-group" style="margin-top: 22px;">
+                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
+                                    Relacionada</label>
+                                <div class="form-group" style="margin-top: 22px;">
+                                    <input type="hidden" class="form-control" name="idDemanda"
+                                        value="<?php echo $demanda['idDemanda'] ?>" style="margin-bottom: -20px;">
+                                    <input type="text" class="form-control"
+                                        value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Cliente</label>
+                                    <input type="hidden" class="form-control" name="idCliente"
+                                        value="<?php echo $demanda['idCliente'] ?>">
+                                    <input type="text" class="form-control"
+                                        value="<?php echo $cliente['nomeCliente'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Reponsável</label>
+                                    <select class="form-control" name="idAtendente">
+                                        <?php
+                                        foreach ($atendentes as $atendente) {
+                                            ?>
+                                        <option <?php
+                                        if ($atendente['idUsuario'] == $idAtendente) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <select class="form-control" name="idTipoOcorrencia">
+                                        <?php
+                                        foreach ($ocorrencias as $ocorrencia) {
+                                            ?>
+                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit" formaction="../database/tarefas.php?operacao=iniciar"
+                                class="btn btn-info">Salvar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="tabContent">
-                <?php include_once 'previsao.php'; ?>
+        </div>
+    </div>
+
+    <!--------- INSERIR/NOVA --------->
+    <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
+        aria-labelledby="inserirModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <form method="post" id="form1">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
+                                <div class="form-group" style="margin-top: 22px;">
+                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
+                                    Relacionada</label>
+                                <div class="form-group" style="margin-top: 22px;">
+                                    <input type="hidden" class="form-control" name="idDemanda"
+                                        value="<?php echo $demanda['idDemanda'] ?>" style="margin-bottom: -20px;">
+                                    <input type="text" class="form-control"
+                                        value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Cliente</label>
+                                <div class="form-group" style="margin-top: 22px;">
+                                    <input type="hidden" class="form-control" name="idCliente"
+                                        value="<?php echo $demanda['idCliente'] ?>">
+                                    <input type="text" class="form-control"
+                                        value="<?php echo $cliente['nomeCliente'] ?>" readonly>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Reponsável</label>
+                                    <select class="form-control" name="idAtendente">
+                                        <?php
+                                        foreach ($atendentes as $atendente) {
+                                            ?>
+                                        <option <?php
+                                        if ($atendente['idUsuario'] == $idAtendente) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <select class="form-control" name="idTipoOcorrencia">
+                                        <?php
+                                        foreach ($ocorrencias as $ocorrencia) {
+                                            ?>
+                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -14px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Horas Cobrado</label>
+                                    <input type="time" class="data select form-control" name="horaCobrado" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit" formaction="../database/tarefas.php?operacao=inserir"
+                                class="btn btn-info">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------- AGENDAR --------->
+    <div class="modal fade bd-example-modal-lg" id="agendarModal" tabindex="-1" role="dialog"
+        aria-labelledby="agendarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agendar Tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <form method="post" id="form1">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
+                                <div class="for-group" style="margin-top: 22px;">
+                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
+                                    Relacionada</label>
+                                <div class="for-group" style="margin-top: 22px;">
+                                    <input type="hidden" class="form-control" name="idDemanda"
+                                        value="<?php echo $demanda['idDemanda'] ?>" style="margin-bottom: -20px;">
+                                    <input type="text" class="form-control"
+                                        value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>"
+                                        readonly>
+                                    <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Cliente</label>
+                                    <input type="hidden" class="form-control" name="idCliente"
+                                        value="<?php echo $demanda['idCliente'] ?>">
+                                    <input type="text" class="form-control"
+                                        value="<?php echo $cliente['nomeCliente'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Reponsável</label>
+                                    <select class="form-control" name="idAtendente">
+                                        <?php
+                                        foreach ($atendentes as $atendente) {
+                                            ?>
+                                        <option <?php
+                                        if ($atendente['idUsuario'] == $idAtendente) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <select class="form-control" name="idTipoOcorrencia">
+                                        <?php
+                                        foreach ($ocorrencias as $ocorrencia) {
+                                            ?>
+                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="labelForm">Data Previsão</label>
+                                    <input type="date" class="data select form-control" name="Previsto"
+                                        autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="labelForm">Inicio</label>
+                                    <input type="time" class="data select form-control" name="horaInicioPrevisto"
+                                        autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="labelForm">Fim</label>
+                                    <input type="time" class="data select form-control" name="horaFinalPrevisto"
+                                        autocomplete="off" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit" formaction="../database/tarefas.php?operacao=previsao"
+                                class="btn btn-info">Agendar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------- ALTERAR --------->
+    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog"
+        aria-labelledby="alterarmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar Tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <form method="post" id="alterarForm">
+                        <div class="row">
+                            <div class="col-md-4" style="margin-top: 10px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Tarefa</label>
+                                    <input type="text" class="data select form-control" id="tituloTarefa"
+                                        name="tituloTarefa" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -10px;">
+                                <div class="form-group" id="demandaContainer">
+                                    <label class="labelForm">ID/Demanda Relacionada</label>
+                                    <input type="text" class="data select form-control" id="tituloDemanda"
+                                        style="margin-top: 18px;" autocomplete="off" readonly>
+                                    <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
+                                        <?php
+                                        foreach ($demandas as $demanda) {
+                                            ?>
+                                        <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" class="form-control" name="idTarefa" id="idTarefa" />
+                            <input type="hidden" class="form-control" name="idDemanda" id="idDemanda" />
+                            <div class="col-md-4" style="margin-top: -10px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Cliente</label>
+                                    <input type="text" class="data select form-control" id="nomeCliente"
+                                        style="margin-top: 18px;" autocomplete="off" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Reponsável</label>
+                                    <select class="form-control" name="idAtendente" id="idAtendente">
+                                        <?php
+                                        foreach ($atendentes as $atendente) {
+                                            ?>
+                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
+                                        <?php
+                                        foreach ($ocorrencias as $ocorrencia) {
+                                            ?>
+                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -14px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Horas Cobrado</label>
+                                    <input type="time" class="data select form-control" id="horaCobrado"
+                                        name="horaCobrado" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -30px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Data Previsão</label>
+                                    <input type="date" class="data select form-control" id="Previsto" name="Previsto"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -30px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Inicio</label>
+                                    <input type="time" class="data select form-control" id="horaInicioPrevisto"
+                                        name="horaInicioPrevisto" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -30px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Fim</label>
+                                    <input type="time" class="data select form-control" id="horaFinalPrevisto"
+                                        name="horaFinalPrevisto" autocomplete="off">
+                                </div>
+                            </div>
+                            <input type="date" class="data select form-control" id="dataReal" name="dataReal"
+                                autocomplete="off" hidden>
+                            <input type="time" class="data select form-control" id="horaInicioReal"
+                                name="horaInicioReal" autocomplete="off" hidden>
+                            <input type="time" class="data select form-control" id="horaFinalReal" name="horaFinalReal"
+                                autocomplete="off" hidden>
+                        </div>
+                        <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit" formaction="../database/tarefas.php?operacao=alterar"
+                                class="btn btn-info">Atualizar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -129,10 +517,7 @@ $tarefas = buscaTarefas($idDemanda, $idTarefa);
                 showTabsContent(1);
             }
             if (id === 'tarefas') {
-                showTabsContent(2); 
-            }
-            if (id === 'previsao') {
-                showTabsContent(3); 
+                showTabsContent(2);
             }
         }
 

@@ -9,31 +9,29 @@
 
 
 include_once '../head.php';
-include_once(ROOT.'/sistema/database/usuario.php');
-include_once(ROOT.'/sistema/database/clientes.php');
+include_once(ROOT.'/cadastros/database/usuario.php');
+include_once(ROOT.'/cadastros/database/clientes.php');
 
+$ClienteSession = null;
+if (isset($_SESSION['idCliente'])) {
+  $ClienteSession = $_SESSION['idCliente'];
+}
 
-$usuario = buscaUsuarios($_SESSION['idUsuario']);
+$usuario = buscaUsuarios(null,$_SESSION['idLogin']);
 $clientes = buscaClientes();
 ?>
 
 
 <body class="bg-transparent">
 
-    <div class="container" style="margin-top:10px">
-       
-           
-                
-                   
-                    <div class="col-sm mt-4" style="text-align:right">
-                        <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
-                    </div>
-                    <div class="col-sm">
-                        <spam class="col titulo">Inserir Demanda</spam>
-                    </div>
-            
-            <div class="container" style="margin-top: 10px">
-
+    <div class="container formContainer">
+            <div class="col-sm mt-4" style="text-align:right">
+                <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+            </div>
+            <div class="col-sm">
+                <spam class="col titulo">Inserir Demanda</spam>
+            </div>
+        <div class="container" style="margin-top: 10px">
                 <form id="form" method="post">
                     <div class="row">
                         <div class="col-md form-group" style="margin-top: 25px;">
@@ -44,7 +42,7 @@ $clientes = buscaClientes();
                             <div class="form-group">
                                 <label class="labelForm">Cliente</label>
                                 <?php
-                                    if ($usuario['idCliente'] == NULL) { ?>
+                                    if ($ClienteSession == NULL) { ?>
                                         <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
                                         <select class="select form-control" name="idCliente" autocomplete="off" style="margin-top: -10px;">
                                             <?php
@@ -53,57 +51,28 @@ $clientes = buscaClientes();
                                                 <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
                                             <?php } ?>
                                         </select>
-                                    <?php }
-                                    if ($usuario['idCliente']  >= 1) { ?>
+                                    <?php } else { ?>
+                                        <input type="text" class="form-control" style="margin-top: -8px;" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
                                         <input type="hidden" class="form-control" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
                                         <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                                        <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
                                     <?php } ?>
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col form-group">
                         <label class="labelForm">Descrição</label>
                             <textarea class="form-control" name="descricao" autocomplete="off" rows="10"></textarea>
                         </div>
                     </div>
-                    
                     <div  style="text-align:right">
-                        <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
+                        <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
                     </div>
                 </form>
             </div>
-        
     </div>
 
 
-<script>
-
-
-$(document).ready(function() {
-            $("#form").submit(function() {
-                var formData = new FormData(this);
-
-                $.ajax({
-                    url: "../database/demanda.php?operacao=inserir",
-                    type: 'POST',
-                    data: formData,
-                    success: refreshPage(),
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    
-                });
-
-            });
-
-            function refreshPage() {
-                window.location.reload();
-            }
-        });
-</script>
 </body>
 
 </html>

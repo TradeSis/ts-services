@@ -7,7 +7,7 @@
 
 include_once '../head.php';
 include_once '../database/contratoStatus.php';
-include_once '../database/clientes.php';
+include_once(ROOT.'/sistema/database/clientes.php');
 include_once '../database/contratos.php';
 
 $idContrato = $_GET['idContrato'];

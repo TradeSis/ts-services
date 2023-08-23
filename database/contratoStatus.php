@@ -2,8 +2,7 @@
 // helio 21032023 - compatibilidade chamada chamaApi
 // helio 01022023 altereado para include_once, usando funcao conectaMysql
 
-include_once('../conexao.php');
-
+include_once __DIR__ . "/../conexao.php";
 
 function buscaContratoStatus($idContratoStatus=null)
 {
@@ -13,7 +12,7 @@ function buscaContratoStatus($idContratoStatus=null)
 	$apiEntrada = array(
 		'idContratoStatus' => $idContratoStatus,
 	);
-	$contratoStatus = chamaAPI(null, '/api/services/contratostatus', json_encode($apiEntrada), 'GET');
+	$contratoStatus = chamaAPI(null, '/services/contratostatus', json_encode($apiEntrada), 'GET');
 
 	//echo json_encode ($contratoStatus);
 	return $contratoStatus;
@@ -30,7 +29,7 @@ if (isset($_GET['operacao'])) {
 			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
 		
-		$contratoStatus = chamaAPI(null, '/api/services/contratostatus', json_encode($apiEntrada), 'PUT');
+		$contratoStatus = chamaAPI(null, '/services/contratostatus', json_encode($apiEntrada), 'PUT');
 	}
 
 	if ($operacao=="alterar") {
@@ -40,19 +39,18 @@ if (isset($_GET['operacao'])) {
 			'nomeContratoStatus' => $_POST['nomeContratoStatus'],
 			'mudaStatusPara' => $_POST['mudaStatusPara']
 		);
-		$contratoStatus = chamaAPI(null, '/api/services/contratostatus', json_encode($apiEntrada), 'POST');
+		$contratoStatus = chamaAPI(null, '/services/contratostatus', json_encode($apiEntrada), 'POST');
 
 	}
 	if ($operacao=="excluir") {
 		$apiEntrada = array(
 			'idContratoStatus' => $_POST['idContratoStatus']
 		);
-		$contratoStatus = chamaAPI(null, '/api/services/contratostatus', json_encode($apiEntrada), 'DELETE');
+		$contratoStatus = chamaAPI(null, '/services/contratostatus', json_encode($apiEntrada), 'DELETE');
 
 	}
 
-	header('Location: ../cadastros/contratoStatus.php');
-	
+	header('Location: ../configuracao?stab=contratoStatus');
 }
 
 

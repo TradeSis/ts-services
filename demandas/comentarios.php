@@ -2,6 +2,7 @@
 include_once '../head.php';
 ?>
 
+
 <body class="bg-transparent">
     <div class="container-fluid">
         <form method="post" id="form" enctype="multipart/form-data">
@@ -28,12 +29,12 @@ include_once '../head.php';
                         <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
 
 
-                        <div style="text-align:right">
+                        <div class="mt-2" style="text-align:right">
                             <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo"
-                                onchange="myFunction()">
+                                onchange="myFunction()" style="color:#567381; display:none">
                             <label for="myFile">
                                 <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill"
-                                        style="color:#fff"></i></a>
+                                        style="color:#fff"></i>&#32;<h7 style="color: #fff;">Anexos</h7></a>
 
                             </label>
                         </div>
@@ -54,7 +55,7 @@ include_once '../head.php';
                             <?php
                             if ($ClienteSession == NULL) { ?>
                                 <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente"
-                                    class="btn btn-info" style="margin-right:10px;float: right;">Comentar</button>
+                                    class="btn btn-info" style="float: right;">Comentar</button>
                                 <button type="submit" formaction="../database/demanda.php?operacao=solicitar"
                                     class="btn btn-warning" style="margin-right:10px;float: right;">Encaminhar</button>
                             <?php } //*************** visão cliente
@@ -62,11 +63,12 @@ include_once '../head.php';
                                 <button type="submit" formaction="../database/demanda.php?operacao=comentar"
                                     class="btn btn-info" style="margin-right:20px;float: right;">Enviar</button>
                             <?php } ?>
+                            
                         </div>
                     </div>
 
-                    <h4 class="mt-5">Anexos:</h4>
-                    <div class="card"></div>
+                    <!-- <h4 class="mt-5">Anexos:</h4>
+                    <div class="card"></div> -->
 
                 </div>
                 <div class="container mt-3 col-md-6" style="float:left">
@@ -89,6 +91,20 @@ include_once '../head.php';
                                         <div class="clearfix"></div>
                                         <p>
                                             <?php echo $comentario['comentario'] ?>
+                                        </p>
+                                        <p>
+                                            <?php if($comentario['pathAnexo'] != ''){ ?>
+                                                <span>anexo:</span>
+                                                <a target="_blank" href="<?php echo $comentario['pathAnexo'] ?>"><?php echo $comentario['nomeAnexo'] ?></a>
+                                                <span class="float-right">
+                                                    <a href="<?php echo $comentario['pathAnexo'] ?>">
+                                                        <i class="bi bi-file-earmark-arrow-down-fill" style="font-size: 2rem;"></i>
+                                                    </a>
+                                                </span>
+                                                
+                                            <?php }else{  ?>
+                                                <a target="_blank" href="<?php echo $comentario['pathAnexo'] ?>"><?php echo $comentario['nomeAnexo'] ?></a>
+                                            <?php } ?>
                                         </p>
                                     </div>
                                 </div>

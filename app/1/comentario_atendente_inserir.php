@@ -13,12 +13,12 @@ if (isset($jsonEntrada['idDemanda'])) {
     $idUsuario = $jsonEntrada['idUsuario'];
     $idCliente = $jsonEntrada['idCliente'];
     //$idAnexo = $jsonEntrada['idAnexo'];
-    //$pathAnexo = $jsonEntrada['pathAnexo'];
-    //$nomeAnexo = $jsonEntrada['nomeAnexo'];
+    $pathAnexo = $jsonEntrada['pathAnexo'];
+    $nomeAnexo = $jsonEntrada['nomeAnexo'];
     $idTipoStatus = $jsonEntrada['idTipoStatus'];
 
 
-    $sql = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";
+    $sql = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario,nomeAnexo,pathAnexo) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP(),'$nomeAnexo','$pathAnexo')";
     $atualizar = mysqli_query($conexao, $sql);
 
     // busca dados tipostatus    

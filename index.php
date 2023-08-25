@@ -28,21 +28,10 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                     $tab = $_GET['tab'];
                 }
 
-                ?>
-
-
-                <?php if ($nivelMenu >= 1) {
+                if ($nivelMenu >= 1) {
                     if ($tab == '') {
-                        $tab = 'dashboard';
+                        $tab = 'agenda';
                     } ?>
-                    <li class="nav-item mr-1">
-                        <a class="nav-link1 nav-link <?php if ($tab == "dashboard") {
-                            echo " active ";
-                        } ?>"
-                            href="?tab=dashboard" role="tab">Dashboard</a>
-                    </li>
-                <?php }
-                if ($nivelMenu >= 1) { ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "agenda") {
                             echo " active ";
@@ -94,6 +83,15 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                             echo " active ";
                         } ?>"
                             href="?tab=projetos" role="tab">Projetos</a>
+                    </li>
+                <?php }
+                if ($nivelMenu >= 1) {?>
+                    
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "dashboard") {
+                            echo " active ";
+                        } ?>"
+                            href="?tab=dashboard" role="tab">Dashboard</a>
                     </li>
                 <?php }
               

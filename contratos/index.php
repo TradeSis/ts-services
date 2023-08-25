@@ -21,6 +21,8 @@
 
 
 //
+echo "tipo=".$_GET["tipo"]."<HR>";
+
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');

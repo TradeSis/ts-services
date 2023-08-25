@@ -69,12 +69,31 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                     </li>
 
                 <?php }
+
                 if ($nivelMenu >= 1) { ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "contratos") {
                             echo " active ";
                         } ?>"
                             href="?tab=contratos" role="tab">Contratos</a>
+                    </li>
+                <?php }
+                if ($nivelMenu >= 1) { ?>
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "atividades") {
+                            echo " active ";
+                        } ?>" href="?tab=atividades"
+                            role="tab">Atividades</a>
+                    </li>
+
+                <?php }
+
+                if ($nivelMenu >= 1) { ?>
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "projetos") {
+                            echo " active ";
+                        } ?>"
+                            href="?tab=projetos" role="tab">Projetos</a>
                     </li>
                 <?php }
               
@@ -102,10 +121,16 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 $src = "";
 
 if ($tab == "demandas") {
-    $src = "demandas/";
+    $src = "demandas/?tipo=contratos";
+}
+if ($tab == "atividades") {
+    $src = "demandas/?tipo=projetos";
 }
 if ($tab == "contratos") {
-    $src = "contratos/";
+    $src = "contratos/?tipo=contratos";
+}
+if ($tab == "projetos") {
+    $src = "contratos/?tipo=projetos";
 }
 if ($tab == "tarefas") {
     $src = "demandas/tarefas.php";

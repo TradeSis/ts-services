@@ -11,9 +11,19 @@
 include '../head.php';
 include '../database/contratoStatus.php';
 include_once(ROOT.'/cadastros/database/clientes.php');
+include '../database/contratotipos.php';
 
 $contratoStatusTodos = buscaContratoStatus();
 $clientes = buscaClientes();
+
+$nomeContratoTipo= $_GET["tipo"];
+/* echo '<HR> TIPO '. $nomeContratoTipo; */
+$contratoTipo = buscaContratoTipos(null,$nomeContratoTipo);
+
+/* echo '<HR> contratoTipos '. json_encode($contratoTipo); */
+/* echo '<HR> contratoTipos ID '. json_encode($contratoTipo['idContratoTipo']); */
+$idContratoTipo = json_encode($contratoTipo['idContratoTipo']);
+/* echo '<HR> contratoTipos ID ' . $idContratoTipo; */
 
 ?>
 
@@ -27,7 +37,7 @@ $clientes = buscaClientes();
                         <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                     </div>
                     <div class="col-sm">
-                        <spam class="col titulo">Inserir Contrato</spam>
+                        <spam class="col titulo">Inserir <?php echo $nomeContratoTipo ?></spam>
                     </div>
             <div class="container" style="margin-top: 10px">
 
@@ -38,7 +48,8 @@ $clientes = buscaClientes();
 
                     <label class='control-label' for='inputNormal' style="margin-top: 4px;">Titulo</label>
                     <div class="for-group">
-                        <input type="text" class="form-control" name="tituloContrato" required>
+                        <input type="text" class="form-control" name="tituloContrato" required>                                                 
+                        <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
                     </div>
                 </div>
 

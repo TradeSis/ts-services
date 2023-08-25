@@ -20,8 +20,9 @@
 // Lucas 31012023 20:53
 
 
-//
-echo "tipo=".$_GET["tipo"]."<HR>";
+//$tipo= "tipo=".$_GET["tipo"]."<HR>";
+$nomeContratoTipo= $_GET["tipo"];
+echo $nomeContratoTipo;
 
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
@@ -39,7 +40,7 @@ if (isset($_SESSION['filtro_contrato'])) {
     $filtroEntrada = $_SESSION['filtro_contrato'];
     $idCliente = $filtroEntrada['idCliente'];
     $idContratoStatus = $filtroEntrada['idContratoStatus'];
-   
+    $nomeContratoTipo = $nomeContratoTipo;
 }
 
 ?>
@@ -341,7 +342,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
                     <div class="col-sm" style="text-align:right">
-                        <a href="inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+                        <a href="inserir.php?tipo=<?php echo $nomeContratoTipo?>"  role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
                     </div>
                 </div>
 
@@ -377,7 +378,7 @@ if (isset($_SESSION['filtro_contrato'])) {
    
     <script>
         
-
+        var nomeContratoTipo = '<?php echo $nomeContratoTipo ?>';
         buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
         
         function limpar() {
@@ -386,8 +387,8 @@ if (isset($_SESSION['filtro_contrato'])) {
         }
 
         function buscar(idCliente, idContratoStatus, tituloContrato) {
-            /* alert(idCliente);
-            alert(idContratoStatus); */
+            /* alert(idCliente); */
+           /*  alert(nomeContratoTipo); */
 
             $.ajax({
                 type: 'POST', 
@@ -399,7 +400,8 @@ if (isset($_SESSION['filtro_contrato'])) {
                 data: {
                     idCliente: idCliente,
                     idContratoStatus: idContratoStatus,
-                    tituloContrato: tituloContrato
+                    tituloContrato: tituloContrato,
+                    nomeContratoTipo: nomeContratoTipo
                 },
                 
 

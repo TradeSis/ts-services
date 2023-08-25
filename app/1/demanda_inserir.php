@@ -19,6 +19,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $idTipoStatus = $jsonEntrada['idTipoStatus'];
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
     $idServico = $jsonEntrada['idServico'];
+    $idContrato = $jsonEntrada['idContrato'];
 
     //busca dados tipostatus    
         $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -27,7 +28,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
         $posicao = $row["mudaPosicaoPara"];
         $statusDemanda = $row["mudaStatusPara"];
 
-    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico)";
+    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato)";
 
     if ($atualizar = mysqli_query($conexao, $sql)) {
         $jsonSaida = array(

@@ -11,6 +11,10 @@
 include_once '../head.php';
 include_once(ROOT.'/cadastros/database/usuario.php');
 include_once(ROOT.'/cadastros/database/clientes.php');
+include '../database/contratotipos.php';
+
+$nomeContratoTipo= $_GET["tipo"];
+$contratoTipo = buscaContratoTipos(null,$nomeContratoTipo);
 
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
@@ -26,7 +30,7 @@ $clientes = buscaClientes();
 
     <div class="container formContainer">
             <div class="col-sm mt-4" style="text-align:right">
-                <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                <a href="index.php?tipo=<?php echo $nomeContratoTipo?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
             <div class="col-sm">
                 <spam class="col titulo">Inserir Demanda</spam>
@@ -37,6 +41,9 @@ $clientes = buscaClientes();
                         <div class="col-md form-group" style="margin-top: 25px;">
                             <label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
                             <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
+                            <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
+                            <input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo ?>" style="display: none">
+                            <!-- idContratoTipo para usar no apiEntrada, nomeContratoTipo para usar no GET -->
                         </div>
                         <div class="col-md-2 form-group-select">
                             <div class="form-group">

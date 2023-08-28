@@ -12,7 +12,9 @@
 // helio 01022023 alterado para include_once
 // helio 26012023 16:16
 
-echo "tipo=".$_GET["tipo"]."<HR>";
+//$tipo= "tipo=".$_GET["tipo"]."<HR>";
+$nomeContratoTipo= $_GET["tipo"];
+
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(ROOT.'/cadastros/database/clientes.php');
@@ -401,7 +403,7 @@ echo "selected";
 
 
       <div class="col-sm" style="text-align:right">
-        <a href="demanda_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+        <a href="demanda_inserir.php?tipo=<?php echo $nomeContratoTipo?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
       </div>
     </div>
 
@@ -628,6 +630,7 @@ echo "selected";
 
   <script>
     <?php if ($ClienteSession === NULL): ?>
+      var nomeContratoTipo = '<?php echo $nomeContratoTipo ?>';
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
 
       function limparTrade() {
@@ -637,7 +640,7 @@ echo "selected";
 
 
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
-        
+       
         $.ajax({
           type: 'POST',
           dataType: 'html',
@@ -653,7 +656,8 @@ echo "selected";
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
             tituloDemanda: tituloDemanda,
-            tamanho: tamanho
+            tamanho: tamanho,
+            nomeContratoTipo: nomeContratoTipo
           },
           success: function (msg) {
             
@@ -722,6 +726,7 @@ echo "selected";
         }
       });
   <?php else: ?>
+    var nomeContratoTipo = '<?php echo $nomeContratoTipo ?>';
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
 
 
@@ -748,7 +753,8 @@ echo "selected";
           idTipoOcorrencia: idTipoOcorrencia,
           statusDemanda: statusDemanda,
           tituloDemanda: tituloDemanda,
-          tamanho: tamanho
+          tamanho: tamanho,
+          nomeContratoTipo: nomeContratoTipo
         },
         success: function (msg) {
          

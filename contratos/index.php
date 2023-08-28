@@ -21,10 +21,9 @@
 
 
 //
-$tipo= "tipo=".$_GET["tipo"]."<HR>";
+//$tipo= "tipo=".$_GET["tipo"]."<HR>";
 $nomeContratoTipo= $_GET["tipo"];
-echo $nomeContratoTipo;
-echo "<HR>" . $tipo;
+
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');

@@ -25,9 +25,8 @@ $idCliente = $contrato["idCliente"];
 $cliente = buscaClientes($idCliente);
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
-$nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'],null);
+$nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'], null);
 
-/* echo '<HR> TIPO '. json_encode($nomeContratoTipo);  */
 ?>
 
 
@@ -37,7 +36,7 @@ $nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'],null);
 
 
 		<div class="col-sm mt-4" style="text-align:right">
-			<a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+			<a href="index.php?tipo=<?php echo $nomeContratoTipo['nomeContratoTipo']?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
 		</div>
 		<div class="col-sm">
 			<spam class="col titulo">Alterar Contrato</spam>
@@ -149,7 +148,7 @@ $nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'],null);
 		<hr style="margin-top: -60px;">
 		<div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
 			<h5>Demandas relacionadas a este contrato:</h5>
-			<div class="col-sm" style="text-align:right">
+			<div class="col-sm" style="text-align:right; margin-top: -30px">
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp; Novo</button>
 			</div>
 
@@ -164,12 +163,14 @@ $nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'],null);
 							</button>
 						</div>
 						<div class="container">
-							<form method="post" action="../database/demanda.php?operacao=inserir" id="inserirForm">
+							<form method="post" action="../database/demanda.php?operacao=inserir_demandadecontrato" id="inserirForm">
 								<div class="row">
 									<div class="col-md form-group" style="margin-top: 25px;">
 										<label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
 										<input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
 										<input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
+										<input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" readonly>
+										<input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo['nomeContratoTipo'] ?>" style="display: none">
 									</div>
 									<div class="col-md-2 form-group-select">
 										<div class="form-group">
@@ -203,48 +204,51 @@ $nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'],null);
 				</div>
 			</div>
 
-
-			<table class="table">
-				<thead class="thead-light">
-					<tr>
-						<th class="text-center">Prioridade</th>
-						<th class="text-center">ID</th>
-						<th class="text-center">Solicitante</th>
-						<th class="text-center">Demanda</th>
-						<th class="text-center">Responsável</th>
-						<th class="text-center">Abertura</th>
-						<th class="text-center">Status</th>
-						<th class="text-center">Ocorrência</th>
-						<th class="text-center">Tamanho</th>
-						<th class="text-center">Tempo</th>
-						<th class="text-center">Horas Previsão</th>
-						<th class="text-center">Ação</th>
-					</tr>
-				</thead>
-				<tbody class="fonteCorpo">
-					<?php
-					foreach ($demandas as $demanda) {
-						$horas = buscaHoras($demanda['idDemanda']);
-					?>
-						<tr>
-							<td class="text-center"><?php echo $demanda['prioridade'] ?></td>
-							<td class="text-center"><?php echo $demanda['idDemanda'] ?></td>
-							<td class="text-center"><?php echo $demanda['nomeSolicitante'] ?></td>
-							<td class="text-center"><?php echo $demanda['tituloDemanda'] ?></td>
-							<td class="text-center"><?php echo $demanda['nomeAtendente'] ?></td>
-							<td class="text-center"><?php echo date('d/m/Y', strtotime($demanda['dataAbertura'])) ?></td>
-							<td class="text-center<?php echo $demanda['nomeTipoStatus'] ?>" data-status='Finalizado'><?php echo $demanda['nomeTipoStatus'] ?></td>
-							<td class="text-center"><?php echo $demanda['nomeTipoOcorrencia'] ?></td>
-							<td class="text-center"><?php echo $demanda['tamanho'] ?></td>
-							<td class="text-center"><?php echo $horas['totalHoraCobrado'] ?></td>
-							<td class="text-center"><?php echo $demanda['horasPrevisao'] ?></td>
-							<td>
-								<a class='btn btn-primary btn-sm' href='../demandas/visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>' role='button'><i class='bi bi-eye-fill'></i></i></a>
-							</td>
-						</tr>
-					<?php } ?>
-				</tbody>
-			</table>
+			<div class="card mt-2 text-center">
+				<div class="table scrollbar-tabela">
+					<table class="table">
+						<thead class="cabecalhoTabela">
+							<tr>
+								<th class="text-center">Prioridade</th>
+								<th class="text-center">ID</th>
+								<th class="text-center">Solicitante</th>
+								<th class="text-center">Demanda</th>
+								<th class="text-center">Responsável</th>
+								<th class="text-center">Abertura</th>
+								<th class="text-center">Status</th>
+								<th class="text-center">Ocorrência</th>
+								<th class="text-center">Tamanho</th>
+								<th class="text-center">Tempo</th>
+								<th class="text-center">Horas Previsão</th>
+								<th class="text-center">Ação</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							foreach ($demandas as $demanda) {
+								$horas = buscaHoras($demanda['idDemanda']);
+							?>
+								<tr>
+									<td class="text-center"><?php echo $demanda['prioridade'] ?></td>
+									<td class="text-center"><?php echo $demanda['idDemanda'] ?></td>
+									<td class="text-center"><?php echo $demanda['nomeSolicitante'] ?></td>
+									<td class="text-center"><?php echo $demanda['tituloDemanda'] ?></td>
+									<td class="text-center"><?php echo $demanda['nomeAtendente'] ?></td>
+									<td class="text-center"><?php echo date('d/m/Y', strtotime($demanda['dataAbertura'])) ?></td>
+									<td class="text-center<?php echo $demanda['nomeTipoStatus'] ?>" data-status='Finalizado'><?php echo $demanda['nomeTipoStatus'] ?></td>
+									<td class="text-center"><?php echo $demanda['nomeTipoOcorrencia'] ?></td>
+									<td class="text-center"><?php echo $demanda['tamanho'] ?></td>
+									<td class="text-center"><?php echo $horas['totalHoraCobrado'] ?></td>
+									<td class="text-center"><?php echo $demanda['horasPrevisao'] ?></td>
+									<td>
+										<a class='btn btn-primary btn-sm' href='../demandas/visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>' role='button'><i class='bi bi-eye-fill'></i></i></a>
+									</td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 

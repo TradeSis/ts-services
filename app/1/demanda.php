@@ -15,14 +15,15 @@ $idEmpresa = null;
 $conexao = conectaMysql($idEmpresa);
 $demanda = array();
 
-$sql = "SELECT demanda.*, cliente.nomeCliente, tipoocorrencia.nomeTipoOcorrencia, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
+$sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipoocorrencia.nomeTipoOcorrencia, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
         LEFT JOIN cliente ON demanda.idCliente = cliente.idCliente
         LEFT JOIN usuario AS atendente ON demanda.idAtendente = atendente.idUsuario
         LEFT JOIN usuario AS solicitante ON demanda.idSolicitante = solicitante.idUsuario
         LEFT JOIN contrato ON demanda.idContrato = contrato.idContrato
         LEFT JOIN servicos ON demanda.idServico = servicos.idServico
         LEFT JOIN tipoocorrencia ON demanda.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
-        LEFT JOIN tipostatus ON demanda.idTipoStatus = tipostatus.idTipoStatus";
+        LEFT JOIN tipostatus ON demanda.idTipoStatus = tipostatus.idTipoStatus
+        LEFT JOIN contratotipos  on  demanda.idContratoTipo = contratotipos.idContratoTipo ";
 if (isset($jsonEntrada["idDemanda"])) {
   $sql = $sql . " where demanda.idDemanda = " . $jsonEntrada["idDemanda"];
 } else {
@@ -73,6 +74,10 @@ if (isset($jsonEntrada["idDemanda"])) {
     $where = " and ";
   }
 
+   if (isset($jsonEntrada["nomeContratoTipo"])) {
+    $sql = $sql . $where . " contratotipos.nomeContratoTipo = " . "'" . $jsonEntrada["nomeContratoTipo"] . "'" ;
+    $where = " and ";
+  }
 
 
 }

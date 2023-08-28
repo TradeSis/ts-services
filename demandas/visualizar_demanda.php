@@ -34,6 +34,7 @@ $statusEncerrar = array(
                             <label class='control-label' for='inputNormal'>Demanda</label>
                             <input type="text" class="form-control" name="tituloDemanda"
                                 value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
+                            <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $demanda['idContratoTipo'] ?>" style="display: none">
                         </div>
                     </div>
                     <div class="col-md-2" style="margin-top:36px;">

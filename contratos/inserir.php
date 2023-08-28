@@ -16,9 +16,8 @@ include '../database/contratotipos.php';
 $contratoStatusTodos = buscaContratoStatus();
 $clientes = buscaClientes();
 
-$nomeContratoTipo= $_GET["tipo"];
-$contratoTipo = buscaContratoTipos(null,$nomeContratoTipo);
-
+$urlContratoTipo= $_GET["tipo"];
+$contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 ?>
 
@@ -29,10 +28,10 @@ $contratoTipo = buscaContratoTipos(null,$nomeContratoTipo);
         <!-- <div class="card shadow pb-4"> -->
  
             <div class="col-sm mt-4" style="text-align:right">
-                        <a href="index.php?tipo=<?php echo $nomeContratoTipo?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                        <a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                     </div>
                     <div class="col-sm">
-                        <spam class="col titulo">Inserir <?php echo $nomeContratoTipo ?></spam>
+                        <spam class="col titulo">Inserir <?php echo $contratoTipo['nomeContrato'] ?></spam>
                     </div>
             <div class="container" style="margin-top: 10px">
 
@@ -45,7 +44,7 @@ $contratoTipo = buscaContratoTipos(null,$nomeContratoTipo);
                     <div class="for-group">
                         <input type="text" class="form-control" name="tituloContrato" required>                                                 
                         <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
-                        <input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo ?>" style="display: none">
+                        <!-- <input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo ?>" style="display: none"> -->
                         <!-- idContratoTipo para usar no apiEntrada, nomeContratoTipo para usar no GET -->
                     </div>
                 </div>

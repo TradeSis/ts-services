@@ -21,13 +21,19 @@
 
 
 //
-//$tipo= "tipo=".$_GET["tipo"]."<HR>";
-$nomeContratoTipo= $_GET["tipo"];
+//
+$tipo= "tipo=".$_GET["tipo"]."<HR>";
+echo $tipo;
+
 
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');
 include_once(ROOT.'/cadastros/database/clientes.php');
+include '../database/contratotipos.php';
+
+$urlContratoTipo= $_GET["tipo"];
+$contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
@@ -40,7 +46,6 @@ if (isset($_SESSION['filtro_contrato'])) {
     $filtroEntrada = $_SESSION['filtro_contrato'];
     $idCliente = $filtroEntrada['idCliente'];
     $idContratoStatus = $filtroEntrada['idContratoStatus'];
-    $nomeContratoTipo = $nomeContratoTipo;
 }
 
 ?>
@@ -326,7 +331,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </div>
 
                     <div class="col-sm-3 ml-2">
-                        <h2 class="tituloTabela" style="color:#12192C">Contrato</h2>
+                        <h2 class="tituloTabela" style="color:#12192C"><?php echo $contratoTipo['nomeContrato']?></h2>
                     </div>
 
                     <div class="col-sm-4">
@@ -342,7 +347,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
                     <div class="col-sm" style="text-align:right">
-                        <a href="inserir.php?tipo=<?php echo $nomeContratoTipo?>"  role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+                        <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>"  role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
                     </div>
                 </div>
 
@@ -354,7 +359,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
                         <tr>
                             <th>Cliente</th>
-                            <th>Titulo</th>
+                            <th><?php echo $contratoTipo['nomeContrato']?></th>
                             <th>Status</th>
                             <th>Previsão</th>
                             <th>Entrega</th>
@@ -378,7 +383,7 @@ if (isset($_SESSION['filtro_contrato'])) {
    
     <script>
         
-        var nomeContratoTipo = '<?php echo $nomeContratoTipo ?>';
+        var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
         buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
         
         function limpar() {
@@ -388,7 +393,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         function buscar(idCliente, idContratoStatus, tituloContrato) {
             /* alert(idCliente); */
-           /*  alert(nomeContratoTipo); */
+           /*  alert(urlContratoTipo); */
 
             $.ajax({
                 type: 'POST', 
@@ -401,7 +406,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     idCliente: idCliente,
                     idContratoStatus: idContratoStatus,
                     tituloContrato: tituloContrato,
-                    nomeContratoTipo: nomeContratoTipo
+                    urlContratoTipo: urlContratoTipo
                 },
                 
 

@@ -23,10 +23,25 @@ $contratotipo = buscaContratoTipos($idContratoTipo);
 
         <form class="mb-4" action="../database/contratotipos.php?operacao=alterar" method="post">
 
-            <div class="col-md-12 form-group">
-                <label class='control-label' for='inputNormal'></label>
-                <input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $contratotipo['nomeContratoTipo'] ?>">
-                <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratotipo['idContratoTipo'] ?>" style="display: none">
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome</label>
+                    <div class="for-group">
+                        <input type="text" name="idContratoTipo" class="form-control" value="<?php echo $contratotipo['idContratoTipo'] ?>">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome Contrato</label>
+                    <div class="for-group">
+                        <input type="text" name="nomeContrato" class="form-control" value="<?php echo $contratotipo['nomeContrato'] ?>">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome Demanda</label>
+                    <div class="for-group">
+                        <input type="text" name="nomeDemanda" class="form-control" value="<?php echo $contratotipo['nomeDemanda'] ?>">
+                    </div>
+                </div>
             </div>
 
             <div style="text-align:right; margin-top:20px">

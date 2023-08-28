@@ -9,15 +9,7 @@ $contratotipo = array();
 
 $sql = "SELECT * FROM contratotipos ";
 if (isset($jsonEntrada["idContratoTipo"])) {
-  $sql = $sql . " where contratotipos.idContratoTipo = " . $jsonEntrada["idContratoTipo"];
-}else {
-  $where = " where ";
-
-  if (isset($jsonEntrada["nomeContratoTipo"])) {
-    $sql = $sql . $where . " contratotipos.nomeContratoTipo = " . "'" . $jsonEntrada["nomeContratoTipo"] . "'" ;
-    $where = " and ";
-  }
-
+  $sql = $sql . " where contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
 }
 
 //echo "-SQL->".json_encode($sql)."\n";
@@ -29,7 +21,7 @@ while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
 }
 //echo "-ARRAY->".json_encode($contratotipo)."\n";
 
-if (isset($jsonEntrada["idContratoTipo"]) || isset($jsonEntrada["nomeContratoTipo"]) && $rows == 1) {
+if (isset($jsonEntrada["idContratoTipo"]) && $rows == 1) {
   $contratotipo = $contratotipo[0];
 }
 

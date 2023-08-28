@@ -21,6 +21,8 @@ $contratoTipos = buscaContratoTipos();
                     <thead class="cabecalhoTabela">
                         <tr>
                             <th>Nome</th>
+                            <th>Nome Contrato</th>
+                            <th>Nome Demanda</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
@@ -28,9 +30,10 @@ $contratoTipos = buscaContratoTipos();
                     foreach ($contratoTipos as $contratoTipo) {
                     ?>
                         <tr>
-                            <td>
-                                <?php echo $contratoTipo['nomeContratoTipo'] ?>
-                            </td>
+                            <td><?php echo $contratoTipo['idContratoTipo'] ?></td>
+                            <td><?php echo $contratoTipo['nomeContrato'] ?></td>
+                            <td><?php echo $contratoTipo['nomeDemanda'] ?></td>
+                            
                             <td>
                                 <a class="btn btn-warning btn-sm" href="contratotipos_alterar.php?idContratoTipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button"><i class="bi bi-pencil-square"></i></a>
                                 <a class="btn btn-danger btn-sm" href="contratotipos_excluir.php?idContratoTipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button"><i class="bi bi-trash3"></i></a>

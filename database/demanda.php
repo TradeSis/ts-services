@@ -96,8 +96,6 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "inserir") {
 
-		$nomeContratoTipo = $_POST['nomeContratoTipo'];
-
 		if(isset($_POST['idContrato'])){
 			$idContrato = $_POST['idContrato'];
 		}else{
@@ -115,7 +113,7 @@ if (isset($_GET['operacao'])) {
 			'idContrato' => $idContrato,
 			'idContratoTipo' => $_POST['idContratoTipo'],
 		);
-	
+
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 
 		$tituloEmail = $_POST['tituloDemanda'];
@@ -136,13 +134,11 @@ if (isset($_GET['operacao'])) {
 
 		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 		
-		header('Location: ../demandas/index.php?tipo='.$nomeContratoTipo);
+		header('Location: ../demandas/index.php?tipo='.$_POST['idContratoTipo']);
 		
 	}
 
 	if ($operacao == "inserir_demandadecontrato") {
-
-		$nomeContratoTipo = $_POST['nomeContratoTipo'];
 		
 		if(isset($_POST['idContrato'])){
 			$idContrato = $_POST['idContrato'];
@@ -182,7 +178,7 @@ if (isset($_GET['operacao'])) {
 
 		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 		
-		header('Location: ../contratos/index.php?tipo='.$nomeContratoTipo);
+		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
 		
 	}
 	if ($operacao == "alterar") {
@@ -440,7 +436,7 @@ if (isset($_GET['operacao'])) {
 		$statusDemanda = $_POST['statusDemanda'];
 		$tituloDemanda = $_POST['tituloDemanda'];
 		$tamanho = $_POST['tamanho'];
-		$nomeContratoTipo = $_POST["nomeContratoTipo"];
+		$idContratoTipo = $_POST["urlContratoTipo"];
 
 		if ($idCliente == "") {
 			$idCliente = null;
@@ -477,8 +473,8 @@ if (isset($_GET['operacao'])) {
 			$tamanho = null;
 		}
 
-		if ($nomeContratoTipo == ""){
-			$nomeContratoTipo = null;
+		if ($idContratoTipo == ""){
+			$idContratoTipo = null;
 		}
 
 
@@ -497,7 +493,7 @@ if (isset($_GET['operacao'])) {
 			'statusDemanda' => $statusDemanda,
 			'tituloDemanda' => $tituloDemanda,
 			'tamanho' => $tamanho,
-			'nomeContratoTipo' => $nomeContratoTipo
+			'idContratoTipo' => $idContratoTipo
 		);
 
 		$_SESSION['filtro_demanda'] = $apiEntrada;

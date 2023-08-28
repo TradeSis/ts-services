@@ -16,14 +16,26 @@ include_once('../head.php');
         </div>
 
         <form class="mb-4" action="../database/contratotipos.php?operacao=inserir" method="post">
-
-            <div class="col-md-12 form-group">
-                <label class='control-label' for='inputNormal' style="margin-top: -20px;">Nome</label>
-                <div class="for-group">
-                    <input type="text" name="nomeContratoTipo" class="form-control" autocomplete="off">
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome</label>
+                    <div class="for-group">
+                        <input type="text" name="idContratoTipo" class="form-control" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome Contrato</label>
+                    <div class="for-group">
+                        <input type="text" name="nomeContrato" class="form-control" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome Demanda</label>
+                    <div class="for-group">
+                        <input type="text" name="nomeDemanda" class="form-control" autocomplete="off">
+                    </div>
                 </div>
             </div>
-
             <div style="text-align:right;margin-top:20px">
                 <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
             </div>

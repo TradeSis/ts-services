@@ -74,8 +74,8 @@ if (isset($jsonEntrada["idDemanda"])) {
     $where = " and ";
   }
 
-   if (isset($jsonEntrada["nomeContratoTipo"])) {
-    $sql = $sql . $where . " contratotipos.nomeContratoTipo = " . "'" . $jsonEntrada["nomeContratoTipo"] . "'" ;
+   if (isset($jsonEntrada["idContratoTipo"])) {
+    $sql = $sql . $where . " contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'" ;
     $where = " and ";
   }
 

@@ -9,9 +9,11 @@ $idEmpresa = null;
 $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idContratoTipo'])) {
     $idContratoTipo = $jsonEntrada['idContratoTipo'];
-    $nomeContratoTipo = $jsonEntrada['nomeContratoTipo'];
+    $nomeContrato = $jsonEntrada['nomeContrato'];
+    $nomeDemanda = $jsonEntrada['nomeDemanda'];
 
-    $sql = "UPDATE contratotipos SET nomeContratoTipo='$nomeContratoTipo' WHERE idContratoTipo = $idContratoTipo";
+    $sql = "UPDATE contratotipos SET idContratoTipo='$idContratoTipo',nomeContrato='$nomeContrato',nomeDemanda='$nomeDemanda' WHERE idContratoTipo = '$idContratoTipo'";
+
     if ($atualizar = mysqli_query($conexao, $sql)) {
         $jsonSaida = array(
             "status" => 200,

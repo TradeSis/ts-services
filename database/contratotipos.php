@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once __DIR__ . "/../conexao.php";
 
 
-function buscaContratoTipos($idContratoTipo=null,$nomeContratoTipo=null)
+function buscaContratoTipos($idContratoTipo=null)
 {
 	
 	$contratotipo = array();
@@ -20,8 +20,7 @@ function buscaContratoTipos($idContratoTipo=null,$nomeContratoTipo=null)
 
 	$apiEntrada = array(
 		'idEmpresa' => $idEmpresa,
-		'idContratoTipo' => $idContratoTipo,
-		'nomeContratoTipo' => $nomeContratoTipo
+		'idContratoTipo' => $idContratoTipo
 	);
 	$contratotipo = chamaAPI(null, '/services/contratotipos', json_encode($apiEntrada), 'GET');
 
@@ -40,7 +39,9 @@ if (isset($_GET['operacao'])) {
 	if ($operacao=="inserir") {
 		$apiEntrada = array(
 			'idEmpresa' => $idEmpresa,
-			'nomeContratoTipo' => $_POST['nomeContratoTipo'],
+			'idContratoTipo' => $_POST['idContratoTipo'],
+			'nomeContrato' => $_POST['nomeContrato'],
+			'nomeDemanda' => $_POST['nomeDemanda'],
 		);
 
 		$contratotipo = chamaAPI(null, '/services/contratotipos', json_encode($apiEntrada), 'PUT');
@@ -51,7 +52,8 @@ if (isset($_GET['operacao'])) {
 		$apiEntrada = array(
 			'idEmpresa' => $idEmpresa,
 			'idContratoTipo' => $_POST['idContratoTipo'],
-			'nomeContratoTipo' => $_POST['nomeContratoTipo'],
+			'nomeContrato' => $_POST['nomeContrato'],
+			'nomeDemanda' => $_POST['nomeDemanda'],
 		);
 		$contratotipo = chamaAPI(null, '/services/contratotipos', json_encode($apiEntrada), 'POST');
 

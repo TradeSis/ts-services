@@ -25,7 +25,7 @@ $idCliente = $contrato["idCliente"];
 $cliente = buscaClientes($idCliente);
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
-$nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'], null);
+$contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
 ?>
 
@@ -36,10 +36,10 @@ $nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'], null);
 
 
 		<div class="col-sm mt-4" style="text-align:right">
-			<a href="index.php?tipo=<?php echo $nomeContratoTipo['nomeContratoTipo']?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+			<a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
 		</div>
 		<div class="col-sm">
-			<spam class="col titulo">Alterar Contrato</spam>
+			<spam class="col titulo">Alterar <?php echo $contratoTipo['nomeContrato']?></spam>
 		</div>
 
 		<div class="container" style="margin-top: 10px">
@@ -52,7 +52,6 @@ $nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'], null);
 						<input type="text" class="form-control" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>">
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
 						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
-						<input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo['nomeContratoTipo'] ?>" style="display: none">
 					</div>
 
 					<div class="col-md-12 form-group" style="margin-top: -5px;">
@@ -170,7 +169,6 @@ $nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'], null);
 										<input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
 										<input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
 										<input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" readonly>
-										<input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo['nomeContratoTipo'] ?>" style="display: none">
 									</div>
 									<div class="col-md-2 form-group-select">
 										<div class="form-group">

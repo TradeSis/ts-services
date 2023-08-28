@@ -14,6 +14,7 @@ include_once '../database/contratos.php';
 include_once '../database/demanda.php';
 include_once '../database/tarefas.php';
 include_once(ROOT . '/cadastros/database/usuario.php');
+include '../database/contratotipos.php';
 
 $idContrato = $_GET['idContrato'];
 $contratoStatusTodos = buscaContratoStatus();
@@ -24,7 +25,9 @@ $idCliente = $contrato["idCliente"];
 $cliente = buscaClientes($idCliente);
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
+$nomeContratoTipo = buscaContratoTipos($contrato['idContratoTipo'],null);
 
+/* echo '<HR> TIPO '. json_encode($nomeContratoTipo);  */
 ?>
 
 
@@ -49,6 +52,8 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 						<label class='control-label' for='inputNormal' style="margin-top: 4px;">Titulo</label>
 						<input type="text" class="form-control" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>">
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
+						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
+						<input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo['nomeContratoTipo'] ?>" style="display: none">
 					</div>
 
 					<div class="col-md-12 form-group" style="margin-top: -5px;">

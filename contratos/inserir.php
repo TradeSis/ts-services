@@ -50,6 +50,7 @@ $idContratoTipo = json_encode($contratoTipo['idContratoTipo']);
                     <div class="for-group">
                         <input type="text" class="form-control" name="tituloContrato" required>                                                 
                         <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
+                        <input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo ?>" style="display: none">
                     </div>
                 </div>
 

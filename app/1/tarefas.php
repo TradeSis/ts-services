@@ -22,10 +22,6 @@ if (isset($jsonEntrada["idTarefa"])) {
   $sql = $sql . $where . " tarefa.idTarefa = " . $jsonEntrada["idTarefa"];
   $where = " and ";
 }
-if (isset($jsonEntrada["idDemanda"])) {
-  $sql = $sql . $where . " tarefa.idDemanda = " . $jsonEntrada["idDemanda"];
-  $where = " and ";
-}
 
 if (isset($jsonEntrada["idCliente"])) {
   $sql = $sql . $where . " tarefa.idCliente = " . $jsonEntrada["idCliente"];
@@ -43,20 +39,30 @@ if (isset($jsonEntrada["idAtendente"])) {
 }
 
 if (isset($jsonEntrada["statusTarefa"])) {
-  if ($jsonEntrada["statusTarefa"] == 1) { 
-    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL"; 
+  if ($jsonEntrada["statusTarefa"] == 1) {
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
     $where = " and ";
   }
-  if ($jsonEntrada["statusTarefa"] == 0) { 
-    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL"; 
+  if ($jsonEntrada["statusTarefa"] == 0) {
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL";
     $where = " and ";
   }
 }
 
 if (isset($jsonEntrada["tituloTarefa"])) {
-  $sql = $sql . $where . " tarefa.tituloTarefa like " . "'%" . $jsonEntrada["tituloTarefa"] . "%'";
+  $sql = $sql . $where . " tarefa.tituloTarefa like " . "'%" . $jsonEntrada["tituloTarefa"] . "%' or demanda.tituloDemanda like " . "'%" . $jsonEntrada["tituloTarefa"] . "%'";
   $where = " and ";
 }
+
+
+if (isset($jsonEntrada["previsto"])) {
+  $sql = $sql . $where . " tarefa.Previsto = " . "'" . $jsonEntrada["previsto"] . "'";
+  $where = " and ";
+}
+if (isset($jsonEntrada["dataReal"])) {
+  $sql = $sql . $where . " tarefa.dataReal = " . "'" . $jsonEntrada["dataReal"] . "'";
+  $where = " and ";
+} 
 
 
 

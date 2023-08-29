@@ -128,7 +128,7 @@ $dadosGrafico4 = buscaTarefasGrafico4();
   </script>
 </head>
 
-<body class="bg-white">
+<body class="bg-transparent">
   <div class="container-fluid mt-4">
     <div class="card">
       <div class="card-header">

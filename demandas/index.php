@@ -140,7 +140,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
 </html>
-<body class="bg-white">
+<body class="bg-transparent">
   <div class="container-fluid py-1">
     <div class="header-body">
       <div class="row row-cols-6">

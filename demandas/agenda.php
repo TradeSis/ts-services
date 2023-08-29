@@ -43,7 +43,7 @@ $tarefas = buscaTarefas();
 
 </html>
 
-<body class="bg-white">
+<body class="bg-transparent">
     <div class="container mt-1">
         <div class="row">
             <div class="col-sm-11">

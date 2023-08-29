@@ -35,9 +35,7 @@ if ($_SESSION['idCliente'] == null) {
 $statusTarefa = "1"; //ABERTO
 
 $filtroEntrada = null;
-$idTipoStatus = null;
 $idTipoOcorrencia = null;
-$idSolicitante = null;
 
 
 if (isset($_SESSION['filtro_tarefas'])) {
@@ -46,16 +44,16 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $idAtendente = $filtroEntrada['idAtendente'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusTarefa = $filtroEntrada['statusTarefa'];
-  $idDemanda = $filtroEntrada['idDemanda'];
+  $previsto = $filtroEntrada['previsto'];
+  $dataReal = $filtroEntrada['dataReal'];
 }
-
 ?>
 
 </html>
 
-<body class="bg-white">
-  
-  <nav id="menuFiltros" class="menuFiltros"  style="width: 170px;margin-top:-90px;margin-left:11px">
+<body class="bg-transparent">
+
+  <nav id="menuFiltros" class="menuFiltros" style="width: 170px;margin-top:-90px;margin-left:11px">
     <div class="titulo"><span>Filtrar por:</span></div>
     <ul>
       <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
@@ -106,7 +104,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
           <input type="text" class="form-control" id="tituloTarefa" placeholder="Buscar por...">
           <span class="input-group-btn">
             <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
+                class="material-symbols-outlined">search</span>
             </button>
           </span>
         </div>
@@ -138,23 +137,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             <tr>
               <th></th>
               <th></th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-control text-center" name="idAtendente" id="FiltroDemanda"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                    <?php
-                    foreach ($demandas as $demanda) {
-                      ?>
-                      <option <?php
-                      if ($demanda['idDemanda'] == $idDemanda) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['tituloDemanda'] ?></option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
+              <th></th>
               <th>
                 <form action="" method="post">
                   <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
@@ -206,8 +189,28 @@ if (isset($_SESSION['filtro_tarefas'])) {
                   </select>
                 </form>
               </th>
-              <th></th>
-              <th></th>
+              <th>
+                <?php if ($previsto != null) { ?>
+                  <input type="date"
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C"
+                    id="FiltroPrevisto" value="<?php echo $previsto ?>" name="previsto" autocomplete="off">
+                <?php } else { ?>
+                  <input type="date"
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C"
+                    id="FiltroPrevisto" name="previsto" autocomplete="off">
+                <?php } ?>
+              </th>
+              <th>
+              <?php if ($dataReal != null) { ?>
+                  <input type="date"
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C"
+                    id="FiltroData" value="<?php echo $dataReal ?>" name="dataReal" autocomplete="off">
+                <?php } else { ?>
+                  <input type="date"
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C"
+                    id="FiltroData" name="dataReal" autocomplete="off">
+                <?php } ?>
+              </th>
               <th></th>
               <th></th>
             </tr>
@@ -452,15 +455,15 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroDemanda").val(), $("#FiltroStatusTarefa").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
 
     function limparTrade() {
-      buscar(null, null, null, null, null, null);
+      buscar(null, null, null, null, null, null, null);
       window.location.reload();
     }
 
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, idDemanda, statusTarefa) {
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, previsto, dataReal) {
 
       $.ajax({
         type: 'POST',
@@ -474,8 +477,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
           idAtendente: idAtendente,
           tituloTarefa: tituloTarefa,
           idTipoOcorrencia: idTipoOcorrencia,
-          idDemanda: idDemanda,
-          statusTarefa: statusTarefa
+          statusTarefa: statusTarefa,
+          previsto: previsto,
+          dataReal: dataReal
         },
         success: function (msg) {
 
@@ -487,9 +491,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
             function formatDate(dateString) {
               if (dateString !== null && !isNaN(new Date(dateString))) {
                 var date = new Date(dateString);
-                var day = date.getDate().toString().padStart(2, '0');
-                var month = (date.getMonth() + 1).toString().padStart(2, '0');
-                var year = date.getFullYear().toString().padStart(4, '0');
+                var day = date.getUTCDate().toString().padStart(2, '0');
+                var month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+                var year = date.getUTCFullYear().toString().padStart(4, '0');
                 return day + "/" + month + "/" + year;
               }
               return "00/00/0000";
@@ -536,32 +540,40 @@ if (isset($_SESSION['filtro_tarefas'])) {
     }
 
     $("#FiltroClientes").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroDemanda").val(), $("#FiltroStatusTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
     });
 
     $("#FiltroUsuario").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroDemanda").val(), $("#FiltroStatusTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
     });
 
     $("#buscar").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroDemanda").val(), $("#FiltroStatusTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
     });
 
     $("#FiltroOcorrencia").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroDemanda").val(), $("#FiltroStatusTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
     });
 
     $("#FiltroDemanda").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroDemanda").val(), $("#FiltroStatusTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
     });
 
     $("#FiltroStatusTarefa").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroDemanda").val(), $("#FiltroStatusTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
+    });
+
+    $("#FiltroPrevisto").change(function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
+    });
+
+    $("#FiltroData").change(function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
     });
 
     document.addEventListener("keypress", function (e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroDemanda").val(), $("#FiltroStatusTarefa").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevisto").val(), $("#FiltroData").val());
       }
     });
 

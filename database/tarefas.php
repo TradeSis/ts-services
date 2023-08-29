@@ -212,8 +212,9 @@ if (isset($_GET['operacao'])) {
         $idAtendente = $_POST['idAtendente'];
         $tituloTarefa = $_POST['tituloTarefa'];
         $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
-        $idDemanda = $_POST['idDemanda'];
         $statusTarefa = $_POST['statusTarefa'];
+        $previsto = $_POST['previsto'];
+        $dataReal = $_POST['dataReal'];
 
         if ($idCliente == "") {
             $idCliente = null;
@@ -227,11 +228,14 @@ if (isset($_GET['operacao'])) {
         if ($idTipoOcorrencia == "") {
             $idTipoOcorrencia = null;
         }
-        if ($idDemanda == "") {
-            $idDemanda = null;
-        }
         if ($statusTarefa == "") {
             $statusTarefa = null;
+        }
+        if ($previsto == "") {
+            $previsto = null;
+        }
+        if ($dataReal == "") {
+            $dataReal = null;
         }
 
         $apiEntrada = array(
@@ -241,7 +245,8 @@ if (isset($_GET['operacao'])) {
             'tituloTarefa' => $tituloTarefa,
             'idTipoOcorrencia' => $idTipoOcorrencia,
             'statusTarefa' => $statusTarefa,
-            'idDemanda' => $idDemanda
+            'previsto' => $previsto,
+            'dataReal' => $dataReal
         );
 
         $_SESSION['filtro_tarefas'] = $apiEntrada;

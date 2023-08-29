@@ -100,8 +100,6 @@ if (isset($_GET['operacao'])) {
 			'idContratoTipo' => $_POST['idContratoTipo'],
 			
 		);
-		/* echo json_encode($apiEntrada);
-		return; */
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'PUT');
 
 		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
@@ -122,8 +120,6 @@ if (isset($_GET['operacao'])) {
 			'valorContrato' => $_POST['valorContrato'],
 			'idContratoTipo' => $_POST['idContratoTipo'],
 		);
-		/* echo json_encode(($apiEntrada));
-		return; */
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'POST');
 		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
 	}

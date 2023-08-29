@@ -9,6 +9,7 @@ include_once '../head.php';
 include_once '../database/contratoStatus.php';
 include_once(ROOT.'/cadastros/database/clientes.php');
 include_once '../database/contratos.php';
+include '../database/contratotipos.php';
 
 $idContrato = $_GET['idContrato'];
 $contrato = buscaContratos($_GET['idContrato']);
@@ -16,6 +17,7 @@ $contrato = buscaContratos($_GET['idContrato']);
 $idCliente = $contrato["idCliente"];
 $cliente = buscaClientes($idCliente);
 
+$contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
 ?>
 
@@ -26,7 +28,7 @@ $cliente = buscaClientes($idCliente);
 		
 
 		<div class="col-sm mt-4" style="text-align:right">
-                        <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                        <a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                     </div>
                     <div class="col-sm">
                         <spam class="col titulo">Finalizar Contrato</spam>

@@ -95,7 +95,7 @@ if (isset($_SESSION['idCliente'])) {
                 </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-                <a href="index.php" role="button" class="btn btn-primary"><i
+                <a href="javascript:history.back()" role="button" class="btn btn-primary"><i
                         class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>

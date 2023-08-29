@@ -12,13 +12,21 @@
 // helio 01022023 alterado para include_once
 // helio 26012023 16:16
 
-echo "tipo=".$_GET["tipo"]."<HR>";
+//
+$tipo= "tipo=".$_GET["tipo"]."<HR>";
+echo $tipo;
+
+
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(ROOT.'/cadastros/database/clientes.php');
 include_once(ROOT.'/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipostatus.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
+include '../database/contratotipos.php';
+
+$urlContratoTipo= $_GET["tipo"];
+$contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
@@ -372,7 +380,7 @@ echo "selected";
       </div>
 
       <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela" style="color:#12192C">Demandas</h2>
+        <h2 class="tituloTabela" style="color:#12192C"><?php echo $contratoTipo['nomeDemanda']?></h2>
       </div>
 
       <div class="col-sm-4" style="margin-top:-10px;">
@@ -401,7 +409,7 @@ echo "selected";
 
 
       <div class="col-sm" style="text-align:right">
-        <a href="demanda_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+        <a href="demanda_inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
       </div>
     </div>
 
@@ -417,7 +425,7 @@ echo "selected";
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>
-                <th>Demanda</th>
+                <th><?php echo $contratoTipo['nomeDemanda']?></th>
                 <th>Responsavel</th>
                 <th>Abertura</th>
                 <th>Status</th>
@@ -536,7 +544,7 @@ echo "selected";
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>
-                <th>Demanda</th>
+                <th><?php echo $contratoTipo['nomeDemanda']?></th>
                 <th>Status</th>
                 <th>Ocorrência</th>
                 <th>Ação</th>
@@ -628,6 +636,7 @@ echo "selected";
 
   <script>
     <?php if ($ClienteSession === NULL): ?>
+      var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
 
       function limparTrade() {
@@ -637,7 +646,7 @@ echo "selected";
 
 
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
-        
+       /* alert(urlContratoTipo) */
         $.ajax({
           type: 'POST',
           dataType: 'html',
@@ -653,7 +662,8 @@ echo "selected";
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
             tituloDemanda: tituloDemanda,
-            tamanho: tamanho
+            tamanho: tamanho,
+            urlContratoTipo: urlContratoTipo
           },
           success: function (msg) {
             
@@ -722,6 +732,7 @@ echo "selected";
         }
       });
   <?php else: ?>
+    var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
 
 
@@ -748,7 +759,8 @@ echo "selected";
           idTipoOcorrencia: idTipoOcorrencia,
           statusDemanda: statusDemanda,
           tituloDemanda: tituloDemanda,
-          tamanho: tamanho
+          tamanho: tamanho,
+          urlContratoTipo: urlContratoTipo
         },
         success: function (msg) {
          

@@ -96,6 +96,11 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "inserir") {
 
+		if(isset($_POST['idContrato'])){
+			$idContrato = $_POST['idContrato'];
+		}else{
+			$idContrato = '';
+		}
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idCliente' => $_POST['idCliente'],
@@ -104,8 +109,11 @@ if (isset($_GET['operacao'])) {
 			'descricao' => $_POST['descricao'],
 			'idTipoOcorrencia' => OCORRENCIA_PADRAO,
 			'idServico' => SERVICOS_PADRAO,
-			'idTipoStatus' => TIPOSTATUS_FILA
+			'idTipoStatus' => TIPOSTATUS_FILA,
+			'idContrato' => $idContrato,
+			'idContratoTipo' => $_POST['idContratoTipo'],
 		);
+
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 
 		$tituloEmail = $_POST['tituloDemanda'];
@@ -126,7 +134,52 @@ if (isset($_GET['operacao'])) {
 
 		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 		
-		header('Location: ../demandas/index.php');
+		header('Location: ../demandas/index.php?tipo='.$_POST['idContratoTipo']);
+		
+	}
+
+	if ($operacao == "inserir_demandadecontrato") {
+		
+		if(isset($_POST['idContrato'])){
+			$idContrato = $_POST['idContrato'];
+		}else{
+			$idContrato = '';
+		}
+		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idCliente' => $_POST['idCliente'],
+			'idSolicitante' => $_POST['idSolicitante'],
+			'tituloDemanda' => $_POST['tituloDemanda'],
+			'descricao' => $_POST['descricao'],
+			'idTipoOcorrencia' => OCORRENCIA_PADRAO,
+			'idServico' => SERVICOS_PADRAO,
+			'idTipoStatus' => TIPOSTATUS_FILA,
+			'idContrato' => $idContrato,
+			'idContratoTipo' => $_POST['idContratoTipo'],
+		);
+
+		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
+
+		$tituloEmail = $_POST['tituloDemanda'];
+		$corpoEmail = $_POST['descricao'];
+
+
+		$arrayPara = array(
+
+			array(
+				'email' => 'tradesis@tradesis.com.br',
+				'nome' => 'TradeSis'
+			),
+			array(
+				'email' => $_SESSION['email'],
+				'nome' => $_SESSION['usuario']
+			),
+		);
+
+		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
+		
+		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
+		
 	}
 	if ($operacao == "alterar") {
 		$apiEntrada = array(
@@ -139,7 +192,8 @@ if (isset($_GET['operacao'])) {
 			'idServico' => $_POST['idServico'],
 			'tamanho' => $_POST['tamanho'],
 			'idAtendente' => $_POST['idAtendente'],
-			'horasPrevisao' => $_POST['horasPrevisao']
+			'horasPrevisao' => $_POST['horasPrevisao'],
+			'idContratoTipo' => $_POST['idContratoTipo'],
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 
@@ -382,6 +436,7 @@ if (isset($_GET['operacao'])) {
 		$statusDemanda = $_POST['statusDemanda'];
 		$tituloDemanda = $_POST['tituloDemanda'];
 		$tamanho = $_POST['tamanho'];
+		$idContratoTipo = $_POST["urlContratoTipo"];
 
 		if ($idCliente == "") {
 			$idCliente = null;
@@ -418,6 +473,10 @@ if (isset($_GET['operacao'])) {
 			$tamanho = null;
 		}
 
+		if ($idContratoTipo == ""){
+			$idContratoTipo = null;
+		}
+
 
 		$idEmpresa = null;
 		if (isset($_SESSION['idEmpresa'])) {
@@ -433,7 +492,8 @@ if (isset($_GET['operacao'])) {
 			'idTipoOcorrencia' => $idTipoOcorrencia,
 			'statusDemanda' => $statusDemanda,
 			'tituloDemanda' => $tituloDemanda,
-			'tamanho' => $tamanho
+			'tamanho' => $tamanho,
+			'idContratoTipo' => $idContratoTipo
 		);
 
 		$_SESSION['filtro_demanda'] = $apiEntrada;

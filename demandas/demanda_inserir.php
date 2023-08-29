@@ -11,6 +11,10 @@
 include_once '../head.php';
 include_once(ROOT.'/cadastros/database/usuario.php');
 include_once(ROOT.'/cadastros/database/clientes.php');
+include '../database/contratotipos.php';
+
+$urlContratoTipo= $_GET["tipo"];
+$contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
@@ -26,10 +30,10 @@ $clientes = buscaClientes();
 
     <div class="container formContainer">
             <div class="col-sm mt-4" style="text-align:right">
-                <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                <a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
             <div class="col-sm">
-                <spam class="col titulo">Inserir Demanda</spam>
+                <spam class="col titulo">Inserir <?php echo $contratoTipo['nomeDemanda']?></spam>
             </div>
         <div class="container" style="margin-top: 10px">
                 <form id="form" method="post">
@@ -37,6 +41,7 @@ $clientes = buscaClientes();
                         <div class="col-md form-group" style="margin-top: 25px;">
                             <label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
                             <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
+                            <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
                         </div>
                         <div class="col-md-2 form-group-select">
                             <div class="form-group">

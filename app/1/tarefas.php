@@ -40,11 +40,11 @@ if (isset($jsonEntrada["idAtendente"])) {
 
 if (isset($jsonEntrada["statusTarefa"])) {
   if ($jsonEntrada["statusTarefa"] == 1) {
-    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL";
     $where = " and ";
   }
   if ($jsonEntrada["statusTarefa"] == 0) {
-    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL";
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
     $where = " and ";
   }
 }

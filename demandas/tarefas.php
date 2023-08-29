@@ -77,11 +77,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
-      <?php if ($ClienteSession == null) { ?>
-        <a onClick="limparTrade()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
-      <?php } else { ?>
         <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
-      <?php } ?>
     </div>
   </nav>
 
@@ -217,6 +213,12 @@ if (isset($_SESSION['filtro_tarefas'])) {
     aria-labelledby="periodoModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Filtro Periodo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <div class="modal-body">
           <form method="post">
             <div class="row">
@@ -257,6 +259,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
                   <?php } ?>
                 </div>
               </div>
+            </div>
+            <div style="text-align:right">
+              <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
+              <button type="button" class="btn btn-success" id="salvarButton">Salvar</button>
             </div>
           </form>
         </div>
@@ -494,8 +500,12 @@ if (isset($_SESSION['filtro_tarefas'])) {
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
 
-    function limparTrade() {
+    function limpar() {
       buscar(null, null, null, null, null, null, null, null);
+      window.location.reload();
+    }
+    function limparPeriodo() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null);
       window.location.reload();
     }
 
@@ -601,15 +611,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
     });
 
-    $("#FiltroPeriodo").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
-    });
-
-    $("#FiltroInicio").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
-    });
-
-    $("#FiltroFinal").change(function () {
+    $("#salvarButton").click(function () {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
     });
 

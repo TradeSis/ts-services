@@ -28,7 +28,7 @@ $logado = $_SESSION['usuario'];
 
 
 <!DOCTYPE html>
-<html class="bg-white">
+<html>
 
 <?php
         include_once ROOT. "/vendor/vendor.php";

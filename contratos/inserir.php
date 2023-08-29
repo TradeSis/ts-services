@@ -44,8 +44,6 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
                     <div class="for-group">
                         <input type="text" class="form-control" name="tituloContrato" required>                                                 
                         <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
-                        <!-- <input type="text" class="form-control" name="nomeContratoTipo" value="<?php echo $nomeContratoTipo ?>" style="display: none"> -->
-                        <!-- idContratoTipo para usar no apiEntrada, nomeContratoTipo para usar no GET -->
                     </div>
                 </div>
 
@@ -67,12 +65,12 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
 
                 <div class="col-md-4">
                     <label class="labelForm">Previsão</label>
-                    <input type="datetime-local" class="data select form-control" name="dataPrevisao">
+                    <input type="date" class="data select form-control" name="dataPrevisao">
                 </div>
 
                 <div class="col-md-4">
                     <label class="labelForm">Entrega</label>
-                    <input type="datetime-local" class="data select form-control" name="dataEntrega">
+                    <input type="date" class="data select form-control" name="dataEntrega">
                 </div>
 
                 <div class="col-md-3 form-group-select">

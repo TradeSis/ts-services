@@ -17,7 +17,7 @@ $idAtendente = $_SESSION['idLogin'];
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
-$contratos = buscaContratosAbertos();
+
 $servicos = buscaServicos();
 $idTipoStatus = $demanda['idTipoStatus'];
 $horas = buscaHoras($idDemanda);
@@ -27,7 +27,7 @@ $comentarios = buscaComentarios($idDemanda);
 $cliente = buscaClientes($demanda["idCliente"]);
 $clientes = buscaClientes();
 $tarefas = buscaTarefas($idDemanda);
-
+$contratos = buscaContratosAbertos($demanda["idCliente"]);
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
     $ClienteSession = $_SESSION['idCliente'];

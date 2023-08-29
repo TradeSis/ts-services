@@ -96,10 +96,18 @@ if (isset($_GET['operacao'])) {
 
 	if ($operacao == "inserir") {
 
-		if(isset($_POST['idContrato'])){
+		if($_POST['idContrato'] != ''){
 			$idContrato = $_POST['idContrato'];
+			$apiEntrada = array(
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'idContrato' => $idContrato,
+				
+			);
+			$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
+			$idCliente = $contrato['idCliente'];
 		}else{
 			$idContrato = '';
+			$idCliente = $_POST['idCliente'];
 		}
 
 		if($_POST['idTipoOcorrencia'] == ''){
@@ -110,7 +118,7 @@ if (isset($_GET['operacao'])) {
 
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
-			'idCliente' => $_POST['idCliente'],
+			'idCliente' => $idCliente,
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
@@ -119,15 +127,11 @@ if (isset($_GET['operacao'])) {
 			'idTipoStatus' => TIPOSTATUS_FILA,
 			'idContrato' => $idContrato,
 			'idContratoTipo' => $_POST['idContratoTipo'],
-
 			'horasPrevisao' => $_POST['horasPrevisao'],
 			'tamanho' => $_POST['tamanho'],
 			'idAtendente' => $_POST['idAtendente'],
-			//'idTipoOcorrencia' => $_POST['idTipoOcorrencia'], // REVISAR
-			//'idServico' => $_POST['idServico'],				  // REVISAR
 			
 		);
-
 
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 
@@ -209,6 +213,7 @@ if (isset($_GET['operacao'])) {
 			'idAtendente' => $_POST['idAtendente'],
 			'horasPrevisao' => $_POST['horasPrevisao'],
 			'idContratoTipo' => $_POST['idContratoTipo'],
+			'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 

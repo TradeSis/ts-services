@@ -115,7 +115,7 @@ $ocorrencias = buscaTipoOcorrencia();
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-12 form-group-select" style="margin-top: 10px; margin-bottom: 10px">
+                        <div class="col-md-12 form-group-select" style="margin-top: 15px; margin-bottom: 10px">
                             <label class="labelForm">Serviço</label>
                             <select class="select form-control" name="idServico" autocomplete="off">
                                 <option value=""></option>

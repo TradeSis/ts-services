@@ -101,18 +101,33 @@ if (isset($_GET['operacao'])) {
 		}else{
 			$idContrato = '';
 		}
+
+		if($_POST['idTipoOcorrencia'] == ''){
+			$idTipoOcorrencia = OCORRENCIA_PADRAO;
+		}else{
+			$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+		}
+
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idCliente' => $_POST['idCliente'],
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
-			'idTipoOcorrencia' => OCORRENCIA_PADRAO,
+			'idTipoOcorrencia' => $idTipoOcorrencia,
 			'idServico' => SERVICOS_PADRAO,
 			'idTipoStatus' => TIPOSTATUS_FILA,
 			'idContrato' => $idContrato,
 			'idContratoTipo' => $_POST['idContratoTipo'],
+
+			'horasPrevisao' => $_POST['horasPrevisao'],
+			'tamanho' => $_POST['tamanho'],
+			'idAtendente' => $_POST['idAtendente'],
+			//'idTipoOcorrencia' => $_POST['idTipoOcorrencia'], // REVISAR
+			//'idServico' => $_POST['idServico'],				  // REVISAR
+			
 		);
+
 
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 

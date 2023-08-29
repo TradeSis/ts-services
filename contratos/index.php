@@ -359,7 +359,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
                         <tr>
                             <th>Cliente</th>
-                            <th><?php echo $contratoTipo['nomeContrato']?></th>
+                            <th>Titulo</th>
                             <th>Status</th>
                             <th>Previsão</th>
                             <th>Entrega</th>

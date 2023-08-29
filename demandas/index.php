@@ -425,7 +425,7 @@ echo "selected";
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>
-                <th><?php echo $contratoTipo['nomeDemanda']?></th>
+                <th>Titulo</th>
                 <th>Responsavel</th>
                 <th>Abertura</th>
                 <th>Status</th>
@@ -544,7 +544,7 @@ echo "selected";
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>
-                <th><?php echo $contratoTipo['nomeDemanda']?></th>
+                <th>Titulo</th>
                 <th>Status</th>
                 <th>Ocorrência</th>
                 <th>Ação</th>

@@ -24,8 +24,18 @@ if (isset($jsonEntrada['tituloContrato'])) {
             $dataEntrega = $jsonEntrada['dataEntrega'];
         }
 		$idCliente = $jsonEntrada['idCliente'];
-        $horas = $jsonEntrada['horas'];
-        $valorHora = $jsonEntrada['valorHora'];
+         
+        if($jsonEntrada['horas'] == ''){
+            $horas = 0;
+        }else{
+            $horas = $jsonEntrada['horas'];
+        }
+        if($jsonEntrada['valorHora'] == ''){
+            $valorHora = 0;
+        }else{
+            $valorHora = $jsonEntrada['valorHora'];
+        }
+ 
 		$valorContrato = $jsonEntrada['valorContrato'];
 		$statusContrato = $jsonEntrada['statusContrato']; 
         $idContratoTipo = $jsonEntrada['idContratoTipo'];

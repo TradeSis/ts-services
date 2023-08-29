@@ -54,16 +54,27 @@ if (isset($jsonEntrada["tituloTarefa"])) {
   $where = " and ";
 }
 
+if (isset($jsonEntrada["periodo"])) {
+  if ($jsonEntrada["periodo"] === "previsao" || $jsonEntrada["periodo"] === "real") {
+    if (isset($jsonEntrada["inicio"])) {
+      if ($jsonEntrada["periodo"] === "previsao") {
+        $sql .= $where . " tarefa.Previsto >= '" . $jsonEntrada["inicio"] . "'";
+      } elseif ($jsonEntrada["periodo"] === "real") {
+        $sql .= $where . " tarefa.dataReal >= '" . $jsonEntrada["inicio"] . "'";
+      }
+      $where = " and ";
+    }
 
-if (isset($jsonEntrada["previsto"])) {
-  $sql = $sql . $where . " tarefa.Previsto = " . "'" . $jsonEntrada["previsto"] . "'";
-  $where = " and ";
+    if (isset($jsonEntrada["final"])) {
+      if ($jsonEntrada["periodo"] === "previsao") {
+        $sql .= $where . " tarefa.Previsto <= '" . $jsonEntrada["final"] . "'";
+      } elseif ($jsonEntrada["periodo"] === "real") {
+        $sql .= $where . " tarefa.dataReal <= '" . $jsonEntrada["final"] . "'";
+      }
+      $where = " and ";
+    }
+  }
 }
-if (isset($jsonEntrada["dataReal"])) {
-  $sql = $sql . $where . " tarefa.dataReal = " . "'" . $jsonEntrada["dataReal"] . "'";
-  $where = " and ";
-} 
-
 
 
 

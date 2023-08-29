@@ -22,6 +22,10 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $idContrato = $jsonEntrada['idContrato'];
     $idContratoTipo = $jsonEntrada['idContratoTipo'];
 
+    $horasPrevisao = $jsonEntrada['horasPrevisao'];
+    $tamanho = $jsonEntrada['tamanho'];
+    $idAtendente = $jsonEntrada['idAtendente'];
+
     //busca dados tipostatus    
         $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
         $buscar2 = mysqli_query($conexao, $sql2);
@@ -30,12 +34,12 @@ if (isset($jsonEntrada['tituloDemanda'])) {
         $statusDemanda = $row["mudaStatusPara"];
 
     if($idContrato == ''){
-        $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContratoTipo) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, '$idContratoTipo')";
+        $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContratoTipo, horasPrevisao, tamanho, idAtendente) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, '$idContratoTipo', '$horasPrevisao', '$tamanho', '$idAtendente')";
     }else{
-        $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, '$idContratoTipo')";
+        $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo, horasPrevisao, tamanho, idAtendente) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, '$idContratoTipo', '$horasPrevisao', '$tamanho', '$idAtendente')";
     }
   
-
+/* echo $sql; */
     if ($atualizar = mysqli_query($conexao, $sql)) {
         $jsonSaida = array(
             "status" => 200,

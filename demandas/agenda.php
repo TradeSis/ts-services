@@ -1,6 +1,17 @@
 <?php
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/tarefas.php');
+include_once(__DIR__ . '/../database/demanda.php');
+include_once(__DIR__ . '/../database/tipoocorrencia.php');
+include_once(ROOT . '/cadastros/database/clientes.php');
+include_once(ROOT . '/cadastros/database/usuario.php');
+
+
+
+$clientes = buscaClientes();
+$atendentes = buscaAtendente();
+$ocorrencias = buscaTipoOcorrencia();
+$demandas = buscaDemandasAbertas();
 $tarefas = buscaTarefas();
 
 ?>
@@ -30,12 +41,21 @@ $tarefas = buscaTarefas();
     </style>
 </head>
 
-<body>
+</html>
+
+<body class="bg-white">
     <div class="container mt-1">
-        <h3 class="text-center">Agenda - Tradesis</h3>
+        <div class="row">
+            <div class="col-sm-11">
+                <h3 class="text-center">Agenda - Tradesis</h3>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-warning" data-toggle="modal"
+                    data-target="#agendarModal">Agendar</button>
+            </div>
+        </div>
     </div>
-   
-    <!-- <hr> -->
+    <hr>
     <div id="calendar"></div>
 
     <div class="modal fade" id="eventDetailsModal" tabindex="-1" role="dialog" aria-labelledby="eventDetailsModalLabel"
@@ -69,6 +89,99 @@ $tarefas = buscaTarefas();
                     </div>
                     <hr>
                     <a id="visualizarDemandaButton" class="btn btn-primary" style="float:right">Visualizar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--------- AGENDAR --------->
+    <div class="modal fade bd-example-modal-lg" id="agendarModal" tabindex="-1" role="dialog"
+        aria-labelledby="agendarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agendar Tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <form method="post" id="agendarForm">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
+                                <div class="for-group" style="margin-top: 22px;">
+                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
+                                </div>
+                                <input type="hidden" class="form-control" name="idDemanda" value="null">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Cliente</label>
+                                    <div class="form-group" style="margin-top: 40px;">
+                                        <select class="form-control" name="idCliente">
+                                            <option value="null"></option>
+                                            <?php
+                                            foreach ($clientes as $cliente) {
+                                                ?>
+                                            <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
+                                            </option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Reponsável</label>
+                                    <select class="form-control" name="idAtendente">
+                                        <?php
+                                        foreach ($atendentes as $atendente) {
+                                            ?>
+                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <select class="form-control" name="idTipoOcorrencia">
+                                        <option value="null"></option>
+                                        <?php
+                                        foreach ($ocorrencias as $ocorrencia) {
+                                            ?>
+                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="labelForm">Data Previsão</label>
+                                    <input type="date" class="data select form-control" name="Previsto"
+                                        autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="labelForm">Inicio</label>
+                                    <input type="time" class="data select form-control" name="horaInicioPrevisto"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="labelForm">Fim</label>
+                                    <input type="time" class="data select form-control" name="horaFinalPrevisto"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit" class="btn btn-info">Agendar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -115,7 +228,7 @@ $tarefas = buscaTarefas();
                         ?>
                         {
                         _id: '<?php echo $tarefa['idTarefa']; ?>',
-                        title: '<?php echo $tarefa['tituloTarefa']; ?>',
+                        title: '<?php echo $tarefa['tituloTarefa'] . ' ' . $tarefa['tituloDemanda']; ?>',
                         start: '<?php echo $tarefa['Previsto'] . ' ' . $tarefa['horaInicioPrevisto']; ?>',
                         end: '<?php echo $tarefa['Previsto'] . ' ' . $tarefa['horaFinalPrevisto']; ?>',
                         idDemanda: '<?php echo $tarefa['idDemanda']; ?>',
@@ -124,7 +237,7 @@ $tarefas = buscaTarefas();
                     <?php } ?>
                 ],
                 eventRender: function (event, element) {
-                    element.css('font-weight', 'bold'); 
+                    element.css('font-weight', 'bold');
                 },
                 eventClick: function (calEvent, jsEvent, view) {
                     $("#eventID").text("Tarefa " + calEvent._id);
@@ -132,9 +245,15 @@ $tarefas = buscaTarefas();
                     $("#eventDate").val(moment(calEvent.start).format('DD/MM/YYYY'));
                     $("#eventStart").val(moment(calEvent.start).format('HH:mm'));
                     $("#eventEnd").val(moment(calEvent.end).format('HH:mm'));
-                    var visualizarDemandaUrl = "visualizar.php?idDemanda=" + calEvent.idDemanda;
-                    $("#visualizarDemandaButton").attr("href", "javascript:void(0);");
-                    $("#visualizarDemandaButton").attr("onclick", "loadPage('" + visualizarDemandaUrl + "')");
+                    if (calEvent.idDemanda !== "") {  
+                        var visualizarDemandaUrl = "visualizar.php?idDemanda=" + calEvent.idDemanda;
+                        $("#visualizarDemandaButton").attr("href", "javascript:void(0);");
+                        $("#visualizarDemandaButton").attr("onclick", "loadPage('" + visualizarDemandaUrl + "')");
+                    } else {
+                        $("#visualizarDemandaButton").removeAttr("href");
+                        $("#visualizarDemandaButton").removeAttr("onclick");
+                    }
+
                     $("#eventDetailsModal").modal();
                 }
             });
@@ -152,6 +271,39 @@ $tarefas = buscaTarefas();
                 document.write(content);
                 document.close();
             }
+        }
+
+        var agendarModal = document.getElementById("agendarModal");
+
+        var agendarBtn = document.querySelector("button[data-target='#agendarModal']");
+
+        agendarBtn.onclick = function () {
+            agendarModal.style.display = "block";
+        };
+
+
+        window.onclick = function (event) {
+            if (event.target == agendarModal) {
+                agendarModal.style.display = "none";
+            }
+        };
+
+
+        $("#agendarForm").submit(function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: "../database/tarefas.php?operacao=previsao",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: refreshPage,
+            });
+        });
+
+        function refreshPage() {
+            window.location.reload();
         }
     </script>
 </body>

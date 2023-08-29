@@ -138,7 +138,9 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 </style>
 
-<body class="bg-transparent">
+
+</html>
+<body class="bg-white">
   <div class="container-fluid py-1">
     <div class="header-body">
       <div class="row row-cols-6">
@@ -206,129 +208,6 @@ if (isset($_SESSION['filtro_demanda'])) {
   <nav id="menuFiltros" class="menuFiltros"> <!-- MENUFILTROS -->
     <div class="titulo"><span>Filtrar por:</span></div>
     <ul>
-
-      <?php /*<li class="ls-label col-sm-12"> <!-- CLIENTE -->
-<form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
-
-<?php if ($_SESSION['idCliente'] == null){ ?>
-<select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Cliente"  ?></option>
-<?php
-foreach ($clientes as $cliente) {
-?>
-<option <?php
-if ($cliente['idCliente'] == $idCliente) {
-echo "selected";
-}
-?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-<?php  } ?>
-</select>
-<?php  } else { ?>
-<select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px" disabled>
-<?php
-foreach ($clientes as $cliente) {
-?>
-<option <?php
-if ($cliente['idCliente'] == $idCliente) {
-echo "selected";
-}
-?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-<?php  } ?>
-</select>
-<?php  } ?>
-
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- RESPONSAVEL -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idAtendente" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Responsável"  ?></option>
-<?php
-foreach ($atendentes as $atendente) {
-?>
-<option <?php
-if ($atendente['idUsuario'] == $idAtendente) {
-echo "selected";
-}
-?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- SOLICITANTE -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Solicitante"  ?></option>
-<?php
-foreach ($usuarios as $usuario) {
-?>
-<option <?php
-if ($usuario['idUsuario'] == $idSolicitante) {
-echo "selected";
-}
-?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- STATUS -->
-<form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
-
-<select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Status"  ?></option>
-<?php foreach ($tiposstatus as $tipostatus) { ?>
-<option <?php
-if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-echo "selected";
-}
-?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
-<?php } ?>
-</select>
-
-</form>
-</li>
-
-
-<li class="ls-label col-sm-12 mr-1"> <!-- OCORRENCIA -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo "Ocorrência"  ?></option>
-<?php
-foreach ($tipoocorrencias as $tipoocorrencia) {
-?>
-<option <?php
-if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-echo "selected";
-}
-?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- TAMANHO -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="tamanho" id="FiltroTamanho" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo "Tamanho"  ?></option>
-<option  value="P">P</option>
-<option  value="M">M</option>
-<option  value="G">G</option>
-</select>
-
-</form>
-</li> */?>
-
       <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
@@ -345,7 +224,6 @@ echo "selected";
 
         </form>
       </li>
-
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
@@ -656,7 +534,6 @@ echo "selected";
             tamanho: tamanho
           },
           success: function (msg) {
-            
             var json = JSON.parse(msg);
             var linha = "";
             for (var $i = 0; $i < json.length; $i++) {

@@ -4,9 +4,9 @@
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 $idEmpresa = null;
-	if (isset($jsonEntrada["idEmpresa"])) {
-    	$idEmpresa = $jsonEntrada["idEmpresa"];
-	}
+if (isset($jsonEntrada["idEmpresa"])) {
+  $idEmpresa = $jsonEntrada["idEmpresa"];
+}
 
 $conexao = conectaMysql($idEmpresa);
 $tarefa = array();
@@ -26,6 +26,41 @@ if (isset($jsonEntrada["idDemanda"])) {
   $sql = $sql . $where . " tarefa.idDemanda = " . $jsonEntrada["idDemanda"];
   $where = " and ";
 }
+
+if (isset($jsonEntrada["idCliente"])) {
+  $sql = $sql . $where . " tarefa.idCliente = " . $jsonEntrada["idCliente"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["idTipoOcorrencia"])) {
+  $sql = $sql . $where . " tarefa.idTipoOcorrencia = " . $jsonEntrada["idTipoOcorrencia"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["idAtendente"])) {
+  $sql = $sql . $where . " tarefa.idAtendente = " . $jsonEntrada["idAtendente"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["statusTarefa"])) {
+  if ($jsonEntrada["statusTarefa"] == 1) { 
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL"; 
+    $where = " and ";
+  }
+  if ($jsonEntrada["statusTarefa"] == 0) { 
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL"; 
+    $where = " and ";
+  }
+}
+
+if (isset($jsonEntrada["tituloTarefa"])) {
+  $sql = $sql . $where . " tarefa.tituloTarefa like " . "'%" . $jsonEntrada["tituloTarefa"] . "%'";
+  $where = " and ";
+}
+
+
+
+
 //echo "-SQL->".json_encode($sql)."\n";
 $rows = 0;
 $buscar = mysqli_query($conexao, $sql);

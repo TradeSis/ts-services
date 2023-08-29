@@ -14,7 +14,7 @@ $dadosGrafico4 = buscaTarefasGrafico4();
 
 ?>
 
-<html>
+
 
 <head>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -128,7 +128,7 @@ $dadosGrafico4 = buscaTarefasGrafico4();
   </script>
 </head>
 
-<body class="bg-transparent">
+<body class="bg-white">
   <div class="container-fluid mt-4">
     <div class="card">
       <div class="card-header">

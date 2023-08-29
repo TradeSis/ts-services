@@ -22,9 +22,6 @@
 
 //
 //
-$tipo= "tipo=".$_GET["tipo"]."<HR>";
-echo $tipo;
-
 
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
@@ -442,7 +439,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                             var dataPrevisaoFormatada = "<p>---</p>";
                         }else{
                             var dataPrevisao = new Date(object.dataPrevisao);
-                            dataPrevisaoFormatada = dataPrevisao.toLocaleDateString("pt-BR");
+                            dataPrevisaoFormatada = (`${dataPrevisao.getUTCDate().toString().padStart(2, '0')}/${(dataPrevisao.getUTCMonth()+1).toString().padStart(2, '0')}/${dataPrevisao.getUTCFullYear()}`);
                         }
 
                         //dataEntrega
@@ -450,7 +447,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                             var dataEntregaFormatada = "<p>---</p>";
                         }else{
                             var dataEntrega = new Date(object.dataEntrega);
-                            dataEntregaFormatada = dataEntrega.toLocaleDateString("pt-BR");
+                            dataEntregaFormatada = (`${dataEntrega.getUTCDate().toString().padStart(2, '0')}/${(dataEntrega.getUTCMonth()+1).toString().padStart(2, '0')}/${dataEntrega.getUTCFullYear()}`);
                         }
 
 

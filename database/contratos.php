@@ -40,7 +40,7 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
 
 	return $contrato;
 }
-function buscaContratosAbertos()
+function buscaContratosAbertos($idCliente=null)
 {
 	$idEmpresa = null;
 	if (isset($_SESSION['idEmpresa'])) {
@@ -49,7 +49,8 @@ function buscaContratosAbertos()
 	$contrato = array();
 	$apiEntrada = array(
 		'idEmpresa' => $idEmpresa,
-		'statusContrato' => '1' //Aberto
+		'statusContrato' => '1', //Aberto
+		'idCliente' => $idCliente,
 	);
 	$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
 
@@ -121,7 +122,8 @@ if (isset($_GET['operacao'])) {
 			'valorContrato' => $_POST['valorContrato'],
 			'idContratoTipo' => $_POST['idContratoTipo'],
 		);
-		
+		/* echo json_encode(($apiEntrada));
+		return; */
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'POST');
 		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
 	}

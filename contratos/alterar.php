@@ -80,12 +80,12 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
 					<div class="col-md-3" style="margin-top: -10px;">
 						<label class="labelForm">Previsao</label>
-						<input type="datetime-local" class="data select form-control" name="dataPrevisao" value="<?php echo $contrato['dataPrevisao'] ?>">
+						<input type="date" class="data select form-control" name="dataPrevisao" value="<?php echo $contrato['dataPrevisao'] ?>">
 					</div>
 
 					<div class="col-md-3" style="margin-top: -10px;">
 						<label class="labelForm">Entrega</label>
-						<input type="datetime-local" class="data select form-control" name="dataEntrega" value="<?php echo $contrato['dataEntrega'] ?>">
+						<input type="date" class="data select form-control" name="dataEntrega" value="<?php echo $contrato['dataEntrega'] ?>">
 					</div>
 				</div>
 

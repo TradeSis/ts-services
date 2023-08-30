@@ -37,6 +37,12 @@ if (isset($jsonEntrada['nomeTipoStatus'])) {
     $sql = "INSERT INTO tipostatus (nomeTipoStatus, mudaPosicaoPara, mudaStatusPara, statusInicial) values ('$nomeTipoStatus', $mudaPosicaoPara, $mudaStatusPara, $statusInicial)";
 
     //LOG
+    if(isset($LOG_NIVEL)) {
+        if ($LOG_NIVEL>=3) {
+            fwrite($arquivo,$identificacao."-SQL->".$sql."\n");
+        }
+    }
+    //LOG
 
     //TRY-CATCH
     try {
@@ -70,5 +76,13 @@ if (isset($jsonEntrada['nomeTipoStatus'])) {
     );
 
 }
+
+//LOG
+if(isset($LOG_NIVEL)) {
+    if ($LOG_NIVEL>=2) {
+        fwrite($arquivo,$identificacao."-SAIDA->".json_encode($jsonSaida)."\n\n");
+    }
+}
+//LOG
 
 ?>

@@ -6,7 +6,7 @@
 $LOG_CAMINHO=defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL=defineNivelLog();
-    $identificacao=date("dmYHis")."-PID".getmypid()."-"."contrato_inserir";
+    $identificacao=date("dmYHis")."-PID".getmypid()."-"."tipostatus_inserir";
     if(isset($LOG_NIVEL)) {
         if ($LOG_NIVEL>=1) {
             $arquivo = fopen(defineCaminhoLog()."services_".date("dmY").".log","a");
@@ -33,10 +33,11 @@ if (isset($jsonEntrada['nomeTipoStatus'])) {
     $nomeTipoStatus = $jsonEntrada['nomeTipoStatus'];
     $mudaPosicaoPara = $jsonEntrada['mudaPosicaoPara'];
     $mudaStatusPara = $jsonEntrada['mudaStatusPara'];
-    $sql = "INSERT INTO tipostatus (nomeTipoStatus, mudaPosicaoPara, mudaStatusPara) values ('$nomeTipoStatus', $mudaPosicaoPara, $mudaStatusPara)";
+    $statusInicial = 0;
+    $sql = "INSERT INTO tipostatus (nomeTipoStatus, mudaPosicaoPara, mudaStatusPara, statusInicial) values ('$nomeTipoStatus', $mudaPosicaoPara, $mudaStatusPara, $statusInicial)";
 
     //LOG
-    
+
     //TRY-CATCH
     try {
 

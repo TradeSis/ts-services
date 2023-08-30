@@ -10,12 +10,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include_once __DIR__."/../config.php";
 
-function defineCaminhoLog() {
-	$pasta = '/ws/tslog/';
-	return $pasta;
-}
-
-
 include_once(ROOT.'/sistema/database/mysql.php');
 include_once(ROOT.'/sistema/database/api.php');
 // helio 26042023

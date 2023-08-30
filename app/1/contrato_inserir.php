@@ -1,12 +1,30 @@
 <?php
 // Lucas 20022023 alterado if para resultar no $valorHora e adicionado o else para $valorContrato;
 // Lucas 07022023 criacao
-//echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
+
+//LOG
+$LOG_CAMINHO=defineCaminhoLog();
+if (isset($LOG_CAMINHO)) {
+    $LOG_NIVEL=defineNivelLog();
+    $identificacao=date("dmYHis")."-PID".getmypid()."-"."contrato_inserir";
+    $arquivo = fopen(defineCaminhoLog()."services_".date("dmY").".log","a");
+}
+if(isset($LOG_NIVEL)) {
+    if ($LOG_NIVEL==1) {
+        fwrite($arquivo,$identificacao."\n");
+    }
+    if ($LOG_NIVEL>=2) {
+        fwrite($arquivo,$identificacao."-ENTRADA->".json_encode($jsonEntrada)."\n");
+    }
+}
+//LOG
+
 $idEmpresa = null;
 	if (isset($jsonEntrada["idEmpresa"])) {
     	$idEmpresa = $jsonEntrada["idEmpresa"];
 	}
 $conexao = conectaMysql($idEmpresa);
+
 if (isset($jsonEntrada['tituloContrato'])) {
         $tituloContrato = $jsonEntrada['tituloContrato'];
         $descricao = $jsonEntrada['descricao'];
@@ -50,18 +68,41 @@ if (isset($jsonEntrada['tituloContrato'])) {
       
 
     $sql = "INSERT INTO contrato (tituloContrato, descricao, dataAbertura, idContratoStatus, dataPrevisao, dataEntrega, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) values ('$tituloContrato', '$descricao', CURRENT_TIMESTAMP(), '$idContratoStatus', '$dataPrevisao', '$dataEntrega', '$idCliente', '$statusContrato', $horas, $valorHora, '$valorContrato', '$idContratoTipo')";
+    //LOG
+    if(isset($LOG_NIVEL)) {
+        if ($LOG_NIVEL>=3) {
+            fwrite($arquivo,$identificacao."-SQL->".$sql."\n");
+        }
+    }
+    //LOG
 
-    if ($atualizar = mysqli_query($conexao, $sql)) {
+    //TRY-CATCH
+      try {
+
+        $atualizar = mysqli_query($conexao, $sql);
+        if (!$atualizar)
+         throw New Exception(mysqli_error($conexao));
+
         $jsonSaida = array(
             "status" => 200,
             "retorno" => "ok"
         );
-    } else {
+
+    } catch (Exception $e){
         $jsonSaida = array(
             "status" => 500,
-            "retorno" => "erro no mysql"
+            "retorno" => $e->getMessage()
         );
+        if ($LOG_NIVEL>=1) {
+            fwrite($arquivo,$identificacao."-ERRO->".$e->getMessage()."\n");
+        }
+
+    } finally {
+        // ACAO EM CASO DE ERRO (CATCH), que mesmo assim precise
     }
+    //TRY-CATCH
+        
+ 
 } else {
     $jsonSaida = array(
         "status" => 400,
@@ -69,5 +110,13 @@ if (isset($jsonEntrada['tituloContrato'])) {
     );
 
 }
+
+//LOG
+if(isset($LOG_NIVEL)) {
+    if ($LOG_NIVEL>=2) {
+        fwrite($arquivo,$identificacao."-SAIDA->".json_encode($jsonSaida)."\n\n");
+    }
+}
+//LOG
 
 ?>

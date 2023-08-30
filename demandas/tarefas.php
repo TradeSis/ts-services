@@ -77,7 +77,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
-        <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+      <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
     </div>
   </nav>
 
@@ -208,7 +208,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
   </div>
 
 
-
+  <!--------- FILTRO PERIODO --------->
   <div class="modal fade bd-example-modal-lg" id="periodoModal" tabindex="-1" role="dialog"
     aria-labelledby="periodoModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -240,11 +240,11 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 <div class="form-group" style="width:150px">
                   <label class="labelForm">Começo</label>
                   <?php if ($inicio != null) { ?>
-                    <input type="date" class="data select form-control" id="FiltroInicio" value="<?php echo $inicio ?>"
-                      name="inicio" autocomplete="off">
+                  <input type="date" class="data select form-control" id="FiltroInicio" value="<?php echo $inicio ?>"
+                    name="inicio" autocomplete="off">
                   <?php } else { ?>
-                    <input type="date" class="data select form-control" id="FiltroInicio" name="inicio"
-                      autocomplete="off">
+                  <input type="date" class="data select form-control" id="FiltroInicio" name="inicio"
+                    autocomplete="off">
                   <?php } ?>
                 </div>
               </div>
@@ -252,17 +252,21 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 <div class="form-group" style="width:150px">
                   <label class="labelForm">Fim</label>
                   <?php if ($final != null) { ?>
-                    <input type="date" class="data select form-control" id="FiltroFinal" value="<?php echo $final ?>"
-                      name="final" autocomplete="off">
+                  <input type="date" class="data select form-control" id="FiltroFinal" value="<?php echo $final ?>"
+                    name="final" autocomplete="off">
                   <?php } else { ?>
-                    <input type="date" class="data select form-control" id="FiltroFinal" name="final" autocomplete="off">
+                  <input type="date" class="data select form-control" id="FiltroFinal" name="final" autocomplete="off">
                   <?php } ?>
                 </div>
               </div>
             </div>
-            <div style="text-align:right">
-              <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
-              <button type="button" class="btn btn-success" id="salvarButton">Salvar</button>
+            <div class="row">
+              <div class="col-sm" style="text-align:left;margin-left:10px">
+                <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
+              </div>
+              <div class="col-sm" style="text-align:right;margin-right:10px">
+                <button type="button" class="btn btn-success" id="filtrarButton" data-dismiss="modal">Filtrar</button>
+              </div>
             </div>
           </form>
         </div>
@@ -385,7 +389,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <div class="col-md-4" style="margin-top: 10px;">
                 <div class="form-group">
                   <label class="labelForm">Tarefa</label>
-                  <input type="text" class="data select form-control" id="tituloTarefa" name="tituloTarefa"
+                  <input type="text" class="data select form-control" id="titulo" name="tituloTarefa"
                     autocomplete="off">
                 </div>
               </div>
@@ -429,7 +433,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <div class="col-md-4">
                 <div class="form-group">
                   <label class='control-label' for='inputNormal'>Ocorrência</label>
-                  <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia" required>
+                  <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
                     <?php
                     foreach ($ocorrencias as $ocorrencia) {
                       ?>
@@ -611,8 +615,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
     });
 
-    $("#salvarButton").click(function () {
+    $("#filtrarButton").click(function () {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+      $('#periodoModal').modal('hide');
     });
 
     document.addEventListener("keypress", function (e) {
@@ -632,7 +637,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         },
         success: function (data) {
           $('#idTarefa').val(data.idTarefa);
-          $('#tituloTarefa').val(data.tituloTarefa);
+          $('#titulo').val(data.tituloTarefa);
           $('#idCliente').val(data.idCliente);
           $('#nomeCliente').val(data.nomeCliente);
           $('#idDemanda').val(data.idDemanda);

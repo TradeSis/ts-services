@@ -23,6 +23,11 @@ if (isset($jsonEntrada["idTarefa"])) {
   $where = " and ";
 }
 
+if (isset($jsonEntrada["idDemanda"])) {
+  $sql = $sql . $where . " tarefa.idDemanda = " . $jsonEntrada["idDemanda"];
+  $where = " and ";
+}
+
 if (isset($jsonEntrada["idCliente"])) {
   $sql = $sql . $where . " tarefa.idCliente = " . $jsonEntrada["idCliente"];
   $where = " and ";
@@ -40,11 +45,11 @@ if (isset($jsonEntrada["idAtendente"])) {
 
 if (isset($jsonEntrada["statusTarefa"])) {
   if ($jsonEntrada["statusTarefa"] == 1) {
-    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL";
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
     $where = " and ";
   }
   if ($jsonEntrada["statusTarefa"] == 0) {
-    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL";
     $where = " and ";
   }
 }

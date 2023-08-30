@@ -293,7 +293,7 @@ $tarefas = buscaTarefas();
             event.preventDefault();
             var formData = new FormData(this);
             $.ajax({
-                url: "../database/tarefas.php?operacao=previsao",
+                url: "../database/tarefas.php?operacao=inserir",
                 type: 'POST',
                 data: formData,
                 processData: false,

@@ -26,8 +26,9 @@ if (isset($jsonEntrada['idTarefa'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
     $idDemandaSelect = $jsonEntrada['idDemandaSelect'];
     $tituloTarefa = $jsonEntrada['tituloTarefa'];
-    $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
     $idAtendente = $jsonEntrada['idAtendente'];
+
+    $idTipoOcorrencia = isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['idTipoOcorrencia']) . "'" : "NULL";
     $tipoStatusDemanda = isset($jsonEntrada['tipoStatusDemanda']) && $jsonEntrada['tipoStatusDemanda'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['tipoStatusDemanda']) . "'" : "NULL";
     $dataReal = isset($jsonEntrada['dataReal']) && $jsonEntrada['dataReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataReal']) . "'" : "NULL";
     $horaInicioReal = isset($jsonEntrada['horaInicioReal']) && $jsonEntrada['horaInicioReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioReal']) . "'" : "NULL";
@@ -37,8 +38,9 @@ if (isset($jsonEntrada['idTarefa'])) {
     $horaInicioPrevisto = isset($jsonEntrada['horaInicioPrevisto']) && $jsonEntrada['horaInicioPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioPrevisto']) . "'" : "NULL";
     $horaFinalPrevisto = isset($jsonEntrada['horaFinalPrevisto']) && $jsonEntrada['horaFinalPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalPrevisto']) . "'" : "NULL";
 
-    // busca dados idCliente
+
     if ($idDemandaSelect !== null) {
+        // busca dados idCliente/Demanda
         $sql2 = "SELECT * FROM demanda WHERE idDemanda = $idDemandaSelect";
         $buscar2 = mysqli_query($conexao, $sql2);
         $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
@@ -55,23 +57,24 @@ if (isset($jsonEntrada['idTarefa'])) {
         `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto 
         WHERE `idTarefa` = $idTarefa";
     }
-
     $atualizar = mysqli_query($conexao, $sql);
 
-    if (isset($jsonEntrada['Previsto'])) {
-        if (in_array($tipoStatusDemanda, $statusTarefa)) {
-            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
-            $atualizar3 = mysqli_query($conexao, $sql3);
+    if (isset($jsonEntrada['idDemanda'])) {
+        if (isset($jsonEntrada['Previsto'])) {
+            if (in_array($tipoStatusDemanda, $statusTarefa)) {
+                $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
+                $atualizar3 = mysqli_query($conexao, $sql3);
+            } else {
+                $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
+                $atualizar3 = mysqli_query($conexao, $sql3);
+            }
         } else {
             $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
-            $atualizar3 = mysqli_query($conexao, $sql3);
         }
-    } else {
-        $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
+        $atualizar3 = mysqli_query($conexao, $sql3);
     }
-    $atualizar3 = mysqli_query($conexao, $sql3);
 
-    if ($atualizar && $atualizar3) {
+    if ($atualizar) {
         $jsonSaida = array(
             "status" => 200,
             "retorno" => "ok"

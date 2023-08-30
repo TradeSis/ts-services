@@ -63,6 +63,15 @@ if (isset($jsonEntrada['tituloContrato'])) {
 		$statusContrato = $jsonEntrada['statusContrato']; 
         $idContratoTipo = $jsonEntrada['idContratoTipo'];
 
+        //LOG
+        if(isset($LOG_NIVEL)) {
+            if ($LOG_NIVEL>=3) {
+                fwrite($arquivo,$identificacao."-valorContrato->".$valorContrato."\n");
+                fwrite($arquivo,$identificacao."-horas->".$horas."\n");
+            }
+        }
+        //LOG
+
         if (($horas !== "") && ($valorContrato !== "")) {
 			$valorHora = $valorContrato / $horas;
 		} else{
@@ -72,7 +81,7 @@ if (isset($jsonEntrada['tituloContrato'])) {
         }
       
 
-    $sql = "INSERT INTO contrato (tituloContrato, descricao, dataAbertura, idContratoStatus, dataPrevisao, dataEntrega, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) values ('$tituloContrato', '$descricao', CURRENT_TIMESTAMP(), '$idContratoStatus', '$dataPrevisao', '$dataEntrega', '$idCliente', '$statusContrato', $horas, $valorHora, '$valorContrato', '$idContratoTipo')";
+    $sql = "INSERT INTO contrato (xxtituloContrato, descricao, dataAbertura, idContratoStatus, dataPrevisao, dataEntrega, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) values ('$tituloContrato', '$descricao', CURRENT_TIMESTAMP(), '$idContratoStatus', '$dataPrevisao', '$dataEntrega', '$idCliente', '$statusContrato', $horas, $valorHora, '$valorContrato', '$idContratoTipo')";
     //LOG
     if(isset($LOG_NIVEL)) {
         if ($LOG_NIVEL>=3) {

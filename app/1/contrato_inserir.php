@@ -7,7 +7,12 @@ $LOG_CAMINHO=defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL=defineNivelLog();
     $identificacao=date("dmYHis")."-PID".getmypid()."-"."contrato_inserir";
-    $arquivo = fopen(defineCaminhoLog()."services_".date("dmY").".log","a");
+    if(isset($LOG_NIVEL)) {
+        if ($LOG_NIVEL>=1) {
+            $arquivo = fopen(defineCaminhoLog()."services_".date("dmY").".log","a");
+        }
+    }
+    
 }
 if(isset($LOG_NIVEL)) {
     if ($LOG_NIVEL==1) {

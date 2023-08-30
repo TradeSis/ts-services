@@ -32,7 +32,8 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['nomeTipoOcorrencia'])) {
     $nomeTipoOcorrencia = $jsonEntrada['nomeTipoOcorrencia'];
-    $sql = "INSERT INTO tipoocorrencia (nomeTipoOcorrencia) values ('$nomeTipoOcorrencia')";
+    $ocorrenciaInicial = 0;
+    $sql = "INSERT INTO tipoocorrencia (nomeTipoOcorrencia, ocorrenciaInicial) values ('$nomeTipoOcorrencia', $ocorrenciaInicial)";
 
 
     //LOG

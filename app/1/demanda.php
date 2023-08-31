@@ -6,11 +6,33 @@
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
+//LOG 
+$LOG_CAMINHO = defineCaminhoLog();
+if (isset($LOG_CAMINHO)) {
+  $LOG_NIVEL = defineNivelLog();
+  $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_select";
+  if (isset($LOG_NIVEL)) {
+    if ($LOG_NIVEL >= 1) {
+      $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
+    }
+  }
+
+}
+if (isset($LOG_NIVEL)) {
+  if ($LOG_NIVEL == 1) {
+    fwrite($arquivo, $identificacao . "\n");
+  }
+  if ($LOG_NIVEL >= 2) {
+    fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
+  }
+} 
+//LOG
+
 
 $idEmpresa = null;
-	if (isset($jsonEntrada["idEmpresa"])) {
-    	$idEmpresa = $jsonEntrada["idEmpresa"];
-	}
+if (isset($jsonEntrada["idEmpresa"])) {
+  $idEmpresa = $jsonEntrada["idEmpresa"];
+}
 
 $conexao = conectaMysql($idEmpresa);
 $demanda = array();
@@ -74,8 +96,8 @@ if (isset($jsonEntrada["idDemanda"])) {
     $where = " and ";
   }
 
-   if (isset($jsonEntrada["idContratoTipo"])) {
-    $sql = $sql . $where . " contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'" ;
+  if (isset($jsonEntrada["idContratoTipo"])) {
+    $sql = $sql . $where . " contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
     $where = " and ";
   }
 
@@ -84,14 +106,55 @@ if (isset($jsonEntrada["idDemanda"])) {
 
 
 $sql = $sql . " order by ordem, prioridade, idDemanda";
-//echo "-SQL->".$sql."\n";
+//echo "-SQL->".json_encode($sql)."\n";
 $rows = 0;
-$buscar = mysqli_query($conexao, $sql);
-while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
-  array_push($demanda, $row);
-  $rows = $rows + 1;
+
+//LOG
+if (isset($LOG_NIVEL)) {
+  if ($LOG_NIVEL >= 3) {
+    fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
+  }
 }
-if (isset($jsonEntrada["idDemanda"]) && $rows == 1) {
-  $demanda = $demanda[0];
+//LOG
+
+
+//TRY-CATCH
+try {
+
+  $buscar = mysqli_query($conexao, $sql);
+  if (!$buscar)
+    throw new Exception(mysqli_error($conexao));
+
+  while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
+    array_push($demanda, $row);
+    $rows = $rows + 1;
+  }
+  if (isset($jsonEntrada["idDemanda"]) && $rows == 1) {
+    $demanda = $demanda[0];
+  }
+  $jsonSaida = $demanda;
+
+} catch (Exception $e) {
+  $jsonSaida = array(
+    "status" => 500,
+    "retorno" => $e->getMessage()
+  );
+  if ($LOG_NIVEL >= 1) {
+    fwrite($arquivo, $identificacao . "-ERRO->" . $e->getMessage() . "\n");
+  }
+
+} finally {
+  // ACAO EM CASO DE ERRO (CATCH), que mesmo assim precise
 }
-$jsonSaida = $demanda;
+//TRY-CATCH
+
+
+
+
+//LOG
+if (isset($LOG_NIVEL)) {
+  if ($LOG_NIVEL >= 4) {
+    fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
+  }
+}
+//LOG

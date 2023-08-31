@@ -44,29 +44,20 @@ if (isset($jsonEntrada['tituloContrato'])) {
 
     $valorContrato = $jsonEntrada['valorContrato'];
 
-if(($horas == 0) && ($valorHora == 0.00)){
-  /*   $horas = 0;
-    $valorHora = 0; */
-    $valorContrato = 0;
-}else{
-    if (($horas !== "") && ($valorContrato !== "")) {
-        $valorHora = $valorContrato / $horas;
+    if (($horas == 0) && ($valorHora == 0.00)) {
+        $valorContrato = 0;
     } else {
-        if (($horas !== "") && ($valorHora !== "")) {
-            $valorContrato = $horas * $valorHora;
+        if (($horas !== "") && ($valorContrato !== "")) {
+            $valorHora = $valorContrato / $horas;
+        } else {
+            if (($horas !== "") && ($valorHora !== "")) {
+                $valorContrato = $horas * $valorHora;
+            }
         }
     }
-}
-    if (strtotime($dataEntrega) == 0) { // check if null or not 
-        $dataEntrega = "0000-00-00 00:00:00";
-    } else {
-        $dataEntrega = date("H:i", strtotime($dataEntrega));
-    }
-    if (strtotime($dataPrevisao) == 0) { // check if null or not 
-        $dataPrevisao = "0000-00-00 00:00:00";
-    } else {
-        $dataPrevisao = date("H:i", strtotime($dataPrevisao));
-    }
+
+    $dataPrevisao = isset($jsonEntrada['dataPrevisao']) && $jsonEntrada['dataPrevisao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataPrevisao']) . "'" : "0000-00-00";
+    $dataEntrega = isset($jsonEntrada['dataEntrega']) && $jsonEntrada['dataEntrega'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataEntrega']) . "'" : "0000-00-00";
 
     //busca dados tipostatus    
     $sql2 = "SELECT * FROM contratostatus WHERE idContratoStatus = $idContratoStatus";
@@ -74,7 +65,7 @@ if(($horas == 0) && ($valorHora == 0.00)){
     $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
     $statusContrato = $row["mudaStatusPara"];
 
-    $sql = "UPDATE `contrato` SET `tituloContrato`='$tituloContrato',`descricao`='$descricao',`idContratoStatus`='$idContratoStatus' ,`valorContrato`='$valorContrato',    `dataPrevisao`= '$dataPrevisao',`dataEntrega`= '$dataEntrega' ,`statusContrato`='$statusContrato',`horas`= $horas,`valorHora`=$valorHora,`idContratoTipo`='$idContratoTipo', dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
+    $sql = "UPDATE `contrato` SET `tituloContrato`='$tituloContrato',`descricao`='$descricao',`idContratoStatus`='$idContratoStatus' ,`valorContrato`='$valorContrato',    `dataPrevisao`= $dataPrevisao,`dataEntrega`= $dataEntrega ,`statusContrato`='$statusContrato',`horas`= $horas,`valorHora`=$valorHora,`idContratoTipo`='$idContratoTipo', dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
     //echo "-SQL->".json_encode($sql)."\n";
     //LOG
     if (isset($LOG_NIVEL)) {
@@ -116,9 +107,9 @@ if(($horas == 0) && ($valorHora == 0.00)){
 }
 
 //LOG
-if(isset($LOG_NIVEL)) {
-    if ($LOG_NIVEL>=2) {
-        fwrite($arquivo,$identificacao."-SAIDA->".json_encode($jsonSaida)."\n\n");
+if (isset($LOG_NIVEL)) {
+    if ($LOG_NIVEL >= 2) {
+        fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
     }
 }
 //LOG

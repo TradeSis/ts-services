@@ -70,8 +70,9 @@ if (isset($jsonEntrada['idDemanda'])) {
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {
-            fwrite($arquivo, $identificacao . "-SQL1->" . $sql . "\n");
-            fwrite($arquivo, $identificacao . "-SQL2->" . $sql23 . "\n");
+            fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
+            fwrite($arquivo, $identificacao . "-SQL2->" . $sql2 . "\n");
+            fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
         }
     }
     //LOG
@@ -119,3 +120,7 @@ if (isset($LOG_NIVEL)) {
     }
 }
 //LOG
+
+
+
+?>

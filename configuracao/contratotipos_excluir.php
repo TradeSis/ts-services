@@ -24,7 +24,7 @@ $contratotipo = buscaContratoTipos($idContratoTipo);
         <form class="mb-4" action="../database/contratotipos.php?operacao=excluir" method="post">
             <div class="col-md-12 form-group">
                 <label class='control-label' for='inputNormal'></label>
-                <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratotipo['idContratoTipo'] ?>" disabled>
+                <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratotipo['idContratoTipo'] ?>" readonly>
             </div>
 
             <div style="text-align:right; margin-top:20px">

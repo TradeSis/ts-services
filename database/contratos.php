@@ -130,12 +130,13 @@ if (isset($_GET['operacao'])) {
 			'idContrato' => $_POST['idContrato'],
 			'dataFechamento' => $_POST['dataFechamento'],
 			'statusContrato' => 0,
-			'idContratoStatus' => 6
+			'idContratoStatus' => 6,
+			'idContratoTipo' => $_POST['idContratoTipo'],
 
 		);
 		$contratos = chamaAPI(null, '/services/contrato/finalizar', json_encode($apiEntrada), 'POST');
 
-		header('Location: ../contratos/index.php');
+		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
 	}
 	if ($operacao == "excluir") {
 		$apiEntrada = array(

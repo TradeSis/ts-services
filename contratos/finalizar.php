@@ -42,6 +42,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 					<label class='labelForm'>Titulo</label>
 						<input type="text" class="form-control" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>" disabled style="margin-top: -5px">
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
+						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
 
 					<div class="row" style="margin-top: 60px;">
 						<div class="col-md-4">

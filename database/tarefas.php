@@ -139,6 +139,7 @@ if (isset($_GET['operacao'])) {
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
+            'idTipoStatus' => $_POST['idTipoStatus'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
             'Previsto' => $Previsto,

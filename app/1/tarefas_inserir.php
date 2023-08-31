@@ -49,15 +49,17 @@ if (isset($jsonEntrada['idDemanda'])) {
 
     $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, horaCobrado, Previsto, horaInicioPrevisto, horaFinalPrevisto) VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $horaCobrado, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto)";
 
-    // busca dados tipostatus    
-    $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
-    $buscar2 = mysqli_query($conexao, $sql2);
-    $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
-    $posicao = $row["mudaPosicaoPara"];
-    $statusDemanda = $row["mudaStatusPara"];
-
 
     if (isset($jsonEntrada['Previsto'])) {
+        $idTipoStatus = TIPOSTATUS_AGENDADO;
+
+        // busca dados tipostatus    
+        $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+        $buscar2 = mysqli_query($conexao, $sql2);
+        $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
+        $posicao = $row["mudaPosicaoPara"];
+        $statusDemanda = $row["mudaStatusPara"];
+
         if (in_array($tipoStatusDemanda, $statusTarefa)) {
             $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
         } else {
@@ -69,9 +71,8 @@ if (isset($jsonEntrada['idDemanda'])) {
 
     //LOG
     if (isset($LOG_NIVEL)) {
-        if ($LOG_NIVEL >= 3) {
+        if ($LOG_NIVEL >= 2) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-            fwrite($arquivo, $identificacao . "-SQL2->" . $sql2 . "\n");
             fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
         }
     }

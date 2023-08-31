@@ -77,6 +77,15 @@ if (isset($jsonEntrada['idTarefa'])) {
 
     if (isset($jsonEntrada['idDemanda'])) {
         if (isset($jsonEntrada['Previsto'])) {
+            $idTipoStatus = TIPOSTATUS_AGENDADO;
+
+            // busca dados tipostatus    
+            $sql4 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+            $buscar4 = mysqli_query($conexao, $sql4);
+            $row = mysqli_fetch_array($buscar4, MYSQLI_ASSOC);
+            $posicao = $row["mudaPosicaoPara"];
+            $statusDemanda = $row["mudaStatusPara"];
+
             if (in_array($tipoStatusDemanda, $statusTarefa)) {
                 $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
             } else {
@@ -89,8 +98,9 @@ if (isset($jsonEntrada['idTarefa'])) {
 
     //LOG
     if (isset($LOG_NIVEL)) {
-        if ($LOG_NIVEL >= 3) {
+        if ($LOG_NIVEL >= 2) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
+            fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
         }
     }
     //LOG

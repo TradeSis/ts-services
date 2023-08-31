@@ -153,7 +153,7 @@ try {
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 4) {
+  if ($LOG_NIVEL >= 3) {
     fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
   }
 }

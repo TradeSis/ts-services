@@ -68,7 +68,14 @@ if (isset($jsonEntrada['idTarefa'])) {
 
         $atualizar = mysqli_query($conexao, $sql);
         $atualizar3 = mysqli_query($conexao, $sql3);
-        if (!$atualizar || !$atualizar3)
+        if (!$atualizar)
+            throw new Exception(mysqli_error($conexao));
+
+        $jsonSaida = array(
+            "status" => 200,
+            "retorno" => "ok"
+        );
+        if (!$atualizar3)
             throw new Exception(mysqli_error($conexao));
 
         $jsonSaida = array(

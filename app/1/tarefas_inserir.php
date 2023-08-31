@@ -70,8 +70,8 @@ if (isset($jsonEntrada['idDemanda'])) {
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {
-            fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-            fwrite($arquivo, $identificacao . "-SQL->" . $sql23 . "\n");
+            fwrite($arquivo, $identificacao . "-SQL1->" . $sql . "\n");
+            fwrite($arquivo, $identificacao . "-SQL2->" . $sql23 . "\n");
         }
     }
     //LOG
@@ -81,7 +81,7 @@ if (isset($jsonEntrada['idDemanda'])) {
 
         $atualizar = mysqli_query($conexao, $sql);
         $atualizar3 = mysqli_query($conexao, $sql3);
-        if (!$atualizar && !$atualizar3)
+        if (!$atualizar || !$atualizar3)
             throw new Exception(mysqli_error($conexao));
 
         $jsonSaida = array(

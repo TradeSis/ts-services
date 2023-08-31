@@ -66,7 +66,7 @@ if (isset($jsonEntrada['idDemanda'])) {
             $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
         }
     } else {
-        if (isset($jsonEntrada['idDemanda'])) {
+        if ($idDemanda !== NULL) {
             $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
         }
     }

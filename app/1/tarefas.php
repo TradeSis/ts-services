@@ -3,7 +3,7 @@
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
-/*
+
 //LOG 
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
@@ -23,7 +23,7 @@ if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL >= 2) {
     fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
   }
-} */
+} 
 //LOG
 
 $idEmpresa = null;
@@ -109,14 +109,14 @@ if (isset($jsonEntrada["periodo"])) {
 //echo "-SQL->".json_encode($sql)."\n";
 $rows = 0;
 
-/*//LOG
+//LOG
 if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL >= 3) {
     fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
   }
 }
 //LOG
-*/
+
 
 //TRY-CATCH
 try {
@@ -150,7 +150,7 @@ try {
 
 
 
-/*
+
 //LOG
 if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL >= 2) {
@@ -159,6 +159,6 @@ if (isset($LOG_NIVEL)) {
 }
 //LOG
 
-*/
+
 
 ?>

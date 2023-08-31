@@ -67,6 +67,7 @@ if (isset($jsonEntrada['tituloContrato'])) {
 
     $sql = "UPDATE `contrato` SET `tituloContrato`='$tituloContrato',`descricao`='$descricao',`idContratoStatus`='$idContratoStatus' ,`valorContrato`='$valorContrato',    `dataPrevisao`= $dataPrevisao,`dataEntrega`= $dataEntrega ,`statusContrato`='$statusContrato',`horas`= $horas,`valorHora`=$valorHora,`idContratoTipo`='$idContratoTipo', dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
     //echo "-SQL->".json_encode($sql)."\n";
+    
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {

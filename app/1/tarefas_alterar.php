@@ -76,8 +76,8 @@ if (isset($jsonEntrada['idTarefa'])) {
         WHERE `idTarefa` = $idTarefa";
     }
 
-    if ($idDemanda !== null) {
-        if ($Previsto !== null) {
+    if (isset($jsonEntrada['idDemanda'])) {
+        if (isset($jsonEntrada['Previsto'])) {
             $idTipoStatus = TIPOSTATUS_AGENDADO;
 
             // busca dados tipostatus    
@@ -92,14 +92,20 @@ if (isset($jsonEntrada['idTarefa'])) {
             } else {
                 $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
             }
-        } 
+        }
+        //LOG
+        if (isset($LOG_NIVEL)) {
+            if ($LOG_NIVEL >= 2) {
+                fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
+            }
+        }
+        //LOG
     }
 
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 2) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-            fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
         }
     }
     //LOG

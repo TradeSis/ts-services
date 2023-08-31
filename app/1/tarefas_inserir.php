@@ -64,13 +64,18 @@ if (isset($jsonEntrada['idDemanda'])) {
         } else {
             $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
         }
+        //LOG
+        if (isset($LOG_NIVEL)) {
+            if ($LOG_NIVEL >= 2) {
+                fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
+            }
+        }
+        //LOG
     }
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 2) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-            fwrite($arquivo, $identificacao . "-SQL2->" . $sql2 . "\n");
-            fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
         }
     }
     //LOG

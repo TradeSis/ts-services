@@ -45,8 +45,9 @@ if (isset($jsonEntrada['idTarefa'])) {
     $tituloTarefa = $jsonEntrada['tituloTarefa'];
     $idAtendente = $jsonEntrada['idAtendente'];
 
-    $idTipoOcorrencia = isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['idTipoOcorrencia']) . "'" : "NULL";
-    $tipoStatusDemanda = isset($jsonEntrada['tipoStatusDemanda']) && $jsonEntrada['tipoStatusDemanda'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['tipoStatusDemanda']) . "'" : "NULL";
+    $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
+    $idTipoOcorrencia = isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idTipoOcorrencia']) : "NULL";
+    $tipoStatusDemanda = isset($jsonEntrada['tipoStatusDemanda']) && $jsonEntrada['tipoStatusDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['tipoStatusDemanda']) : "NULL";
     $dataReal = isset($jsonEntrada['dataReal']) && $jsonEntrada['dataReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataReal']) . "'" : "NULL";
     $horaInicioReal = isset($jsonEntrada['horaInicioReal']) && $jsonEntrada['horaInicioReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioReal']) . "'" : "NULL";
     $horaFinalReal = isset($jsonEntrada['horaFinalReal']) && $jsonEntrada['horaFinalReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalReal']) . "'" : "NULL";
@@ -75,8 +76,8 @@ if (isset($jsonEntrada['idTarefa'])) {
         WHERE `idTarefa` = $idTarefa";
     }
 
-    if (isset($jsonEntrada['idDemanda'])) {
-        if (isset($jsonEntrada['Previsto'])) {
+    if ($idDemanda !== null) {
+        if ($Previsto !== null) {
             $idTipoStatus = TIPOSTATUS_AGENDADO;
 
             // busca dados tipostatus    
@@ -91,9 +92,7 @@ if (isset($jsonEntrada['idTarefa'])) {
             } else {
                 $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
             }
-        } else {
-            $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
-        }
+        } 
     }
 
     //LOG

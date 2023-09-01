@@ -35,17 +35,16 @@ $statusDemanda = null;
 
 if (isset($jsonEntrada['tituloDemanda'])) {
     $idCliente = $jsonEntrada['idCliente'];
-    $idSolicitante = $jsonEntrada['idSolicitante'];
     $tituloDemanda = $jsonEntrada['tituloDemanda'];
     $descricao = $jsonEntrada['descricao'];
     $idTipoStatus = $jsonEntrada['idTipoStatus'];
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
-    $idServico = $jsonEntrada['idServico'];
-    $idContrato = $jsonEntrada['idContrato'];
-    $idContratoTipo = $jsonEntrada['idContratoTipo'];
-
-    $horasPrevisao = $jsonEntrada['horasPrevisao'];
-    $tamanho = $jsonEntrada['tamanho'];
+    $idSolicitante = isset($jsonEntrada['idSolicitante']) && $jsonEntrada['idSolicitante'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idSolicitante']) : "NULL";
+    $idServico = isset($jsonEntrada['idServico']) && $jsonEntrada['idServico'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idServico']) : "NULL";
+    $idContrato = isset($jsonEntrada['idContrato']) && $jsonEntrada['idContrato'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idContrato']) : "NULL";
+    $idContratoTipo = isset($jsonEntrada['idContratoTipo']) && $jsonEntrada['idContratoTipo'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['idContratoTipo']) . "'" : "NULL";
+    $horasPrevisao = isset($jsonEntrada['horasPrevisao']) && $jsonEntrada['horasPrevisao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horasPrevisao']) . "'" : "NULL";
+    $tamanho = isset($jsonEntrada['tamanho']) && $jsonEntrada['tamanho'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['tamanho']) . "'" : "NULL";
     $idAtendente = $jsonEntrada['idAtendente'];
 
     //busca dados tipostatus    
@@ -55,11 +54,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $posicao = $row["mudaPosicaoPara"];
     $statusDemanda = $row["mudaStatusPara"];
 
-    if ($idContrato == '') {
-        $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContratoTipo, horasPrevisao, tamanho, idAtendente) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, '$idContratoTipo', '$horasPrevisao', '$tamanho', '$idAtendente')";
-    } else {
-        $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo, horasPrevisao, tamanho, idAtendente) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, '$idContratoTipo', '$horasPrevisao', '$tamanho', '$idAtendente')";
-    }
+    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo horasPrevisao, tamanho, idAtendente) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, $idContratoTipo, $horasPrevisao, $tamanho, $idAtendente)";
 
     //LOG
     if (isset($LOG_NIVEL)) {

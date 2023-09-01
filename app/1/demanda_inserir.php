@@ -45,7 +45,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $idContratoTipo = isset($jsonEntrada['idContratoTipo']) && $jsonEntrada['idContratoTipo'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['idContratoTipo']) . "'" : "NULL";
     $horasPrevisao = isset($jsonEntrada['horasPrevisao']) && $jsonEntrada['horasPrevisao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horasPrevisao']) . "'" : "NULL";
     $tamanho = isset($jsonEntrada['tamanho']) && $jsonEntrada['tamanho'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['tamanho']) . "'" : "NULL";
-    $idAtendente = $jsonEntrada['idAtendente'];
+    $idAtendente = isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendente']) : "NULL";
 
     //busca dados tipostatus    
     $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";

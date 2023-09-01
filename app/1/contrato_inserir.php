@@ -34,18 +34,10 @@ if (isset($jsonEntrada['tituloContrato'])) {
         $tituloContrato = $jsonEntrada['tituloContrato'];
         $descricao = $jsonEntrada['descricao'];
         $idContratoStatus = $jsonEntrada['idContratoStatus'];
-		
-		
-        if($jsonEntrada['dataPrevisao'] == ''){
-            $dataPrevisao = '0000-00-00';
-        }else{
-            $dataPrevisao = $jsonEntrada['dataPrevisao'];
-        }
-        if($jsonEntrada['dataEntrega'] == ''){
-            $dataEntrega = '0000-00-00';
-        }else{
-            $dataEntrega = $jsonEntrada['dataEntrega'];
-        }
+
+        $dataPrevisao = isset($jsonEntrada['dataPrevisao']) && $jsonEntrada['dataPrevisao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataPrevisao']) . "'" : "0000-00-00";
+        $dataEntrega = isset($jsonEntrada['dataEntrega']) && $jsonEntrada['dataEntrega'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataEntrega']) . "'" : "0000-00-00";
+
 		$idCliente = $jsonEntrada['idCliente'];
          
         if($jsonEntrada['horas'] == ''){
@@ -72,7 +64,7 @@ if (isset($jsonEntrada['tituloContrato'])) {
         }
       
 
-    $sql = "INSERT INTO contrato (tituloContrato, descricao, dataAbertura, idContratoStatus, dataPrevisao, dataEntrega, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) values ('$tituloContrato', '$descricao', CURRENT_TIMESTAMP(), '$idContratoStatus', '$dataPrevisao', '$dataEntrega', '$idCliente', '$statusContrato', $horas, $valorHora, '$valorContrato', '$idContratoTipo')";
+    $sql = "INSERT INTO contrato (tituloContrato, descricao, dataAbertura, idContratoStatus, dataPrevisao, dataEntrega, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) values ('$tituloContrato', '$descricao', CURRENT_TIMESTAMP(), '$idContratoStatus', $dataPrevisao, $dataEntrega, '$idCliente', '$statusContrato', $horas, $valorHora, '$valorContrato', '$idContratoTipo')";
     //LOG
     if(isset($LOG_NIVEL)) {
         if ($LOG_NIVEL>=3) {

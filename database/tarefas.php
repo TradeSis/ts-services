@@ -115,36 +115,19 @@ if (isset($_GET['operacao'])) {
         $idEmpresa = $_SESSION['idEmpresa'];
     }
     if ($operacao == "inserir") {
-        $horaCobrado = $_POST['horaCobrado'];
-        $Previsto = $_POST['Previsto'];
-        $horaInicioPrevisto = $_POST['horaInicioPrevisto'];
-        $horaFinalPrevisto = $_POST['horaFinalPrevisto'];
-
-        if ($horaCobrado == "") {
-            $horaCobrado = null;
-        }
-        if ($Previsto == "") {
-            $Previsto = null;
-        }
-        if ($horaInicioPrevisto == "") {
-            $horaInicioPrevisto = null;
-        }
-        if ($horaFinalPrevisto == "") {
-            $horaFinalPrevisto = null;
-        }
-
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idCliente' => $_POST['idCliente'],
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
+            'idTipoStatus' => $_POST['idTipoStatus'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-            'Previsto' => $Previsto,
-            'horaInicioPrevisto' => $horaInicioPrevisto,
-            'horaFinalPrevisto' => $horaFinalPrevisto,
-            'horaCobrado' => $horaCobrado
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'horaCobrado' => $_POST['horaCobrado']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
 

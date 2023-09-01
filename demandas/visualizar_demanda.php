@@ -142,7 +142,7 @@ $statusEncerrar = array(
                         <div class="col-md-12 form-group-select" style="margin-top: -25px;">
                             <label class="labelForm">Ocorrência</label>
                                 <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
-                                <option value="<?php echo $demanda['nomeTipoOcorrencia'] ?>"><?php echo $demanda['nomeTipoOcorrencia'] ?></option>
+                                <option value="<?php echo $demanda['idTipoOcorrencia'] ?>"><?php echo $demanda['nomeTipoOcorrencia'] ?></option>
                                 <?php foreach ($ocorrencias as $ocorrencia) { ?>
                                     <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
                                     </option>

@@ -28,9 +28,9 @@ if ($_SESSION['idCliente'] == null) {
 }
 
 if ($_SESSION['idCliente'] == null) {
-  $idAtendente = $_SESSION['idLogin'];
+  $nomeAtendente = $_SESSION['usuario'];
 } else {
-  $idAtendente = null;
+  $nomeAtendente = null;
 }
 $statusTarefa = "1"; //ABERTO
 
@@ -149,7 +149,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                     foreach ($atendentes as $atendente) {
                       ?>
                       <option <?php
-                      if ($atendente['idUsuario'] == $idAtendente) {
+                      if ($atendente['nomeUsuario'] == $nomeAtendente) {
                         echo "selected";
                       }
                       ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>

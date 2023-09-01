@@ -21,10 +21,16 @@
 
 
 //
+//
+
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');
 include_once(ROOT.'/cadastros/database/clientes.php');
+include '../database/contratotipos.php';
+
+$urlContratoTipo= $_GET["tipo"];
+$contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
@@ -37,7 +43,6 @@ if (isset($_SESSION['filtro_contrato'])) {
     $filtroEntrada = $_SESSION['filtro_contrato'];
     $idCliente = $filtroEntrada['idCliente'];
     $idContratoStatus = $filtroEntrada['idContratoStatus'];
-   
 }
 
 ?>
@@ -323,7 +328,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </div>
 
                     <div class="col-sm-3 ml-2">
-                        <h2 class="tituloTabela" style="color:#12192C">Contrato</h2>
+                        <h2 class="tituloTabela" style="color:#12192C"><?php echo $contratoTipo['nomeContrato']?></h2>
                     </div>
 
                     <div class="col-sm-4">
@@ -339,7 +344,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
                     <div class="col-sm" style="text-align:right">
-                        <a href="inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+                        <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>"  role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
                     </div>
                 </div>
 
@@ -375,7 +380,7 @@ if (isset($_SESSION['filtro_contrato'])) {
    
     <script>
         
-
+        var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
         buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
         
         function limpar() {
@@ -384,8 +389,8 @@ if (isset($_SESSION['filtro_contrato'])) {
         }
 
         function buscar(idCliente, idContratoStatus, tituloContrato) {
-            /* alert(idCliente);
-            alert(idContratoStatus); */
+            /* alert(idCliente); */
+           /*  alert(urlContratoTipo); */
 
             $.ajax({
                 type: 'POST', 
@@ -397,7 +402,8 @@ if (isset($_SESSION['filtro_contrato'])) {
                 data: {
                     idCliente: idCliente,
                     idContratoStatus: idContratoStatus,
-                    tituloContrato: tituloContrato
+                    tituloContrato: tituloContrato,
+                    urlContratoTipo: urlContratoTipo
                 },
                 
 
@@ -433,7 +439,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                             var dataPrevisaoFormatada = "<p>---</p>";
                         }else{
                             var dataPrevisao = new Date(object.dataPrevisao);
-                            dataPrevisaoFormatada = dataPrevisao.toLocaleDateString("pt-BR");
+                            dataPrevisaoFormatada = (`${dataPrevisao.getUTCDate().toString().padStart(2, '0')}/${(dataPrevisao.getUTCMonth()+1).toString().padStart(2, '0')}/${dataPrevisao.getUTCFullYear()}`);
                         }
 
                         //dataEntrega
@@ -441,7 +447,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                             var dataEntregaFormatada = "<p>---</p>";
                         }else{
                             var dataEntrega = new Date(object.dataEntrega);
-                            dataEntregaFormatada = dataEntrega.toLocaleDateString("pt-BR");
+                            dataEntregaFormatada = (`${dataEntrega.getUTCDate().toString().padStart(2, '0')}/${(dataEntrega.getUTCMonth()+1).toString().padStart(2, '0')}/${dataEntrega.getUTCFullYear()}`);
                         }
 
 

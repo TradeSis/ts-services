@@ -34,6 +34,7 @@ $statusEncerrar = array(
                             <label class='control-label' for='inputNormal'>Demanda</label>
                             <input type="text" class="form-control" name="tituloDemanda"
                                 value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
+                            <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $demanda['idContratoTipo'] ?>" style="display: none">
                         </div>
                     </div>
                     <div class="col-md-2" style="margin-top:36px;">
@@ -138,12 +139,17 @@ $statusEncerrar = array(
                             <input type="text" class="data select form-control"
                                 value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
                         </div>
-                        <div class="col-md-12 form-group" style="margin-top: -25px;">
+                        <div class="col-md-12 form-group-select" style="margin-top: -25px;">
                             <label class="labelForm">Ocorrência</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $demanda['nomeTipoOcorrencia'] ?>" readonly>
+                                <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
+                                <option value="<?php echo $demanda['idTipoOcorrencia'] ?>"><?php echo $demanda['nomeTipoOcorrencia'] ?></option>
+                                <?php foreach ($ocorrencias as $ocorrencia) { ?>
+                                    <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
                         </div>
-                        <div class="col-md-12 form-group-select" style="margin-top: -30px; margin-bottom: 10px">
+                        <div class="col-md-12 form-group-select" style="margin-top: 15px; margin-bottom: 10px">
                             <label class="labelForm">Serviço</label>
                             <select class="select form-control" name="idServico" autocomplete="off">
                                 <option value="<?php echo $demanda['idServico'] ?>"><?php echo $demanda['nomeServico'] ?>

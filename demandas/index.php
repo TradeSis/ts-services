@@ -12,13 +12,16 @@
 // helio 01022023 alterado para include_once
 // helio 26012023 16:16
 
-
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(ROOT.'/cadastros/database/clientes.php');
 include_once(ROOT.'/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipostatus.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
+include '../database/contratotipos.php';
+
+$urlContratoTipo= $_GET["tipo"];
+$contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
@@ -138,6 +141,8 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 </style>
 
+
+</html>
 <body class="bg-transparent">
   <div class="container-fluid py-1">
     <div class="header-body">
@@ -206,129 +211,6 @@ if (isset($_SESSION['filtro_demanda'])) {
   <nav id="menuFiltros" class="menuFiltros"> <!-- MENUFILTROS -->
     <div class="titulo"><span>Filtrar por:</span></div>
     <ul>
-
-      <?php /*<li class="ls-label col-sm-12"> <!-- CLIENTE -->
-<form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
-
-<?php if ($_SESSION['idCliente'] == null){ ?>
-<select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Cliente"  ?></option>
-<?php
-foreach ($clientes as $cliente) {
-?>
-<option <?php
-if ($cliente['idCliente'] == $idCliente) {
-echo "selected";
-}
-?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-<?php  } ?>
-</select>
-<?php  } else { ?>
-<select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px" disabled>
-<?php
-foreach ($clientes as $cliente) {
-?>
-<option <?php
-if ($cliente['idCliente'] == $idCliente) {
-echo "selected";
-}
-?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-<?php  } ?>
-</select>
-<?php  } ?>
-
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- RESPONSAVEL -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idAtendente" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Responsável"  ?></option>
-<?php
-foreach ($atendentes as $atendente) {
-?>
-<option <?php
-if ($atendente['idUsuario'] == $idAtendente) {
-echo "selected";
-}
-?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- SOLICITANTE -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Solicitante"  ?></option>
-<?php
-foreach ($usuarios as $usuario) {
-?>
-<option <?php
-if ($usuario['idUsuario'] == $idSolicitante) {
-echo "selected";
-}
-?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- STATUS -->
-<form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
-
-<select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Status"  ?></option>
-<?php foreach ($tiposstatus as $tipostatus) { ?>
-<option <?php
-if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-echo "selected";
-}
-?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
-<?php } ?>
-</select>
-
-</form>
-</li>
-
-
-<li class="ls-label col-sm-12 mr-1"> <!-- OCORRENCIA -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo "Ocorrência"  ?></option>
-<?php
-foreach ($tipoocorrencias as $tipoocorrencia) {
-?>
-<option <?php
-if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-echo "selected";
-}
-?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- TAMANHO -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="tamanho" id="FiltroTamanho" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo "Tamanho"  ?></option>
-<option  value="P">P</option>
-<option  value="M">M</option>
-<option  value="G">G</option>
-</select>
-
-</form>
-</li> */?>
-
       <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
@@ -345,7 +227,6 @@ echo "selected";
 
         </form>
       </li>
-
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
@@ -372,7 +253,7 @@ echo "selected";
       </div>
 
       <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela" style="color:#12192C">Demandas</h2>
+        <h2 class="tituloTabela" style="color:#12192C"><?php echo $contratoTipo['nomeDemanda']?></h2>
       </div>
 
       <div class="col-sm-4" style="margin-top:-10px;">
@@ -401,7 +282,7 @@ echo "selected";
 
 
       <div class="col-sm" style="text-align:right">
-        <a href="demanda_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+        <a href="demanda_inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
       </div>
     </div>
 
@@ -417,7 +298,7 @@ echo "selected";
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>
-                <th>Demanda</th>
+                <th>Titulo</th>
                 <th>Responsavel</th>
                 <th>Abertura</th>
                 <th>Status</th>
@@ -536,7 +417,7 @@ echo "selected";
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>
-                <th>Demanda</th>
+                <th>Titulo</th>
                 <th>Status</th>
                 <th>Ocorrência</th>
                 <th>Ação</th>
@@ -628,6 +509,7 @@ echo "selected";
 
   <script>
     <?php if ($ClienteSession === NULL): ?>
+      var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
 
       function limparTrade() {
@@ -637,7 +519,7 @@ echo "selected";
 
 
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
-        
+       /* alert(urlContratoTipo) */
         $.ajax({
           type: 'POST',
           dataType: 'html',
@@ -653,10 +535,10 @@ echo "selected";
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
             tituloDemanda: tituloDemanda,
-            tamanho: tamanho
+            tamanho: tamanho,
+            urlContratoTipo: urlContratoTipo
           },
           success: function (msg) {
-            
             var json = JSON.parse(msg);
             var linha = "";
             for (var $i = 0; $i < json.length; $i++) {
@@ -722,6 +604,7 @@ echo "selected";
         }
       });
   <?php else: ?>
+    var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
 
 
@@ -748,7 +631,8 @@ echo "selected";
           idTipoOcorrencia: idTipoOcorrencia,
           statusDemanda: statusDemanda,
           tituloDemanda: tituloDemanda,
-          tamanho: tamanho
+          tamanho: tamanho,
+          urlContratoTipo: urlContratoTipo
         },
         success: function (msg) {
          

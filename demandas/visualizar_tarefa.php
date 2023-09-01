@@ -5,9 +5,7 @@ include_once '../head.php';
 <body class="bg-transparent">
     <div class="container-fluid">
         <div class="mb-2" style="text-align:right">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#iniciarModal">Iniciar</button>
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#agendarModal">Agendar</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inserirModal">Nova</button>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
         <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
             <table class="table">
@@ -342,35 +340,15 @@ include_once '../head.php';
             window.location.href = newUrl;
         }
 
-        var agendarModal = document.getElementById("agendarModal");
-        var iniciarModal = document.getElementById("iniciarModal");
         var inserirModal = document.getElementById("inserirModal");
 
-        var iniciarBtn = document.querySelector("button[data-target='#agendarModal']");
-        var iniciarBtn = document.querySelector("button[data-target='#iniciarModal']");
         var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
-
-        agendarBtn.onclick = function () {
-            agendarModal.style.display = "block";
-        };
-
-        iniciarBtn.onclick = function () {
-            iniciarModal.style.display = "block";
-        };
 
         inserirBtn.onclick = function () {
             inserirModal.style.display = "block";
         };
 
         window.onclick = function (event) {
-            if (event.target == agendarModal) {
-                agendarModal.style.display = "none";
-            }
-
-            if (event.target == iniciarModal) {
-                iniciarModal.style.display = "none";
-            }
-
             if (event.target == inserirModal) {
                 inserirModal.style.display = "none";
             }

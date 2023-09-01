@@ -30,40 +30,26 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
                 if ($nivelMenu >= 1) {
                     if ($tab == '') {
-                        $tab = 'agenda';
+                        $tab = 'solicitacoes';
                     } ?>
+
                     <li class="nav-item mr-1">
-                        <a class="nav-link1 nav-link <?php if ($tab == "agenda") {
+                        <a class="nav-link1 nav-link <?php if ($tab == "solicitacoes") {
                             echo " active ";
-                        } ?>" href="?tab=agenda" role="tab">Agenda</a>
+                        } ?>" href="?tab=solicitacoes" role="tab">Solicitações</a>
                     </li>
 
                 <?php }
+
                 if ($nivelMenu >= 1) { ?>
                     <li class="nav-item mr-1">
-                        <a class="nav-link1 nav-link <?php if ($tab == "execucao") {
+                        <a class="nav-link1 nav-link <?php if ($tab == "contratos") {
                             echo " active ";
-                        } ?>" href="?tab=execucao" role="tab">Execução</a>
-                    </li>
-
-                <?php }
-                if ($nivelMenu >= 1) { ?>
-
-                    <li class="nav-item mr-1">
-                        <a class="nav-link1 nav-link <?php if ($tab == "dashboard") {
-                            echo " active ";
-                        } ?>" href="?tab=dashboard" role="tab">Dashboard</a>
+                        } ?>" href="?tab=contratos" role="tab">Contratos</a>
                     </li>
                 <?php }
 
-                if ($nivelMenu >= 4) { ?>
-                    <li class="nav-item mr-1">
-                        <a class="nav-link1 nav-link <?php if ($tab == "configuracao") {
-                            echo " active ";
-                        } ?>" href="?tab=configuracao" role="tab" data-toggle="tooltip" data-placement="top"
-                            title="Configurações"><i class="bi bi-gear"></i> Configurações</a>
-                    </li>
-                <?php } ?>
+                ?>
 
 
             </ul>

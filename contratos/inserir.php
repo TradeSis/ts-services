@@ -11,9 +11,13 @@
 include '../head.php';
 include '../database/contratoStatus.php';
 include_once(ROOT.'/cadastros/database/clientes.php');
+include '../database/contratotipos.php';
 
 $contratoStatusTodos = buscaContratoStatus();
 $clientes = buscaClientes();
+
+$urlContratoTipo= $_GET["tipo"];
+$contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 ?>
 
@@ -24,10 +28,10 @@ $clientes = buscaClientes();
         <!-- <div class="card shadow pb-4"> -->
  
             <div class="col-sm mt-4" style="text-align:right">
-                        <a href="index.php" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                        <a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                     </div>
                     <div class="col-sm">
-                        <spam class="col titulo">Inserir Contrato</spam>
+                        <spam class="col titulo">Inserir <?php echo $contratoTipo['nomeContrato'] ?></spam>
                     </div>
             <div class="container" style="margin-top: 10px">
 
@@ -38,7 +42,8 @@ $clientes = buscaClientes();
 
                     <label class='control-label' for='inputNormal' style="margin-top: 4px;">Titulo</label>
                     <div class="for-group">
-                        <input type="text" class="form-control" name="tituloContrato" required>
+                        <input type="text" class="form-control" name="tituloContrato" required>                                                 
+                        <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
                     </div>
                 </div>
 
@@ -60,12 +65,12 @@ $clientes = buscaClientes();
 
                 <div class="col-md-4">
                     <label class="labelForm">Previsão</label>
-                    <input type="datetime-local" class="data select form-control" name="dataPrevisao">
+                    <input type="date" class="data select form-control" name="dataPrevisao">
                 </div>
 
                 <div class="col-md-4">
                     <label class="labelForm">Entrega</label>
-                    <input type="datetime-local" class="data select form-control" name="dataEntrega">
+                    <input type="date" class="data select form-control" name="dataEntrega">
                 </div>
 
                 <div class="col-md-3 form-group-select">

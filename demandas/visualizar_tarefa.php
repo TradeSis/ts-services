@@ -251,13 +251,23 @@ include_once '../head.php';
                 var tipoStatusDemanda = $(this).data('status');
                 var horaInicioCobrado = $(this).data('data-execucao');
                 var idDemanda = $(this).data('demanda');
-                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, horaInicioCobrado: horaInicioCobrado, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=stop",
                     method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage('tarefas', idDemanda)
+                    dataType: "json",
+                    data: { 
+                        idTarefa: idTarefa, 
+                        tipoStatusDemanda: tipoStatusDemanda, 
+                        horaInicioCobrado: horaInicioCobrado, 
+                        idDemanda: idDemanda
+                    },
+                    success: function (msg) {
+                        //var message = msg.retorno; 
+                        //alert(message);
+                        if (msg.retorno == "ok") {
+                            refreshPage('tarefas', idDemanda);
+                        }
+                    }
                 });
             });
 
@@ -265,13 +275,22 @@ include_once '../head.php';
                 var idTarefa = $(this).data('id');
                 var tipoStatusDemanda = $(this).data('status');
                 var idDemanda = $(this).data('demanda');
-                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=start",
                     method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage('tarefas', idDemanda)
+                    dataType: "json",
+                    data: { 
+                        idTarefa: idTarefa,
+                        tipoStatusDemanda: tipoStatusDemanda, 
+                        idDemanda: idDemanda 
+                    },
+                    success: function (msg) {
+                        //var message = msg.retorno; 
+                        //alert(message);
+                        if (msg.retorno == "ok") {
+                            refreshPage('tarefas', idDemanda);
+                        }
+                    }
                 });
             });
 
@@ -279,13 +298,22 @@ include_once '../head.php';
                 var idTarefa = $(this).data('id');
                 var tipoStatusDemanda = $(this).data('status');
                 var idDemanda = $(this).data('demanda');
-                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=realizado",
                     method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage('tarefas', idDemanda)
+                    dataType: "json", 
+                    data: { 
+                        idTarefa: idTarefa, 
+                        tipoStatusDemanda: tipoStatusDemanda, 
+                        idDemanda: idDemanda 
+                    },
+                    success: function (msg) {
+                        //var message = msg.retorno; 
+                        //alert(message);
+                        if (msg.retorno == "ok") {
+                            refreshPage('tarefas', idDemanda);
+                        }
+                    }
                 });
             });
 

@@ -11,19 +11,16 @@ include_once(ROOT . '/cadastros/database/usuario.php');
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
-$demandas = buscaDemandasAbertas();
 $tarefas = buscaTarefas();
+$demandas = buscaDemandasAbertas();
 
+$idAtendente = $_SESSION['idLogin'];
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/services/demandas/fullcalendar.min.css">
-    <script type="text/javascript" src="<?php echo URLROOT ?>/services/demandas/moment.min.js"></script>
-    <script type="text/javascript" src="<?php echo URLROOT ?>/services/demandas/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="<?php echo URLROOT ?>/services/demandas/pt-br.min.js"></script>
     <style>
         ::-webkit-scrollbar {
             width: 0.5em;
@@ -44,55 +41,140 @@ $tarefas = buscaTarefas();
 </html>
 
 <body class="bg-transparent">
-    <div class="container mt-1">
+
+    <div class="container-fluid text-center mt-4">
         <div class="row">
-            <div class="col-sm-11">
-                <h3 class="text-center">Agenda - Tradesis</h3>
+            <div class=" btnAbre">
+                <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;"
+                    class="material-symbols-outlined">
+                    filter_alt
+                </span>
+
             </div>
-            <div class="col-sm-1">
-                <button type="button" class="btn btn-warning" data-toggle="modal"
-                    data-target="#agendarModal">Agendar</button>
+
+            <div class="col-sm-10 text-center">
+                <h3>Agenda</h3>
+            </div>
+
+            <div class="col-sm" style="text-align:right">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agendarModal"><i
+                        class="bi bi-plus-square"></i>&nbsp Novo</button>
             </div>
         </div>
+        <hr>
+        <div id="calendar"></div>
     </div>
-    <hr>
-    <div id="calendar"></div>
 
-    <div class="modal fade" id="eventDetailsModal" tabindex="-1" role="dialog" aria-labelledby="eventDetailsModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+
+    <!--------- ALTERAR --------->
+    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog"
+        aria-labelledby="alterarmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eventDetailsModalLabel">
-                        <p id="eventID" style="margin-bottom:-20px"></p>
-                    </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar Tarefa</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <label class="labelForm">Título</label>
-                    <input type="text" class="data select form-control" id="eventTitle" readonly>
-                    <div class="row">
-                        <div class="col-md">
-                            <label>Data</label>
-                            <input type="text" class="data select form-control" id="eventDate" readonly>
+                <div class="container">
+                    <form method="post" id="alterarForm">
+                        <div class="row">
+                            <div class="col-md-4" style="margin-top: 10px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Tarefa</label>
+                                    <input type="text" class="data select form-control" id="titulo" name="tituloTarefa"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -10px;">
+                                <div class="form-group" id="demandaContainer">
+                                    <label class="labelForm">ID/Demanda Relacionada</label>
+                                    <input type="text" class="data select form-control" id="tituloDemanda"
+                                        style="margin-top: 18px;" autocomplete="off" readonly>
+                                    <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
+                                        <?php
+                                        foreach ($demandas as $demanda) {
+                                            ?>
+                                        <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" class="form-control" name="idTarefa" id="idTarefa" />
+                            <input type="hidden" class="form-control" name="idDemanda" id="idDemanda" />
+                            <div class="col-md-4" style="margin-top: -10px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Cliente</label>
+                                    <input type="text" class="data select form-control" id="nomeCliente"
+                                        style="margin-top: 18px;" autocomplete="off" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Reponsável</label>
+                                    <select class="form-control" name="idAtendente" id="idAtendente">
+                                        <?php
+                                        foreach ($atendentes as $atendente) {
+                                            ?>
+                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
+                                    <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
+                                        <?php
+                                        foreach ($ocorrencias as $ocorrencia) {
+                                            ?>
+                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -14px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Horas Cobrado</label>
+                                    <input type="time" class="data select form-control" id="horaCobrado"
+                                        name="horaCobrado" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -30px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Data Previsão</label>
+                                    <input type="date" class="data select form-control" id="Previsto" name="Previsto"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -30px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Inicio</label>
+                                    <input type="time" class="data select form-control" id="horaInicioPrevisto"
+                                        name="horaInicioPrevisto" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: -30px;">
+                                <div class="form-group">
+                                    <label class="labelForm">Fim</label>
+                                    <input type="time" class="data select form-control" id="horaFinalPrevisto"
+                                        name="horaFinalPrevisto" autocomplete="off">
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md">
-                            <label>Início</label>
-                            <input type="text" class="data select form-control" id="eventStart" readonly>
+                        <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit" class="btn btn-warning">Atualizar</button>
                         </div>
-                        <div class="col-md">
-                            <label>Fim</label>
-                            <input type="text" class="data select form-control" id="eventEnd" readonly>
-                        </div>
-                    </div>
-                    <hr>
-                    <a id="visualizarDemandaButton" class="btn btn-primary" style="float:right">Visualizar</a>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
     <!--------- AGENDAR --------->
     <div class="modal fade bd-example-modal-lg" id="agendarModal" tabindex="-1" role="dialog"
         aria-labelledby="agendarModalLabel" aria-hidden="true">
@@ -110,7 +192,8 @@ $tarefas = buscaTarefas();
                             <div class="col-md-6 form-group">
                                 <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
                                 <div class="for-group" style="margin-top: 22px;">
-                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
+                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off"
+                                        required>
                                 </div>
                                 <input type="hidden" class="form-control" name="idDemanda" value="null">
                             </div>
@@ -134,11 +217,15 @@ $tarefas = buscaTarefas();
                                 <div class="form-group">
                                     <label class='control-label' for='inputNormal'>Reponsável</label>
                                     <select class="form-control" name="idAtendente">
+                                        <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                         <?php
                                         foreach ($atendentes as $atendente) {
                                             ?>
-                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
-                                        </option>
+                                        <option <?php
+                                        if ($atendente['idLogin'] == $idAtendente) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -147,11 +234,15 @@ $tarefas = buscaTarefas();
                                 <div class="form-group">
                                     <label class='control-label' for='inputNormal'>Ocorrência</label>
                                     <select class="form-control" name="idTipoOcorrencia">
-                                        <option value="null"></option>
+                                        <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                         <?php
                                         foreach ($ocorrencias as $ocorrencia) {
                                             ?>
-                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                            <option <?php
+                                            if ($ocorrencia['ocorrenciaInicial'] == 1) {
+                                            echo "selected";
+                                            }
+                                            ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -179,7 +270,7 @@ $tarefas = buscaTarefas();
                             </div>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" class="btn btn-info">Agendar</button>
+                            <button type="submit" class="btn btn-success">Inserir</button>
                         </div>
                     </form>
                 </div>
@@ -231,7 +322,20 @@ $tarefas = buscaTarefas();
                         title: '<?php echo $tarefa['tituloTarefa'] . ' ' . $tarefa['tituloDemanda']; ?>',
                         start: '<?php echo $tarefa['Previsto'] . ' ' . $tarefa['horaInicioPrevisto']; ?>',
                         end: '<?php echo $tarefa['Previsto'] . ' ' . $tarefa['horaFinalPrevisto']; ?>',
+                        idTarefa: '<?php echo $tarefa['idTarefa']; ?>',
+                        tituloTarefa: '<?php echo $tarefa['tituloTarefa']; ?>',
+                        idCliente: '<?php echo $tarefa['idCliente']; ?>',
+                        nomeCliente: '<?php echo $tarefa['nomeCliente']; ?>',
                         idDemanda: '<?php echo $tarefa['idDemanda']; ?>',
+                        tituloDemanda: '<?php echo $tarefa['tituloDemanda']; ?>',
+                        idAtendente: '<?php echo $tarefa['idAtendente']; ?>',
+                        nomeUsuario: '<?php echo $tarefa['nomeUsuario']; ?>',
+                        idTipoOcorrencia: '<?php echo $tarefa['idTipoOcorrencia']; ?>',
+                        nomeTipoOcorrencia: '<?php echo $tarefa['nomeTipoOcorrencia']; ?>',
+                        Previsto: '<?php echo $tarefa['Previsto']; ?>',
+                        horaInicioPrevisto: '<?php echo $tarefa['horaInicioPrevisto']; ?>',
+                        horaFinalPrevisto: '<?php echo $tarefa['horaFinalPrevisto']; ?>',
+                        horaCobrado: '<?php echo $tarefa['horaCobrado']; ?>',
                         color: '<?php echo $color; ?>'
                     },
                     <?php } ?>
@@ -240,21 +344,36 @@ $tarefas = buscaTarefas();
                     element.css('font-weight', 'bold');
                 },
                 eventClick: function (calEvent, jsEvent, view) {
-                    $("#eventID").text("Tarefa " + calEvent._id);
-                    $("#eventTitle").val(calEvent.title);
-                    $("#eventDate").val(moment(calEvent.start).format('DD/MM/YYYY'));
-                    $("#eventStart").val(moment(calEvent.start).format('HH:mm'));
-                    $("#eventEnd").val(moment(calEvent.end).format('HH:mm'));
-                    if (calEvent.idDemanda !== "") {  
-                        var visualizarDemandaUrl = "visualizar.php?idDemanda=" + calEvent.idDemanda;
-                        $("#visualizarDemandaButton").attr("href", "javascript:void(0);");
-                        $("#visualizarDemandaButton").attr("onclick", "loadPage('" + visualizarDemandaUrl + "')");
+                    $('#idTarefa').val(calEvent.idTarefa);
+                    $('#titulo').val(calEvent.tituloTarefa);
+                    $('#idCliente').val(calEvent.idCliente);
+                    $('#nomeCliente').val(calEvent.nomeCliente);
+                    $('#idDemanda').val(calEvent.idDemanda);
+                    $('#idDemandaSelect').val(calEvent.idDemanda);
+                    $('#tituloDemanda').val(calEvent.idDemanda + ' - ' + calEvent.tituloDemanda);
+                    $('#idAtendente').val(calEvent.idAtendente);
+                    $('#nomeUsuario').val(calEvent.nomeUsuario);
+                    $('#idTipoOcorrencia').val(calEvent.idTipoOcorrencia);
+                    $('#nomeTipoOcorrencia').val(calEvent.nomeTipoOcorrencia);
+                    $('#Previsto').val(calEvent.Previsto);
+                    $('#horaInicioPrevisto').val(calEvent.horaInicioPrevisto);
+                    $('#horaFinalPrevisto').val(calEvent.horaFinalPrevisto);
+                    $('#dataReal').val(calEvent.dataReal);
+                    $('#horaInicioReal').val(calEvent.horaInicioReal);
+                    $('#horaFinalReal').val(calEvent.horaFinalReal);
+                    $('#horaCobrado').val(calEvent.horaCobrado);
+
+                    if (calEvent.idDemanda !== "") {
+                        $('#idDemandaSelect').hide();
+                        $('#tituloDemanda').show();
                     } else {
-                        $("#visualizarDemandaButton").removeAttr("href");
-                        $("#visualizarDemandaButton").removeAttr("onclick");
+                        $('#idDemandaSelect').show();
+                        $('#tituloDemanda').hide();
                     }
 
-                    $("#eventDetailsModal").modal();
+
+
+                    $('#alterarmodal').modal('show');
                 }
             });
             $('#scheduleButton').on('click', function () {
@@ -294,6 +413,19 @@ $tarefas = buscaTarefas();
             var formData = new FormData(this);
             $.ajax({
                 url: "../database/tarefas.php?operacao=inserir",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: refreshPage,
+            });
+        });
+
+        $("#alterarForm").submit(function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: "../database/tarefas.php?operacao=alterar",
                 type: 'POST',
                 data: formData,
                 processData: false,

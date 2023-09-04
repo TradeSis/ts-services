@@ -165,6 +165,8 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_FAZENDO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/start', json_encode($apiEntrada), 'POST');
+        echo json_encode($tarefas);
+        return $tarefas;
     }
 
     if ($operacao == "realizado") {
@@ -176,6 +178,8 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_PAUSADO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
+        echo json_encode($tarefas);
+        return $tarefas;
     }
 
     if ($operacao == "stop") {
@@ -187,6 +191,8 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_PAUSADO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+        echo json_encode($tarefas);
+        return $tarefas;
     }
 
     if ($operacao == "filtrar") {

@@ -28,9 +28,9 @@ if ($_SESSION['idCliente'] == null) {
 }
 
 if ($_SESSION['idCliente'] == null) {
-  $nomeAtendente = $_SESSION['usuario'];
+  $idAtendente = $_SESSION['idLogin'];
 } else {
-  $nomeAtendente = null;
+  $idAtendente = null;
 }
 $statusTarefa = "1"; //ABERTO
 
@@ -149,7 +149,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                     foreach ($atendentes as $atendente) {
                       ?>
                       <option <?php
-                      if ($atendente['nomeUsuario'] == $nomeAtendente) {
+                      if ($atendente['idLogin'] == $idAtendente) {
                         echo "selected";
                       }
                       ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
@@ -364,7 +364,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               </div>
             </div>
             <div class="card-footer bg-transparent" style="text-align:right">
-              <button type="submit" class="btn btn-info">Salvar</button>
+              <button type="submit" class="btn btn-success">Inserir</button>
             </div>
           </form>
         </div>
@@ -492,7 +492,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               </div>
             </div>
             <div class="card-footer bg-transparent" style="text-align:right">
-              <button type="submit" class="btn btn-info">Atualizar</button>
+              <button type="submit" class="btn btn-warning">Atualizar</button>
             </div>
           </form>
         </div>
@@ -583,7 +583,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
             linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>";
             linha += "<td>" + vhoraCobrado + "</td>";
-            linha += "<td><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button></td>";
+            linha += "<td><button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button></td>";
             linha += "</tr>";
           }
           $("#dados").html(linha);

@@ -46,7 +46,7 @@ if (isset($jsonEntrada["idTarefa"])) {
   $where = " and ";
 }
 
-if (isset($jsonEntrada["idDemanda"])) {
+if (isset($jsonEntrada["idDemanda"]) && $jsonEntrada["idDemanda"] !== "") {
   $sql = $sql . $where . " tarefa.idDemanda = " . $jsonEntrada["idDemanda"];
   $where = " and ";
 }

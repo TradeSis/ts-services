@@ -45,6 +45,49 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                             echo " active ";
                         } ?>" href="?tab=execucao" role="tab">Execução</a>
                     </li>
+                <?php }
+
+                if ($nivelMenu >= 1) { ?>
+
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "demandas") {
+                            echo " active ";
+                        } ?>" href="?tab=demandas" role="tab">Demandas</a>
+                    </li>
+
+                <?php }
+
+                if ($nivelMenu >= 1) { ?>
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "contratos") {
+                            echo " active ";
+                        } ?>" href="?tab=contratos" role="tab">Contratos</a>
+                    </li>
+                <?php }
+
+                if ($nivelMenu >= 1) { ?>
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "projetos") {
+                            echo " active ";
+                        } ?>" href="?tab=projetos" role="tab">Projetos</a>
+                    </li>
+                <?php }
+
+                if ($nivelMenu >= 1) { ?>
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "os") {
+                            echo " active ";
+                        } ?>" href="?tab=os" role="tab">O.S.</a>
+                    </li>
+                <?php }
+
+
+                if ($nivelMenu >= 1) { ?>
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "notasservico") {
+                            echo " active ";
+                        } ?>" href="?tab=notasservico" role="tab">Notas Serviço</a>
+                    </li>
 
                 <?php }
                 if ($nivelMenu >= 1) { ?>
@@ -82,8 +125,8 @@ if ($tab == "servicos") {
     $src = "demandas/?tipo=os";
 }
 
-if ($tab == "solicitacoes") {
-    $src = "demandas/?tipo=contratos";
+if ($tab == "demandas") {
+    $src = "demandas/";
 }
 if ($tab == "atividades") {
     $src = "demandas/?tipo=projetos";
@@ -106,6 +149,9 @@ if ($tab == "dashboard") {
 }
 if ($tab == "agenda") {
     $src = "demandas/agenda.php";
+}
+if ($tab == "notasservico") {
+    $src = "notasservico/";
 }
 if ($tab == "configuracao") {
     $src = "configuracao/";

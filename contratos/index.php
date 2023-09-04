@@ -328,7 +328,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </div>
 
                     <div class="col-sm-3 ml-2">
-                        <h2 class="tituloTabela" style="color:#12192C"><?php echo $contratoTipo['nomeContrato']?></h2>
+                        <h2 class="tituloTabela"><?php echo $contratoTipo['nomeContrato']?></h2>
                     </div>
 
                     <div class="col-sm-4">

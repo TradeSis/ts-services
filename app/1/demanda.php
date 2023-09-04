@@ -25,7 +25,7 @@ if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL >= 2) {
     fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
   }
-} 
+}
 //LOG
 
 
@@ -46,63 +46,62 @@ $sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipoocorrencia.n
         LEFT JOIN tipoocorrencia ON demanda.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
         LEFT JOIN tipostatus ON demanda.idTipoStatus = tipostatus.idTipoStatus
         LEFT JOIN contratotipos  on  demanda.idContratoTipo = contratotipos.idContratoTipo ";
-if (isset($jsonEntrada["idDemanda"])) {
-  $sql = $sql . " where demanda.idDemanda = " . $jsonEntrada["idDemanda"];
-} else {
-  $where = " where ";
-
-  if (isset($jsonEntrada["idCliente"])) {
-    $sql = $sql . $where . " demanda.idCliente = " . $jsonEntrada["idCliente"];
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["idSolicitante"])) {
-    $sql = $sql . $where . " demanda.idSolicitante = " . $jsonEntrada["idSolicitante"];
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["idTipoStatus"])) {
-    $sql = $sql . $where . " demanda.idTipoStatus = " . $jsonEntrada["idTipoStatus"];
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["idTipoOcorrencia"])) {
-    $sql = $sql . $where . " demanda.idTipoOcorrencia = " . $jsonEntrada["idTipoOcorrencia"];
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["idAtendente"])) {
-    $sql = $sql . $where . " demanda.idAtendente = " . $jsonEntrada["idAtendente"];
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["statusDemanda"])) {
-    $sql = $sql . $where . " demanda.statusDemanda = " . $jsonEntrada["statusDemanda"];
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["tituloDemanda"])) {
-    $sql = $sql . $where . " demanda.tituloDemanda like " . "'%" . $jsonEntrada["tituloDemanda"] . "%'";
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["tamanho"])) {
-    $sql = $sql . $where . " demanda.tamanho = " . "'" . $jsonEntrada["tamanho"] . "'";
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["idContrato"])) {
-    $sql = $sql . $where . " demanda.idContrato = " . "'" . $jsonEntrada["idContrato"] . "'";
-    $where = " and ";
-  }
-
-  if (isset($jsonEntrada["idContratoTipo"])) {
-    $sql = $sql . $where . " contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
-    $where = " and ";
-  }
-
-
+$where = " where ";
+if (isset($jsonEntrada["idDemanda"]) && $jsonEntrada["idDemanda"] !== "") {
+  $sql = $sql . $where . " demanda.idDemanda = " . $jsonEntrada["idDemanda"];
 }
+
+if (isset($jsonEntrada["idCliente"])) {
+  $sql = $sql . $where . " demanda.idCliente = " . $jsonEntrada["idCliente"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["idSolicitante"])) {
+  $sql = $sql . $where . " demanda.idSolicitante = " . $jsonEntrada["idSolicitante"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["idTipoStatus"])) {
+  $sql = $sql . $where . " demanda.idTipoStatus = " . $jsonEntrada["idTipoStatus"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["idTipoOcorrencia"])) {
+  $sql = $sql . $where . " demanda.idTipoOcorrencia = " . $jsonEntrada["idTipoOcorrencia"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["idAtendente"])) {
+  $sql = $sql . $where . " demanda.idAtendente = " . $jsonEntrada["idAtendente"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["statusDemanda"])) {
+  $sql = $sql . $where . " demanda.statusDemanda = " . $jsonEntrada["statusDemanda"];
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["tituloDemanda"])) {
+  $sql = $sql . $where . " demanda.tituloDemanda like " . "'%" . $jsonEntrada["tituloDemanda"] . "%'";
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["tamanho"])) {
+  $sql = $sql . $where . " demanda.tamanho = " . "'" . $jsonEntrada["tamanho"] . "'";
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["idContrato"])) {
+  $sql = $sql . $where . " demanda.idContrato = " . "'" . $jsonEntrada["idContrato"] . "'";
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["idContratoTipo"])) {
+  $sql = $sql . $where . " contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
+  $where = " and ";
+}
+
+
 
 
 $sql = $sql . " order by ordem, prioridade, idDemanda";

@@ -18,16 +18,19 @@ $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
 
+if ($idDemanda !== "") {
+    $tarefas = buscaTarefas($idDemanda);
+    $horas = buscaHoras($idDemanda);
+    $comentarios = buscaComentarios($idDemanda);
+}
 $servicos = buscaServicos();
 $idTipoStatus = $demanda['idTipoStatus'];
-$horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
-$comentarios = buscaComentarios($idDemanda);
 $cliente = buscaClientes($demanda["idCliente"]);
 $clientes = buscaClientes();
-$tarefas = buscaTarefas($idDemanda);
 $contratos = buscaContratosAbertos($demanda["idCliente"]);
+
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
     $ClienteSession = $_SESSION['idCliente'];

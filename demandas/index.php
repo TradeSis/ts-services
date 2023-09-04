@@ -20,9 +20,13 @@ include_once(__DIR__ . '/../database/tipostatus.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
 include '../database/contratotipos.php';
 
-$urlContratoTipo = $_GET["tipo"];
-$contratoTipo = buscaContratoTipos($urlContratoTipo);
-
+$urlContratoTipo = null;
+if (isset($_GET["tipo"])) {
+  $urlContratoTipo= $_GET["tipo"];
+  $contratoTipo = buscaContratoTipos($urlContratoTipo);
+} else {
+  $contratoTipo = buscaContratoTipos('contratos');
+}
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
   $ClienteSession = $_SESSION['idCliente'];
@@ -515,6 +519,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   <script>
     <?php if ($ClienteSession === NULL): ?>
       var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
+
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
 
       function limparTrade() {

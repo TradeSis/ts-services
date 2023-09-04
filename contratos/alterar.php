@@ -134,7 +134,8 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 				<div class="row ml-1" style="padding-bottom: 50px;">
 					<div class="col-3">
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
-						<input type="datetime-local" class="data select form-control" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] ?>">
+						<input type="datetime-local" class="data select form-control" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] ?>" required>
+						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
 					</div>
 
 					<div class="col-3" style="text-align: left;">

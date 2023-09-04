@@ -75,7 +75,7 @@ $ocorrencias = buscaTipoOcorrencia();
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label class="labelForm">Descrição</label>
-                        <textarea class="form-control" name="descricao" autocomplete="off" rows="10"></textarea>
+                        <textarea class="form-control" name="descricao" autocomplete="off" rows="7"></textarea>
                     </div>
 
                     <div class="col-md" style="margin-top: 60px">
@@ -86,7 +86,7 @@ $ocorrencias = buscaTipoOcorrencia();
                         <div class="col-md-12 form-group-select" style="margin-top: -29px;">
                             <label class="labelForm">Tamanho</label>
                             <select class="select form-control" name="tamanho">
-                                <option value=""></option>
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                 <option value="P">P</option>
                                 <option value="M">M</option>
                                 <option value="G">G</option>
@@ -96,7 +96,7 @@ $ocorrencias = buscaTipoOcorrencia();
                         <div class="col-md-12 form-group-select" style="margin-top: 20px;">
                             <label class="labelForm">Responsável</label>
                             <select class="select form-control" name="idAtendente">
-                                <option value=""></option>
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                 <?php foreach ($atendentes as $atendente) { ?>
                                     <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
                                 <?php } ?>
@@ -108,17 +108,22 @@ $ocorrencias = buscaTipoOcorrencia();
                         <div class="col-md-12 form-group-select" style="margin-top: -25px;">
                             <label class="labelForm">Ocorrência</label>
                             <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
-                                <option value=""></option>
-                                <?php foreach ($ocorrencias as $ocorrencia) { ?>
-                                    <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                                    </option>
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                <?php
+                                foreach ($ocorrencias as $ocorrencia) {
+                                    ?>
+                                    <option <?php
+                                    if ($ocorrencia['ocorrenciaInicial'] == 1) {
+                                    echo "selected";
+                                    }
+                                    ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-12 form-group-select" style="margin-top: 15px; margin-bottom: 10px">
+                        <div class="col-md-12 form-group-select" style="margin-top: 20px; margin-bottom: 10px">
                             <label class="labelForm">Serviço</label>
                             <select class="select form-control" name="idServico" autocomplete="off">
-                                <option value=""></option>
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                 <?php foreach ($servicos as $servico) { ?>
                                     <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
                                     </option>
@@ -134,7 +139,7 @@ $ocorrencias = buscaTipoOcorrencia();
                                 <select class="select form-control" name="idContrato" autocomplete="off">
                             <?php } ?>
 
-                                <option value=""></option>
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                 <?php foreach ($contratos as $contrato) { ?>
                                     <option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?></option>
                                 <?php } ?>

@@ -32,8 +32,19 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
                 if ($nivelMenu >= 1) {
                     if ($tab == '') {
-                        $tab = 'agenda';
+                        $tab = 'dashboard';
                     } ?>
+
+                    <li class="nav-item mr-1">
+                        <a class="nav-link1 nav-link <?php if ($tab == "dashboard") {
+                            echo " active ";
+                        } ?>" href="?tab=dashboard" role="tab">Dashboard</a>
+                    </li>
+                <?php }
+
+
+                if ($nivelMenu >= 1) {
+                    ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "agenda") {
                             echo " active ";
@@ -84,14 +95,6 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                 <?php }
 
 
-                if ($nivelMenu >= 1) { ?>
-
-                    <li class="nav-item mr-1">
-                        <a class="nav-link1 nav-link <?php if ($tab == "dashboard") {
-                            echo " active ";
-                        } ?>" href="?tab=dashboard" role="tab">Dashboard</a>
-                    </li>
-                <?php }
 
                 if ($nivelMenu >= 4) { ?>
                     <li class="nav-item mr-1">
@@ -166,24 +169,26 @@ if ($tab == "configuracao") {
 if ($src !== "") {
     //echo URLROOT ."/services/". $src;
     ?>
-        </body>
+    </body>
 
-</html>
+    </html>
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 
-<head>
-    <title><?php echo $title; ?></title>
-</head>
-<html>
+    <head>
+        <title>
+            <?php echo $title; ?>
+        </title>
+    </head>
+    <html>
 
-<body>
+    <body>
 
-    <div class="diviFrame">
-        <iframe class="iFrame container-fluid " id="iFrameTab"
-            src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
-    </div>
-    <?php
+        <div class="diviFrame">
+            <iframe class="iFrame container-fluid " id="iFrameTab"
+                src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
+        </div>
+        <?php
 }
 ?>
 

@@ -147,7 +147,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
 		<hr style="margin-top: -60px;">
 		<div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-			<h5><?php echo $contratoTipo['nomeDemanda']?> relacionadas a <?php echo $contratoTipo['nomeContrato']?>:</h5>
+			<h5><?php echo $contratoTipo['nomeDemanda']?> :</h5>
 			<div class="col-sm" style="text-align:right; margin-top: -30px">
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp; Novo</button>
 			</div>

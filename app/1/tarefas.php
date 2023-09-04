@@ -78,7 +78,7 @@ if (isset($jsonEntrada["statusTarefa"])) {
 }
 
 if (isset($jsonEntrada["tituloTarefa"])) {
-  $sql = $sql . $where . " tarefa.tituloTarefa like " . "'%" . $jsonEntrada["tituloTarefa"] . "%' or demanda.tituloDemanda like " . "'%" . $jsonEntrada["tituloTarefa"] . "%'";
+  $sql = $sql . $where . " (tarefa.tituloTarefa like '%" . $tituloTarefa . "%' or (demanda.tituloDemanda is not null and demanda.tituloDemanda not like '%null - null%'))";
   $where = " and ";
 }
 

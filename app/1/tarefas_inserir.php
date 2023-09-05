@@ -47,11 +47,14 @@ if (isset($jsonEntrada['idDemanda'])) {
     $horaInicioPrevisto = isset($jsonEntrada['horaInicioPrevisto']) && $jsonEntrada['horaInicioPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioPrevisto']) . "'" : "NULL";
     $horaFinalPrevisto = isset($jsonEntrada['horaFinalPrevisto']) && $jsonEntrada['horaFinalPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalPrevisto']) . "'" : "NULL";
 
-    if(($Previsto) != "NULL" && $tituloTarefa == ''){
-        $tituloTarefa = $jsonEntrada['tituloDemanda'];
-    }else{
+    if(isset($jsonEntrada['tituloTarefa'])){
         $tituloTarefa = $jsonEntrada['tituloTarefa'];
     }
+    if(($Previsto) != "NULL" && $tituloTarefa == ''){
+        $tituloTarefa = $jsonEntrada['tituloDemanda'];
+    }
+        
+    
     $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, horaCobrado, Previsto, horaInicioPrevisto, horaFinalPrevisto) VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $horaCobrado, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto)";
 
     if (isset($jsonEntrada['Previsto'])) {

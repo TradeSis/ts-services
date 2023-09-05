@@ -17,15 +17,14 @@ $idAtendente = $_SESSION['idLogin'];
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
-<<<<<<< HEAD
+
 
 if ($idDemanda !== "") {
     $tarefas = buscaTarefas($idDemanda);
     $horas = buscaHoras($idDemanda);
     $comentarios = buscaComentarios($idDemanda);
 }
-=======
->>>>>>> lucas/fix0509
+
 $servicos = buscaServicos();
 $idTipoStatus = $demanda['idTipoStatus'];
 $atendentes = buscaAtendente();

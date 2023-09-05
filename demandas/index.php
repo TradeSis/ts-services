@@ -567,7 +567,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
-              linha += "<td><a class='btn btn-info btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -659,7 +659,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td>" + object.tituloDemanda + "</td>";
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-              linha += "<td><a class='btn btn-info btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 

@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include_once __DIR__ . "/../conexao.php";
 
-function buscaTarefas($idDemanda = null, $idTarefa = null)
+function buscaTarefas($idDemanda = null, $idTarefa = null, $idAtendente = null)
 {
 
     $tarefas = array();
@@ -22,11 +22,13 @@ function buscaTarefas($idDemanda = null, $idTarefa = null)
     $apiEntrada = array(
         'idDemanda' => $idDemanda,
         'idTarefa' => $idTarefa,
+        'idAtendente' => $idAtendente,
         'idEmpresa' => $idEmpresa,
     );
     $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');
     return $tarefas;
 }
+
 function buscaTarefasGrafico1()
 {
 
@@ -106,6 +108,7 @@ function buscaHoras($idDemanda)
     $horas = chamaAPI(null, '/services/horas', json_encode($apiEntrada), 'GET');
     return $horas;
 }
+
 
 if (isset($_GET['operacao'])) {
 
@@ -276,7 +279,21 @@ if (isset($_GET['operacao'])) {
     }
 
 
+    if ($operacao == "filtroAgenda") {
 
+        $idAtendente = $_POST['idAtendente'];
+
+      
+        if ($idAtendente == "") {
+            $idAtendente = null;
+        }
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,  
+            'idAtendente' => $idAtendente
+        );
+
+        $_SESSION['filtro_agenda'] = $apiEntrada;
+    }
     /*
         include "../demandas/tarefas_ok.php";
     */

@@ -44,7 +44,7 @@ $final = null;
 if (isset($_SESSION['filtro_tarefas'])) {
   $filtroEntrada = $_SESSION['filtro_tarefas'];
   $idCliente = $filtroEntrada['idCliente'];
-  $idAtendente = $filtroEntrada['idAtendente'];
+  $idAtendente = $_SESSION['idLogin'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusTarefa = $filtroEntrada['statusTarefa'];
   $periodo = $filtroEntrada['periodo'];
@@ -329,7 +329,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 <div class="form-group">
                   <label class='control-label' for='inputNormal'>Ocorrência</label>
                   <select class="form-control" name="idTipoOcorrencia">
-                    <option value="null"></option>
+                    <option></option>
                     <?php
                     foreach ($ocorrencias as $ocorrencia) {
                       ?>
@@ -347,7 +347,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <div class="col-md-4" style="margin-top: -20px;">
                 <div class="form-group">
                   <label class="labelForm">Data Previsão</label>
-                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off">
+                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
                 </div>
               </div>
               <div class="col-md-4" style="margin-top: -20px;">

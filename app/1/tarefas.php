@@ -104,7 +104,7 @@ if (isset($jsonEntrada["periodo"])) {
   }
 }
 
-
+$sql = $sql . " ORDER BY idTarefa DESC ";
 
 //echo "-SQL->".json_encode($sql)."\n";
 $rows = 0;

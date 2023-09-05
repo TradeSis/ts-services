@@ -44,7 +44,7 @@ $final = null;
 if (isset($_SESSION['filtro_tarefas'])) {
   $filtroEntrada = $_SESSION['filtro_tarefas'];
   $idCliente = $filtroEntrada['idCliente'];
-  $idAtendente = $_SESSION['idLogin'];
+  $idAtendente = $filtroEntrada['idAtendente'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusTarefa = $filtroEntrada['statusTarefa'];
   $periodo = $filtroEntrada['periodo'];
@@ -134,7 +134,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <th>Previsão</th>
               <th>Real</th>
               <th>Cobrado</th>
-              <th>Ação</th>
+              <th style="width: 17%;">Ação</th>
             </tr>
             <tr>
               <th></th>
@@ -194,7 +194,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <th></th>
               <th></th>
               <th></th>
-              <th></th>
+              <th style="width: 10%;"></th>
             </tr>
 
           </thead>
@@ -583,7 +583,17 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
             linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>";
             linha += "<td>" + vhoraCobrado + "</td>";
-            linha += "<td><button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button></td>";
+            linha += "<td class='text-center'>";
+            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00") {
+              linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+            }
+            if (vhoraInicioReal == "00:00") {
+              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
+              linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
+            }
+            linha += "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
+
+            linha += "</td>";
             linha += "</tr>";
           }
           $("#dados").html(linha);
@@ -693,6 +703,71 @@ if (isset($_SESSION['filtro_tarefas'])) {
   </script>
 
   <script>
+    $(document).on('click', '.stopButton', function () {
+      var idTarefa = $(this).data('id');
+      var tipoStatusDemanda = $(this).data('status');
+      var horaInicioCobrado = $(this).data('data-execucao');
+      var idDemanda = $(this).data('demanda');
+      $.ajax({
+        url: "../database/tarefas.php?operacao=stop",
+        method: "POST",
+        dataType: "json",
+        data: {
+          idTarefa: idTarefa,
+          tipoStatusDemanda: tipoStatusDemanda,
+          horaInicioCobrado: horaInicioCobrado,
+          idDemanda: idDemanda
+        },
+        success: function (msg) {
+          if (msg.retorno == "ok") {
+            window.location.reload();
+          }
+        }
+      });
+    });
+
+    $(document).on('click', '.startButton', function () {
+      var idTarefa = $(this).data('id');
+      var tipoStatusDemanda = $(this).data('status');
+      var idDemanda = $(this).data('demanda');
+      $.ajax({
+        url: "../database/tarefas.php?operacao=start",
+        method: "POST",
+        dataType: "json",
+        data: {
+          idTarefa: idTarefa,
+          tipoStatusDemanda: tipoStatusDemanda,
+          idDemanda: idDemanda
+        },
+        success: function (msg) {
+          if (msg.retorno == "ok") {
+            window.location.reload();
+          }
+        }
+      });
+    });
+
+    $(document).on('click', '.realizadoButton', function () {
+      var idTarefa = $(this).data('id');
+      var tipoStatusDemanda = $(this).data('status');
+      var idDemanda = $(this).data('demanda');
+      $.ajax({
+        url: "../database/tarefas.php?operacao=realizado",
+        method: "POST",
+        dataType: "json",
+        data: {
+          idTarefa: idTarefa,
+          tipoStatusDemanda: tipoStatusDemanda,
+          idDemanda: idDemanda
+        },
+        success: function (msg) {
+          if (msg.retorno == "ok") {
+            window.location.reload();
+          }
+        }
+      });
+    });
+
     $(document).ready(function () {
       $("#inserirForm").submit(function (event) {
         event.preventDefault();
@@ -719,7 +794,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
           success: refreshPage,
         });
       });
-
       function refreshPage() {
         window.location.reload();
       }

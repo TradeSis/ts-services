@@ -47,7 +47,7 @@ if ($_SESSION['idCliente'] == null) {
 }
 
 if ($_SESSION['idCliente'] == null) {
-  $idAtendente = $_SESSION['idLogin'];
+  $idAtendente = $_SESSION['idUsuario'];
 } else {
   $idAtendente = null;
 }
@@ -69,6 +69,8 @@ if (isset($_SESSION['filtro_demanda'])) {
   $statusDemanda = $filtroEntrada['statusDemanda'];
   $tamanho = $filtroEntrada['tamanho'];
 }
+
+//echo json_encode($_SESSION);
 ?>
 <style>
   [class="<?php echo TIPOSTATUS_FILA ?>"] {
@@ -361,7 +363,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                       foreach ($atendentes as $atendente) {
                         ?>
                         <option <?php
-                        if ($atendente['idLogin'] == $idAtendente) {
+                        if ($atendente['idUsuario'] == $idAtendente) {
                           echo "selected";
                         }
                         ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>

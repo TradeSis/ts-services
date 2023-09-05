@@ -12,11 +12,22 @@ $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
 
-$filtroAgenda= ($_SESSION['filtro_agenda']);
-$tarefas = buscaTarefas(null,null,$filtroAgenda['idAtendente']);
+if ($_SESSION['idCliente'] == null) {
+    $idAtendente = $_SESSION['idUsuario'];
+} else {
+    $idAtendente = null;
+}
+$statusTarefa = "1"; //ABERTO
+
+if (isset($_SESSION['filtro_agenda'])) {
+    $filtroEntrada = $_SESSION['filtro_agenda'];
+    $idAtendente = $filtroEntrada['idAtendente'];
+    $statusTarefa = $filtroEntrada['statusTarefa'];
+}
+$tarefas = buscaTarefas(null, null, $idAtendente, $statusTarefa);
 $demandas = buscaDemandasAbertas();
 
-$idAtendente = $_SESSION['idLogin'];
+//echo json_encode($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +58,8 @@ $idAtendente = $_SESSION['idLogin'];
     <div class="container-fluid text-center mt-4">
         <div class="row">
             <div class=" btnAbre">
-                <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+                <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;"
+                    class="material-symbols-outlined">
                     filter_alt
                 </span>
 
@@ -58,7 +70,8 @@ $idAtendente = $_SESSION['idLogin'];
             </div>
 
             <div class="col-sm" style="text-align:right">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agendarModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agendarModal"><i
+                        class="bi bi-plus-square"></i>&nbsp Novo</button>
             </div>
         </div>
         <hr>
@@ -67,7 +80,8 @@ $idAtendente = $_SESSION['idLogin'];
 
 
     <!--------- ALTERAR --------->
-    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog" aria-labelledby="alterarmodalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog"
+        aria-labelledby="alterarmodalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -82,19 +96,21 @@ $idAtendente = $_SESSION['idLogin'];
                             <div class="col-md-4" style="margin-top: 10px;">
                                 <div class="form-group">
                                     <label class="labelForm">Tarefa</label>
-                                    <input type="text" class="data select form-control" id="titulo" name="tituloTarefa" autocomplete="off">
+                                    <input type="text" class="data select form-control" id="titulo" name="tituloTarefa"
+                                        autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -10px;">
                                 <div class="form-group" id="demandaContainer">
                                     <label class="labelForm">ID/Demanda Relacionada</label>
-                                    <input type="text" class="data select form-control" id="tituloDemanda" style="margin-top: 18px;" autocomplete="off" readonly>
+                                    <input type="text" class="data select form-control" id="tituloDemanda"
+                                        style="margin-top: 18px;" autocomplete="off" readonly>
                                     <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
                                         <?php
                                         foreach ($demandas as $demanda) {
-                                        ?>
-                                            <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                                            </option>
+                                            ?>
+                                        <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -104,7 +120,8 @@ $idAtendente = $_SESSION['idLogin'];
                             <div class="col-md-4" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="labelForm">Cliente</label>
-                                    <input type="text" class="data select form-control" id="nomeCliente" style="margin-top: 18px;" autocomplete="off" readonly>
+                                    <input type="text" class="data select form-control" id="nomeCliente"
+                                        style="margin-top: 18px;" autocomplete="off" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -113,9 +130,9 @@ $idAtendente = $_SESSION['idLogin'];
                                     <select class="form-control" name="idAtendente" id="idAtendente">
                                         <?php
                                         foreach ($atendentes as $atendente) {
-                                        ?>
-                                            <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
-                                            </option>
+                                            ?>
+                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -126,9 +143,9 @@ $idAtendente = $_SESSION['idLogin'];
                                     <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
                                         <?php
                                         foreach ($ocorrencias as $ocorrencia) {
-                                        ?>
-                                            <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                                <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                            ?>
+                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -136,25 +153,29 @@ $idAtendente = $_SESSION['idLogin'];
                             <div class="col-md-4" style="margin-top: -14px;">
                                 <div class="form-group">
                                     <label class="labelForm">Horas Cobrado</label>
-                                    <input type="time" class="data select form-control" id="horaCobrado" name="horaCobrado" autocomplete="off">
+                                    <input type="time" class="data select form-control" id="horaCobrado"
+                                        name="horaCobrado" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -30px;">
                                 <div class="form-group">
                                     <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" id="Previsto" name="Previsto" autocomplete="off">
+                                    <input type="date" class="data select form-control" id="Previsto" name="Previsto"
+                                        autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -30px;">
                                 <div class="form-group">
                                     <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" id="horaInicioPrevisto" name="horaInicioPrevisto" autocomplete="off">
+                                    <input type="time" class="data select form-control" id="horaInicioPrevisto"
+                                        name="horaInicioPrevisto" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -30px;">
                                 <div class="form-group">
                                     <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" id="horaFinalPrevisto" name="horaFinalPrevisto" autocomplete="off">
+                                    <input type="time" class="data select form-control" id="horaFinalPrevisto"
+                                        name="horaFinalPrevisto" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -168,7 +189,8 @@ $idAtendente = $_SESSION['idLogin'];
     </div>
 
     <!--------- AGENDAR --------->
-    <div class="modal fade bd-example-modal-lg" id="agendarModal" tabindex="-1" role="dialog" aria-labelledby="agendarModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="agendarModal" tabindex="-1" role="dialog"
+        aria-labelledby="agendarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -183,7 +205,8 @@ $idAtendente = $_SESSION['idLogin'];
                             <div class="col-md-6 form-group">
                                 <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
                                 <div class="for-group" style="margin-top: 22px;">
-                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off" required>
+                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off"
+                                        required>
                                 </div>
                                 <input type="hidden" class="form-control" name="idDemanda" value="null">
                             </div>
@@ -195,9 +218,9 @@ $idAtendente = $_SESSION['idLogin'];
                                             <option value="null"></option>
                                             <?php
                                             foreach ($clientes as $cliente) {
-                                            ?>
-                                                <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
-                                                </option>
+                                                ?>
+                                            <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
+                                            </option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -210,12 +233,12 @@ $idAtendente = $_SESSION['idLogin'];
                                         <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                         <?php
                                         foreach ($atendentes as $atendente) {
-                                        ?>
-                                            <option <?php
-                                                    if ($atendente['idLogin'] == $idAtendente) {
-                                                        echo "selected";
-                                                    }
-                                                    ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                            ?>
+                                        <option <?php
+                                        if ($atendente['idUsuario'] == $idAtendente) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -227,12 +250,12 @@ $idAtendente = $_SESSION['idLogin'];
                                         <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                         <?php
                                         foreach ($ocorrencias as $ocorrencia) {
-                                        ?>
-                                            <option <?php
-                                                    if ($ocorrencia['ocorrenciaInicial'] == 1) {
-                                                        echo "selected";
-                                                    }
-                                                    ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                            ?>
+                                        <option <?php
+                                        if ($ocorrencia['ocorrenciaInicial'] == 1) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -240,19 +263,22 @@ $idAtendente = $_SESSION['idLogin'];
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
+                                    <input type="date" class="data select form-control" name="Previsto"
+                                        autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
+                                    <input type="time" class="data select form-control" name="horaInicioPrevisto"
+                                        autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
+                                    <input type="time" class="data select form-control" name="horaFinalPrevisto"
+                                        autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -269,23 +295,39 @@ $idAtendente = $_SESSION['idLogin'];
     <nav id="menuFiltros" class="menuFiltros">
         <div class="titulo"><span>Filtrar por:</span></div>
         <ul>
-
             <li class="col-sm-12">
                 <form class="d-flex" action="" method="post" style="text-align: right;">
 
-                    <select class="form-control" name="idUsuario" id="FiltroAtendente" style="font-size: 14px; width: 150px; height: 35px" onchange="atualizarAgenda()">
-                        <option value="<?php echo null ?>"><?php echo "Responsavel"  ?></option>
+                    <select class="form-control" name="idUsuario" id="FiltroAtendente"
+                        style="font-size: 14px; width: 150px; height: 35px" onchange="atualizarAgenda()">
+                        <option value="<?php echo null ?>"><?php echo "Responsavel" ?></option>
                         <?php
                         foreach ($atendentes as $atendente) {
-                        ?>
-                            <option value="<?php echo $atendente['idUsuario'] ?>" ><?php echo $atendente['nomeUsuario']  ?></option>
-                        <?php  } ?>
+                            ?>
+                        <option <?php
+                        if ($atendente['idUsuario'] == $idAtendente) {
+                            echo "selected";
+                        }
+                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                        </option>
+                        <?php } ?>
                     </select>
-
-
                 </form>
             </li>
-
+            <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+                <form class="d-flex" action="" method="post" style="text-align: right;">
+                    <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
+                        style="font-size: 14px; width: 150px; height: 35px" onchange="atualizarAgenda()">
+                        <option value="<?php echo null ?>"><?php echo "Todos" ?></option>
+                        <option <?php if ($statusTarefa == "1") {
+                            echo "selected";
+                        } ?> value="1">Aberto</option>
+                        <option <?php if ($statusTarefa == "0") {
+                            echo "selected";
+                        } ?> value="0">Fechado</option>
+                    </select>
+                </form>
+            </li>
         </ul>
 
         <div class="col-sm" style="text-align:right; color: #fff">
@@ -293,9 +335,11 @@ $idAtendente = $_SESSION['idLogin'];
         </div>
     </nav>
 
-    
+
     <script type="text/javascript">
-        $(document).ready(function() {
+        buscar($("#FiltroAtendente").val());
+
+        $(document).ready(function () {
             $("#calendar").fullCalendar({
                 header: {
                     left: "prev,next today",
@@ -345,8 +389,8 @@ $idAtendente = $_SESSION['idLogin'];
                         } else {
                             $horaFinalPrevisto = $tarefa['horaFinalPrevisto'];
                         }
-                    ?>
-                        {
+                        ?>
+                                        {
                             _id: '<?php echo $tarefa['idTarefa']; ?>',
                             title: '<?php echo $tarefa['tituloTarefa'] . ' ' . $tarefa['tituloDemanda']; ?>',
                             start: '<?php echo $tarefa['Previsto'] . ' ' . $horaInicioPrevisto; ?>',
@@ -369,10 +413,10 @@ $idAtendente = $_SESSION['idLogin'];
                         },
                     <?php } ?>
                 ],
-                eventRender: function(event, element) {
+                eventRender: function (event, element) {
                     element.css('font-weight', 'bold');
                 },
-                eventClick: function(calEvent, jsEvent, view) {
+                eventClick: function (calEvent, jsEvent, view) {
                     $('#idTarefa').val(calEvent.idTarefa);
                     $('#titulo').val(calEvent.tituloTarefa);
                     $('#idCliente').val(calEvent.idCliente);
@@ -405,7 +449,7 @@ $idAtendente = $_SESSION['idLogin'];
                     $('#alterarmodal').modal('show');
                 }
             });
-            $('#scheduleButton').on('click', function() {
+            $('#scheduleButton').on('click', function () {
                 $('#calendar').fullCalendar('changeView', 'schedule');
             });
         });
@@ -426,19 +470,19 @@ $idAtendente = $_SESSION['idLogin'];
 
         var agendarBtn = document.querySelector("button[data-target='#agendarModal']");
 
-        agendarBtn.onclick = function() {
+        agendarBtn.onclick = function () {
             agendarModal.style.display = "block";
         };
 
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == agendarModal) {
                 agendarModal.style.display = "none";
             }
         };
 
 
-        $("#agendarForm").submit(function(event) {
+        $("#agendarForm").submit(function (event) {
             event.preventDefault();
             var formData = new FormData(this);
             $.ajax({
@@ -451,7 +495,7 @@ $idAtendente = $_SESSION['idLogin'];
             });
         });
 
-        $("#alterarForm").submit(function(event) {
+        $("#alterarForm").submit(function (event) {
             event.preventDefault();
             var formData = new FormData(this);
             $.ajax({
@@ -472,42 +516,46 @@ $idAtendente = $_SESSION['idLogin'];
         function atualizarAgenda() {
             window.location.reload();
         }
+
         function limpar() {
-            buscar(null, null, null);
+            buscar(null);
             window.location.reload();
         }
-        buscar($("#FiltroAtendente").val());
 
-        function buscar(idAtendente) {
-           /*  alert(idAtendente); */
+        buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
+
+        function buscar(idAtendente, statusTarefa) {
+            /*  alert(idAtendente); */
 
             $.ajax({
-                type: 'POST', 
-                dataType: 'html', 
-                url: '../database/tarefas.php?operacao=filtroAgenda', 
-                beforeSend: function() {
+                type: 'POST',
+                dataType: 'html',
+                url: '../database/tarefas.php?operacao=filtroAgenda',
+                beforeSend: function () {
                     $("#dados").html("Carregando...");
                 },
                 data: {
-                    idAtendente: idAtendente
+                    idAtendente: idAtendente,
+                    statusTarefa: statusTarefa
                 },
-                /* success: window.location.reload(), */
-                error: function(e) {
+                /*success: window.location.reload(), */
+                error: function (e) {
                     alert('Erro: ' + JSON.stringify(e));
 
                     return null;
                 }
             });
-            
-        }
-        
-       
 
-        $("#FiltroAtendente").change(function() {
-            buscar($("#FiltroAtendente").val());
+        }
+
+        $("#FiltroAtendente").change(function () {
+            buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
+        })
+        $("#FiltroStatusTarefa").change(function () {
+            buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
         })
 
-        $('.btnAbre').click(function() {
+        $('.btnAbre').click(function () {
             $('.menuFiltros').toggleClass('mostra');
             $('.diviFrame').toggleClass('mostra');
         });

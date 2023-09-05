@@ -28,7 +28,7 @@ if ($_SESSION['idCliente'] == null) {
 }
 
 if ($_SESSION['idCliente'] == null) {
-  $idAtendente = $_SESSION['idLogin'];
+  $idAtendente = $_SESSION['idUsuario'];
 } else {
   $idAtendente = null;
 }
@@ -51,6 +51,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $inicio = $filtroEntrada['inicio'];
   $final = $filtroEntrada['final'];
 }
+
+//echo json_encode($_SESSION);
 ?>
 
 </html>
@@ -149,7 +151,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                     foreach ($atendentes as $atendente) {
                       ?>
                       <option <?php
-                      if ($atendente['idLogin'] == $idAtendente) {
+                      if ($atendente['idUsuario'] == $idAtendente) {
                         echo "selected";
                       }
                       ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
@@ -319,7 +321,11 @@ if (isset($_SESSION['filtro_tarefas'])) {
                     <?php
                     foreach ($atendentes as $atendente) {
                       ?>
-                    <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                    <option <?php
+                    if ($atendente['idUsuario'] == $idAtendente) {
+                      echo "selected";
+                    }
+                    ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
                     </option>
                     <?php } ?>
                   </select>

@@ -18,16 +18,21 @@ $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
 
+
+if ($idDemanda !== "") {
+    $tarefas = buscaTarefas($idDemanda);
+    $horas = buscaHoras($idDemanda);
+    $comentarios = buscaComentarios($idDemanda);
+}
+
 $servicos = buscaServicos();
 $idTipoStatus = $demanda['idTipoStatus'];
-$horas = buscaHoras($idDemanda);
 $atendentes = buscaAtendente();
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
-$comentarios = buscaComentarios($idDemanda);
 $cliente = buscaClientes($demanda["idCliente"]);
 $clientes = buscaClientes();
-$tarefas = buscaTarefas($idDemanda);
 $contratos = buscaContratosAbertos($demanda["idCliente"]);
+
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
     $ClienteSession = $_SESSION['idCliente'];
@@ -138,6 +143,7 @@ if (isset($_SESSION['idCliente'])) {
                                 <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
                                 <div class="form-group" style="margin-top: 22px;">
                                     <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
+                                    <input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="display: none;">
                                 </div>
                             </div>
                             <div class="col-md-4 form-group">

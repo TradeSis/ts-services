@@ -32,7 +32,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
 <body class="bg-transparent">
 
-	<div class="container" style="margin-top: 10px;">
+	<div class="container">
 
 
 		<div class="col-sm mt-4" style="text-align:right">
@@ -42,9 +42,9 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 			<spam class="col titulo">Alterar <?php echo $contratoTipo['nomeContrato']?></spam>
 		</div>
 
-		<div class="container" style="margin-top: 10px">
+		<div class="container">
 
-			<form action="../database/contratos.php?operacao=alterar" method="post" style="margin-top: 20px; padding: 10px; text-align: left">
+			<form action="../database/contratos.php?operacao=alterar" method="post" style="padding: 10px; text-align: left">
 				<div class="row gy-4">
 
 					<div class="col-md-12 form-group">
@@ -123,18 +123,13 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 				</div>
 
 			</form>
-		</div>
 
-		<div>
-			<div class="card-footer bg-transparent col-sm">
-				<span class="col titulo">Finalizar Contrato</span>
-			</div>
-
-			<form action="../database/contratos.php?operacao=finalizar" method="post" style="margin-top:30px;">
+			<form action="../database/contratos.php?operacao=finalizar" method="post" style="margin-top:-50px;">
 				<div class="row ml-1" style="padding-bottom: 50px;">
 					<div class="col-3">
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
-						<input type="datetime-local" class="data select form-control" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] ?>">
+						<input type="datetime-local" class="data select form-control" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] ?>" required>
+						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
 					</div>
 
 					<div class="col-3" style="text-align: left;">
@@ -144,13 +139,21 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 			</form>
 		</div>
 
-		<hr style="margin-top: -60px;">
-		<div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-			<h5>Demandas relacionadas a este contrato:</h5>
-			<div class="col-sm" style="text-align:right; margin-top: -30px">
-				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp; Novo</button>
+		<!-- <div>
+			<div class="card-footer bg-transparent col-sm">
+				<span class="col titulo">Finalizar Contrato</span>
 			</div>
 
+			
+		</div> -->
+
+		<hr style="margin-top: -60px;">
+		<div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame" style="margin-left: 10px;">
+			
+			<div class="col-sm" style="text-align:right; margin-bottom: -20px">
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp; Novo</button>
+			</div>
+			<span class="col titulo"><?php echo $contratoTipo['nomeDemanda']?> :</span>
 			<!--------- INSERIR DEMANDA MODAL --------->
 			<div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog" aria-labelledby="inserirModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg">

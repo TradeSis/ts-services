@@ -328,7 +328,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </div>
 
                     <div class="col-sm-3 ml-2">
-                        <h2 class="tituloTabela" style="color:#12192C"><?php echo $contratoTipo['nomeContrato']?></h2>
+                        <h2 class="tituloTabela"><?php echo $contratoTipo['nomeContrato']?></h2>
                     </div>
 
                     <div class="col-sm-4">
@@ -468,7 +468,6 @@ if (isset($_SESSION['filtro_contrato'])) {
                         linha = linha + "<td>" + object.valorHora + "</td>";
                         linha = linha + "<td>" + object.valorContrato + "</td>";
                         linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='alterar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
-                        linha = linha + "<td>" + "<a class='btn btn-danger btn-sm' href='finalizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-calendar-check'></i></a>" + "</td>";
                         linha = linha + "</tr>";
                     }
 

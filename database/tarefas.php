@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include_once __DIR__ . "/../conexao.php";
 
-function buscaTarefas($idDemanda = null, $idTarefa = null)
+function buscaTarefas($idDemanda = null, $idTarefa = null, $idAtendente = null, $statusTarefa = null)
 {
 
     $tarefas = array();
@@ -22,11 +22,14 @@ function buscaTarefas($idDemanda = null, $idTarefa = null)
     $apiEntrada = array(
         'idDemanda' => $idDemanda,
         'idTarefa' => $idTarefa,
+        'idAtendente' => $idAtendente,
+        'statusTarefa' => $statusTarefa,
         'idEmpresa' => $idEmpresa,
     );
     $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'GET');
     return $tarefas;
 }
+
 function buscaTarefasGrafico1()
 {
 
@@ -107,6 +110,7 @@ function buscaHoras($idDemanda)
     return $horas;
 }
 
+
 if (isset($_GET['operacao'])) {
 
     $operacao = $_GET['operacao'];
@@ -114,7 +118,15 @@ if (isset($_GET['operacao'])) {
     if (isset($_SESSION['idEmpresa'])) {
         $idEmpresa = $_SESSION['idEmpresa'];
     }
+
     if ($operacao == "inserir") {
+
+        if($_POST['idTipoOcorrencia'] == ''){
+            $idTipoOcorrencia = OCORRENCIA_PADRAO;
+        }else{
+            $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+        }
+
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'tituloTarefa' => $_POST['tituloTarefa'],
@@ -122,13 +134,15 @@ if (isset($_GET['operacao'])) {
             'idDemanda' => $_POST['idDemanda'],
             'idAtendente' => $_POST['idAtendente'],
             'idTipoStatus' => $_POST['idTipoStatus'],
-            'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+            'idTipoOcorrencia' => $idTipoOcorrencia,
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
             'Previsto' => $_POST['Previsto'],
             'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
             'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
-            'horaCobrado' => $_POST['horaCobrado']
+            'horaCobrado' => $_POST['horaCobrado'],
+            'tituloDemanda' => $_POST['tituloDemanda']
         );
+
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
 
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
@@ -165,6 +179,8 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_FAZENDO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/start', json_encode($apiEntrada), 'POST');
+        echo json_encode($tarefas);
+        return $tarefas;
     }
 
     if ($operacao == "realizado") {
@@ -176,6 +192,8 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_PAUSADO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
+        echo json_encode($tarefas);
+        return $tarefas;
     }
 
     if ($operacao == "stop") {
@@ -187,6 +205,8 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_PAUSADO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+        echo json_encode($tarefas);
+        return $tarefas;
     }
 
     if ($operacao == "filtrar") {
@@ -260,7 +280,26 @@ if (isset($_GET['operacao'])) {
     }
 
 
+    if ($operacao == "filtroAgenda") {
 
+        $idAtendente = $_POST['idAtendente'];
+        $statusTarefa = $_POST['statusTarefa'];
+      
+        if ($idAtendente == "") {
+            $idAtendente = null;
+        }
+        if ($statusTarefa == "") {
+            $statusTarefa = null;
+        }
+
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,  
+            'statusTarefa' => $statusTarefa,
+            'idAtendente' => $idAtendente
+        );
+
+        $_SESSION['filtro_agenda'] = $apiEntrada;
+    }
     /*
         include "../demandas/tarefas_ok.php";
     */

@@ -28,7 +28,7 @@ if ($_SESSION['idCliente'] == null) {
 }
 
 if ($_SESSION['idCliente'] == null) {
-  $idAtendente = $_SESSION['idLogin'];
+  $idAtendente = $_SESSION['idUsuario'];
 } else {
   $idAtendente = null;
 }
@@ -51,6 +51,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $inicio = $filtroEntrada['inicio'];
   $final = $filtroEntrada['final'];
 }
+
+//echo json_encode($_SESSION);
 ?>
 
 </html>
@@ -134,7 +136,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <th>Previsão</th>
               <th>Real</th>
               <th>Cobrado</th>
-              <th>Ação</th>
+              <th style="width: 17%;">Ação</th>
             </tr>
             <tr>
               <th></th>
@@ -194,7 +196,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <th></th>
               <th></th>
               <th></th>
-              <th></th>
+              <th style="width: 10%;"></th>
             </tr>
 
           </thead>
@@ -319,7 +321,11 @@ if (isset($_SESSION['filtro_tarefas'])) {
                     <?php
                     foreach ($atendentes as $atendente) {
                       ?>
-                    <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                    <option <?php
+                    if ($atendente['idUsuario'] == $idAtendente) {
+                      echo "selected";
+                    }
+                    ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
                     </option>
                     <?php } ?>
                   </select>
@@ -329,7 +335,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 <div class="form-group">
                   <label class='control-label' for='inputNormal'>Ocorrência</label>
                   <select class="form-control" name="idTipoOcorrencia">
-                    <option value="null"></option>
+                    <option></option>
                     <?php
                     foreach ($ocorrencias as $ocorrencia) {
                       ?>
@@ -347,7 +353,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <div class="col-md-4" style="margin-top: -20px;">
                 <div class="form-group">
                   <label class="labelForm">Data Previsão</label>
-                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off">
+                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
                 </div>
               </div>
               <div class="col-md-4" style="margin-top: -20px;">
@@ -364,7 +370,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               </div>
             </div>
             <div class="card-footer bg-transparent" style="text-align:right">
-              <button type="submit" class="btn btn-info">Salvar</button>
+              <button type="submit" class="btn btn-success">Inserir</button>
             </div>
           </form>
         </div>
@@ -492,7 +498,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               </div>
             </div>
             <div class="card-footer bg-transparent" style="text-align:right">
-              <button type="submit" class="btn btn-info">Atualizar</button>
+              <button type="submit" class="btn btn-warning">Atualizar</button>
             </div>
           </form>
         </div>
@@ -583,7 +589,17 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
             linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>";
             linha += "<td>" + vhoraCobrado + "</td>";
-            linha += "<td><button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button></td>";
+            linha += "<td class='text-center'>";
+            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00") {
+              linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+            }
+            if (vhoraInicioReal == "00:00") {
+              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
+              linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
+            }
+            linha += "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
+
+            linha += "</td>";
             linha += "</tr>";
           }
           $("#dados").html(linha);
@@ -693,6 +709,71 @@ if (isset($_SESSION['filtro_tarefas'])) {
   </script>
 
   <script>
+    $(document).on('click', '.stopButton', function () {
+      var idTarefa = $(this).data('id');
+      var tipoStatusDemanda = $(this).data('status');
+      var horaInicioCobrado = $(this).data('data-execucao');
+      var idDemanda = $(this).data('demanda');
+      $.ajax({
+        url: "../database/tarefas.php?operacao=stop",
+        method: "POST",
+        dataType: "json",
+        data: {
+          idTarefa: idTarefa,
+          tipoStatusDemanda: tipoStatusDemanda,
+          horaInicioCobrado: horaInicioCobrado,
+          idDemanda: idDemanda
+        },
+        success: function (msg) {
+          if (msg.retorno == "ok") {
+            window.location.reload();
+          }
+        }
+      });
+    });
+
+    $(document).on('click', '.startButton', function () {
+      var idTarefa = $(this).data('id');
+      var tipoStatusDemanda = $(this).data('status');
+      var idDemanda = $(this).data('demanda');
+      $.ajax({
+        url: "../database/tarefas.php?operacao=start",
+        method: "POST",
+        dataType: "json",
+        data: {
+          idTarefa: idTarefa,
+          tipoStatusDemanda: tipoStatusDemanda,
+          idDemanda: idDemanda
+        },
+        success: function (msg) {
+          if (msg.retorno == "ok") {
+            window.location.reload();
+          }
+        }
+      });
+    });
+
+    $(document).on('click', '.realizadoButton', function () {
+      var idTarefa = $(this).data('id');
+      var tipoStatusDemanda = $(this).data('status');
+      var idDemanda = $(this).data('demanda');
+      $.ajax({
+        url: "../database/tarefas.php?operacao=realizado",
+        method: "POST",
+        dataType: "json",
+        data: {
+          idTarefa: idTarefa,
+          tipoStatusDemanda: tipoStatusDemanda,
+          idDemanda: idDemanda
+        },
+        success: function (msg) {
+          if (msg.retorno == "ok") {
+            window.location.reload();
+          }
+        }
+      });
+    });
+
     $(document).ready(function () {
       $("#inserirForm").submit(function (event) {
         event.preventDefault();
@@ -719,7 +800,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
           success: refreshPage,
         });
       });
-
       function refreshPage() {
         window.location.reload();
       }

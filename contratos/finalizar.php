@@ -47,7 +47,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 					<div class="row" style="margin-top: 60px;">
 						<div class="col-md-4">
 							<label>Finalizar</label>
-								<input type="datetime-local" class="data select form_campos" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] ?>">
+								<input type="datetime-local" class="data select form_campos" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] ?>" required>
 						</div>
 
 						<div class="col" style="margin-top: 30px;">

@@ -109,6 +109,10 @@ if ($metodo == "GET") {
       include 'tarefas_grafico4.php';
       break;
 
+    case "contratotipos":
+      include 'contratotipos.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -142,10 +146,6 @@ if ($metodo == "PUT") {
     $parametro = null;
   }
 
-  if ($funcao == "tarefas" && $parametro == "iniciar") {
-    $funcao = "tarefas/iniciar";
-    $parametro = null;
-  }
 
   switch ($funcao) {
     case "contratostatus":
@@ -192,10 +192,10 @@ if ($metodo == "PUT") {
       include 'demanda_retornar.php';
       break;
 
-    case "tarefas/iniciar":
-      include 'tarefas_iniciar.php';
-      break;
 
+    case "contratotipos":
+      include 'contratotipos_inserir.php';
+      break;
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -292,6 +292,9 @@ if ($metodo == "POST") {
       include 'previsao_alterar.php';
       break;
 
+    case "contratotipos":
+      include 'contratotipos_alterar.php';
+      break;
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -321,6 +324,10 @@ if ($metodo == "DELETE") {
 
     case "contrato":
       include 'contrato_excluir.php';
+      break;
+
+    case "contratotipos":
+      include 'contratotipos_excluir.php';
       break;
 
     default:

@@ -40,7 +40,7 @@ function buscaContratos($idContrato = null, $idContratoStatus = null, $idCliente
 
 	return $contrato;
 }
-function buscaContratosAbertos()
+function buscaContratosAbertos($idCliente=null)
 {
 	$idEmpresa = null;
 	if (isset($_SESSION['idEmpresa'])) {
@@ -49,7 +49,8 @@ function buscaContratosAbertos()
 	$contrato = array();
 	$apiEntrada = array(
 		'idEmpresa' => $idEmpresa,
-		'statusContrato' => '1' //Aberto
+		'statusContrato' => '1', //Aberto
+		'idCliente' => $idCliente,
 	);
 	$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
 
@@ -95,11 +96,13 @@ if (isset($_GET['operacao'])) {
 			'horas' => $_POST['horas'],
 			'valorHora' => $_POST['valorHora'],
 			'valorContrato' => $_POST['valorContrato'],
-			'statusContrato' => 1
+			'statusContrato' => 1,
+			'idContratoTipo' => $_POST['idContratoTipo'],
+			
 		);
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'PUT');
 
-		header('Location: ../contratos/index.php');
+		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
 	}
 
 
@@ -115,10 +118,10 @@ if (isset($_GET['operacao'])) {
 			'horas' => $_POST['horas'],
 			'valorHora' => $_POST['valorHora'],
 			'valorContrato' => $_POST['valorContrato'],
-
+			'idContratoTipo' => $_POST['idContratoTipo'],
 		);
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'POST');
-		header('Location: ../contratos/index.php');
+		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
 	}
 
 	if ($operacao == "finalizar") {
@@ -127,12 +130,13 @@ if (isset($_GET['operacao'])) {
 			'idContrato' => $_POST['idContrato'],
 			'dataFechamento' => $_POST['dataFechamento'],
 			'statusContrato' => 0,
-			'idContratoStatus' => 6
+			'idContratoStatus' => 6,
+			'idContratoTipo' => $_POST['idContratoTipo'],
 
 		);
 		$contratos = chamaAPI(null, '/services/contrato/finalizar', json_encode($apiEntrada), 'POST');
 
-		header('Location: ../contratos/index.php');
+		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
 	}
 	if ($operacao == "excluir") {
 		$apiEntrada = array(
@@ -150,6 +154,7 @@ if (isset($_GET['operacao'])) {
 		$idCliente = $_POST["idCliente"];
 		$idContratoStatus = $_POST["idContratoStatus"];
 		$tituloContrato = $_POST["tituloContrato"];
+		$idContratoTipo = $_POST["urlContratoTipo"];
 
 		if ($idCliente == ""){
 			$idCliente = null;
@@ -163,13 +168,18 @@ if (isset($_GET['operacao'])) {
 			$tituloContrato = null;
 		} 
 
+		if ($idContratoTipo == ""){
+			$idContratoTipo = null;
+		} 
+
 	
 		$apiEntrada = array(
 			'idEmpresa' => $idEmpresa,
 			'idContrato' => null,
 			'idCliente' => $idCliente,
 			'idContratoStatus' => $idContratoStatus,
-			'tituloContrato' => $tituloContrato
+			'tituloContrato' => $tituloContrato,
+			'idContratoTipo' => $idContratoTipo
 		);
 		
 		$_SESSION['filtro_contrato'] = $apiEntrada;
@@ -184,9 +194,5 @@ if (isset($_GET['operacao'])) {
 	}
 	
 	
-	
-	
-
-	//include "../contratos/contrato_ok.php";
 
 }

@@ -5,9 +5,7 @@ include_once '../head.php';
 <body class="bg-transparent">
     <div class="container-fluid">
         <div class="mb-2" style="text-align:right">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#iniciarModal">Iniciar</button>
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#agendarModal">Agendar</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inserirModal">Nova</button>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
         <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
             <table class="table">
@@ -212,25 +210,25 @@ include_once '../head.php';
                                 </td>
                                 <td class="text-center">
                                     <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
-                                        <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop"
+                                        <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>"
-                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
+                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-stop-circle"></i></button>
                                     <?php } ?>
                                     <?php if ($horaInicioReal == "00:00") { ?>
-                                        <input type="button" class="startButton btn btn-success btn-sm" value="Start"
+                                        <button type="button" class="startButton btn btn-success btn-sm" value="Start"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
                                             data-status="<?php echo $idTipoStatus ?>"
-                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
-                                        <input type="button" class="realizadoButton btn btn-warning btn-sm" value="Realizado"
+                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-play-circle"></i></button>
+                                        <button type="button" class="realizadoButton btn btn-info btn-sm" value="Realizado"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
                                             data-status="<?php echo $idTipoStatus ?>"
-                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>" />
+                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-check-circle"></i></button>
                                     <?php } ?>
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                     data-target="#alterarmodal"
-                                    data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">Alterar</button>
+                                    data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i></button>
                                 </td>
                             </tr>
                         <?php }
@@ -253,13 +251,23 @@ include_once '../head.php';
                 var tipoStatusDemanda = $(this).data('status');
                 var horaInicioCobrado = $(this).data('data-execucao');
                 var idDemanda = $(this).data('demanda');
-                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, horaInicioCobrado: horaInicioCobrado, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=stop",
                     method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage('tarefas', idDemanda)
+                    dataType: "json",
+                    data: { 
+                        idTarefa: idTarefa, 
+                        tipoStatusDemanda: tipoStatusDemanda, 
+                        horaInicioCobrado: horaInicioCobrado, 
+                        idDemanda: idDemanda
+                    },
+                    success: function (msg) {
+                        //var message = msg.retorno; 
+                        //alert(message);
+                        if (msg.retorno == "ok") {
+                            refreshPage('tarefas', idDemanda);
+                        }
+                    }
                 });
             });
 
@@ -267,13 +275,22 @@ include_once '../head.php';
                 var idTarefa = $(this).data('id');
                 var tipoStatusDemanda = $(this).data('status');
                 var idDemanda = $(this).data('demanda');
-                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=start",
                     method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage('tarefas', idDemanda)
+                    dataType: "json",
+                    data: { 
+                        idTarefa: idTarefa,
+                        tipoStatusDemanda: tipoStatusDemanda, 
+                        idDemanda: idDemanda 
+                    },
+                    success: function (msg) {
+                        //var message = msg.retorno; 
+                        //alert(message);
+                        if (msg.retorno == "ok") {
+                            refreshPage('tarefas', idDemanda);
+                        }
+                    }
                 });
             });
 
@@ -281,13 +298,22 @@ include_once '../head.php';
                 var idTarefa = $(this).data('id');
                 var tipoStatusDemanda = $(this).data('status');
                 var idDemanda = $(this).data('demanda');
-                var form_data = { idTarefa: idTarefa, tipoStatusDemanda: tipoStatusDemanda, idDemanda: idDemanda };
                 $.ajax({
                     url: "../database/tarefas.php?operacao=realizado",
                     method: "POST",
-                    data: form_data,
-                    dataType: "JSON",
-                    success: refreshPage('tarefas', idDemanda)
+                    dataType: "json", 
+                    data: { 
+                        idTarefa: idTarefa, 
+                        tipoStatusDemanda: tipoStatusDemanda, 
+                        idDemanda: idDemanda 
+                    },
+                    success: function (msg) {
+                        //var message = msg.retorno; 
+                        //alert(message);
+                        if (msg.retorno == "ok") {
+                            refreshPage('tarefas', idDemanda);
+                        }
+                    }
                 });
             });
 
@@ -342,35 +368,15 @@ include_once '../head.php';
             window.location.href = newUrl;
         }
 
-        var agendarModal = document.getElementById("agendarModal");
-        var iniciarModal = document.getElementById("iniciarModal");
         var inserirModal = document.getElementById("inserirModal");
 
-        var iniciarBtn = document.querySelector("button[data-target='#agendarModal']");
-        var iniciarBtn = document.querySelector("button[data-target='#iniciarModal']");
         var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
-
-        agendarBtn.onclick = function () {
-            agendarModal.style.display = "block";
-        };
-
-        iniciarBtn.onclick = function () {
-            iniciarModal.style.display = "block";
-        };
 
         inserirBtn.onclick = function () {
             inserirModal.style.display = "block";
         };
 
         window.onclick = function (event) {
-            if (event.target == agendarModal) {
-                agendarModal.style.display = "none";
-            }
-
-            if (event.target == iniciarModal) {
-                iniciarModal.style.display = "none";
-            }
-
             if (event.target == inserirModal) {
                 inserirModal.style.display = "none";
             }

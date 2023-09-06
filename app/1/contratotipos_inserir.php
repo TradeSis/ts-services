@@ -1,18 +1,17 @@
 <?php
-//gabriel 220323
+
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 //LOG
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL = defineNivelLog();
-    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_atualizar";
+    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "contratotipos_inserir";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
             $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
         }
     }
-
 }
 if (isset($LOG_NIVEL)) {
     if ($LOG_NIVEL == 1) {
@@ -29,18 +28,13 @@ if (isset($jsonEntrada["idEmpresa"])) {
     $idEmpresa = $jsonEntrada["idEmpresa"];
 }
 $conexao = conectaMysql($idEmpresa);
-if (isset($jsonEntrada['idDemanda'])) {
-    $idDemanda = $jsonEntrada['idDemanda'];
-    $idTipoStatus = $jsonEntrada['idTipoStatus'];
+if (isset($jsonEntrada['idContratoTipo'])) {
+    $idContratoTipo = $jsonEntrada['idContratoTipo'];
+    $nomeContrato = $jsonEntrada['nomeContrato'];
+    $nomeDemanda = $jsonEntrada['nomeDemanda'];
 
-    //busca dados tipostatus    
-    $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
-    $buscar2 = mysqli_query($conexao, $sql2);
-    $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
-    $posicao = $row["mudaPosicaoPara"];
-    $statusDemanda = $row["mudaStatusPara"];
 
-    $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+    $sql = "INSERT INTO contratotipos (idContratoTipo,nomeContrato,nomeDemanda) values ('$idContratoTipo','$nomeContrato','$nomeDemanda')";
 
     //LOG
     if (isset($LOG_NIVEL)) {
@@ -61,7 +55,6 @@ if (isset($jsonEntrada['idDemanda'])) {
             "status" => 200,
             "retorno" => "ok"
         );
-
     } catch (Exception $e) {
         $jsonSaida = array(
             "status" => 500,
@@ -70,19 +63,15 @@ if (isset($jsonEntrada['idDemanda'])) {
         if ($LOG_NIVEL >= 1) {
             fwrite($arquivo, $identificacao . "-ERRO->" . $e->getMessage() . "\n");
         }
-
     } finally {
         // ACAO EM CASO DE ERRO (CATCH), que mesmo assim precise
     }
     //TRY-CATCH
-
-
 } else {
     $jsonSaida = array(
         "status" => 400,
         "retorno" => "Faltaram parametros"
     );
-
 }
 
 //LOG

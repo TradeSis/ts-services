@@ -12,14 +12,21 @@
 // helio 01022023 alterado para include_once
 // helio 26012023 16:16
 
-
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/demanda.php');
-include_once(ROOT.'/cadastros/database/clientes.php');
-include_once(ROOT.'/cadastros/database/usuario.php');
+include_once(ROOT . '/cadastros/database/clientes.php');
+include_once(ROOT . '/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipostatus.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
+include '../database/contratotipos.php';
 
+$urlContratoTipo = null;
+if (isset($_GET["tipo"])) {
+  $urlContratoTipo= $_GET["tipo"];
+  $contratoTipo = buscaContratoTipos($urlContratoTipo);
+} else {
+  $contratoTipo = buscaContratoTipos('contratos');
+}
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
   $ClienteSession = $_SESSION['idCliente'];
@@ -40,7 +47,7 @@ if ($_SESSION['idCliente'] == null) {
 }
 
 if ($_SESSION['idCliente'] == null) {
-  $idAtendente = $_SESSION['idLogin'];
+  $idAtendente = $_SESSION['idUsuario'];
 } else {
   $idAtendente = null;
 }
@@ -63,6 +70,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   $tamanho = $filtroEntrada['tamanho'];
 }
 
+//echo json_encode($_SESSION);
 ?>
 <style>
   [class="<?php echo TIPOSTATUS_FILA ?>"] {
@@ -135,8 +143,10 @@ if (isset($_SESSION['filtro_demanda'])) {
     color: #fff;
     width: 160px;
   }
-
 </style>
+
+
+</html>
 
 <body class="bg-transparent">
   <div class="container-fluid py-1">
@@ -206,129 +216,6 @@ if (isset($_SESSION['filtro_demanda'])) {
   <nav id="menuFiltros" class="menuFiltros"> <!-- MENUFILTROS -->
     <div class="titulo"><span>Filtrar por:</span></div>
     <ul>
-
-      <?php /*<li class="ls-label col-sm-12"> <!-- CLIENTE -->
-<form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
-
-<?php if ($_SESSION['idCliente'] == null){ ?>
-<select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Cliente"  ?></option>
-<?php
-foreach ($clientes as $cliente) {
-?>
-<option <?php
-if ($cliente['idCliente'] == $idCliente) {
-echo "selected";
-}
-?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-<?php  } ?>
-</select>
-<?php  } else { ?>
-<select class="form-control fonteSelect" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px" disabled>
-<?php
-foreach ($clientes as $cliente) {
-?>
-<option <?php
-if ($cliente['idCliente'] == $idCliente) {
-echo "selected";
-}
-?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-<?php  } ?>
-</select>
-<?php  } ?>
-
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- RESPONSAVEL -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idAtendente" id="FiltroUsuario" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Responsável"  ?></option>
-<?php
-foreach ($atendentes as $atendente) {
-?>
-<option <?php
-if ($atendente['idUsuario'] == $idAtendente) {
-echo "selected";
-}
-?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- SOLICITANTE -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Solicitante"  ?></option>
-<?php
-foreach ($usuarios as $usuario) {
-?>
-<option <?php
-if ($usuario['idUsuario'] == $idSolicitante) {
-echo "selected";
-}
-?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- STATUS -->
-<form class="d-flex" action="" method="post" style="text-align: right; margin-right:5px">
-
-<select class="form-control" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo " Status"  ?></option>
-<?php foreach ($tiposstatus as $tipostatus) { ?>
-<option <?php
-if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-echo "selected";
-}
-?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?></option>
-<?php } ?>
-</select>
-
-</form>
-</li>
-
-
-<li class="ls-label col-sm-12 mr-1"> <!-- OCORRENCIA -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo "Ocorrência"  ?></option>
-<?php
-foreach ($tipoocorrencias as $tipoocorrencia) {
-?>
-<option <?php
-if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-echo "selected";
-}
-?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia']  ?></option>
-<?php  } ?>
-</select>
-
-</form>
-</li>
-
-<li class="ls-label col-sm-12 mr-1"> <!-- TAMANHO -->
-<form class="d-flex" action="" method="post" style="text-align: right;">
-
-<select class="form-control" name="tamanho" id="FiltroTamanho" style="font-size: 14px; width: 150px; height: 35px">
-<option value="<?php echo null ?>"><?php echo "Tamanho"  ?></option>
-<option  value="P">P</option>
-<option  value="M">M</option>
-<option  value="G">G</option>
-</select>
-
-</form>
-</li> */?>
-
       <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
@@ -345,7 +232,6 @@ echo "selected";
 
         </form>
       </li>
-
     </ul>
 
     <div class="col-sm" style="text-align:right; color: #fff">
@@ -365,14 +251,17 @@ echo "selected";
 
     <div class="row">
       <div class=" btnAbre">
-        <span style="font-size: 25px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+        <span style="font-size: 25px; font-family: 'Material Symbols Outlined'!important;"
+          class="material-symbols-outlined">
           filter_alt
         </span>
 
       </div>
 
       <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela" style="color:#12192C">Demandas</h2>
+        <h2 class="tituloTabela" style="color:#12192C">
+          <?php echo $contratoTipo['nomeDemanda'] ?>
+        </h2>
       </div>
 
       <div class="col-sm-4" style="margin-top:-10px;">
@@ -380,7 +269,8 @@ echo "selected";
           <input type="text" class="form-control" id="tituloDemanda" placeholder="Buscar por...">
           <span class="input-group-btn">
             <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
+                class="material-symbols-outlined">search</span>
             </button>
           </span>
         </div>
@@ -401,7 +291,8 @@ echo "selected";
 
 
       <div class="col-sm" style="text-align:right">
-        <a href="demanda_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+        <a href="demanda_inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button"
+          class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
       </div>
     </div>
 
@@ -417,7 +308,7 @@ echo "selected";
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>
-                <th>Demanda</th>
+                <th>Titulo</th>
                 <th>Responsavel</th>
                 <th>Abertura</th>
                 <th>Status</th>
@@ -517,7 +408,7 @@ echo "selected";
                 <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="tamanho" id="FiltroTamanho"
-                     style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <option value="P">P</option>
                       <option value="M">M</option>
@@ -536,7 +427,7 @@ echo "selected";
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Solicitante</th>
-                <th>Demanda</th>
+                <th>Titulo</th>
                 <th>Status</th>
                 <th>Ocorrência</th>
                 <th>Ação</th>
@@ -547,7 +438,8 @@ echo "selected";
                 <th style="width: 10%;">
                   <form action="" method="post">
                     <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C" disabled>
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C"
+                      disabled>
                       <?php
                       foreach ($clientes as $cliente) {
                         ?>
@@ -628,6 +520,8 @@ echo "selected";
 
   <script>
     <?php if ($ClienteSession === NULL): ?>
+      var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
+
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
 
       function limparTrade() {
@@ -637,7 +531,7 @@ echo "selected";
 
 
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
-        
+        /* alert(urlContratoTipo) */
         $.ajax({
           type: 'POST',
           dataType: 'html',
@@ -653,10 +547,10 @@ echo "selected";
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
             tituloDemanda: tituloDemanda,
-            tamanho: tamanho
+            tamanho: tamanho,
+            urlContratoTipo: urlContratoTipo
           },
           success: function (msg) {
-            
             var json = JSON.parse(msg);
             var linha = "";
             for (var $i = 0; $i < json.length; $i++) {
@@ -675,7 +569,7 @@ echo "selected";
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
-              linha += "<td><a class='btn btn-info btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -722,95 +616,97 @@ echo "selected";
         }
       });
   <?php else: ?>
+      var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
 
 
-    function limpar() {
-      var idClienteOriginal = $("#FiltroClientes").val();
-      buscar(idClienteOriginal, null, null, null, null, null, null, null);
-      window.location.reload();
-    }
+      function limpar() {
+        var idClienteOriginal = $("#FiltroClientes").val();
+        buscar(idClienteOriginal, null, null, null, null, null, null, null);
+        window.location.reload();
+      }
 
-    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
-        
-      $.ajax({
-        type: 'POST',
-        dataType: 'html',
-        url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
-        beforeSend: function () {
-          $("#dados").html("Carregando...");
-        },
-        data: {
-          idCliente: idCliente,
-          idSolicitante: idSolicitante,
-          idAtendente: idAtendente,
-          idTipoStatus: idTipoStatus,
-          idTipoOcorrencia: idTipoOcorrencia,
-          statusDemanda: statusDemanda,
-          tituloDemanda: tituloDemanda,
-          tamanho: tamanho
-        },
-        success: function (msg) {
-         
-          var json = JSON.parse(msg);
-          var linha = "";
-          for (var $i = 0; $i < json.length; $i++) {
-            var object = json[$i];
+      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
 
-            linha += "<tr>";
-            linha += "<td>" + object.prioridade + "</td>";
-            linha += "<td>" + object.idDemanda + "</td>";
-            linha += "<td>" + object.nomeCliente + "</td>";
-            linha += "<td>" + object.nomeSolicitante + "</td>";
-            linha += "<td>" + object.tituloDemanda + "</td>";
-            linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
-            linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td><a class='btn btn-info btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
-            linha += "</tr>";
+        $.ajax({
+          type: 'POST',
+          dataType: 'html',
+          url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
+          beforeSend: function () {
+            $("#dados").html("Carregando...");
+          },
+          data: {
+            idCliente: idCliente,
+            idSolicitante: idSolicitante,
+            idAtendente: idAtendente,
+            idTipoStatus: idTipoStatus,
+            idTipoOcorrencia: idTipoOcorrencia,
+            statusDemanda: statusDemanda,
+            tituloDemanda: tituloDemanda,
+            tamanho: tamanho,
+            urlContratoTipo: urlContratoTipo
+          },
+          success: function (msg) {
+
+            var json = JSON.parse(msg);
+            var linha = "";
+            for (var $i = 0; $i < json.length; $i++) {
+              var object = json[$i];
+
+              linha += "<tr>";
+              linha += "<td>" + object.prioridade + "</td>";
+              linha += "<td>" + object.idDemanda + "</td>";
+              linha += "<td>" + object.nomeCliente + "</td>";
+              linha += "<td>" + object.nomeSolicitante + "</td>";
+              linha += "<td>" + object.tituloDemanda + "</td>";
+              linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
+              linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+              linha += "</tr>";
+            }
+
+            $("#dados").html(linha);
           }
+        });
+      }
 
-          $("#dados").html(linha);
+      $("#FiltroTipoStatus").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      });
+
+      $("#FiltroClientes").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      });
+
+      $("#FiltroSolicitante").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      });
+
+      $("#FiltroOcorrencia").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      });
+
+      $("#FiltroUsuario").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      });
+
+      $("#FiltroStatusDemanda").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      });
+
+      $("#buscar").click(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      });
+
+      $("#FiltroTamanho").click(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      });
+
+      document.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
         }
       });
-    }
-
-    $("#FiltroTipoStatus").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-    });
-
-    $("#FiltroClientes").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-    });
-
-    $("#FiltroSolicitante").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-    });
-
-    $("#FiltroOcorrencia").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-    });
-
-    $("#FiltroUsuario").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-    });
-
-    $("#FiltroStatusDemanda").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-    });
-
-    $("#buscar").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-    });
-
-    $("#FiltroTamanho").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-    });
-
-    document.addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
-      }
-    });
   <?php endif; ?>
 
       $('.btnAbre').click(function () {

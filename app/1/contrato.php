@@ -5,18 +5,21 @@
 // Lucas 17022023 adicionado condição else para idContratoStatus
 // Lucas 07022023 criacao
 
+
+
 $idEmpresa = null;
-	if (isset($jsonEntrada["idEmpresa"])) {
-    	$idEmpresa = $jsonEntrada["idEmpresa"];
-	}
+if (isset($jsonEntrada["idEmpresa"])) {
+  $idEmpresa = $jsonEntrada["idEmpresa"];
+}
 
 $conexao = conectaMysql($idEmpresa);
 
 $contrato = array();
 
-$sql = "SELECT contrato.*, cliente.*, contratostatus.* FROM contrato				
+$sql = "SELECT contrato.*, cliente.*, contratostatus.*, contratotipos.* FROM contrato				
         INNER JOIN cliente on cliente.idCliente = contrato.idcliente 
-        INNER JOIN contratostatus  on  contrato.idContratoStatus = contratostatus.idContratoStatus  ";
+        INNER JOIN contratostatus  on  contrato.idContratoStatus = contratostatus.idContratoStatus
+        INNER JOIN contratotipos  on  contrato.idContratoTipo = contratotipos.idContratoTipo  ";
 if (isset($jsonEntrada["idContrato"])) {
   $sql = $sql . " where contrato.idContrato = " . $jsonEntrada["idContrato"];
 } else {
@@ -42,10 +45,15 @@ if (isset($jsonEntrada["idContrato"])) {
     $where = " and ";
   }
 
+  if (isset($jsonEntrada["idContratoTipo"])) {
+    $sql = $sql . $where . " contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
+    $where = " and ";
+  }
 }
 
 
 //echo "-SQL->".$sql."\n";
+
 
 $rows = 0;
 $buscar = mysqli_query($conexao, $sql);
@@ -60,3 +68,4 @@ if (isset($jsonEntrada["idContrato"]) && $rows == 1) {
 $jsonSaida = $contrato;
 
 //echo "-SAIDA->".json_encode($jsonSaida)."\n";
+

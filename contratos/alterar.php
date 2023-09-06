@@ -36,10 +36,10 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
 
 		<div class="col-sm mt-4" style="text-align:right">
-			<a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+			<a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
 		</div>
 		<div class="col-sm">
-			<spam class="col titulo">Alterar <?php echo $contratoTipo['nomeContrato']?></spam>
+			<spam class="col titulo">Alterar <?php echo $contratoTipo['nomeContrato'] ?></spam>
 		</div>
 
 		<div class="container">
@@ -54,11 +54,13 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
 					</div>
 
-					<div class="col-md-12 form-group" style="margin-top: -5px;">
-						<label class="labelForm">Descrição</label>
-						<textarea class="form-control" name="descricao" autocomplete="off" rows="4"><?php echo $contrato['descricao'] ?></textarea>
+					<div class="container-fluid p-0 mb-3">
+						<div class="col">
+							<span class="tituloEditor">Descrição</span>
+						</div>
+						<div class="quill-textarea"><?php echo $contrato['descricao'] ?></div>
+						<textarea style="display: none" id="detail" name="descricao"><?php echo $contrato['descricao'] ?></textarea>
 					</div>
-
 
 					<div class="col-md-3 form-group-select" style="margin-top: -10px;">
 						<label class="labelForm">Status</label>
@@ -149,11 +151,11 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
 		<hr style="margin-top: -60px;">
 		<div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame" style="margin-left: 10px;">
-			
+
 			<div class="col-sm" style="text-align:right; margin-bottom: -20px">
 				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp; Novo</button>
 			</div>
-			<span class="col titulo"><?php echo $contratoTipo['nomeDemanda']?> :</span>
+			<span class="col titulo"><?php echo $contratoTipo['nomeDemanda'] ?> :</span>
 			<!--------- INSERIR DEMANDA MODAL --------->
 			<div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog" aria-labelledby="inserirModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg">
@@ -253,12 +255,9 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 		</div>
 	</div>
 
-
-
-
 	</div><!-- container -->
 
-
+	<script src="<?php echo URLROOT ?>/sistema/js/quilljs.js"></script>
 </body>
 
 </html>

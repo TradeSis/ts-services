@@ -47,10 +47,12 @@ $statusEncerrar = array(
                 </div>
                 <div class="row" style="margin-top: -30px;">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label class='labelForm'>Descrição</label>
-                            <textarea class="form-control" name="descricao" autocomplete="off"
-                                rows="17"><?php echo $demanda['descricao'] ?></textarea>
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Descrição</span>
+                            </div>
+                            <div class="quill-textarea"><?php echo $demanda['descricao'] ?></div>
+                            <textarea style="display: none" id="detail" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
                         </div>
                     </div>
                     <div class="col-md">
@@ -217,10 +219,12 @@ $statusEncerrar = array(
                 </div>
                 <div class="row" style="margin-top: -30px;">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label class='labelForm'>Descrição</label>
-                            <textarea class="form-control" name="descricao" autocomplete="off"
-                                rows="17"><?php echo $demanda['descricao'] ?></textarea>
+                    <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Descrição</span>
+                            </div>
+                            <div class="quill-textarea"><?php echo $demanda['descricao'] ?></div>
+                            <textarea style="display: none" id="detail" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
                         </div>
                     </div>
                     <div class="col-md">
@@ -325,5 +329,5 @@ $statusEncerrar = array(
         <?php } ?>
     </div>
 
-
+    <script src="<?php echo URLROOT ?>/sistema/js/quilljs.js"></script>
 </body>

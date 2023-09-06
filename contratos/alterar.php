@@ -126,30 +126,9 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
 			</form>
 
-			<form action="../database/contratos.php?operacao=finalizar" method="post" style="margin-top:-50px;">
-				<div class="row ml-1" style="padding-bottom: 50px;">
-					<div class="col-3">
-						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
-						<input type="datetime-local" class="data select form-control" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] ?>" required>
-						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
-					</div>
-
-					<div class="col-3" style="text-align: left;">
-						<button type="submit" id="botao" class="btn btn-danger "><i class="bi bi-calendar-check"></i>&#32;Finalizar</button>
-					</div>
-				</div>
-			</form>
 		</div>
 
-		<!-- <div>
-			<div class="card-footer bg-transparent col-sm">
-				<span class="col titulo">Finalizar Contrato</span>
-			</div>
-
-			
-		</div> -->
-
-		<hr style="margin-top: -60px;">
+		<hr style="margin-top: 30px;">
 		<div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame" style="margin-left: 10px;">
 
 			<div class="col-sm" style="text-align:right; margin-bottom: -20px">

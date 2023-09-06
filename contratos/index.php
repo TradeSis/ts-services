@@ -319,7 +319,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                                     echo "selected";
                                 } ?> value="1">Ativo</option>
 
-                        <option <?php if ($statusContrato == "2") {
+                        <option <?php if ($statusContrato == "0") {
                                     echo "selected";
                                 } ?> value="0">Encerrado</option>
                     </select>

@@ -26,10 +26,10 @@
 include_once(__DIR__ . '/../head.php');
 include_once(__DIR__ . '/../database/contratos.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');
-include_once(ROOT.'/cadastros/database/clientes.php');
+include_once(ROOT . '/cadastros/database/clientes.php');
 include '../database/contratotipos.php';
 
-$urlContratoTipo= $_GET["tipo"];
+$urlContratoTipo = $_GET["tipo"];
 $contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $clientes = buscaClientes();
@@ -38,63 +38,64 @@ $cards = buscaCards("");
 
 $idCliente = null;
 $idContratoStatus = null;
-
+$statusContrato =  "1"; //ABERTO
 if (isset($_SESSION['filtro_contrato'])) {
     $filtroEntrada = $_SESSION['filtro_contrato'];
     $idCliente = $filtroEntrada['idCliente'];
     $idContratoStatus = $filtroEntrada['idContratoStatus'];
+    $statusContrato = $filtroEntrada['statusContrato'];
 }
+
 
 ?>
 
 <style>
-[class="Orçamento"] { 
-  margin-top: 5px;
-  display: inline-block;
-  background: #5271FE;
-  color: #fff;
-  width: 160px;
-}
+    [class="Orçamento"] {
+        margin-top: 5px;
+        display: inline-block;
+        background: #5271FE;
+        color: #fff;
+        width: 160px;
+    }
 
-[class="Faturamento"] {
-  margin-top: 5px;
-  display: inline-block;
-  background: #FE5469;
-  color: #fff;
-  width: 160px;
-}
+    [class="Faturamento"] {
+        margin-top: 5px;
+        display: inline-block;
+        background: #FE5469;
+        color: #fff;
+        width: 160px;
+    }
 
-[class="Finalizado"] {
-  display: inline-block;
-  background: #C34A36;
-  color: #fff;
-  width: 160px;
-}
+    [class="Finalizado"] {
+        display: inline-block;
+        background: #C34A36;
+        color: #fff;
+        width: 160px;
+    }
 
-[class="Aprovação"] { 
-  margin-top: 5px;
-  display: inline-block;
-  background: #69419D;
-  color: #fff;
-  width: 160px;
-}
+    [class="Aprovação"] {
+        margin-top: 5px;
+        display: inline-block;
+        background: #69419D;
+        color: #fff;
+        width: 160px;
+    }
 
-[class="Desenvolvimento"] {
-  margin-top: 5px;
-  display: inline-block; 
-  background: #FEA051;
-  color: #fff;
-  width: 160px;
-}
+    [class="Desenvolvimento"] {
+        margin-top: 5px;
+        display: inline-block;
+        background: #FEA051;
+        color: #fff;
+        width: 160px;
+    }
 
-[class="Recebimento"] {
-  margin-top: 5px;
-  display: inline-block;
-  background: #18B376;
-  color: #fff;
-  width: 160px;
-}
-
+    [class="Recebimento"] {
+        margin-top: 5px;
+        display: inline-block;
+        background: #18B376;
+        color: #fff;
+        width: 160px;
+    }
 </style>
 
 <body class="bg-transparent">
@@ -109,7 +110,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                             <div class="col p-1">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase ">
                                     Total</div>
-                                    
+
                                 <div class="h5 mb-0  text-gray-800"><?php
                                                                     foreach ($cards as $card)
                                                                         if ($card["idContratoStatus"] == "0") {
@@ -269,7 +270,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             <li class="col-sm-12">
                 <form class="d-flex" action="" method="post" style="text-align: right;">
 
-                    <select class="form-control" name="idCliente" id="FiltroClientes"  style="font-size: 14px; width: 150px; height: 35px">
+                    <select class="form-control" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
                         <option value="<?php echo null ?>"><?php echo "Cliente"  ?></option>
                         <?php
                         foreach ($clientes as $cliente) {
@@ -305,54 +306,75 @@ if (isset($_SESSION['filtro_contrato'])) {
 
             </li>
 
+            <li class="col-sm-12 mt-2"> <!-- ABERTO/FECHADO -->
+                <form class="d-flex" action="" method="post" style="text-align: right;">
+
+                    <select class="form-control" name="statusContrato" id="FiltroStatusContrato" style="font-size: 14px; width: 150px; height: 35px">
+                        <option value=""><?php echo "Todos" ?></option>
+                        <option <?php if ($statusContrato == "null") {
+                                    echo "selected";
+                                } ?> value="null">Orçamento</option>
+
+                        <option <?php if ($statusContrato == "1") {
+                                    echo "selected";
+                                } ?> value="1">Ativo</option>
+
+                        <option <?php if ($statusContrato == "2") {
+                                    echo "selected";
+                                } ?> value="0">Encerrado</option>
+                    </select>
+
+                </form>
+            </li>
+
         </ul>
 
         <div class="col-sm" style="text-align:right; color: #fff">
-                <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
-              </div>
+            <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+        </div>
     </nav>
 
 
-    <div class="container-fluid text-center pt-2 mt-3"> 
-        
-
-            <!--INICIO-->
-            <!-- <div class="card-header"> -->         
-
-                <div class="row">
-                    <div class=" btnAbre">
-                        <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
-                            filter_alt
-                        </span>
-
-                    </div>
-
-                    <div class="col-sm-3 ml-2">
-                        <h2 class="tituloTabela"><?php echo $contratoTipo['nomeContrato']?></h2>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="tituloContrato" placeholder="Buscar por...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
-                                        search
-                                    </span></button>
-                            </span>
-                        </div>
-                    </div>
+    <div class="container-fluid text-center pt-2 mt-3">
 
 
-                    <div class="col-sm" style="text-align:right">
-                        <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo']?>"  role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
-                    </div>
+        <!--INICIO-->
+        <!-- <div class="card-header"> -->
+
+        <div class="row">
+            <div class=" btnAbre">
+                <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+                    filter_alt
+                </span>
+
+            </div>
+
+            <div class="col-sm-3 ml-2">
+                <h2 class="tituloTabela"><?php echo $contratoTipo['nomeContrato'] ?></h2>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="tituloContrato" placeholder="Buscar por...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+                                search
+                            </span></button>
+                    </span>
                 </div>
+            </div>
 
-            <!-- </div> -->
-        <div class="card mt-2" style="background-color: #EEEEEE">    
+
+            <div class="col-sm" style="text-align:right">
+                <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+            </div>
+        </div>
+
+        <!-- </div> -->
+        <div class="card mt-2" style="background-color: #EEEEEE">
             <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-                <table class="table" id="myIframe" > <!-- table-striped -->
-                    <thead  class="cabecalhoTabela">
+                <table class="table" id="myIframe"> <!-- table-striped -->
+                    <thead class="cabecalhoTabela">
 
                         <tr>
                             <th>Cliente</th>
@@ -377,25 +399,24 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         </div>
     </div>
-   
+
     <script>
-        
         var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
-        
+        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+
         function limpar() {
-            buscar(null, null, null);
+            buscar(null, null, null, null);
             window.location.reload();
         }
 
-        function buscar(idCliente, idContratoStatus, tituloContrato) {
+        function buscar(idCliente, idContratoStatus, tituloContrato, statusContrato) {
             /* alert(idCliente); */
-           /*  alert(urlContratoTipo); */
+            /* alert(statusContrato); */
 
             $.ajax({
-                type: 'POST', 
-                dataType: 'html', 
-                url: '<?php echo URLROOT ?>/services/database/contratos.php?operacao=filtrar', 
+                type: 'POST',
+                dataType: 'html',
+                url: '<?php echo URLROOT ?>/services/database/contratos.php?operacao=filtrar',
                 beforeSend: function() {
                     $("#dados").html("Carregando...");
                 },
@@ -403,9 +424,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                     idCliente: idCliente,
                     idContratoStatus: idContratoStatus,
                     tituloContrato: tituloContrato,
-                    urlContratoTipo: urlContratoTipo
+                    urlContratoTipo: urlContratoTipo,
+                    statusContrato: statusContrato
                 },
-                
+
 
                 success: function(msg) {
                     //alert("segundo alert: " + msg);
@@ -419,33 +441,33 @@ if (isset($_SESSION['filtro_contrato'])) {
                     for (var $i = 0; $i < json.length; $i++) {
                         var object = json[$i];
                         //dataAtualização
-                        if(object.dataAtualizacao == "0000-00-00 00:00:00"){
+                        if (object.dataAtualizacao == "0000-00-00 00:00:00") {
                             var dataAtualizacaoFormatada = "<p>---</p>";
-                        }else{
+                        } else {
                             var dataAtualizacao = new Date(object.dataAtualizacao);
                             dataAtualizacaoFormatada = dataAtualizacao.toLocaleDateString("pt-BR") + " " + dataAtualizacao.toLocaleTimeString("pt-BR");
                         }
 
                         //dataFechamento
-                        if(object.dataFechamento == null){
+                        if (object.dataFechamento == null) {
                             var dataFechamentoFormatada = "<p>---</p>";
-                        }else{
+                        } else {
                             var dataFechamento = new Date(object.dataFechamento);
                             dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + " " + dataFechamento.toLocaleTimeString("pt-BR");
                         }
 
                         //dataPrevisao
-                        if(object.dataPrevisao == "0000-00-00"){
+                        if (object.dataPrevisao == "0000-00-00") {
                             var dataPrevisaoFormatada = "<p>---</p>";
-                        }else{
+                        } else {
                             var dataPrevisao = new Date(object.dataPrevisao);
                             dataPrevisaoFormatada = (`${dataPrevisao.getUTCDate().toString().padStart(2, '0')}/${(dataPrevisao.getUTCMonth()+1).toString().padStart(2, '0')}/${dataPrevisao.getUTCFullYear()}`);
                         }
 
                         //dataEntrega
-                        if(object.dataEntrega == "0000-00-00"){
+                        if (object.dataEntrega == "0000-00-00") {
                             var dataEntregaFormatada = "<p>---</p>";
-                        }else{
+                        } else {
                             var dataEntrega = new Date(object.dataEntrega);
                             dataEntregaFormatada = (`${dataEntrega.getUTCDate().toString().padStart(2, '0')}/${(dataEntrega.getUTCMonth()+1).toString().padStart(2, '0')}/${dataEntrega.getUTCFullYear()}`);
                         }
@@ -457,7 +479,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         linha = linha + "<td>" + object.nomeCliente + "</td>";
                         linha = linha + "<td>" + object.tituloContrato + "</td>";
 
-                        linha = linha + "<td class='"+ object.nomeContratoStatus +"' data-status='Finalizado' >" + object.nomeContratoStatus +" </td>";
+                        linha = linha + "<td class='" + object.nomeContratoStatus + "' data-status='Finalizado' >" + object.nomeContratoStatus + " </td>";
 
 
                         linha = linha + "<td>" + dataPrevisaoFormatada + "</td>";
@@ -486,20 +508,24 @@ if (isset($_SESSION['filtro_contrato'])) {
         }
 
         $("#FiltroClientes").change(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         $("#FiltroContratoStatus").change(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         $("#buscar").click(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+        })
+
+        $("#FiltroStatusContrato").click(function() {
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         document.addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
-                buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val());
+                buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
             }
         });
 

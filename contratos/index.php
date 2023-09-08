@@ -311,7 +311,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
                     <select class="form-control" name="statusContrato" id="FiltroStatusContrato" style="font-size: 14px; width: 150px; height: 35px">
                         <option value=""><?php echo "Todos" ?></option>
-                        <option <?php if ($statusContrato == null) {
+                        <option <?php if ($statusContrato == "null") {
                                     echo "selected";
                                 } ?> value="null">Orçamento</option>
 

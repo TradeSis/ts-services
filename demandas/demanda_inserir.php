@@ -159,7 +159,52 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
     </div>
 
-    <script src="<?php echo URLROOT ?>/sistema/js/quilljs.js"></script>
+    <script>
+                var quill = new Quill('.quill-textarea', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], 
+            ['blockquote'],
+            [{
+                'list': 'ordered'
+            }, {
+                'list': 'bullet'
+            }],
+            [{
+                'indent': '-1'
+            }, {
+                'indent': '+1'
+            }], 
+            [{
+                'direction': 'rtl'
+            }], 
+            [{
+                'size': ['small', false, 'large', 'huge']
+            }], 
+            [{
+                'header': [1, 2, 3, 4, 5, 6, false]
+            }],
+            ['link', 'image', 'video', 'formula'], 
+            [{
+                'color': []
+            }, {
+                'background': []
+            }], 
+            [{
+                'font': []
+            }],
+            [{
+                'align': []
+            }],
+        ]
+    }
+});
+
+quill.on('text-change', function(delta, oldDelta, source) {
+    $('#detail').val(quill.container.firstChild.innerHTML);
+});
+    </script>
 </body>
 
 </html>

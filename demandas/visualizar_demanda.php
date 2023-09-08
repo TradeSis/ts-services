@@ -52,7 +52,7 @@ $statusEncerrar = array(
                                 <span class="tituloEditor">Descrição</span>
                             </div>
                             <div class="quill-textarea"><?php echo $demanda['descricao'] ?></div>
-                            <textarea style="display: none" id="detail" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
+                            <textarea style="display: none" id="quill-descricao" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
                         </div>
                     </div>
                     <div class="col-md">
@@ -224,7 +224,7 @@ $statusEncerrar = array(
                                 <span class="tituloEditor">Descrição</span>
                             </div>
                             <div class="quill-textarea"><?php echo $demanda['descricao'] ?></div>
-                            <textarea style="display: none" id="detail" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
+                            <textarea style="display: none" id="quill-descricao" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
                         </div>
                     </div>
                     <div class="col-md">
@@ -329,5 +329,51 @@ $statusEncerrar = array(
         <?php } ?>
     </div>
 
-    <script src="<?php echo URLROOT ?>/sistema/js/quilljs.js"></script>
+    <script>
+        var quilldescricao = new Quill('.quill-textarea', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote'],
+            [{
+                'list': 'ordered'
+            }, {
+                'list': 'bullet'
+            }],
+            [{
+                'indent': '-1'
+            }, {
+                'indent': '+1'
+            }], 
+            [{
+                'direction': 'rtl'
+            }], 
+            [{
+                'size': ['small', false, 'large', 'huge']
+            }],
+            [{
+                'header': [1, 2, 3, 4, 5, 6, false]
+            }],
+            ['link', 'image', 'video', 'formula'], 
+            [{
+                'color': []
+            }, {
+                'background': []
+            }], 
+            [{
+                'font': []
+            }],
+            [{
+                'align': []
+            }],
+        ]
+    }
+});
+
+quilldescricao.on('text-change', function(delta, oldDelta, source) {
+    $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
+});
+
+    </script>
 </body>

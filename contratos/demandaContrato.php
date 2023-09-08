@@ -10,7 +10,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
 <body class="bg-transparent">
     <div class="container-fluid">
         <div class="mb-2" style="text-align:right">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+            <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
        
        <div class="card mt-2 text-center">

@@ -75,7 +75,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 				</div>
 
 				<div class="row" style="margin-top: -40px;">
-					<div class="col-md-2 form-group">
+					<div class="col-md-3 form-group">
 						<label class="labelForm">Cliente</label>
 						<select class="select form-control" name="idCliente" autocomplete="off" disabled>
 							<option value="<?php echo $contrato['idCliente'] ?>"><?php echo $contrato['nomeCliente'] ?>
@@ -85,25 +85,21 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 						</select>
 					</div>
 
-					<div class="col-md-2 form-group" style="margin-top: 16px;">
+					<div class="col-md-3 form-group" style="margin-top: 16px;">
 						<label class="labelForm">Horas</label>
 						<input type="number" class="form-control" style="margin-top: -1px;" name="horas" value="<?php echo $contrato['horas'] ?>">
 
 					</div>
 
-					<div class="col-md-2 form-group" style="margin-top: 16px;">
+					<div class="col-md-3 form-group" style="margin-top: 16px;">
 						<label class="labelForm">Valor Hora</label>
 						<input type="number" class="form-control" style="margin-top: -1px;" name="valorHora" value="<?php echo $contrato['valorHora'] ?>">
 					</div>
 
-					<div class="col-md-2 form-group" style="margin-top: 16px;">
+					<div class="col-md-3 form-group" style="margin-top: 16px;">
 						<label class="labelForm">Valor Contrato</label>
 						<input type="number" class="form-control" style="margin-top: -1px;" name="valorContrato" value="<?php echo $contrato['valorContrato'] ?>">
 					</div>
-
-					<!-- <div class="col-md-4" style="text-align: right; padding-top: 35px;">
-						<button type="submit" id="botao" class="btn btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Salvar</button>
-					</div> -->
 
 				</div>
 				<div class="row">

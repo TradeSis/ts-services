@@ -310,10 +310,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <form class="d-flex" action="" method="post" style="text-align: right;">
 
                     <select class="form-control" name="statusContrato" id="FiltroStatusContrato" style="font-size: 14px; width: 150px; height: 35px">
-                        <option value=""><?php echo "Todos" ?></option>
-                        <option <?php if ($statusContrato == "null") {
+                        <option value="<?php echo NULL ?>"><?php echo "Todos" ?></option>
+                        <option <?php if ($statusContrato == "2") {
                                     echo "selected";
-                                } ?> value="null">Orçamento</option>
+                                } ?> value="2">Orçamento</option>
 
                         <option <?php if ($statusContrato == "1") {
                                     echo "selected";
@@ -489,7 +489,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         linha = linha + "<td>" + object.horas + "</td>";
                         linha = linha + "<td>" + object.valorHora + "</td>";
                         linha = linha + "<td>" + object.valorContrato + "</td>";
-                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='alterar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
+                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
                         linha = linha + "</tr>";
                     }
 

@@ -65,12 +65,17 @@ if (isset($jsonEntrada['tituloContrato'])) {
     $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
     $statusContrato = $row["mudaStatusPara"];
 
-    if($idContratoStatus == 6){
-        $sql = "UPDATE `contrato` SET `tituloContrato`='$tituloContrato',`descricao`='$descricao',`idContratoStatus`='$idContratoStatus' ,`valorContrato`='$valorContrato', `dataPrevisao`= $dataPrevisao,`dataEntrega`= $dataEntrega ,`statusContrato`='$statusContrato',`horas`= $horas,`valorHora`=$valorHora,`idContratoTipo`='$idContratoTipo',`dataFechamento`=CURRENT_TIMESTAMP (), dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
-    }else{  
-    $sql = "UPDATE `contrato` SET `tituloContrato`='$tituloContrato',`descricao`='$descricao',`idContratoStatus`='$idContratoStatus' ,`valorContrato`='$valorContrato', `dataPrevisao`= $dataPrevisao,`dataEntrega`= $dataEntrega ,`statusContrato`='$statusContrato',`horas`= $horas,`valorHora`=$valorHora,`idContratoTipo`='$idContratoTipo', dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
+    if($statusContrato == 0){
+        $dataFechamento = 'CURRENT_TIMESTAMP ()';
+    }else{
+        $dataFechamento = 'null';
     }
-    //echo "-SQL->".json_encode($sql)."\n";
+  
+        $sql = "UPDATE `contrato` SET `tituloContrato`='$tituloContrato',`descricao`='$descricao',`idContratoStatus`='$idContratoStatus' ,`valorContrato`='$valorContrato',
+         `dataPrevisao`= $dataPrevisao,`dataEntrega`= $dataEntrega ,`statusContrato`='$statusContrato',`horas`= $horas,`valorHora`=$valorHora,`idContratoTipo`='$idContratoTipo',
+         `dataFechamento`=$dataFechamento, dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
+
+/* echo "-SQL->".json_encode($sql)."\n"; */ 
     
     //LOG
     if (isset($LOG_NIVEL)) {

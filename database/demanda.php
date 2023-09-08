@@ -176,9 +176,10 @@ if (isset($_GET['operacao'])) {
 			'idContrato' => $idContrato,
 			'idContratoTipo' => $_POST['idContratoTipo'],
 		);
-
+		/* echo json_encode(($apiEntrada));
+		return; */
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
-
+/* 
 		$tituloEmail = $_POST['tituloDemanda'];
 		$corpoEmail = $_POST['descricao'];
 
@@ -195,10 +196,10 @@ if (isset($_GET['operacao'])) {
 			),
 		);
 
-		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
+		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail); */
 		
-		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
-		
+		/* header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']); */
+		header('Location: ../contratos/visualizar.php?id=demandacontrato&&idContrato=' . $apiEntrada['idContrato']);
 	}
 	if ($operacao == "alterar") {
 		$apiEntrada = array(

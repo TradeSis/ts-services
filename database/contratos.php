@@ -100,8 +100,6 @@ if (isset($_GET['operacao'])) {
 			
 		);
 
-		/* echo json_encode($apiEntrada);
-		return; */
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'PUT');
 
 		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
@@ -191,8 +189,7 @@ if (isset($_GET['operacao'])) {
 		);
 		
 		$_SESSION['filtro_contrato'] = $apiEntrada;
-		/* echo json_encode(($apiEntrada));
-		return; */
+		
 		$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
 
 		echo json_encode($contrato);

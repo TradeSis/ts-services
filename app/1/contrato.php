@@ -36,11 +36,7 @@ if (isset($jsonEntrada["idContrato"])) {
   }
 
   if (isset($jsonEntrada["statusContrato"])) {
-    if($jsonEntrada["statusContrato"] == "null"){
-      $sql = $sql . $where . " contrato.statusContrato = " . "'". $jsonEntrada["statusContrato"] . "'" . " IS NULL ";
-    }else{
-      $sql = $sql . $where . " contrato.statusContrato = " . $jsonEntrada["statusContrato"];
-    }
+    $sql = $sql . $where . " contrato.statusContrato = " . $jsonEntrada["statusContrato"];
     $where = " and ";
   }
 

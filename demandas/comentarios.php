@@ -4,6 +4,7 @@ include_once '../head.php';
 
 
 <body class="bg-transparent">
+    
     <div class="container-fluid">
         <form method="post" id="form" enctype="multipart/form-data">
             <div class="row">
@@ -115,7 +116,6 @@ include_once '../head.php';
             </div>
         </form>
     </div>
-
 
     <script>
 

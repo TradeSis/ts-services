@@ -215,6 +215,7 @@ $demandas = buscaDemandasAbertas();
                             </div>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
+                            <a id="visualizarDemandaButton" class="btn btn-primary" style="float:left">Visualizar</a>
                             <button type="submit" class="btn btn-warning">Atualizar</button>
                         </div>
                     </form>
@@ -442,6 +443,15 @@ $demandas = buscaDemandasAbertas();
                     $('#horaInicioReal').val(calEvent.horaInicioReal);
                     $('#horaFinalReal').val(calEvent.horaFinalReal);
                     $('#horaCobrado').val(calEvent.horaCobrado);
+
+                    if (calEvent.idDemanda !== "") {
+                        var visualizarDemandaUrl = "visualizar.php?idDemanda=" + calEvent.idDemanda;
+                        $("#visualizarDemandaButton").attr("href", "javascript:void(0);");
+                        $("#visualizarDemandaButton").attr("onclick", "loadPage('" + visualizarDemandaUrl + "')");
+                        $('#visualizarDemandaButton').show();
+                    } else {
+                        $('#visualizarDemandaButton').hide();
+                    }
 
                     if (calEvent.idDemanda !== "") {
                         $('#idDemandaSelect').hide();

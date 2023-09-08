@@ -478,6 +478,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
               </div>
             </div>
             <div class="card-footer bg-transparent" style="text-align:right">
+              <a id="visualizarDemandaButton" class="btn btn-primary" style="float:left">Visualizar</a>
               <button type="submit" class="btn btn-warning">Atualizar</button>
             </div>
           </form>
@@ -675,6 +676,14 @@ if (isset($_SESSION['filtro_tarefas'])) {
           $('#horaInicioReal').val(data.horaInicioReal);
           $('#horaFinalReal').val(data.horaFinalReal);
           $('#horaCobrado').val(data.horaCobrado);
+
+          if (data.idDemanda !== null) {
+            var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
+            $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
+            $('#visualizarDemandaButton').show();
+          } else {
+            $('#visualizarDemandaButton').hide();
+          }
 
           if (data.idDemanda !== null) {
             $('#idDemandaSelect').hide();

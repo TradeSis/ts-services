@@ -12,7 +12,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
         <div class="mb-2" style="text-align:right">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
-       <!--TABELA-->
+       
        <div class="card mt-2 text-center">
 				<div class="table scrollbar-tabela">
 					<table class="table">
@@ -60,20 +60,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
 			</div>
     </div>
 
-    
-
-
-
-
     <script>
-   
-
-       /*  function refreshPage(tab, idContrato) {
-            window.location.reload();
-            var url = window.location.href.split('?')[0];
-            var newUrl = url + '?id=' + tab + '&&idContrato=' + idContrato;
-            window.location.href = newUrl;
-        } */
 
         var inserirModal = document.getElementById("inserirModal");
 

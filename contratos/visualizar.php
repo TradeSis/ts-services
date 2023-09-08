@@ -66,18 +66,17 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
         <div class="row">
             <div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
                 <span class="titulo">
-                <?php echo $contrato['tituloContrato'] ?>
+                    <?php echo $contrato['tituloContrato'] ?>
                 </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-                <a href="javascript:history.back()" role="button" class="btn btn-primary"><i
-                        class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                <a href="javascript:history.back()" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
         <div id="tabs">
             <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
             <div class="tab" id="tab-demandacontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
-           
+
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'alterar.php'; ?>
@@ -85,13 +84,12 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
             <div class="tabContent">
                 <?php include_once 'demandaContrato.php'; ?>
             </div>
-         
+
         </div>
     </div>
 
     <!--------- INSERIR --------->
-    <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
-        aria-labelledby="inserirModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog" aria-labelledby="inserirModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,37 +100,36 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
                 </div>
                 <div class="container">
                     <form method="post" id="form1">
-                    <div class="row">
-									<div class="col-md form-group" style="margin-top: 25px;">
-										<label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
-										<input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
-										<input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
-										<input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" readonly>
-									</div>
-									<div class="col-md-2 form-group-select">
-										<div class="form-group">
-											<label class="labelForm">Cliente</label>
-											<select class="select form-control" name="idCliente" autocomplete="off" disabled>
-												<option value="<?php echo $contrato['idCliente'] ?>"><?php echo $contrato['nomeCliente'] ?>
-												</option>
-												<option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
-												</option>
-											</select>
-											<input type="hidden" class="form-control" name="idCliente" value="<?php echo $cliente['idCliente'] ?>" readonly>
-											<input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                        <div class="row">
+                            <div class="col-md form-group" style="margin-top: 25px;">
+                                <label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
+                                <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
+                                <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
+                                <input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" readonly>
+                            </div>
+                            <div class="col-md-2 form-group-select">
+                                <div class="form-group">
+                                    <label class="labelForm">Cliente</label>
+                                    <select class="select form-control" name="idCliente" autocomplete="off" disabled>
+                                        <option value="<?php echo $contrato['idCliente'] ?>"><?php echo $contrato['nomeCliente'] ?>
+                                        </option>
+                                        <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
+                                        </option>
+                                    </select>
+                                    <input type="hidden" class="form-control" name="idCliente" value="<?php echo $cliente['idCliente'] ?>" readonly>
+                                    <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
 
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col form-group">
-										<label class="labelForm">Descrição</label>
-										<textarea class="form-control" name="descricao" autocomplete="off" rows="10"></textarea>
-									</div>
-								</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col form-group">
+                                <label class="labelForm">Descrição</label>
+                                <textarea class="form-control" name="descricao" autocomplete="off" rows="10"></textarea>
+                            </div>
+                        </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" formaction="../database/demanda.php?operacao=inserir_demandadecontrato"
-                                class="btn btn-info">Salvar</button>
+                            <button type="submit" formaction="../database/demanda.php?operacao=inserir_demandadecontrato" class="btn btn-info">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -144,7 +141,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
         var tab;
         var tabContent;
 
-        window.onload = function () {
+        window.onload = function() {
             tabContent = document.getElementsByClassName('tabContent');
             tab = document.getElementsByClassName('tab');
             hideTabsContent(1);
@@ -156,7 +153,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
             }
         }
 
-        document.getElementById('tabs').onclick = function (event) {
+        document.getElementById('tabs').onclick = function(event) {
             var target = event.target;
             if (target.className == 'tab') {
                 for (var i = 0; i < tab.length; i++) {

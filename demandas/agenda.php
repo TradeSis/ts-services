@@ -27,7 +27,6 @@ if (isset($_SESSION['filtro_agenda'])) {
 $tarefas = buscaTarefas(null, null, $idAtendente, $statusTarefa);
 $demandas = buscaDemandasAbertas();
 
-//echo json_encode($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +47,19 @@ $demandas = buscaDemandasAbertas();
             width: 0;
             background-color: transparent;
         }
+
+        .fc-novo-button {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745
+        }
+
+        .filtroresponsavel {
+            width: 180px;
+            position: fixed;
+            top: -112px;
+            left: 230px;
+        }
     </style>
 </head>
 
@@ -55,28 +67,51 @@ $demandas = buscaDemandasAbertas();
 
 <body class="bg-transparent">
 
-    <div class="container-fluid text-center mt-4">
-        <div class="row">
-            <div class=" btnAbre">
-                <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;"
-                    class="material-symbols-outlined">
-                    filter_alt
-                </span>
+    <nav style="margin-left:230px;margin-bottom:-50px">
+        <ul>
+            <form action="" method="post">
+                <select class="form-control text-center" name="idAtendente" id="FiltroAtendente"
+                    style="font-size: 14px; width: 150px; height: 35px">
+                    <option value="<?php echo null ?>"><?php echo "Responsável" ?></option>
+                    <?php
+                    foreach ($atendentes as $atendente) {
+                        ?>
+                        <option <?php
+                        if ($atendente['idUsuario'] == $idAtendente) {
+                            echo "selected";
+                        }
+                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                    <?php } ?>
+                </select>
+            </form>
+        </ul>
+    </nav>
+    <div class="mt-3" id="calendar"></div>
 
-            </div>
+    <!--------- MENUFILTROS --------->
+    <nav id="menuFiltros" class="menuFiltros" style="margin-top:-115px">
+        <div class="titulo"><span>Filtrar por:</span></div>
+        <ul>
+            <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+                <form class="d-flex" action="" method="post" style="text-align: right;">
+                    <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
+                        style="font-size: 14px; width: 150px; height: 35px">
+                        <option value="<?php echo null ?>"><?php echo "Todos" ?></option>
+                        <option <?php if ($statusTarefa == "1") {
+                            echo "selected";
+                        } ?> value="1">Aberto</option>
+                        <option <?php if ($statusTarefa == "0") {
+                            echo "selected";
+                        } ?> value="0">Fechado</option>
+                    </select>
+                </form>
+            </li>
+        </ul>
 
-            <div class="col-sm-10 text-center">
-                <h3>Agenda</h3>
-            </div>
-
-            <div class="col-sm" style="text-align:right">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#agendarModal"><i
-                        class="bi bi-plus-square"></i>&nbsp Novo</button>
-            </div>
+        <div class="col-sm" style="text-align:right; color: #fff">
+            <a id="limpar-button" role="button" class="btn btn-sm mb-2" style="background-color:#84bfc3;">Limpar</a>
         </div>
-        <hr>
-        <div id="calendar"></div>
-    </div>
+    </nav>
 
 
     <!--------- ALTERAR --------->
@@ -291,65 +326,21 @@ $demandas = buscaDemandasAbertas();
         </div>
     </div>
 
-    <!--------- MENUFILTROS --------->
-    <nav id="menuFiltros" class="menuFiltros">
-        <div class="titulo"><span>Filtrar por:</span></div>
-        <ul>
-            <li class="col-sm-12">
-                <form class="d-flex" action="" method="post" style="text-align: right;">
-
-                    <select class="form-control" name="idUsuario" id="FiltroAtendente"
-                        style="font-size: 14px; width: 150px; height: 35px" onchange="atualizarAgenda()">
-                        <option value="<?php echo null ?>"><?php echo "Responsavel" ?></option>
-                        <?php
-                        foreach ($atendentes as $atendente) {
-                            ?>
-                        <option <?php
-                        if ($atendente['idUsuario'] == $idAtendente) {
-                            echo "selected";
-                        }
-                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
-                        </option>
-                        <?php } ?>
-                    </select>
-                </form>
-            </li>
-            <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
-                <form class="d-flex" action="" method="post" style="text-align: right;">
-                    <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
-                        style="font-size: 14px; width: 150px; height: 35px" onchange="atualizarAgenda()">
-                        <option value="<?php echo null ?>"><?php echo "Todos" ?></option>
-                        <option <?php if ($statusTarefa == "1") {
-                            echo "selected";
-                        } ?> value="1">Aberto</option>
-                        <option <?php if ($statusTarefa == "0") {
-                            echo "selected";
-                        } ?> value="0">Fechado</option>
-                    </select>
-                </form>
-            </li>
-        </ul>
-
-        <div class="col-sm" style="text-align:right; color: #fff">
-            <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
-        </div>
-    </nav>
-
-
     <script type="text/javascript">
-        buscar($("#FiltroAtendente").val());
-
         $(document).ready(function () {
+            var today = new Date();
+            var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
             $("#calendar").fullCalendar({
+
                 header: {
-                    left: "prev,next today",
+                    left: "filtro, prev,next today",
                     center: "title",
-                    right: "month,agendaWeek,agendaDay,schedule"
+                    right: "month,agendaWeek,agendaDay,schedule, novo"
                 },
                 locale: 'pt-br',
                 defaultView: "month",
                 navLinks: true,
-                editable: false,
+                editable: true,
                 eventLimit: false,
                 selectable: true,
                 selectHelper: false,
@@ -365,10 +356,26 @@ $demandas = buscaDemandasAbertas();
                     },
                     schedule: {
                         type: 'list',
-                        duration: {
-                            months: 1
+                        visibleRange: {
+                            start: today,
+                            end: lastDayOfMonth
                         },
                         buttonText: 'Programação'
+                    }
+                },
+                customButtons: {
+                    filtro: {
+                        text: 'Filtro',
+                        click: function () {
+                            $('.menuFiltros').toggleClass('mostra');
+                            $('.diviFrame').toggleClass('mostra');
+                        }
+                    },
+                    novo: {
+                        text: 'Novo',
+                        click: function () {
+                            $('#agendarModal').modal('show');
+                        }
                     }
                 },
                 events: [
@@ -390,27 +397,27 @@ $demandas = buscaDemandasAbertas();
                             $horaFinalPrevisto = $tarefa['horaFinalPrevisto'];
                         }
                         ?>
-                                        {
-                            _id: '<?php echo $tarefa['idTarefa']; ?>',
-                            title: '<?php echo $tarefa['tituloTarefa'] . ' ' . $tarefa['tituloDemanda']; ?>',
-                            start: '<?php echo $tarefa['Previsto'] . ' ' . $horaInicioPrevisto; ?>',
-                            end: '<?php echo $tarefa['Previsto'] . ' ' . $horaFinalPrevisto; ?>',
-                            idTarefa: '<?php echo $tarefa['idTarefa']; ?>',
-                            tituloTarefa: '<?php echo $tarefa['tituloTarefa']; ?>',
-                            idCliente: '<?php echo $tarefa['idCliente']; ?>',
-                            nomeCliente: '<?php echo $tarefa['nomeCliente']; ?>',
-                            idDemanda: '<?php echo $tarefa['idDemanda']; ?>',
-                            tituloDemanda: '<?php echo $tarefa['tituloDemanda']; ?>',
-                            idAtendente: '<?php echo $tarefa['idAtendente']; ?>',
-                            nomeUsuario: '<?php echo $tarefa['nomeUsuario']; ?>',
-                            idTipoOcorrencia: '<?php echo $tarefa['idTipoOcorrencia']; ?>',
-                            nomeTipoOcorrencia: '<?php echo $tarefa['nomeTipoOcorrencia']; ?>',
-                            Previsto: '<?php echo $tarefa['Previsto']; ?>',
-                            horaInicioPrevisto: '<?php echo $tarefa['horaInicioPrevisto']; ?>',
-                            horaFinalPrevisto: '<?php echo $tarefa['horaFinalPrevisto']; ?>',
-                            horaCobrado: '<?php echo $tarefa['horaCobrado']; ?>',
-                            color: '<?php echo $color; ?>'
-                        },
+                                                            {
+                        _id: '<?php echo $tarefa['idTarefa']; ?>',
+                        title: '<?php echo $tarefa['tituloTarefa'] . ' ' . $tarefa['tituloDemanda']; ?>',
+                        start: '<?php echo $tarefa['Previsto'] . ' ' . $horaInicioPrevisto; ?>',
+                        end: '<?php echo $tarefa['Previsto'] . ' ' . $horaFinalPrevisto; ?>',
+                        idTarefa: '<?php echo $tarefa['idTarefa']; ?>',
+                        tituloTarefa: '<?php echo $tarefa['tituloTarefa']; ?>',
+                        idCliente: '<?php echo $tarefa['idCliente']; ?>',
+                        nomeCliente: '<?php echo $tarefa['nomeCliente']; ?>',
+                        idDemanda: '<?php echo $tarefa['idDemanda']; ?>',
+                        tituloDemanda: '<?php echo $tarefa['tituloDemanda']; ?>',
+                        idAtendente: '<?php echo $tarefa['idAtendente']; ?>',
+                        nomeUsuario: '<?php echo $tarefa['nomeUsuario']; ?>',
+                        idTipoOcorrencia: '<?php echo $tarefa['idTipoOcorrencia']; ?>',
+                        nomeTipoOcorrencia: '<?php echo $tarefa['nomeTipoOcorrencia']; ?>',
+                        Previsto: '<?php echo $tarefa['Previsto']; ?>',
+                        horaInicioPrevisto: '<?php echo $tarefa['horaInicioPrevisto']; ?>',
+                        horaFinalPrevisto: '<?php echo $tarefa['horaFinalPrevisto']; ?>',
+                        horaCobrado: '<?php echo $tarefa['horaCobrado']; ?>',
+                        color: '<?php echo $color; ?>'
+                    },
                     <?php } ?>
                 ],
                 eventRender: function (event, element) {
@@ -507,58 +514,60 @@ $demandas = buscaDemandasAbertas();
                 success: refreshPage,
             });
         });
-
-
         function refreshPage() {
             window.location.reload();
         }
-
-        function atualizarAgenda() {
-            window.location.reload();
-        }
-
-        function limpar() {
-            buscar(null);
-            window.location.reload();
-        }
-
-        buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
-
-        function buscar(idAtendente, statusTarefa) {
-            /*  alert(idAtendente); */
-
-            $.ajax({
-                type: 'POST',
-                dataType: 'html',
-                url: '../database/tarefas.php?operacao=filtroAgenda',
-                beforeSend: function () {
-                    $("#dados").html("Carregando...");
-                },
-                data: {
-                    idAtendente: idAtendente,
-                    statusTarefa: statusTarefa
-                },
-                /*success: window.location.reload(), */
-                error: function (e) {
-                    alert('Erro: ' + JSON.stringify(e));
-
-                    return null;
-                }
-            });
-
-        }
-
-        $("#FiltroAtendente").change(function () {
-            buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
-        })
-        $("#FiltroStatusTarefa").change(function () {
-            buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
-        })
 
         $('.btnAbre').click(function () {
             $('.menuFiltros').toggleClass('mostra');
             $('.diviFrame').toggleClass('mostra');
         });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
+
+            $("#FiltroAtendente").change(function () {
+                buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
+                window.location.reload();
+            });
+
+            $("#FiltroStatusTarefa").change(function () {
+                buscar($("#FiltroAtendente").val(), $("#FiltroStatusTarefa").val());
+                window.location.reload();
+            });
+
+            function buscar(idAtendente, statusTarefa) {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'html',
+                    url: '../database/tarefas.php?operacao=filtroAgenda',
+                    beforeSend: function () {
+                        $("#dados").html("Carregando...");
+                    },
+                    data: {
+                        idAtendente: idAtendente,
+                        statusTarefa: statusTarefa
+                    },
+                    success: function (data) {
+                        $("#dados").html(data);
+                    },
+                    error: function (e) {
+                        alert('Erro: ' + JSON.stringify(e));
+                    }
+                });
+            }
+
+            $("#limpar-button").click(function () {
+                buscar(null, null);
+                window.location.reload();
+            });
+        });
+
+
+
+
     </script>
 </body>
 

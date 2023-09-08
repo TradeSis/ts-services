@@ -36,9 +36,10 @@ $statusTarefa = "1"; //ABERTO
 
 $filtroEntrada = null;
 $idTipoOcorrencia = null;
-$periodo = null;
-$inicio = null;
-$final = null;
+$PrevistoInicio = null;
+$PrevistoFinal = null;
+$RealInicio = null;
+$RealFinal = null;
 
 
 if (isset($_SESSION['filtro_tarefas'])) {
@@ -47,9 +48,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $idAtendente = $filtroEntrada['idAtendente'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusTarefa = $filtroEntrada['statusTarefa'];
-  $periodo = $filtroEntrada['periodo'];
-  $inicio = $filtroEntrada['inicio'];
-  $final = $filtroEntrada['final'];
+  $PrevistoInicio = $filtroEntrada['PrevistoInicio'];
+  $PrevistoFinal = $filtroEntrada['PrevistoFinal'];
+  $RealInicio = $filtroEntrada['RealInicio'];
+  $RealFinal = $filtroEntrada['RealFinal'];
 }
 
 //echo json_encode($_SESSION);
@@ -111,10 +113,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
         </div>
       </div>
 
-      <div class="col-sm-1">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#periodoModal"><i
-            class="bi bi-calendar3"></i></button>
-      </div>
       <div class="col-sm" style="text-align:right">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i
             class="bi bi-plus-square"></i>&nbsp Novo</button>
@@ -193,85 +191,67 @@ if (isset($_SESSION['filtro_tarefas'])) {
                   </select>
                 </form>
               </th>
-              <th></th>
-              <th></th>
+              <th>
+                <div class="row">
+                  <div class="col-6" style="margin-left:25px;margin-right:-20px">
+                    <?php if ($PrevistoInicio != null) { ?>
+                      <input type="date" class="data select form-control" id="FiltroPrevistoInicio"
+                        value="<?php echo $PrevistoInicio ?>" name="PrevistoInicio" autocomplete="off"
+                        style="font-size: 12px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C">
+                    <?php } else { ?>
+                      <input type="date" class="data select form-control" id="FiltroPrevistoInicio" name="PrevistoInicio"
+                        autocomplete="off"
+                        style="font-size: 12px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C">
+                    <?php } ?>
+                  </div>
+                  <div class="col-6" style="margin-left:-20px">
+                    <?php if ($PrevistoFinal != null) { ?>
+                      <input type="date" class="data select form-control" id="FiltroPrevistoFinal"
+                        value="<?php echo $PrevistoFinal ?>" name="PrevistoFinal" autocomplete="off"
+                        style="font-size: 12px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C">
+                    <?php } else { ?>
+                      <input type="date" class="data select form-control" id="FiltroPrevistoFinal" name="PrevistoFinal"
+                        autocomplete="off"
+                        style="font-size: 12px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C">
+                    <?php } ?>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="row">
+                  <div class="col-6" style="margin-left:25px;margin-right:-20px">
+                    <?php if ($RealInicio != null) { ?>
+                      <input type="date" class="data select form-control" id="FiltroRealInicio"
+                        value="<?php echo $RealInicio ?>" name="RealInicio" autocomplete="off"
+                        style="font-size: 12px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C">
+                    <?php } else { ?>
+                      <input type="date" class="data select form-control" id="FiltroRealInicio" name="RealInicio"
+                        autocomplete="off"
+                        style="font-size: 12px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C">
+                    <?php } ?>
+                  </div>
+                  <div class="col-6" style="margin-left:-20px">
+                    <?php if ($RealFinal != null) { ?>
+                      <input type="date" class="data select form-control" id="FiltroRealFinal"
+                        value="<?php echo $RealFinal ?>" name="RealFinal" autocomplete="off"
+                        style="font-size: 12px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C">
+                    <?php } else { ?>
+                      <input type="date" class="data select form-control" id="FiltroRealFinal" name="RealFinal"
+                        autocomplete="off"
+                        style="font-size: 12px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C">
+                    <?php } ?>
+                  </div>
+                </div>
+              </th>
               <th></th>
               <th style="width: 10%;"></th>
             </tr>
-
           </thead>
 
           <tbody id='dados' class="fonteCorpo">
 
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-
-
-  <!--------- FILTRO PERIODO --------->
-  <div class="modal fade bd-example-modal-lg" id="periodoModal" tabindex="-1" role="dialog"
-    aria-labelledby="periodoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Filtro Periodo</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="post">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group" style="width:100px">
-                  <form action="" method="post">
-                    <select class="form-control" name="periodo" id="FiltroPeriodo" style="margin-top:34px">
-                      <option <?php if ($periodo == "previsao") {
-                        echo "selected";
-                      } ?> value="previsao">Previsao</option>
-                      <option <?php if ($periodo == "real") {
-                        echo "selected";
-                      } ?> value="real">Real</option>
-                    </select>
-                  </form>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group" style="width:150px">
-                  <label class="labelForm">Começo</label>
-                  <?php if ($inicio != null) { ?>
-                  <input type="date" class="data select form-control" id="FiltroInicio" value="<?php echo $inicio ?>"
-                    name="inicio" autocomplete="off">
-                  <?php } else { ?>
-                  <input type="date" class="data select form-control" id="FiltroInicio" name="inicio"
-                    autocomplete="off">
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group" style="width:150px">
-                  <label class="labelForm">Fim</label>
-                  <?php if ($final != null) { ?>
-                  <input type="date" class="data select form-control" id="FiltroFinal" value="<?php echo $final ?>"
-                    name="final" autocomplete="off">
-                  <?php } else { ?>
-                  <input type="date" class="data select form-control" id="FiltroFinal" name="final" autocomplete="off">
-                  <?php } ?>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm" style="text-align:left;margin-left:10px">
-                <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
-              </div>
-              <div class="col-sm" style="text-align:right;margin-right:10px">
-                <button type="button" class="btn btn-success" id="filtrarButton" data-dismiss="modal">Filtrar</button>
-              </div>
-            </div>
-          </form>
-        </div>
       </div>
     </div>
   </div>
@@ -508,19 +488,21 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
-
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
     function limpar() {
-      buscar(null, null, null, null, null, null, null, null);
-      window.location.reload();
-    }
-    function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null);
+      buscar(null, null, null, null, null, null, null, null, null);
       window.location.reload();
     }
 
+    var vdata = new Date();
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, periodo, inicio, final) {
+    var dd = String(vdata.getDate()).padStart(2, '0');
+    var mm = String(vdata.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = vdata.getFullYear();
+
+    var today = dd + '/' + mm + '/' + yyyy;
+
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, PrevistoInicio, PrevistoFinal, RealInicio, RealFinal) {
 
       $.ajax({
         type: 'POST',
@@ -535,9 +517,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
           tituloTarefa: tituloTarefa,
           idTipoOcorrencia: idTipoOcorrencia,
           statusTarefa: statusTarefa,
-          periodo: periodo,
-          inicio: inicio,
-          final: final
+          PrevistoInicio: PrevistoInicio,
+          PrevistoFinal: PrevistoFinal,
+          RealInicio: RealInicio,
+          RealFinal: RealFinal
         },
         success: function (msg) {
 
@@ -578,10 +561,17 @@ if (isset($_SESSION['filtro_tarefas'])) {
             var vhorasReal = formatTime(object.horasReal);
             var vhoraCobrado = formatTime(object.horaCobrado);
 
-
             linha += "<tr>";
             linha += "<td>" + object.idTarefa + "</td>";
-            linha += "<td>" + object.tituloTarefa + "</td>";
+            linha += "<td>";
+
+            if (object.tituloTarefa == "") {
+              linha += object.tituloDemanda + " (" + object.nomeUsuario + ")";
+            } else {
+              linha += object.tituloTarefa;
+            }
+
+            linha += "</td>";
             linha += "<td>" + object.idDemanda + "</td>";
             linha += "<td>" + object.nomeUsuario + "</td>";
             linha += "<td>" + object.nomeCliente + "</td>";
@@ -590,7 +580,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>";
             linha += "<td>" + vhoraCobrado + "</td>";
             linha += "<td class='text-center'>";
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00") {
+            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
               linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
             }
             if (vhoraInicioReal == "00:00") {
@@ -608,37 +598,52 @@ if (isset($_SESSION['filtro_tarefas'])) {
     }
 
     $("#FiltroClientes").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
     });
 
     $("#FiltroUsuario").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
     });
 
     $("#buscar").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
     });
 
     $("#FiltroOcorrencia").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
     });
 
     $("#FiltroDemanda").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
     });
 
     $("#FiltroStatusTarefa").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
     });
 
-    $("#filtrarButton").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+    $("#FiltroPrevistoInicio").change(function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
+      $('#periodoModal').modal('hide');
+    });
+
+    $("#FiltroPrevistoFinal").change(function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
+      $('#periodoModal').modal('hide');
+    });
+
+    $("#FiltroRealInicio").change(function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
+      $('#periodoModal').modal('hide');
+    });
+
+    $("#FiltroRealFinal").change(function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
       $('#periodoModal').modal('hide');
     });
 
     document.addEventListener("keypress", function (e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodo").val(), $("#FiltroInicio").val(), $("#FiltroFinal").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val());
       }
     });
 

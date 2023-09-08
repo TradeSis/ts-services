@@ -216,9 +216,10 @@ if (isset($_GET['operacao'])) {
         $tituloTarefa = $_POST['tituloTarefa'];
         $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
         $statusTarefa = $_POST['statusTarefa'];
-        $periodo = $_POST['periodo'];
-        $inicio = $_POST['inicio'];
-        $final = $_POST['final'];
+        $PrevistoInicio = $_POST['PrevistoInicio'];
+        $PrevistoFinal = $_POST['PrevistoFinal'];
+        $RealInicio = $_POST['RealInicio'];
+        $RealFinal = $_POST['RealFinal'];
 
         if ($idCliente == "") {
             $idCliente = null;
@@ -235,14 +236,17 @@ if (isset($_GET['operacao'])) {
         if ($statusTarefa == "") {
             $statusTarefa = null;
         }
-        if ($periodo == "") {
-            $periodo = null;
+        if ($PrevistoInicio == "") {
+            $PrevistoInicio = null;
         }
-        if ($inicio == "") {
-            $inicio = null;
+        if ($PrevistoFinal == "") {
+            $PrevistoFinal = null;
         }
-        if ($final == "") {
-            $final = null;
+        if ($RealInicio == "") {
+            $RealInicio = null;
+        }
+        if ($RealFinal == "") {
+            $RealFinal = null;
         }
 
         $apiEntrada = array(
@@ -252,9 +256,10 @@ if (isset($_GET['operacao'])) {
             'tituloTarefa' => $tituloTarefa,
             'idTipoOcorrencia' => $idTipoOcorrencia,
             'statusTarefa' => $statusTarefa,
-            'periodo' => $periodo,
-            'inicio' => $inicio,
-            'final' => $final
+            'PrevistoInicio' => $PrevistoInicio,
+            'PrevistoFinal' => $PrevistoFinal,
+            'RealInicio' => $RealInicio,
+            'RealFinal' => $RealFinal
         );
 
         $_SESSION['filtro_tarefas'] = $apiEntrada;

@@ -176,7 +176,7 @@ if (isset($_SESSION['idCliente'])) {
                                         foreach ($atendentes as $atendente) {
                                             ?>
                                         <option <?php
-                                        if ($atendente['idUsuario'] == $idAtendente) {
+                                        if ($atendente['idUsuario'] == $demanda['idAtendente']) {
                                             echo "selected";
                                         }
                                         ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
@@ -191,7 +191,11 @@ if (isset($_SESSION['idCliente'])) {
                                         <?php
                                         foreach ($ocorrencias as $ocorrencia) {
                                             ?>
-                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        <option <?php
+                                        if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>

@@ -23,7 +23,7 @@ if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL >= 2) {
     fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
   }
-} 
+}
 //LOG
 
 $idEmpresa = null;
@@ -33,7 +33,7 @@ if (isset($jsonEntrada["idEmpresa"])) {
 
 $conexao = conectaMysql($idEmpresa);
 $tarefa = array();
-$sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda, tipoocorrencia.nomeTipoOcorrencia,
+$sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda, demanda.idTipoStatus, tipoocorrencia.nomeTipoOcorrencia,
         TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal, 
         TIMEDIFF(tarefa.horaFinalPrevisto, tarefa.horaInicioPrevisto) AS horasPrevisto FROM tarefa
         LEFT JOIN usuario ON tarefa.idAtendente = usuario.idUsuario 
@@ -82,29 +82,49 @@ if (isset($jsonEntrada["tituloTarefa"])) {
   $where = " and ";
 }
 
-if (isset($jsonEntrada["periodo"])) {
-  if ($jsonEntrada["periodo"] === "previsao" || $jsonEntrada["periodo"] === "real") {
-    if (isset($jsonEntrada["inicio"])) {
-      if ($jsonEntrada["periodo"] === "previsao") {
-        $sql .= $where . " tarefa.Previsto >= '" . $jsonEntrada["inicio"] . "'";
-      } elseif ($jsonEntrada["periodo"] === "real") {
-        $sql .= $where . " tarefa.dataReal >= '" . $jsonEntrada["inicio"] . "'";
-      }
-      $where = " and ";
-    }
+if (isset($jsonEntrada["PrevistoInicio"])) {
+  $sql .= $where . " tarefa.Previsto >= '" . $jsonEntrada["PrevistoInicio"] . "'";
+  $where = " and ";
+}
 
-    if (isset($jsonEntrada["final"])) {
-      if ($jsonEntrada["periodo"] === "previsao") {
-        $sql .= $where . " tarefa.Previsto <= '" . $jsonEntrada["final"] . "'";
-      } elseif ($jsonEntrada["periodo"] === "real") {
-        $sql .= $where . " tarefa.dataReal <= '" . $jsonEntrada["final"] . "'";
-      }
-      $where = " and ";
-    }
+if (isset($jsonEntrada["PrevistoFinal"])) {
+  $sql .= $where . " tarefa.Previsto <= '" . $jsonEntrada["PrevistoFinal"] . "'";
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["RealInicio"])) {
+  $sql .= $where . " tarefa.dataReal >= '" . $jsonEntrada["RealInicio"] . "'";
+  $where = " and ";
+}
+
+if (isset($jsonEntrada["RealFinal"])) {
+  $sql .= $where . " tarefa.dataReal <= '" . $jsonEntrada["RealFinal"] . "'";
+  $where = " and ";
+}
+
+$order = " ORDER BY ";
+if (isset($jsonEntrada["PrevistoOrdem"])) {
+  if ($jsonEntrada["PrevistoOrdem"] == 1) {
+    $sql .= $order . " `tarefa`.`Previsto` DESC ";
+    $order = ",";
+  }
+  if ($jsonEntrada["PrevistoOrdem"] == 0) {
+    $sql .= $order . " `tarefa`.`Previsto` ASC ";
+    $order = ",";
   }
 }
 
-$sql = $sql . " ORDER BY idTarefa DESC ";
+if (isset($jsonEntrada["RealOrdem"])) {
+  if ($jsonEntrada["RealOrdem"] == 1) {
+    $sql .= $order . " `tarefa`.`dataReal` DESC ";
+    $order = ",";
+  }
+  if ($jsonEntrada["RealOrdem"] == 0) {
+    $sql .= $order . " `tarefa`.`dataReal` ASC ";
+    $order = ",";
+  }
+}
+$sql .= $order . " idTarefa DESC ";
 
 //echo "-SQL->".json_encode($sql)."\n";
 $rows = 0;
@@ -124,7 +144,7 @@ try {
   $buscar = mysqli_query($conexao, $sql);
   if (!$buscar)
     throw new Exception(mysqli_error($conexao));
-  
+
   while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
     array_push($tarefa, $row);
     $rows = $rows + 1;

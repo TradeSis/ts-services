@@ -43,12 +43,14 @@ if (isset($jsonEntrada['idTarefa'])) {
     $idTarefa = $jsonEntrada['idTarefa'];
     $dataReal = date('Y-m-d');
     $horaInicioReal = date('H:i:00');
-    $idDemanda = $jsonEntrada['idDemanda'];
     $idTipoStatus = $jsonEntrada['idTipoStatus'];
-    $tipoStatusDemanda = $jsonEntrada['tipoStatusDemanda'];
+    $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
+    $tipoStatusDemanda = isset($jsonEntrada['tipoStatusDemanda']) && $jsonEntrada['tipoStatusDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['tipoStatusDemanda']) : "NULL";
 
     $sql = "UPDATE `tarefa` SET `horaInicioReal`='$horaInicioReal', `dataReal`='$dataReal' WHERE idTarefa = $idTarefa";
 
+    
+    if ($idDemanda !== null) {
     // busca dados tipostatus    
     $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
     $buscar2 = mysqli_query($conexao, $sql2);
@@ -56,11 +58,11 @@ if (isset($jsonEntrada['idTarefa'])) {
     $posicao = $row["mudaPosicaoPara"];
     $statusDemanda = $row["mudaStatusPara"];
 
-
-    if (in_array($tipoStatusDemanda, $statusStart)) {
-        $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-    } else {
-        $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+        if (in_array($tipoStatusDemanda, $statusStart)) {
+            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+        } else {
+            $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+        }
     }
 
     //LOG

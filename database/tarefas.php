@@ -224,6 +224,8 @@ if (isset($_GET['operacao'])) {
         $PrevistoFinal = $_POST['PrevistoFinal'];
         $RealInicio = $_POST['RealInicio'];
         $RealFinal = $_POST['RealFinal'];
+        $PrevistoOrdem = $_POST['PrevistoOrdem'];
+        $RealOrdem = $_POST['RealOrdem'];
 
         if ($idCliente == "") {
             $idCliente = null;
@@ -252,6 +254,12 @@ if (isset($_GET['operacao'])) {
         if ($RealFinal == "") {
             $RealFinal = null;
         }
+        if ($PrevistoOrdem == "") {
+            $PrevistoOrdem = null;
+        }
+        if ($RealOrdem == "") {
+            $RealOrdem = null;
+        }
 
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
@@ -263,7 +271,9 @@ if (isset($_GET['operacao'])) {
             'PrevistoInicio' => $PrevistoInicio,
             'PrevistoFinal' => $PrevistoFinal,
             'RealInicio' => $RealInicio,
-            'RealFinal' => $RealFinal
+            'RealFinal' => $RealFinal,
+            'PrevistoOrdem' => $PrevistoOrdem,
+            'RealOrdem' => $RealOrdem
         );
 
         $_SESSION['filtro_tarefas'] = $apiEntrada;

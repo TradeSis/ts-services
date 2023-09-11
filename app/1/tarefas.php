@@ -102,7 +102,29 @@ if (isset($jsonEntrada["RealFinal"])) {
   $where = " and ";
 }
 
-$sql = $sql . " ORDER BY idTarefa DESC ";
+$order = " ORDER BY ";
+if (isset($jsonEntrada["PrevistoOrdem"])) {
+  if ($jsonEntrada["PrevistoOrdem"] == 1) {
+    $sql .= $order . " `tarefa`.`Previsto` DESC ";
+    $order = ",";
+  }
+  if ($jsonEntrada["PrevistoOrdem"] == 0) {
+    $sql .= $order . " `tarefa`.`Previsto` ASC ";
+    $order = ",";
+  }
+}
+
+if (isset($jsonEntrada["RealOrdem"])) {
+  if ($jsonEntrada["RealOrdem"] == 1) {
+    $sql .= $order . " `tarefa`.`dataReal` DESC ";
+    $order = ",";
+  }
+  if ($jsonEntrada["RealOrdem"] == 0) {
+    $sql .= $order . " `tarefa`.`dataReal` ASC ";
+    $order = ",";
+  }
+}
+$sql .= $order . " idTarefa DESC ";
 
 //echo "-SQL->".json_encode($sql)."\n";
 $rows = 0;

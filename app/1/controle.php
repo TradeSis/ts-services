@@ -264,10 +264,6 @@ if ($metodo == "POST") {
       include 'contrato_alterar.php';
       break;
 
-    case "contrato/finalizar":
-      include 'contrato_finalizar.php';
-      break;
-
     case "tarefas":
       include 'tarefas_alterar.php';
       break;

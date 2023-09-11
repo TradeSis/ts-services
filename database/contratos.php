@@ -96,10 +96,10 @@ if (isset($_GET['operacao'])) {
 			'horas' => $_POST['horas'],
 			'valorHora' => $_POST['valorHora'],
 			'valorContrato' => $_POST['valorContrato'],
-			'statusContrato' => 1,
 			'idContratoTipo' => $_POST['idContratoTipo'],
 			
 		);
+
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'PUT');
 
 		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);
@@ -155,6 +155,7 @@ if (isset($_GET['operacao'])) {
 		$idContratoStatus = $_POST["idContratoStatus"];
 		$tituloContrato = $_POST["tituloContrato"];
 		$idContratoTipo = $_POST["urlContratoTipo"];
+		$statusContrato = $_POST['statusContrato'];
 
 		if ($idCliente == ""){
 			$idCliente = null;
@@ -172,6 +173,10 @@ if (isset($_GET['operacao'])) {
 			$idContratoTipo = null;
 		} 
 
+		if ($statusContrato == ""){
+			$statusContrato = null;
+		}
+
 	
 		$apiEntrada = array(
 			'idEmpresa' => $idEmpresa,
@@ -179,12 +184,12 @@ if (isset($_GET['operacao'])) {
 			'idCliente' => $idCliente,
 			'idContratoStatus' => $idContratoStatus,
 			'tituloContrato' => $tituloContrato,
-			'idContratoTipo' => $idContratoTipo
+			'idContratoTipo' => $idContratoTipo,
+			'statusContrato' => $statusContrato
 		);
 		
 		$_SESSION['filtro_contrato'] = $apiEntrada;
-		/* echo json_encode(($apiEntrada));
-		return; */
+		
 		$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
 
 		echo json_encode($contrato);

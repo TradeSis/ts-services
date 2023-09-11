@@ -215,8 +215,8 @@ $demandas = buscaDemandasAbertas();
                             </div>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
+                            <button id="AtualizarButton" type="submit" class="btn btn-warning">Atualizar</button>
                             <a id="visualizarDemandaButton" class="btn btn-primary" style="float:left">Visualizar</a>
-                            <button type="submit" class="btn btn-warning">Atualizar</button>
                         </div>
                     </form>
                 </div>
@@ -271,7 +271,7 @@ $demandas = buscaDemandasAbertas();
                                         foreach ($atendentes as $atendente) {
                                             ?>
                                         <option <?php
-                                        if ($atendente['idUsuario'] == $idAtendente) {
+                                        if ($atendente['idUsuario'] == $_SESSION['idUsuario']) {
                                             echo "selected";
                                         }
                                         ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
@@ -387,20 +387,18 @@ $demandas = buscaDemandasAbertas();
                         $color = $colors[$colorIndex % count($colors)];
                         $colorIndex++;
 
-                        if ($tarefa['horaInicioPrevisto'] == null) {
-                            $horaInicioPrevisto = "06:00:00";
+                        if ($tarefa['idDemanda'] !== null) {
+                            $tituloTarefa = empty($tarefa['tituloTarefa']) ? $tarefa['tituloDemanda'] . " (" . $tarefa['nomeUsuario'] . ")" : $tarefa['tituloTarefa'];
                         } else {
-                            $horaInicioPrevisto = $tarefa['horaInicioPrevisto'];
+                            $tituloTarefa = empty($tarefa['tituloTarefa']) ? $tarefa['tituloTarefa'] . " (" . $tarefa['nomeUsuario'] . ")" : $tarefa['tituloTarefa'];
                         }
-                        if ($tarefa['horaFinalPrevisto'] == null) {
-                            $horaFinalPrevisto = "24:00:00";
-                        } else {
-                            $horaFinalPrevisto = $tarefa['horaFinalPrevisto'];
-                        }
+                        $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "06:00:00" : $tarefa['horaInicioPrevisto'];
+                        $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "24:00:00" : $tarefa['horaFinalPrevisto'];
+
                         ?>
-                                                            {
+                        {
                         _id: '<?php echo $tarefa['idTarefa']; ?>',
-                        title: '<?php echo $tarefa['tituloTarefa'] . ' ' . $tarefa['tituloDemanda']; ?>',
+                        title: '<?php echo $tituloTarefa ?>',
                         start: '<?php echo $tarefa['Previsto'] . ' ' . $horaInicioPrevisto; ?>',
                         end: '<?php echo $tarefa['Previsto'] . ' ' . $horaFinalPrevisto; ?>',
                         idTarefa: '<?php echo $tarefa['idTarefa']; ?>',
@@ -498,32 +496,6 @@ $demandas = buscaDemandasAbertas();
             }
         };
 
-
-        $("#agendarForm").submit(function (event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            $.ajax({
-                url: "../database/tarefas.php?operacao=inserir",
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: refreshPage,
-            });
-        });
-
-        $("#alterarForm").submit(function (event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            $.ajax({
-                url: "../database/tarefas.php?operacao=alterar",
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: refreshPage,
-            });
-        });
         function refreshPage() {
             window.location.reload();
         }
@@ -575,8 +547,44 @@ $demandas = buscaDemandasAbertas();
             });
         });
 
+        $(document).ready(function () {
+            $("#agendarForm").submit(function () {
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "../database/tarefas.php?operacao=inserir",
+                    type: 'POST',
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (msg) {
+                        if (msg.retorno == "ok") {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
 
-
+            $("#alterarForm").submit(function () {
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "../database/tarefas.php?operacao=alterar",
+                    type: 'POST',
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (msg) {
+                        if (msg.retorno == "ok") {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+            function refreshPage() {
+                window.location.reload();
+            }
+        });
 
     </script>
 </body>

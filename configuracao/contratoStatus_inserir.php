@@ -20,16 +20,17 @@ include_once('../head.php');
         <form class="mb-4" action="../database/contratoStatus.php?operacao=inserir" method="post">
             <div class="row">
                 <div class="col-md-8 form-group">
-                    <label class='control-label' for='inputNormal' style="margin-top: -20px;">nome Status</label>
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">nome do Status</label>
                     <div class="for-group">
                         <input type="text" name="nomeContratoStatus" class="form-control" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-md-4" style="margin-top: -7px">
-                    <label class="labelForm">Status (0=Fechado 1=Aberto)</label>
+                    <label class="labelForm">Status (0=Fechado 1=Aberto 2=Orçamento)</label>
                     <select class="form-control" name="mudaStatusPara">
                         <option>0</option>
                         <option>1</option>
+                        <option>2</option>
                     </select>
                 </div>
             </div>

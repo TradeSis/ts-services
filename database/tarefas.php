@@ -144,6 +144,8 @@ if (isset($_GET['operacao'])) {
         );
 
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
+        echo json_encode($tarefas);
+        return $tarefas;
 
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
     }
@@ -166,6 +168,8 @@ if (isset($_GET['operacao'])) {
             'horaFinalPrevisto' => $_POST['horaFinalPrevisto']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'POST');
+        echo json_encode($tarefas);
+        return $tarefas;
 
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
     }
@@ -216,9 +220,12 @@ if (isset($_GET['operacao'])) {
         $tituloTarefa = $_POST['tituloTarefa'];
         $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
         $statusTarefa = $_POST['statusTarefa'];
-        $periodo = $_POST['periodo'];
-        $inicio = $_POST['inicio'];
-        $final = $_POST['final'];
+        $PrevistoInicio = $_POST['PrevistoInicio'];
+        $PrevistoFinal = $_POST['PrevistoFinal'];
+        $RealInicio = $_POST['RealInicio'];
+        $RealFinal = $_POST['RealFinal'];
+        $PrevistoOrdem = $_POST['PrevistoOrdem'];
+        $RealOrdem = $_POST['RealOrdem'];
 
         if ($idCliente == "") {
             $idCliente = null;
@@ -235,14 +242,23 @@ if (isset($_GET['operacao'])) {
         if ($statusTarefa == "") {
             $statusTarefa = null;
         }
-        if ($periodo == "") {
-            $periodo = null;
+        if ($PrevistoInicio == "") {
+            $PrevistoInicio = null;
         }
-        if ($inicio == "") {
-            $inicio = null;
+        if ($PrevistoFinal == "") {
+            $PrevistoFinal = null;
         }
-        if ($final == "") {
-            $final = null;
+        if ($RealInicio == "") {
+            $RealInicio = null;
+        }
+        if ($RealFinal == "") {
+            $RealFinal = null;
+        }
+        if ($PrevistoOrdem == "") {
+            $PrevistoOrdem = null;
+        }
+        if ($RealOrdem == "") {
+            $RealOrdem = null;
         }
 
         $apiEntrada = array(
@@ -252,9 +268,12 @@ if (isset($_GET['operacao'])) {
             'tituloTarefa' => $tituloTarefa,
             'idTipoOcorrencia' => $idTipoOcorrencia,
             'statusTarefa' => $statusTarefa,
-            'periodo' => $periodo,
-            'inicio' => $inicio,
-            'final' => $final
+            'PrevistoInicio' => $PrevistoInicio,
+            'PrevistoFinal' => $PrevistoFinal,
+            'RealInicio' => $RealInicio,
+            'RealFinal' => $RealFinal,
+            'PrevistoOrdem' => $PrevistoOrdem,
+            'RealOrdem' => $RealOrdem
         );
 
         $_SESSION['filtro_tarefas'] = $apiEntrada;

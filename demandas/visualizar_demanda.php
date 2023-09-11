@@ -47,10 +47,12 @@ $statusEncerrar = array(
                 </div>
                 <div class="row" style="margin-top: -30px;">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label class='labelForm'>Descrição</label>
-                            <textarea class="form-control" name="descricao" autocomplete="off"
-                                rows="17"><?php echo $demanda['descricao'] ?></textarea>
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Descrição</span>
+                            </div>
+                            <div class="quill-textarea"><?php echo $demanda['descricao'] ?></div>
+                            <textarea style="display: none" id="quill-descricao" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
                         </div>
                     </div>
                     <div class="col-md">
@@ -217,10 +219,12 @@ $statusEncerrar = array(
                 </div>
                 <div class="row" style="margin-top: -30px;">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label class='labelForm'>Descrição</label>
-                            <textarea class="form-control" name="descricao" autocomplete="off"
-                                rows="17"><?php echo $demanda['descricao'] ?></textarea>
+                    <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Descrição</span>
+                            </div>
+                            <div class="quill-textarea"><?php echo $demanda['descricao'] ?></div>
+                            <textarea style="display: none" id="quill-descricao" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
                         </div>
                     </div>
                     <div class="col-md">
@@ -325,5 +329,51 @@ $statusEncerrar = array(
         <?php } ?>
     </div>
 
+    <script>
+        var quilldescricao = new Quill('.quill-textarea', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote'],
+            [{
+                'list': 'ordered'
+            }, {
+                'list': 'bullet'
+            }],
+            [{
+                'indent': '-1'
+            }, {
+                'indent': '+1'
+            }], 
+            [{
+                'direction': 'rtl'
+            }], 
+            [{
+                'size': ['small', false, 'large', 'huge']
+            }],
+            [{
+                'header': [1, 2, 3, 4, 5, 6, false]
+            }],
+            ['link', 'image', 'video', 'formula'], 
+            [{
+                'color': []
+            }, {
+                'background': []
+            }], 
+            [{
+                'font': []
+            }],
+            [{
+                'align': []
+            }],
+        ]
+    }
+});
 
+quilldescricao.on('text-change', function(delta, oldDelta, source) {
+    $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
+});
+
+    </script>
 </body>

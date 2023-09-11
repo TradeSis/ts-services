@@ -74,8 +74,13 @@ $ocorrencias = buscaTipoOcorrencia();
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label class="labelForm">Descrição</label>
-                        <textarea class="form-control" name="descricao" autocomplete="off" rows="7"></textarea>
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Descrição</span>
+                            </div>
+                            <div class="quill-textarea"></div>
+                            <textarea style="display: none" id="detail" name="descricao"></textarea>
+                        </div>
                     </div>
 
                     <div class="col-md" style="margin-top: 60px">
@@ -111,12 +116,12 @@ $ocorrencias = buscaTipoOcorrencia();
                                 <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                 <?php
                                 foreach ($ocorrencias as $ocorrencia) {
-                                    ?>
+                                ?>
                                     <option <?php
-                                    if ($ocorrencia['ocorrenciaInicial'] == 1) {
-                                    echo "selected";
-                                    }
-                                    ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                            if ($ocorrencia['ocorrenciaInicial'] == 1) {
+                                                echo "selected";
+                                            }
+                                            ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -134,16 +139,16 @@ $ocorrencias = buscaTipoOcorrencia();
                         <div class="col-md-12 form-group-select" style="margin-top: 10px; margin-bottom: 10px">
                             <label class="labelForm">Contrato Vinculado</label>
                             <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
-                            <select class="select form-control" name="idContrato" autocomplete="off" required>
-                            <?php } else { ?>
-                                <select class="select form-control" name="idContrato" autocomplete="off">
-                            <?php } ?>
+                                <select class="select form-control" name="idContrato" autocomplete="off" required>
+                                <?php } else { ?>
+                                    <select class="select form-control" name="idContrato" autocomplete="off">
+                                    <?php } ?>
 
-                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                                <?php foreach ($contratos as $contrato) { ?>
-                                    <option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?></option>
-                                <?php } ?>
-                            </select>
+                                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                    <?php foreach ($contratos as $contrato) { ?>
+                                        <option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?></option>
+                                    <?php } ?>
+                                    </select>
                         </div>
                     </div>
                 </div>
@@ -154,7 +159,52 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
     </div>
 
+    <script>
+                var quill = new Quill('.quill-textarea', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'], 
+            ['blockquote'],
+            [{
+                'list': 'ordered'
+            }, {
+                'list': 'bullet'
+            }],
+            [{
+                'indent': '-1'
+            }, {
+                'indent': '+1'
+            }], 
+            [{
+                'direction': 'rtl'
+            }], 
+            [{
+                'size': ['small', false, 'large', 'huge']
+            }], 
+            [{
+                'header': [1, 2, 3, 4, 5, 6, false]
+            }],
+            ['link', 'image', 'video', 'formula'], 
+            [{
+                'color': []
+            }, {
+                'background': []
+            }], 
+            [{
+                'font': []
+            }],
+            [{
+                'align': []
+            }],
+        ]
+    }
+});
 
+quill.on('text-change', function(delta, oldDelta, source) {
+    $('#detail').val(quill.container.firstChild.innerHTML);
+});
+    </script>
 </body>
 
 </html>

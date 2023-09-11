@@ -149,7 +149,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
             var urlParams = new URLSearchParams(window.location.search);
             var id = urlParams.get('id');
             if (id === 'demandacontrato') {
-                showTabsContent(2);
+                showTabsContent(1);
             }
         }
 

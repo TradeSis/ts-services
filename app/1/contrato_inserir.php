@@ -52,7 +52,9 @@ if (isset($jsonEntrada['tituloContrato'])) {
         }
  
 		$valorContrato = $jsonEntrada['valorContrato'];
-		$statusContrato = $jsonEntrada['statusContrato']; 
+
+		$statusContrato = null; 
+
         $idContratoTipo = $jsonEntrada['idContratoTipo'];
 
         if (($horas !== "") && ($valorContrato !== "")) {
@@ -63,8 +65,14 @@ if (isset($jsonEntrada['tituloContrato'])) {
             }
         }
       
+         //busca dados contratostatus    
+    $sql2 = "SELECT * FROM contratostatus WHERE idContratoStatus = $idContratoStatus";
+    $buscar2 = mysqli_query($conexao, $sql2);
+    $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
+    $statusContrato = $row["mudaStatusPara"];
 
-    $sql = "INSERT INTO contrato (tituloContrato, descricao, dataAbertura, idContratoStatus, dataPrevisao, dataEntrega, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) values ('$tituloContrato', '$descricao', CURRENT_TIMESTAMP(), '$idContratoStatus', $dataPrevisao, $dataEntrega, '$idCliente', '$statusContrato', $horas, $valorHora, '$valorContrato', '$idContratoTipo')";
+    $sql = "INSERT INTO contrato (tituloContrato, descricao, dataAbertura, idContratoStatus, dataPrevisao, dataEntrega, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) values ('$tituloContrato', '$descricao', CURRENT_TIMESTAMP(), $idContratoStatus, $dataPrevisao, $dataEntrega, $idCliente, $statusContrato, $horas, $valorHora, '$valorContrato', '$idContratoTipo')";
+
     //LOG
     if(isset($LOG_NIVEL)) {
         if ($LOG_NIVEL>=3) {

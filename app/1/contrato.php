@@ -36,7 +36,7 @@ if (isset($jsonEntrada["idContrato"])) {
   }
 
   if (isset($jsonEntrada["statusContrato"])) {
-    $sql = $sql . $where . " contrato.statusContrato = " . $jsonEntrada["statusContrato"];;
+    $sql = $sql . $where . " contrato.statusContrato = " . $jsonEntrada["statusContrato"];
     $where = " and ";
   }
 
@@ -52,7 +52,7 @@ if (isset($jsonEntrada["idContrato"])) {
 }
 
 
-//echo "-SQL->".$sql."\n";
+//echo "-SQL->".$sql."\n"; 
 
 
 $rows = 0;

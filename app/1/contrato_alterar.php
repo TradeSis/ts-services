@@ -60,27 +60,38 @@ if (isset($jsonEntrada['tituloContrato'])) {
     $dataEntrega = isset($jsonEntrada['dataEntrega']) && $jsonEntrada['dataEntrega'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataEntrega']) . "'" : "0000-00-00";
 
     //busca dados tipostatus    
-    $sql2 = "SELECT * FROM contratostatus WHERE idContratoStatus = $idContratoStatus";
-    $buscar2 = mysqli_query($conexao, $sql2);
+    $sql1 = "SELECT * FROM contratostatus WHERE idContratoStatus = $idContratoStatus";
+    $buscar2 = mysqli_query($conexao, $sql1);
     $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
     $statusContrato = $row["mudaStatusPara"];
 
-    if($statusContrato == 0){
+    if ($statusContrato == 0) {
         $dataFechamento = 'CURRENT_TIMESTAMP ()';
-    }else{
+    } else {
         $dataFechamento = 'null';
     }
-  
-        $sql = "UPDATE `contrato` SET `tituloContrato`='$tituloContrato',`descricao`='$descricao',`idContratoStatus`='$idContratoStatus' ,`valorContrato`='$valorContrato',
-         `dataPrevisao`= $dataPrevisao,`dataEntrega`= $dataEntrega ,`statusContrato`='$statusContrato',`horas`= $horas,`valorHora`=$valorHora,`idContratoTipo`='$idContratoTipo',
-         `dataFechamento`=$dataFechamento, dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
 
-/* echo "-SQL->".json_encode($sql)."\n"; */ 
-    
+    $sql2 = "UPDATE contrato SET tituloContrato='$tituloContrato',descricao='$descricao',idContratoStatus='$idContratoStatus' ,valorContrato='$valorContrato',
+    dataPrevisao= $dataPrevisao,dataEntrega= $dataEntrega ,statusContrato='$statusContrato',horas= $horas,valorHora=$valorHora,idContratoTipo='$idContratoTipo',
+    dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
+
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {
-            fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
+            fwrite($arquivo, $identificacao . "-SQL UPDATE->" . $sql2 . "\n");
+        }
+    }
+    //LOG
+
+
+    $sql3 = "UPDATE contrato SET dataFechamento=$dataFechamento, dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato /* and dataFechamento is null */";
+
+    /* echo "-SQL->".json_encode($sql)."\n"; */
+
+    //LOG
+    if (isset($LOG_NIVEL)) {
+        if ($LOG_NIVEL >= 3) {
+            fwrite($arquivo, $identificacao . "-SQL DATA_FECHAMENTO->" . $sql3 . "\n");
         }
     }
     //LOG
@@ -88,8 +99,10 @@ if (isset($jsonEntrada['tituloContrato'])) {
     //TRY-CATCH
     try {
 
-        $atualizar = mysqli_query($conexao, $sql);
-        if (!$atualizar)
+        $atualizar1 = mysqli_query($conexao, $sql1);
+        $atualizar2 = mysqli_query($conexao, $sql2);
+        $atualizar3 = mysqli_query($conexao, $sql3);
+        if (!$atualizar1 && !$atualizar2 && !$atualizar3)
             throw new Exception(mysqli_error($conexao));
 
         $jsonSaida = array(

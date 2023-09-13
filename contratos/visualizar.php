@@ -66,7 +66,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
         <div class="row">
             <div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
                 <span class="titulo">
-                    <?php echo $contrato['tituloContrato'] ?>
+                    <?php echo $contrato['tituloContrato'] ?> - <?php echo $contrato['idContrato'] ?>
                 </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">

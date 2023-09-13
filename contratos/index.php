@@ -266,46 +266,6 @@ if (isset($_SESSION['filtro_contrato'])) {
     <nav id="menuFiltros" class="menuFiltros"> <!-- MENUFILTROS -->
         <div class="titulo"><span>Filtrar por:</span></div>
         <ul>
-
-            <li class="col-sm-12">
-                <form class="d-flex" action="" method="post" style="text-align: right;">
-
-                    <select class="form-control" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
-                        <option value="<?php echo null ?>"><?php echo "Cliente"  ?></option>
-                        <?php
-                        foreach ($clientes as $cliente) {
-                        ?>
-                            <option <?php
-                                    if ($cliente['idCliente'] == $idCliente) {
-                                        echo "selected";
-                                    }
-                                    ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-                        <?php  } ?>
-                    </select>
-
-
-                </form>
-            </li>
-            <li class="col-sm-12 mt-2">
-                <form class="d-flex" action="" id="idContratoStatus" method="post" style="text-align: right">
-                    <select class="form-control" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px; width: 150px; height: 35px">
-                        <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
-                        <?php
-
-                        foreach ($contratoStatusTodos as $contratoStatus) {
-                        ?>
-                            <option <?php
-                                    if ($contratoStatus['idContratoStatus'] == $idContratoStatus) {
-                                        echo "selected";
-                                    }
-                                    ?> value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?></option>
-                        <?php  } ?>
-                    </select>
-
-                </form>
-
-            </li>
-
             <li class="col-sm-12 mt-2"> <!-- ABERTO/FECHADO -->
                 <form class="d-flex" action="" method="post" style="text-align: right;">
 
@@ -377,6 +337,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <thead class="cabecalhoTabela">
 
                         <tr>
+                            <th>ID</th>
                             <th>Cliente</th>
                             <th>Titulo</th>
                             <th>Status</th>
@@ -388,6 +349,52 @@ if (isset($_SESSION['filtro_contrato'])) {
                             <th>hora</th>
                             <th>Contrato</th>
                             <th colspan="2">Ação</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th style="width: 10%;">
+                                <form action="" method="post">
+                                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                                        <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                        <?php
+                                        foreach ($clientes as $cliente) {
+                                        ?>
+                                            <option <?php
+                                                    if ($cliente['idCliente'] == $idCliente) {
+                                                        echo "selected";
+                                                    }
+                                                    ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </form>
+                            </th>
+                            <th></th>
+                            <th style="width: 10%;">
+                                <form action="" method="post">
+                                    <select class="form-control text-center" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                                        <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
+                                        <?php
+
+                                        foreach ($contratoStatusTodos as $contratoStatus) {
+                                        ?>
+                                            <option <?php
+                                                    if ($contratoStatus['idContratoStatus'] == $idContratoStatus) {
+                                                        echo "selected";
+                                                    }
+                                                    ?> value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?></option>
+                                        <?php  } ?>
+                                    </select>
+
+                                </form>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id='dados' class="fonteCorpo">
@@ -476,12 +483,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                         // alert("quarto alert: " + JSON.stringify(object))
                         /*  alert(object); */
                         linha = linha + "<tr>";
+                        linha = linha + "<td>" + object.idContrato + "</td>";
                         linha = linha + "<td>" + object.nomeCliente + "</td>";
                         linha = linha + "<td>" + object.tituloContrato + "</td>";
-
                         linha = linha + "<td class='" + object.nomeContratoStatus + "' data-status='Finalizado' >" + object.nomeContratoStatus + " </td>";
-
-
                         linha = linha + "<td>" + dataPrevisaoFormatada + "</td>";
                         linha = linha + "<td>" + dataEntregaFormatada + "</td>";
                         linha = linha + "<td>" + dataAtualizacaoFormatada + "</td>";

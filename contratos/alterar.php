@@ -18,7 +18,6 @@ $idCliente = $contrato["idCliente"];
 $cliente = buscaClientes($idCliente);
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
-
 ?>
 
 
@@ -30,14 +29,23 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 			<form action="../database/contratos.php?operacao=alterar" method="post" style="padding: 10px; text-align: left">
 				<div class="row gy-4">
 
-					<div class="col-md-12 form-group">
+					<div class="col-md-9 form-group">
 						<label class='control-label' for='inputNormal' style="margin-top: 4px;">Titulo</label>
 						<input type="text" class="form-control" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>">
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
 						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
 					</div>
+					<div class="col-md-3 form-group" style="margin-top: 12px;">
+						<label class="labelForm" >Cliente</label>
+						<select class="select form-control" name="idCliente" autocomplete="off" disabled>
+							<option value="<?php echo $contrato['idCliente'] ?>"><?php echo $contrato['nomeCliente'] ?>
+							</option>
+							<option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
+							</option>
+						</select>
+					</div>
 
-					<div class="container-fluid p-0 mb-3">
+					<div class="container-fluid p-0 mb-3" style="margin-top: -40px;">
 						<div class="col">
 							<span class="tituloEditor">Descrição</span>
 						</div>
@@ -75,14 +83,14 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 				</div>
 
 				<div class="row" style="margin-top: -40px;">
-					<div class="col-md-3 form-group">
-						<label class="labelForm">Cliente</label>
-						<select class="select form-control" name="idCliente" autocomplete="off" disabled>
-							<option value="<?php echo $contrato['idCliente'] ?>"><?php echo $contrato['nomeCliente'] ?>
-							</option>
-							<option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
-							</option>
-						</select>
+					<div class="col-md-3" style="margin-top: 20px;">
+						<label class="labelForm">Fechamento</label>
+						<input type="text" class="data select form-control" name="dataFechamento" 
+						value="<?php if($contrato['dataFechamento'] == null){
+							echo '00/00/0000 00:00'; 
+						} else{ 
+							echo date('d/m/Y H:i', strtotime($contrato['dataFechamento'])) 
+							 ?> <?php } ?> "disabled>
 					</div>
 
 					<div class="col-md-3 form-group" style="margin-top: 16px;">

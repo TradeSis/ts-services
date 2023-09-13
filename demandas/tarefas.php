@@ -117,6 +117,11 @@ if (isset($_SESSION['filtro_tarefas'])) {
         </div>
       </div>
 
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#periodoModal"><i
+            class="bi bi-calendar3"></i></button>
+      </div>
+
       <div class="col-sm" style="text-align:right">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i
             class="bi bi-plus-square"></i>&nbsp Novo</button>
@@ -288,6 +293,103 @@ if (isset($_SESSION['filtro_tarefas'])) {
     </div>
   </div>
 
+
+  <!--------- FILTRO PERIODO --------->
+  <div class="modal fade bd-example-modal-lg" id="periodoModal" tabindex="-1" role="dialog"
+    aria-labelledby="periodoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Filtro Periodo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            <div class="row">
+              <div class="col-4">
+                <label class="labelForm">Previsto Começo</label>
+                <?php if ($PrevistoInicio != null) { ?>
+                <input type="date" class="data select form-control" id="ModalPrevistoInicio"
+                  value="<?php echo $PrevistoInicio ?>" name="PrevistoInicio" autocomplete="off">
+                <?php } else { ?>
+                <input type="date" class="data select form-control" id="ModalPrevistoInicio" name="PrevistoInicio"
+                  autocomplete="off">
+                <?php } ?>
+              </div>
+              <div class="col-4">
+                <label class="labelForm">Fim</label>
+                <?php if ($PrevistoFinal != null) { ?>
+                <input type="date" class="data select form-control" id="ModalPrevistoFinal"
+                  value="<?php echo $PrevistoFinal ?>" name="PrevistoFinal" autocomplete="off">
+                <?php } else { ?>
+                <input type="date" class="data select form-control" id="ModalPrevistoFinal" name="PrevistoFinal"
+                  autocomplete="off">
+                <?php } ?>
+              </div>
+              <div class="col-4">
+                <label class="labelForm">Ordem</label>
+                <form class="d-flex" action="" method="post" style="text-align: right;">
+                  <select class="form-control" name="PrevistoOrdem" id="ModalPrevistoOrdem" style="margin-top:-7px">
+                    <option value="<?php echo null ?>"><?php echo "Sem Ordem" ?></option>
+                    <option <?php if ($PrevistoOrdem == "1") {
+                      echo "selected";
+                    } ?> value="1">DESC</option>
+                    <option <?php if ($PrevistoOrdem == "0") {
+                      echo "selected";
+                    } ?> value="0">ASC</option>
+                  </select>
+                </form>
+              </div>
+              <div class="col-4">
+                <label class="labelForm">Real Começo</label>
+                <?php if ($RealInicio != null) { ?>
+                <input type="date" class="data select form-control" id="ModalRealInicio"
+                  value="<?php echo $RealInicio ?>" name="RealInicio" autocomplete="off">
+                <?php } else { ?>
+                <input type="date" class="data select form-control" id="ModalRealInicio" name="RealInicio"
+                  autocomplete="off">
+                <?php } ?>
+              </div>
+              <div class="col-4">
+                <label class="labelForm">Fim</label>
+                <?php if ($RealFinal != null) { ?>
+                <input type="date" class="data select form-control" id="ModalRealFinal"
+                  value="<?php echo $RealFinal ?>" name="RealFinal" autocomplete="off">
+                <?php } else { ?>
+                <input type="date" class="data select form-control" id="ModalRealFinal" name="RealFinal"
+                  autocomplete="off">
+                <?php } ?>
+              </div>
+              <div class="col-4">
+                <label class="labelForm">Ordem</label>
+                <form class="d-flex" action="" method="post" style="text-align: right;">
+                  <select class="form-control" name="RealOrdem" id="ModalRealOrdem" style="margin-top:-6px">
+                    <option value="<?php echo null ?>"><?php echo "Sem Ordem" ?></option>
+                    <option <?php if ($RealOrdem == "1") {
+                      echo "selected";
+                    } ?> value="1">DESC</option>
+                    <option <?php if ($RealOrdem == "0") {
+                      echo "selected";
+                    } ?> value="0">ASC</option>
+                  </select>
+                </form>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm" style="text-align:left;margin-left:10px">
+                <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
+              </div>
+              <div class="col-sm" style="text-align:right;margin-right:10px">
+                <button type="button" class="btn btn-success" id="filtrarButton" data-dismiss="modal">Filtrar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!--------- INSERIR/NOVA --------->
   <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
@@ -526,6 +628,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
       buscar(null, null, null, null, null, null, null, null, null, null, null);
       window.location.reload();
     }
+    function limparPeriodo() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, null);
+      window.location.reload();
+    }
 
     var vdata = new Date();
 
@@ -675,32 +781,32 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
     $("#FiltroPrevistoInicio").change(function () {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      $('#periodoModal').modal('hide');
     });
 
     $("#FiltroPrevistoFinal").change(function () {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      $('#periodoModal').modal('hide');
     });
 
     $("#FiltroRealInicio").change(function () {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      $('#periodoModal').modal('hide');
     });
 
     $("#FiltroRealFinal").change(function () {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      $('#periodoModal').modal('hide');
     });
 
     $("#FiltroPrevistoOrdem").change(function () {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      $('#periodoModal').modal('hide');
     });
 
     $("#FiltroRealOrdem").change(function () {
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
+    });
+
+    $("#filtrarButton").click(function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#ModalPrevistoInicio").val(), $("#ModalPrevistoFinal").val(), $("#ModalRealInicio").val(), $("#ModalRealFinal").val(), $("#ModalPrevistoOrdem").val(), $("#ModalRealOrdem").val());
       $('#periodoModal').modal('hide');
+      window.location.reload();
     });
 
     document.addEventListener("keypress", function (e) {

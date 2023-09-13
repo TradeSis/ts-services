@@ -37,17 +37,26 @@ if (isset($jsonEntrada['idTarefa'])) {
     $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
     $tipoStatusDemanda = isset($jsonEntrada['tipoStatusDemanda']) && $jsonEntrada['tipoStatusDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['tipoStatusDemanda']) : "NULL";
 
+    // busca horaCobrado Tarefa    
+    $sql4 = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
+    $buscar4 = mysqli_query($conexao, $sql4);
+    $row = mysqli_fetch_array($buscar4, MYSQLI_ASSOC);
+    $horaCobradoTarefa = $row["horaCobrado"];
 
-    $sql = "UPDATE `tarefa` SET `horaFinalReal`='$horaFinalReal', `horaCobrado`=TIMEDIFF(`horaFinalReal`, `horaInicioReal`) WHERE idTarefa = $idTarefa";
+    if ($horaCobradoTarefa == null) {
+        $sql = "UPDATE `tarefa` SET `horaFinalReal`='$horaFinalReal', `horaCobrado`=TIMEDIFF(`horaFinalReal`, `horaInicioReal`) WHERE idTarefa = $idTarefa";
+    } else {
+        $sql = "UPDATE `tarefa` SET `horaFinalReal`='$horaFinalReal' WHERE idTarefa = $idTarefa";
+    }
 
-    
+
     if ($idDemanda !== null) {
-    // busca dados tipostatus    
-    $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
-    $buscar2 = mysqli_query($conexao, $sql2);
-    $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
-    $posicao = $row["mudaPosicaoPara"];
-    $statusDemanda = $row["mudaStatusPara"];
+        // busca dados tipostatus    
+        $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+        $buscar2 = mysqli_query($conexao, $sql2);
+        $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
+        $posicao = $row["mudaPosicaoPara"];
+        $statusDemanda = $row["mudaStatusPara"];
 
         if ($tipoStatusDemanda == TIPOSTATUS_FAZENDO) {
             $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";

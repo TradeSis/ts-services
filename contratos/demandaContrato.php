@@ -26,9 +26,6 @@ $demandas = buscaDemandas(null, null, $idContrato);
 							<th class="text-center">Abertura</th>
 							<th class="text-center">Status</th>
 							<th class="text-center">Ocorrência</th>
-							<th class="text-center">Tamanho</th>
-							<th class="text-center">Tempo</th>
-							<th class="text-center">Horas Previsão</th>
 							<th class="text-center">Ação</th>
 						</tr>
 					</thead>
@@ -46,11 +43,8 @@ $demandas = buscaDemandas(null, null, $idContrato);
 								<td class="text-center"><?php echo date('d/m/Y', strtotime($demanda['dataAbertura'])) ?></td>
 								<td class="text-center<?php echo $demanda['nomeTipoStatus'] ?>" data-status='Finalizado'><?php echo $demanda['nomeTipoStatus'] ?></td>
 								<td class="text-center"><?php echo $demanda['nomeTipoOcorrencia'] ?></td>
-								<td class="text-center"><?php echo $demanda['tamanho'] ?></td>
-								<td class="text-center"><?php echo $horas['totalHoraCobrado'] ?></td>
-								<td class="text-center"><?php echo $demanda['horasPrevisao'] ?></td>
 								<td>
-									<a class='btn btn-primary btn-sm' href='../demandas/visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>' role='button'><i class='bi bi-eye-fill'></i></i></a>
+									<a class='btn btn-warning btn-sm' href='../demandas/visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>' role='button'><i class='bi bi-pencil-square'></i></i></a>
 								</td>
 							</tr>
 						<?php } ?>

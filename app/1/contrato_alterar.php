@@ -59,51 +59,63 @@ if (isset($jsonEntrada['tituloContrato'])) {
     $dataPrevisao = isset($jsonEntrada['dataPrevisao']) && $jsonEntrada['dataPrevisao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataPrevisao']) . "'" : "0000-00-00";
     $dataEntrega = isset($jsonEntrada['dataEntrega']) && $jsonEntrada['dataEntrega'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataEntrega']) . "'" : "0000-00-00";
 
+
     //busca dados tipostatus    
     $sql = "SELECT * FROM contratostatus WHERE idContratoStatus = $idContratoStatus";
     $buscar = mysqli_query($conexao, $sql);
     $row = mysqli_fetch_array($buscar, MYSQLI_ASSOC);
     $statusContrato = $row["mudaStatusPara"];
 
-    if ($statusContrato == 0) {
-        $sql = "SELECT * FROM contrato WHERE idContrato = $idContrato";
-        $buscar = mysqli_query($conexao, $sql);
-        $row = mysqli_fetch_array($buscar, MYSQLI_ASSOC);
-        $dataFechamento = $row["dataFechamento"];
+    //update geral para os campos normais
+    $sql1 = "UPDATE contrato SET tituloContrato='$tituloContrato',descricao='$descricao',idContratoStatus='$idContratoStatus' ,valorContrato='$valorContrato',
+    dataPrevisao= $dataPrevisao,dataEntrega= $dataEntrega ,statusContrato='$statusContrato',horas= $horas,valorHora=$valorHora,idContratoTipo='$idContratoTipo',
+    dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
+    
+    //busca data de fechamento atual
+    $sql = "SELECT * FROM contrato WHERE idContrato = $idContrato";
+    $buscar = mysqli_query($conexao, $sql);
+    $row = mysqli_fetch_array($buscar, MYSQLI_ASSOC);
+    $dataFechamento = $row["dataFechamento"];
 
-        if ($dataFechamento == null) {
-            $dataFechamento = 'CURRENT_TIMESTAMP ()';
-            $sql = "UPDATE contrato SET tituloContrato='$tituloContrato',descricao='$descricao',idContratoStatus='$idContratoStatus' ,valorContrato='$valorContrato',
-        dataPrevisao= $dataPrevisao,dataEntrega= $dataEntrega ,statusContrato='$statusContrato',horas= $horas,valorHora=$valorHora,idContratoTipo='$idContratoTipo',
-        dataFechamento=$dataFechamento, dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
-        } else {
-            $sql = "UPDATE contrato SET tituloContrato='$tituloContrato',descricao='$descricao',idContratoStatus='$idContratoStatus' ,valorContrato='$valorContrato',
-        dataPrevisao= $dataPrevisao,dataEntrega= $dataEntrega ,statusContrato='$statusContrato',horas= $horas,valorHora=$valorHora,idContratoTipo='$idContratoTipo',
-        dataFechamento='$dataFechamento', dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
+    $sql2=null;
+
+    if ($statusContrato == 0) { //se vai fechar
+        if ($dataFechamento == null) { //e a data for null
+            $dataFechamento = 'CURRENT_TIMESTAMP ()'; //grava a data de fechamento
+            $sql2 = "UPDATE contrato SET dataFechamento=$dataFechamento, dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
         }
-    } else {
-        $dataFechamento = 'null';
-        $sql = "UPDATE contrato SET tituloContrato='$tituloContrato',descricao='$descricao',idContratoStatus='$idContratoStatus' ,valorContrato='$valorContrato',
-        dataPrevisao= $dataPrevisao,dataEntrega= $dataEntrega ,statusContrato='$statusContrato',horas= $horas,valorHora=$valorHora,idContratoTipo='$idContratoTipo',
-        dataFechamento=$dataFechamento,dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
+    } else { // se vai abrir
+        if ($dataFechamento != null) { // e está fechado
+            $dataFechamento = 'null'; //grava null na data de fechamento
+            $sql2 = "UPDATE contrato SET dataFechamento=$dataFechamento, dataAtualizacao=CURRENT_TIMESTAMP () WHERE contrato.idContrato = $idContrato ";
+        }
     }
 
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-        }
+            fwrite($arquivo, $identificacao . "-SQL1->" . $sql1 . "\n");
+            if(isset($sql2)){
+                fwrite($arquivo, $identificacao . "-SQL2->" . $sql2 . "\n");
+            }
+        } 
     }
     //LOG
-
-
+ 
     //TRY-CATCH
     try {
 
-        $atualizar = mysqli_query($conexao, $sql);
-        if (!$atualizar)
+        $atualizar1 = mysqli_query($conexao, $sql1);
+        if (!$atualizar1)
             throw new Exception(mysqli_error($conexao));
 
+        if(isset($sql2)){
+            $atualizar2 = mysqli_query($conexao, $sql2);
+            if (!$atualizar2)
+            throw new Exception(mysqli_error($conexao));
+        }
+        
         $jsonSaida = array(
             "status" => 200,
             "retorno" => "ok"

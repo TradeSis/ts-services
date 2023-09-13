@@ -29,28 +29,16 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 			<form action="../database/contratos.php?operacao=alterar" method="post" style="padding: 10px; text-align: left">
 				<div class="row gy-4">
 
-
 					<div class="col-md-1 form-group">
 						<label class='control-label' for='inputNormal' style="margin-top: 4px;">ID</label>
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" disabled>
 					</div>
 					<div class="col-md-8 form-group">
-
 						<label class='control-label' for='inputNormal' style="margin-top: 4px;">Titulo</label>
 						<input type="text" class="form-control" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>">
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
 						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
 					</div>
-					<div class="col-md-3 form-group" style="margin-top: 12px;">
-						<label class="labelForm" >Cliente</label>
-						<select class="select form-control" name="idCliente" autocomplete="off" disabled>
-							<option value="<?php echo $contrato['idCliente'] ?>"><?php echo $contrato['nomeCliente'] ?>
-							</option>
-							<option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
-							</option>
-						</select>
-					</div>
-
 
 					<div class="col-md-3 form-group" style="margin-top: 13px;">
 						<label class="labelForm">Cliente</label>
@@ -63,7 +51,6 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 					</div>
 
 					<div class="container-fluid p-0 mb-3">
-
 						<div class="col">
 							<span class="tituloEditor">Descrição</span>
 						</div>
@@ -103,13 +90,11 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 				<div class="row" style="margin-top: -40px;">
 					<div class="col-md-3" style="margin-top: 20px;">
 						<label class="labelForm">Fechamento</label>
-
 						<?php if ($contrato['dataFechamento'] == null) { ?>
 							<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] = '00/00/0000 00:00' ?>" disabled>
 						<?php } else { ?>
 							<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataFechamento'])) ?>" disabled>
 						<?php } ?>
-
 					</div>
 
 					<div class="col-md-3 form-group" style="margin-top: 16px;">

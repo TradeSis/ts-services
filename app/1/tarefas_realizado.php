@@ -46,8 +46,9 @@ if (isset($jsonEntrada['idTarefa'])) {
     $row = mysqli_fetch_array($buscar4, MYSQLI_ASSOC);
     $horaCobradoTarefa = $row["horaCobrado"];
 
-    if ($horaCobradoTarefa == null) {
-        $sql = "UPDATE `tarefa` SET `dataReal`='$dataReal', `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal', `horaCobrado`=TIMEDIFF(`horaFinalReal`, `horaInicioReal`) WHERE idTarefa = $idTarefa";
+    if ($horaCobradoTarefa == null || $horaCobradoTarefa == '00:00:00') {
+        $horaCobrado = '00:30:00';
+        $sql = "UPDATE `tarefa` SET `dataReal`='$dataReal', `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal', `horaCobrado`='$horaCobrado' WHERE idTarefa = $idTarefa";
     } else {
         $sql = "UPDATE `tarefa` SET `dataReal`='$dataReal', `horaInicioReal`='$horaInicioReal', `horaFinalReal`='$horaFinalReal' WHERE idTarefa = $idTarefa";
     }

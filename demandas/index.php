@@ -310,6 +310,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Ocorrência</th>
                 <th>Fechamento</th>
                 <th>Ação</th>
+                <th></th>
               </tr>
               <tr>
                 <th></th>
@@ -410,6 +411,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Titulo</th>
                 <th>Status</th>
                 <th>Ocorrência</th>
+                <th>Fechamento</th>
                 <th>Ação</th>
               </tr>
               <tr>
@@ -478,6 +480,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                     </select>
                   </form>
                 </th>
+                <th></th>
                 <th></th>
               </tr>
             <?php } ?>
@@ -634,6 +637,13 @@ if (isset($_SESSION['filtro_demanda'])) {
             for (var $i = 0; $i < json.length; $i++) {
               var object = json[$i];
 
+              if (object.dataFechamento == null) {
+                var dataFechamentoFormatada = "<p>---</p>";
+              } else {
+                var dataFechamento = new Date(object.dataFechamento);
+                dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
+              }
+
               linha += "<tr>";
               linha += "<td>" + object.prioridade + "</td>";
               linha += "<td>" + object.idDemanda + "</td>";
@@ -642,6 +652,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td>" + object.tituloDemanda + "</td>";
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
+              linha += "<td>" + dataFechamentoFormatada + "</td>";
               linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }

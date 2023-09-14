@@ -52,7 +52,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                     </li>
 
                 <?php }
-                if ($nivelMenu >= 2) { ?>
+                if ($nivelMenu >= 1) { ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "execucao") {
                             echo " active ";

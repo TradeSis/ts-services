@@ -192,7 +192,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
                             </div>
                             <div class="col-md-3 form-group">
                                 <label class='labelForm' style="margin-top: -5px;">valorNota</label>
-                                <input type="text" class="form-control" name="valorNota" autocomplete="off" required style="margin-top: -5px;">
+                                <input type="text" class="form-control" name="valorNota" autocomplete="off" value="<?php echo $contrato['valorContrato'] ?>" required style="margin-top: -5px;">
                             </div>
                             <div class="col-md-3 form-group-select">
                                 <div class="form-group">

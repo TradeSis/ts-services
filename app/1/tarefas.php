@@ -83,7 +83,7 @@ if (isset($jsonEntrada["tituloTarefa"])) {
 }
 
 if (isset($jsonEntrada["buscaTarefa"])) {
-  $sql = $sql . $where . " tarefa.tituloTarefa like " . "'%" . $jsonEntrada["buscaTarefa"] . "%' or tarefa.idTarefa like " . "'%" . $jsonEntrada["buscaTarefa"] . "%'";
+  $sql = $sql . $where . " tarefa.idTarefa= " .  $jsonEntrada["buscaTarefa"] . " or tarefa.tituloTarefa like " . "'%" . $jsonEntrada["buscaTarefa"] . "%'";
   $where = " and ";
 }
 

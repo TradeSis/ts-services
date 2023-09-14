@@ -5,7 +5,26 @@
 // Lucas 17022023 adicionado condição else para idContratoStatus
 // Lucas 07022023 criacao
 
-
+//LOG
+$LOG_CAMINHO = defineCaminhoLog();
+if (isset($LOG_CAMINHO)) {
+  $LOG_NIVEL = defineNivelLog();
+  $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "contrato";
+  if (isset($LOG_NIVEL)) {
+    if ($LOG_NIVEL >= 1) {
+      $arquivo = fopen(defineCaminhoLog() . "contrato_" . date("dmY") . ".log", "a");
+    }
+  }
+}
+if (isset($LOG_NIVEL)) {
+  if ($LOG_NIVEL == 1) {
+    fwrite($arquivo, $identificacao . "\n");
+  }
+  if ($LOG_NIVEL >= 2) {
+    fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
+  }
+}
+//LOG
 
 $idEmpresa = null;
 if (isset($jsonEntrada["idEmpresa"])) {
@@ -41,7 +60,7 @@ if (isset($jsonEntrada["idContrato"])) {
   }
 
   if (isset($jsonEntrada["buscaContrato"])) {
-    $sql = $sql . $where . " contrato.tituloContrato like " . "'%" . $jsonEntrada["buscaContrato"] . "%' or . contrato.idContrato like " . "'%" . $jsonEntrada["buscaContrato"] . "%'";
+    $sql = $sql . $where . " contrato.idContrato= " . $jsonEntrada["buscaContrato"] . " or . contrato.tituloContrato like " . "'%" . $jsonEntrada["buscaContrato"] . "%'";
     $where = " and ";
   }
 
@@ -53,7 +72,13 @@ if (isset($jsonEntrada["idContrato"])) {
 
 
 //echo "-SQL->".$sql."\n"; 
-
+//LOG
+if (isset($LOG_NIVEL)) {
+  if ($LOG_NIVEL >= 3) {
+    fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
+  }
+}
+//LOG
 
 $rows = 0;
 $buscar = mysqli_query($conexao, $sql);
@@ -69,3 +94,10 @@ $jsonSaida = $contrato;
 
 //echo "-SAIDA->".json_encode($jsonSaida)."\n";
 
+//LOG
+if (isset($LOG_NIVEL)) {
+  if ($LOG_NIVEL >= 2) {
+    fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
+  }
+}
+//LOG

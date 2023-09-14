@@ -76,8 +76,8 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
         <div id="tabs">
             <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
             <div class="tab" id="tab-demandacontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
-            <div class="tab" id="tab-notascontrato">Notas Contrato</div>
-
+            <div class="tab" id="tab-notascontrato">Notas</div>
+                                     
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'alterar.php'; ?>
@@ -146,13 +146,13 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Inserir Nota de Serviço</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Inserir Nota</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="container-fluid">
-                    <form method="post" >
+                    <form method="post" id="inserirFormNotaContrato" >
                         <div class="row">
                             <div class="col-md-6 form-group-select">
                                 <div class="form-group">
@@ -214,7 +214,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
                         </div>
 
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" formaction="<?php echo URLROOT?>/notas/database/notasservico.php?operacao=inserir_notascontrato" class="btn btn-success">Cadastrar</button>
+                            <button type="submit"  class="btn btn-success">Cadastrar</button>
                         </div>
                     </form>
                 </div>
@@ -224,28 +224,30 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
    
     <!--------- MODAL ALTERAR NOTAS --------->
-    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog" aria-labelledby="alterarmodalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="alterarModalNotas" tabindex="-1" role="dialog" aria-labelledby="alterarModalNotasLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Alterar Nota Serviço</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar Nota</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="container">
-                    <form method="post" >
+                    <form method="post" id="alterarFormNotaContrato">
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="labelForm">idNotaServico</label>
-                                    <input type="text" class="data select form-control" id="idNotaServico" name="idNotaServico" disabled>
+                                    <input type="text" class="data select form-control" id="idNotaServico" name="idNotaServico" readonly>
+                                    <input type="hidden" class="data select form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="labelForm">Cliente</label>
-                                    <input type="text" class="data select form-control" name="idCliente" id="idCliente"  disabled>
+                                    <input type="text" class="data select form-control" name="nomeCliente" id="nomeCliente" disabled>
+                                    <input type="hidden" class="data select form-control" name="idCliente" id="idCliente" readonly>
                                 </div>
                             </div>
                             <div class="col-md-3 form-group">
@@ -294,7 +296,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
                             </div>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" formaction="../database/notasservico.php?operacao=alterar" class="btn btn-success">Salvar</button>
+                            <button type="submit"  class="btn btn-success">Salvar</button>
                         </div>
                     </form>
                 </div>

@@ -1,78 +1,119 @@
 <?php
-include_once '../head.php';
-include_once(ROOT. '/notas/database/notascontrato.php');
-
-
-$notascontratos = buscaNotasContrato($contrato['idContrato']);
-echo json_encode($notascontratos);
+include_once(__DIR__ . '/../head.php');
+$idContrato = $contrato['idContrato'];
 ?>
 
+</html>
+
 <body class="bg-transparent">
-	<div class="container-fluid">
-		<div class="mb-2" style="text-align:right">
-			<button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirModalNotas"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
-		</div>
 
-		<div class="card mt-2 text-center">
-			<div class="table scrollbar-tabela">
-				<table class="table">
-					<thead class="cabecalhoTabela">
-						<tr>
-							<th class="text-center">ID Nota</th>
-							<th class="text-center">dataFaturamento</th>
-							<th class="text-center">dataEmissao</th>
-							<th class="text-center">serieNota</th>
-							<th class="text-center">numeroNota</th>
-							<th class="text-center">serieRPS</th>
-							<th class="text-center">numeroRPS</th>
-							<th class="text-center">valorNota</th>
-                            <th class="text-center">statusNota</th>
-							<th class="text-center">Ação</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						foreach ($notascontratos as $notascontrato) {
-                            if($notascontrato['dataEmissao'] == "0000-00-00"){
-                                $dataEmissao = "---";
-                            }else{
-                                $dataEmissao = date('d/m/Y', strtotime($notascontrato['dataEmissao']));
+    <div class="container-fluid text-center mt-4">
+
+        <div class="row">
+            <div class="col-sm-3 ml-2">
+                <h2 class="tituloTabela">Notas</h2>
+            </div>
+
+            <div class="col-sm" style="text-align:right">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModalNotas"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+            </div>
+        </div>
+
+
+        <div class="card mt-2 text-center">
+            <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
+                <table class="table">
+                    <thead class="cabecalhoTabela">
+                        <tr>
+                            <th>idNotaServico</th>
+                            <th>dataFaturamento</th>
+                            <th>dataEmissao</th>
+                            <th>serieNota</th>
+                            <th>numeroNota</th>
+                            <th>serieRPS</th>
+                            <th>numeroRPS</th>
+                            <th>valorNota</th>
+                            <th>statusNota</th>
+                            <th>condicao</th>
+                            <th colspan="2">Ação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id='dados' class="fonteCorpo">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+            $.ajax({
+                type: 'POST',
+                dataType: 'html',
+                url: '<?php echo URLROOT ?>/notas/database/notasservico.php?operacao=buscarnotascontrato',
+                beforeSend: function() {
+                    $("#dados").html("Carregando...");
+                },
+                data: {
+                    idContrato:<?php echo $idContrato ?>
+                },
+                success: function(msg) {
+
+                    var json = JSON.parse(msg);
+                    var linha = "";
+                    for (var $i = 0; $i < json.length; $i++) {
+                        var object = json[$i];
+
+                        function formatDate(dateString) {
+                            if (dateString !== null && !isNaN(new Date(dateString))) {
+                                var date = new Date(dateString);
+                                var day = date.getUTCDate().toString().padStart(2, '0');
+                                var month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+                                var year = date.getUTCFullYear().toString().padStart(4, '0');
+                                return day + "/" + month + "/" + year;
                             }
-                            if($notascontrato['dataFaturamento'] == "0000-00-00"){
-                                $dataFaturamento = "---";
-                            }else{
-                                $dataFaturamento = date('d/m/Y', strtotime($notascontrato['dataFaturamento']));
-                            }
-						?>
-							<tr>
-								<td class="text-center"><?php echo $notascontrato['idNotaServico'] ?></td>
-								<td class="text-center"><?php echo $dataFaturamento ?></td>
-								<td class="text-center"><?php echo $dataEmissao ?></td>
-								<td class="text-center"><?php echo $notascontrato['serieNota'] ?></td>
-								<td class="text-center"><?php echo $notascontrato['numeroNota'] ?></td>
-								<td class="text-center"><?php echo $notascontrato['serieRPS'] ?></td>
-								<td class="text-center"><?php echo $notascontrato['numeroRPS'] ?></td>
-								<td class="text-center"><?php echo $notascontrato['valorNota'] ?></td>
-                                <td class="text-center"><?php echo $notascontrato['statusNota'] ?></td>
-								<td>
-								<!-- <button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' 
-                                data-idContrato='79'><i class='bi bi-pencil-square'></i></button> -->	
+                            return "00/00/0000";
+                        }
 
-								<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' 
-								data-idNotaServico='" + object.79 + "'><i class='bi bi-pencil-square'></i></button>
-                                
-								</td>
-							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+                        var dataFaturamentoFormatada = formatDate(object.dataFaturamento);
+                        var dataEmissaoFormatada = formatDate(object.dataEmissao);
 
-	<script>
+                        if (object.statusNota == 0) {
+                            var novoStatusNota = "Aberto";
+                        }
+                        if (object.statusNota == 1) {
+                            var novoStatusNota = "Emitida";
+                        }
+                        if (object.statusNota == 2) {
+                            var novoStatusNota = "Recebida";
+                        }
+                        if (object.statusNota == 3) {
+                            var novoStatusNota = "Cancelada";
+                        }
 
-        $(document).on('click', 'button[data-target="#alterarmodal"]', function() {
+                        linha = linha + "<tr>";
+                        linha = linha + "<td>" + object.idNotaServico + "</td>";
+                        linha = linha + "<td>" + dataFaturamentoFormatada + "</td>";
+                        linha = linha + "<td>" + dataEmissaoFormatada + "</td>";
+                        linha = linha + "<td>" + object.serieNota + "</td>";
+                        linha = linha + "<td>" + object.numeroNota + "</td>";
+                        linha = linha + "<td>" + object.serieRPS + "</td>";
+                        linha = linha + "<td>" + object.numeroRPS + "</td>";
+                        linha = linha + "<td>" + object.valorNota + "</td>";
+                        linha = linha + "<td>" + novoStatusNota + "</td>";
+                        linha = linha + "<td>" + object.condicao + "</td>";
+                        linha = linha + "<td>" + "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarModalNotas' data-idNotaServico='" + object.idNotaServico + "'><i class='bi bi-pencil-square'></i></button>"
+                        linha = linha + "</tr>";
+                    }
+                    $("#dados").html(linha);
+                }
+            });
+        
+       
+
+        $(document).on('click', 'button[data-target="#alterarModalNotas"]', function() {
             var idNotaServico = $(this).attr("data-idNotaServico");
             //alert(idNotaServico)
             $.ajax({
@@ -80,11 +121,12 @@ echo json_encode($notascontratos);
                 dataType: 'json',
                 url: '<?php echo URLROOT ?>/notas/database/notasservico.php?operacao=buscar',
                 data: {
-                    idContrato: idContrato
+                    idNotaServico: idNotaServico
                 },
                 success: function(data) {
                     $('#idNotaServico').val(data.idNotaServico);
                     $('#idCliente').val(data.idCliente);
+                    $('#nomeCliente').val(data.nomeCliente);
                     $('#dataFaturamento').val(data.dataFaturamento);
                     $('#dataEmissao').val(data.dataEmissao);
                     $('#serieNota').val(data.serieNota);
@@ -94,33 +136,75 @@ echo json_encode($notascontratos);
                     $('#valorNota').val(data.valorNota);
                     $('#statusNota').val(data.statusNota);
                     $('#condicao').val(data.condicao);
-                /* alert(data) */
-                    $('#alterarmodal').modal('show');
+                    /* alert(data.idCliente) */
+                    $('#alterarModalNotas').modal('show');
                 }
             });
         });
 
-		function refreshPage(tab, idContrato) {
-			window.location.reload();
-			var url = window.location.href.split('?')[0];
-			var newUrl = url + '?id=' + tab + '&&idContrato=' + idContrato;
-			window.location.href = newUrl;
-		}
+        $('.btnAbre').click(function() {
+            $('.menuFiltros').toggleClass('mostra');
+            $('.diviFrame').toggleClass('mostra');
+        });
 
-		var inserirModal = document.getElementById("inserirModal");
 
-		var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
+      
 
-		inserirBtn.onclick = function() {
-			inserirModal.style.display = "block";
-		};
+        var inserirModal = document.getElementById("inserirModal");
 
-		window.onclick = function(event) {
-			if (event.target == inserirModal) {
-				inserirModal.style.display = "none";
-			}
-		};
-	</script>
+        var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
+
+        inserirBtn.onclick = function() {
+            inserirModal.style.display = "block";
+        };
+
+        window.onclick = function(event) {
+            if (event.target == inserirModal) {
+                inserirModal.style.display = "none";
+            }
+        };
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#inserirFormNotaContrato").submit(function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "<?php echo URLROOT?>/notas/database/notasservico.php?operacao=inserir_notascontrato",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: refreshPage,
+                });
+            });
+
+          $("#alterarFormNotaContrato").submit(function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "<?php echo URLROOT?>/notas/database/notasservico.php?operacao=alterar",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: refreshPage,
+                });
+            }); 
+            
+         function refreshPage(tab, idContrato) {
+            window.location.reload();
+            var url = window.location.href.split('?')[0];
+            var newUrl = url + '?id=' + tab + '&&idContrato=' + idContrato;
+            window.location.href = newUrl;
+            
+        } 
+            
+        });
+    </script>
+
+
 </body>
 
 </html>

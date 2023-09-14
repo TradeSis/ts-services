@@ -66,6 +66,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
         <div class="row">
             <div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
                 <span class="titulo">
+
                     <?php echo $contrato['idContrato'] ?> - <?php echo $contrato['tituloContrato'] ?>
                 </span>
             </div>
@@ -76,13 +77,17 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
         <div id="tabs">
             <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
             <div class="tab" id="tab-demandacontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
-
+            <div class="tab" id="tab-notascontrato">Notas</div>
+                                     
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'alterar.php'; ?>
             </div>
             <div class="tabContent">
                 <?php include_once 'demandaContrato.php'; ?>
+            </div>
+            <div class="tabContent">
+                <?php include_once 'notascontrato.php'; ?>
             </div>
 
         </div>
@@ -137,6 +142,170 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
         </div>
     </div>
 
+      <!--------- MODAL INSERIR NOTAS --------->
+      <div class="modal fade bd-example-modal-lg" id="inserirModalNotas" tabindex="-1" role="dialog" aria-labelledby="inserirModalNotasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Inserir Nota</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container-fluid">
+                    <form method="post" id="inserirFormNotaContrato" >
+                        <div class="row">
+                            <div class="col-md-6 form-group-select">
+                                <div class="form-group">
+                                    <label class="labelForm">Cliente</label>
+                                    <input type="text" class="data select form-control" name="nomeCliente" value="<?php echo $contrato['nomeCliente'] ?>" disabled>
+                                    <input type="hidden" class="form-control" name="idCliente" value="<?php echo $contrato['idCliente'] ?>" readonly>
+                                    <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm' style="margin-top: -5px;">dataFaturamento</label>
+                                <input type="date" class="form-control" name="dataFaturamento" autocomplete="off" required style="margin-top: -5px;">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm' style="margin-top: -5px;">dataEmissao</label>
+                                <input type="date" class="form-control" name="dataEmissao" autocomplete="off"  style="margin-top: -5px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label class='labelForm' style="margin-top: -5px;">serieNota</label>
+                                <input type="text" class="form-control" name="serieNota" autocomplete="off"  style="margin-top: -5px;">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class='labelForm' style="margin-top: -5px;">numeroNota</label>
+                                <input type="text" class="form-control" name="numeroNota" autocomplete="off" style="margin-top: -5px;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm' style="margin-top: -5px;">serieRPS</label>
+                                <input type="text" class="form-control" name="serieRPS" autocomplete="off"  style="margin-top: -5px;">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm' style="margin-top: -5px;">numeroRPS</label>
+                                <input type="text" class="form-control" name="numeroRPS" autocomplete="off"  style="margin-top: -5px;">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm' style="margin-top: -5px;">valorNota</label>
+                                <input type="text" class="form-control" name="valorNota" autocomplete="off" value="<?php echo $contrato['valorContrato'] ?>" required style="margin-top: -5px;">
+                            </div>
+                            <div class="col-md-3 form-group-select">
+                                <div class="form-group">
+                                    <label class="labelForm">statusNota</label>
+                                    <select class="select form-control" name="statusNota" autocomplete="off" required style="margin-top: -5px;">
+                                        <option value="0">Aberto</option>
+                                        <option value="1">Emitida</option>
+                                        <option value="2">Recebida</option>
+                                        <option value="3">Cancelada</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label class='labelForm' style="margin-top: -5px;">condicao</label>
+                                <input type="text" class="form-control" name="condicao" autocomplete="off" style="margin-top: -5px;">
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit"  class="btn btn-success">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <!--------- MODAL ALTERAR NOTAS --------->
+    <div class="modal fade bd-example-modal-lg" id="alterarModalNotas" tabindex="-1" role="dialog" aria-labelledby="alterarModalNotasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Alterar Nota</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <form method="post" id="alterarFormNotaContrato">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="labelForm">idNotaServico</label>
+                                    <input type="text" class="data select form-control" id="idNotaServico" name="idNotaServico" readonly>
+                                    <input type="hidden" class="data select form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="labelForm">Cliente</label>
+                                    <input type="text" class="data select form-control" name="nomeCliente" id="nomeCliente" disabled>
+                                    <input type="hidden" class="data select form-control" name="idCliente" id="idCliente" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm'>dataFaturamento</label>
+                                <input type="date" class="data select form-control" name="dataFaturamento" id="dataFaturamento" required>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm'>dataEmissao</label>
+                                <input type="date" class="data select form-control" name="dataEmissao" id="dataEmissao" >
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: -55px;">
+                            <div class="col-md-6 form-group">
+                                <label class='labelForm'>serieNota</label>
+                                <input type="text" class="data select form-control" name="serieNota" id="serieNota" >
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class='labelForm'>numeroNota</label>
+                                <input type="text" class="data select form-control" name="numeroNota" id="numeroNotabd" >
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: -55px;">
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm'>serieRPS</label>
+                                <input type="text" class="data select form-control" name="serieRPS" id="serieRPS">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm'>numeroRPS</label>
+                                <input type="text" class="data select form-control" name="numeroRPS" id="numeroRPS">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm'>valorNota</label>
+                                <input type="text" class="data select form-control" name="valorNota" id="valorNota" required>
+                            </div>
+
+                            <div class="col-md-3 form-group">
+                                <label class='labelForm'>statusNota</label>
+                                <input type="text" class="data select form-control" name="statusNota" id="statusNota" required>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: -55px;">
+                            <div class="col-md-12 form-group">
+                                <label class='labelForm'>condicao</label>
+                                <input type="text" class="data select form-control" name="condicao" id="condicao">
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit"  class="btn btn-success">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
     <script>
         var tab;
         var tabContent;
@@ -150,6 +319,9 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
             var id = urlParams.get('id');
             if (id === 'demandacontrato') {
                 showTabsContent(1);
+            }
+            if (id === 'notascontrato') {
+                showTabsContent(2);
             }
         }
 

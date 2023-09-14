@@ -34,12 +34,11 @@ if ($_SESSION['idCliente'] == null) {
 }
 $statusTarefa = "1"; //ABERTO
 
+$Periodo = null;
 $filtroEntrada = null;
 $idTipoOcorrencia = null;
-$PrevistoInicio = null;
-$PrevistoFinal = null;
-$RealInicio = null;
-$RealFinal = null;
+$PeriodoInicio = null;
+$PeriodoFim = null;
 $PrevistoOrdem = null;
 $RealOrdem = null;
 
@@ -50,15 +49,16 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $idAtendente = $filtroEntrada['idAtendente'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusTarefa = $filtroEntrada['statusTarefa'];
-  $PrevistoInicio = $filtroEntrada['PrevistoInicio'];
-  $PrevistoFinal = $filtroEntrada['PrevistoFinal'];
-  $RealInicio = $filtroEntrada['RealInicio'];
-  $RealFinal = $filtroEntrada['RealFinal'];
+  $Periodo = $filtroEntrada['Periodo'];
+  $PeriodoInicio = $filtroEntrada['PeriodoInicio'];
+  $PeriodoFim = $filtroEntrada['PeriodoFim'];
   $PrevistoOrdem = $filtroEntrada['PrevistoOrdem'];
   $RealOrdem = $filtroEntrada['RealOrdem'];
 }
+$previsaoChecked = ($Periodo === '1') ? 'checked' : '';
+$realizadoChecked = ($Periodo === '0') ? 'checked' : '';
+$Checked = ($Periodo === null) ? 'checked' : '';
 
-//echo json_encode();
 ?>
 
 </html>
@@ -107,66 +107,23 @@ if (isset($_SESSION['filtro_tarefas'])) {
           <?php
           $var = [];
 
-          if ($idAtendente != null) {
-            foreach ($atendentes as $atendente) {
-              if ($atendente['idUsuario'] == $idAtendente) {
-                $varUsuario = $atendente['nomeUsuario'];
-              }
-            }
-            $var[] = "Responsável = $varUsuario";
-          }
-          if ($idCliente != null) {
-            foreach ($clientes as $cliente) {
-              if ($cliente['idCliente'] == $idCliente) {
-                $varCliente = $cliente['nomeCliente'];
-              }
-            }
-            $var[] = "Cliente = $varCliente";
-          }
-          if ($idTipoOcorrencia != null) {
-            foreach ($ocorrencias as $ocorrencia) {
-              if ($ocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                $varOcorrencia = $ocorrencia['nomeTipoOcorrencia'];
-              }
-            }
-            $var[] = "Ocorrência = $varOcorrencia";
-          }
           if ($statusTarefa != null) {
-            if ($statusTarefa == 1) {
-              $varStatus = "Aberto";
-            }
-            if ($statusTarefa == 0) {
-              $varStatus = "Realizado";
-            }
+            $varStatus = ($statusTarefa == 1) ? "Aberto" : "Realizado";
             $var[] = "Status = $varStatus";
           }
-          if ($PrevistoInicio != null && $PrevistoFinal != null) {
-            $varPrevistoInicio = date('d/m/Y', strtotime($PrevistoInicio));
-            $varPrevistoFinalFormatted = date('d/m/Y', strtotime($PrevistoFinal));
-            $var[] = "Período Previsão = $varPrevistoInicio até $varPrevistoFinalFormatted";
-          }
-          if ($RealInicio != null && $RealFinal != null) {
-            $varRealInicio = date('d/m/Y', strtotime($RealInicio));
-            $varRealFinal = date('d/m/Y', strtotime($RealFinal));
-            $var[] = "Período Realizado = $varRealInicio até $varRealFinal";
-          }
-          if ($PrevistoOrdem != null) {
-            if ($PrevistoOrdem == 1) {
-              $varPrevistoOrdem = "DESC";
+
+          if ($Periodo != null) {
+            $varPeriodo = ($Periodo == 1) ? "Previsão" : "Realizado";
+            $var[] = "Periodo = $varPeriodo";
+            if ($PeriodoInicio != null) {
+              $varPeriodoInicio = date('d/m/Y', strtotime($PeriodoInicio));
+              $var[] = "De $varPeriodoInicio";
+
+              if ($PeriodoFim != null) {
+                $varPeriodoFimFormatted = date('d/m/Y', strtotime($PeriodoFim));
+                $var[] = "Até $varPeriodoFimFormatted";
+              }
             }
-            if ($PrevistoOrdem == 0) {
-              $varPrevistoOrdem = "ASC";
-            }
-            $var[] = "Ordem Previsão = $varPrevistoOrdem";
-          }
-          if ($RealOrdem != null) {
-            if ($RealOrdem == 1) {
-              $varRealOrdem = "DESC";
-            }
-            if ($RealOrdem == 0) {
-              $varRealOrdem = "ASC";
-            }
-            $var[] = "Ordem Realizado = $varRealOrdem";
           }
 
           echo implode(" - ", $var);
@@ -323,57 +280,37 @@ if (isset($_SESSION['filtro_tarefas'])) {
         <div class="modal-body">
           <form method="post">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="Radio" id="Radio1">
-              <label class="form-check-label" for="Radio1">
+              <input class="form-check-input" type="radio" value="<?php echo null ?>" id="Radio" name="FiltroPeriodo"
+                <?php echo $Checked; ?> hidden>
+              <input class="form-check-input" type="radio" value="1" id="PrevisaoRadio" name="FiltroPeriodo" <?php echo $previsaoChecked; ?>>
+              <label class="form-check-label" for="PrevisaoRadio">
                 Previsão
               </label>
             </div>
-            <div class="row" id="conteudoPrev">
-              <div class="col">
-                <label class="labelForm">Começo</label>
-                <?php if ($PrevistoInicio != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroPrevistoInicio"
-                  value="<?php echo $PrevistoInicio ?>" name="PrevistoInicio" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroPrevistoInicio" name="PrevistoInicio"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-              <div class="col">
-                <label class="labelForm">Fim</label>
-                <?php if ($PrevistoFinal != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroPrevistoFinal"
-                  value="<?php echo $PrevistoFinal ?>" name="PrevistoFinal" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroPrevistoFinal" name="PrevistoFinal"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-            </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="Radio" id="Radio2">
-              <label class="form-check-label" for="Radio2">
+              <input class="form-check-input" type="radio" value="0" id="RealizadoRadio" name="FiltroPeriodo" <?php echo $realizadoChecked; ?>>
+              <label class="form-check-label" for="RealizadoRadio">
                 Realizado
               </label>
             </div>
             <div class="row" id="conteudoReal">
               <div class="col">
                 <label class="labelForm">Começo</label>
-                <?php if ($RealInicio != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroRealInicio"
-                  value="<?php echo $RealInicio ?>" name="RealInicio" autocomplete="off">
+                <?php if ($PeriodoInicio != null) { ?>
+                <input type="date" class="data select form-control" id="FiltroPeriodoInicio"
+                  value="<?php echo $PeriodoInicio ?>" name="PeriodoInicio" autocomplete="off">
                 <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroRealInicio" name="RealInicio"
+                <input type="date" class="data select form-control" id="FiltroPeriodoInicio" name="PeriodoInicio"
                   autocomplete="off">
                 <?php } ?>
               </div>
               <div class="col">
                 <label class="labelForm">Fim</label>
-                <?php if ($RealFinal != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroRealFinal"
-                  value="<?php echo $RealFinal ?>" name="RealFinal" autocomplete="off">
+                <?php if ($PeriodoFim != null) { ?>
+                <input type="date" class="data select form-control" id="FiltroPeriodoFim"
+                  value="<?php echo $PeriodoFim ?>" name="PeriodoFim" autocomplete="off">
                 <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroRealFinal" name="RealFinal"
+                <input type="date" class="data select form-control" id="FiltroPeriodoFim" name="PeriodoFim"
                   autocomplete="off">
                 <?php } ?>
               </div>
@@ -624,13 +561,14 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
+
     function limpar() {
-      buscar(null, null, null, null, null, null, null, null, null, null, null);
+      buscar(null, null, null, null, null, null, null, null, null, null);
       window.location.reload();
     }
     function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, null);
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null);
       window.location.reload();
     }
 
@@ -645,7 +583,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
     var mm = String(vdata.getMinutes()).padStart(2, '0');
     var time = hh + ':' + mm;
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, PrevistoInicio, PrevistoFinal, RealInicio, RealFinal, PrevistoOrdem, RealOrdem) {
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem) {
 
       $.ajax({
         type: 'POST',
@@ -660,10 +598,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
           tituloTarefa: tituloTarefa,
           idTipoOcorrencia: idTipoOcorrencia,
           statusTarefa: statusTarefa,
-          PrevistoInicio: PrevistoInicio,
-          PrevistoFinal: PrevistoFinal,
-          RealInicio: RealInicio,
-          RealFinal: RealFinal,
+          Periodo: Periodo,
+          PeriodoInicio: PeriodoInicio,
+          PeriodoFim: PeriodoFim,
           PrevistoOrdem: PrevistoOrdem,
           RealOrdem: RealOrdem
         },
@@ -756,63 +693,52 @@ if (isset($_SESSION['filtro_tarefas'])) {
     }
 
     $("#FiltroClientes").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      window.location.reload();
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
     });
 
     $("#FiltroUsuario").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      window.location.reload();
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
     });
 
     $("#buscar").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      window.location.reload();
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
     });
 
     $("#FiltroOcorrencia").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      window.location.reload();
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
     });
 
     $("#FiltroDemanda").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      window.location.reload();
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
     });
 
     $("#FiltroStatusTarefa").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
       window.location.reload();
     });
 
     $("#FiltroPrevistoOrdem").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      window.location.reload();
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
     });
 
     $("#FiltroRealOrdem").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      window.location.reload();
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
     });
 
     $("#filtrarButton").click(function () {
-      if (!$('#Radio1').is(':checked') && !$('#Radio2').is(':checked')) {
-        alert("Por favor selecione uma opção.");
-        return false;
-      } else {
-        if ($('#Radio2').is(':checked')) {
-          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), null, $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), null, $("#FiltroRealOrdem").val());
-        } else {
-          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), null);
-        }
-        $('#periodoModal').modal('hide');
-        window.location.reload();
+      if ($("input[name='FiltroPeriodo']:checked").val() == 1) {
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), null);
       }
+      if ($("input[name='FiltroPeriodo']:checked").val() == 0) {
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), null, $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), null, $("#FiltroRealOrdem").val());
+      }
+      $('#periodoModal').modal('hide');
+      window.location.reload();
     });
 
     document.addEventListener("keypress", function (e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
       }
     });
 
@@ -987,25 +913,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
       }
     });
 
-    $(document).ready(function () {
-      function RadioChange() {
-        if ($('#Radio1').is(':checked')) {
-          $('#conteudoPrev').show().prop('checked', true);
-          $('#conteudoReal').hide().prop('checked', false);
-          $('#FiltroRealInicio').val(null);
-          $('#FiltroRealFinal').val(null);
-        } else if ($('#Radio2').is(':checked')) {
-          $('#conteudoPrev').hide().prop('checked', false);
-          $('#conteudoReal').show().prop('checked', true);
-          $('#FiltroPrevistoInicio').val(null);
-          $('#FiltroPrevistoFinal').val(null);
-        }
-      }
-
-      $('#Radio1, #Radio2').change(RadioChange);
-
-      RadioChange();
-    });
   </script>
 
 

@@ -220,10 +220,9 @@ if (isset($_GET['operacao'])) {
         $tituloTarefa = $_POST['tituloTarefa'];
         $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
         $statusTarefa = $_POST['statusTarefa'];
-        $PrevistoInicio = $_POST['PrevistoInicio'];
-        $PrevistoFinal = $_POST['PrevistoFinal'];
-        $RealInicio = $_POST['RealInicio'];
-        $RealFinal = $_POST['RealFinal'];
+        $Periodo = $_POST['Periodo'];
+        $PeriodoInicio = $_POST['PeriodoInicio'];
+        $PeriodoFim = $_POST['PeriodoFim'];
         $PrevistoOrdem = $_POST['PrevistoOrdem'];
         $RealOrdem = $_POST['RealOrdem'];
 
@@ -242,17 +241,14 @@ if (isset($_GET['operacao'])) {
         if ($statusTarefa == "") {
             $statusTarefa = null;
         }
-        if ($PrevistoInicio == "") {
-            $PrevistoInicio = null;
+        if ($Periodo == "") {
+            $Periodo = null;
         }
-        if ($PrevistoFinal == "") {
-            $PrevistoFinal = null;
+        if ($PeriodoInicio == "") {
+            $PeriodoInicio = null;
         }
-        if ($RealInicio == "") {
-            $RealInicio = null;
-        }
-        if ($RealFinal == "") {
-            $RealFinal = null;
+        if ($PeriodoFim == "") {
+            $PeriodoFim = null;
         }
         if ($PrevistoOrdem == "") {
             $PrevistoOrdem = null;
@@ -268,10 +264,9 @@ if (isset($_GET['operacao'])) {
             'tituloTarefa' => $tituloTarefa,
             'idTipoOcorrencia' => $idTipoOcorrencia,
             'statusTarefa' => $statusTarefa,
-            'PrevistoInicio' => $PrevistoInicio,
-            'PrevistoFinal' => $PrevistoFinal,
-            'RealInicio' => $RealInicio,
-            'RealFinal' => $RealFinal,
+            'Periodo' => $Periodo,
+            'PeriodoInicio' => $PeriodoInicio,
+            'PeriodoFim' => $PeriodoFim,
             'PrevistoOrdem' => $PrevistoOrdem,
             'RealOrdem' => $RealOrdem
         );

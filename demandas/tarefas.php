@@ -726,9 +726,14 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     });
 
     $("#filtrarButton").click(function () {
+      if (!$('#PrevisaoRadio').is(':checked') && !$('#RealizadoRadio').is(':checked')) {
+        alert("Por favor selecione uma opção.");
+        return false;
+      } else {
         buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val());
-      $('#periodoModal').modal('hide');
-      window.location.reload();
+        $('#periodoModal').modal('hide');
+        window.location.reload();
+      }
     });
 
     document.addEventListener("keypress", function (e) {

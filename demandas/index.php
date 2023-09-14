@@ -22,7 +22,7 @@ include '../database/contratotipos.php';
 
 $urlContratoTipo = null;
 if (isset($_GET["tipo"])) {
-  $urlContratoTipo= $_GET["tipo"];
+  $urlContratoTipo = $_GET["tipo"];
   $contratoTipo = buscaContratoTipos($urlContratoTipo);
 } else {
   $contratoTipo = buscaContratoTipos('contratos');
@@ -67,7 +67,6 @@ if (isset($_SESSION['filtro_demanda'])) {
   $idTipoStatus = $filtroEntrada['idTipoStatus'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusDemanda = $filtroEntrada['statusDemanda'];
-  $tamanho = $filtroEntrada['tamanho'];
 }
 
 //echo json_encode($_SESSION);
@@ -219,15 +218,14 @@ if (isset($_SESSION['filtro_demanda'])) {
       <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda"
-            style="font-size: 14px; width: 150px; height: 35px">
+          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>"><?php echo "Todos" ?></option>
             <option <?php if ($statusDemanda == "1") {
-              echo "selected";
-            } ?> value="1">Aberto</option>
+                      echo "selected";
+                    } ?> value="1">Aberto</option>
             <option <?php if ($statusDemanda == "0") {
-              echo "selected";
-            } ?> value="0">Fechado</option>
+                      echo "selected";
+                    } ?> value="0">Fechado</option>
           </select>
 
         </form>
@@ -251,8 +249,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     <div class="row">
       <div class=" btnAbre">
-        <span style="font-size: 25px; font-family: 'Material Symbols Outlined'!important;"
-          class="material-symbols-outlined">
+        <span style="font-size: 25px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
           filter_alt
         </span>
 
@@ -266,11 +263,10 @@ if (isset($_SESSION['filtro_demanda'])) {
 
       <div class="col-sm-4" style="margin-top:-10px;">
         <div class="input-group">
-          <input type="text" class="form-control" id="tituloDemanda" placeholder="Buscar por...">
+          <input type="text" class="form-control" id="buscaDemanda" placeholder="Buscar por id ou titulo">
           <span class="input-group-btn">
             <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
-                class="material-symbols-outlined">search</span>
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
             </button>
           </span>
         </div>
@@ -291,8 +287,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
       <div class="col-sm" style="text-align:right">
-        <a href="demanda_inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button"
-          class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+        <a href="demanda_inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
       </div>
     </div>
 
@@ -313,7 +308,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Abertura</th>
                 <th>Status</th>
                 <th>Ocorrência</th>
-                <th>Tamanho</th>
+                <th>Fechamento</th>
                 <th>Ação</th>
               </tr>
               <tr>
@@ -321,34 +316,32 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($clientes as $cliente) {
-                        ?>
+                      ?>
                         <option <?php
-                        if ($cliente['idCliente'] == $idCliente) {
-                          echo "selected";
-                        }
-                        ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                                if ($cliente['idCliente'] == $idCliente) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
                       <?php } ?>
                     </select>
                   </form>
                 </th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
-                        ?>
+                      ?>
                         <option <?php
-                        if ($usuario['idUsuario'] == $idSolicitante) {
-                          echo "selected";
-                        }
-                        ?>    value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario'] ?></option>
+                                if ($usuario['idUsuario'] == $idSolicitante) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario'] ?></option>
                       <?php } ?>
                     </select>
                   </form>
@@ -356,17 +349,16 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idAtendente" id="FiltroUsuario" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($atendentes as $atendente) {
-                        ?>
+                      ?>
                         <option <?php
-                        if ($atendente['idUsuario'] == $idAtendente) {
-                          echo "selected";
-                        }
-                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                if ($atendente['idUsuario'] == $idAtendente) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
                       <?php } ?>
                     </select>
                   </form>
@@ -374,15 +366,14 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
-                        if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                          echo "selected";
-                        }
-                        ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?>
+                                if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?>
                         </option>
                       <?php } ?>
                     </select>
@@ -390,32 +381,21 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
-                        ?>
+                      ?>
                         <option <?php
-                        if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                          echo "selected";
-                        }
-                        ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
+                                if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
                       <?php } ?>
                     </select>
                   </form>
                 </th>
-                <th style="width: 10%;">
-                  <form action="" method="post">
-                    <select class="form-control text-center" name="tamanho" id="FiltroTamanho"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
-                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                      <option value="P">P</option>
-                      <option value="M">M</option>
-                      <option value="G">G</option>
-                    </select>
-                  </form>
-                </th>
+                <th></th>
                 <th></th>
                 <th></th>
               </tr>
@@ -437,34 +417,31 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C"
-                      disabled>
+                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C" disabled>
                       <?php
                       foreach ($clientes as $cliente) {
-                        ?>
+                      ?>
                         <option <?php
-                        if ($cliente['idCliente'] == $idCliente) {
-                          echo "selected";
-                        }
-                        ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                                if ($cliente['idCliente'] == $idCliente) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
                       <?php } ?>
                     </select>
                   </form>
                 </th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C">
+                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
-                        ?>
+                      ?>
                         <option <?php
-                        if ($usuario['idUsuario'] == $idSolicitante) {
-                          echo "selected";
-                        }
-                        ?>              value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario'] ?></option>
+                                if ($usuario['idUsuario'] == $idSolicitante) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $usuario['idUsuario'] ?>"><?php echo $usuario['nomeUsuario'] ?></option>
                       <?php } ?>
                     </select>
                   </form>
@@ -472,15 +449,14 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
-                        if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                          echo "selected";
-                        }
-                        ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?>
+                                if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $tipostatus['idTipoStatus'] ?>"><?php echo $tipostatus['nomeTipoStatus'] ?>
                         </option>
                       <?php } ?>
                     </select>
@@ -488,17 +464,16 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
-                        ?>
+                      ?>
                         <option <?php
-                        if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                          echo "selected";
-                        }
-                        ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
+                                if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
                       <?php } ?>
                     </select>
                   </form>
@@ -519,10 +494,10 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
   <script>
-    <?php if ($ClienteSession === NULL): ?>
+    <?php if ($ClienteSession === NULL) : ?>
       var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
 
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroTamanho").val());
 
       function limparTrade() {
         buscar(null, null, null, null, null, null, null, null);
@@ -530,13 +505,13 @@ if (isset($_SESSION['filtro_demanda'])) {
       }
 
 
-      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
+      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, tamanho) {
         /* alert(urlContratoTipo) */
         $.ajax({
           type: 'POST',
           dataType: 'html',
           url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
-          beforeSend: function () {
+          beforeSend: function() {
             $("#dados").html("Carregando...");
           },
           data: {
@@ -546,18 +521,24 @@ if (isset($_SESSION['filtro_demanda'])) {
             idTipoStatus: idTipoStatus,
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
-            tituloDemanda: tituloDemanda,
+            buscaDemanda: buscaDemanda,
             tamanho: tamanho,
             urlContratoTipo: urlContratoTipo
           },
-          success: function (msg) {
+          success: function(msg) {
             var json = JSON.parse(msg);
             var linha = "";
             for (var $i = 0; $i < json.length; $i++) {
               var object = json[$i];
               var dataAbertura = new Date(object.dataAbertura);
               var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
-
+              
+              if (object.dataFechamento == null) {
+                var dataFechamentoFormatada = "<p>---</p>";
+              } else {
+                var dataFechamento = new Date(object.dataFechamento);
+                dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
+              }
               linha += "<tr>";
               linha += "<td>" + object.prioridade + "</td>";
               linha += "<td>" + object.idDemanda + "</td>";
@@ -568,7 +549,8 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td>" + dataFormatada + "</td>";
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-              linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
+              //linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
+              linha += "<td>" + dataFechamentoFormatada + "</td>";
               linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
@@ -578,46 +560,46 @@ if (isset($_SESSION['filtro_demanda'])) {
         });
       }
 
-      $("#FiltroTipoStatus").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      $("#FiltroTipoStatus").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       });
 
-      $("#FiltroClientes").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      $("#FiltroClientes").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       });
 
-      $("#FiltroSolicitante").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      $("#FiltroSolicitante").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       });
 
-      $("#FiltroOcorrencia").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      $("#FiltroOcorrencia").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       });
 
-      $("#FiltroUsuario").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      $("#FiltroUsuario").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       });
 
-      $("#FiltroStatusDemanda").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      $("#FiltroStatusDemanda").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       });
 
-      $("#buscar").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      $("#buscar").click(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       });
 
-      $("#FiltroTamanho").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+      $("#FiltroTamanho").click(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       });
 
-      document.addEventListener("keypress", function (e) {
+      document.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
-          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), $("#FiltroTamanho").val());
+          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
         }
       });
-  <?php else: ?>
+    <?php else : ?>
       var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
 
 
       function limpar() {
@@ -626,13 +608,13 @@ if (isset($_SESSION['filtro_demanda'])) {
         window.location.reload();
       }
 
-      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, tituloDemanda, tamanho) {
+      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda) {
 
         $.ajax({
           type: 'POST',
           dataType: 'html',
           url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
-          beforeSend: function () {
+          beforeSend: function() {
             $("#dados").html("Carregando...");
           },
           data: {
@@ -642,11 +624,10 @@ if (isset($_SESSION['filtro_demanda'])) {
             idTipoStatus: idTipoStatus,
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
-            tituloDemanda: tituloDemanda,
-            tamanho: tamanho,
+            buscaDemanda: buscaDemanda,
             urlContratoTipo: urlContratoTipo
           },
-          success: function (msg) {
+          success: function(msg) {
 
             var json = JSON.parse(msg);
             var linha = "";
@@ -670,49 +651,49 @@ if (isset($_SESSION['filtro_demanda'])) {
         });
       }
 
-      $("#FiltroTipoStatus").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      $("#FiltroTipoStatus").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
       });
 
-      $("#FiltroClientes").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      $("#FiltroClientes").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
       });
 
-      $("#FiltroSolicitante").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      $("#FiltroSolicitante").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
       });
 
-      $("#FiltroOcorrencia").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      $("#FiltroOcorrencia").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
       });
 
-      $("#FiltroUsuario").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      $("#FiltroUsuario").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
       });
 
-      $("#FiltroStatusDemanda").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      $("#FiltroStatusDemanda").change(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
       });
 
-      $("#buscar").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      $("#buscar").click(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
       });
 
-      $("#FiltroTamanho").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+      $("#FiltroTamanho").click(function() {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
       });
 
-      document.addEventListener("keypress", function (e) {
+      document.addEventListener("keypress", function(e) {
         if (e.key === "Enter") {
-          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#tituloDemanda").val(), null);
+          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
         }
       });
-  <?php endif; ?>
+    <?php endif; ?>
 
-      $('.btnAbre').click(function () {
-        $('.menuFiltros').toggleClass('mostra');
-        $('.diviFrame').toggleClass('mostra');
-      });
+    $('.btnAbre').click(function() {
+      $('.menuFiltros').toggleClass('mostra');
+      $('.diviFrame').toggleClass('mostra');
+    });
 
 
 
@@ -735,7 +716,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           tituloDemanda: $("#tituloDemanda").val(),
           tamanho: tamanhoValue
         },
-        success: function (json) {
+        success: function(json) {
           var excelContent =
             "<html xmlns:x='urn:schemas-microsoft-com:office:excel'>" +
             "<head>" +
@@ -762,7 +743,9 @@ if (isset($_SESSION['filtro_demanda'])) {
 
           excelContent += "</table></body></html>";
 
-          var excelBlob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+          var excelBlob = new Blob([excelContent], {
+            type: 'application/vnd.ms-excel'
+          });
           var excelUrl = URL.createObjectURL(excelBlob);
           var link = document.createElement("a");
           link.setAttribute("href", excelUrl);
@@ -773,7 +756,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
           document.body.removeChild(link);
         },
-        error: function (e) {
+        error: function(e) {
           alert('Erro: ' + JSON.stringify(e));
         }
       });
@@ -797,7 +780,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           tituloDemanda: $("#tituloDemanda").val(),
           tamanho: tamanhoValue
         },
-        success: function (json) {
+        success: function(json) {
           var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
           csvContent += "Prioridade,ID,Cliente,Solicitante,Demanda,Responsavel,Abertura,Status,Ocorrencia,Tamanho,Previsao\n";
 
@@ -826,7 +809,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
           document.body.removeChild(link);
         },
-        error: function (e) {
+        error: function(e) {
           alert('Erro: ' + JSON.stringify(e));
         }
       });
@@ -850,7 +833,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           tituloDemanda: $("#tituloDemanda").val(),
           tamanho: tamanhoValue
         },
-        success: function (json) {
+        success: function(json) {
           var tableContent =
             "<table>" +
             "<tr><th>Prioridade</th><th>ID</th><th>Cliente</th><th>Solicitante</th><th>Demanda</th><th>Responsavel</th><th>Abertura</th><th>Status</th><th>Ocorrencia</th><th>Tamanho</th></tr>";
@@ -878,16 +861,16 @@ if (isset($_SESSION['filtro_demanda'])) {
           printWindow.document.write('</body></html>');
           printWindow.document.close();
 
-          printWindow.onload = function () {
+          printWindow.onload = function() {
             printWindow.print();
-            printWindow.onafterprint = function () {
+            printWindow.onafterprint = function() {
               printWindow.close();
             };
           };
 
           printWindow.onload();
         },
-        error: function (e) {
+        error: function(e) {
           alert('Erro: ' + JSON.stringify(e));
         }
       });
@@ -897,7 +880,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
 
-    $("#export").click(function () {
+    $("#export").click(function() {
       var selectedOption = $("#exportoptions").val();
       if (selectedOption === "excel") {
         exportToExcel();
@@ -907,9 +890,6 @@ if (isset($_SESSION['filtro_demanda'])) {
         exportToCSV();
       }
     });
-
-
-
   </script>
 </body>
 

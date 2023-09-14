@@ -40,8 +40,8 @@ if (isset($jsonEntrada["idContrato"])) {
     $where = " and ";
   }
 
-  if (isset($jsonEntrada["tituloContrato"])) {
-    $sql = $sql . $where . " contrato.tituloContrato like " . "'%" . $jsonEntrada["tituloContrato"] . "%'";
+  if (isset($jsonEntrada["buscaContrato"])) {
+    $sql = $sql . $where . " contrato.tituloContrato like " . "'%" . $jsonEntrada["buscaContrato"] . "%' or . contrato.idContrato like " . "'%" . $jsonEntrada["buscaContrato"] . "%'";
     $where = " and ";
   }
 

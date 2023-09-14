@@ -315,7 +315,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
             <div class="col-sm-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="tituloContrato" placeholder="Buscar por...">
+                    <input type="text" class="form-control" id="buscaContrato" placeholder="Buscar por id ou titulo">
                     <span class="input-group-btn">
                         <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                                 search
@@ -409,16 +409,14 @@ if (isset($_SESSION['filtro_contrato'])) {
 
     <script>
         var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
 
         function limpar() {
             buscar(null, null, null, null);
             window.location.reload();
         }
 
-        function buscar(idCliente, idContratoStatus, tituloContrato, statusContrato) {
-            /* alert(idCliente); */
-            /* alert(statusContrato); */
+        function buscar(idCliente, idContratoStatus, buscaContrato, statusContrato) {
 
             $.ajax({
                 type: 'POST',
@@ -430,7 +428,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 data: {
                     idCliente: idCliente,
                     idContratoStatus: idContratoStatus,
-                    tituloContrato: tituloContrato,
+                    buscaContrato: buscaContrato,
                     urlContratoTipo: urlContratoTipo,
                     statusContrato: statusContrato
                 },
@@ -513,24 +511,24 @@ if (isset($_SESSION['filtro_contrato'])) {
         }
 
         $("#FiltroClientes").change(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         $("#FiltroContratoStatus").change(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         $("#buscar").click(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         $("#FiltroStatusContrato").click(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         document.addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
-                buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+                buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
             }
         });
 

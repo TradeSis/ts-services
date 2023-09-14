@@ -226,6 +226,7 @@ if (isset($_GET['operacao'])) {
         $RealFinal = $_POST['RealFinal'];
         $PrevistoOrdem = $_POST['PrevistoOrdem'];
         $RealOrdem = $_POST['RealOrdem'];
+        $buscaTarefa = $_POST['buscaTarefa'];
 
         if ($idCliente == "") {
             $idCliente = null;
@@ -260,6 +261,9 @@ if (isset($_GET['operacao'])) {
         if ($RealOrdem == "") {
             $RealOrdem = null;
         }
+        if ($buscaTarefa == "") {
+            $buscaTarefa = null;
+        }
 
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
@@ -273,7 +277,8 @@ if (isset($_GET['operacao'])) {
             'RealInicio' => $RealInicio,
             'RealFinal' => $RealFinal,
             'PrevistoOrdem' => $PrevistoOrdem,
-            'RealOrdem' => $RealOrdem
+            'RealOrdem' => $RealOrdem,
+            'buscaTarefa' => $buscaTarefa
         );
 
         $_SESSION['filtro_tarefas'] = $apiEntrada;

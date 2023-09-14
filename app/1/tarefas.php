@@ -82,6 +82,11 @@ if (isset($jsonEntrada["tituloTarefa"])) {
   $where = " and ";
 }
 
+if (isset($jsonEntrada["buscaTarefa"])) {
+  $sql = $sql . $where . " tarefa.idTarefa= " .  $jsonEntrada["buscaTarefa"] . " or tarefa.tituloTarefa like " . "'%" . $jsonEntrada["buscaTarefa"] . "%'";
+  $where = " and ";
+}
+
 if (isset($jsonEntrada["PrevistoInicio"])) {
   $sql .= $where . " tarefa.Previsto >= '" . $jsonEntrada["PrevistoInicio"] . "'";
   $where = " and ";

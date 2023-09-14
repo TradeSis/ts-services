@@ -153,7 +153,7 @@ if (isset($_GET['operacao'])) {
 
 		$idCliente = $_POST["idCliente"];
 		$idContratoStatus = $_POST["idContratoStatus"];
-		$tituloContrato = $_POST["tituloContrato"];
+		$buscaContrato = $_POST["buscaContrato"];
 		$idContratoTipo = $_POST["urlContratoTipo"];
 		$statusContrato = $_POST['statusContrato'];
 
@@ -165,8 +165,8 @@ if (isset($_GET['operacao'])) {
 			$idContratoStatus = null;
 		} 
 
-		if ($tituloContrato == ""){
-			$tituloContrato = null;
+		if ($buscaContrato == ""){
+			$buscaContrato = null;
 		} 
 
 		if ($idContratoTipo == ""){
@@ -183,7 +183,7 @@ if (isset($_GET['operacao'])) {
 			'idContrato' => null,
 			'idCliente' => $idCliente,
 			'idContratoStatus' => $idContratoStatus,
-			'tituloContrato' => $tituloContrato,
+			'buscaContrato' => $buscaContrato,
 			'idContratoTipo' => $idContratoTipo,
 			'statusContrato' => $statusContrato
 		);

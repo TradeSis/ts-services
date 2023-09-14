@@ -81,8 +81,8 @@ if (isset($jsonEntrada["statusDemanda"])) {
   $where = " and ";
 }
 
-if (isset($jsonEntrada["tituloDemanda"])) {
-  $sql = $sql . $where . " demanda.tituloDemanda like " . "'%" . $jsonEntrada["tituloDemanda"] . "%'";
+if (isset($jsonEntrada["buscaDemanda"])) {
+  $sql = $sql . $where . " demanda.idDemanda= " . $jsonEntrada["buscaDemanda"] . " or . demanda.tituloDemanda like " . "'%" . $jsonEntrada["buscaDemanda"] . "%'";
   $where = " and ";
 }
 

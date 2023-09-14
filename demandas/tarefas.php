@@ -34,12 +34,11 @@ if ($_SESSION['idCliente'] == null) {
 }
 $statusTarefa = "1"; //ABERTO
 
+$Periodo = null;
 $filtroEntrada = null;
 $idTipoOcorrencia = null;
-$PrevistoInicio = null;
-$PrevistoFinal = null;
-$RealInicio = null;
-$RealFinal = null;
+$PeriodoInicio = null;
+$PeriodoFim = null;
 $PrevistoOrdem = null;
 $RealOrdem = null;
 
@@ -50,15 +49,16 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $idAtendente = $filtroEntrada['idAtendente'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusTarefa = $filtroEntrada['statusTarefa'];
-  $PrevistoInicio = $filtroEntrada['PrevistoInicio'];
-  $PrevistoFinal = $filtroEntrada['PrevistoFinal'];
-  $RealInicio = $filtroEntrada['RealInicio'];
-  $RealFinal = $filtroEntrada['RealFinal'];
+  $Periodo = $filtroEntrada['Periodo'];
+  $PeriodoInicio = $filtroEntrada['PeriodoInicio'];
+  $PeriodoFim = $filtroEntrada['PeriodoFim'];
   $PrevistoOrdem = $filtroEntrada['PrevistoOrdem'];
   $RealOrdem = $filtroEntrada['RealOrdem'];
 }
+$previsaoChecked = ($Periodo === '1') ? 'checked' : '';
+$realizadoChecked = ($Periodo === '0') ? 'checked' : '';
+$Checked = ($Periodo === null) ? 'checked' : '';
 
-//echo json_encode($_SESSION['filtro_tarefas']);
 ?>
 
 </html>
@@ -78,7 +78,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             } ?> value="1">Aberto</option>
             <option <?php if ($statusTarefa == "0") {
               echo "selected";
-            } ?> value="0">Fechado</option>
+            } ?> value="0">Realizado</option>
           </select>
         </form>
       </li>
@@ -93,7 +93,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
   <div class="container-fluid text-center mt-4">
 
     <div class="row">
-      <div class=" btnAbre">
+      <div class="btnAbre" style="height:33px">
         <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;"
           class="material-symbols-outlined">
           filter_alt
@@ -103,6 +103,32 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
       <div class="col-sm-3 ml-2">
         <h2 class="tituloTabela">Tarefas</h2>
+        <h6 style="font-size: 10px;font-style:italic;text-align:left;">
+          <?php
+          $var = [];
+
+          if ($statusTarefa != null) {
+            $varStatus = ($statusTarefa == 1) ? "Aberto" : "Realizado";
+            $var[] = "Status = $varStatus";
+          }
+
+          if ($Periodo != null) {
+            $varPeriodo = ($Periodo == 1) ? "Previsão" : "Realizado";
+            $var[] = "Periodo = $varPeriodo";
+            if ($PeriodoInicio != null) {
+              $varPeriodoInicio = date('d/m/Y', strtotime($PeriodoInicio));
+              $var[] = "De $varPeriodoInicio";
+
+              if ($PeriodoFim != null) {
+                $varPeriodoFimFormatted = date('d/m/Y', strtotime($PeriodoFim));
+                $var[] = "Até $varPeriodoFimFormatted";
+              }
+            }
+          }
+
+          echo implode(" - ", $var);
+          ?>
+        </h6>
       </div>
 
       <!-- <div class="col-sm-4" style="margin-top:-10px;">
@@ -146,7 +172,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
             <tr>
               <th>ID</th>
               <th>Tarefa</th>
-              <th>Demanda</th>
               <th>Responsável</th>
               <th>Cliente</th>
               <th>Ocorrência</th>
@@ -156,7 +181,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
               <th style="width: 17%;">Ação</th>
             </tr>
             <tr>
-              <th></th>
               <th></th>
               <th></th>
               <th>
@@ -210,85 +234,33 @@ if (isset($_SESSION['filtro_tarefas'])) {
                   </select>
                 </form>
               </th>
-              <th style="width: 15%;">
-                <div class="row">
-                  <div class="col-5" style="margin-right:-10px">
-                    <?php if ($PrevistoInicio != null) { ?>
-                      <input type="date" class="data select form-control" id="FiltroPrevistoInicio"
-                        value="<?php echo $PrevistoInicio ?>" name="PrevistoInicio" autocomplete="off"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C;width:75px">
-                    <?php } else { ?>
-                      <input type="date" class="data select form-control" id="FiltroPrevistoInicio" name="PrevistoInicio"
-                        autocomplete="off"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C;width:75px">
-                    <?php } ?>
-                  </div>
-                  <div class="col-5" style="margin-left:-10px;margin-right:-10px">
-                    <?php if ($PrevistoFinal != null) { ?>
-                      <input type="date" class="data select form-control" id="FiltroPrevistoFinal"
-                        value="<?php echo $PrevistoFinal ?>" name="PrevistoFinal" autocomplete="off"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C;width:75px">
-                    <?php } else { ?>
-                      <input type="date" class="data select form-control" id="FiltroPrevistoFinal" name="PrevistoFinal"
-                        autocomplete="off"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C;width:75px">
-                    <?php } ?>
-                  </div>
-                  <div class="col-2">
-                    <form class="d-flex" action="" method="post" style="text-align: right;">
-                      <select class="form-control" name="PrevistoOrdem" id="FiltroPrevistoOrdem"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C;height:30px;width:55px">
-                        <option value="<?php echo null ?>"><?php echo "Ord" ?></option>
-                        <option <?php if ($PrevistoOrdem == "1") {
-                          echo "selected";
-                        } ?> value="1">DESC</option>
-                        <option <?php if ($PrevistoOrdem == "0") {
-                          echo "selected";
-                        } ?> value="0">ASC</option>
-                      </select>
-                    </form>
-                  </div>
-                </div>
+              <th style="width: 10%;">
+                <form action="" method="post">
+                  <select class="form-control text-center" name="PrevistoOrdem" id="FiltroPrevistoOrdem"
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option <?php if ($PrevistoOrdem == "1") {
+                      echo "selected";
+                    } ?> value="1">DESC</option>
+                    <option <?php if ($PrevistoOrdem == "0") {
+                      echo "selected";
+                    } ?> value="0">ASC</option>
+                  </select>
+                </form>
               </th>
-              <th style="width: 15%;">
-                <div class="row">
-                  <div class="col-5" style="margin-left:10px;margin-right:-10px">
-                    <?php if ($RealInicio != null) { ?>
-                      <input type="date" class="data select form-control" id="FiltroRealInicio"
-                        value="<?php echo $RealInicio ?>" name="RealInicio" autocomplete="off"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C;width:75px">
-                    <?php } else { ?>
-                      <input type="date" class="data select form-control" id="FiltroRealInicio" name="RealInicio"
-                        autocomplete="off"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C;width:75px">
-                    <?php } ?>
-                  </div>
-                  <div class="col-5" style="margin-left:-10px;margin-right:-10px">
-                    <?php if ($RealFinal != null) { ?>
-                      <input type="date" class="data select form-control" id="FiltroRealFinal"
-                        value="<?php echo $RealFinal ?>" name="RealFinal" autocomplete="off"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C;width:75px">
-                    <?php } else { ?>
-                      <input type="date" class="data select form-control" id="FiltroRealFinal" name="RealFinal"
-                        autocomplete="off"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-5px;background-color:#12192C;width:75px">
-                    <?php } ?>
-                  </div>
-                  <div class="col-2">
-                    <form class="d-flex" action="" method="post" style="text-align: right;">
-                      <select class="form-control" name="RealOrdem" id="FiltroRealOrdem"
-                        style="font-size: 11px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C;height:30px;width:55px">
-                        <option value="<?php echo null ?>"><?php echo "Ord" ?></option>
-                        <option <?php if ($RealOrdem == "1") {
-                          echo "selected";
-                        } ?> value="1">DESC</option>
-                        <option <?php if ($RealOrdem == "0") {
-                          echo "selected";
-                        } ?> value="0">ASC</option>
-                      </select>
-                    </form>
-                  </div>
-                </div>
+              <th style="width: 10%;">
+                <form action="" method="post">
+                  <select class="form-control text-center" name="RealOrdem" id="FiltroRealOrdem"
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option <?php if ($RealOrdem == "1") {
+                      echo "selected";
+                    } ?> value="1">DESC</option>
+                    <option <?php if ($RealOrdem == "0") {
+                      echo "selected";
+                    } ?> value="0">ASC</option>
+                  </select>
+                </form>
               </th>
               <th></th>
               <th style="width: 10%;"></th>
@@ -317,77 +289,43 @@ if (isset($_SESSION['filtro_tarefas'])) {
         </div>
         <div class="modal-body">
           <form method="post">
-            <div class="row">
-              <div class="col-4">
-                <label class="labelForm">Previsto Começo</label>
-                <?php if ($PrevistoInicio != null) { ?>
-                <input type="date" class="data select form-control" id="ModalPrevistoInicio"
-                  value="<?php echo $PrevistoInicio ?>" name="PrevistoInicio" autocomplete="off">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="<?php echo null ?>" id="Radio" name="FiltroPeriodo"
+                <?php echo $Checked; ?> hidden>
+              <input class="form-check-input" type="radio" value="1" id="PrevisaoRadio" name="FiltroPeriodo" <?php echo $previsaoChecked; ?>>
+              <label class="form-check-label" for="PrevisaoRadio">
+                Previsão
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" value="0" id="RealizadoRadio" name="FiltroPeriodo" <?php echo $realizadoChecked; ?>>
+              <label class="form-check-label" for="RealizadoRadio">
+                Realizado
+              </label>
+            </div>
+            <div class="row" id="conteudoReal">
+              <div class="col">
+                <label class="labelForm">Começo</label>
+                <?php if ($PeriodoInicio != null) { ?>
+                <input type="date" class="data select form-control" id="FiltroPeriodoInicio"
+                  value="<?php echo $PeriodoInicio ?>" name="PeriodoInicio" autocomplete="off">
                 <?php } else { ?>
-                <input type="date" class="data select form-control" id="ModalPrevistoInicio" name="PrevistoInicio"
+                <input type="date" class="data select form-control" id="FiltroPeriodoInicio" name="PeriodoInicio"
                   autocomplete="off">
                 <?php } ?>
               </div>
-              <div class="col-4">
+              <div class="col">
                 <label class="labelForm">Fim</label>
-                <?php if ($PrevistoFinal != null) { ?>
-                <input type="date" class="data select form-control" id="ModalPrevistoFinal"
-                  value="<?php echo $PrevistoFinal ?>" name="PrevistoFinal" autocomplete="off">
+                <?php if ($PeriodoFim != null) { ?>
+                <input type="date" class="data select form-control" id="FiltroPeriodoFim"
+                  value="<?php echo $PeriodoFim ?>" name="PeriodoFim" autocomplete="off">
                 <?php } else { ?>
-                <input type="date" class="data select form-control" id="ModalPrevistoFinal" name="PrevistoFinal"
+                <input type="date" class="data select form-control" id="FiltroPeriodoFim" name="PeriodoFim"
                   autocomplete="off">
                 <?php } ?>
-              </div>
-              <div class="col-4">
-                <label class="labelForm">Ordem</label>
-                <form class="d-flex" action="" method="post" style="text-align: right;">
-                  <select class="form-control" name="PrevistoOrdem" id="ModalPrevistoOrdem" style="margin-top:-7px">
-                    <option value="<?php echo null ?>"><?php echo "Sem Ordem" ?></option>
-                    <option <?php if ($PrevistoOrdem == "1") {
-                      echo "selected";
-                    } ?> value="1">DESC</option>
-                    <option <?php if ($PrevistoOrdem == "0") {
-                      echo "selected";
-                    } ?> value="0">ASC</option>
-                  </select>
-                </form>
-              </div>
-              <div class="col-4">
-                <label class="labelForm">Real Começo</label>
-                <?php if ($RealInicio != null) { ?>
-                <input type="date" class="data select form-control" id="ModalRealInicio"
-                  value="<?php echo $RealInicio ?>" name="RealInicio" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="ModalRealInicio" name="RealInicio"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-              <div class="col-4">
-                <label class="labelForm">Fim</label>
-                <?php if ($RealFinal != null) { ?>
-                <input type="date" class="data select form-control" id="ModalRealFinal"
-                  value="<?php echo $RealFinal ?>" name="RealFinal" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="ModalRealFinal" name="RealFinal"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-              <div class="col-4">
-                <label class="labelForm">Ordem</label>
-                <form class="d-flex" action="" method="post" style="text-align: right;">
-                  <select class="form-control" name="RealOrdem" id="ModalRealOrdem" style="margin-top:-6px">
-                    <option value="<?php echo null ?>"><?php echo "Sem Ordem" ?></option>
-                    <option <?php if ($RealOrdem == "1") {
-                      echo "selected";
-                    } ?> value="1">DESC</option>
-                    <option <?php if ($RealOrdem == "0") {
-                      echo "selected";
-                    } ?> value="0">ASC</option>
-                  </select>
-                </form>
               </div>
             </div>
-            <div class="row">
+            <div class="row mt-2">
               <div class="col-sm" style="text-align:left;margin-left:10px">
                 <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
               </div>
@@ -633,13 +571,13 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val() , $("#buscaTarefa").val());
     function limpar() {
-      buscar(null, null, null, null, null, null, null, null, null, null, null);
+      buscar(null, null, null, null, null, null, null, null, null, null);
       window.location.reload();
     }
     function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, null);
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null);
       window.location.reload();
     }
 
@@ -654,7 +592,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
     var mm = String(vdata.getMinutes()).padStart(2, '0');
     var time = hh + ':' + mm;
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, PrevistoInicio, PrevistoFinal, RealInicio, RealFinal, PrevistoOrdem, RealOrdem, buscaTarefa) {
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa) {
 
       $.ajax({
         type: 'POST',
@@ -669,10 +607,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
           tituloTarefa: tituloTarefa,
           idTipoOcorrencia: idTipoOcorrencia,
           statusTarefa: statusTarefa,
-          PrevistoInicio: PrevistoInicio,
-          PrevistoFinal: PrevistoFinal,
-          RealInicio: RealInicio,
-          RealFinal: RealFinal,
+          Periodo: Periodo,
+          PeriodoInicio: PeriodoInicio,
+          PeriodoFim: PeriodoFim,
           PrevistoOrdem: PrevistoOrdem,
           RealOrdem: RealOrdem,
           buscaTarefa: buscaTarefa
@@ -721,13 +658,12 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td>";
 
             if (object.tituloTarefa == "") {
-              linha += object.tituloDemanda + " (" + object.nomeUsuario + ")";
+              linha += object.tituloDemanda;
             } else {
               linha += object.tituloTarefa;
             }
 
             linha += "</td>";
-            linha += "<td>" + object.idDemanda + "</td>";
             linha += "<td>" + object.nomeUsuario + "</td>";
             linha += "<td>" + object.nomeCliente + "</td>";
             linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
@@ -767,62 +703,52 @@ if (isset($_SESSION['filtro_tarefas'])) {
     }
 
     $("#FiltroClientes").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroUsuario").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#buscar").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroOcorrencia").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroDemanda").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroStatusTarefa").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-    });
-
-    $("#FiltroPrevistoInicio").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-    });
-
-    $("#FiltroPrevistoFinal").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-    });
-
-    $("#FiltroRealInicio").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-    });
-
-    $("#FiltroRealFinal").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      window.location.reload();
     });
 
     $("#FiltroPrevistoOrdem").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroRealOrdem").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#filtrarButton").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#ModalPrevistoInicio").val(), $("#ModalPrevistoFinal").val(), $("#ModalRealInicio").val(), $("#ModalRealFinal").val(), $("#ModalPrevistoOrdem").val(), $("#ModalRealOrdem").val(),$("#buscaTarefa").val());
-      $('#periodoModal').modal('hide');
-      window.location.reload();
+      if (!$('#PrevisaoRadio').is(':checked') && !$('#RealizadoRadio').is(':checked')) {
+        alert("Por favor selecione uma opção.");
+        return false;
+      } else {
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+        $('#periodoModal').modal('hide');
+        window.location.reload();
+      }
     });
 
     document.addEventListener("keypress", function (e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPrevistoInicio").val(), $("#FiltroPrevistoFinal").val(), $("#FiltroRealInicio").val(), $("#FiltroRealFinal").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
       }
     });
 
@@ -996,6 +922,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         window.location.reload();
       }
     });
+
   </script>
 
 

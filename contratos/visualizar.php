@@ -101,7 +101,7 @@ $ocorrencias = buscaTipoOcorrencia();
             <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
             <div class="tab" id="tab-demandacontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
             <div class="tab" id="tab-notascontrato">Notas</div>
-                                     
+
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'alterar.php'; ?>
@@ -117,7 +117,7 @@ $ocorrencias = buscaTipoOcorrencia();
     </div>
 
     <!--------- INSERIR --------->
-    <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog" aria-labelledby="inserirModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="inserirDemandaContratoModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaContratoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -129,7 +129,7 @@ $ocorrencias = buscaTipoOcorrencia();
                 <div class="container-fluid">
                     <form method="post" id="form1">
                         <div class="row">
-                            <div class="col-md form-group" style="margin-top: 5px;"> 
+                            <div class="col-md form-group" style="margin-top: 5px;">
                                 <label class='control-label' for='inputNormal' style="margin-top: 4px;"><?php echo $contratoTipo['nomeDemanda'] ?></label>
                                 <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
                                 <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
@@ -150,86 +150,80 @@ $ocorrencias = buscaTipoOcorrencia();
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row">
-                            <div class="col form-group">
-                                <label class="labelForm">Descrição</label>
-                                <textarea class="form-control" name="descricao" autocomplete="off" rows="10"></textarea>
-                            </div>
-                        </div> -->
+
                         <div class="container-fluid p-0">
                             <div class="col">
                                 <span class="tituloEditor">Descrição</span>
                             </div>
-                            <div class="quill-comentario" style="height:150px !important"></div>
-                            <textarea style="display: none" id="quill-comentario" name="descricao"></textarea>
-                        </div>
-                <div class="row" style="margin-top: 25px;">
-
-                   
-                        <div class="col-md-4 form-group" style="margin-top: -25px;">
-                            <label class="labelForm">Previsão</label>
-                            <input type="number" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
-                        </div>
-                        <div class="col-md-4 form-group-select" style="margin-top: -25px;">
-                            <label class="labelForm">Tamanho</label>
-                            <select class="select form-control" name="tamanho">
-                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                                <option value="P">P</option>
-                                <option value="M">M</option>
-                                <option value="G">G</option>
-                            </select>
+                            <div class="quill-demandainserir" style="height:150px !important"></div>
+                            <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
                         </div>
 
-                        <div class="col-md-4 form-group-select" style="margin-top: -25px;">
-                            <label class="labelForm">Responsável</label>
-                            <select class="select form-control" name="idAtendente">
-                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                                <?php foreach ($atendentes as $atendente) { ?>
-                                    <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    
+                        <div class="row" style="margin-top: 25px;">
 
-                    
-                        <div class="col-md-4 form-group-select" style="margin-top: -25px;">
-                            <label class="labelForm">Ocorrência</label>
-                            <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
-                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                                <?php
-                                foreach ($ocorrencias as $ocorrencia) {
-                                ?>
-                                    <option <?php
-                                            if ($ocorrencia['ocorrenciaInicial'] == 1) {
-                                                echo "selected";
-                                            }
-                                            ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="col-md-4 form-group-select" style="margin-top: -25px; ">
-                            <label class="labelForm">Serviço</label>
-                            <select class="select form-control" name="idServico" autocomplete="off">
-                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                                <?php foreach ($servicos as $servico) { ?>
-                                    <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
 
-                        <div class="col-md-4 form-group-select" style="margin-top: -25px;">
-                            <label class="labelForm">Contrato Vinculado</label>
-                            <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
-                                <select class="select form-control" name="idContrato" autocomplete="off" required>
-                                <?php } else { ?>
-                                    <select class="select form-control" name="idContrato" autocomplete="off" disabled>
-                                <?php } ?>
-                                    <option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?></option>
+                            <div class="col-md-4 form-group" style="margin-top: -25px;">
+                                <label class="labelForm">Previsão</label>
+                                <input type="number" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                            </div>
+                            <div class="col-md-4 form-group-select" style="margin-top: -25px;">
+                                <label class="labelForm">Tamanho</label>
+                                <select class="select form-control" name="tamanho">
+                                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                    <option value="P">P</option>
+                                    <option value="M">M</option>
+                                    <option value="G">G</option>
                                 </select>
-                        </div>
-                    
-                </div><!--row-->
+                            </div>
+
+                            <div class="col-md-4 form-group-select" style="margin-top: -25px;">
+                                <label class="labelForm">Responsável</label>
+                                <select class="select form-control" name="idAtendente">
+                                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                    <?php foreach ($atendentes as $atendente) { ?>
+                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 form-group-select" style="margin-top: -25px;">
+                                <label class="labelForm">Ocorrência</label>
+                                <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
+                                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                    <?php
+                                    foreach ($ocorrencias as $ocorrencia) {
+                                    ?>
+                                        <option <?php
+                                                if ($ocorrencia['ocorrenciaInicial'] == 1) {
+                                                    echo "selected";
+                                                }
+                                                ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group-select" style="margin-top: -25px; ">
+                                <label class="labelForm">Serviço</label>
+                                <select class="select form-control" name="idServico" autocomplete="off">
+                                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                    <?php foreach ($servicos as $servico) { ?>
+                                        <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 form-group-select" style="margin-top: -25px;">
+                                <label class="labelForm">Contrato Vinculado</label>
+                                <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
+                                    <select class="select form-control" name="idContrato" autocomplete="off" required>
+                                    <?php } else { ?>
+                                        <select class="select form-control" name="idContrato" autocomplete="off" disabled>
+                                        <?php } ?>
+                                        <option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?></option>
+                                        </select>
+                            </div>
+
+                        </div><!--row-->
                         <div class="card-footer bg-transparent mt-4" style="text-align:right">
                             <button type="submit" formaction="../database/demanda.php?operacao=inserir_demandadecontrato" class="btn btn-success">Salvar</button>
                         </div>
@@ -239,8 +233,8 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
     </div>
 
-      <!--------- MODAL INSERIR NOTAS --------->
-      <div class="modal fade bd-example-modal-lg" id="inserirModalNotas" tabindex="-1" role="dialog" aria-labelledby="inserirModalNotasLabel" aria-hidden="true">
+    <!--------- MODAL INSERIR NOTAS --------->
+    <div class="modal fade bd-example-modal-lg" id="inserirModalNotas" tabindex="-1" role="dialog" aria-labelledby="inserirModalNotasLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -250,7 +244,7 @@ $ocorrencias = buscaTipoOcorrencia();
                     </button>
                 </div>
                 <div class="container-fluid">
-                    <form method="post" id="inserirFormNotaContrato" >
+                    <form method="post" id="inserirFormNotaContrato">
                         <div class="row">
                             <div class="col-md-6 form-group-select">
                                 <div class="form-group">
@@ -266,13 +260,13 @@ $ocorrencias = buscaTipoOcorrencia();
                             </div>
                             <div class="col-md-3 form-group">
                                 <label class='labelForm' style="margin-top: -5px;">dataEmissao</label>
-                                <input type="date" class="form-control" name="dataEmissao" autocomplete="off"  style="margin-top: -5px;">
+                                <input type="date" class="form-control" name="dataEmissao" autocomplete="off" style="margin-top: -5px;">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label class='labelForm' style="margin-top: -5px;">serieNota</label>
-                                <input type="text" class="form-control" name="serieNota" autocomplete="off"  style="margin-top: -5px;">
+                                <input type="text" class="form-control" name="serieNota" autocomplete="off" style="margin-top: -5px;">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class='labelForm' style="margin-top: -5px;">numeroNota</label>
@@ -282,11 +276,11 @@ $ocorrencias = buscaTipoOcorrencia();
                         <div class="row">
                             <div class="col-md-3 form-group">
                                 <label class='labelForm' style="margin-top: -5px;">serieRPS</label>
-                                <input type="text" class="form-control" name="serieRPS" autocomplete="off"  style="margin-top: -5px;">
+                                <input type="text" class="form-control" name="serieRPS" autocomplete="off" style="margin-top: -5px;">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label class='labelForm' style="margin-top: -5px;">numeroRPS</label>
-                                <input type="text" class="form-control" name="numeroRPS" autocomplete="off"  style="margin-top: -5px;">
+                                <input type="text" class="form-control" name="numeroRPS" autocomplete="off" style="margin-top: -5px;">
                             </div>
                             <div class="col-md-3 form-group">
                                 <label class='labelForm' style="margin-top: -5px;">valorNota</label>
@@ -312,7 +306,7 @@ $ocorrencias = buscaTipoOcorrencia();
                         </div>
 
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit"  class="btn btn-success">Cadastrar</button>
+                            <button type="submit" class="btn btn-success">Cadastrar</button>
                         </div>
                     </form>
                 </div>
@@ -320,7 +314,7 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
     </div>
 
-   
+
     <!--------- MODAL ALTERAR NOTAS --------->
     <div class="modal fade bd-example-modal-lg" id="alterarModalNotas" tabindex="-1" role="dialog" aria-labelledby="alterarModalNotasLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -354,17 +348,17 @@ $ocorrencias = buscaTipoOcorrencia();
                             </div>
                             <div class="col-md-3 form-group">
                                 <label class='labelForm'>dataEmissao</label>
-                                <input type="date" class="data select form-control" name="dataEmissao" id="dataEmissao" >
+                                <input type="date" class="data select form-control" name="dataEmissao" id="dataEmissao">
                             </div>
                         </div>
                         <div class="row" style="margin-top: -55px;">
                             <div class="col-md-6 form-group">
                                 <label class='labelForm'>serieNota</label>
-                                <input type="text" class="data select form-control" name="serieNota" id="serieNota" >
+                                <input type="text" class="data select form-control" name="serieNota" id="serieNota">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label class='labelForm'>numeroNota</label>
-                                <input type="text" class="data select form-control" name="numeroNota" id="numeroNotabd" >
+                                <input type="text" class="data select form-control" name="numeroNota" id="numeroNotabd">
                             </div>
                         </div>
                         <div class="row" style="margin-top: -55px;">
@@ -394,15 +388,15 @@ $ocorrencias = buscaTipoOcorrencia();
                             </div>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit"  class="btn btn-success">Salvar</button>
+                            <button type="submit" class="btn btn-success">Salvar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
-    
+
+
     <script>
         var tab;
         var tabContent;
@@ -452,8 +446,8 @@ $ocorrencias = buscaTipoOcorrencia();
         }
     </script>
 
-<script>
-        var demandaContrato = new Quill('.quill-comentario', {
+    <script>
+        var demandaContrato = new Quill('.quill-demandainserir', {
             theme: 'snow',
             modules: {
                 toolbar: [
@@ -468,7 +462,7 @@ $ocorrencias = buscaTipoOcorrencia();
                         'indent': '-1'
                     }, {
                         'indent': '+1'
-                    }], 
+                    }],
                     [{
                         'direction': 'rtl'
                     }],
@@ -495,7 +489,7 @@ $ocorrencias = buscaTipoOcorrencia();
         });
 
         demandaContrato.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-comentario').val(demandaContrato.container.firstChild.innerHTML);
+            $('#quill-demandainserir').val(demandaContrato.container.firstChild.innerHTML);
         });
     </script>
 </body>

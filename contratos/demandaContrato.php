@@ -10,7 +10,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
 <body class="bg-transparent">
 	<div class="container-fluid">
 		<div class="mb-2" style="text-align:right">
-			<button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+			<button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirDemandaContratoModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
 		</div>
 
 		<div class="card mt-2 text-center">
@@ -62,9 +62,9 @@ $demandas = buscaDemandas(null, null, $idContrato);
 			window.location.href = newUrl;
 		}
 
-		var inserirModal = document.getElementById("inserirModal");
+		var inserirModal = document.getElementById("inserirDemandaContratoModal");
 
-		var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
+		var inserirBtn = document.querySelector("button[data-target='#inserirDemandaContratoModal']");
 
 		inserirBtn.onclick = function() {
 			inserirModal.style.display = "block";

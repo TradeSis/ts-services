@@ -8,6 +8,30 @@ $idContrato = $_GET['idContrato'];
 $contrato = buscaContratos($idContrato, null);
 $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
 
+// LEMBRAR DE AJUSTAR A CLASSE DO EDITOR CSS DO CONTAINER 
+
+include_once(ROOT . '/cadastros/database/usuario.php');
+include_once(ROOT . '/cadastros/database/clientes.php');
+/* include '../database/contratotipos.php'; */
+include_once '../database/contratos.php';
+include_once(ROOT . '/cadastros/database/servicos.php');
+include_once(ROOT . '/cadastros/database/usuario.php');
+include_once '../database/tipoocorrencia.php';
+
+/* $urlContratoTipo = $_GET["tipo"];
+$contratoTipo = buscaContratoTipos($urlContratoTipo); */
+
+$ClienteSession = null;
+if (isset($_SESSION['idCliente'])) {
+    $ClienteSession = $_SESSION['idCliente'];
+}
+
+$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
+$clientes = buscaClientes();
+$contratos = buscaContratosAbertos();
+$servicos = buscaServicos();
+$atendentes = buscaAtendente();
+$ocorrencias = buscaTipoOcorrencia();
 ?>
 
 <style>
@@ -83,7 +107,7 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
                 <?php include_once 'alterar.php'; ?>
             </div>
             <div class="tabContent">
-                <?php include_once 'demandaContrato.php'; ?>
+                <?php include_once 'demandacontrato.php'; ?>
             </div>
             <div class="tabContent">
                 <?php include_once 'notascontrato.php'; ?>
@@ -102,16 +126,16 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="container">
+                <div class="container-fluid">
                     <form method="post" id="form1">
                         <div class="row">
-                            <div class="col-md form-group" style="margin-top: 25px;">
-                                <label class='control-label' for='inputNormal' style="margin-top: 4px;">Demanda</label>
+                            <div class="col-md form-group" style="margin-top: 5px;"> 
+                                <label class='control-label' for='inputNormal' style="margin-top: 4px;"><?php echo $contratoTipo['nomeDemanda'] ?></label>
                                 <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
                                 <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
                                 <input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" readonly>
                             </div>
-                            <div class="col-md-2 form-group-select">
+                            <div class="col-md-2 form-group-select" style="margin-top: -20px;">
                                 <div class="form-group">
                                     <label class="labelForm">Cliente</label>
                                     <select class="select form-control" name="idCliente" autocomplete="off" disabled>
@@ -126,14 +150,88 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col form-group">
                                 <label class="labelForm">Descrição</label>
                                 <textarea class="form-control" name="descricao" autocomplete="off" rows="10"></textarea>
                             </div>
+                        </div> -->
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Descrição</span>
+                            </div>
+                            <div class="quill-comentario" style="height:150px !important"></div>
+                            <textarea style="display: none" id="quill-comentario" name="descricao"></textarea>
                         </div>
-                        <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" formaction="../database/demanda.php?operacao=inserir_demandadecontrato" class="btn btn-info">Salvar</button>
+                <div class="row" style="margin-top: 25px;">
+
+                   
+                        <div class="col-md-4 form-group" style="margin-top: -25px;">
+                            <label class="labelForm">Previsão</label>
+                            <input type="number" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                        </div>
+                        <div class="col-md-4 form-group-select" style="margin-top: -25px;">
+                            <label class="labelForm">Tamanho</label>
+                            <select class="select form-control" name="tamanho">
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                <option value="P">P</option>
+                                <option value="M">M</option>
+                                <option value="G">G</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 form-group-select" style="margin-top: -25px;">
+                            <label class="labelForm">Responsável</label>
+                            <select class="select form-control" name="idAtendente">
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                <?php foreach ($atendentes as $atendente) { ?>
+                                    <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    
+
+                    
+                        <div class="col-md-4 form-group-select" style="margin-top: -25px;">
+                            <label class="labelForm">Ocorrência</label>
+                            <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                <?php
+                                foreach ($ocorrencias as $ocorrencia) {
+                                ?>
+                                    <option <?php
+                                            if ($ocorrencia['ocorrenciaInicial'] == 1) {
+                                                echo "selected";
+                                            }
+                                            ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group-select" style="margin-top: -25px; ">
+                            <label class="labelForm">Serviço</label>
+                            <select class="select form-control" name="idServico" autocomplete="off">
+                                <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                <?php foreach ($servicos as $servico) { ?>
+                                    <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 form-group-select" style="margin-top: -25px;">
+                            <label class="labelForm">Contrato Vinculado</label>
+                            <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
+                                <select class="select form-control" name="idContrato" autocomplete="off" required>
+                                <?php } else { ?>
+                                    <select class="select form-control" name="idContrato" autocomplete="off" disabled>
+                                <?php } ?>
+                                    <option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?></option>
+                                </select>
+                        </div>
+                    
+                </div><!--row-->
+                        <div class="card-footer bg-transparent mt-4" style="text-align:right">
+                            <button type="submit" formaction="../database/demanda.php?operacao=inserir_demandadecontrato" class="btn btn-success">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -352,6 +450,53 @@ $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
                 tabContent[b].classList.add('show');
             }
         }
+    </script>
+
+<script>
+        var demandaContrato = new Quill('.quill-comentario', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }], 
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        demandaContrato.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-comentario').val(demandaContrato.container.firstChild.innerHTML);
+        });
     </script>
 </body>
 

@@ -158,7 +158,8 @@ if (isset($_GET['operacao'])) {
 	}
 
 	if ($operacao == "inserir_demandadecontrato") {
-		
+		/* echo json_encode($_POST);
+		return; */
 		if(isset($_POST['idContrato'])){
 			$idContrato = $_POST['idContrato'];
 		}else{
@@ -175,6 +176,7 @@ if (isset($_GET['operacao'])) {
 			'idTipoStatus' => TIPOSTATUS_FILA,
 			'idContrato' => $idContrato,
 			'idContratoTipo' => $_POST['idContratoTipo'],
+			'idAtendente' => $_POST['idAtendente'],
 		);
 	
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');

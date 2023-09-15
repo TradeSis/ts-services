@@ -66,7 +66,12 @@ if (isset($jsonEntrada["idAtendente"])) {
   $where = " and ";
 }
 
-if (isset($jsonEntrada["statusTarefa"]) && $jsonEntrada["Periodo"] != 0) {
+
+$Periodo = 1;
+if (isset($jsonEntrada["Periodo"])) {
+  $Periodo = $jsonEntrada["Periodo"];
+}
+if (isset($jsonEntrada["statusTarefa"]) && $Periodo != 0) {
   if ($jsonEntrada["statusTarefa"] == 1) {
     $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
     $where = " and ";

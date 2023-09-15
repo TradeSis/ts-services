@@ -5,9 +5,7 @@ include_once '../head.php';
 <body class="bg-transparent">
     <div class="container-fluid">
         <div class="mb-2" style="text-align:right">
-            <?php if ($demanda['idTipoStatus'] !== TIPOSTATUS_REALIZADO && $demanda['idTipoStatus'] !== TIPOSTATUS_VALIDADO) { ?>
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
-            <?php } ?>
         </div>
         <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
             <table class="table">

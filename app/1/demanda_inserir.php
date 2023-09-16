@@ -66,7 +66,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
 
     //TRY-CATCH
     try {
-
+        
         $atualizar = mysqli_query($conexao, $sql);
         if (!$atualizar)
             throw new Exception(mysqli_error($conexao));
@@ -98,7 +98,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     );
 
 }
-
+echo "-SAIDA->".json_encode($jsonSaida)."\n";
 //LOG
 if (isset($LOG_NIVEL)) {
     if ($LOG_NIVEL >= 2) {

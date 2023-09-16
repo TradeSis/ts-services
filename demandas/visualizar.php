@@ -124,7 +124,7 @@ if (isset($_SESSION['idCliente'])) {
             <?php } ?>
         </div>
     </div>
-
+    
     <!--------- INSERIR/NOVA --------->
     <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
         aria-labelledby="inserirModalLabel" aria-hidden="true">

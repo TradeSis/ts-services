@@ -19,6 +19,7 @@ include_once(ROOT . '/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipostatus.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
 include '../database/contratotipos.php';
+include_once '../database/contratos.php';
 
 $urlContratoTipo = null;
 if (isset($_GET["tipo"])) {
@@ -32,13 +33,14 @@ if (isset($_SESSION['idCliente'])) {
   $ClienteSession = $_SESSION['idCliente'];
 }
 
+$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $usuarios = buscaUsuarios();
 $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
 $cards = buscaCardsDemanda();
-
+$contratos = buscaContratosAbertos();
 
 if ($_SESSION['idCliente'] == null) {
   $idCliente = null;
@@ -142,6 +144,16 @@ if (isset($_SESSION['filtro_demanda'])) {
     color: #fff;
     width: 160px;
   }
+
+  .modal-dialog {
+    margin-left: 10vw;
+
+  }
+
+  .modal-content {
+    width: 80vw;
+    height: 80vh;
+  }
 </style>
 
 
@@ -241,11 +253,142 @@ if (isset($_SESSION['filtro_demanda'])) {
     </div>
   </nav>
 
+  <!--------- MODAL DEMANDA INSERIR --------->
+  <div class="modal fade bd-example-modal-lg" id="inserirDemandaModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Inserir <?php echo $contratoTipo['nomeDemanda'] ?></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="container-fluid">
+          <form method="post" id="form1">
+            <div class="row">
+              <div class="col-md form-group" style="margin-top: 5px;">
+                <label class='control-label' for='inputNormal' style="margin-top: 4px;"><?php echo $contratoTipo['nomeDemanda'] ?></label>
+                <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
+                <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
+                <input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" readonly>
+              </div>
+              <div class="col-md-2 form-group-select" style="margin-top: -20px;">
+                <div class="form-group">
+                  <label class="labelForm">Cliente</label>
+                  <?php
+                  if ($ClienteSession == NULL) { ?>
+                    <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                    <select class="select form-control" name="idCliente" autocomplete="off" style="margin-top: -10px;">
+                      <?php
+                      foreach ($clientes as $cliente) {
+                      ?>
+                        <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                      <?php } ?>
+                    </select>
+                  <?php } else { ?>
+                    <input type="text" class="form-control" style="margin-top: -8px;" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
+                    <input type="hidden" class="form-control" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
+                    <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                  <?php } ?>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 25px;">
+              <div class="col-md-6">
+                <div class="container-fluid p-0">
+                  <div class="col">
+                    <span class="tituloEditor">Descrição</span>
+                  </div>
+                  <div class="quill-demandainserir" style="height:300px !important"></div>
+                  <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
+                </div>
+              </div><!--col-md-6-->
+
+              <div class="col-md-6" style="margin-top: 50px;">
+                <div class="row">
+                  <div class="col-md-6 form-group" style="margin-top: -25px;">
+                    <label class="labelForm">Previsão</label>
+                    <input type="number" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                  </div>
+                  <div class="col-md-6 form-group-select" style="margin-top: -25px;">
+                    <label class="labelForm">Ocorrência</label>
+                    <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php
+                      foreach ($tipoocorrencias as $tipoocorrencia) {
+                      ?>
+                        <option <?php
+                                if ($tipoocorrencia['ocorrenciaInicial'] == 1) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div><!--fim row 1-->
+
+                <div class="row">
+                  <div class="col-md-6 form-group-select" style="margin-top: -25px;">
+                    <label class="labelForm">Tamanho</label>
+                    <select class="select form-control" name="tamanho">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <option value="P">P</option>
+                      <option value="M">M</option>
+                      <option value="G">G</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 form-group-select" style="margin-top: -25px; ">
+                    <label class="labelForm">Serviço</label>
+                    <select class="select form-control" name="idServico" autocomplete="off">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php foreach ($servicos as $servico) { ?>
+                        <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div><!--fim row 2-->
+
+                <div class="row">
+                  <div class="col-md-6 form-group-select" style="margin-top: 40px;">
+                    <label class="labelForm">Responsável</label>
+                    <select class="select form-control" name="idAtendente">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <?php foreach ($atendentes as $atendente) { ?>
+                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="col-md-6 form-group-select" style="margin-top: 40px;">
+                    <label class="labelForm">Contrato Vinculado</label>
+                    <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
+                      <select class="select form-control" name="idContrato" autocomplete="off" required>
+                      <?php } else { ?>
+                        <select class="select form-control" name="idContrato" autocomplete="off">
+                        <?php } ?>
+
+                        <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                        <?php foreach ($contratos as $contrato) { ?>
+                          <option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?></option>
+                        <?php } ?>
+                        </select>
+                  </div>
+                </div><!--fim row 3-->
+
+              </div><!--col-md-6-->
+            </div>
+            <div class="card-footer bg-transparent mt-4" style="text-align:right">
+              <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="container-fluid text-center mt-4">
-
-
-
 
     <div class="row">
       <div class=" btnAbre">
@@ -256,7 +399,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
 
       <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela" style="color:#12192C">
+        <h2 class="tituloTabela" >
           <?php echo $contratoTipo['nomeDemanda'] ?>
         </h2>
       </div>
@@ -284,14 +427,10 @@ if (isset($_SESSION['filtro_demanda'])) {
         <button class="btn btn-warning" id="export" name="export" type="submit">Gerar</button>
       </div>
 
-
-
       <div class="col-sm" style="text-align:right">
-        <a href="demanda_inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+        <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
       </div>
     </div>
-
-
 
     <div class="card mt-2" style="background-color: #EEEEEE">
       <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
@@ -317,7 +456,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($clientes as $cliente) {
@@ -333,7 +472,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
@@ -350,7 +489,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idAtendente" id="FiltroUsuario" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idAtendente" id="FiltroUsuario" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($atendentes as $atendente) {
@@ -367,7 +506,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
@@ -382,7 +521,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -419,7 +558,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C" disabled>
+                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#13216A" disabled>
                       <?php
                       foreach ($clientes as $cliente) {
                       ?>
@@ -434,7 +573,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#12192C">
+                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#13216A">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($usuarios as $usuario) {
@@ -451,7 +590,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php foreach ($tiposstatus as $tipostatus) { ?>
                         <option <?php
@@ -466,7 +605,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th style="width: 10%;">
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <?php
                       foreach ($tipoocorrencias as $tipoocorrencia) {
@@ -535,7 +674,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               var object = json[$i];
               var dataAbertura = new Date(object.dataAbertura);
               var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
-              
+
               if (object.dataFechamento == null) {
                 var dataFechamentoFormatada = "<p>---</p>";
               } else {
@@ -705,8 +844,6 @@ if (isset($_SESSION['filtro_demanda'])) {
       $('.menuFiltros').toggleClass('mostra');
       $('.diviFrame').toggleClass('mostra');
     });
-
-
 
 
     //**************exporta excel 
@@ -900,6 +1037,53 @@ if (isset($_SESSION['filtro_demanda'])) {
       } else if (selectedOption === "csv") {
         exportToCSV();
       }
+    });
+  </script>
+
+  <script>
+    var demandaContrato = new Quill('.quill-demandainserir', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote'],
+          [{
+            'list': 'ordered'
+          }, {
+            'list': 'bullet'
+          }],
+          [{
+            'indent': '-1'
+          }, {
+            'indent': '+1'
+          }],
+          [{
+            'direction': 'rtl'
+          }],
+          [{
+            'size': ['small', false, 'large', 'huge']
+          }],
+          [{
+            'header': [1, 2, 3, 4, 5, 6, false]
+          }],
+          ['link', 'image', 'video', 'formula'],
+          [{
+            'color': []
+          }, {
+            'background': []
+          }],
+          [{
+            'font': []
+          }],
+          [{
+            'align': []
+          }],
+        ]
+      }
+    });
+
+    demandaContrato.on('text-change', function(delta, oldDelta, source) {
+      $('#quill-demandainserir').val(demandaContrato.container.firstChild.innerHTML);
     });
   </script>
 </body>

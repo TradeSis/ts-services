@@ -132,9 +132,9 @@ if (isset($_GET['operacao'])) {
 			'idAtendente' => $_POST['idAtendente'],
 			
 		);
-
+	
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
-
+		
 		$tituloEmail = $_POST['tituloDemanda'];
 		$corpoEmail = $_POST['descricao'];
 
@@ -152,13 +152,14 @@ if (isset($_GET['operacao'])) {
 		);
 
 		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
-		
+	
 		header('Location: ../demandas/index.php?tipo='.$_POST['idContratoTipo']);
-		
+		/* header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']); */
 	}
 
 	if ($operacao == "inserir_demandadecontrato") {
-		
+		/* echo json_encode($_POST);
+		return; */
 		if(isset($_POST['idContrato'])){
 			$idContrato = $_POST['idContrato'];
 		}else{
@@ -175,6 +176,7 @@ if (isset($_GET['operacao'])) {
 			'idTipoStatus' => TIPOSTATUS_FILA,
 			'idContrato' => $idContrato,
 			'idContratoTipo' => $_POST['idContratoTipo'],
+			'idAtendente' => $_POST['idAtendente'],
 		);
 	
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');

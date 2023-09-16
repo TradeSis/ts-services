@@ -99,7 +99,7 @@ if (isset($_GET['operacao'])) {
 			'idContratoTipo' => $_POST['idContratoTipo'],
 			
 		);
-
+		
 		$contratos = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'PUT');
 
 		header('Location: ../contratos/index.php?tipo='.$_POST['idContratoTipo']);

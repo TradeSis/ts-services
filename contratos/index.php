@@ -354,7 +354,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                             <th></th>
                             <th style="width: 10%;">
                                 <form action="" method="post">
-                                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                                         <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                         <?php
                                         foreach ($clientes as $cliente) {
@@ -371,7 +371,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                             <th></th>
                             <th style="width: 10%;">
                                 <form action="" method="post">
-                                    <select class="form-control text-center" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                                    <select class="form-control text-center" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                                         <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
                                         <?php
 

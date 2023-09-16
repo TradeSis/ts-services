@@ -186,7 +186,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <th>
                 <form action="" method="post">
                   <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                     <?php
                     foreach ($atendentes as $atendente) {
@@ -203,7 +203,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <th style="width: 10%;">
                 <form action="" method="post">
                   <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                     <?php
                     foreach ($clientes as $cliente) {
@@ -220,7 +220,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <th style="width: 10%;">
                 <form action="" method="post">
                   <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                     <?php
                     foreach ($ocorrencias as $ocorrencia) {
@@ -237,7 +237,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <th style="width: 10%;">
                 <form action="" method="post">
                   <select class="form-control text-center" name="PrevistoOrdem" id="FiltroPrevistoOrdem"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                     <option <?php if ($PrevistoOrdem == "1") {
                       echo "selected";
@@ -251,7 +251,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <th style="width: 10%;">
                 <form action="" method="post">
                   <select class="form-control text-center" name="RealOrdem" id="FiltroRealOrdem"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#12192C">
+                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                     <option <?php if ($RealOrdem == "1") {
                       echo "selected";

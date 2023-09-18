@@ -340,7 +340,8 @@ if (isset($_SESSION['idCliente'])) {
                             <input type="date" class="data select form-control" id="dataReal" name="dataReal"
                                 autocomplete="off" hidden>
                             <input type="time" class="data select form-control" id="horaInicioReal"
-                                name="horaInicioReal" autocomplete="off" hidden>
+                                name="horaInicioReal" autocomplete="off" step="2" readonly style="display: none;">
+                                
                             <input type="time" class="data select form-control" id="horaFinalReal" name="horaFinalReal"
                                 autocomplete="off" hidden>
                         </div>

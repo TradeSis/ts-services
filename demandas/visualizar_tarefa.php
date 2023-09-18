@@ -241,6 +241,7 @@ include_once '../head.php';
                                             data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>"
                                             data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>"
                                             data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>"
+                                            data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>"
                                             ><i class="bi bi-play-circle"></i></button>
                                     <?php } ?>
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
@@ -325,7 +326,8 @@ include_once '../head.php';
                 var horaFinalPrevisto = $(this).data('horafinalprevisto');horaCobrado
                 var horaCobrado = $(this).data('horacobrado');
                 var tituloDemanda = $(this).data('titulodemanda');
-               
+                var horaInicioReal = $(this).data('horainicioreal');
+                
                 $.ajax({
                     url: "../database/tarefas.php?operacao=novostart",
                     method: "POST",

@@ -226,6 +226,18 @@ include_once '../head.php';
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-check-circle"></i></button>
                                     <?php } ?>
+                                    <?php if ($horaInicioReal != "00:00" && $horaCobrado != "00:00") { ?>
+                                        <button type="button" class="novoStartButton btn btn-danger btn-sm" value="Start"
+                                            data-id="<?php echo $tarefa['idTarefa'] ?>"
+                                            data-titulo="<?php echo $tarefa['tituloTarefa'] ?>"
+                                            data-cliente="<?php echo $tarefa['idCliente'] ?>"
+                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>"
+                                            data-atendente="<?php echo $tarefa['idAtendente'] ?>"
+                                            data-status="<?php echo $idTipoStatus ?>"
+                                            data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>"
+                                            data-statusdemanda="<?php echo $idTipoStatus ?>"
+                                            ><i class="bi bi-play-circle"></i></button>
+                                    <?php } ?>
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                     data-target="#alterarmodal"
                                     data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i></button>
@@ -283,6 +295,47 @@ include_once '../head.php';
                         idTarefa: idTarefa,
                         tipoStatusDemanda: tipoStatusDemanda, 
                         idDemanda: idDemanda 
+                    },
+                    success: function (msg) {
+                        //var message = msg.retorno; 
+                        //alert(message);
+                        if (msg.retorno == "ok") {
+                            refreshPage('tarefas', idDemanda);
+                        }
+                    }
+                });
+            });
+
+            $('.novoStartButton').click(function () {
+                var idTarefa = $(this).data('id');
+                var tituloTarefa = $(this).data('titulo');
+                var idCliente = $(this).data('cliente');
+                var idDemanda = $(this).data('demanda');
+                var idAtendente = $(this).data('atendente');
+                var idTipoStatus = $(this).data('status');
+                var idTipoOcorrencia = $(this).data('ocorrencia');
+                var tipoStatusDemanda = $(this).data('statusdemanda');
+
+                
+                $.ajax({
+                    url: "../database/tarefas.php?operacao=novostart",
+                    method: "POST",
+                    dataType: "json",
+                    data: {  
+                        
+                       tituloTarefa: tituloTarefa,
+                       idCliente: idCliente,
+                       idDemanda: idDemanda,
+                       idAtendente: idAtendente,
+                       idTipoStatus: idTipoStatus,
+                       idTipoOcorrencia: idTipoOcorrencia,
+                       tipoStatusDemanda: tipoStatusDemanda,
+                       Previsto:'',
+                       horaInicioPrevisto:'',
+                       horaFinalPrevisto:'',
+                       horaCobrado:'',
+                       tituloDemanda:'Demanda de teste a',
+
                     },
                     success: function (msg) {
                         //var message = msg.retorno; 

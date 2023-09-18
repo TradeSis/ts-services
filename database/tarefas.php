@@ -142,8 +142,39 @@ if (isset($_GET['operacao'])) {
             'horaCobrado' => $_POST['horaCobrado'],
             'tituloDemanda' => $_POST['tituloDemanda']
         );
-
+       
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
+        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        echo json_encode($tarefas);
+        return $tarefas;
+
+    }
+
+    if ($operacao == "novostart") {
+
+        if($_POST['idTipoOcorrencia'] == ''){
+            $idTipoOcorrencia = OCORRENCIA_PADRAO;
+        }else{
+            $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+        }
+
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'tituloTarefa' => $_POST['tituloTarefa'],
+            'idCliente' => $_POST['idCliente'],
+            'idDemanda' => $_POST['idDemanda'],
+            'idAtendente' => $_POST['idAtendente'],
+            'idTipoStatus' => $_POST['idTipoStatus'],
+            'idTipoOcorrencia' => $idTipoOcorrencia,
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'horaCobrado' => $_POST['horaCobrado'],
+            'tituloDemanda' => $_POST['tituloDemanda']
+        );
+
+        $tarefas = chamaAPI(null, '/services/tarefas/novostart', json_encode($apiEntrada), 'PUT');
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
         echo json_encode($tarefas);
         return $tarefas;
@@ -183,6 +214,19 @@ if (isset($_GET['operacao'])) {
             'idTipoStatus' => TIPOSTATUS_FAZENDO
         );
         $tarefas = chamaAPI(null, '/services/tarefas/start', json_encode($apiEntrada), 'POST');
+        echo json_encode($tarefas);
+        return $tarefas;
+    }
+
+    if ($operacao == "xnovostartx") {
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'idTarefa' => $_POST['idTarefa'],
+            'idDemanda' => $_POST['idDemanda'],
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_FAZENDO
+        );
+        //$tarefas = chamaAPI(null, '/services/tarefas/start', json_encode($apiEntrada), 'POST');
         echo json_encode($tarefas);
         return $tarefas;
     }

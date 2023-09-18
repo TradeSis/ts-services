@@ -236,6 +236,12 @@ if (isset($_SESSION['filtro_demanda'])) {
             <option <?php if ($statusDemanda == "1") {
                       echo "selected";
                     } ?> value="1">Aberto</option>
+            <option <?php if ($statusDemanda == "2") {
+                      echo "selected";
+                    } ?> value="2">Execução</option>
+            <option <?php if ($statusDemanda == "3") {
+                      echo "selected";
+                    } ?> value="3">Entregue</option>
             <option <?php if ($statusDemanda == "0") {
                       echo "selected";
                     } ?> value="0">Fechado</option>

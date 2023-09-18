@@ -6,7 +6,7 @@
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL = defineNivelLog();
-    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "tarefas_inserir";
+    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "tarefas_novostart";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
             $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
@@ -73,11 +73,15 @@ if (isset($jsonEntrada['idDemanda'])) {
             $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
         }
     }
+
+    $idTipoStatus = TIPOSTATUS_FAZENDO;
+    $sql4 = "UPDATE `demanda` SET `idTipoStatus`= $idTipoStatus WHERE idDemanda = $idDemanda";
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 2) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
             fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
+            fwrite($arquivo, $identificacao . "-SQL4->" . $sql4 . "\n");
         }
     }
     //LOG
@@ -87,6 +91,7 @@ if (isset($jsonEntrada['idDemanda'])) {
 
         $atualizar = mysqli_query($conexao, $sql);
         $atualizar3 = mysqli_query($conexao, $sql3);
+        $atualizar4 = mysqli_query($conexao, $sql4);
         if (!$atualizar || !$atualizar3)
             throw new Exception(mysqli_error($conexao));
 

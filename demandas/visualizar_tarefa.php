@@ -226,8 +226,8 @@ include_once '../head.php';
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-check-circle"></i></button>
                                     <?php } ?>
-                                    <?php if ($horaInicioReal != "00:00" && $horaCobrado != "00:00") { ?>
-                                        <button type="button" class="novoStartButton btn btn-danger btn-sm" value="Start"
+                                    <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
+                                        <button type="button" class="novoStartButton btn btn-success btn-sm" value="Start"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
                                             data-titulo="<?php echo $tarefa['tituloTarefa'] ?>"
                                             data-cliente="<?php echo $tarefa['idCliente'] ?>"
@@ -236,6 +236,11 @@ include_once '../head.php';
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>"
                                             data-statusdemanda="<?php echo $idTipoStatus ?>"
+                                            data-previsto="<?php echo $tarefa['Previsto'] ?>"
+                                            data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>"
+                                            data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>"
+                                            data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>"
+                                            data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>"
                                             ><i class="bi bi-play-circle"></i></button>
                                     <?php } ?>
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
@@ -315,8 +320,12 @@ include_once '../head.php';
                 var idTipoStatus = $(this).data('status');
                 var idTipoOcorrencia = $(this).data('ocorrencia');
                 var tipoStatusDemanda = $(this).data('statusdemanda');
-
-                
+                var previsto = $(this).data('previsto');
+                var horaInicioPrevisto = $(this).data('horainicioprevisto');
+                var horaFinalPrevisto = $(this).data('horafinalprevisto');horaCobrado
+                var horaCobrado = $(this).data('horacobrado');
+                var tituloDemanda = $(this).data('titulodemanda');
+               
                 $.ajax({
                     url: "../database/tarefas.php?operacao=novostart",
                     method: "POST",
@@ -330,11 +339,11 @@ include_once '../head.php';
                        idTipoStatus: idTipoStatus,
                        idTipoOcorrencia: idTipoOcorrencia,
                        tipoStatusDemanda: tipoStatusDemanda,
-                       Previsto:'',
-                       horaInicioPrevisto:'',
-                       horaFinalPrevisto:'',
-                       horaCobrado:'',
-                       tituloDemanda:'Demanda de teste a',
+                       Previsto: previsto,
+                       horaInicioPrevisto: horaInicioPrevisto,
+                       horaFinalPrevisto: horaFinalPrevisto,
+                       horaCobrado: horaCobrado,
+                       tituloDemanda: tituloDemanda,
 
                     },
                     success: function (msg) {

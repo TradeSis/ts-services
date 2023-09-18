@@ -167,7 +167,7 @@ $ocorrencias = buscaTipoOcorrencia();
                                     <div class="col">
                                         <span class="tituloEditor">Descrição</span>
                                     </div>
-                                    <div class="quill-demandainserir" style="height:300px !important"></div>
+                                    <div class="quill-demandainserir" style="height:200px !important"></div>
                                     <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
                                 </div>
                             </div>

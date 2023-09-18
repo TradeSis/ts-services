@@ -242,11 +242,12 @@ $ocorrencias = buscaTipoOcorrencia();
                                 </div><!--fim row 3-->
                             </div>
                         </div>
-                    </form>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="submit" formaction="../database/demanda.php?operacao=inserir_demandadecontrato" class="btn btn-success">Salvar</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

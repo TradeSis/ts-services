@@ -379,11 +379,12 @@ if (isset($_SESSION['filtro_demanda'])) {
 
               </div><!--col-md-6-->
             </div>
-          </form>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
         </div>
+        </form>
       </div>
     </div>
   </div>

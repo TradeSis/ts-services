@@ -100,8 +100,7 @@ if (isset($_SESSION['idCliente'])) {
                 </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-                <a href="javascript:history.back()" role="button" class="btn btn-primary"><i
-                        class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                <a href="javascript:history.back()" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
         <div id="tabs">
@@ -124,10 +123,9 @@ if (isset($_SESSION['idCliente'])) {
             <?php } ?>
         </div>
     </div>
-    
+
     <!--------- INSERIR/NOVA --------->
-    <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
-        aria-labelledby="inserirModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog" aria-labelledby="inserirModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -150,21 +148,16 @@ if (isset($_SESSION['idCliente'])) {
                                 <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
                                     Relacionada</label>
                                 <div class="form-group" style="margin-top: 22px;">
-                                    <input type="hidden" class="form-control" name="idDemanda"
-                                        value="<?php echo $demanda['idDemanda'] ?>" style="margin-bottom: -20px;">
-                                    <input type="text" class="form-control"
-                                        value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>"
-                                        readonly>
+                                    <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" style="margin-bottom: -20px;">
+                                    <input type="text" class="form-control" value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>" readonly>
                                     <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
                                 </div>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label class='control-label' for='inputNormal' style="margin-top: 10px;">Cliente</label>
                                 <div class="form-group" style="margin-top: 22px;">
-                                    <input type="hidden" class="form-control" name="idCliente"
-                                        value="<?php echo $demanda['idCliente'] ?>">
-                                    <input type="text" class="form-control"
-                                        value="<?php echo $cliente['nomeCliente'] ?>" readonly>
+                                    <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>">
+                                    <input type="text" class="form-control" value="<?php echo $cliente['nomeCliente'] ?>" readonly>
 
                                 </div>
                             </div>
@@ -174,12 +167,12 @@ if (isset($_SESSION['idCliente'])) {
                                     <select class="form-control" name="idAtendente">
                                         <?php
                                         foreach ($atendentes as $atendente) {
-                                            ?>
-                                        <option <?php
-                                        if ($atendente['idUsuario'] == $demanda['idAtendente']) {
-                                            echo "selected";
-                                        }
-                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                        ?>
+                                            <option <?php
+                                                    if ($atendente['idUsuario'] == $demanda['idAtendente']) {
+                                                        echo "selected";
+                                                    }
+                                                    ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -190,12 +183,12 @@ if (isset($_SESSION['idCliente'])) {
                                     <select class="form-control" name="idTipoOcorrencia">
                                         <?php
                                         foreach ($ocorrencias as $ocorrencia) {
-                                            ?>
-                                        <option <?php
-                                        if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {
-                                            echo "selected";
-                                        }
-                                        ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        ?>
+                                            <option <?php
+                                                    if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {
+                                                        echo "selected";
+                                                    }
+                                                    ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -209,28 +202,24 @@ if (isset($_SESSION['idCliente'])) {
                             <div class="col-md-4" style="margin-top: -20px;">
                                 <div class="form-group">
                                     <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" name="Previsto"
-                                        autocomplete="off">
+                                    <input type="date" class="data select form-control" name="Previsto" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -20px;">
                                 <div class="form-group">
                                     <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" name="horaInicioPrevisto"
-                                        autocomplete="off">
+                                    <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -20px;">
                                 <div class="form-group">
                                     <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" name="horaFinalPrevisto"
-                                        autocomplete="off">
+                                    <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" formaction="../database/tarefas.php?operacao=inserir"
-                                class="btn btn-info">Salvar</button>
+                            <button type="submit" formaction="../database/tarefas.php?operacao=inserir" class="btn btn-info">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -239,8 +228,7 @@ if (isset($_SESSION['idCliente'])) {
     </div>
 
     <!--------- ALTERAR --------->
-    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog"
-        aria-labelledby="alterarmodalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog" aria-labelledby="alterarmodalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -255,21 +243,19 @@ if (isset($_SESSION['idCliente'])) {
                             <div class="col-md-4" style="margin-top: 10px;">
                                 <div class="form-group">
                                     <label class="labelForm">Tarefa</label>
-                                    <input type="text" class="data select form-control" id="tituloTarefa"
-                                        name="tituloTarefa" autocomplete="off">
+                                    <input type="text" class="data select form-control" id="tituloTarefa" name="tituloTarefa" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -10px;">
                                 <div class="form-group" id="demandaContainer">
                                     <label class="labelForm">ID/Demanda Relacionada</label>
-                                    <input type="text" class="data select form-control" id="tituloDemanda"
-                                        style="margin-top: 18px;" autocomplete="off" readonly>
+                                    <input type="text" class="data select form-control" id="tituloDemanda" style="margin-top: 18px;" autocomplete="off" readonly>
                                     <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
                                         <?php
                                         foreach ($demandas as $demanda) {
-                                            ?>
-                                        <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                                        </option>
+                                        ?>
+                                            <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                                            </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -279,8 +265,7 @@ if (isset($_SESSION['idCliente'])) {
                             <div class="col-md-4" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="labelForm">Cliente</label>
-                                    <input type="text" class="data select form-control" id="nomeCliente"
-                                        style="margin-top: 18px;" autocomplete="off" readonly>
+                                    <input type="text" class="data select form-control" id="nomeCliente" style="margin-top: 18px;" autocomplete="off" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -289,9 +274,9 @@ if (isset($_SESSION['idCliente'])) {
                                     <select class="form-control" name="idAtendente" id="idAtendente">
                                         <?php
                                         foreach ($atendentes as $atendente) {
-                                            ?>
-                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
-                                        </option>
+                                        ?>
+                                            <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                                            </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -302,9 +287,9 @@ if (isset($_SESSION['idCliente'])) {
                                     <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
                                         <?php
                                         foreach ($ocorrencias as $ocorrencia) {
-                                            ?>
-                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        ?>
+                                            <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                                                <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -312,41 +297,33 @@ if (isset($_SESSION['idCliente'])) {
                             <div class="col-md-4" style="margin-top: -14px;">
                                 <div class="form-group">
                                     <label class="labelForm">Horas Cobrado</label>
-                                    <input type="time" class="data select form-control" id="horaCobrado"
-                                        name="horaCobrado" autocomplete="off">
+                                    <input type="time" class="data select form-control" id="horaCobrado" name="horaCobrado" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -30px;">
                                 <div class="form-group">
                                     <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" id="Previsto" name="Previsto"
-                                        autocomplete="off">
+                                    <input type="date" class="data select form-control" id="Previsto" name="Previsto" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -30px;">
                                 <div class="form-group">
                                     <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" id="horaInicioPrevisto"
-                                        name="horaInicioPrevisto" autocomplete="off">
+                                    <input type="time" class="data select form-control" id="horaInicioPrevisto" name="horaInicioPrevisto" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: -30px;">
                                 <div class="form-group">
                                     <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" id="horaFinalPrevisto"
-                                        name="horaFinalPrevisto" autocomplete="off">
+                                    <input type="time" class="data select form-control" id="horaFinalPrevisto" name="horaFinalPrevisto" autocomplete="off">
                                 </div>
                             </div>
-                            <input type="date" class="data select form-control" id="dataReal" name="dataReal"
-                                autocomplete="off" hidden>
-                            <input type="time" class="data select form-control" id="horaInicioReal"
-                                name="horaInicioReal" autocomplete="off" hidden>
-                            <input type="time" class="data select form-control" id="horaFinalReal" name="horaFinalReal"
-                                autocomplete="off" hidden>
+                            <input type="date" class="data select form-control" id="dataReal" name="dataReal" autocomplete="off" hidden>
+                            <input type="time" class="data select form-control" id="horaInicioReal" name="horaInicioReal" autocomplete="off" hidden>
+                            <input type="time" class="data select form-control" id="horaFinalReal" name="horaFinalReal" autocomplete="off" hidden>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" formaction="../database/tarefas.php?operacao=alterar"
-                                class="btn btn-info">Atualizar</button>
+                            <button type="submit" formaction="../database/tarefas.php?operacao=alterar" class="btn btn-info">Atualizar</button>
                         </div>
                     </form>
                 </div>
@@ -354,11 +331,90 @@ if (isset($_SESSION['idCliente'])) {
         </div>
     </div>
 
+    <!--------- MODAL VALIDAR --------->
+    <div class="modal fade bd-example-modal-lg" id="validarModal" tabindex="-1" role="dialog" aria-labelledby="validarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Validar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="col-md form-group" style="margin-top: 5px;">
+                            <label class='control-label' for='inputNormal' style="margin-top: 4px;">xx</label>
+                            <textarea name="comentariovalidar"  cols="30" rows="10"></textarea>
+                            <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger">Validar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--------- MODAL Retornar --------->
+    <div class="modal fade bd-example-modal-lg" id="retornarModal" tabindex="-1" role="dialog" aria-labelledby="retornarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Retornar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn btn-warning">Retornar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------- MODAL Encaminhar --------->
+    <div class="modal fade bd-example-modal-lg" id="encaminharModal" tabindex="-1" role="dialog" aria-labelledby="encaminharModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Encaminhar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn btn-warning">Encaminhar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         var tab;
         var tabContent;
 
-        window.onload = function () {
+        window.onload = function() {
             tabContent = document.getElementsByClassName('tabContent');
             tab = document.getElementsByClassName('tab');
             hideTabsContent(1);
@@ -373,7 +429,7 @@ if (isset($_SESSION['idCliente'])) {
             }
         }
 
-        document.getElementById('tabs').onclick = function (event) {
+        document.getElementById('tabs').onclick = function(event) {
             var target = event.target;
             if (target.className == 'tab') {
                 for (var i = 0; i < tab.length; i++) {

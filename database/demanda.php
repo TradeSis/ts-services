@@ -252,7 +252,8 @@ if (isset($_GET['operacao'])) {
 		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
 		
 		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
-
+		/* echo json_encode($_POST);
+		return; */
 		$apiEntrada = array(
 			//'nomeAnexo' => $nomeAnexo,
 			//'pathAnexo' => $pathURL,
@@ -260,14 +261,16 @@ if (isset($_GET['operacao'])) {
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
-			'comentario' => $_POST['comentario'],
+			//'comentario' => $_POST['comentario'],
 			'idTipoStatus' => TIPOSTATUS_VALIDADO
 
 		);
 
+		/* echo json_encode($apiEntrada);
+		return; */
 		$comentario = chamaAPI(null, '/services/demanda/validar', json_encode($apiEntrada), 'PUT');
 
-		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
 	if ($operacao == "retornar") {

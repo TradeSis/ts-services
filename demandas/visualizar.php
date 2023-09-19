@@ -229,8 +229,10 @@ if (isset($_SESSION['idCliente'])) {
                             </div>
                         </div>
                         <div class="card-footer bg-transparent" style="text-align:right">
+                            <button type="submit" formaction="../database/tarefas.php?operacao=inserirStart"
+                                class="btn btn-warning">Start</button>
                             <button type="submit" formaction="../database/tarefas.php?operacao=inserir"
-                                class="btn btn-info">Salvar</button>
+                                class="btn btn-success">Inserir</button>
                         </div>
                     </form>
                 </div>

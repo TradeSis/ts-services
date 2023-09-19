@@ -131,7 +131,7 @@ if (isset($_SESSION['idCliente'])) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa1</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -340,7 +340,8 @@ if (isset($_SESSION['idCliente'])) {
                             <input type="date" class="data select form-control" id="dataReal" name="dataReal"
                                 autocomplete="off" hidden>
                             <input type="time" class="data select form-control" id="horaInicioReal"
-                                name="horaInicioReal" autocomplete="off" hidden>
+                                name="horaInicioReal" autocomplete="off" step="2" readonly style="display: none;">
+                                
                             <input type="time" class="data select form-control" id="horaFinalReal" name="horaFinalReal"
                                 autocomplete="off" hidden>
                         </div>

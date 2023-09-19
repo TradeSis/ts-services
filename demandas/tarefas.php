@@ -356,7 +356,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <div class="col-md-6 form-group">
                 <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
                 <div class="form-group" style="margin-top: 22px;">
-                  <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
+                  <input type="text" class="form-control" name="tituloTarefa" autocomplete="off" required>
                 </div>
                 <input type="hidden" class="form-control" name="idDemanda" value="null">
               </div>
@@ -432,7 +432,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               </div>
             </div>
             <div class="card-footer bg-transparent" style="text-align:right">
-              <button type="submit" class="btn btn-success">Inserir</button>
+              <button type="submit" class="btn btn-warning" id="inserirStartBtn">Start</button>
+              <button type="submit" class="btn btn-success" id="inserirBtn">Inserir</button>
             </div>
           </form>
         </div>
@@ -896,14 +897,30 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       $("#inserirForm").submit(function (event) {
         event.preventDefault();
         var formData = new FormData(this);
+        var vurl;
+        if ($("#inserirStartBtn").prop("clicked")) {
+          vurl = "../database/tarefas.php?operacao=inserirStart";
+        } else {
+          vurl = "../database/tarefas.php?operacao=inserir";
+        }
         $.ajax({
-          url: "../database/tarefas.php?operacao=inserir",
+          url: vurl,
           type: 'POST',
           data: formData,
           processData: false,
           contentType: false,
           success: refreshPage,
         });
+      });
+      
+      $("#inserirStartBtn").click(function() {
+        $("#inserirBtn").prop("clicked", false);
+        $(this).prop("clicked", true);
+      });
+
+      $("#inserirBtn").click(function() {
+        $("#inserirStartBtn").prop("clicked", false);
+        $(this).prop("clicked", true);
       });
 
       $("#alterarForm").submit(function (event) {

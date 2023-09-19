@@ -147,12 +147,13 @@ if (isset($_SESSION['filtro_demanda'])) {
 
   .modal-dialog {
     margin-left: 10vw;
+    margin-top: 0px;
 
   }
 
   .modal-content {
     width: 80vw;
-    height: 80vh;
+    height: 85vh;
   }
 </style>
 
@@ -235,6 +236,12 @@ if (isset($_SESSION['filtro_demanda'])) {
             <option <?php if ($statusDemanda == "1") {
                       echo "selected";
                     } ?> value="1">Aberto</option>
+            <option <?php if ($statusDemanda == "2") {
+                      echo "selected";
+                    } ?> value="2">Execução</option>
+            <option <?php if ($statusDemanda == "3") {
+                      echo "selected";
+                    } ?> value="3">Entregue</option>
             <option <?php if ($statusDemanda == "0") {
                       echo "selected";
                     } ?> value="0">Fechado</option>
@@ -263,7 +270,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="container-fluid">
+        <div class="modal-body">
           <form method="post" id="form1">
             <div class="row">
               <div class="col-md form-group" style="margin-top: 5px;">
@@ -294,18 +301,18 @@ if (isset($_SESSION['filtro_demanda'])) {
               </div>
             </div>
 
-            <div class="row" style="margin-top: 25px;">
+            <div class="row" style="margin-top: 5px;">
               <div class="col-md-6">
                 <div class="container-fluid p-0">
                   <div class="col">
                     <span class="tituloEditor">Descrição</span>
                   </div>
-                  <div class="quill-demandainserir" style="height:300px !important"></div>
+                  <div class="quill-demandainserir" style="height:20vh !important"></div>
                   <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
                 </div>
               </div><!--col-md-6-->
 
-              <div class="col-md-6" style="margin-top: 50px;">
+              <div class="col-md-6" style="margin-top: 25px;">
                 <div class="row">
                   <div class="col-md-6 form-group" style="margin-top: -25px;">
                     <label class="labelForm">Previsão</label>
@@ -378,11 +385,12 @@ if (isset($_SESSION['filtro_demanda'])) {
 
               </div><!--col-md-6-->
             </div>
-            <div class="card-footer bg-transparent mt-4" style="text-align:right">
-              <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
-            </div>
-          </form>
+          
         </div>
+        <div class="modal-footer">
+          <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
+        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -399,7 +407,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
 
       <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela" >
+        <h2 class="tituloTabela">
           <?php echo $contratoTipo['nomeDemanda'] ?>
         </h2>
       </div>
@@ -1063,10 +1071,10 @@ if (isset($_SESSION['filtro_demanda'])) {
           [{
             'size': ['small', false, 'large', 'huge']
           }],
-          [{
-            'header': [1, 2, 3, 4, 5, 6, false]
-          }],
-          ['link', 'image', 'video', 'formula'],
+          /*  [{
+             'header': [1, 2, 3, 4, 5, 6, false]
+           }], */
+          ['link', 'image'],
           [{
             'color': []
           }, {

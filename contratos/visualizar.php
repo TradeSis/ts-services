@@ -86,12 +86,12 @@ $ocorrencias = buscaTipoOcorrencia();
 
     .modal_lg {
         margin-left: 10vw;
-
+        margin-top: 0px;
     }
 
     .containermodal_lg {
         width: 80vw;
-        height: 80vh;
+        height: 85vh;
     }
 </style>
 
@@ -136,7 +136,7 @@ $ocorrencias = buscaTipoOcorrencia();
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="container-fluid">
+                <div class="modal-body">
                     <form method="post" id="form1">
                         <div class="row">
                             <div class="col-md form-group" style="margin-top: 5px;">
@@ -161,17 +161,17 @@ $ocorrencias = buscaTipoOcorrencia();
                             </div>
                         </div>
 
-                        <div class="row" style="margin-top: 25px;">
+                        <div class="row" style="margin-top: 5px;">
                             <div class="col-md-6">
                                 <div class="container-fluid p-0">
                                     <div class="col">
                                         <span class="tituloEditor">Descrição</span>
                                     </div>
-                                    <div class="quill-demandainserir" style="height:300px !important"></div>
+                                    <div class="quill-demandainserir" style="height:20vh !important"></div>
                                     <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6" style="margin-top: 50px;">
+                            <div class="col-md-6" style="margin-top: 25px;">
                                 <div class="row">
                                     <div class="col-md-6 form-group" style="margin-top: -25px;">
                                         <label class="labelForm">Previsão</label>
@@ -242,11 +242,12 @@ $ocorrencias = buscaTipoOcorrencia();
                                 </div><!--fim row 3-->
                             </div>
                         </div>
-                        <div class="card-footer bg-transparent mt-4" style="text-align:right">
-                            <button type="submit" formaction="../database/demanda.php?operacao=inserir_demandadecontrato" class="btn btn-success">Salvar</button>
-                        </div>
-                    </form>
+                    
                 </div>
+                <div class="modal-footer">
+                    <button type="submit" formaction="../database/demanda.php?operacao=inserir_demandadecontrato" class="btn btn-success">Salvar</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -487,10 +488,10 @@ $ocorrencias = buscaTipoOcorrencia();
                     [{
                         'size': ['small', false, 'large', 'huge']
                     }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
+                    /*  [{
+                       'header': [1, 2, 3, 4, 5, 6, false]
+                     }], */
+                    ['link', 'image'],
                     [{
                         'color': []
                     }, {

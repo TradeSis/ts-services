@@ -18,7 +18,6 @@ $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);
 
-
 if ($idDemanda !== "") {
     $tarefas = buscaTarefas($idDemanda);
     $horas = buscaHoras($idDemanda);
@@ -333,7 +332,7 @@ if (isset($_SESSION['idCliente'])) {
 
     <!--------- MODAL VALIDAR --------->
     <div class="modal fade bd-example-modal-lg" id="validarModal" tabindex="-1" role="dialog" aria-labelledby="validarModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Validar</h5>
@@ -343,27 +342,31 @@ if (isset($_SESSION['idCliente'])) {
                 </div>
                 <div class="modal-body">
                     <form method="post">
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Comentários</span>
+                            </div>
+                            <div class="quill-validar" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-validar" name="comentario"></textarea>
+                        </div>
                         <div class="col-md form-group" style="margin-top: 5px;">
-                            <label class='control-label' for='inputNormal' style="margin-top: 4px;">xx</label>
-                            <textarea name="comentariovalidar"  cols="30" rows="10"></textarea>
                             <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
                             <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
                             <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
                         </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger">Validar</button>
-                        </div>
-                    </form>
                 </div>
-
+                <div class="modal-footer">
+                    <button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger">Validar</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!--------- MODAL Retornar --------->
+    <!--------- MODAL RETORNAR --------->
     <div class="modal fade bd-example-modal-lg" id="retornarModal" tabindex="-1" role="dialog" aria-labelledby="retornarModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Retornar</h5>
@@ -373,21 +376,31 @@ if (isset($_SESSION['idCliente'])) {
                 </div>
                 <div class="modal-body">
                     <form method="post">
-
-
-
-                    </form>
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Comentários</span>
+                            </div>
+                            <div class="quill-retornar" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-retornar" name="comentario"></textarea>
+                        </div>
+                        <div class="col-md form-group" style="margin-top: 5px;">
+                            <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
+                        </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn btn-warning">Retornar</button>
+                    <button type="submit" formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning">Retornar</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!--------- MODAL Encaminhar --------->
+    <!--------- MODAL ENCAMINHAR --------->
     <div class="modal fade bd-example-modal-lg" id="encaminharModal" tabindex="-1" role="dialog" aria-labelledby="encaminharModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Encaminhar</h5>
@@ -397,17 +410,29 @@ if (isset($_SESSION['idCliente'])) {
                 </div>
                 <div class="modal-body">
                     <form method="post">
-
-
-
-                    </form>
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Comentários</span>
+                            </div>
+                            <div class="quill-encaminhar" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-encaminhar" name="comentario"></textarea>
+                        </div>
+                        <div class="col-md form-group" style="margin-top: 5px;">
+                            <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
+                        </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" formaction="../database/demanda.php?operacao=inserir" class="btn btn-warning">Encaminhar</button>
+                    <button type="submit" formaction="../database/demanda.php?operacao=solicitar" class="btn btn-warning">Encaminhar</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+
+
 
 
     <script>
@@ -457,6 +482,143 @@ if (isset($_SESSION['idCliente'])) {
                 tabContent[b].classList.add('show');
             }
         }
+    </script>
+
+    <script>
+        var quillvalidar = new Quill('.quill-validar', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        quillvalidar.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-validar').val(quillvalidar.container.firstChild.innerHTML);
+        });
+
+        var quillretornar = new Quill('.quill-retornar', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        quillretornar.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-retornar').val(quillretornar.container.firstChild.innerHTML);
+        });
+
+        var quillencaminhar = new Quill('.quill-encaminhar', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        quillencaminhar.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-encaminhar').val(quillencaminhar.container.firstChild.innerHTML);
+        });
     </script>
 </body>
 

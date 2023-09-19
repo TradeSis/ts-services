@@ -161,7 +161,7 @@ $statusEncerrar = array(
                     </div>
                 </div>
                 <div class="row mt-3 mb-5">
-                    
+
                     <div class="col-md-6">
                         <?php
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
@@ -169,13 +169,13 @@ $statusEncerrar = array(
                             <!-- formaction="../database/demanda.php?operacao=validar" -->
                         <?php }
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
-                            <button type="submit"  formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
+                            <button type="button" data-toggle="modal" data-target="#retornarModal" class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
                             <!-- formaction="../database/demanda.php?operacao=retornar" -->
                         <?php } ?>
                         <?php
                         if ($ClienteSession == NULL) { ?>
 
-                            <button type="button"  data-toggle="modal" data-target="#encaminharModal" class="btn btn-warning" style="margin-right:10px;float: left;">Encaminhar</button>
+                            <button type="button" data-toggle="modal" data-target="#encaminharModal" class="btn btn-warning" style="margin-right:10px;float: left;">Encaminhar</button>
                             <!-- formaction="../database/demanda.php?operacao=solicitar" -->
                         <?php } ?>
 
@@ -309,8 +309,19 @@ $statusEncerrar = array(
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2 mb-5">
-                    <div class="col-md-12 text-right">
+                <div class="row mt-3 mb-5">
+
+                    <div class="col-md-6">
+
+
+                        <?php if ($ClienteSession >= 1) { ?>
+                            <button type="button" data-toggle="modal" data-target="#validarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Validar</button>
+                            <button type="button" data-toggle="modal" data-target="#retornarModal" class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
+                        <?php } ?>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+
                         <input type="submit" name="submit" id="submit" class="btn btn-success" value="Atualizar" />
                     </div>
                 </div>

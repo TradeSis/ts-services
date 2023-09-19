@@ -492,7 +492,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         linha = linha + "<td>" + object.horas + "</td>";
                         linha = linha + "<td>" + object.valorHora + "</td>";
                         linha = linha + "<td>" + object.valorContrato + "</td>";
-                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
+                        linha = linha + "<td>" + "<a class='visualizarDemandaButton btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
                         linha = linha + "</tr>";
                     }
 
@@ -535,6 +535,17 @@ if (isset($_SESSION['filtro_contrato'])) {
         $('.btnAbre').click(function() {
             $('.menuFiltros').toggleClass('mostra');
             $('.diviFrame').toggleClass('mostra');
+        });
+
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        }
+
+        $(document).on('click', '.visualizarDemandaButton', function () {
+        setCookie('origem', 'contrato', 7);
+        setCookie('tipocontrato', '<?php echo $urlContratoTipo ?>', 7);
         });
     </script>
 </body>

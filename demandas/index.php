@@ -799,7 +799,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+              linha += "<td><a class='visualizarDemandaButton btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -916,6 +916,16 @@ if (isset($_SESSION['filtro_demanda'])) {
         }
       });
     }
+
+    function setCookie(name, value, days) {
+      const expires = new Date();
+      expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+      document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+    }
+
+    $(document).on('click', '.visualizarDemandaButton', function () {
+      setCookie('origem', 'demanda', 7);
+    });
 
     //**************exporta csv
     function exportToCSV() {

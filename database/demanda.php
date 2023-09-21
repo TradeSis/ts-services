@@ -222,41 +222,6 @@ if (isset($_GET['operacao'])) {
 	}
 	
 	if ($operacao == "realizado") {
-		/* echo json_encode($_POST);
-		return; */
-		if($_POST['retornardemanda'] == "0"){
-			if($_POST['comentario'] != ""){
-				$apiEntrada2 = array(
-					'idEmpresa' => $_SESSION['idEmpresa'],
-					'idUsuario' => $_POST['idUsuario'],
-					'idCliente' => $_POST['idCliente'],
-					'idDemanda' => $_POST['idDemanda'],
-					'comentario' => $_POST['comentario'],
-					'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-					'idTipoStatus' => TIPOSTATUS_RESPONDIDO
-		
-				);
-				$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
-			}
-			$apiEntrada = array(
-				//'nomeAnexo' => $nomeAnexo,
-				//'pathAnexo' => $pathURL,
-				'idEmpresa' => $_SESSION['idEmpresa'],
-				'idUsuario' => $_POST['idUsuario'],
-				'idCliente' => $_POST['idCliente'],
-				'idDemanda' => $_POST['idDemanda'],
-				//'comentario' => $_POST['comentario'],
-				'idTipoStatus' => TIPOSTATUS_RETORNO
-	
-			);
-
-			/* echo 'retorno' . json_encode($apiEntrada);
-		return; */
-			$comentario = chamaAPI(null, '/services/demanda/retornar', json_encode($apiEntrada), 'PUT');
-		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
-		}else{
-
-		
 
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
@@ -283,7 +248,7 @@ if (isset($_GET['operacao'])) {
 		$demanda = chamaAPI(null, '/services/demanda/realizado', json_encode($apiEntrada), 'POST');
 		
 		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
-	}//fim do else
+
 	}
 	
 	if ($operacao == "validar") {

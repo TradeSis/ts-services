@@ -460,13 +460,6 @@ if (isset($_SESSION['idCliente'])) {
 
                 </div>
                 <div class="modal-footer">
-                    <div class="col-md-4" style="margin-right:400px">
-                        <div class="select-form-group">
-                            <label for="retornardemanda">Retornar</label>
-                            <input type="range" id="retornardemanda" name="retornardemanda" min="0" max="1" style="width: 25%;">
-                            <label for="retornardemanda">Encerrar</label>
-                        </div>
-                    </div>
                     <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning">Encerrar</button>
                 </div>
                 </form>

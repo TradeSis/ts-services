@@ -5,6 +5,7 @@ include_once '../database/demanda.php';
 
 $idContrato = $_GET['idContrato'];
 $demandas = buscaDemandas(null, null, $idContrato);
+
 ?>
 
 <body class="bg-transparent">

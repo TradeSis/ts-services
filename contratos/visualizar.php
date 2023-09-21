@@ -109,7 +109,7 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
         <div id="tabs">
             <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
-            <div class="tab" id="tab-demandacontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
+            <div class="tab" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
             <div class="tab" id="tab-notascontrato">Notas</div>
 
             <div class="line"></div>
@@ -117,7 +117,7 @@ $ocorrencias = buscaTipoOcorrencia();
                 <?php include_once 'alterar.php'; ?>
             </div>
             <div class="tabContent">
-                <?php include_once 'demandacontrato.php'; ?>
+                <?php include_once 'demandascontrato.php'; ?>
             </div>
             <div class="tabContent">
                 <?php include_once 'notascontrato.php'; ?>

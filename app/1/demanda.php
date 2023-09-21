@@ -82,7 +82,7 @@ if (isset($jsonEntrada["statusDemanda"])) {
 }
 
 if (isset($jsonEntrada["buscaDemanda"])) {
-  $sql = $sql . $where . " demanda.idDemanda= " . $jsonEntrada["buscaDemanda"] . " or . demanda.tituloDemanda like " . "'%" . $jsonEntrada["buscaDemanda"] . "%'";
+  $sql = $sql . $where . " demanda.idDemanda= " . "'" . $jsonEntrada["buscaDemanda"] . "'" . " or demanda.tituloDemanda like " . "'%" . $jsonEntrada["buscaDemanda"] . "%'";
   $where = " and ";
 }
 
@@ -105,7 +105,7 @@ if (isset($jsonEntrada["idContratoTipo"])) {
 
 
 $sql = $sql . " order by ordem, prioridade, idDemanda";
-//echo "-SQL->".json_encode($sql)."\n";
+//echo "-SQL->" . json_encode($sql) . "\n";
 $rows = 0;
 
 //LOG

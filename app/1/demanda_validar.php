@@ -57,9 +57,9 @@ if (isset($jsonEntrada['idDemanda'])) {
 
       if($dataFechamento == null){
         $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-      }else{
-        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento='$dataFechamento', statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
       }
+      // se a data de fechamento estiver NULL então o validar pode gravar algo nela
+      // se estiver preenchida, não faz nada
     
 
     if ($comentario != null) {

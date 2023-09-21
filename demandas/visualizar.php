@@ -432,6 +432,31 @@ if (isset($_SESSION['idCliente'])) {
         </div>
     </div>
 
+        <!--------- MODAL ENCERRAR --------->
+        <div class="modal fade bd-example-modal-lg" id="encerrarModal" tabindex="-1" role="dialog" aria-labelledby="encerrarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Encerrar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                      
+                        <div class="col-md form-group" style="margin-top: 5px;">
+                            <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning">Encerrar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 
 

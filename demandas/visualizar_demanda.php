@@ -180,7 +180,8 @@ $statusEncerrar = array(
                         <?php } ?>
 
                         <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
-                            <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning mr-3">Encerrar</button>
+                            <button type="button" data-toggle="modal" data-target="#encerrarModal" class="btn btn-warning mr-3">Encerrar</button>
+                            <!-- formaction="../database/demanda.php?operacao=realizado" -->
                         <?php } ?>
                     </div>
 
@@ -312,8 +313,6 @@ $statusEncerrar = array(
                 <div class="row mt-3 mb-5">
 
                     <div class="col-md-6">
-
-
                         <?php if ($ClienteSession >= 1) { ?>
                             <button type="button" data-toggle="modal" data-target="#validarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Validar</button>
                             <button type="button" data-toggle="modal" data-target="#retornarModal" class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>

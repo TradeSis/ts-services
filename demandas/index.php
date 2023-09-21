@@ -869,8 +869,9 @@ if (isset($_SESSION['filtro_demanda'])) {
           idTipoStatus: $("#FiltroTipoStatus").val(),
           idTipoOcorrencia: $("#FiltroOcorrencia").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
-          tituloDemanda: $("#tituloDemanda").val(),
-          tamanho: tamanhoValue
+          buscaDemanda: $("#buscaDemanda").val(),
+          tamanho: tamanhoValue,
+          urlContratoTipo: urlContratoTipo
         },
         success: function(json) {
           var excelContent =
@@ -933,8 +934,9 @@ if (isset($_SESSION['filtro_demanda'])) {
           idTipoStatus: $("#FiltroTipoStatus").val(),
           idTipoOcorrencia: $("#FiltroOcorrencia").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
-          tituloDemanda: $("#tituloDemanda").val(),
-          tamanho: tamanhoValue
+          buscaDemanda: $("#buscaDemanda").val(),
+          tamanho: tamanhoValue,
+          urlContratoTipo: urlContratoTipo
         },
         success: function(json) {
           var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
@@ -986,8 +988,9 @@ if (isset($_SESSION['filtro_demanda'])) {
           idTipoStatus: $("#FiltroTipoStatus").val(),
           idTipoOcorrencia: $("#FiltroOcorrencia").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
-          tituloDemanda: $("#tituloDemanda").val(),
-          tamanho: tamanhoValue
+          buscaDemanda: $("#buscaDemanda").val(),
+          tamanho: tamanhoValue,
+          urlContratoTipo: urlContratoTipo
         },
         success: function(json) {
           var tableContent =

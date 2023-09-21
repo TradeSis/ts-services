@@ -72,7 +72,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         <form class="d-flex" action="" method="post" style="text-align: right;">
           <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
             style="font-size: 14px; width: 150px; height: 35px">
-            <option value="<?php echo null ?>"><?php echo "Todos" ?></option>
+            <option value="<?php echo null ?>">
+              <?php echo "Todos" ?>
+            </option>
             <option <?php if ($statusTarefa == "1") {
               echo "selected";
             } ?> value="1">Aberto</option>
@@ -143,14 +145,15 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         </div>
       </div> -->
       <div class="col-sm-4">
-          <div class="input-group">
-            <input type="text" class="form-control" id="buscaTarefa" placeholder="Buscar por id ou titulo">
-            <span class="input-group-btn">
-              <button class="btn btn-primary mt-2" id="buscar" type="button">
-                <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
-              </button>
-            </span>
-          </div>
+        <div class="input-group">
+          <input type="text" class="form-control" id="buscaTarefa" placeholder="Buscar por id ou titulo">
+          <span class="input-group-btn">
+            <button class="btn btn-primary mt-2" id="buscar" type="button">
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
+                class="material-symbols-outlined">search</span>
+            </button>
+          </span>
+        </div>
       </div>
 
       <div class="col-sm-1">
@@ -187,7 +190,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 <form action="" method="post">
                   <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
                     style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
                     <?php
                     foreach ($atendentes as $atendente) {
                       ?>
@@ -195,7 +200,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                       if ($atendente['idUsuario'] == $idAtendente) {
                         echo "selected";
                       }
-                      ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                      ?> value="<?php echo $atendente['idUsuario'] ?>">
+                        <?php echo $atendente['nomeUsuario'] ?>
+                      </option>
                     <?php } ?>
                   </select>
                 </form>
@@ -204,7 +211,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 <form action="" method="post">
                   <select class="form-control text-center" name="idCliente" id="FiltroClientes"
                     style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
                     <?php
                     foreach ($clientes as $cliente) {
                       ?>
@@ -212,7 +221,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                       if ($cliente['idCliente'] == $idCliente) {
                         echo "selected";
                       }
-                      ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                      ?> value="<?php echo $cliente['idCliente'] ?>">
+                        <?php echo $cliente['nomeCliente'] ?>
+                      </option>
                     <?php } ?>
                   </select>
                 </form>
@@ -221,7 +232,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 <form action="" method="post">
                   <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
                     style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
                     <?php
                     foreach ($ocorrencias as $ocorrencia) {
                       ?>
@@ -229,7 +242,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                       if ($ocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
                         echo "selected";
                       }
-                      ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                      ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                        <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                      </option>
                     <?php } ?>
                   </select>
                 </form>
@@ -238,7 +253,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 <form action="" method="post">
                   <select class="form-control text-center" name="PrevistoOrdem" id="FiltroPrevistoOrdem"
                     style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
                     <option <?php if ($PrevistoOrdem == "1") {
                       echo "selected";
                     } ?> value="1">DESC</option>
@@ -252,7 +269,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 <form action="" method="post">
                   <select class="form-control text-center" name="RealOrdem" id="FiltroRealOrdem"
                     style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
                     <option <?php if ($RealOrdem == "1") {
                       echo "selected";
                     } ?> value="1">DESC</option>
@@ -369,7 +388,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                       <?php
                       foreach ($clientes as $cliente) {
                         ?>
-                      <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
+                      <option value="<?php echo $cliente['idCliente'] ?>">
+                        <?php echo $cliente['nomeCliente'] ?>
                       </option>
                       <?php } ?>
                     </select>
@@ -386,8 +406,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                     <option <?php
                     if ($atendente['idUsuario'] == $idAtendente) {
                       echo "selected";
-                    }
-                    ?>  value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                    } ?> value="
+                      <?php echo $atendente['idUsuario'] ?>">
+                      <?php echo $atendente['nomeUsuario'] ?>
                     </option>
                     <?php } ?>
                   </select>
@@ -401,7 +422,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                     <?php
                     foreach ($ocorrencias as $ocorrencia) {
                       ?>
-                    <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                    <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                      <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                    </option>
                     <?php } ?>
                   </select>
                 </div>
@@ -471,7 +494,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                     <?php
                     foreach ($demandas as $demanda) {
                       ?>
-                    <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                    <option value="<?php echo $demanda['idDemanda'] ?>">
+                      <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
                     </option>
                     <?php } ?>
                   </select>
@@ -493,7 +517,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                     <?php
                     foreach ($atendentes as $atendente) {
                       ?>
-                    <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                    <option value="<?php echo $atendente['idUsuario'] ?>">
+                      <?php echo $atendente['nomeUsuario'] ?>
                     </option>
                     <?php } ?>
                   </select>
@@ -507,7 +532,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                     foreach ($ocorrencias as $ocorrencia) {
                       ?>
                     <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                      <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                      <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                    </option>
                     <?php } ?>
                   </select>
                 </div>
@@ -572,14 +598,16 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val() , $("#buscaTarefa").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     function limpar() {
-      buscar(null, null, null, null, null, null, null, null, null, null);
-      window.location.reload();
+      buscar(null, null, null, null, null, null, null, null, null, null, function () {
+        window.location.reload();
+      });
     }
     function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null);
-      window.location.reload();
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function () {
+        window.location.reload();
+      });
     }
 
     var vdata = new Date();
@@ -593,7 +621,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     var mm = String(vdata.getMinutes()).padStart(2, '0');
     var time = hh + ':' + mm;
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa) {
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
 
       $.ajax({
         type: 'POST',
@@ -698,7 +726,12 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             linha += "</td>";
             linha += "</tr>";
           }
+
           $("#dados").html(linha);
+
+          if (typeof callback === 'function') {
+            callback();
+          }
         }
       });
     }
@@ -912,13 +945,13 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           success: refreshPage,
         });
       });
-      
-      $("#inserirStartBtn").click(function() {
+
+      $("#inserirStartBtn").click(function () {
         $("#inserirBtn").prop("clicked", false);
         $(this).prop("clicked", true);
       });
 
-      $("#inserirBtn").click(function() {
+      $("#inserirBtn").click(function () {
         $("#inserirStartBtn").prop("clicked", false);
         $(this).prop("clicked", true);
       });

@@ -432,24 +432,41 @@ if (isset($_SESSION['idCliente'])) {
         </div>
     </div>
 
-        <!--------- MODAL ENCERRAR --------->
-        <div class="modal fade bd-example-modal-lg" id="encerrarModal" tabindex="-1" role="dialog" aria-labelledby="encerrarModalLabel" aria-hidden="true">
+<!--------- MODAL ENCERRAR --------->
+<div class="modal fade bd-example-modal-lg" id="encerrarModal" tabindex="-1" role="dialog" aria-labelledby="encerrarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Encerrar</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Chamado -<?php echo $idDemanda ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form method="post">
-                      
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Comentários</span>
+                            </div>
+                            <div class="quill-encerrar" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-encerrar" name="comentario"></textarea>
+                        </div>
                         <div class="col-md form-group" style="margin-top: 5px;">
                             <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
                         </div>
+
                 </div>
                 <div class="modal-footer">
+                    <div class="col-md-4" style="margin-right:400px">
+                        <div class="select-form-group">
+                            <label for="retornardemanda">Retornar</label>
+                            <input type="range" id="retornardemanda" name="retornardemanda" min="0" max="1" style="width: 25%;">
+                            <label for="retornardemanda">Encerrar</label>
+                        </div>
+                    </div>
                     <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning">Encerrar</button>
                 </div>
                 </form>
@@ -643,6 +660,51 @@ if (isset($_SESSION['idCliente'])) {
 
         quillencaminhar.on('text-change', function(delta, oldDelta, source) {
             $('#quill-encaminhar').val(quillencaminhar.container.firstChild.innerHTML);
+        });
+
+        var quillencerrar = new Quill('.quill-encerrar', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        quillencerrar.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-encerrar').val(quillencerrar.container.firstChild.innerHTML);
         });
     </script>
 </body>

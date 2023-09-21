@@ -56,9 +56,11 @@ if (isset($jsonEntrada['idDemanda'])) {
       $dataFechamento = $row["dataFechamento"];
 
       if($dataFechamento == null){
-        $dataFechamento = 'CURRENT_TIMESTAMP()';
+        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+      }else{
+        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento='$dataFechamento', statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
       }
-    $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento='$dataFechamento', statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+    
 
     if ($comentario != null) {
         $sql3 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";

@@ -55,6 +55,9 @@ if (isset($jsonEntrada['idDemanda'])) {
       $row = mysqli_fetch_array($buscar, MYSQLI_ASSOC);
       $dataFechamento = $row["dataFechamento"];
 
+      if($dataFechamento == null){
+        $dataFechamento = 'CURRENT_TIMESTAMP()';
+      }
     $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento='$dataFechamento', statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
 
     if ($comentario != null) {

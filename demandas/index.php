@@ -700,7 +700,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               //linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+              linha += "<td><a class='visualizarDemandaButton btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 

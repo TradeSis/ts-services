@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 // Lucas 22032023 ajustado função do botão de limpar
 // Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
 // Lucas 15032023 alterado select de idContratoStatus para acionar uma função js, botão "buscar" foi removido, 
@@ -492,7 +493,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         linha = linha + "<td>" + object.horas + "</td>";
                         linha = linha + "<td>" + object.valorHora + "</td>";
                         linha = linha + "<td>" + object.valorContrato + "</td>";
-                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
+                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a>" + "</td>";
                         linha = linha + "</tr>";
                     }
 
@@ -526,6 +527,23 @@ if (isset($_SESSION['filtro_contrato'])) {
             buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
+        //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
+        $(document).on('click', '#visualizarDemandaButton', function () {
+        var urlContratoTipo = '?tipo=<?php echo $urlContratoTipo ?>';
+        var currentPath = window.location.pathname + urlContratoTipo;
+            $.ajax({
+                type: 'POST',
+                url: '../database/demanda.php?operacao=origem',
+                data: { origem: currentPath },
+                success: function(response) {
+                console.log('Session variable set successfully.');
+                },
+                error: function(xhr, status, error) {
+                console.error('An error occurred:', error);
+                }
+            });
+        });
+
         document.addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
                 buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
@@ -536,6 +554,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             $('.menuFiltros').toggleClass('mostra');
             $('.diviFrame').toggleClass('mostra');
         });
+
     </script>
 </body>
 

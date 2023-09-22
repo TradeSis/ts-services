@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 // Lucas 30032023 - modificado operação comentar para ser inserido anexos.
 // gabriel 220323 11:19 - adicionado operação retornar demanda
 // Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
@@ -517,4 +518,8 @@ if (isset($_GET['operacao'])) {
 		return $demanda;
 	}
 
+	//Gabriel 22092023 id544 operação grava origem em session 
+	if ($operacao == "origem") {
+		$_SESSION['origem'] = $_POST['origem'];
+	  }
 }

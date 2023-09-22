@@ -145,6 +145,10 @@ if ($metodo == "PUT") {
     $funcao = "demanda/retornar";
     $parametro = null;
   }
+  if ($funcao == "tarefas" && $parametro == "novostart") {
+    $funcao = "tarefas/novostart";
+    $parametro = null;
+  }
 
 
   switch ($funcao) {
@@ -196,6 +200,10 @@ if ($metodo == "PUT") {
     case "contratotipos":
       include 'contratotipos_inserir.php';
       break;
+
+        case "tarefas/novostart":
+          include 'tarefas_novostart.php';
+          break;
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -236,6 +244,7 @@ if ($metodo == "POST") {
     $funcao = "tarefas/start";
     $parametro = null;
   }
+
 
 
 

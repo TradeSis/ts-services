@@ -30,7 +30,6 @@ include_once '../head.php';
                             <textarea style="display: none" id="quill-comentario" name="comentario"></textarea>
                         </div>
 
-                        <!-- <textarea name="comentario" id="comentario" class="form-control" placeholder="Inserir Comentario" rows="5"></textarea> -->
                         <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
                         <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
 

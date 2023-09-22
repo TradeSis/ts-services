@@ -166,22 +166,18 @@ $statusEncerrar = array(
                         <?php
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
                             <button type="button" data-toggle="modal" data-target="#validarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Validar</button>
-                            <!-- formaction="../database/demanda.php?operacao=validar" -->
                         <?php }
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
                             <button type="button" data-toggle="modal" data-target="#retornarModal" class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
-                            <!-- formaction="../database/demanda.php?operacao=retornar" -->
                         <?php } ?>
                         <?php
                         if ($ClienteSession == NULL) { ?>
 
                             <button type="button" data-toggle="modal" data-target="#encaminharModal" class="btn btn-warning" style="margin-right:10px;float: left;">Encaminhar</button>
-                            <!-- formaction="../database/demanda.php?operacao=solicitar" -->
                         <?php } ?>
 
                         <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
                             <button type="button" data-toggle="modal" data-target="#encerrarModal" class="btn btn-warning mr-3">Encerrar</button>
-                            <!-- formaction="../database/demanda.php?operacao=realizado" -->
                         <?php } ?>
                     </div>
 

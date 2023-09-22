@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 // gabriel 04082023
 
 
@@ -945,14 +946,19 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
     });
 
-    function setCookie(name, value, days) {
-      const expires = new Date();
-      expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-      document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-    }
-
+    //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session 
     document.getElementById('visualizarDemandaButton').addEventListener('click', function () {
-      setCookie('origem', 'tarefa', 7); 
+      var currentPath = window.location.pathname;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '../database/demanda.php?operacao=origem', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log('Session variable set successfully.');
+        }
+      };
+      xhr.send('origem=' + encodeURIComponent(currentPath));
     });
 
   </script>

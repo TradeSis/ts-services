@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 
 include_once '../head.php';
 include_once '../database/demanda.php';
@@ -38,8 +39,6 @@ if (isset($_SESSION['idCliente'])) {
     $ClienteSession = $_SESSION['idCliente'];
 }
 
-echo json_encode($_COOKIE['origem']);
-echo json_encode($_COOKIE['tipocontrato']);
 ?>
 
 <style>
@@ -102,20 +101,11 @@ echo json_encode($_COOKIE['tipocontrato']);
                 </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-                <?php if ($_COOKIE['origem'] == "demanda") { ?>
-                    <a href="index.php" role="button" class="btn btn-primary"><i
-                            class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
-                <?php }
-                if ($_COOKIE['origem'] == "tarefa") { ?>
-                    <a href="tarefas.php" role="button" class="btn btn-primary"><i
-                            class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
-                <?php }
-                if ($_COOKIE['origem'] == "contrato") { ?>
-                    <a href="../contratos/index.php?tipo=<?php echo $_COOKIE['tipocontrato'] ?>" role="button" class="btn btn-primary"><i
+            <!-- Gabriel 22092023 id544 href dinâmico com session -->
+                <?php if (isset($_SESSION['origem'])) { ?>
+                    <a href="<?php echo $_SESSION['origem'] ?>" role="button" class="btn btn-primary"><i
                             class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                 <?php } ?>
-
-
             </div>
         </div>
         <div id="tabs">

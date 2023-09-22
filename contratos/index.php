@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 // Lucas 22032023 ajustado função do botão de limpar
 // Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
 // Lucas 15032023 alterado select de idContratoStatus para acionar uma função js, botão "buscar" foi removido, 
@@ -537,16 +538,21 @@ if (isset($_SESSION['filtro_contrato'])) {
             $('.diviFrame').toggleClass('mostra');
         });
 
-        function setCookie(name, value, days) {
-            const expires = new Date();
-            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-            document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-        }
+    //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session 
+    $(document).on('click', '.visualizarDemandaButton', function () {
+      var urlContratoTipo = '?tipo=<?php echo $urlContratoTipo ?>';
+      var currentPath = window.location.pathname + urlContratoTipo;
 
-        $(document).on('click', '.visualizarDemandaButton', function () {
-        setCookie('origem', 'contrato', 7);
-        setCookie('tipocontrato', '<?php echo $urlContratoTipo ?>', 7);
-        });
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '../database/demanda.php?operacao=origem', true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log('Session variable set successfully.');
+        }
+      };
+      xhr.send('origem=' + encodeURIComponent(currentPath));
+    });
     </script>
 </body>
 

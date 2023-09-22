@@ -22,7 +22,6 @@ if (isset($_SESSION['filtro_agenda'])) {
 }
 $tarefas = buscaTarefas(null, null, $idAtendente, $statusTarefa);
 $demandas = buscaDemandasAbertas();
-//echo json_encode($_COOKIE);
 ?>
 
 <!DOCTYPE html>
@@ -347,44 +346,37 @@ $demandas = buscaDemandasAbertas();
     </div>
 
     <script type="text/javascript">
-        function getCookie(cookieName) {
-            var name = cookieName + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var cookieArray = decodedCookie.split(';');
-            for (var i = 0; i < cookieArray.length; i++) {
-                var cookie = cookieArray[i];
-                while (cookie.charAt(0) === ' ') {
-                    cookie = cookie.substring(1);
-                }
-                if (cookie.indexOf(name) === 0) {
-                    return cookie.substring(name.length, cookie.length);
-                }
-            }
-            return null;
-        }
-        function setCookie(name, value, days) {
-            const expires = new Date();
-            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-            const cookieOptions = `expires=${expires.toUTCString()};path=/;SameSite=None;Secure`;
-            document.cookie = `${name}=${value};${cookieOptions}`;
-        }
-
         $(document).on('click', '.fc-month-button', function () {
-            setCookie('calendarView', 'month', 7);
+            gravaUltimo('month');
         });
         $(document).on('click', '.fc-agendaWeek-button', function () {
-            setCookie('calendarView', 'agendaWeek', 7);
+            gravaUltimo('agendaWeek');
         });
         $(document).on('click', '.fc-agendaDay-button', function () {
-            setCookie('calendarView', 'agendaDay', 7);
+            gravaUltimo('agendaDay');
         });
         $(document).on('click', '.fc-schedule-button', function () {
-            setCookie('calendarView', 'schedule', 7);
+            gravaUltimo('schedule');
         });
 
+        //Gabriel 22092023 id542 function gravaUltimo em session
+        function gravaUltimo(tab) {
+            $.ajax({
+                type: 'POST',
+                url: '../database/tarefas.php?operacao=ultimoTab', 
+                data: { ultimoTab: tab }, 
+                success: function(response) {
+                console.log('Session variable set successfully.');
+                },
+                error: function(xhr, status, error) {
+                console.error('An error occurred:', error);
+                }
+            });
+        }
+
         $(document).ready(function () {
-            var savedView = getCookie('calendarView');
-            var vdefaultView = savedView || 'month';
+             //Gabriel 22092023 id542 verifica se possui $_SESSION['ultimoTab'] se não, padrão (mês)
+            var vdefaultView = '<?php echo isset($_SESSION['ultimoTab']) ? $_SESSION['ultimoTab'] : 'month' ?>';
             var today = new Date();
             var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
             $("#calendar").fullCalendar({
@@ -519,12 +511,7 @@ $demandas = buscaDemandasAbertas();
 
                     $('#alterarmodal').modal('show');
                 }
-              
             });
-
-        $('#scheduleButton').on('click', function () {
-            $('#calendar').fullCalendar('changeView', 'schedule');
-        });
         });
 
         function loadPage(url) {

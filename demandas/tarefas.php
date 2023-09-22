@@ -946,19 +946,20 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
     });
 
-    //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session 
-    document.getElementById('visualizarDemandaButton').addEventListener('click', function () {
+    //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
+    $("#visualizarDemandaButton").click(function() {
       var currentPath = window.location.pathname;
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '../database/demanda.php?operacao=origem', true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
+      $.ajax({
+        type: 'POST',
+        url: '../database/demanda.php?operacao=origem',
+        data: { origem: currentPath },
+        success: function(response) {
           console.log('Session variable set successfully.');
+        },
+        error: function(xhr, status, error) {
+          console.error('An error occurred:', error);
         }
-      };
-      xhr.send('origem=' + encodeURIComponent(currentPath));
+      });
     });
 
   </script>

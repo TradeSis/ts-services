@@ -701,7 +701,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               //linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-              linha += "<td><a class='visualizarDemandaButton btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -800,7 +800,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-              linha += "<td><a class='visualizarDemandaButton btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -847,6 +847,22 @@ if (isset($_SESSION['filtro_demanda'])) {
         }
       });
     <?php endif; ?>
+
+    //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
+    $(document).on('click', '#visualizarDemandaButton', function () {
+      var currentPath = window.location.pathname;
+      $.ajax({
+        type: 'POST',
+        url: '../database/demanda.php?operacao=origem',
+        data: { origem: currentPath },
+        success: function(response) {
+          console.log('Session variable set successfully.');
+        },
+        error: function(xhr, status, error) {
+          console.error('An error occurred:', error);
+        }
+      });
+    });
 
     $('.btnAbre').click(function() {
       $('.menuFiltros').toggleClass('mostra');
@@ -919,20 +935,6 @@ if (isset($_SESSION['filtro_demanda'])) {
     }
 
     
-    //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session 
-    $(document).on('click', '.visualizarDemandaButton', function () {
-      var currentPath = window.location.pathname;
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '../database/demanda.php?operacao=origem', true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log('Session variable set successfully.');
-        }
-      };
-      xhr.send('origem=' + encodeURIComponent(currentPath));
-    });
 
     //**************exporta csv
     function exportToCSV() {

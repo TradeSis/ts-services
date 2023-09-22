@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 
 include_once '../head.php';
 include_once '../database/demanda.php';
@@ -100,8 +101,11 @@ if (isset($_SESSION['idCliente'])) {
                 </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-                <a href="javascript:history.back()" role="button" class="btn btn-primary"><i
-                        class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+            <!-- Gabriel 22092023 id544 href dinâmico com session -->
+                <?php if (isset($_SESSION['origem'])) { ?>
+                    <a href="<?php echo $_SESSION['origem'] ?>" role="button" class="btn btn-primary"><i
+                            class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+                <?php } ?>
             </div>
         </div>
         <div id="tabs">
@@ -124,7 +128,7 @@ if (isset($_SESSION['idCliente'])) {
             <?php } ?>
         </div>
     </div>
-    
+
     <!--------- INSERIR/NOVA --------->
     <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
         aria-labelledby="inserirModalLabel" aria-hidden="true">
@@ -143,7 +147,8 @@ if (isset($_SESSION['idCliente'])) {
                                 <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
                                 <div class="form-group" style="margin-top: 22px;">
                                     <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
-                                    <input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="display: none;">
+                                    <input type="text" class="form-control" name="tituloDemanda"
+                                        value="<?php echo $demanda['tituloDemanda'] ?>" style="display: none;">
                                 </div>
                             </div>
                             <div class="col-md-4 form-group">
@@ -179,7 +184,8 @@ if (isset($_SESSION['idCliente'])) {
                                         if ($atendente['idUsuario'] == $demanda['idAtendente']) {
                                             echo "selected";
                                         }
-                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -194,8 +200,11 @@ if (isset($_SESSION['idCliente'])) {
                                         <option <?php
                                         if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {
                                             echo "selected";
-                                        }
-                                        ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        } ?>
+                                            value="
+                                            <?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -270,7 +279,8 @@ if (isset($_SESSION['idCliente'])) {
                                         <?php
                                         foreach ($demandas as $demanda) {
                                             ?>
-                                        <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                                        <option value="<?php echo $demanda['idDemanda'] ?>">
+                                            <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
                                         </option>
                                         <?php } ?>
                                     </select>
@@ -292,7 +302,8 @@ if (isset($_SESSION['idCliente'])) {
                                         <?php
                                         foreach ($atendentes as $atendente) {
                                             ?>
-                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                                        <option value="<?php echo $atendente['idUsuario'] ?>">
+                                            <?php echo $atendente['nomeUsuario'] ?>
                                         </option>
                                         <?php } ?>
                                     </select>
@@ -306,7 +317,8 @@ if (isset($_SESSION['idCliente'])) {
                                         foreach ($ocorrencias as $ocorrencia) {
                                             ?>
                                         <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>

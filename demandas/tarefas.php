@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 // gabriel 04082023
 
 
@@ -857,10 +858,6 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
     };
 
-
-  </script>
-
-  <script>
     $(document).on('click', '.stopButton', function () {
       var idTarefa = $(this).data('id');
       var tipoStatusDemanda = $(this).data('status');
@@ -971,6 +968,22 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       function refreshPage() {
         window.location.reload();
       }
+    });
+
+    //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
+    $("#visualizarDemandaButton").click(function() {
+      var currentPath = window.location.pathname;
+      $.ajax({
+        type: 'POST',
+        url: '../database/demanda.php?operacao=origem',
+        data: { origem: currentPath },
+        success: function(response) {
+          console.log('Session variable set successfully.');
+        },
+        error: function(xhr, status, error) {
+          console.error('An error occurred:', error);
+        }
+      });
     });
 
   </script>

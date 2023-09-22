@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 // Lucas 22032023 ajustado função do botão de limpar
 // Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
 // Lucas 21032023 adicionado forms para filtro de cliente, responsavel, usuario e ocorrencia, fazendo a requisição via ajax.
@@ -782,7 +783,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               //linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -886,7 +887,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a></td>";
               linha += "</tr>";
             }
 
@@ -938,7 +939,24 @@ if (isset($_SESSION['filtro_demanda'])) {
       });
     <?php endif; ?>
 
-    $('.btnAbre').click(function () {
+
+    //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
+    $(document).on('click', '#visualizarDemandaButton', function () {
+      var currentPath = window.location.pathname;
+      $.ajax({
+        type: 'POST',
+        url: '../database/demanda.php?operacao=origem',
+        data: { origem: currentPath },
+        success: function(response) {
+          console.log('Session variable set successfully.');
+        },
+        error: function(xhr, status, error) {
+          console.error('An error occurred:', error);
+        }
+      });
+    });
+
+    $('.btnAbre').click(function() {
       $('.menuFiltros').toggleClass('mostra');
       $('.diviFrame').toggleClass('mostra');
     });
@@ -1008,6 +1026,8 @@ if (isset($_SESSION['filtro_demanda'])) {
         }
       });
     }
+
+    
 
     //**************exporta csv
     function exportToCSV() {

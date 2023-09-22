@@ -1,4 +1,5 @@
 <?php
+//lucas 22092023 ID 358 Demandas/Comentarios 
 include_once '../head.php';
 $statusEncerrar = array(
     TIPOSTATUS_FILA,
@@ -165,10 +166,12 @@ $statusEncerrar = array(
                     <div class="col-md-6">
                         <?php
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
-                            <button type="button" data-toggle="modal" data-target="#validarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Validar</button>
+                        <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para encerrar-->
+                            <button type="button" data-toggle="modal" data-target="#encerrarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Encerrar</button>
                         <?php }
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
-                            <button type="button" data-toggle="modal" data-target="#retornarModal" class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
+                        <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para reabrir-->
+                            <button type="button" data-toggle="modal" data-target="#reabrirModal" class="btn btn-warning" style="margin-right:10px;float: left;">Reabrir</button>
                         <?php } ?>
                         <?php
                         if ($ClienteSession == NULL) { ?>
@@ -177,7 +180,8 @@ $statusEncerrar = array(
                         <?php } ?>
 
                         <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
-                            <button type="button" data-toggle="modal" data-target="#encerrarModal" class="btn btn-warning mr-3">Encerrar</button>
+                            <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para entregar-->
+                            <button type="button" data-toggle="modal" data-target="#entregarModal" class="btn btn-warning mr-3">Entregar</button>
                         <?php } ?>
                     </div>
 
@@ -310,8 +314,11 @@ $statusEncerrar = array(
 
                     <div class="col-md-6">
                         <?php if ($ClienteSession >= 1) { ?>
-                            <button type="button" data-toggle="modal" data-target="#validarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Validar</button>
-                            <button type="button" data-toggle="modal" data-target="#retornarModal" class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
+                            <!-- lucas 22092023 ID 358 Modificado nome da chamada dos modais e dos botôes para encerrar e reabrir, adicionado condição para botão reabrir-->
+                            <button type="button" data-toggle="modal" data-target="#encerrarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Encerrar</button>
+                            <?php if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
+                            <button type="button" data-toggle="modal" data-target="#reabrirModal" class="btn btn-warning" style="margin-right:10px;float: left;">Reabrir</button>
+                            <?php } ?>
                         <?php } ?>
                     </div>
 

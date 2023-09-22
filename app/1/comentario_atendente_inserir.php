@@ -1,4 +1,5 @@
 <?php
+//lucas 22092023 ID 358 Demandas/Comentarios 
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
@@ -16,6 +17,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     $pathAnexo = $jsonEntrada['pathAnexo'];
     $nomeAnexo = $jsonEntrada['nomeAnexo'];
     $idTipoStatus = $jsonEntrada['idTipoStatus'];
+    $idAtendente = $jsonEntrada['idAtendente'];
 
 
     $sql = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario,nomeAnexo,pathAnexo) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP(),'$nomeAnexo','$pathAnexo')";
@@ -33,10 +35,10 @@ if (isset($jsonEntrada['idDemanda'])) {
         $sql3 = "UPDATE demanda SET posicao=$posicao, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
         $atualizar3 = mysqli_query($conexao, $sql3);
     } else {
-        $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+        //lucas 22092023 ID 358 Adicionado idAtendente
+        $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, idAtendente=$idAtendente , dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
         $atualizar3 = mysqli_query($conexao, $sql3);
     }
-
 
     if ($atualizar && $atualizar3) {
         $jsonSaida = array(

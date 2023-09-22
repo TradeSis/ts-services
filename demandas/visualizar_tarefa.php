@@ -212,7 +212,8 @@ include_once '../head.php';
                                 </td>
                                 <td class="text-center">
                                     <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
-                                        <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop"
+                                        <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-toggle="modal"
+                                    data-target="#stopmodal"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>"
@@ -265,31 +266,30 @@ include_once '../head.php';
 
     <script>
         $(document).ready(function () {
-
-            $('.stopButton').click(function () {
-                var idTarefa = $(this).data('id');
-                var tipoStatusDemanda = $(this).data('status');
-                var horaInicioCobrado = $(this).data('data-execucao');
-                var idDemanda = $(this).data('demanda');
+        //lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada
+            $('button[data-target="#stopmodal"]').click(function () {
+                var idTarefa = $(this).attr("data-id");
+                var idDemanda = $(this).attr("data-demanda");
+                var status = $(this).attr("data-status");
+                var horaInicioReal = $(this).attr("data-data-execucao");
                 $.ajax({
-                    url: "../database/tarefas.php?operacao=stop",
-                    method: "POST",
-                    dataType: "json",
-                    data: { 
-                        idTarefa: idTarefa, 
-                        tipoStatusDemanda: tipoStatusDemanda, 
-                        horaInicioCobrado: horaInicioCobrado, 
-                        idDemanda: idDemanda
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
+                    data: {
+                    idTarefa: idTarefa 
                     },
-                    success: function (msg) {
-                        //var message = msg.retorno; 
-                        //alert(message);
-                        if (msg.retorno == "ok") {
-                            refreshPage('tarefas', idDemanda);
-                        }
+                    success: function (data) {
+                        $('#idTarefa-stop').val(data.idTarefa);
+                        $('#idDemanda-stop').val(idDemanda);
+                        $('#status-stop').val(status);
+                        $('#horaInicioReal-stop').val(horaInicioReal);
+                        
+                        $('#stopmodal').modal('show');
                     }
                 });
             });
+        /*lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada*/
 
             $('.startButton').click(function () {
                 var idTarefa = $(this).data('id');

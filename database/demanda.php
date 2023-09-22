@@ -1,4 +1,5 @@
 <?php
+//lucas 22092023 ID 358 Demandas/Comentarios 
 // Lucas 30032023 - modificado operação comentar para ser inserido anexos.
 // gabriel 220323 11:19 - adicionado operação retornar demanda
 // Lucas 21032023 adicionado a operação filtrar, Clientes,Usuarios,TipoStatus  e tipoOcorrencia.
@@ -243,8 +244,19 @@ if (isset($_GET['operacao'])) {
 			);
 			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
 		}
-		/* echo 'encerrada' . json_encode($apiEntrada);
-		return; */
+
+		if($_POST['idTarefa'] != ""){
+			$apiEntrada3 = array(
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'idTarefa' => $_POST['idTarefa'],
+				'idDemanda' => $_POST['idDemanda'],
+				'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+				'idTipoStatus' => TIPOSTATUS_PAUSADO
+			);
+			
+			$tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada3), 'POST');
+		}
+		
 		$demanda = chamaAPI(null, '/services/demanda/realizado', json_encode($apiEntrada), 'POST');
 		
 		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
@@ -324,8 +336,7 @@ if (isset($_GET['operacao'])) {
 		
 		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
 
-		/* echo json_encode($_POST);
-		return; */
+		
 		$apiEntrada = array(
 			//'nomeAnexo' => $nomeAnexo,
 			//'pathAnexo' => $pathURL,
@@ -492,8 +503,9 @@ if (isset($_GET['operacao'])) {
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
 			'comentario' => $comentario,
-			'idTipoStatus' => TIPOSTATUS_AGUARDANDOSOLICITANTE
-
+			'idTipoStatus' => TIPOSTATUS_AGUARDANDOSOLICITANTE,
+			//lucas 22092023 ID 358 Adicionado idAtendente
+			'idAtendente' => $_POST['idAtendente'],
 		);
 
 		$comentario = chamaAPI(null, '/services/comentario/atendente', json_encode($apiEntrada), 'PUT');

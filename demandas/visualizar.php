@@ -1,4 +1,5 @@
 <?php
+//lucas 22092023 ID 358 Demandas/Comentarios 
 
 include_once '../head.php';
 include_once '../database/demanda.php';
@@ -333,13 +334,14 @@ if (isset($_SESSION['idCliente'])) {
             </div>
         </div>
     </div>
+    
 
-    <!--------- MODAL VALIDAR --------->
-    <div class="modal fade bd-example-modal-lg" id="validarModal" tabindex="-1" role="dialog" aria-labelledby="validarModalLabel" aria-hidden="true">
+    <!--------- MODAL STOP --------->
+    <div class="modal fade bd-example-modal-lg" id="stopmodal" tabindex="-1" role="dialog" aria-labelledby="stopmodalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Validar</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -350,8 +352,52 @@ if (isset($_SESSION['idCliente'])) {
                             <div class="col">
                                 <span class="tituloEditor">Comentários</span>
                             </div>
-                            <div class="quill-validar" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-validar" name="comentario"></textarea>
+                            <div class="quill-stop" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
+                        </div>
+                        <div class="col-md form-group" style="margin-top: 5px;">
+                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                            
+                            <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stop" />
+                            <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stop" />
+                            <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stop" />
+                            <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stop" step="2" readonly style="display: none;" />
+                            
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col align-self-start pl-0">
+                        <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left" >Entregar</button>
+                    </div>
+                    <button type="submit" formaction="../database/tarefas.php?operacao=stop" class="btn btn-danger">Stop</button>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--------- MODAL ENCERRAR --------->
+    <div class="modal fade bd-example-modal-lg" id="encerrarModal" tabindex="-1" role="dialog" aria-labelledby="encerrarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
+                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Comentários</span>
+                            </div>
+                            <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
+                            <div class="quill-encerrar" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-encerrar" name="comentario"></textarea>
+                            <!-- -->
                         </div>
                         <div class="col-md form-group" style="margin-top: 5px;">
                             <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
@@ -361,19 +407,22 @@ if (isset($_SESSION['idCliente'])) {
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger">Validar</button>
+                    <!-- lucas 22092023 ID 358 Modificado nome do botao-->
+                    <button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger">Encerrar</button>
                 </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!--------- MODAL RETORNAR --------->
-    <div class="modal fade bd-example-modal-lg" id="retornarModal" tabindex="-1" role="dialog" aria-labelledby="retornarModalLabel" aria-hidden="true">
+    <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal para reabrir-->
+    <!--------- MODAL REABRIR --------->
+    <div class="modal fade bd-example-modal-lg" id="reabrirModal" tabindex="-1" role="dialog" aria-labelledby="reabrirModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Retornar</h5>
+                    <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
+                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -384,8 +433,10 @@ if (isset($_SESSION['idCliente'])) {
                             <div class="col">
                                 <span class="tituloEditor">Comentários</span>
                             </div>
-                            <div class="quill-retornar" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-retornar" name="comentario"></textarea>
+                            <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
+                            <div class="quill-reabrir" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-reabrir" name="comentario"></textarea>
+                            <!-- -->
                         </div>
                         <div class="col-md form-group" style="margin-top: 5px;">
                             <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
@@ -395,7 +446,8 @@ if (isset($_SESSION['idCliente'])) {
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning">Retornar</button>
+                    <!-- lucas 22092023 ID 358 Modificado nome do botao-->
+                    <button type="submit" formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning">Reabrir</button>
                 </div>
                 </form>
             </div>
@@ -407,7 +459,8 @@ if (isset($_SESSION['idCliente'])) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Encaminhar</h5>
+                    <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
+                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -427,6 +480,20 @@ if (isset($_SESSION['idCliente'])) {
                             <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
                             <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
                         </div>
+                        <div class="col-md-3 mt-2">
+                        <label class='control-label' for='inputNormal' style="margin-top: -40px;">Reponsável</label>
+                                    <select class="form-control" name="idAtendente">
+                                        <?php
+                                        foreach ($atendentes as $atendente) {
+                                        ?>
+                                            <option <?php
+                                                    if ($atendente['idUsuario'] == $demanda['idAtendente']) {
+                                                        echo "selected";
+                                                    }
+                                                    ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" formaction="../database/demanda.php?operacao=solicitar" class="btn btn-warning">Encaminhar</button>
@@ -436,12 +503,14 @@ if (isset($_SESSION['idCliente'])) {
         </div>
     </div>
 
-<!--------- MODAL ENCERRAR --------->
-<div class="modal fade bd-example-modal-lg" id="encerrarModal" tabindex="-1" role="dialog" aria-labelledby="encerrarModalLabel" aria-hidden="true">
+    <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal para entregar-->
+<!--------- MODAL ENTREGAR --------->
+<div class="modal fade bd-example-modal-lg" id="entregarModal" tabindex="-1" role="dialog" aria-labelledby="entregarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chamado -<?php echo $idDemanda ?></h5>
+                    <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
+                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -452,8 +521,10 @@ if (isset($_SESSION['idCliente'])) {
                             <div class="col">
                                 <span class="tituloEditor">Comentários</span>
                             </div>
-                            <div class="quill-encerrar" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-encerrar" name="comentario"></textarea>
+                            <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
+                            <div class="quill-entregar" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-entregar" name="comentario"></textarea>
+                            <!-- -->
                         </div>
                         <div class="col-md form-group" style="margin-top: 5px;">
                             <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
@@ -464,7 +535,8 @@ if (isset($_SESSION['idCliente'])) {
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning">Encerrar</button>
+                    <!-- lucas 22092023 ID 358 Modificado nome do botao-->
+                    <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning">Entregar</button>
                 </div>
                 </form>
             </div>
@@ -524,7 +596,8 @@ if (isset($_SESSION['idCliente'])) {
     </script>
 
     <script>
-        var quillvalidar = new Quill('.quill-validar', {
+        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+        var quillencerrar = new Quill('.quill-encerrar', {
             theme: 'snow',
             modules: {
                 toolbar: [
@@ -565,11 +638,13 @@ if (isset($_SESSION['idCliente'])) {
             }
         });
 
-        quillvalidar.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-validar').val(quillvalidar.container.firstChild.innerHTML);
+        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+        quillencerrar.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-encerrar').val(quillencerrar.container.firstChild.innerHTML);
         });
 
-        var quillretornar = new Quill('.quill-retornar', {
+        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+        var quillreabrir = new Quill('.quill-reabrir', {
             theme: 'snow',
             modules: {
                 toolbar: [
@@ -609,9 +684,9 @@ if (isset($_SESSION['idCliente'])) {
                 ]
             }
         });
-
-        quillretornar.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-retornar').val(quillretornar.container.firstChild.innerHTML);
+        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+        quillreabrir.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-reabrir').val(quillreabrir.container.firstChild.innerHTML);
         });
 
         var quillencaminhar = new Quill('.quill-encaminhar', {
@@ -659,7 +734,8 @@ if (isset($_SESSION['idCliente'])) {
             $('#quill-encaminhar').val(quillencaminhar.container.firstChild.innerHTML);
         });
 
-        var quillencerrar = new Quill('.quill-encerrar', {
+        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+        var quillentregar = new Quill('.quill-entregar', {
             theme: 'snow',
             modules: {
                 toolbar: [
@@ -700,8 +776,55 @@ if (isset($_SESSION['idCliente'])) {
             }
         });
 
-        quillencerrar.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-encerrar').val(quillencerrar.container.firstChild.innerHTML);
+        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+        quillentregar.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-entregar').val(quillentregar.container.firstChild.innerHTML);
+        });
+
+        var quillstop = new Quill('.quill-stop', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+        quillstop.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
         });
     </script>
 </body>

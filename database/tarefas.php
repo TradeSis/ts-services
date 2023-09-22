@@ -413,6 +413,10 @@ if (isset($_GET['operacao'])) {
 
         $_SESSION['filtro_agenda'] = $apiEntrada;
     }
+    //Gabriel 22092023 id542 operação ultimoTab em session
+    if ($operacao == "ultimoTab") {
+        $_SESSION['ultimoTab'] = $_POST['ultimoTab'];
+    }
     /*
         include "../demandas/tarefas_ok.php";
     */

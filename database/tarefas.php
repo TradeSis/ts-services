@@ -297,8 +297,7 @@ if (isset($_GET['operacao'])) {
     }
 
     if ($operacao == "stop") {
-        /* echo json_encode($_POST);
-		return; */
+        
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
@@ -318,9 +317,10 @@ if (isset($_GET['operacao'])) {
 				'idTipoStatus' => TIPOSTATUS_RESPONDIDO
 	
 			);
+          
 			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
 		}
-        
+       
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
         //lucas 22092023 ID 358 Adicionado header
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);

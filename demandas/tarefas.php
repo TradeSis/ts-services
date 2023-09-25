@@ -21,7 +21,8 @@ $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
 $demandas = buscaDemandasAbertas();
-
+//lucas 25092023 ID 358 Adicionado buscaUsuarios
+$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
 if ($_SESSION['idCliente'] == null) {
   $idCliente = null;
@@ -618,7 +619,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                             <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
                         </div>
                         <div class="col-md form-group" style="margin-top: 5px;">
-                            
+                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+
                             <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
                             <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
                             <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />

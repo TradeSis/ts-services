@@ -198,8 +198,7 @@ if (isset($_SESSION['idCliente'])) {
                                         if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {
                                             echo "selected";
                                         } /*lucas 25092023 ID 358 indentado value de idTipoOcorrencia para não passar valor em branco*/  ?>
-                                            value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                                            value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
                                         </option>
                                         <?php } ?>
                                     </select>

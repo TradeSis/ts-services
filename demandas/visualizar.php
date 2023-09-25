@@ -102,7 +102,6 @@ if (isset($_SESSION['idCliente'])) {
                 </span>
             </div>
             <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-
             <!-- Gabriel 22092023 id544 href dinâmico com session -->
                 <?php if (isset($_SESSION['origem'])) { ?>
                     <a href="<?php echo $_SESSION['origem'] ?>" role="button" class="btn btn-primary"><i
@@ -194,7 +193,6 @@ if (isset($_SESSION['idCliente'])) {
                                     <select class="form-control" name="idTipoOcorrencia">
                                         <?php
                                         foreach ($ocorrencias as $ocorrencia) {
-
                                             ?>
                                         <option <?php
                                         if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {

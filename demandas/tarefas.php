@@ -1,4 +1,5 @@
 <?php
+//lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 // gabriel 04082023
 
@@ -20,7 +21,8 @@ $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
 $demandas = buscaDemandasAbertas();
-
+//lucas 25092023 ID 358 Adicionado buscaUsuarios
+$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
 if ($_SESSION['idCliente'] == null) {
   $idCliente = null;
@@ -597,6 +599,47 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     </div>
   </div>
 
+      <!--------- MODAL STOP Tab EXECUCAO --------->
+      <div class="modal fade bd-example-modal-lg" id="stopexecucaomodal" tabindex="-1" role="dialog" aria-labelledby="stopexecucaomodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="container-fluid p-0">
+                            <div class="col">
+                                <span class="tituloEditor">Comentários</span>
+                            </div>
+                            <div class="quill-stop" style="height:20vh !important"></div>
+                            <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
+                        </div>
+                        <div class="col-md form-group" style="margin-top: 5px;">
+                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+
+                            <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
+                            <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
+                            <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
+                            <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2" readonly style="display: none;" />
+                            
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col align-self-start pl-0">
+                        <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left" >Entregar</button>
+                    </div>
+                    <button type="submit" formaction="../database/tarefas.php?operacao=stop" class="btn btn-danger">Stop</button>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
 
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
@@ -716,7 +759,12 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             linha += "<td>" + vhoraCobrado + "</td>";
             linha += "<td class='text-center'>";
             if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
-              linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+              //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
+              if(object.idDemanda == null){
+                linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+              }else{
+                linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-toggle='modal' data-target='#stopexecucaomodal' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+              }
             }
             if (vhoraInicioReal == "00:00") {
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
@@ -789,6 +837,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     $(document).on('click', 'button[data-target="#alterarmodal"]', function () {
       var idTarefa = $(this).attr("data-idtarefa");
+ 
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -837,6 +886,31 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     });
 
+    //lucas 25092023 ID 358 Adicionado script para popup de stop
+    $(document).on('click', 'button[data-target="#stopexecucaomodal"]', function () {
+      var idTarefa = $(this).attr("data-id");
+      var idDemanda = $(this).attr("data-demanda");
+      var status = $(this).attr("data-status");
+      var horaInicioReal = $(this).attr("data-data-execucao");
+      
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
+        data: {
+          idTarefa: idTarefa
+        },
+        success: function (data) {
+          $('#idTarefa-stopexecucao').val(data.idTarefa);
+          $('#idDemanda-stopexecucao').val(idDemanda);
+          $('#status-stopexecucao').val(status);
+          $('#horaInicioReal-stopexecucao').val(horaInicioReal);
+                        
+          $('#stopexecucaomodal').modal('show');
+        }
+      });
+    });
+
     $('.btnAbre').click(function () {
       $('.menuFiltros').toggleClass('mostra');
       $('.diviFrame').toggleClass('mostra');
@@ -858,13 +932,20 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
     };
 
+
+  </script>
+
+  <script>
+
     $(document).on('click', '.stopButton', function () {
       var idTarefa = $(this).data('id');
       var tipoStatusDemanda = $(this).data('status');
       var horaInicioCobrado = $(this).data('data-execucao');
       var idDemanda = $(this).data('demanda');
+      alert(idTarefa)
       $.ajax({
-        url: "../database/tarefas.php?operacao=stop",
+        //lucas 25092023 ID 358 Modificado operação de tarefas
+        url: "../database/tarefas.php?operacao=stopsemdemanda",
         method: "POST",
         dataType: "json",
         data: {
@@ -970,6 +1051,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
     });
 
+
     //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
     $("#visualizarDemandaButton").click(function() {
       var currentPath = window.location.pathname;
@@ -985,6 +1067,53 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         }
       });
     });
+
+
+    var quillstop = new Quill('.quill-stop', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+        quillstop.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
+        });
 
   </script>
 

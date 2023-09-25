@@ -1,5 +1,9 @@
 <?php
+
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
+
+//lucas 22092023 ID 358 Demandas/Comentarios 
+
 // Lucas 22032023 ajustado função do botão de limpar
 // Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
 // Lucas 21032023 adicionado forms para filtro de cliente, responsavel, usuario e ocorrencia, fazendo a requisição via ajax.
@@ -495,6 +499,8 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Status</th>
                 <th>Ocorrência</th>
                 <th>Fechamento</th>
+                <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
+                <th>Posição</th>
                 <th>Ação</th>
                 <th></th>
               </tr>
@@ -622,6 +628,8 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Status</th>
                 <th>Ocorrência</th>
                 <th>Fechamento</th>
+                <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
+                <th>Posição</th>
                 <th>Ação</th>
               </tr>
               <tr>
@@ -771,6 +779,14 @@ if (isset($_SESSION['filtro_demanda'])) {
                 var dataFechamento = new Date(object.dataFechamento);
                 dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
               }
+              /* lucas 22092023 ID 358 logica para mostar o nome em vez do numero */
+              if(object.posicao == 0){
+                var posicao = "Atendente"
+              }
+              if(object.posicao == 1){
+                var posicao = "Cliente"
+              }
+              /*  */
               linha += "<tr>";
               linha += "<td>" + object.prioridade + "</td>";
               linha += "<td>" + object.idDemanda + "</td>";
@@ -781,9 +797,13 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td>" + dataFormatada + "</td>";
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-              //linha += "<td>" + object.tamanho + " - " + object.horasPrevisao + "</td>";
+              /* lucas 22092023 ID 358 Removido comentario */
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a></td>";
+
+              /* lucas 22092023 ID 358 Adicionado campo na tabela */
+              linha += "<td>" + posicao + "</td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+
               linha += "</tr>";
             }
 
@@ -877,6 +897,13 @@ if (isset($_SESSION['filtro_demanda'])) {
                 var dataFechamento = new Date(object.dataFechamento);
                 dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
               }
+              
+              if(object.posicao == 0){
+                var posicao = "Atendente"
+              }
+              if(object.posicao == 1){
+                var posicao = "Cliente"
+              }
 
               linha += "<tr>";
               linha += "<td>" + object.prioridade + "</td>";
@@ -887,7 +914,11 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a></td>";
+
+              /* lucas 22092023 ID 358 Adicionado campo na tabela */
+              linha += "<td>" + posicao + "</td>";
+              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+
               linha += "</tr>";
             }
 

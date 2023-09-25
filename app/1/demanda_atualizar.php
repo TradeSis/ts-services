@@ -1,4 +1,5 @@
 <?php
+//lucas 22092023 ID 358 Demandas/Comentarios 
 //gabriel 220323
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
@@ -42,8 +43,8 @@ if (isset($jsonEntrada['idDemanda'])) {
     $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
 
 
-
-    if ($statusDemanda == 3) { //se status for do tipo entregue
+//lucas 22092023 ID 358 modificado o teste para gravar a data quando for tipo encerrado
+    if ($statusDemanda == 0) { //se status for do tipo encerrar
         if ($dataFechamento == null) { //e a data for null
             $dataFechamento = 'CURRENT_TIMESTAMP ()'; //grava a data de fechamento
             $sql2 = "UPDATE demanda SET dataFechamento=$dataFechamento, dataAtualizacaoAtendente=CURRENT_TIMESTAMP () WHERE demanda.idDemanda = $idDemanda ";

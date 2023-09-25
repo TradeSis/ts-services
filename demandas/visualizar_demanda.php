@@ -1,4 +1,5 @@
 <?php
+//lucas 22092023 ID 358 Demandas/Comentarios 
 include_once '../head.php';
 $statusEncerrar = array(
     TIPOSTATUS_FILA,
@@ -18,30 +19,26 @@ $statusEncerrar = array(
                     <div class="col-md-1">
                         <div class="form-group">
                             <label class='control-label' for='inputNormal'>Prioridade</label>
-                            <input type="number" min="1" max="99" class="form-control" name="prioridade"
-                                value="<?php echo $demanda['prioridade'] ?>" style="margin-top: 50px;">
+                            <input type="number" min="1" max="99" class="form-control" name="prioridade" value="<?php echo $demanda['prioridade'] ?>" style="margin-top: 50px;">
                         </div>
                     </div>
                     <div class="col-md-1">
                         <div class="form-group">
                             <label class='control-label' for='inputNormal'>ID</label>
-                            <input type="text" class="form-control" name="idDemanda"
-                                value="<?php echo $demanda['idDemanda'] ?>" readonly style="margin-top: 50px;">
+                            <input type="text" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly style="margin-top: 50px;">
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="form-group">
                             <label class='control-label' for='inputNormal'>Demanda</label>
-                            <input type="text" class="form-control" name="tituloDemanda"
-                                value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
+                            <input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
                             <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $demanda['idContratoTipo'] ?>" style="display: none">
                         </div>
                     </div>
                     <div class="col-md-2" style="margin-top:36px;">
                         <div class="form-group">
                             <label class='control-label' for='inputNormal'>Solicitante</label>
-                            <input type="text" class="data select form-control" name="idSolicitante"
-                                value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
+                            <input type="text" class="data select form-control" name="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
                         </div>
                     </div>
                 </div>
@@ -64,27 +61,22 @@ $statusEncerrar = array(
                                 $dataCobradoAtualizacaoAtendente = date('d/m/Y H:i', strtotime($dataCobradoAtualizacaoAtendente));
                             }
                             ?>
-                            <input type="text" class="data select form-control" name="dataAtualizacaoAtendente"
-                                value="<?php echo $dataCobradoAtualizacaoAtendente ?>" readonly>
+                            <input type="text" class="data select form-control" name="dataAtualizacaoAtendente" value="<?php echo $dataCobradoAtualizacaoAtendente ?>" readonly>
                             <label class='control-label' for='inputNormal'>Data de Abertura</label>
-                            <input type="text" class="data select form-control" name="dataabertura"
-                                value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
+                            <input type="text" class="data select form-control" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -20px;">
 
                             <label class="labelForm">Tempo Cobrado</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $horas['totalHoraCobrado'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $horas['totalHoraCobrado'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -20px;">
                             <label class="labelForm">Quantidade Retornos</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $demanda['QtdRetornos'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $demanda['QtdRetornos'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -25px;">
                             <label class="labelForm">Previsão</label>
-                            <input type="number" class="data select form-control" name="horasPrevisao"
-                                value="<?php echo $demanda['horasPrevisao'] ?>">
+                            <input type="number" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                         </div>
                         <div class="col-md-12 form-group-select" style="margin-top: -29px;">
                             <label class="labelForm">Tamanho</label>
@@ -116,8 +108,7 @@ $statusEncerrar = array(
                                 $dataCobradoAtualizacaoCliente = date('d/m/Y H:i', strtotime($dataCobradoAtualizacaoCliente));
                             }
                             ?>
-                            <input type="text" class="data select form-control" name="dataAtualizacaoCliente"
-                                value="<?php echo $dataCobradoAtualizacaoCliente ?>" readonly>
+                            <input type="text" class="data select form-control" name="dataAtualizacaoCliente" value="<?php echo $dataCobradoAtualizacaoCliente ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -24px;">
                             <label class="labelForm">Data Fim</label>
@@ -127,23 +118,20 @@ $statusEncerrar = array(
                                 $dataCobradoFechamento = date('d/m/Y H:i', strtotime($dataCobradoFechamento));
                             }
                             ?>
-                            <input type="text" class="data select form-control" name="dataFechamento"
-                                value="<?php echo $dataCobradoFechamento ?>" readonly>
+                            <input type="text" class="data select form-control" name="dataFechamento" value="<?php echo $dataCobradoFechamento ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -20px;">
                             <label class="labelForm">Tempo Real</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $horas['totalHorasReal'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $horas['totalHorasReal'] ?>" readonly>
                         </div>
 
                         <div class="col-md-12 form-group" style="margin-top: -20px;">
                             <label class="labelForm">Status</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group-select" style="margin-top: -25px;">
                             <label class="labelForm">Ocorrência</label>
-                                <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
+                            <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
                                 <option value="<?php echo $demanda['idTipoOcorrencia'] ?>"><?php echo $demanda['nomeTipoOcorrencia'] ?></option>
                                 <?php foreach ($ocorrencias as $ocorrencia) { ?>
                                     <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
@@ -174,11 +162,31 @@ $statusEncerrar = array(
                     </div>
                 </div>
                 <div class="row mt-3 mb-5">
-                    <div class="col-md-12 text-right">
-                        <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
-                            <button type="submit" formaction="../database/demanda.php?operacao=realizado"
-                                class="btn btn-warning mr-3">Encerrar</button>
+
+                    <div class="col-md-6">
+                        <?php
+                        if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
+                        <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para encerrar-->
+                            <button type="button" data-toggle="modal" data-target="#encerrarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Encerrar</button>
+                        <?php }
+                        if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
+                        <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para reabrir-->
+                            <button type="button" data-toggle="modal" data-target="#reabrirModal" class="btn btn-warning" style="margin-right:10px;float: left;">Reabrir</button>
                         <?php } ?>
+                        <?php
+                        if ($ClienteSession == NULL) { ?>
+
+                            <button type="button" data-toggle="modal" data-target="#encaminharModal" class="btn btn-warning" style="margin-right:10px;float: left;">Encaminhar</button>
+                        <?php } ?>
+
+                        <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
+                            <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para entregar-->
+                            <button type="button" data-toggle="modal" data-target="#entregarModal" class="btn btn-warning mr-3">Entregar</button>
+                        <?php } ?>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+
                         <input type="submit" name="submit" id="submit" class="btn btn-success" value="Atualizar" />
                     </div>
                 </div>
@@ -191,35 +199,31 @@ $statusEncerrar = array(
                     <div class="col-md-1">
                         <div class="form-group">
                             <label class='control-label' for='inputNormal'>Prioridade</label>
-                            <input type="number" min="1" max="99" class="form-control" name="prioridade"
-                                value="<?php echo $demanda['prioridade'] ?>" style="margin-top: 50px;">
+                            <input type="number" min="1" max="99" class="form-control" name="prioridade" value="<?php echo $demanda['prioridade'] ?>" style="margin-top: 50px;">
                         </div>
                     </div>
                     <div class="col-md-1">
                         <div class="form-group">
                             <label class='control-label' for='inputNormal'>ID</label>
-                            <input type="text" class="form-control" name="idDemanda"
-                                value="<?php echo $demanda['idDemanda'] ?>" readonly style="margin-top: 50px;">
+                            <input type="text" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly style="margin-top: 50px;">
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="form-group">
                             <label class='control-label' for='inputNormal'>Demanda</label>
-                            <input type="text" class="form-control" name="tituloDemanda"
-                                value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
+                            <input type="text" class="form-control" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="margin-top: 50px;">
                         </div>
                     </div>
                     <div class="col-md-2" style="margin-top:36px;">
                         <div class="form-group">
                             <label class='control-label' for='inputNormal'>Solicitante</label>
-                            <input type="text" class="data select form-control" name="idSolicitante"
-                                value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
+                            <input type="text" class="data select form-control" name="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="margin-top: -30px;">
                     <div class="col-md-6">
-                    <div class="container-fluid p-0">
+                        <div class="container-fluid p-0">
                             <div class="col">
                                 <span class="tituloEditor">Descrição</span>
                             </div>
@@ -236,37 +240,30 @@ $statusEncerrar = array(
                                 $dataCobradoAtualizacaoAtendente = date('d/m/Y H:i', strtotime($dataCobradoAtualizacaoAtendente));
                             }
                             ?>
-                            <input type="text" class="data select form-control" name="dataAtualizacaoAtendente"
-                                value="<?php echo $dataCobradoAtualizacaoAtendente ?>" readonly>
+                            <input type="text" class="data select form-control" name="dataAtualizacaoAtendente" value="<?php echo $dataCobradoAtualizacaoAtendente ?>" readonly>
                             <label class='control-label' for='inputNormal'>Data de Abertura</label>
-                            <input type="text" class="data select form-control" name="dataabertura"
-                                value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
+                            <input type="text" class="data select form-control" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -20px;">
 
                             <label class="labelForm">Tempo Cobrado</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $horas['totalHoraCobrado'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $horas['totalHoraCobrado'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -20px;">
                             <label class="labelForm">Quantidade Retornos</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $demanda['QtdRetornos'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $demanda['QtdRetornos'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -25px;">
                             <label class="labelForm">Previsão</label>
-                            <input type="number" class="data select form-control" name="horasPrevisao"
-                                value="<?php echo $demanda['horasPrevisao'] ?>" readonly>
+                            <input type="number" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -25px;">
                             <label class="labelForm">Tamanho</label>
-                            <input type="text" class="data select form-control" name="tamanho"
-                                value="<?php echo $demanda['tamanho'] ?>" readonly>
+                            <input type="text" class="data select form-control" name="tamanho" value="<?php echo $demanda['tamanho'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -25px;">
                             <label class="labelForm">Responsável</label>
-                            <input type="text" class="data select form-control" name="idAtendente"
-                                value="<?php echo $demanda['idAtendente'] ?>" readonly><?php echo $demanda['nomeAtendente'] ?></input>
+                            <input type="text" class="data select form-control" name="idAtendente" value="<?php echo $demanda['idAtendente'] ?>" readonly><?php echo $demanda['nomeAtendente'] ?></input>
                         </div>
                     </div>
                     <div class="col-md">
@@ -278,8 +275,7 @@ $statusEncerrar = array(
                                 $dataCobradoAtualizacaoCliente = date('d/m/Y H:i', strtotime($dataCobradoAtualizacaoCliente));
                             }
                             ?>
-                            <input type="text" class="data select form-control" name="dataAtualizacaoCliente"
-                                value="<?php echo $dataCobradoAtualizacaoCliente ?>" readonly>
+                            <input type="text" class="data select form-control" name="dataAtualizacaoCliente" value="<?php echo $dataCobradoAtualizacaoCliente ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -24px;">
                             <label class="labelForm">Data Fim</label>
@@ -289,39 +285,45 @@ $statusEncerrar = array(
                                 $dataCobradoFechamento = date('d/m/Y H:i', strtotime($dataCobradoFechamento));
                             }
                             ?>
-                            <input type="text" class="data select form-control" name="dataFechamento"
-                                value="<?php echo $dataCobradoFechamento ?>" readonly>
+                            <input type="text" class="data select form-control" name="dataFechamento" value="<?php echo $dataCobradoFechamento ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -20px;">
                             <label class="labelForm">Tempo Real</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $horas['totalHorasReal'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $horas['totalHorasReal'] ?>" readonly>
                         </div>
 
                         <div class="col-md-12 form-group" style="margin-top: -20px;">
                             <label class="labelForm">Status</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -25px;">
                             <label class="labelForm">Ocorrência</label>
-                            <input type="text" class="data select form-control"
-                                value="<?php echo $demanda['nomeTipoOcorrencia'] ?>" readonly>
+                            <input type="text" class="data select form-control" value="<?php echo $demanda['nomeTipoOcorrencia'] ?>" readonly>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -25px;">
                             <label class="labelForm">Serviço</label>
-                            <input type="text" class="data select form-control" name="idServico"
-                                value="<?php echo $demanda['idServico'] ?>" readonly><?php echo $demanda['nomeServico'] ?></input>
+                            <input type="text" class="data select form-control" name="idServico" value="<?php echo $demanda['idServico'] ?>" readonly><?php echo $demanda['nomeServico'] ?></input>
                         </div>
                         <div class="col-md-12 form-group" style="margin-top: -25px;">
                             <label class="labelForm">Contrato Vinculado</label>
-                            <input type="text" class="data select form-control" name="idContrato"
-                                value="<?php echo $demanda['idContrato'] ?>" readonly><?php echo $demanda['tituloContrato'] ?></input>
+                            <input type="text" class="data select form-control" name="idContrato" value="<?php echo $demanda['idContrato'] ?>" readonly><?php echo $demanda['tituloContrato'] ?></input>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2 mb-5">
-                    <div class="col-md-12 text-right">
+                <div class="row mt-3 mb-5">
+
+                    <div class="col-md-6">
+                        <?php if ($ClienteSession >= 1) { ?>
+                            <!-- lucas 22092023 ID 358 Modificado nome da chamada dos modais e dos botôes para encerrar e reabrir, adicionado condição para botão reabrir-->
+                            <button type="button" data-toggle="modal" data-target="#encerrarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Encerrar</button>
+                            <?php if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
+                            <button type="button" data-toggle="modal" data-target="#reabrirModal" class="btn btn-warning" style="margin-right:10px;float: left;">Reabrir</button>
+                            <?php } ?>
+                        <?php } ?>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+
                         <input type="submit" name="submit" id="submit" class="btn btn-success" value="Atualizar" />
                     </div>
                 </div>
@@ -329,51 +331,51 @@ $statusEncerrar = array(
         <?php } ?>
     </div>
 
+
     <script>
         var quilldescricao = new Quill('.quill-textarea', {
-    theme: 'snow',
-    modules: {
-        toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote'],
-            [{
-                'list': 'ordered'
-            }, {
-                'list': 'bullet'
-            }],
-            [{
-                'indent': '-1'
-            }, {
-                'indent': '+1'
-            }], 
-            [{
-                'direction': 'rtl'
-            }], 
-            [{
-                'size': ['small', false, 'large', 'huge']
-            }],
-            [{
-                'header': [1, 2, 3, 4, 5, 6, false]
-            }],
-            ['link', 'image', 'video', 'formula'], 
-            [{
-                'color': []
-            }, {
-                'background': []
-            }], 
-            [{
-                'font': []
-            }],
-            [{
-                'align': []
-            }],
-        ]
-    }
-});
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
 
-quilldescricao.on('text-change', function(delta, oldDelta, source) {
-    $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
-});
-
+        quilldescricao.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
+        });
     </script>
 </body>

@@ -339,6 +339,8 @@ if (isset($_GET['operacao'])) {
         );
         
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+        //lucas 22092023 ID 358 Adicionado header
+        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
         echo json_encode($tarefas);
         return $tarefas;
     }

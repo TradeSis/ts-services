@@ -1,9 +1,6 @@
 <?php
-
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
-
 //lucas 22092023 ID 358 Demandas/Comentarios 
-
 // Lucas 22032023 ajustado função do botão de limpar
 // Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
 // Lucas 21032023 adicionado forms para filtro de cliente, responsavel, usuario e ocorrencia, fazendo a requisição via ajax.
@@ -799,7 +796,6 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               /* lucas 22092023 ID 358 Removido comentario */
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-
               /* lucas 22092023 ID 358 Adicionado campo na tabela */
               linha += "<td>" + posicao + "</td>";
               linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
@@ -914,7 +910,6 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
               linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
               linha += "<td>" + dataFechamentoFormatada + "</td>";
-
               /* lucas 22092023 ID 358 Adicionado campo na tabela */
               linha += "<td>" + posicao + "</td>";
               linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";

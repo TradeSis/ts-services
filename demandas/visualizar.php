@@ -1,5 +1,5 @@
 <?php
-
+//lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
 
@@ -199,9 +199,8 @@ if (isset($_SESSION['idCliente'])) {
                                         <option <?php
                                         if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {
                                             echo "selected";
-                                        } ?>
-                                            value="
-                                            <?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                                        } /*lucas 25092023 ID 358 indentado value de idTipoOcorrencia para não passar valor em branco*/  ?>
+                                            value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
                                             <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
                                         </option>
                                         <?php } ?>

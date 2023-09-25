@@ -21,6 +21,7 @@ if (isset($_SESSION['filtro_agenda'])) {
     $statusTarefa = $filtroEntrada['statusTarefa'];
 }
 $tarefas = buscaTarefas(null, null, $idAtendente, $statusTarefa);
+
 $demandas = buscaDemandasAbertas();
 ?>
 
@@ -378,7 +379,7 @@ $demandas = buscaDemandasAbertas();
              //Gabriel 22092023 id542 verifica se possui $_SESSION['ultimoTab'] se não, padrão (mês)
             var vdefaultView = '<?php echo isset($_SESSION['ultimoTab']) ? $_SESSION['ultimoTab'] : 'month' ?>';
             var today = new Date();
-            var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 3, 0);
             $("#calendar").fullCalendar({
 
                 header: {
@@ -398,10 +399,12 @@ $demandas = buscaDemandasAbertas();
                         timeFormat: 'HH:mm'
                     },
                     agendaWeek: {
-                        minTime: "06:00:00"
+                        minTime: "08:00:00",
+                        maxTime: "20:00:00"
                     },
                     agendaDay: {
-                        minTime: "06:00:00"
+                        minTime: "08:00:00",
+                        maxTime: "20:00:00"
                     },
                     schedule: {
                         type: 'list',
@@ -440,11 +443,12 @@ $demandas = buscaDemandasAbertas();
                         } else {
                             $tituloTarefa = empty($tarefa['tituloTarefa']) ? $tarefa['tituloTarefa'] . " (" . $tarefa['nomeUsuario'] . ")" : $tarefa['tituloTarefa'];
                         }
-                        $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "06:00:00" : $tarefa['horaInicioPrevisto'];
-                        $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "24:00:00" : $tarefa['horaFinalPrevisto'];
+                        $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "08:00:00" : $tarefa['horaInicioPrevisto'];
+                        $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "19:00:00" : $tarefa['horaFinalPrevisto'];
 
                         ?>
                     {
+                        allDay: <?php if ($tarefa['horaInicioPrevisto']==null) { echo 'true';} else { echo 'false';}?> ,
                         _id: '<?php echo $tarefa['idTarefa']; ?>',
                         title: '<?php echo $tituloTarefa ?>',
                         start: '<?php echo $tarefa['Previsto'] . ' ' . $horaInicioPrevisto; ?>',

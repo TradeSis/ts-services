@@ -1,4 +1,5 @@
 <?php
+//lucas 25092023 ID 358 Demandas/Comentarios
 //lucas 22092023 ID 358 Demandas/Comentarios 
 // helio 21032023 - compatibilidade chamada chamaApi
 // gabriel 06022023 calculo timediff
@@ -316,12 +317,28 @@ if (isset($_GET['operacao'])) {
 				'idTipoStatus' => TIPOSTATUS_RESPONDIDO
 	
 			);
+          
 			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
 		}
-        
+       
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
         //lucas 22092023 ID 358 Adicionado header
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        echo json_encode($tarefas);
+        return $tarefas;
+    }
+//lucas 25092023 ID 358 Operação que é chamada quando a tarefa estiver sem uma demanda associada
+    if ($operacao == "stopsemdemanda") {
+       
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'idTarefa' => $_POST['idTarefa'],
+            'idDemanda' => $_POST['idDemanda'],
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_PAUSADO
+        );
+        
+        $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
         echo json_encode($tarefas);
         return $tarefas;
     }

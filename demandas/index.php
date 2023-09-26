@@ -213,7 +213,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               <div class="col mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-primary text-uppercase ">Aberto</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalDemandas'] ?>
+                  <?php echo $cards['totalAbertas'] ?>
                 </div>
               </div>
             </div>
@@ -228,7 +228,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Execução</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalAbertos'] ?>
+                  <?php echo $cards['totalExecucao'] ?>
                 </div>
               </div>
             </div>
@@ -243,7 +243,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Entregue</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalFechados'] ?>
+                  <?php echo $cards['totalEntregue'] ?>
                 </div>
               </div>
             </div>
@@ -258,7 +258,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Fechado</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalAguardando'] ?>
+                  <?php echo $cards['totalFechado'] ?>
                 </div>
               </div>
             </div>
@@ -797,7 +797,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   <script>
     <?php if ($ClienteSession === NULL): ?>
       var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-      //lucas 26092023 ID 576 Adicionado posicao busca
+      //lucas 26092023 ID 576 Adicionado posicao no buscar
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
 
       function limparTrade() {
@@ -805,7 +805,12 @@ if (isset($_SESSION['filtro_demanda'])) {
           window.location.reload();
         });
       }
-
+     
+      //lucas 26092023 ID 576 Modificado função clickCard, passando os valores dos outros filtros
+      function clickCard(statusDemanda) {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), 
+        statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+      } 
 
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
         //alert(posicao)
@@ -929,7 +934,14 @@ if (isset($_SESSION['filtro_demanda'])) {
           window.location.reload();
         });
       }
-      /* lucas 26092023 ID 576 Adicionado posicao no busca */
+
+    //lucas 26092023 ID 576 Modificado função clickCard, passando os valores dos outros filtros
+    function clickCard(statusDemanda) {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), 
+      statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+    } 
+
+      /* lucas 26092023 ID 576 Adicionado posicao no buscar */
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
 
         $.ajax({
@@ -1346,11 +1358,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       $('.cardColor1').removeClass('cardColor-active');
       $('.cardColor2').removeClass('cardColor-active');
       $('.cardColor3').removeClass('cardColor-active');
-    });
-    
-    function clickCard(stausDemadaCard) {
-  buscar(null,null,null,null,null,stausDemadaCard,null,null,null)
-}
+    }); 
     
 // Cards com Botões acionamento ligado ao Select de StatusDemanda
 let btn = document.querySelectorAll('button');

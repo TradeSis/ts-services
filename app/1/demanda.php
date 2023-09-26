@@ -1,4 +1,5 @@
 <?php
+//lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Lucas 19052023 adicionado if para filtro de tamanho
 // Lucas 22032023 adicionado if para filtro de tituloDemanda
 // Lucas 21032023 ajustado estrutura dentro do else, para os novos filtros.
@@ -85,9 +86,9 @@ if (isset($jsonEntrada["buscaDemanda"])) {
   $sql = $sql . $where . " demanda.idDemanda= " . "'" . $jsonEntrada["buscaDemanda"] . "'" . " or demanda.tituloDemanda like " . "'%" . $jsonEntrada["buscaDemanda"] . "%'";
   $where = " and ";
 }
-
-if (isset($jsonEntrada["tamanho"])) {
-  $sql = $sql . $where . " demanda.tamanho = " . "'" . $jsonEntrada["tamanho"] . "'";
+//lucas 26092023 ID 576 Substituido $jsonEntrada["tamanho"] para $jsonEntrada["posicao"], filtro tamanho foi removido 
+if (isset($jsonEntrada["posicao"])) {
+  $sql = $sql . $where . " demanda.posicao = " . $jsonEntrada["posicao"];
   $where = " and ";
 }
 

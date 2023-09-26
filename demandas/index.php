@@ -1,4 +1,5 @@
 <?php
+//lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
 // Lucas 22032023 ajustado função do botão de limpar
@@ -71,9 +72,11 @@ if (isset($_SESSION['filtro_demanda'])) {
   $idTipoStatus = $filtroEntrada['idTipoStatus'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusDemanda = $filtroEntrada['statusDemanda'];
+  //lucas 26092023 ID 576 Adicionado posicao no filtro_demanda
+  $posicao = $filtroEntrada['posicao'];
 }
 
-//echo json_encode($_SESSION);
+
 ?>
 <style>
   [class="<?php echo TIPOSTATUS_FILA ?>"] {
@@ -157,6 +160,29 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 80vw;
     height: 85vh;
   }
+  .cardLink {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index:2;
+  opacity: 0;
+}
+.cardLink:hover{
+  cursor: pointer;
+}
+
+.cardColor-active{
+  background-color: #fff !important;
+  box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+  -webkit-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+  -moz-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+  border-left:solid #158cee !important;
+
+}
+.shadowOff{
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
 </style>
 
 
@@ -166,63 +192,81 @@ if (isset($_SESSION['filtro_demanda'])) {
   <div class="container-fluid py-1">
     <div class="header-body">
       <div class="row row-cols-6">
-
-        <div class="col my-2">
-          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+       <!-- lucas 26092023 ID 576 Modificado estrutura dos cards -->
+      <div class="col my-2">
+          <div class="cardColor card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-uppercase text-success">Total de Chamado</div>
+                <div class="text-xs font-weight-bold text-secondary text-success text-uppercase ">Todos</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
                   <?php echo $cards['totalDemandas'] ?>
                 </div>
               </div>
             </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="" id=""></button>
           </div>
         </div>
 
         <div class="col my-2">
-          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+          <div class="cardColor1 cardColor-active card border-left-success  py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Abertos</div>
-
+                <div class="text-xs font-weight-bold text-primary text-uppercase ">Aberto</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalAbertos'] ?>
+                  <?php echo $cards['totalAbertas'] ?>
                 </div>
               </div>
             </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="1" id="1"></button>
           </div>
         </div>
 
         <div class="col my-2">
-          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+          <div class="cardColor2 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Encerrados</div>
+                <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Execução</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalFechados'] ?>
+                  <?php echo $cards['totalExecucao'] ?>
                 </div>
               </div>
             </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="2" id="2"></button>
           </div>
         </div>
 
         <div class="col my-2">
-          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+          <div class="cardColor3 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Aguardando</div>
+                <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Entregue</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalAguardando'] ?>
+                  <?php echo $cards['totalEntregue'] ?>
                 </div>
               </div>
             </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="3" id="3"></button>
           </div>
         </div>
 
+        <div class="col my-2">
+          <div class="cardColor0 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2 mb-2 p-1">
+                <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Fechado</div>
 
+                <div class="h5 mb-0  text-gray-800 ml-1">
+                  <?php echo $cards['totalFechado'] ?>
+                </div>
+              </div>
+            </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="0" id="0"></button>
+          </div>
+        </div>
+
+    <!--  -->
       </div>
     </div>
   </div>
@@ -233,7 +277,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda"
+          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" onchange="mudarSelect(this.value)"
             style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>">
               <?php echo "Todos" ?>
@@ -500,6 +544,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Posição</th>
                 <th>Ação</th>
                 <th></th>
+                
               </tr>
               <tr>
                 <th></th>
@@ -610,6 +655,17 @@ if (isset($_SESSION['filtro_demanda'])) {
                   </form>
                 </th>
                 <th></th>
+                <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
+                <th style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="posicao" id="FiltroPosicao"
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <option value="0">Atendente</option>
+                      <option value="1">Cliente</option>
+                    </select>
+                  </form>
+                </th>
                 <th></th>
                 <th></th>
               </tr>
@@ -714,6 +770,17 @@ if (isset($_SESSION['filtro_demanda'])) {
                   </form>
                 </th>
                 <th></th>
+               <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
+                <th style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="posicao" id="FiltroPosicao"
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <option value="0">Atendente</option>
+                      <option value="1">Cliente</option>
+                    </select>
+                  </form>
+                </th>
                 <th></th>
               </tr>
             <?php } ?>
@@ -732,18 +799,23 @@ if (isset($_SESSION['filtro_demanda'])) {
   <script>
     <?php if ($ClienteSession === NULL): ?>
       var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroTamanho").val());
+      //lucas 26092023 ID 576 Adicionado posicao no buscar
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
 
       function limparTrade() {
         buscar(null, null, null, null, null, null, null, null, function () {
           window.location.reload();
         });
       }
+     
+      //lucas 26092023 ID 576 Modificado função clickCard, passando os valores dos outros filtros
+      function clickCard(statusDemanda) {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), 
+        statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+      } 
 
-
-      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, tamanho, callback) {
-        /* alert(urlContratoTipo) */
+      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
+        //alert(posicao)
         $.ajax({
           type: 'POST',
           dataType: 'html',
@@ -759,8 +831,9 @@ if (isset($_SESSION['filtro_demanda'])) {
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
             buscaDemanda: buscaDemanda,
-            tamanho: tamanho,
-            urlContratoTipo: urlContratoTipo
+            urlContratoTipo: urlContratoTipo,
+            /* lucas 26092023 ID 576 Adicionado posicao */
+            posicao: posicao
           },
           success: function (msg) {
             var json = JSON.parse(msg);
@@ -812,46 +885,49 @@ if (isset($_SESSION['filtro_demanda'])) {
         });
       }
 
+      /* lucas 26092023 ID 576 Adicionado filtro posicao */
       $("#FiltroTipoStatus").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroClientes").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroSolicitante").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroOcorrencia").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroUsuario").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroStatusDemanda").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#buscar").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
-      $("#FiltroTamanho").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      $("#FiltroPosicao").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       document.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
         }
       });
+      /*  */
     <?php else: ?>
       var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+      /* lucas 26092023 ID 576 Adicionado filtro posicao */
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
 
 
       function limpar() {
@@ -861,7 +937,14 @@ if (isset($_SESSION['filtro_demanda'])) {
         });
       }
 
-      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, callback) {
+    //lucas 26092023 ID 576 Modificado função clickCard, passando os valores dos outros filtros
+    function clickCard(statusDemanda) {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), 
+      statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+    } 
+
+      /* lucas 26092023 ID 576 Adicionado posicao no buscar */
+      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
 
         $.ajax({
           type: 'POST',
@@ -878,7 +961,9 @@ if (isset($_SESSION['filtro_demanda'])) {
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
             buscaDemanda: buscaDemanda,
-            urlContratoTipo: urlContratoTipo
+            urlContratoTipo: urlContratoTipo,
+            /* lucas 26092023 ID 576 Adicionado posicao */
+            posicao: posicao
           },
           success: function (msg) {
 
@@ -925,44 +1010,45 @@ if (isset($_SESSION['filtro_demanda'])) {
           }
         });
       }
-
+/* lucas 26092023 ID 576 Adicionado filtro posicao */
       $("#FiltroTipoStatus").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroClientes").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroSolicitante").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroOcorrencia").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroUsuario").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroStatusDemanda").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#buscar").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
-      $("#FiltroTamanho").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+      $("#FiltroPosicao").change(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       document.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
         }
       });
+      /*  */
     <?php endif; ?>
 
 
@@ -1232,6 +1318,73 @@ if (isset($_SESSION['filtro_demanda'])) {
     demandaContrato.on('text-change', function (delta, oldDelta, source) {
       $('#quill-demandainserir').val(demandaContrato.container.firstChild.innerHTML);
     });
+
+
+// Cards com Botões acionamento individual
+    $('.cardColor').click(function () {
+      $('.cardColor').addClass('cardColor-active'); 
+      $('.cardColor').removeClass('shadowOff');
+      $('.cardColor1').removeClass('cardColor-active');
+      $('.cardColor2').removeClass('cardColor-active');
+      $('.cardColor3').removeClass('cardColor-active');
+      $('.cardColor0').removeClass('cardColor-active');
+    });
+    $('.cardColor1').click(function () {
+      $('.cardColor1').addClass('cardColor-active');
+      $('.cardColor1').removeClass('shadowOff');
+      $('.cardColor').removeClass('cardColor-active');
+      $('.cardColor2').removeClass('cardColor-active');
+      $('.cardColor3').removeClass('cardColor-active');
+      $('.cardColor0').removeClass('cardColor-active');
+    });
+    $('.cardColor2').click(function () {
+      $('.cardColor2').addClass('cardColor-active');
+      $('.cardColor2').removeClass('shadowOff');
+      $('.cardColor').removeClass('cardColor-active');
+      $('.cardColor1').removeClass('cardColor-active');
+      $('.cardColor3').removeClass('cardColor-active');
+      $('.cardColor0').removeClass('cardColor-active');
+    });
+    $('.cardColor3').click(function () {
+      $('.cardColor3').addClass('cardColor-active');
+      $('.cardColor3').removeClass('shadowOff');
+      $('.cardColor').removeClass('cardColor-active');
+      $('.cardColor1').removeClass('cardColor-active');
+      $('.cardColor2').removeClass('cardColor-active');
+      $('.cardColor0').removeClass('cardColor-active');
+    });
+    $('.cardColor0').click(function () {
+      $('.cardColor0').addClass('cardColor-active');
+      $('.cardColor0').removeClass('shadowOff');
+      $('.cardColor').removeClass('cardColor-active');
+      $('.cardColor1').removeClass('cardColor-active');
+      $('.cardColor2').removeClass('cardColor-active');
+      $('.cardColor3').removeClass('cardColor-active');
+    }); 
+    
+// Cards com Botões acionamento ligado ao Select de StatusDemanda
+let btn = document.querySelectorAll('button');
+let select = document.querySelector('select');
+
+function troca(e) {
+    select.value = e.currentTarget.id;
+}
+
+btn.forEach( (el) => {
+    el.addEventListener('click', troca);
+}) 
+
+function mudarSelect(valor){
+  $('.cardColor').removeClass('cardColor-active');
+  $('.cardColor1').removeClass('cardColor-active');
+  $('.cardColor2').removeClass('cardColor-active');
+  $('.cardColor3').removeClass('cardColor-active');
+  $('.cardColor0').removeClass('cardColor-active');
+  $('.cardColor' + valor).addClass('cardColor-active');
+  $('.cardColor' + valor).removeClass('shadowOff');
+  
+}
+
   </script>
 </body>
 

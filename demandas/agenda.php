@@ -434,6 +434,10 @@ $demandas = buscaDemandasAbertas();
                 events: [
                     <?php
                     $colors = array('#FF6B6B', '#77DD77', '#6CA6CD', '#FFD700', '#FF69B4', '#00CED1');
+                    // helio 26092023 - inicio teste de cores
+                    $cor_previsto   = '#77DD77';
+                    $cor_executando = '#FF6B6B';
+                    $cor_diatodo    = '#6CA6CD';
                     $colorIndex = 0;
                     foreach ($tarefas as $tarefa) {
                         $color = $colors[$colorIndex % count($colors)];
@@ -453,17 +457,18 @@ $demandas = buscaDemandasAbertas();
                             // sem realfinal, coloca sempre mais 1 hora, para melhorar visualmente
                             if ($tarefa['horaFinalReal']==null) {
                                 $dtf   = date('H:00:00', strtotime('1 hour')); 
+                                $color = $cor_executando; // helio 26092023 - inicio teste de cores
                             }
                             $horaInicioPrevisto = is_null($tarefa['horaInicioReal']) ? "08:00:00" : $tarefa['horaInicioReal'];
                             $horaFinalPrevisto = is_null($tarefa['horaFinalReal']) ? $dtf : $tarefa['horaFinalReal'];
                         } else {
+                            $cor = $cor_previsto ; // helio 26092023 - inicio teste de cores
                             if ($tarefa['horaInicioPrevisto']==null) { $allDay = true;} else { $allDay = false;} // teste de allDay
                             $dataPrevisto = $tarefa['Previsto'];
                             $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "08:00:00" : $tarefa['horaInicioPrevisto'];
                             $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "19:00:00" : $tarefa['horaFinalPrevisto'];
-                            
                         }
-
+                        if ($allDay==true) {$color = $cor_diatodo;}
                         ?>
                     {
                         allDay: <?php if ($allDay==true) { echo 'true';} else { echo 'false';} // teste de allDay ?> ,

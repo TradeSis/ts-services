@@ -157,6 +157,29 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 80vw;
     height: 85vh;
   }
+  .cardLink {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index:2;
+  opacity: 0;
+}
+.cardLink:hover{
+  cursor: pointer;
+}
+
+.cardColor-active{
+  background-color: #fff !important;
+  box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+  -webkit-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+  -moz-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+  border-left:solid #158cee !important;
+
+}
+.shadowOff{
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
 </style>
 
 
@@ -167,58 +190,76 @@ if (isset($_SESSION['filtro_demanda'])) {
     <div class="header-body">
       <div class="row row-cols-6">
 
-        <div class="col my-2">
-          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+      <div class="col my-2">
+          <div class="cardColor card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-uppercase text-success">Total de Chamado</div>
+                <div class="text-xs font-weight-bold text-secondary text-success text-uppercase ">Todos</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
                   <?php echo $cards['totalDemandas'] ?>
                 </div>
               </div>
             </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="" id=""></button>
           </div>
         </div>
 
         <div class="col my-2">
-          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+          <div class="cardColor1 cardColor-active card border-left-success  py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Abertos</div>
+                <div class="text-xs font-weight-bold text-primary text-uppercase ">Aberto</div>
+                <div class="h5 mb-0  text-gray-800 ml-1">
+                  <?php echo $cards['totalDemandas'] ?>
+                </div>
+              </div>
+            </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="1" id="1"></button>
+          </div>
+        </div>
+
+        <div class="col my-2">
+          <div class="cardColor2 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2 mb-2 p-1">
+                <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Execução</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
                   <?php echo $cards['totalAbertos'] ?>
                 </div>
               </div>
             </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="2" id="2"></button>
           </div>
         </div>
 
         <div class="col my-2">
-          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+          <div class="cardColor3 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Encerrados</div>
+                <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Entregue</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
                   <?php echo $cards['totalFechados'] ?>
                 </div>
               </div>
             </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="3" id="3"></button>
           </div>
         </div>
 
         <div class="col my-2">
-          <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
+          <div class="cardColor0 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Aguardando</div>
+                <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Fechado</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
                   <?php echo $cards['totalAguardando'] ?>
                 </div>
               </div>
             </div>
+            <button class="cardLink" onClick="clickCard(this.value)" value="0" id="0"></button>
           </div>
         </div>
 
@@ -233,7 +274,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
 
-          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda"
+          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" onchange="mudarSelect(this.value)"
             style="font-size: 14px; width: 150px; height: 35px">
             <option value="<?php echo null ?>">
               <?php echo "Todos" ?>
@@ -743,7 +784,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
       function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, tamanho, callback) {
-        /* alert(urlContratoTipo) */
+        //alert(statusDemanda)
         $.ajax({
           type: 'POST',
           dataType: 'html',
@@ -1232,6 +1273,77 @@ if (isset($_SESSION['filtro_demanda'])) {
     demandaContrato.on('text-change', function (delta, oldDelta, source) {
       $('#quill-demandainserir').val(demandaContrato.container.firstChild.innerHTML);
     });
+
+
+// Cards com Botões acionamento individual
+    $('.cardColor').click(function () {
+      $('.cardColor').addClass('cardColor-active'); 
+      $('.cardColor').removeClass('shadowOff');
+      $('.cardColor1').removeClass('cardColor-active');
+      $('.cardColor2').removeClass('cardColor-active');
+      $('.cardColor3').removeClass('cardColor-active');
+      $('.cardColor0').removeClass('cardColor-active');
+    });
+    $('.cardColor1').click(function () {
+      $('.cardColor1').addClass('cardColor-active');
+      $('.cardColor1').removeClass('shadowOff');
+      $('.cardColor').removeClass('cardColor-active');
+      $('.cardColor2').removeClass('cardColor-active');
+      $('.cardColor3').removeClass('cardColor-active');
+      $('.cardColor0').removeClass('cardColor-active');
+    });
+    $('.cardColor2').click(function () {
+      $('.cardColor2').addClass('cardColor-active');
+      $('.cardColor2').removeClass('shadowOff');
+      $('.cardColor').removeClass('cardColor-active');
+      $('.cardColor1').removeClass('cardColor-active');
+      $('.cardColor3').removeClass('cardColor-active');
+      $('.cardColor0').removeClass('cardColor-active');
+    });
+    $('.cardColor3').click(function () {
+      $('.cardColor3').addClass('cardColor-active');
+      $('.cardColor3').removeClass('shadowOff');
+      $('.cardColor').removeClass('cardColor-active');
+      $('.cardColor1').removeClass('cardColor-active');
+      $('.cardColor2').removeClass('cardColor-active');
+      $('.cardColor0').removeClass('cardColor-active');
+    });
+    $('.cardColor0').click(function () {
+      $('.cardColor0').addClass('cardColor-active');
+      $('.cardColor0').removeClass('shadowOff');
+      $('.cardColor').removeClass('cardColor-active');
+      $('.cardColor1').removeClass('cardColor-active');
+      $('.cardColor2').removeClass('cardColor-active');
+      $('.cardColor3').removeClass('cardColor-active');
+    });
+    
+    function clickCard(stausDemadaCard) {
+  buscar(null,null,null,null,null,stausDemadaCard,null,null,null)
+}
+    
+// Cards com Botões acionamento ligado ao Select de StatusDemanda
+let btn = document.querySelectorAll('button');
+let select = document.querySelector('select');
+
+function troca(e) {
+    select.value = e.currentTarget.id;
+}
+
+btn.forEach( (el) => {
+    el.addEventListener('click', troca);
+}) 
+
+function mudarSelect(valor){
+  $('.cardColor').removeClass('cardColor-active');
+  $('.cardColor1').removeClass('cardColor-active');
+  $('.cardColor2').removeClass('cardColor-active');
+  $('.cardColor3').removeClass('cardColor-active');
+  $('.cardColor0').removeClass('cardColor-active');
+  $('.cardColor' + valor).addClass('cardColor-active');
+  $('.cardColor' + valor).removeClass('shadowOff');
+  
+}
+
   </script>
 </body>
 

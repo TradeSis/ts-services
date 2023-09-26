@@ -23,6 +23,7 @@ if (isset($_SESSION['filtro_agenda'])) {
 $tarefas = buscaTarefas(null, null, $idAtendente, $statusTarefa);
 
 $demandas = buscaDemandasAbertas();
+
 ?>
 
 <!DOCTYPE html>
@@ -448,13 +449,19 @@ $demandas = buscaDemandasAbertas();
                         if ($tarefa['dataReal']!=null) {
                             $dataPrevisto = $tarefa['dataReal'];
                             $allDay = false;
+                            $dtf = $tarefa['horaFinalReal'];
+                            // sem realfinal, coloca sempre mais 1 hora, para melhorar visualmente
+                            if ($tarefa['horaFinalReal']==null) {
+                                $dtf   = date('H:00:00', strtotime('1 hour')); 
+                            }
                             $horaInicioPrevisto = is_null($tarefa['horaInicioReal']) ? "08:00:00" : $tarefa['horaInicioReal'];
-                            $horaFinalPrevisto = is_null($tarefa['horaFinalReal']) ? "19:00:00" : $tarefa['horaFinalReal'];
+                            $horaFinalPrevisto = is_null($tarefa['horaFinalReal']) ? $dtf : $tarefa['horaFinalReal'];
                         } else {
                             if ($tarefa['horaInicioPrevisto']==null) { $allDay = true;} else { $allDay = false;} // teste de allDay
                             $dataPrevisto = $tarefa['Previsto'];
                             $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "08:00:00" : $tarefa['horaInicioPrevisto'];
                             $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "19:00:00" : $tarefa['horaFinalPrevisto'];
+                            
                         }
 
                         ?>

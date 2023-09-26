@@ -1,4 +1,5 @@
 <?php
+//lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
@@ -32,11 +33,12 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 $card = array();
 
-
+//lucas 26092023 ID 576 Modificado query para os novos status
 $sql = "SELECT
-        SUM(CASE WHEN demanda.statusDemanda = 1 THEN 1 ELSE 0 END) AS totalAbertos,
-        SUM(CASE WHEN demanda.statusDemanda = 0 THEN 1 ELSE 0 END) AS totalFechados,
-        SUM(CASE WHEN demanda.statusDemanda = 1 AND demanda.idTipoStatus = 7 THEN 1 ELSE 0 END) AS totalAguardando,
+        SUM(CASE WHEN demanda.statusDemanda = 1 THEN 1 ELSE 0 END) AS totalAbertas,
+        SUM(CASE WHEN demanda.statusDemanda = 2 THEN 1 ELSE 0 END) AS totalExecucao,
+        SUM(CASE WHEN demanda.statusDemanda = 3 THEN 1 ELSE 0 END) AS totalEntregue,
+        SUM(CASE WHEN demanda.statusDemanda = 0 THEN 1 ELSE 0 END) AS totalFechado,
         COUNT(demanda.idDemanda) AS totalDemandas
         FROM demanda";
 

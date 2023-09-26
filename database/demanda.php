@@ -1,5 +1,5 @@
 <?php
-
+//lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
 // Lucas 30032023 - modificado operação comentar para ser inserido anexos.
@@ -525,6 +525,8 @@ if (isset($_GET['operacao'])) {
 		$statusDemanda = $_POST['statusDemanda'];
 		$buscaDemanda = $_POST['buscaDemanda'];
 		$idContratoTipo = $_POST["urlContratoTipo"];
+		//lucas 26092023 ID 576 Adiciono posicao
+		$posicao = $_POST["posicao"];
 
 		if ($idCliente == "") {
 			$idCliente = null;
@@ -560,6 +562,10 @@ if (isset($_GET['operacao'])) {
 		if ($idContratoTipo == ""){
 			$idContratoTipo = null;
 		}
+		//lucas 26092023 ID 576 Adiciono posicao
+		if ($posicao == ""){
+			$posicao = null;
+		}
 
 
 		$idEmpresa = null;
@@ -576,7 +582,9 @@ if (isset($_GET['operacao'])) {
 			'idTipoOcorrencia' => $idTipoOcorrencia,
 			'statusDemanda' => $statusDemanda,
 			'buscaDemanda' => $buscaDemanda,
-			'idContratoTipo' => $idContratoTipo
+			'idContratoTipo' => $idContratoTipo,
+			//lucas 26092023 ID 576 Adiciono posicao
+			'posicao' => $posicao
 		);
 
 		$_SESSION['filtro_demanda'] = $apiEntrada;

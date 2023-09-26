@@ -1,4 +1,5 @@
 <?php
+//lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
 // Lucas 22032023 ajustado função do botão de limpar
@@ -71,9 +72,11 @@ if (isset($_SESSION['filtro_demanda'])) {
   $idTipoStatus = $filtroEntrada['idTipoStatus'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusDemanda = $filtroEntrada['statusDemanda'];
+  //lucas 26092023 ID 576 Adicionado posicao no filtro_demanda
+  $posicao = $filtroEntrada['posicao'];
 }
 
-//echo json_encode($_SESSION);
+
 ?>
 <style>
   [class="<?php echo TIPOSTATUS_FILA ?>"] {
@@ -189,7 +192,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   <div class="container-fluid py-1">
     <div class="header-body">
       <div class="row row-cols-6">
-
+       <!-- lucas 26092023 ID 576 Modificado estrutura dos cards -->
       <div class="col my-2">
           <div class="cardColor card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
             <div class="row no-gutters align-items-center">
@@ -210,7 +213,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               <div class="col mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-primary text-uppercase ">Aberto</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalDemandas'] ?>
+                  <?php echo $cards['totalAbertas'] ?>
                 </div>
               </div>
             </div>
@@ -225,7 +228,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Execução</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalAbertos'] ?>
+                  <?php echo $cards['totalExecucao'] ?>
                 </div>
               </div>
             </div>
@@ -240,7 +243,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Entregue</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalFechados'] ?>
+                  <?php echo $cards['totalEntregue'] ?>
                 </div>
               </div>
             </div>
@@ -255,7 +258,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Fechado</div>
 
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalAguardando'] ?>
+                  <?php echo $cards['totalFechado'] ?>
                 </div>
               </div>
             </div>
@@ -263,7 +266,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           </div>
         </div>
 
-
+    <!--  -->
       </div>
     </div>
   </div>
@@ -651,7 +654,17 @@ if (isset($_SESSION['filtro_demanda'])) {
                   </form>
                 </th>
                 <th></th>
-                <th></th>
+                <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
+                <th style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="posicao" id="FiltroPosicao"
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <option value="0">Atendente</option>
+                      <option value="1">Cliente</option>
+                    </select>
+                  </form>
+                </th>
                 <th></th>
               </tr>
 
@@ -755,6 +768,17 @@ if (isset($_SESSION['filtro_demanda'])) {
                   </form>
                 </th>
                 <th></th>
+               <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
+                <th style="width: 10%;">
+                  <form action="" method="post">
+                    <select class="form-control text-center" name="posicao" id="FiltroPosicao"
+                      style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                      <option value="0">Atendente</option>
+                      <option value="1">Cliente</option>
+                    </select>
+                  </form>
+                </th>
                 <th></th>
               </tr>
             <?php } ?>
@@ -773,18 +797,23 @@ if (isset($_SESSION['filtro_demanda'])) {
   <script>
     <?php if ($ClienteSession === NULL): ?>
       var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroTamanho").val());
+      //lucas 26092023 ID 576 Adicionado posicao no buscar
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
 
       function limparTrade() {
         buscar(null, null, null, null, null, null, null, null, function () {
           window.location.reload();
         });
       }
+     
+      //lucas 26092023 ID 576 Modificado função clickCard, passando os valores dos outros filtros
+      function clickCard(statusDemanda) {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), 
+        statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+      } 
 
-
-      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, tamanho, callback) {
-        //alert(statusDemanda)
+      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
+        //alert(posicao)
         $.ajax({
           type: 'POST',
           dataType: 'html',
@@ -800,8 +829,9 @@ if (isset($_SESSION['filtro_demanda'])) {
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
             buscaDemanda: buscaDemanda,
-            tamanho: tamanho,
-            urlContratoTipo: urlContratoTipo
+            urlContratoTipo: urlContratoTipo,
+            /* lucas 26092023 ID 576 Adicionado posicao */
+            posicao: posicao
           },
           success: function (msg) {
             var json = JSON.parse(msg);
@@ -853,46 +883,49 @@ if (isset($_SESSION['filtro_demanda'])) {
         });
       }
 
+      /* lucas 26092023 ID 576 Adicionado filtro posicao */
       $("#FiltroTipoStatus").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroClientes").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroSolicitante").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroOcorrencia").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroUsuario").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#FiltroStatusDemanda").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       $("#buscar").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
-      $("#FiltroTamanho").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      $("#FiltroPosicao").click(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
       document.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
         }
       });
+      /*  */
     <?php else: ?>
       var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+      /* lucas 26092023 ID 576 Adicionado filtro posicao */
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
 
 
       function limpar() {
@@ -902,7 +935,14 @@ if (isset($_SESSION['filtro_demanda'])) {
         });
       }
 
-      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, callback) {
+    //lucas 26092023 ID 576 Modificado função clickCard, passando os valores dos outros filtros
+    function clickCard(statusDemanda) {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), 
+      statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+    } 
+
+      /* lucas 26092023 ID 576 Adicionado posicao no buscar */
+      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
 
         $.ajax({
           type: 'POST',
@@ -919,7 +959,9 @@ if (isset($_SESSION['filtro_demanda'])) {
             idTipoOcorrencia: idTipoOcorrencia,
             statusDemanda: statusDemanda,
             buscaDemanda: buscaDemanda,
-            urlContratoTipo: urlContratoTipo
+            urlContratoTipo: urlContratoTipo,
+            /* lucas 26092023 ID 576 Adicionado posicao */
+            posicao: posicao
           },
           success: function (msg) {
 
@@ -966,44 +1008,45 @@ if (isset($_SESSION['filtro_demanda'])) {
           }
         });
       }
-
+/* lucas 26092023 ID 576 Adicionado filtro posicao */
       $("#FiltroTipoStatus").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroClientes").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroSolicitante").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroOcorrencia").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroUsuario").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#FiltroStatusDemanda").change(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       $("#buscar").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
-      $("#FiltroTamanho").click(function () {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+      $("#FiltroPosicao").click(function () {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
       document.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), null);
+          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
         }
       });
+      /*  */
     <?php endif; ?>
 
 
@@ -1315,11 +1358,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       $('.cardColor1').removeClass('cardColor-active');
       $('.cardColor2').removeClass('cardColor-active');
       $('.cardColor3').removeClass('cardColor-active');
-    });
-    
-    function clickCard(stausDemadaCard) {
-  buscar(null,null,null,null,null,stausDemadaCard,null,null,null)
-}
+    }); 
     
 // Cards com Botões acionamento ligado ao Select de StatusDemanda
 let btn = document.querySelectorAll('button');

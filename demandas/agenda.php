@@ -443,16 +443,27 @@ $demandas = buscaDemandasAbertas();
                         } else {
                             $tituloTarefa = empty($tarefa['tituloTarefa']) ? $tarefa['tituloTarefa'] . " (" . $tarefa['nomeUsuario'] . ")" : $tarefa['tituloTarefa'];
                         }
-                        $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "08:00:00" : $tarefa['horaInicioPrevisto'];
-                        $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "19:00:00" : $tarefa['horaFinalPrevisto'];
+
+                        // substituindo dataPrevisto por Real, quando Real existir
+                        if ($tarefa['dataReal']!=null) {
+                            $dataPrevisto = $tarefa['dataReal'];
+                            $allDay = false;
+                            $horaInicioPrevisto = is_null($tarefa['horaInicioReal']) ? "08:00:00" : $tarefa['horaInicioReal'];
+                            $horaFinalPrevisto = is_null($tarefa['horaFinalReal']) ? "19:00:00" : $tarefa['horaFinalReal'];
+                        } else {
+                            if ($tarefa['horaInicioPrevisto']==null) { $allDay = true;} else { $allDay = false;} // teste de allDay
+                            $dataPrevisto = $tarefa['Previsto'];
+                            $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "08:00:00" : $tarefa['horaInicioPrevisto'];
+                            $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "19:00:00" : $tarefa['horaFinalPrevisto'];
+                        }
 
                         ?>
                     {
-                        allDay: <?php if ($tarefa['horaInicioPrevisto']==null) { echo 'true';} else { echo 'false';}?> ,
+                        allDay: <?php if ($allDay==true) { echo 'true';} else { echo 'false';} // teste de allDay ?> ,
                         _id: '<?php echo $tarefa['idTarefa']; ?>',
                         title: '<?php echo $tituloTarefa ?>',
-                        start: '<?php echo $tarefa['Previsto'] . ' ' . $horaInicioPrevisto; ?>',
-                        end: '<?php echo $tarefa['Previsto'] . ' ' . $horaFinalPrevisto; ?>',
+                        start: '<?php echo $dataPrevisto . ' ' . $horaInicioPrevisto; // uso dataPrevisto com real/previsto ?>',
+                        end: '<?php echo $dataPrevisto . ' ' . $horaFinalPrevisto; // uso dataPrevisto com real/previsto ?>',
                         idTarefa: '<?php echo $tarefa['idTarefa']; ?>',
                         tituloTarefa: '<?php echo $tarefa['tituloTarefa']; ?>',
                         idCliente: '<?php echo $tarefa['idCliente']; ?>',

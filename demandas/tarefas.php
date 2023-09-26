@@ -942,7 +942,6 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       var tipoStatusDemanda = $(this).data('status');
       var horaInicioCobrado = $(this).data('data-execucao');
       var idDemanda = $(this).data('demanda');
-      alert(idTarefa)
       $.ajax({
         //lucas 25092023 ID 358 Modificado operação de tarefas
         url: "../database/tarefas.php?operacao=stopsemdemanda",

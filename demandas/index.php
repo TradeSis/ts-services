@@ -544,6 +544,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Posição</th>
                 <th>Ação</th>
                 <th></th>
+                
               </tr>
               <tr>
                 <th></th>
@@ -666,8 +667,8 @@ if (isset($_SESSION['filtro_demanda'])) {
                   </form>
                 </th>
                 <th></th>
+                <th></th>
               </tr>
-
             <?php } //******************visão do Cliente 
             else { ?>
               <tr>
@@ -912,7 +913,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
-      $("#FiltroPosicao").click(function () {
+      $("#FiltroPosicao").change(function () {
         buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       });
 
@@ -1037,7 +1038,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 
-      $("#FiltroPosicao").click(function () {
+      $("#FiltroPosicao").change(function () {
         buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
       });
 

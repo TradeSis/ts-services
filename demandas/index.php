@@ -155,10 +155,17 @@ if (isset($_SESSION['filtro_demanda'])) {
     margin-top: 0px;
 
   }
-
+ 
   .modal-content {
     width: 80vw;
-    height: 85vh;
+    /* height: 85vh; */
+  } 
+
+  @media only screen and (max-height: 600px) {
+    .modal-content {
+    width: 100%;
+    /* height: 85vh; */
+  }
   }
 
   .cardLink {
@@ -326,8 +333,8 @@ if (isset($_SESSION['filtro_demanda'])) {
   </nav>
 
   <!--------- MODAL DEMANDA INSERIR --------->
-  <div class="modal fade bd-example-modal-lg" id="inserirDemandaModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade " id="inserirDemandaModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Inserir
@@ -340,7 +347,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         <div class="modal-body">
           <form method="post" id="form1">
             <div class="row">
-              <div class="col-md form-group" style="margin-top: 5px;">
+              <div class="col-sm-8 col-md form-group" style="margin-top: 5px;">
                 <label class='control-label' for='inputNormal' style="margin-top: 4px;">
                   <?php echo $contratoTipo['nomeDemanda'] ?>
                 </label>
@@ -348,7 +355,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
                 <input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" readonly>
               </div>
-              <div class="col-md-2 form-group-select" style="margin-top: -20px;">
+              <div class="col-sm-4 col-md-2 form-group-select" style="margin-top: -20px;">
                 <div class="form-group">
                   <label class="labelForm">Cliente</label>
                   <?php
@@ -385,11 +392,11 @@ if (isset($_SESSION['filtro_demanda'])) {
 
               <div class="col-md-6" style="margin-top: 25px;">
                 <div class="row">
-                  <div class="col-md-6 form-group" style="margin-top: -25px;">
+                  <div class="col-sm-6 col-md-6 form-group" style="margin-top: -25px;">
                     <label class="labelForm">Previsão</label>
                     <input type="number" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                   </div>
-                  <div class="col-md-6 form-group-select" style="margin-top: -25px;">
+                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: -25px;">
                     <label class="labelForm">Ocorrência</label>
                     <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
                       <option value="<?php echo null ?>">
@@ -411,7 +418,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </div><!--fim row 1-->
 
                 <div class="row">
-                  <div class="col-md-6 form-group-select" style="margin-top: -25px;">
+                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: -25px;">
                     <label class="labelForm">Tamanho</label>
                     <select class="select form-control" name="tamanho">
                       <option value="<?php echo null ?>">
@@ -422,7 +429,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                       <option value="G">G</option>
                     </select>
                   </div>
-                  <div class="col-md-6 form-group-select" style="margin-top: -25px; ">
+                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: -25px;">
                     <label class="labelForm">Serviço</label>
                     <select class="select form-control" name="idServico" autocomplete="off">
                       <option value="<?php echo null ?>">
@@ -438,7 +445,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </div><!--fim row 2-->
 
                 <div class="row">
-                  <div class="col-md-6 form-group-select" style="margin-top: 40px;">
+                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: 40px;">
                     <label class="labelForm">Responsável</label>
                     <select class="select form-control" name="idAtendente">
                       <option value="<?php echo null ?>">
@@ -451,7 +458,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                       <?php } ?>
                     </select>
                   </div>
-                  <div class="col-md-6 form-group-select" style="margin-top: 40px;">
+                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: 40px;">
                     <label class="labelForm">Contrato Vinculado</label>
                     <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
                       <select class="select form-control" name="idContrato" autocomplete="off" required>
@@ -488,7 +495,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     <div class="row align-items-center p-3 ">
 
       <div class="col-4 order-1 col-sm-4  col-md-4 order-md-1 col-lg-1 order-lg-1 mt-3">
-        <button type="button" class="btnAbre btn btn-sm"><span style="font-size: 23px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+        <button type="button" class="btnAbre btn btn-sm btn-outline-primary"><span style="font-size: 23px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
             filter_alt
           </span></button>
       </div>
@@ -524,14 +531,14 @@ if (isset($_SESSION['filtro_demanda'])) {
 
       </div>
 
-      <div class="col-4 order-3 col-sm-4 col-md-4 order-md-3 col-lg-2 order-lg-5 text-end">
+      <div class="col-4 order-3 col-sm-4 col-md-4 order-md-3 col-lg-2 order-lg-5" style="text-align: end;">
         <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
       </div>
     </div>
 
     <!-- <div class="card mt-2" style="background-color: #EEEEEE;"> -->
       <div class="table table-sm table-hover  diviFrame">
-        <table class="table table-sm table-responsive table-wrapper-scroll-y">
+        <table class="table table-sm table-responsive table-wrapper-scroll-y table-striped">
           <thead class="cabecalhoTabela">
             <?php if ($ClienteSession == NULL) { ?>
               <tr style="background-color:#13216A;position: sticky;top:0px;">

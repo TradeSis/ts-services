@@ -1,17 +1,61 @@
 <?php
 include_once __DIR__ . "/../config.php";
-include_once ROOT . "/sistema/head.php";
+include_once "novohead.php";
 include_once ROOT . "/sistema/database/loginAplicativo.php";
-
+include_once ROOT . "/sistema/novopainel.php";
 $nivelMenuLogin = buscaLoginAplicativo($_SESSION['idLogin'], 'Services');
 $configuracao = 1;
 $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
+/* pega a ultima parte da url */
+$url = $_SERVER['QUERY_STRING'];
 ?>
 
 
-<div class="container-fluid mt-1" style="background-color: #EEEEEE;">
-    <div class="row border-bottom">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 col-md-8 ">
+        </div>
+        <div class="col-6 col-md-4" >
+            <h5 style="text-align:right">PERFIL</h5>
+        </div>
+    </div>
+
+    <select class="form-select d-md-none position-sticky" id="linksub" style="color:#000; width:200px;text-align:center; margin-left:auto;margin-right:auto;margin-top:-30px">         
+        <option value="<?php echo URLROOT ?>/services/novoindex.php?tab=dashboard" 
+            <?php if ($url == "tab=dashboard") {echo " selected ";} ?>
+        >Dashboard</option>
+
+        <option value="<?php echo URLROOT ?>/services/novoindex.php?tab=agenda" 
+            <?php if ($url == "tab=agenda") {echo " selected ";} ?>
+        >Agenda</option>
+
+        <option value="<?php echo URLROOT ?>/services/novoindex.php?tab=execucao" 
+            <?php if ($url == "tab=execucao") {echo " selected ";} ?>
+        >Execução</option>
+        
+        <option value="<?php echo URLROOT ?>/services/novoindex.php?tab=demandas" 
+            <?php if ($url == "tab=demandas") {echo " selected ";} ?>
+        >Demandas</option>
+
+        <option value="<?php echo URLROOT ?>/services/novoindex.php?tab=contratos" 
+            <?php if ($url == "tab=contratos") {echo " selected ";} ?>
+        >Contratos</option>
+
+        <option value="<?php echo URLROOT ?>/services/novoindex.php?tab=projetos" 
+            <?php if ($url == "tab=projetos") {echo " selected ";} ?>
+        >Projetos</option>
+
+        <option value="<?php echo URLROOT ?>/services/novoindex.php?tab=os" 
+            <?php if ($url == "tab=os") {echo " selected ";} ?>
+        >O.S.</option>
+
+        <option value="<?php echo URLROOT ?>/services/novoindex.php?tab=configuracao" 
+            <?php if ($url == "tab=configuracao") {echo " selected ";} ?>
+        >Configurações</option>
+    </select>
+
+    <div class="row border-bottom d-none d-md-block fixed-top">
         <div class="col-md-12 d-flex justify-content-center">
             <ul class="nav a" id="myTabs">
 
@@ -93,8 +137,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "configuracao") {
                                                             echo " active ";
-                                                        } ?>" href="?tab=configuracao" role="tab" 
-                                                        data-toggle="tooltip" data-placement="top" title="Configurações"><i class="bi bi-gear"></i> Configurações</a>
+                                                        } ?>" href="?tab=configuracao" role="tab" data-toggle="tooltip" data-placement="top" title="Configurações"><i class="bi bi-gear"></i> Configurações</a>
                     </li>
                 <?php } ?>
 
@@ -106,63 +149,79 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
     </div>
 
+    <?php
+    $src = "";
+    $title = "Serviços";
+    if ($tab == "servicos") {
+        $src = "demandas/?tipo=os";
+    }
+
+    if ($tab == "demandas") {
+        $src = "demandas/";
+        $title = "Serviços/Demandas";
+    }
+    if ($tab == "atividades") {
+        $src = "demandas/?tipo=projetos";
+        $title = "Serviços/Atividades";
+    }
+    if ($tab == "os") {
+        $src = "contratos/?tipo=os";
+        $title = "Serviços/O.S.";
+    }
+
+    if ($tab == "contratos") {
+        $src = "contratos/?tipo=contratos";
+        $title = "Serviços/Contratos";
+    }
+    if ($tab == "projetos") {
+        $src = "contratos/?tipo=projetos";
+        $title = "Serviços/Projetos";
+    }
+    if ($tab == "execucao") {
+        $src = "demandas/tarefas.php";
+        $title = "Serviços/Execução";
+    }
+    if ($tab == "dashboard") {
+        $src = "demandas/dashboard.php";
+        $title = "Serviços/Dashboard";
+    }
+    if ($tab == "agenda") {
+        $src = "demandas/agenda.php";
+        $title = "Serviços/Agenda";
+    }
+    if ($tab == "configuracao") {
+        $src = "configuracao/";
+        $title = "Serviços/Configuração";
+        if (isset($_GET['stab'])) {
+            $src = $src . "?stab=" . $_GET['stab'];
+        }
+    }
+
+    if ($src !== "") {
+
+    ?>
+
+        <div class="container-fluid p-0 m-0" style="overflow: hidden;">
+            <iframe class="row p-0 m-0" id="iFrameTab" style="width: 100%; height: 86vh; border:none" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
+        </div>
+    <?php
+    }
+    ?>
+
 </div>
 
-<?php
-$src = "";
-$title = "Serviços";
-if ($tab == "servicos") {
-    $src = "demandas/?tipo=os";
-}
+<!-- temporario -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-if ($tab == "demandas") {
-    $src = "demandas/";
-    $title = "Serviços/Demandas";
-}
-if ($tab == "atividades") {
-    $src = "demandas/?tipo=projetos";
-    $title = "Serviços/Atividades";
-}
-if ($tab == "os") {
-    $src = "contratos/?tipo=os";
-    $title = "Serviços/O.S.";
-}
+<script>
+    $(document).ready(function() {
 
-if ($tab == "contratos") {
-    $src = "contratos/?tipo=contratos";
-    $title = "Serviços/Contratos";
-}
-if ($tab == "projetos") {
-    $src = "contratos/?tipo=projetos";
-    $title = "Serviços/Projetos";
-}
-if ($tab == "execucao") {
-    $src = "demandas/tarefas.php";
-    $title = "Serviços/Execução";
-}
-if ($tab == "dashboard") {
-    $src = "demandas/dashboard.php";
-    $title = "Serviços/Dashboard";
-}
-if ($tab == "agenda") {
-    $src = "demandas/agenda.php";
-    $title = "Serviços/Agenda";
-}
-if ($tab == "configuracao") {
-    $src = "configuracao/";
-    $title = "Serviços/Configuração";
-    if (isset($_GET['stab'])) {
-        $src = $src . "?stab=" . $_GET['stab'];
-    }
-}
-
-if ($src !== "") {
-    
-?>
-
-    <div class="container-fluid p-0 m-0" style="overflow: hidden;">
-        <iframe class="row p-0 m-0" id="iFrameTab" style="width: 100%; height: 92vh; border:none" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
-    </div>
-<?php
-}
-?>
+        $('#linksub').on('change', function() {
+            var url = $(this).val();
+            if (url) {
+                window.open(url, '_self');
+            }
+            return false;
+        });
+    });
+</script>

@@ -1,4 +1,5 @@
 <?php
+//Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 include_once __DIR__ . "/../config.php";
 include_once ROOT . "/sistema/painel.php";
 include_once ROOT . "/sistema/database/loginAplicativo.php";
@@ -13,8 +14,8 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
 
 ?>
-
-
+<!-- Gabriel 05102023 ID 575 removido style, formato arquivo /excluido style -->
+<link href="chat.css" rel="stylesheet" type="text/css">
 
 
 <div class="container-fluid mt-1">
@@ -116,6 +117,9 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 </div>
 
 <?php
+//Gabriel 05102023 ID 575 removido chat, formato include 
+include "demandas/chat.php";
+
 $src = "";
 $title = "Serviços";
 if ($tab == "servicos") {

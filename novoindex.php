@@ -15,7 +15,7 @@ $url = $_SERVER['QUERY_STRING'];
 <div class="container-fluid">
 
     <div class="row ">
-        <div class="col-lg-10 d-none d-md-none d-lg-block pr-0" style="background-color: #13216A;">
+        <div class="col-lg-10 d-none d-md-none d-lg-block pr-0 pl-0" style="background-color: #13216A;">
             <ul class="nav a" id="myTabs">
 
                 <?php
@@ -136,21 +136,21 @@ $url = $_SERVER['QUERY_STRING'];
             </select>
         </div>
         <div class="col-5 col-md-3 col-lg-2 " style="text-align:right;background-color: #13216A;">
-            <button class="btn text-white  position-relative dropdown-toggle mt-2 mr-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn text-white  dropdown-toggle position-relative mt-2 mr-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-person-fill"></i>&#32;Lucas
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     99+
                     <span class="visually-hidden">unread messages</span>
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <ul class="dropdown-menu">
                 <a class="dropdown-item" href="#">Mensagens</a>
                 <a class="dropdown-item" href="#">Perfil</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Logout</a>
-            </div>
-
+            </ul>
         </div>
-    </div>
+
+    </div><!--row-->
 
 
     <?php

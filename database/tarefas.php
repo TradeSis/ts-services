@@ -1,4 +1,6 @@
 <?php
+//lucas 25092023 ID 358 Demandas/Comentarios
+//lucas 22092023 ID 358 Demandas/Comentarios 
 // helio 21032023 - compatibilidade chamada chamaApi
 // gabriel 06022023 calculo timediff
 // gabriel 15:10
@@ -142,9 +144,103 @@ if (isset($_GET['operacao'])) {
             'horaCobrado' => $_POST['horaCobrado'],
             'tituloDemanda' => $_POST['tituloDemanda']
         );
+       
+        $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
+        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        echo json_encode($tarefas);
+        return $tarefas;
+
+    }
+
+    if ($operacao == "novostart") {
+
+        if($_POST['idTipoOcorrencia'] == ''){
+            $idTipoOcorrencia = OCORRENCIA_PADRAO;
+        }else{
+            $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+        }
+
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'tituloTarefa' => $_POST['tituloTarefa'],
+            'idCliente' => $_POST['idCliente'],
+            'idDemanda' => $_POST['idDemanda'],
+            'idAtendente' => $_POST['idAtendente'],
+            'idTipoStatus' => TIPOSTATUS_FAZENDO,
+            'idTipoOcorrencia' => $idTipoOcorrencia,
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'horaCobrado' => $_POST['horaCobrado'],
+            'tituloDemanda' => $_POST['tituloDemanda']
+        );
+
+        $tarefas = chamaAPI(null, '/services/tarefas/novostart', json_encode($apiEntrada), 'PUT');
+        echo json_encode($tarefas);
+        return $tarefas;
+
+    }
+
+
+    if ($operacao == "inserirStart") {
+
+        if($_POST['idTipoOcorrencia'] == ''){
+            $idTipoOcorrencia = OCORRENCIA_PADRAO;
+        }else{
+            $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+        }
+
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'tituloTarefa' => $_POST['tituloTarefa'],
+            'idCliente' => $_POST['idCliente'],
+            'idDemanda' => $_POST['idDemanda'],
+            'idAtendente' => $_POST['idAtendente'],
+            'idTipoStatus' => $_POST['idTipoStatus'],
+            'idTipoOcorrencia' => $idTipoOcorrencia,
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'horaCobrado' => $_POST['horaCobrado'],
+            'tituloDemanda' => $_POST['tituloDemanda'],
+            'start' => true
+        );
+
 
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        echo json_encode($tarefas);
+        return $tarefas;
+
+    }
+
+    if ($operacao == "novostart") {
+
+        if($_POST['idTipoOcorrencia'] == ''){
+            $idTipoOcorrencia = OCORRENCIA_PADRAO;
+        }else{
+            $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+        }
+
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'tituloTarefa' => $_POST['tituloTarefa'],
+            'idCliente' => $_POST['idCliente'],
+            'idDemanda' => $_POST['idDemanda'],
+            'idAtendente' => $_POST['idAtendente'],
+            'idTipoStatus' => TIPOSTATUS_FAZENDO,
+            'idTipoOcorrencia' => $idTipoOcorrencia,
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'Previsto' => $_POST['Previsto'],
+            'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
+            'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
+            'horaCobrado' => $_POST['horaCobrado'],
+            'tituloDemanda' => $_POST['tituloDemanda']
+        );
+
+        $tarefas = chamaAPI(null, '/services/tarefas/novostart', json_encode($apiEntrada), 'PUT');
         echo json_encode($tarefas);
         return $tarefas;
 
@@ -201,6 +297,7 @@ if (isset($_GET['operacao'])) {
     }
 
     if ($operacao == "stop") {
+        
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
@@ -208,7 +305,42 @@ if (isset($_GET['operacao'])) {
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
             'idTipoStatus' => TIPOSTATUS_PAUSADO
         );
+        //lucas 22092023 ID 358 Adicionado condição para comentarios 
+        if($_POST['comentario'] != ""){
+			$apiEntrada2 = array(
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'idUsuario' => $_POST['idUsuario'],
+				'idCliente' => $_POST['idCliente'],
+				'idDemanda' => $_POST['idDemanda'],
+				'comentario' => $_POST['comentario'],
+				'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+				'idTipoStatus' => TIPOSTATUS_RESPONDIDO
+	
+			);
+          
+			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
+		}
+       
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+        //lucas 22092023 ID 358 Adicionado header
+        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        echo json_encode($tarefas);
+        return $tarefas;
+    }
+//lucas 25092023 ID 358 Operação que é chamada quando a tarefa estiver sem uma demanda associada
+    if ($operacao == "stopsemdemanda") {
+       
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'idTarefa' => $_POST['idTarefa'],
+            'idDemanda' => $_POST['idDemanda'],
+            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_PAUSADO
+        );
+        
+        $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+        //lucas 22092023 ID 358 Adicionado header
+        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
         echo json_encode($tarefas);
         return $tarefas;
     }
@@ -220,12 +352,12 @@ if (isset($_GET['operacao'])) {
         $tituloTarefa = $_POST['tituloTarefa'];
         $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
         $statusTarefa = $_POST['statusTarefa'];
-        $PrevistoInicio = $_POST['PrevistoInicio'];
-        $PrevistoFinal = $_POST['PrevistoFinal'];
-        $RealInicio = $_POST['RealInicio'];
-        $RealFinal = $_POST['RealFinal'];
+        $Periodo = $_POST['Periodo'];
+        $PeriodoInicio = $_POST['PeriodoInicio'];
+        $PeriodoFim = $_POST['PeriodoFim'];
         $PrevistoOrdem = $_POST['PrevistoOrdem'];
         $RealOrdem = $_POST['RealOrdem'];
+        $buscaTarefa = $_POST['buscaTarefa'];
 
         if ($idCliente == "") {
             $idCliente = null;
@@ -242,23 +374,23 @@ if (isset($_GET['operacao'])) {
         if ($statusTarefa == "") {
             $statusTarefa = null;
         }
-        if ($PrevistoInicio == "") {
-            $PrevistoInicio = null;
+        if ($Periodo == "") {
+            $Periodo = null;
         }
-        if ($PrevistoFinal == "") {
-            $PrevistoFinal = null;
+        if ($PeriodoInicio == "") {
+            $PeriodoInicio = null;
         }
-        if ($RealInicio == "") {
-            $RealInicio = null;
-        }
-        if ($RealFinal == "") {
-            $RealFinal = null;
+        if ($PeriodoFim == "") {
+            $PeriodoFim = null;
         }
         if ($PrevistoOrdem == "") {
             $PrevistoOrdem = null;
         }
         if ($RealOrdem == "") {
             $RealOrdem = null;
+        }
+        if ($buscaTarefa == "") {
+            $buscaTarefa = null;
         }
 
         $apiEntrada = array(
@@ -268,12 +400,12 @@ if (isset($_GET['operacao'])) {
             'tituloTarefa' => $tituloTarefa,
             'idTipoOcorrencia' => $idTipoOcorrencia,
             'statusTarefa' => $statusTarefa,
-            'PrevistoInicio' => $PrevistoInicio,
-            'PrevistoFinal' => $PrevistoFinal,
-            'RealInicio' => $RealInicio,
-            'RealFinal' => $RealFinal,
+            'Periodo' => $Periodo,
+            'PeriodoInicio' => $PeriodoInicio,
+            'PeriodoFim' => $PeriodoFim,
             'PrevistoOrdem' => $PrevistoOrdem,
-            'RealOrdem' => $RealOrdem
+            'RealOrdem' => $RealOrdem,
+            'buscaTarefa' => $buscaTarefa
         );
 
         $_SESSION['filtro_tarefas'] = $apiEntrada;
@@ -318,6 +450,10 @@ if (isset($_GET['operacao'])) {
         );
 
         $_SESSION['filtro_agenda'] = $apiEntrada;
+    }
+    //Gabriel 22092023 id542 operação ultimoTab em session
+    if ($operacao == "ultimoTab") {
+        $_SESSION['ultimoTab'] = $_POST['ultimoTab'];
     }
     /*
         include "../demandas/tarefas_ok.php";

@@ -12,11 +12,7 @@ $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
 
-if ($_SESSION['idCliente'] == null) {
-    $idAtendente = $_SESSION['idUsuario'];
-} else {
-    $idAtendente = null;
-}
+$idAtendente = null;
 $statusTarefa = "1"; //ABERTO
 
 if (isset($_SESSION['filtro_agenda'])) {
@@ -25,6 +21,7 @@ if (isset($_SESSION['filtro_agenda'])) {
     $statusTarefa = $filtroEntrada['statusTarefa'];
 }
 $tarefas = buscaTarefas(null, null, $idAtendente, $statusTarefa);
+
 $demandas = buscaDemandasAbertas();
 
 ?>
@@ -60,6 +57,10 @@ $demandas = buscaDemandasAbertas();
             top: -112px;
             left: 230px;
         }
+
+        #calendar .fc-toolbar h2 {
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -70,9 +71,12 @@ $demandas = buscaDemandasAbertas();
     <nav style="margin-left:230px;margin-bottom:-50px">
         <ul>
             <form action="" method="post">
+                <label class="labelForm">Responsável</label>
                 <select class="form-control text-center" name="idAtendente" id="FiltroAtendente"
-                    style="font-size: 14px; width: 150px; height: 35px">
-                    <option value="<?php echo null ?>"><?php echo "Responsável" ?></option>
+                    style="font-size: 14px; width: 150px; height: 35px;margin-top:-4px">
+                    <option value="<?php echo null ?>">
+                        <?php echo "Todos" ?>
+                    </option>
                     <?php
                     foreach ($atendentes as $atendente) {
                         ?>
@@ -80,7 +84,9 @@ $demandas = buscaDemandasAbertas();
                         if ($atendente['idUsuario'] == $idAtendente) {
                             echo "selected";
                         }
-                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                        ?> value="<?php echo $atendente['idUsuario'] ?>">
+                            <?php echo $atendente['nomeUsuario'] ?>
+                        </option>
                     <?php } ?>
                 </select>
             </form>
@@ -96,7 +102,9 @@ $demandas = buscaDemandasAbertas();
                 <form class="d-flex" action="" method="post" style="text-align: right;">
                     <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
                         style="font-size: 14px; width: 150px; height: 35px">
-                        <option value="<?php echo null ?>"><?php echo "Todos" ?></option>
+                        <option value="<?php echo null ?>">
+                            <?php echo "Todos" ?>
+                        </option>
                         <option <?php if ($statusTarefa == "1") {
                             echo "selected";
                         } ?> value="1">Aberto</option>
@@ -144,7 +152,8 @@ $demandas = buscaDemandasAbertas();
                                         <?php
                                         foreach ($demandas as $demanda) {
                                             ?>
-                                        <option value="<?php echo $demanda['idDemanda'] ?>"><?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                                        <option value="<?php echo $demanda['idDemanda'] ?>">
+                                            <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
                                         </option>
                                         <?php } ?>
                                     </select>
@@ -166,7 +175,8 @@ $demandas = buscaDemandasAbertas();
                                         <?php
                                         foreach ($atendentes as $atendente) {
                                             ?>
-                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
+                                        <option value="<?php echo $atendente['idUsuario'] ?>">
+                                            <?php echo $atendente['nomeUsuario'] ?>
                                         </option>
                                         <?php } ?>
                                     </select>
@@ -180,7 +190,8 @@ $demandas = buscaDemandasAbertas();
                                         foreach ($ocorrencias as $ocorrencia) {
                                             ?>
                                         <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -255,7 +266,8 @@ $demandas = buscaDemandasAbertas();
                                             <?php
                                             foreach ($clientes as $cliente) {
                                                 ?>
-                                            <option value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?>
+                                            <option value="<?php echo $cliente['idCliente'] ?>">
+                                                <?php echo $cliente['nomeCliente'] ?>
                                             </option>
                                             <?php } ?>
                                         </select>
@@ -266,15 +278,19 @@ $demandas = buscaDemandasAbertas();
                                 <div class="form-group">
                                     <label class='control-label' for='inputNormal'>Reponsável</label>
                                     <select class="form-control" name="idAtendente">
-                                        <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                        <option value="<?php echo null ?>">
+                                            <?php echo "Selecione" ?>
+                                        </option>
                                         <?php
                                         foreach ($atendentes as $atendente) {
                                             ?>
                                         <option <?php
                                         if ($atendente['idUsuario'] == $_SESSION['idUsuario']) {
                                             echo "selected";
-                                        }
-                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                        } ?> value="
+                                            <?php echo $atendente['idUsuario'] ?>">
+                                            <?php echo $atendente['nomeUsuario'] ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -283,15 +299,19 @@ $demandas = buscaDemandasAbertas();
                                 <div class="form-group">
                                     <label class='control-label' for='inputNormal'>Ocorrência</label>
                                     <select class="form-control" name="idTipoOcorrencia">
-                                        <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                        <option value="<?php echo null ?>">
+                                            <?php echo "Selecione" ?>
+                                        </option>
                                         <?php
                                         foreach ($ocorrencias as $ocorrencia) {
                                             ?>
                                         <option <?php
                                         if ($ocorrencia['ocorrenciaInicial'] == 1) {
                                             echo "selected";
-                                        }
-                                        ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?></option>
+                                        } ?>   value="
+                                            <?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -328,9 +348,39 @@ $demandas = buscaDemandasAbertas();
     </div>
 
     <script type="text/javascript">
+        $(document).on('click', '.fc-month-button', function () {
+            gravaUltimo('month');
+        });
+        $(document).on('click', '.fc-agendaWeek-button', function () {
+            gravaUltimo('agendaWeek');
+        });
+        $(document).on('click', '.fc-agendaDay-button', function () {
+            gravaUltimo('agendaDay');
+        });
+        $(document).on('click', '.fc-schedule-button', function () {
+            gravaUltimo('schedule');
+        });
+
+        //Gabriel 22092023 id542 function gravaUltimo em session
+        function gravaUltimo(tab) {
+            $.ajax({
+                type: 'POST',
+                url: '../database/tarefas.php?operacao=ultimoTab', 
+                data: { ultimoTab: tab }, 
+                success: function(response) {
+                console.log('Session variable set successfully.');
+                },
+                error: function(xhr, status, error) {
+                console.error('An error occurred:', error);
+                }
+            });
+        }
+
         $(document).ready(function () {
+             //Gabriel 22092023 id542 verifica se possui $_SESSION['ultimoTab'] se não, padrão (mês)
+            var vdefaultView = '<?php echo isset($_SESSION['ultimoTab']) ? $_SESSION['ultimoTab'] : 'month' ?>';
             var today = new Date();
-            var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 3, 0);
             $("#calendar").fullCalendar({
 
                 header: {
@@ -339,7 +389,7 @@ $demandas = buscaDemandasAbertas();
                     right: "month,agendaWeek,agendaDay,schedule, novo"
                 },
                 locale: 'pt-br',
-                defaultView: "month",
+                defaultView: vdefaultView,
                 navLinks: true,
                 editable: true,
                 eventLimit: false,
@@ -347,13 +397,15 @@ $demandas = buscaDemandasAbertas();
                 selectHelper: false,
                 views: {
                     month: {
-                        timeFormat: 'HH:mm',
+                        timeFormat: 'HH:mm'
                     },
                     agendaWeek: {
-                        minTime: "06:00:00"
+                        minTime: "08:00:00",
+                        maxTime: "20:00:00"
                     },
                     agendaDay: {
-                        minTime: "06:00:00"
+                        minTime: "08:00:00",
+                        maxTime: "20:00:00"
                     },
                     schedule: {
                         type: 'list',
@@ -382,6 +434,10 @@ $demandas = buscaDemandasAbertas();
                 events: [
                     <?php
                     $colors = array('#FF6B6B', '#77DD77', '#6CA6CD', '#FFD700', '#FF69B4', '#00CED1');
+                    // helio 26092023 - inicio teste de cores
+                    $cor_previsto   = '#77DD77';
+                    $cor_executando = '#FF6B6B';
+                    $cor_diatodo    = '#6CA6CD';
                     $colorIndex = 0;
                     foreach ($tarefas as $tarefa) {
                         $color = $colors[$colorIndex % count($colors)];
@@ -392,15 +448,34 @@ $demandas = buscaDemandasAbertas();
                         } else {
                             $tituloTarefa = empty($tarefa['tituloTarefa']) ? $tarefa['tituloTarefa'] . " (" . $tarefa['nomeUsuario'] . ")" : $tarefa['tituloTarefa'];
                         }
-                        $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "06:00:00" : $tarefa['horaInicioPrevisto'];
-                        $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "24:00:00" : $tarefa['horaFinalPrevisto'];
 
+                        // substituindo dataPrevisto por Real, quando Real existir
+                        if ($tarefa['dataReal']!=null) {
+                            $dataPrevisto = $tarefa['dataReal'];
+                            $allDay = false;
+                            $dtf = $tarefa['horaFinalReal'];
+                            // sem realfinal, coloca sempre mais 1 hora, para melhorar visualmente
+                            if ($tarefa['horaFinalReal']==null) {
+                                $dtf   = date('H:00:00', strtotime('1 hour')); 
+                                $color = $cor_executando; // helio 26092023 - inicio teste de cores
+                            }
+                            $horaInicioPrevisto = is_null($tarefa['horaInicioReal']) ? "08:00:00" : $tarefa['horaInicioReal'];
+                            $horaFinalPrevisto = is_null($tarefa['horaFinalReal']) ? $dtf : $tarefa['horaFinalReal'];
+                        } else {
+                            $cor = $cor_previsto ; // helio 26092023 - inicio teste de cores
+                            if ($tarefa['horaInicioPrevisto']==null) { $allDay = true;} else { $allDay = false;} // teste de allDay
+                            $dataPrevisto = $tarefa['Previsto'];
+                            $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "08:00:00" : $tarefa['horaInicioPrevisto'];
+                            $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "19:00:00" : $tarefa['horaFinalPrevisto'];
+                        }
+                        if ($allDay==true) {$color = $cor_diatodo;}
                         ?>
-                        {
+                    {
+                        allDay: <?php if ($allDay==true) { echo 'true';} else { echo 'false';} // teste de allDay ?> ,
                         _id: '<?php echo $tarefa['idTarefa']; ?>',
                         title: '<?php echo $tituloTarefa ?>',
-                        start: '<?php echo $tarefa['Previsto'] . ' ' . $horaInicioPrevisto; ?>',
-                        end: '<?php echo $tarefa['Previsto'] . ' ' . $horaFinalPrevisto; ?>',
+                        start: '<?php echo $dataPrevisto . ' ' . $horaInicioPrevisto; // uso dataPrevisto com real/previsto ?>',
+                        end: '<?php echo $dataPrevisto . ' ' . $horaFinalPrevisto; // uso dataPrevisto com real/previsto ?>',
                         idTarefa: '<?php echo $tarefa['idTarefa']; ?>',
                         tituloTarefa: '<?php echo $tarefa['tituloTarefa']; ?>',
                         idCliente: '<?php echo $tarefa['idCliente']; ?>',
@@ -463,9 +538,6 @@ $demandas = buscaDemandasAbertas();
 
                     $('#alterarmodal').modal('show');
                 }
-            });
-            $('#scheduleButton').on('click', function () {
-                $('#calendar').fullCalendar('changeView', 'schedule');
             });
         });
 

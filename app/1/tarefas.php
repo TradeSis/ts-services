@@ -66,7 +66,12 @@ if (isset($jsonEntrada["idAtendente"])) {
   $where = " and ";
 }
 
-if (isset($jsonEntrada["statusTarefa"])) {
+
+$Periodo = 1;
+if (isset($jsonEntrada["Periodo"])) {
+  $Periodo = $jsonEntrada["Periodo"];
+}
+if (isset($jsonEntrada["statusTarefa"]) && $Periodo != 0) {
   if ($jsonEntrada["statusTarefa"] == 1) {
     $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
     $where = " and ";
@@ -82,24 +87,29 @@ if (isset($jsonEntrada["tituloTarefa"])) {
   $where = " and ";
 }
 
-if (isset($jsonEntrada["PrevistoInicio"])) {
-  $sql .= $where . " tarefa.Previsto >= '" . $jsonEntrada["PrevistoInicio"] . "'";
-  $where = " and ";
-}
 
-if (isset($jsonEntrada["PrevistoFinal"])) {
-  $sql .= $where . " tarefa.Previsto <= '" . $jsonEntrada["PrevistoFinal"] . "'";
-  $where = " and ";
-}
+if (isset($jsonEntrada["Periodo"])) {
+  if ($jsonEntrada["Periodo"] == 1) {
+    if (isset($jsonEntrada["PeriodoInicio"])) {
+      $sql .= $where . " tarefa.Previsto >= '" . $jsonEntrada["PeriodoInicio"] . "'";
+      $where = " and ";
+    }
+    if (isset($jsonEntrada["PeriodoFim"])) {
+      $sql .= $where . " tarefa.Previsto <= '" . $jsonEntrada["PeriodoFim"] . "'";
+      $where = " and ";
+    }
+  }
+  if ($jsonEntrada["Periodo"] == 0) {
+    if (isset($jsonEntrada["PeriodoInicio"])) {
+      $sql .= $where . " tarefa.dataReal >= '" . $jsonEntrada["PeriodoInicio"] . "'";
+      $where = " and ";
+    }
+    if (isset($jsonEntrada["PeriodoFim"])) {
+      $sql .= $where . " tarefa.dataReal <= '" . $jsonEntrada["PeriodoFim"] . "'";
+      $where = " and ";
+    }
 
-if (isset($jsonEntrada["RealInicio"])) {
-  $sql .= $where . " tarefa.dataReal >= '" . $jsonEntrada["RealInicio"] . "'";
-  $where = " and ";
-}
-
-if (isset($jsonEntrada["RealFinal"])) {
-  $sql .= $where . " tarefa.dataReal <= '" . $jsonEntrada["RealFinal"] . "'";
-  $where = " and ";
+  }
 }
 
 $order = " ORDER BY ";

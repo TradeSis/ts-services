@@ -1,4 +1,5 @@
 <?php
+// Gabriel 22092023 id 544 Demandas - Botão Voltar
 // Lucas 22032023 ajustado função do botão de limpar
 // Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
 // Lucas 15032023 alterado select de idContratoStatus para acionar uma função js, botão "buscar" foi removido, 
@@ -266,46 +267,6 @@ if (isset($_SESSION['filtro_contrato'])) {
     <nav id="menuFiltros" class="menuFiltros"> <!-- MENUFILTROS -->
         <div class="titulo"><span>Filtrar por:</span></div>
         <ul>
-
-            <li class="col-sm-12">
-                <form class="d-flex" action="" method="post" style="text-align: right;">
-
-                    <select class="form-control" name="idCliente" id="FiltroClientes" style="font-size: 14px; width: 150px; height: 35px">
-                        <option value="<?php echo null ?>"><?php echo "Cliente"  ?></option>
-                        <?php
-                        foreach ($clientes as $cliente) {
-                        ?>
-                            <option <?php
-                                    if ($cliente['idCliente'] == $idCliente) {
-                                        echo "selected";
-                                    }
-                                    ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente']  ?></option>
-                        <?php  } ?>
-                    </select>
-
-
-                </form>
-            </li>
-            <li class="col-sm-12 mt-2">
-                <form class="d-flex" action="" id="idContratoStatus" method="post" style="text-align: right">
-                    <select class="form-control" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px; width: 150px; height: 35px">
-                        <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
-                        <?php
-
-                        foreach ($contratoStatusTodos as $contratoStatus) {
-                        ?>
-                            <option <?php
-                                    if ($contratoStatus['idContratoStatus'] == $idContratoStatus) {
-                                        echo "selected";
-                                    }
-                                    ?> value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?></option>
-                        <?php  } ?>
-                    </select>
-
-                </form>
-
-            </li>
-
             <li class="col-sm-12 mt-2"> <!-- ABERTO/FECHADO -->
                 <form class="d-flex" action="" method="post" style="text-align: right;">
 
@@ -355,7 +316,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
             <div class="col-sm-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="tituloContrato" placeholder="Buscar por...">
+                    <input type="text" class="form-control" id="buscaContrato" placeholder="Buscar por id ou titulo">
                     <span class="input-group-btn">
                         <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                                 search
@@ -377,6 +338,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     <thead class="cabecalhoTabela">
 
                         <tr>
+                            <th>ID</th>
                             <th>Cliente</th>
                             <th>Titulo</th>
                             <th>Status</th>
@@ -388,6 +350,52 @@ if (isset($_SESSION['filtro_contrato'])) {
                             <th>hora</th>
                             <th>Contrato</th>
                             <th colspan="2">Ação</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th style="width: 10%;">
+                                <form action="" method="post">
+                                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                                        <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                        <?php
+                                        foreach ($clientes as $cliente) {
+                                        ?>
+                                            <option <?php
+                                                    if ($cliente['idCliente'] == $idCliente) {
+                                                        echo "selected";
+                                                    }
+                                                    ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </form>
+                            </th>
+                            <th></th>
+                            <th style="width: 10%;">
+                                <form action="" method="post">
+                                    <select class="form-control text-center" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                                        <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
+                                        <?php
+
+                                        foreach ($contratoStatusTodos as $contratoStatus) {
+                                        ?>
+                                            <option <?php
+                                                    if ($contratoStatus['idContratoStatus'] == $idContratoStatus) {
+                                                        echo "selected";
+                                                    }
+                                                    ?> value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?></option>
+                                        <?php  } ?>
+                                    </select>
+
+                                </form>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id='dados' class="fonteCorpo">
@@ -402,16 +410,14 @@ if (isset($_SESSION['filtro_contrato'])) {
 
     <script>
         var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
 
         function limpar() {
             buscar(null, null, null, null);
             window.location.reload();
         }
 
-        function buscar(idCliente, idContratoStatus, tituloContrato, statusContrato) {
-            /* alert(idCliente); */
-            /* alert(statusContrato); */
+        function buscar(idCliente, idContratoStatus, buscaContrato, statusContrato) {
 
             $.ajax({
                 type: 'POST',
@@ -423,7 +429,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 data: {
                     idCliente: idCliente,
                     idContratoStatus: idContratoStatus,
-                    tituloContrato: tituloContrato,
+                    buscaContrato: buscaContrato,
                     urlContratoTipo: urlContratoTipo,
                     statusContrato: statusContrato
                 },
@@ -476,12 +482,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                         // alert("quarto alert: " + JSON.stringify(object))
                         /*  alert(object); */
                         linha = linha + "<tr>";
+                        linha = linha + "<td>" + object.idContrato + "</td>";
                         linha = linha + "<td>" + object.nomeCliente + "</td>";
                         linha = linha + "<td>" + object.tituloContrato + "</td>";
-
                         linha = linha + "<td class='" + object.nomeContratoStatus + "' data-status='Finalizado' >" + object.nomeContratoStatus + " </td>";
-
-
                         linha = linha + "<td>" + dataPrevisaoFormatada + "</td>";
                         linha = linha + "<td>" + dataEntregaFormatada + "</td>";
                         linha = linha + "<td>" + dataAtualizacaoFormatada + "</td>";
@@ -489,7 +493,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         linha = linha + "<td>" + object.horas + "</td>";
                         linha = linha + "<td>" + object.valorHora + "</td>";
                         linha = linha + "<td>" + object.valorContrato + "</td>";
-                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button'><i class='bi bi-pencil-square'></i></a>" + "</td>";
+                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a>" + "</td>";
                         linha = linha + "</tr>";
                     }
 
@@ -508,24 +512,41 @@ if (isset($_SESSION['filtro_contrato'])) {
         }
 
         $("#FiltroClientes").change(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         $("#FiltroContratoStatus").change(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         $("#buscar").click(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         $("#FiltroStatusContrato").click(function() {
-            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
+
+        //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
+        $(document).on('click', '#visualizarDemandaButton', function () {
+        var urlContratoTipo = '?tipo=<?php echo $urlContratoTipo ?>';
+        var currentPath = window.location.pathname + urlContratoTipo;
+            $.ajax({
+                type: 'POST',
+                url: '../database/demanda.php?operacao=origem',
+                data: { origem: currentPath },
+                success: function(response) {
+                console.log('Session variable set successfully.');
+                },
+                error: function(xhr, status, error) {
+                console.error('An error occurred:', error);
+                }
+            });
+        });
 
         document.addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
-                buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#tituloContrato").val(), $("#FiltroStatusContrato").val());
+                buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
             }
         });
 
@@ -533,6 +554,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             $('.menuFiltros').toggleClass('mostra');
             $('.diviFrame').toggleClass('mostra');
         });
+
     </script>
 </body>
 

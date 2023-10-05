@@ -5,7 +5,9 @@ include_once '../head.php';
 <body class="bg-transparent">
     <div class="container-fluid">
         <div class="mb-2" style="text-align:right">
+            <?php if ($demanda['idTipoStatus'] !== TIPOSTATUS_REALIZADO && $demanda['idTipoStatus'] !== TIPOSTATUS_VALIDADO) { ?>
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+            <?php } ?>
         </div>
         <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
             <table class="table">
@@ -210,7 +212,8 @@ include_once '../head.php';
                                 </td>
                                 <td class="text-center">
                                     <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
-                                        <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop"
+                                        <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-toggle="modal"
+                                    data-target="#stopmodal"
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>"
@@ -225,6 +228,24 @@ include_once '../head.php';
                                             data-id="<?php echo $tarefa['idTarefa'] ?>"
                                             data-status="<?php echo $idTipoStatus ?>"
                                             data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-check-circle"></i></button>
+                                    <?php } ?>
+                                    <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
+                                        <button type="button" class="novoStartButton btn btn-success btn-sm" value="Start"
+                                            data-id="<?php echo $tarefa['idTarefa'] ?>"
+                                            data-titulo="<?php echo $tarefa['tituloTarefa'] ?>"
+                                            data-cliente="<?php echo $tarefa['idCliente'] ?>"
+                                            data-demanda="<?php echo $tarefa['idDemanda'] ?>"
+                                            data-atendente="<?php echo $tarefa['idAtendente'] ?>"
+                                            data-status="<?php echo $idTipoStatus ?>"
+                                            data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>"
+                                            data-statusdemanda="<?php echo $idTipoStatus ?>"
+                                            data-previsto="<?php echo $tarefa['Previsto'] ?>"
+                                            data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>"
+                                            data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>"
+                                            data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>"
+                                            data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>"
+                                            data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>"
+                                            ><i class="bi bi-play-circle"></i></button>
                                     <?php } ?>
                                     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                     data-target="#alterarmodal"
@@ -245,31 +266,30 @@ include_once '../head.php';
 
     <script>
         $(document).ready(function () {
-
-            $('.stopButton').click(function () {
-                var idTarefa = $(this).data('id');
-                var tipoStatusDemanda = $(this).data('status');
-                var horaInicioCobrado = $(this).data('data-execucao');
-                var idDemanda = $(this).data('demanda');
+        //lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada
+            $('button[data-target="#stopmodal"]').click(function () {
+                var idTarefa = $(this).attr("data-id");
+                var idDemanda = $(this).attr("data-demanda");
+                var status = $(this).attr("data-status");
+                var horaInicioReal = $(this).attr("data-data-execucao");
                 $.ajax({
-                    url: "../database/tarefas.php?operacao=stop",
-                    method: "POST",
-                    dataType: "json",
-                    data: { 
-                        idTarefa: idTarefa, 
-                        tipoStatusDemanda: tipoStatusDemanda, 
-                        horaInicioCobrado: horaInicioCobrado, 
-                        idDemanda: idDemanda
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
+                    data: {
+                    idTarefa: idTarefa 
                     },
-                    success: function (msg) {
-                        //var message = msg.retorno; 
-                        //alert(message);
-                        if (msg.retorno == "ok") {
-                            refreshPage('tarefas', idDemanda);
-                        }
+                    success: function (data) {
+                        $('#idTarefa-stop').val(data.idTarefa);
+                        $('#idDemanda-stop').val(idDemanda);
+                        $('#status-stop').val(status);
+                        $('#horaInicioReal-stop').val(horaInicioReal);
+                        
+                        $('#stopmodal').modal('show');
                     }
                 });
             });
+        /*lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada*/
 
             $('.startButton').click(function () {
                 var idTarefa = $(this).data('id');
@@ -283,6 +303,52 @@ include_once '../head.php';
                         idTarefa: idTarefa,
                         tipoStatusDemanda: tipoStatusDemanda, 
                         idDemanda: idDemanda 
+                    },
+                    success: function (msg) {
+                        //var message = msg.retorno; 
+                        //alert(message);
+                        if (msg.retorno == "ok") {
+                            refreshPage('tarefas', idDemanda);
+                        }
+                    }
+                });
+            });
+
+            $('.novoStartButton').click(function () {
+                var idTarefa = $(this).data('id');
+                var tituloTarefa = $(this).data('titulo');
+                var idCliente = $(this).data('cliente');
+                var idDemanda = $(this).data('demanda');
+                var idAtendente = $(this).data('atendente');
+                var idTipoStatus = $(this).data('status');
+                var idTipoOcorrencia = $(this).data('ocorrencia');
+                var tipoStatusDemanda = $(this).data('statusdemanda');
+                var previsto = $(this).data('previsto');
+                var horaInicioPrevisto = $(this).data('horainicioprevisto');
+                var horaFinalPrevisto = $(this).data('horafinalprevisto');horaCobrado
+                var horaCobrado = $(this).data('horacobrado');
+                var tituloDemanda = $(this).data('titulodemanda');
+                var horaInicioReal = $(this).data('horainicioreal');
+                
+                $.ajax({
+                    url: "../database/tarefas.php?operacao=novostart",
+                    method: "POST",
+                    dataType: "json",
+                    data: {  
+                        
+                       tituloTarefa: tituloTarefa,
+                       idCliente: idCliente,
+                       idDemanda: idDemanda,
+                       idAtendente: idAtendente,
+                       idTipoStatus: idTipoStatus,
+                       idTipoOcorrencia: idTipoOcorrencia,
+                       tipoStatusDemanda: tipoStatusDemanda,
+                       Previsto: previsto,
+                       horaInicioPrevisto: horaInicioPrevisto,
+                       horaFinalPrevisto: horaFinalPrevisto,
+                       horaCobrado: horaCobrado,
+                       tituloDemanda: tituloDemanda,
+
                     },
                     success: function (msg) {
                         //var message = msg.retorno; 

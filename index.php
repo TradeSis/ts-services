@@ -70,7 +70,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
                 <?php }
 
-                if ($nivelMenu >= 1) { ?>
+                if ($nivelMenu >= 2) { ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "contratos") {
                             echo " active ";
@@ -78,7 +78,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                     </li>
                 <?php }
 
-                if ($nivelMenu >= 1) { ?>
+                if ($nivelMenu >= 2) { ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "projetos") {
                             echo " active ";
@@ -86,7 +86,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                     </li>
                 <?php }
 
-                if ($nivelMenu >= 1) { ?>
+                if ($nivelMenu >= 2) { ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "os") {
                             echo " active ";

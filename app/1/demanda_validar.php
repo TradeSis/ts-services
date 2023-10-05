@@ -49,7 +49,18 @@ if (isset($jsonEntrada['idDemanda'])) {
     $posicao = $row["mudaPosicaoPara"];
     $statusDemanda = $row["mudaStatusPara"];
 
-    $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+      //busca data de fechamento atual
+      $sql = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
+      $buscar = mysqli_query($conexao, $sql);
+      $row = mysqli_fetch_array($buscar, MYSQLI_ASSOC);
+      $dataFechamento = $row["dataFechamento"];
+
+      if($dataFechamento == null){
+        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+      }
+      // se a data de fechamento estiver NULL então o validar pode gravar algo nela
+      // se estiver preenchida, não faz nada
+    
 
     if ($comentario != null) {
         $sql3 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";

@@ -29,14 +29,19 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 			<form action="../database/contratos.php?operacao=alterar" method="post" style="padding: 10px; text-align: left">
 				<div class="row gy-4">
 
-					<div class="col-md-9 form-group">
+					<div class="col-md-1 form-group">
+						<label class='control-label' for='inputNormal' style="margin-top: 4px;">ID</label>
+						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" disabled>
+					</div>
+					<div class="col-md-8 form-group">
 						<label class='control-label' for='inputNormal' style="margin-top: 4px;">Titulo</label>
 						<input type="text" class="form-control" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>">
 						<input type="text" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" style="display: none">
 						<input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>" style="display: none">
 					</div>
-					<div class="col-md-3 form-group" style="margin-top: 12px;">
-						<label class="labelForm" >Cliente</label>
+
+					<div class="col-md-3 form-group" style="margin-top: 13px;">
+						<label class="labelForm">Cliente</label>
 						<select class="select form-control" name="idCliente" autocomplete="off" disabled>
 							<option value="<?php echo $contrato['idCliente'] ?>"><?php echo $contrato['nomeCliente'] ?>
 							</option>
@@ -45,7 +50,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 						</select>
 					</div>
 
-					<div class="container-fluid p-0 mb-3" style="margin-top: -40px;">
+					<div class="container-fluid p-0 mb-3">
 						<div class="col">
 							<span class="tituloEditor">Descrição</span>
 						</div>
@@ -85,12 +90,11 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 				<div class="row" style="margin-top: -40px;">
 					<div class="col-md-3" style="margin-top: 20px;">
 						<label class="labelForm">Fechamento</label>
-						<input type="text" class="data select form-control" name="dataFechamento" 
-						value="<?php if($contrato['dataFechamento'] == null){
-							echo '00/00/0000 00:00'; 
-						} else{ 
-							echo date('d/m/Y H:i', strtotime($contrato['dataFechamento'])) 
-							 ?> <?php } ?> "disabled>
+						<?php if ($contrato['dataFechamento'] == null) { ?>
+							<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] = '00/00/0000 00:00' ?>" disabled>
+						<?php } else { ?>
+							<input type="text" class="data select form-control" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataFechamento'])) ?>" disabled>
+						<?php } ?>
 					</div>
 
 					<div class="col-md-3 form-group" style="margin-top: 16px;">
@@ -118,55 +122,55 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 			</form>
 
 		</div>
-		
+
 
 	</div><!-- container -->
 
 	<script>
-		        var quill = new Quill('.quill-textarea', {
-    theme: 'snow',
-    modules: {
-        toolbar: [
-            ['bold', 'italic', 'underline', 'strike'], 
-            ['blockquote'],
-            [{
-                'list': 'ordered'
-            }, {
-                'list': 'bullet'
-            }],
-            [{
-                'indent': '-1'
-            }, {
-                'indent': '+1'
-            }], 
-            [{
-                'direction': 'rtl'
-            }], 
-            [{
-                'size': ['small', false, 'large', 'huge']
-            }], 
-            [{
-                'header': [1, 2, 3, 4, 5, 6, false]
-            }],
-            ['link', 'image', 'video', 'formula'], 
-            [{
-                'color': []
-            }, {
-                'background': []
-            }], 
-            [{
-                'font': []
-            }],
-            [{
-                'align': []
-            }],
-        ]
-    }
-});
+		var quill = new Quill('.quill-textarea', {
+			theme: 'snow',
+			modules: {
+				toolbar: [
+					['bold', 'italic', 'underline', 'strike'],
+					['blockquote'],
+					[{
+						'list': 'ordered'
+					}, {
+						'list': 'bullet'
+					}],
+					[{
+						'indent': '-1'
+					}, {
+						'indent': '+1'
+					}],
+					[{
+						'direction': 'rtl'
+					}],
+					[{
+						'size': ['small', false, 'large', 'huge']
+					}],
+					[{
+						'header': [1, 2, 3, 4, 5, 6, false]
+					}],
+					['link', 'image', 'video', 'formula'],
+					[{
+						'color': []
+					}, {
+						'background': []
+					}],
+					[{
+						'font': []
+					}],
+					[{
+						'align': []
+					}],
+				]
+			}
+		});
 
-quill.on('text-change', function(delta, oldDelta, source) {
-    $('#detail').val(quill.container.firstChild.innerHTML);
-});
+		quill.on('text-change', function(delta, oldDelta, source) {
+			$('#detail').val(quill.container.firstChild.innerHTML);
+		});
 	</script>
 </body>
 

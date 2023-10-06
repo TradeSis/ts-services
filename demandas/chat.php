@@ -59,7 +59,8 @@ $contratos = buscaContratosAbertos();
                         <!-- dados escondidos -->
                         <input type="hidden" class="form-control" name="INidUsuario"
                             value="<?php echo $_SESSION['idUsuario'] ?>" readonly>
-                        <textarea name="chat" id="send-msg-inp"
+                        <!-- Gabriel 05102023 ID 575 ID caixa de texto -->
+                        <textarea name="chat" id="caixa-chat"
                             style="flex: 1; max-width: 80%; min-width: 5%; width: 78%; height: 30px; margin-top: 15px; box-sizing: border-box; resize: none;"></textarea>
                         <button type="submit" id="send-btn" class="btn btn-sm btn-success"
                             style="height: 30px; margin-top: 15px; min-width: 5%%; width: 22%; box-sizing: border-box;">Enviar</button>
@@ -260,7 +261,6 @@ $contratos = buscaContratosAbertos();
         let chatCont = document.querySelector(".chat-msg-pequeno");
         let errovl = $(".chat-msg-pequeno-ovl");
         let incoming_id = $("#incoming_id_inp");
-        let chatInp = $("#send-msg-inp");
         let subbtn = $("#send-btn");
         let incoming_msg = $("#chat-msg-pequeno");
 
@@ -312,10 +312,18 @@ $contratos = buscaContratosAbertos();
                 processData: false,
                 contentType: false,
                 success: (data, stat) => {
-                    chatInp.val("");
                     scrollmsg();
                 },
             });
+            //Gabriel 05102023 ID 575 limpa caixa de texto
+            $("#caixa-chat").val("");
+        });
+        //Gabriel 05102023 ID 575 envia ao apertar enter
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault(); 
+                sendbtn.click();
+            }
         });
 
         function scrollmsg() {

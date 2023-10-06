@@ -83,8 +83,9 @@ if (isset($_POST['fetch_msg'])) {
                             <?php echo $chat['nomeINusuario'] ?> -
                             <?php echo date('H:i d/m/Y', strtotime($chat['dataMensagem'])) ?>
                         </div>
-                        <p>
-                            <?php echo $chat['chat'] ?>
+                        <p> 
+                            <!-- Gabriel 05102023 ID 575 formatação chat -->
+                            <?php echo nl2br($chat['chat']) ?>
                         </p>
                     </div>
                 </div>
@@ -99,7 +100,8 @@ if (isset($_POST['fetch_msg'])) {
                             <?php echo date('H:i d/m/Y', strtotime($chat['dataMensagem'])) ?>
                         </div>
                         <p>
-                            <?php echo $chat['chat'] ?>
+                            <!-- Gabriel 05102023 ID 575 formatação chat -->
+                            <?php echo nl2br($chat['chat']) ?>
                         </p>
                     </div>
                 </div>

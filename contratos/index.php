@@ -345,8 +345,8 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
         </div>
 
-        <div class="table table-sm table-hover  my-custom-scrollbar mt-3 diviFrame">
-            <table class="table table-sm  table-wrapper-scroll-y table-striped ">
+        <div class="table table-sm table-hover diviFrame">
+            <table class="table table-sm table-responsive table-wrapper-scroll-y table-striped ">
                 <thead class="cabecalhoTabela">
                     <tr style="background-color:#13216A;position: sticky;top:0px;">
                         <th>ID</th>

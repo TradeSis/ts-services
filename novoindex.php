@@ -1,4 +1,5 @@
 <?php
+// lucas 09102023 novo padrao
 include_once __DIR__ . "/../config.php";
 include_once "novohead.php";
 include_once ROOT . "/sistema/database/loginAplicativo.php";
@@ -7,11 +8,22 @@ $configuracao = 1;
 $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
 ?>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    
+    <?php include_once ROOT. "/vendor/head_css.php";?>
+    <title>Serviços</title>
+
+</head>
 
 <body>
     <?php include_once  ROOT . "/sistema/painelmobile.php"; ?>
+
     <div class="d-flex">
-        <?php include_once  ROOT . "/sistema/novopainel.php"; ?>
+
+        <?php include_once  ROOT . "/sistema/painel.php"; ?>
+
         <div class="container-fluid">
 
             <div class="row ">
@@ -120,20 +132,8 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         <?php if ($getTab == "configuracao") {echo " selected ";} ?>>Configurações</option>
                     </select>
                 </div>
-                <div class="col-5 col-md-3 col-lg-2 " style="text-align:right;background-color: #13216A;">
-                    <button class="btn text-white  dropdown-toggle position-relative mt-2 mr-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-fill"></i>&#32;Lucas
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            99+
-                            <span class="visually-hidden">unread messages</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Mensagens</a>
-                        <a class="dropdown-item" href="#">Perfil</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Logout</a>
-                    </ul>
-                </div>
+             
+                <?php include_once  ROOT . "/sistema/novoperfil.php"; ?>
 
             </div><!--row-->
 
@@ -194,9 +194,14 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
         </div><!-- div container -->
     </div><!-- div class="d-flex" -->
-    <?php include_once ROOT . "/sistema/footer_js.php"; ?>
+
+    <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <?php include_once ROOT. "/vendor/footer_js.php";?>
 
     <script src="<?php echo URLROOT ?>/sistema/js/mobileSelectTabs.js"></script>
+
+    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

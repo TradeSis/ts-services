@@ -1,4 +1,5 @@
 <?php
+//Gabriel 26092023 ID 575 Demandas/Comentarios - Layout de chat
 //lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
@@ -115,6 +116,7 @@ if (isset($_SESSION['idCliente'])) {
             <?php if ($ClienteSession == NULL) { ?>
                 <div class="tab" id="tab-tarefas">Tarefas</div>
             <?php } ?>
+            <div class="tab" id="tab-mensagem">mensagem</div>
             <div class="line"></div>
             <div class="tabContent">
                 <?php include_once 'visualizar_demanda.php'; ?>
@@ -127,6 +129,10 @@ if (isset($_SESSION['idCliente'])) {
                     <?php include_once 'visualizar_tarefa.php'; ?>
                 </div>
             <?php } ?>
+        <!-- Gabriel 26092023 ID 575 adicionado tab mensagens -->
+            <div class="tabContent">
+                <?php include_once 'mensagem.php'; ?>
+            </div>
         </div>
     </div>
 
@@ -580,6 +586,10 @@ if (isset($_SESSION['idCliente'])) {
             }
             if (id === 'tarefas') {
                 showTabsContent(2);
+            }
+        //Gabriel 26092023 ID 575 adicionado tab mensagens
+            if (id === 'mensagem') {
+                showTabsContent(3);
             }
         }
 

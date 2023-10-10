@@ -97,6 +97,20 @@ if (isset($_SESSION['filtro_contrato'])) {
         color: #fff;
         width: 160px;
     }
+
+    .table {
+        border-top: 2px solid #EEEEEE;
+        margin-top: -3px;
+        height: 75vh;
+    }
+
+    @media only screen and (max-height: 600px) {
+        .table {
+            border-top: 2px solid #EEEEEE;
+            margin-top: -3px;
+            height: 60vh;
+        }
+    }
 </style>
 
 <body class="bg-transparent">
@@ -104,11 +118,11 @@ if (isset($_SESSION['filtro_contrato'])) {
         <div class="header-body">
             <div class="row row-cols-6">
 
-                <div class="col my-2">
+                <div class="col-12 col-md-12 col-lg my-2">
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col p-1">
+                            <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase ">
                                     Total</div>
 
@@ -130,11 +144,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </div>
                 </div>
 
-                <div class="col my-2">
+                <div class="col-12 col-md-12 col-lg my-2">
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col p-1">
+                            <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
                                     Orçamento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -155,11 +169,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </div>
                 </div>
 
-                <div class="col my-2">
+                <div class="col-12 col-md-12 col-lg my-2">
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col p-1 ">
+                            <div class="col-12 col-md-12 col-lg p-1 ">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
                                     Aprovação</div>
                                 <div class="h5 mb-0 text-gray-800"><?php
@@ -180,11 +194,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </div>
                 </div>
 
-                <div class="col my-2">
+                <div class="col-12 col-md-12 col-lg my-2">
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col p-1">
+                            <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase ">
                                     Desenvolvimento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -207,11 +221,11 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
 
-                <div class="col my-2">
+                <div class="col-12 col-md-12 col-lg my-2">
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col p-1">
+                            <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
                                     Faturamento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -232,11 +246,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </div>
                 </div>
 
-                <div class="col my-2">
+                <div class="col-12 col-md-12 col-lg my-2">
                     <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
                         <!-- <div class="card-body"> -->
                         <div class="row no-gutters align-items-center">
-                            <div class="col p-1">
+                            <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
                                     Recebimento</div>
                                 <div class="h5 mb-0  text-gray-800"><?php
@@ -296,25 +310,25 @@ if (isset($_SESSION['filtro_contrato'])) {
     </nav>
 
 
-    <div class="container-fluid text-center pt-2 mt-3">
+    <div class="container-fluid text-center ">
 
 
         <!--INICIO-->
         <!-- <div class="card-header"> -->
 
         <div class="row">
-            <div class=" btnAbre">
-                <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
-                    filter_alt
-                </span>
+            <div class="col-6 order-1 col-sm-6  col-md-6 order-md-1 col-lg-1 order-lg-1 mt-3" >
+                <button type="button" class="btnAbre btn btn-sm btn-outline-primary"><span style="font-size: 23px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+                        filter_alt
+                    </span></button>
 
             </div>
 
-            <div class="col-sm-3 ml-2">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-2 order-lg-2 mt-4">
                 <h2 class="tituloTabela"><?php echo $contratoTipo['nomeContrato'] ?></h2>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
                 <div class="input-group">
                     <input type="text" class="form-control" id="buscaContrato" placeholder="Buscar por id ou titulo">
                     <span class="input-group-btn">
@@ -326,86 +340,83 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
 
-            <div class="col-sm" style="text-align:right">
+            <div class="col-6 order-2 col-sm-6 col-md-6 order-md-2 col-lg-4 order-lg-4 mt-1" style="text-align: end; margin-left:-30px ">
                 <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
             </div>
         </div>
 
-        <!-- </div> -->
-        <div class="card mt-2" style="background-color: #EEEEEE">
-            <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-                <table class="table" id="myIframe"> <!-- table-striped -->
-                    <thead class="cabecalhoTabela">
+        <div class="table table-sm table-hover diviFrame">
+            <table class="table table-sm table-responsive table-wrapper-scroll-y table-striped ">
+                <thead class="cabecalhoTabela">
+                    <tr style="background-color:#13216A;position: sticky;top:0px;">
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Titulo</th>
+                        <th>Status</th>
+                        <th>Previsão</th>
+                        <th>Entrega</th>
+                        <th>Atualização</th>
+                        <th>Fechamento</th>
+                        <th>Horas</th>
+                        <th>hora</th>
+                        <th>Contrato</th>
+                        <th colspan="2">Ação</th>
+                    </tr>
+                    
+                    <tr style="background-color:#13216A;position: sticky;top:34px;">
+                        <th></th>
+                        <th style="width: 10%;">
+                            <form action="" method="post">
+                                <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px;background-color:#13216A">
+                                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                    <?php
+                                    foreach ($clientes as $cliente) {
+                                    ?>
+                                        <option <?php
+                                                if ($cliente['idCliente'] == $idCliente) {
+                                                    echo "selected";
+                                                }
+                                                ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </form>
+                        </th>
+                        <th></th>
+                        <th style="width: 10%;">
+                            <form action="" method="post">
+                                <select class="form-control text-center" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px;background-color:#13216A">
+                                    <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
+                                    <?php
 
-                        <tr>
-                            <th>ID</th>
-                            <th>Cliente</th>
-                            <th>Titulo</th>
-                            <th>Status</th>
-                            <th>Previsão</th>
-                            <th>Entrega</th>
-                            <th>Atualização</th>
-                            <th>Fechamento</th>
-                            <th>Horas</th>
-                            <th>hora</th>
-                            <th>Contrato</th>
-                            <th colspan="2">Ação</th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th style="width: 10%;">
-                                <form action="" method="post">
-                                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                                        <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                                        <?php
-                                        foreach ($clientes as $cliente) {
-                                        ?>
-                                            <option <?php
-                                                    if ($cliente['idCliente'] == $idCliente) {
-                                                        echo "selected";
-                                                    }
-                                                    ?> value="<?php echo $cliente['idCliente'] ?>"><?php echo $cliente['nomeCliente'] ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </form>
-                            </th>
-                            <th></th>
-                            <th style="width: 10%;">
-                                <form action="" method="post">
-                                    <select class="form-control text-center" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                                        <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
-                                        <?php
+                                    foreach ($contratoStatusTodos as $contratoStatus) {
+                                    ?>
+                                        <option <?php
+                                                if ($contratoStatus['idContratoStatus'] == $idContratoStatus) {
+                                                    echo "selected";
+                                                }
+                                                ?> value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?></option>
+                                    <?php  } ?>
+                                </select>
 
-                                        foreach ($contratoStatusTodos as $contratoStatus) {
-                                        ?>
-                                            <option <?php
-                                                    if ($contratoStatus['idContratoStatus'] == $idContratoStatus) {
-                                                        echo "selected";
-                                                    }
-                                                    ?> value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus']  ?></option>
-                                        <?php  } ?>
-                                    </select>
+                            </form>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-                                </form>
-                            </th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id='dados' class="fonteCorpo">
+                <tbody id='dados' class="fonteCorpo">
 
-                    </tbody>
-                </table>
-            </div>
-
-
+                </tbody>
+            </table>
         </div>
+
     </div>
 
     <script>
@@ -528,18 +539,20 @@ if (isset($_SESSION['filtro_contrato'])) {
         })
 
         //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
-        $(document).on('click', '#visualizarDemandaButton', function () {
-        var urlContratoTipo = '?tipo=<?php echo $urlContratoTipo ?>';
-        var currentPath = window.location.pathname + urlContratoTipo;
+        $(document).on('click', '#visualizarDemandaButton', function() {
+            var urlContratoTipo = '?tipo=<?php echo $urlContratoTipo ?>';
+            var currentPath = window.location.pathname + urlContratoTipo;
             $.ajax({
                 type: 'POST',
                 url: '../database/demanda.php?operacao=origem',
-                data: { origem: currentPath },
+                data: {
+                    origem: currentPath
+                },
                 success: function(response) {
-                console.log('Session variable set successfully.');
+                    console.log('Session variable set successfully.');
                 },
                 error: function(xhr, status, error) {
-                console.error('An error occurred:', error);
+                    console.error('An error occurred:', error);
                 }
             });
         });
@@ -554,7 +567,6 @@ if (isset($_SESSION['filtro_contrato'])) {
             $('.menuFiltros').toggleClass('mostra');
             $('.diviFrame').toggleClass('mostra');
         });
-
     </script>
 </body>
 

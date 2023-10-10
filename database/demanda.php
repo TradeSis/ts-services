@@ -1,4 +1,5 @@
 <?php
+//Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 //lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
@@ -158,6 +159,82 @@ if (isset($_GET['operacao'])) {
 	
 		header('Location: ../demandas/index.php?tipo='.$_POST['idContratoTipo']);
 		/* header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']); */
+	}
+
+	//Gabriel 05102023 ID 575 inserir com mensagens do chat
+	if ($operacao == "inserirChat") {
+
+		if ($_POST['idContrato'] != '') {
+			$idContrato = $_POST['idContrato'];
+			$apiEntrada = array(
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'idContrato' => $idContrato,
+
+			);
+			$contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
+			$idCliente = $contrato['idCliente'];
+		} else {
+			$idContrato = '';
+			$idCliente = $_POST['idCliente'];
+		}
+
+		if ($_POST['idTipoOcorrencia'] == '') {
+			$idTipoOcorrencia = OCORRENCIA_PADRAO;
+		} else {
+			$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+		}
+
+		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idCliente' => $idCliente,
+			'idSolicitante' => $_POST['idSolicitante'],
+			'tituloDemanda' => $_POST['tituloDemanda'],
+			'descricao' => $_POST['descricao'],
+			'idTipoOcorrencia' => $idTipoOcorrencia,
+			'idServico' => SERVICOS_PADRAO,
+			'idTipoStatus' => TIPOSTATUS_FILA,
+			'idContrato' => $idContrato,
+			'idContratoTipo' => $_POST['idContratoTipo'],
+			'horasPrevisao' => $_POST['horasPrevisao'],
+			'tamanho' => $_POST['tamanho'],
+			'idAtendente' => $_POST['idAtendente']
+		);
+
+		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
+
+		if ($demanda['status'] === 200 && isset($demanda['idInserido'])) {
+			$idDemanda = $demanda['idInserido'];
+
+			$apiEntrada2 = array(
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'idDemanda' => $idDemanda,
+				'INidUsuario' => $_POST['INidUsuario'],
+				'OUTidUsuario' => $_POST['OUTidUsuario']
+			);
+
+			$chat = chamaAPI(null, '/services/demanda/chat', json_encode($apiEntrada2), 'PUT');
+		}
+
+
+		$tituloEmail = $_POST['tituloDemanda'];
+		$corpoEmail = $_POST['descricao'];
+
+
+		$arrayPara = array(
+
+			array(
+				'email' => 'tradesis@tradesis.com.br',
+				'nome' => 'TradeSis'
+			),
+			array(
+				'email' => $_SESSION['email'],
+				'nome' => $_SESSION['usuario']
+			),
+		);
+
+		$envio = emailEnviar(null, null, $arrayPara, $tituloEmail, $corpoEmail);
+		
+		header('Location: ../?tab=demandas');
 	}
 
 	if ($operacao == "inserir_demandadecontrato") {

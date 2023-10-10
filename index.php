@@ -107,28 +107,28 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         $getTab = '';
                     } ?>
                     <select class="form-select mt-2" id="subtabServices" style="color:#000; width:160px;text-align:center; ">
-                        <option value="<?php echo URLROOT ?>/services/index.php?tab=dashboard" 
+                        <option value="<?php echo URLROOT ?>/services/?tab=dashboard" 
                         <?php if ($getTab == "dashboard") {echo " selected ";} ?>>Dashboard</option>
 
-                        <option value="<?php echo URLROOT ?>/services/index.php?tab=agenda" 
+                        <option value="<?php echo URLROOT ?>/services/?tab=agenda" 
                         <?php if ($getTab == "agenda") {echo " selected ";} ?>>Agenda</option>
 
-                        <option value="<?php echo URLROOT ?>/services/index.php?tab=execucao" 
+                        <option value="<?php echo URLROOT ?>/services/?tab=execucao" 
                         <?php if ($getTab == "execucao") {echo " selected ";} ?>>Execução</option>
 
-                        <option value="<?php echo URLROOT ?>/services/index.php?tab=demandas" 
+                        <option value="<?php echo URLROOT ?>/services/?tab=demandas" 
                         <?php if ($getTab == "demandas") {echo " selected ";} ?>>Demandas</option>
 
-                        <option value="<?php echo URLROOT ?>/services/index.php?tab=contratos" 
+                        <option value="<?php echo URLROOT ?>/services/?tab=contratos" 
                         <?php if ($getTab == "contratos") {echo " selected ";} ?>>Contratos</option>
 
-                        <option value="<?php echo URLROOT ?>/services/index.php?tab=projetos" 
+                        <option value="<?php echo URLROOT ?>/services/?tab=projetos" 
                         <?php if ($getTab == "projetos") {echo " selected ";} ?>>Projetos</option>
 
-                        <option value="<?php echo URLROOT ?>/services/index.php?tab=os" 
+                        <option value="<?php echo URLROOT ?>/services/?tab=os" 
                         <?php if ($getTab == "os") {echo " selected ";} ?>>O.S.</option>
 
-                        <option value="<?php echo URLROOT ?>/services/index.php?tab=configuracao" 
+                        <option value="<?php echo URLROOT ?>/services/?tab=configuracao" 
                         <?php if ($getTab == "configuracao") {echo " selected ";} ?>>Configurações</option>
                     </select>
                 </div>

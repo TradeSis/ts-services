@@ -1,4 +1,5 @@
 <?php
+//Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
@@ -70,12 +71,14 @@ if (isset($jsonEntrada['tituloDemanda'])) {
         $atualizar = mysqli_query($conexao, $sql);
         if (!$atualizar)
             throw new Exception(mysqli_error($conexao));
-
+        //Gabriel 05102023 ID 575 adicionado idDemanda adicionada
+        $idInserido = mysqli_insert_id($conexao);
+    
         $jsonSaida = array(
             "status" => 200,
-            "retorno" => "ok"
-        );
-
+            "retorno" => "ok",
+            "idInserido" => $idInserido  
+        );  
     } catch (Exception $e) {
         $jsonSaida = array(
             "status" => 500,
@@ -98,7 +101,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     );
 
 }
-echo "-SAIDA->".json_encode($jsonSaida)."\n";
+//echo "-SAIDA->".json_encode($jsonSaida)."\n";
 //LOG
 if (isset($LOG_NIVEL)) {
     if ($LOG_NIVEL >= 2) {

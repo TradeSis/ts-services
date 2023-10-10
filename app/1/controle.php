@@ -1,4 +1,5 @@
 <?php
+//Gabriel 26092023 ID 575 Demandas/Comentarios - Layout de chat
 // Lucas 05042023 - adicionado aplicativo, menu, menuPrograma e montaMenu
 // gabriel 200323 11:04 - demanda/retornar
 // Lucas 03032023 - usuario alterar
@@ -77,6 +78,15 @@ if ($metodo == "GET") {
       include 'comentario.php';
       break;
 
+    //Gabriel 26092023 ID 575 adicionado get mensagens e chat
+    case "mensagem":
+      include 'mensagem.php';
+      break;
+      
+    case "chat":
+      include 'chat.php';
+      break;
+
     case "horas":
       include 'tarefas_horas.php';
       break;
@@ -149,6 +159,11 @@ if ($metodo == "PUT") {
     $funcao = "tarefas/novostart";
     $parametro = null;
   }
+  //Gabriel 26092023 ID 575 inserir demanda via chat
+  if ($funcao == "demanda" && $parametro == "chat") {
+    $funcao = "demanda/chat";
+    $parametro = null;
+  }
 
 
   switch ($funcao) {
@@ -204,6 +219,20 @@ if ($metodo == "PUT") {
         case "tarefas/novostart":
           include 'tarefas_novostart.php';
           break;
+    //Gabriel 26092023 ID 575 inserir demanda via chat
+    case "demanda/chat":
+      include 'demanda_inserirchat.php';
+      break;      
+          
+    //Gabriel 26092023 ID 575 inserir mensagens e chat
+    case "mensagem":
+      include 'mensagem_inserir.php';
+      break;
+
+    case "chat":
+      include 'chat_inserir.php';
+      break;
+      
     default:
       $jsonSaida = json_decode(
         json_encode(

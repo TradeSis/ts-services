@@ -1,5 +1,6 @@
 <?php
 // lucas 09102023 novo padrao
+//Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 include_once __DIR__ . "/../config.php";
 include_once "header.php";
 include_once ROOT . "/sistema/database/loginAplicativo.php";
@@ -8,11 +9,15 @@ $configuracao = 1;
 $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
 ?>
+
 <!doctype html>
 <html lang="pt-BR">
 <head>
     
     <?php include_once ROOT. "/vendor/head_css.php";?>
+    <!-- Gabriel 05102023 ID 575 removido style, formato arquivo /excluido style -->
+    <link href="chat.css" rel="stylesheet" type="text/css">
+
     <title>Serviços</title>
 
 </head>
@@ -197,9 +202,13 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
     <!-- LOCAL PARA COLOCAR OS JS -->
 
-    <?php include_once ROOT. "/vendor/footer_js.php";?>
+    <?php include_once ROOT. "/vendor/footer_js.php";
+      //Gabriel 05102023 ID 575 removido chat, formato include 
+      include "demandas/chat.php";
+    ?>
 
     <script src="<?php echo URLROOT ?>/sistema/js/mobileSelectTabs.js"></script>
+
 
     <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 

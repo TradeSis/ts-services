@@ -254,7 +254,7 @@
                 $('#horaFinalReal').val(data.horaFinalReal);
                 $('#horaCobrado').val(data.horaCobrado);
                 $('#tipoStatusDemanda').val(data.idTipoStatus);
-                $('#descricao').val(data.descricao);
+                quilldescricao.root.innerHTML = data.descricao;
 
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;

@@ -1,4 +1,5 @@
 <?php
+//Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 //Gabriel 26092023 ID 575 Demandas/Comentarios - Layout de chat
 //lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
@@ -247,118 +248,7 @@ if (isset($_SESSION['idCliente'])) {
         </div>
     </div>
 
-    <!--------- ALTERAR --------->
-    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog" aria-labelledby="alterarmodalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Alterar Tarefa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="container">
-                    <form method="post" id="alterarForm">
-                        <div class="row">
-                            <div class="col-md-4" style="margin-top: 10px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Tarefa</label>
-                                    <input type="text" class="data select form-control" id="tituloTarefa" name="tituloTarefa" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -10px;">
-                                <div class="form-group" id="demandaContainer">
-                                    <label class="labelForm">ID/Demanda Relacionada</label>
-                                    <input type="text" class="data select form-control" id="tituloDemanda" style="margin-top: 18px;" autocomplete="off" readonly>
-                                    <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
-                                        <?php
-                                        foreach ($demandas as $demanda) {
-                                            ?>
-                                        <option value="<?php echo $demanda['idDemanda'] ?>">
-                                            <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                                        </option>
-
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <input type="hidden" class="form-control" name="idTarefa" id="idTarefa" />
-                            <input type="hidden" class="form-control" name="idDemanda" id="idDemanda" />
-                            <div class="col-md-4" style="margin-top: -10px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Cliente</label>
-                                    <input type="text" class="data select form-control" id="nomeCliente" style="margin-top: 18px;" autocomplete="off" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Reponsável</label>
-                                    <select class="form-control" name="idAtendente" id="idAtendente">
-                                        <?php
-                                        foreach ($atendentes as $atendente) {
-
-                                            ?>
-                                        <option value="<?php echo $atendente['idUsuario'] ?>">
-                                            <?php echo $atendente['nomeUsuario'] ?>
-                                        </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
-                                    <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
-                                        <?php
-                                        foreach ($ocorrencias as $ocorrencia) {
-
-                                            ?>
-                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                                        </option>
-
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -14px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Horas Cobrado</label>
-                                    <input type="time" class="data select form-control" id="horaCobrado" name="horaCobrado" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -30px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" id="Previsto" name="Previsto" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -30px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" id="horaInicioPrevisto" name="horaInicioPrevisto" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -30px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" id="horaFinalPrevisto" name="horaFinalPrevisto" autocomplete="off">
-                                </div>
-                            </div>
-
-                            <input type="date" class="data select form-control" id="dataReal" name="dataReal"  autocomplete="off" hidden>
-                            <input type="time" class="data select form-control" id="horaInicioReal" name="horaInicioReal" autocomplete="off" step="2" readonly style="display: none;">
-                            <input type="time" class="data select form-control" id="horaFinalReal" name="horaFinalReal" autocomplete="off" hidden>
-                        </div>
-                        <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" formaction="../database/tarefas.php?operacao=alterar" class="btn btn-info">Atualizar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    
+    <!--Gabriel 11102023 ID 596 removido modal Alterar tarefa -->
 
     <!--------- MODAL STOP --------->
     <div class="modal fade bd-example-modal-lg" id="stopmodal" tabindex="-1" role="dialog" aria-labelledby="stopmodalLabel" aria-hidden="true">
@@ -566,8 +456,8 @@ if (isset($_SESSION['idCliente'])) {
             </div>
         </div>
     </div>
-
-
+    <!--Gabriel 11102023 ID 596 modal Alterar tarefa via include -->
+    <?php include 'alterarTarefaModal.php'; ?>
 
 
     <script>
@@ -854,6 +744,43 @@ if (isset($_SESSION['idCliente'])) {
         quillstop.on('text-change', function(delta, oldDelta, source) {
             $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
         });
+//Gabriel 11102023 ID 596 script para tratar o envio e retorno do form alterar tarefa
+    $(document).ready(function () {
+        $("#alterarForm").submit(function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            var vurl;
+            if ($("#stopButtonModal").is(":focus")) {
+                vurl = "../database/tarefas.php?operacao=stop";
+            } 
+            if ($("#startButtonModal").is(":focus")) {
+                vurl = "../database/tarefas.php?operacao=start";
+            } 
+            if ($("#realizadoButtonModal").is(":focus")) {
+                vurl = "../database/tarefas.php?operacao=realizado";
+            } 
+            if ($("#atualizarButtonModal").is(":focus")) {
+                vurl = "../database/tarefas.php?operacao=alterar";
+            }
+            $.ajax({
+                url: vurl,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: refreshPage('tarefas', <?php echo $idDemanda ?>)
+                
+            });
+        });
+    });
+    function refreshPage(tab, idDemanda) {
+        window.location.reload();
+        var url = window.location.href.split('?')[0];
+        var newUrl = url + '?id=' + tab + '&&idDemanda=' + idDemanda;
+        window.location.href = newUrl;
+    }
+
+    
     </script>
 </body>
 

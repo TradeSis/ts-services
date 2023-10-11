@@ -1,4 +1,5 @@
 <?php
+//Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 // helio 12072023 - ajustes de horas
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
@@ -56,7 +57,13 @@ if (isset($jsonEntrada['idTarefa'])) {
     $horaInicioPrevisto = isset($jsonEntrada['horaInicioPrevisto']) && $jsonEntrada['horaInicioPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioPrevisto']) . "'" : "NULL";
     $horaFinalPrevisto = isset($jsonEntrada['horaFinalPrevisto']) && $jsonEntrada['horaFinalPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalPrevisto']) . "'" : "NULL";
 
-
+    //Gabriel 11102023 ID 596 adicionado idAtendenteSelect e descricao
+    $idAtendenteSelect = isset($jsonEntrada['idAtendenteSelect']) && $jsonEntrada['idAtendenteSelect'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendenteSelect']) : "NULL";
+    $descricao = isset($jsonEntrada['descricao']) && $jsonEntrada['descricao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['descricao']) . "'" : "NULL";
+    if ($idAtendenteSelect !== null){
+        $idAtendente = $idAtendenteSelect;
+    }
+    
     if ($idDemandaSelect !== null) {
         // busca dados idCliente/Demanda
         $sql2 = "SELECT * FROM demanda WHERE idDemanda = $idDemandaSelect";
@@ -67,12 +74,12 @@ if (isset($jsonEntrada['idTarefa'])) {
 
         $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `idTipoOcorrencia`=$idTipoOcorrencia, `idAtendente`=$idAtendente, `horaCobrado`=$horaCobrado,
     `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal, `idDemanda`=$idDemandaSelect, `idCliente`=$idCliente,
-    `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto 
+    `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao
     WHERE `idTarefa` = $idTarefa";
     } else {
         $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `idTipoOcorrencia`=$idTipoOcorrencia, `idAtendente`=$idAtendente, `horaCobrado`=$horaCobrado,
         `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal,
-        `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto 
+        `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao 
         WHERE `idTarefa` = $idTarefa";
     }
 

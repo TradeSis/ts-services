@@ -1,4 +1,5 @@
 <?php
+//Gabriel 13102023 fix modal nova demanda 
 //lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
@@ -150,23 +151,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     width: 160px;
   }
 
-  .modal-dialog {
-    margin-left: 10vw;
-    margin-top: 0px;
-
-  }
- 
-  .modal-content {
-    width: 80vw;
-    /* height: 85vh; */
-  } 
-
-  @media only screen and (max-height: 600px) {
-    .modal-content {
-    width: 100%;
-    /* height: 85vh; */
-  }
-  }
+  /* Gabriel 13102023 fix modal nova demanda, removido styles de modal */
 
   .cardLink {
     position: absolute;
@@ -334,7 +319,8 @@ if (isset($_SESSION['filtro_demanda'])) {
 
   <!--------- MODAL DEMANDA INSERIR --------->
   <div class="modal fade " id="inserirDemandaModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <!-- Gabriel 13102023 fix modal nova demanda, ajustado para modal-lg  -->
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Inserir

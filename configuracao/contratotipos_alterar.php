@@ -1,43 +1,23 @@
 <?php
-//Lucas 13102023 novo padrao
-include_once('../header.php');
+include_once('../head.php');
 include_once '../database/contratotipos.php';
 
 $idContratoTipo = $_GET['idContratoTipo'];
 
 $contratotipo = buscaContratoTipos($idContratoTipo);
+
 ?>
-<!doctype html>
-<html lang="pt-BR">
 
-<head>
+<body class="bg-transparent">
 
-    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+    <div class="container p-4" style="margin-top:10px">
 
-</head>
-
-<body>
-
-    <div class="container-fluid">
-
-    <div class="row">
-            <BR> <!-- MENSAGENS/ALERTAS -->
-        </div>
         <div class="row">
-            <BR> <!-- BOTOES AUXILIARES -->
-        </div>
-        <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
-            <div class="col-3">
-                <!-- TITULO -->
+            <div class="col-sm">
                 <h2 class="tituloTabela">Alterar Contrato Tipos</h2>
             </div>
-            <div class="col-7">
-                <!-- FILTROS -->
-            </div>
-
-            <div class="col-2 text-end">
-                <a href="../configuracao/?tab=configuracao&stab=contratotipos" role="button" class="btn btn-primary"><i
-                        class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+            <div class="col-sm mt-4" style="text-align:right">
+                <a href="../configuracao/?tab=configuracao&stab=contratotipos" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
 
@@ -45,37 +25,32 @@ $contratotipo = buscaContratoTipos($idContratoTipo);
 
             <div class="row">
                 <div class="col-md-4 form-group">
-                    <label class='control-label' for='inputNormal'>Nome</label>
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome</label>
                     <div class="for-group">
                         <input type="text" name="idContratoTipo" class="form-control" value="<?php echo $contratotipo['idContratoTipo'] ?>">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
-                    <label class='control-label' for='inputNormal'>Nome Contrato</label>
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome Contrato</label>
                     <div class="for-group">
                         <input type="text" name="nomeContrato" class="form-control" value="<?php echo $contratotipo['nomeContrato'] ?>">
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
-                    <label class='control-label' for='inputNormal'>Nome Demanda</label>
+                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome Demanda</label>
                     <div class="for-group">
                         <input type="text" name="nomeDemanda" class="form-control" value="<?php echo $contratotipo['nomeDemanda'] ?>">
                     </div>
                 </div>
             </div>
 
-            <div class="text-end mt-4">
+            <div style="text-align:right; margin-top:20px">
                 <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Salvar</button>
             </div>
         </form>
 
     </div>
 
-    <!-- LOCAL PARA COLOCAR OS JS -->
-
-    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
-    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

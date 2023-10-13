@@ -1,8 +1,7 @@
 <?php
-//Lucas 13102023 novo padrao
 // helio 01022023 altereado para include_once
 // helio 26012023 16:16
-include_once('../header.php');
+include_once('../head.php');
 include_once '../database/tipoocorrencia.php';
 
 $idTipoOcorrencia = $_GET['idTipoOcorrencia'];
@@ -10,35 +9,16 @@ $idTipoOcorrencia = $_GET['idTipoOcorrencia'];
 $ocorrencias = buscaTipoOcorrencia(null, $idTipoOcorrencia);
 
 ?>
-<!doctype html>
-<html lang="pt-BR">
 
-<head>
+<body class="bg-transparent">
 
-    <?php include_once ROOT . "/vendor/head_css.php"; ?>
-
-</head>
-
-<body>
-
-    <div class="container-fluid">
+    <div class="container p-4" style="margin-top:10px">
 
         <div class="row">
-            <BR> <!-- MENSAGENS/ALERTAS -->
-        </div>
-        <div class="row">
-            <BR> <!-- BOTOES AUXILIARES -->
-        </div>
-        <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
-            <div class="col-3">
-                <!-- TITULO -->
+            <div class="col-sm-8">
                 <h2 class="tituloTabela">Excluir Ocorrência</h2>
             </div>
-            <div class="col-7">
-                <!-- FILTROS -->
-            </div>
-
-            <div class="col-2 text-end">
+            <div class="col-sm-4" style="text-align:right">
                 <a href="../configuracao/?tab=configuracao&stab=tipoocorrencia" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
@@ -47,10 +27,10 @@ $ocorrencias = buscaTipoOcorrencia(null, $idTipoOcorrencia);
             <div class="col-md-12 form-group">
                 <label class='control-label' for='inputNormal'></label>
                 <input type="text" class="form-control" name="nomeTipoOcorrencia" value="<?php echo $ocorrencias['nomeTipoOcorrencia'] ?>" disabled>
-                <input type="hidden" class="form-control" name="idTipoOcorrencia" value="<?php echo $ocorrencias['idTipoOcorrencia'] ?>">
+                <input type="text" class="form-control" name="idTipoOcorrencia" value="<?php echo $ocorrencias['idTipoOcorrencia'] ?>" style="display: none">
             </div>
 
-            <div class="text-end mt-4">
+            <div style="text-align:right; margin-top:20px">
                 <button type="submit" id="botao" class="btn btn-sm btn-danger"><i class="bi bi-x-octagon"></i>&#32;Excluir</button>
             </div>
         </form>
@@ -58,11 +38,6 @@ $ocorrencias = buscaTipoOcorrencia(null, $idTipoOcorrencia);
 
     </div>
 
-    <!-- LOCAL PARA COLOCAR OS JS -->
-
-    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
-    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

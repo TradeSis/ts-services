@@ -31,25 +31,25 @@ include_once(__DIR__ . '/../head.php');
         //echo "<HR>stab=" . $stab;
         ?>
         <li class="nav-item ">
-          <a class="nav-link ts-tabConfig <?php if ($stab == "contratotipos") {
+          <a class="nav-link <?php if ($stab == "contratotipos") {
             echo " active ";
           } ?>"
             href="?tab=configuracao&stab=contratotipos" role="tab" >Contrato Tipos</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link ts-tabConfig <?php if ($stab == "contratoStatus") {
+          <a class="nav-link <?php if ($stab == "contratoStatus") {
             echo " active ";
           } ?>"
             href="?tab=configuracao&stab=contratoStatus" role="tab" >Contrato Status</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link ts-tabConfig <?php if ($stab == "tipoocorrencia") {
+          <a class="nav-link <?php if ($stab == "tipoocorrencia") {
             echo " active ";
           } ?>"
             href="?tab=configuracao&stab=tipoocorrencia" role="tab" >Tipo Ocorrência</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link ts-tabConfig <?php if ($stab == "tipostatus") {
+          <a class="nav-link <?php if ($stab == "tipostatus") {
             echo " active ";
           } ?>"
             href="?tab=configuracao&stab=tipostatus" role="tab" >Tipo Status</a>

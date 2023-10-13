@@ -1,43 +1,24 @@
 <?php
-//Lucas 13102023 novo padrao
 // helio 01022023 altereado para include_once
 // helio 26012023 16:16
-include_once('../header.php');
+include_once('../head.php');
 include_once '../database/tipostatus.php';
 
 $idTipoStatus = $_GET['idTipoStatus'];
 
 $status = buscaTipoStatus(null, $idTipoStatus);
+
 ?>
-<!doctype html>
-<html lang="pt-BR">
 
-<head>
+<body class="bg-transparent">
 
-    <?php include_once ROOT . "/vendor/head_css.php"; ?>
-
-</head>
-
-<body>
-
-    <div class="container-fluid">
+    <div class="container p-4" style="margin-top:10px">
 
         <div class="row">
-            <BR> <!-- MENSAGENS/ALERTAS -->
-        </div>
-        <div class="row">
-            <BR> <!-- BOTOES AUXILIARES -->
-        </div>
-        <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
-            <div class="col-3">
-                <!-- TITULO -->
+            <div class="col-sm">
                 <h2 class="tituloTabela">Alterar Status</h2>
             </div>
-            <div class="col-7">
-                <!-- FILTROS -->
-            </div>
-
-            <div class="col-2 text-end">
+            <div class="col-sm mt-4" style="text-align:right">
                 <a href="../configuracao/?tab=configuracao&stab=tipostatus" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
@@ -47,7 +28,7 @@ $status = buscaTipoStatus(null, $idTipoStatus);
             <div class="col-md-12 form-group">
                 <label class='control-label' for='inputNormal'></label>
                 <input type="text" class="form-control" name="nomeTipoStatus" value="<?php echo $status['nomeTipoStatus'] ?>">
-                <input type="hidden" class="form-control" name="idTipoStatus" value="<?php echo $status['idTipoStatus'] ?>">
+                <input type="text" class="form-control" name="idTipoStatus" value="<?php echo $status['idTipoStatus'] ?>" style="display: none">
                 <div class="row">
                     <div class="col-md-6">
                         <label class="labelForm">Atendimento(0=Atendente 1=Cliente)</label>
@@ -68,18 +49,13 @@ $status = buscaTipoStatus(null, $idTipoStatus);
                 </div>
             </div>
 
-            <div class="text-end mt-4">
+            <div style="text-align:right; margin-top:20px">
                 <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Salvar</button>
             </div>
         </form>
 
     </div>
 
-    <!-- LOCAL PARA COLOCAR OS JS -->
-
-    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
-    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

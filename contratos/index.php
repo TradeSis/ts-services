@@ -1,4 +1,5 @@
 <?php
+//Lucas 13102023 novo padrao
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 // Lucas 22032023 ajustado função do botão de limpar
 // Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
@@ -24,7 +25,7 @@
 //
 //
 
-include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/contratos.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');
 include_once(ROOT . '/cadastros/database/clientes.php');
@@ -47,71 +48,17 @@ if (isset($_SESSION['filtro_contrato'])) {
     $statusContrato = $filtroEntrada['statusContrato'];
 }
 
-
 ?>
+<!doctype html>
+<html lang="pt-BR">
 
-<style>
-    [class="Orçamento"] {
-        margin-top: 5px;
-        display: inline-block;
-        background: #5271FE;
-        color: #fff;
-        width: 160px;
-    }
+<head>
 
-    [class="Faturamento"] {
-        margin-top: 5px;
-        display: inline-block;
-        background: #FE5469;
-        color: #fff;
-        width: 160px;
-    }
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
 
-    [class="Finalizado"] {
-        display: inline-block;
-        background: #C34A36;
-        color: #fff;
-        width: 160px;
-    }
+</head>
 
-    [class="Aprovação"] {
-        margin-top: 5px;
-        display: inline-block;
-        background: #69419D;
-        color: #fff;
-        width: 160px;
-    }
 
-    [class="Desenvolvimento"] {
-        margin-top: 5px;
-        display: inline-block;
-        background: #FEA051;
-        color: #fff;
-        width: 160px;
-    }
-
-    [class="Recebimento"] {
-        margin-top: 5px;
-        display: inline-block;
-        background: #18B376;
-        color: #fff;
-        width: 160px;
-    }
-
-    .table {
-        border-top: 2px solid #EEEEEE;
-        margin-top: -3px;
-        height: 75vh;
-    }
-
-    @media only screen and (max-height: 600px) {
-        .table {
-            border-top: 2px solid #EEEEEE;
-            margin-top: -3px;
-            height: 60vh;
-        }
-    }
-</style>
 
 <body class="bg-transparent">
     <div class="container-fluid py-1">
@@ -119,8 +66,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             <div class="row row-cols-6">
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
-                        <!-- <div class="card-body"> -->
+                    <div class="card border-left-success shadow py-0 ts-cardsTotais">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase ">
@@ -140,13 +86,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                             </div>
 
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
-                        <!-- <div class="card-body"> -->
+                    <div class="card border-left-success shadow py-0 ts-cardsTotais">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
@@ -165,13 +109,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                             </div>
 
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
-                        <!-- <div class="card-body"> -->
+                    <div class="card border-left-success shadow py-0 ts-cardsTotais">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1 ">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
@@ -190,13 +132,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                             </div>
 
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
-                        <!-- <div class="card-body"> -->
+                    <div class="card border-left-success shadow py-0 ts-cardsTotais">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase ">
@@ -215,15 +155,13 @@ if (isset($_SESSION['filtro_contrato'])) {
                             </div>
 
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
 
 
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
-                        <!-- <div class="card-body"> -->
+                    <div class="card border-left-success shadow py-0 ts-cardsTotais">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
@@ -242,13 +180,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                             </div>
 
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success shadow py-0" style="border-left:solid #0b2782; height:65px">
-                        <!-- <div class="card-body"> -->
+                    <div class="card border-left-success shadow py-0 ts-cardsTotais">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
@@ -267,7 +203,6 @@ if (isset($_SESSION['filtro_contrato'])) {
                             </div>
 
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
 
@@ -277,14 +212,14 @@ if (isset($_SESSION['filtro_contrato'])) {
     </div>
 
 
+<!-- MENUFILTROS -->
+    <nav class="ts-menuFiltros" style="margin-top: 40px;"> 
+    <label class="pl-2" for="">Filtrar por:</label>
+       
+            <div class="col-12"> <!-- ABERTO/FECHADO -->
+                <form class="d-flex" action="" method="post">
 
-    <nav id="menuFiltros" class="menuFiltros"> <!-- MENUFILTROS -->
-        <div class="titulo"><span>Filtrar por:</span></div>
-        <ul>
-            <li class="col-sm-12 mt-2"> <!-- ABERTO/FECHADO -->
-                <form class="d-flex" action="" method="post" style="text-align: right;">
-
-                    <select class="form-control" name="statusContrato" id="FiltroStatusContrato" style="font-size: 14px; width: 150px; height: 35px">
+                    <select class="form-control" name="statusContrato" id="FiltroStatusContrato">
                         <option value="<?php echo NULL ?>"><?php echo "Todos" ?></option>
                         <option <?php if ($statusContrato == "2") {
                                     echo "selected";
@@ -300,12 +235,12 @@ if (isset($_SESSION['filtro_contrato'])) {
                     </select>
 
                 </form>
-            </li>
+            </div>
 
-        </ul>
+      
 
-        <div class="col-sm" style="text-align:right; color: #fff">
-            <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+        <div class="col-sm text-end mt-2">
+            <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
         </div>
     </nav>
 
@@ -318,14 +253,14 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         <div class="row">
             <div class="col-6 order-1 col-sm-6  col-md-6 order-md-1 col-lg-1 order-lg-1 mt-3" >
-                <button type="button" class="btnAbre btn btn-sm btn-outline-primary"><span style="font-size: 23px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+                <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
                         filter_alt
                     </span></button>
 
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-2 order-lg-2 mt-4">
-                <h2 class="tituloTabela"><?php echo $contratoTipo['nomeContrato'] ?></h2>
+                <h2 class="ts-tituloPrincipal"><?php echo $contratoTipo['nomeContrato'] ?></h2>
             </div>
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
@@ -345,29 +280,29 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
         </div>
 
-        <div class="table table-sm table-hover diviFrame">
-            <table class="table table-sm table-responsive table-wrapper-scroll-y table-striped ">
-                <thead class="cabecalhoTabela">
-                    <tr style="background-color:#13216A;position: sticky;top:0px;">
-                        <th>ID</th>
-                        <th>Cliente</th>
-                        <th>Titulo</th>
-                        <th>Status</th>
-                        <th>Previsão</th>
-                        <th>Entrega</th>
-                        <th>Atualização</th>
-                        <th>Fechamento</th>
-                        <th>Horas</th>
-                        <th>hora</th>
-                        <th>Contrato</th>
-                        <th colspan="2">Ação</th>
+        <div class="table mt-2 ts-divTabela ts-tableFiltros">
+            <table class="table table-hover table-sm align-middle table-responsive ">
+                <thead class="ts-headertabelafixo">
+                    <tr class="ts-headerTabelaLinhaCima">
+                        <th class="col-1">ID</th>
+                        <th class="col-1">Cliente</th>
+                        <th class="col-1">Titulo</th>
+                        <th class="col-1">Status</th>
+                        <th class="col-1">Previsão</th>
+                        <th class="col-1">Entrega</th>
+                        <th class="col-1">Atualização</th>
+                        <th class="col-1">Fechamento</th>
+                        <th class="col-1">Horas</th>
+                        <th class="col-1">hora</th>
+                        <th class="col-1">Contrato</th>
+                        <th class="col-1" colspan="2">Ação</th>
                     </tr>
                     
-                    <tr style="background-color:#13216A;position: sticky;top:34px;">
-                        <th></th>
-                        <th style="width: 10%;">
+                    <tr class="ts-headerTabelaLinhaBaixo">
+                        <th class="col-1"></th>
+                        <th class="col-1">
                             <form action="" method="post">
-                                <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px;background-color:#13216A">
+                                <select class="form-control ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                     <?php
                                     foreach ($clientes as $cliente) {
@@ -381,10 +316,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                                 </select>
                             </form>
                         </th>
-                        <th></th>
-                        <th style="width: 10%;">
+                        <th class="col-1"></th>
+                        <th class="col-1">
                             <form action="" method="post">
-                                <select class="form-control text-center" name="idContratoStatus" id="FiltroContratoStatus" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px;background-color:#13216A">
+                                <select class="form-control ts-selectFiltrosHeaderTabela" name="idContratoStatus" id="FiltroContratoStatus">
                                     <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
                                     <?php
 
@@ -400,14 +335,14 @@ if (isset($_SESSION['filtro_contrato'])) {
 
                             </form>
                         </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
+                        <th class="col-1"></th>
                     </tr>
                 </thead>
 
@@ -418,6 +353,12 @@ if (isset($_SESSION['filtro_contrato'])) {
         </div>
 
     </div>
+
+    <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+    <!-- script para menu de filtros -->
+    <script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
 
     <script>
         var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
@@ -563,11 +504,10 @@ if (isset($_SESSION['filtro_contrato'])) {
             }
         });
 
-        $('.btnAbre').click(function() {
-            $('.menuFiltros').toggleClass('mostra');
-            $('.diviFrame').toggleClass('mostra');
-        });
     </script>
+
+    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
+
 </body>
 
 </html>

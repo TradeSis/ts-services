@@ -1,4 +1,5 @@
 <?php
+// Lucas 13102023 novo padrao
 // Lucas 20022023 adicionado o campo de Valor Contrato, linhas: 91 até 94;
 // Lucas 10022023 Melhorado estrutura do script
 // Lucas 01022023 - Acrescentado campos no form dataPrevisao e dataEntrega, e ajustado layout das colunas do form
@@ -8,7 +9,7 @@
 // Lucas 01022023 18:22
 
 
-include '../head.php';
+include '../header.php';
 include '../database/contratoStatus.php';
 include_once(ROOT . '/cadastros/database/clientes.php');
 include '../database/contratotipos.php';
@@ -18,22 +19,42 @@ $clientes = buscaClientes();
 
 $urlContratoTipo = $_GET["tipo"];
 $contratoTipo = buscaContratoTipos($urlContratoTipo);
-
 ?>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    
+    <?php include_once ROOT. "/vendor/head_css.php";?>
+
+</head>
 
 
-<body class="bg-transparent">
 
-    <div class="container formContainer">
-        <!-- <div class="card shadow pb-4"> -->
+<body>
 
-        <div class="col-sm mt-4" style="text-align:right">
-            <a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+    <div class="container-fluid">
+
+    <div class="row">
+            <BR> <!-- MENSAGENS/ALERTAS -->
         </div>
-        <div class="col-sm">
-            <spam class="col titulo">Inserir <?php echo $contratoTipo['nomeContrato'] ?></spam>
+        <div class="row">
+            <BR> <!-- BOTOES AUXILIARES -->
         </div>
-        <div class="container" style="margin-top: 10px">
+        <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
+            <div class="col-3">
+                <!-- TITULO -->
+                <h2 class="ts-tituloPrincipal">Inserir <?php echo $contratoTipo['nomeContrato'] ?></h2>
+            </div>
+            <div class="col-7">
+                <!-- FILTROS -->
+            </div>
+
+            <div class="col-2 text-end">
+                <a href="index.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-primary"><i
+                        class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+            </div>
+        </div>
+
 
             <form action="../database/contratos.php?operacao=inserir" method="post">
                 <div class="row gy-4">
@@ -43,7 +64,7 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
                         <label class='control-label' for='inputNormal' style="margin-top: 4px;">Titulo</label>
                         <div class="for-group">
                             <input type="text" class="form-control" name="tituloContrato" required>
-                            <input type="text" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" style="display: none">
+                            <input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>">
                         </div>
                     </div>
 
@@ -102,16 +123,17 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
                         <input type="number" class="form-control" name="valorContrato" autocomplete="off">
                     </div>
                     <div class="col-md-12 mt-4">
-                        <div style="text-align:right">
+                        <div class="text-end mt-4">
                             <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
                         </div>
                     </div>
             </form>
-        </div>
-        <!-- </div> -->
+       
     </div>
 
+<!-- LOCAL PARA COLOCAR OS JS -->
 
+<?php include_once ROOT. "/vendor/footer_js.php";?>
 
     <script>
         var quill = new Quill('.quill-textarea', {
@@ -172,6 +194,8 @@ quill.on('text-change', function(delta, oldDelta, source) {
     $('#detail').val(quill.container.firstChild.innerHTML);
 });
     </script>
+
+     <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 </body>
 
 </html>

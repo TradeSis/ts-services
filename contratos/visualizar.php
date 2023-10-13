@@ -1,6 +1,6 @@
 <?php
-
-include_once '../head.php';
+// Lucas 13102023 novo padrao
+include_once '../header.php';
 include_once '../database/contratos.php';
 include '../database/contratotipos.php';
 
@@ -95,18 +95,31 @@ $ocorrencias = buscaTipoOcorrencia();
     }
 </style>
 
-<body class="bg-transparent">
+<body>
     <div class="container-fluid">
+
+    <div class="row">
+            <BR> <!-- MENSAGENS/ALERTAS -->
+        </div>
         <div class="row">
-            <div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
-                <span class="titulo">
-                    <?php echo $contrato['idContrato'] ?> - <?php echo $contrato['tituloContrato'] ?>
-                </span>
+            <BR> <!-- BOTOES AUXILIARES -->
+        </div>
+        <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
+            <div class="col-3">
+                <!-- TITULO -->
+                <h2 class="ts-tituloPrincipal"><?php echo $contrato['idContrato'] ?> - 
+                <?php echo $contrato['tituloContrato'] ?></h2>
             </div>
-            <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-                <a href="javascript:history.back()" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
+            <div class="col-7">
+                <!-- FILTROS -->
+            </div>
+
+            <div class="col-2 text-end">
+            <a href="javascript:history.back()" role="button" class="btn btn-primary">
+                <i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
+
         <div id="tabs">
             <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
             <div class="tab" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>

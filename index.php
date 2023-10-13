@@ -32,7 +32,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
         <div class="container-fluid">
 
             <div class="row ">
-                <div class="col-lg-10 d-none d-md-none d-lg-block pr-0 pl-0 ts-bgAplicativos">
+                <div class="col-lg-10 d-none d-md-none d-lg-block pr-0 pl-0 fundoAbas">
                     <ul class="nav a" id="myTabs">
 
                         <?php
@@ -104,14 +104,14 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                     </ul>
                 </div>
                 <!--Essa coluna só vai aparecer em dispositivo mobile-->
-                <div class="col-7 col-md-9 d-md-block d-lg-none ts-bgAplicativos">
+                <div class="col-7 col-md-9 d-md-block d-lg-none" style="background-color: #13216A;">
                     <!--atraves do GET testa o valor para selecionar um option no select-->
                     <?php if (isset($_GET['tab'])) {
                         $getTab = $_GET['tab'];
                     } else {
                         $getTab = '';
                     } ?>
-                    <select class="form-select mt-2 selectSubMenuAplicativos" id="subtabServices">
+                    <select class="form-select mt-2" id="subtabServices" style="color:#000; width:160px;text-align:center; ">
                         <option value="<?php echo URLROOT ?>/services/?tab=dashboard" 
                         <?php if ($getTab == "dashboard") {echo " selected ";} ?>>Dashboard</option>
 

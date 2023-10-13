@@ -337,7 +337,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                                     <label class='control-label' for='inputNormal'>Reponsável</label>
                                     <div class="form-group" style="margin-top: 20px;">
                                         <select class="form-control" name="idAtendente" id="newidAtendente">
-                                            <option value="null">Selecione</option>
+                                            <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
                                             <?php
                                             foreach ($atendentes as $atendente) {
                                                 ?>

@@ -209,13 +209,15 @@
     });
     function limpar() {
       buscar(null, null, null, null, null, null, null, null, null, null, function () {
-        window.location.reload();
+      //gabriel 13102023 id 596 fix atualizar pagina correta
+      refreshTab('execucao');
       });
     }
     function limparPeriodo() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function () {
-        window.location.reload();
+      //gabriel 13102023 id 596 fix atualizar pagina correta
+      refreshTab('execucao');
       });
     }
     //Gabriel 06102023 ID 596 movido function do ajax para ser utilizado fora dele
@@ -365,7 +367,8 @@
               linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
             }
             if (vhoraInicioReal != "00:00" && vhoraFinalReal != "00:00") {
-              linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1' data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>";
+              //gabriel 13102023 id 596 identificação botão clonar novo
+              linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1' data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
             }
             linha += "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
 

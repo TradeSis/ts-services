@@ -166,14 +166,15 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 <body class="bg-transparent">
     <div class="container-fluid">
         <div id="tabs">
-            <div class="tab whiteborder" id="tab-execucao">Execução</div>
-            <div class="tab" id="tab-agenda">Agenda</div>
+            <!-- gabriel 13102023 id 596 fix menu ao contrario -->
+            <div class="tab whiteborder" id="tab-agenda">Agenda</div>
+            <div class="tab" id="tab-execucao">Execução</div>
             <div class="line"></div>
             <div class="tabContent">
-                <?php include_once 'tarefas.php'; ?>
+                <?php include_once 'agenda.php'; ?>
             </div>
             <div class="tabContent">
-                <?php include_once 'agenda.php'; ?>
+                <?php include_once 'tarefas.php'; ?>
             </div>
         </div>
     </div>
@@ -257,7 +258,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post">
+                    <!-- gabriel 13102023 id 596 adicionado id -->
+                    <form method="post" id="stopForm">
                         <div class="container-fluid p-0">
                             <div class="col">
                                 <span class="tituloEditor">Comentários</span>
@@ -281,12 +283,11 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 </div>
                 <div class="modal-footer">
                     <div class="col align-self-start pl-0">
-                        <button type="submit" formaction="../database/demanda.php?operacao=realizado"
-                            class="btn btn-warning float-left">Entregar</button>
+                        <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
+                        <button type="submit" id="realizadoFormbutton" class="btn btn-warning float-left">Entregar</button>
                     </div>
-                    <button type="submit" formaction="../database/tarefas.php?operacao=stop"
-                        class="btn btn-danger">Stop</button>
-
+                        <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
+                        <button type="submit" id="stopFormbutton" class="btn btn-danger">Stop</button>
                     </form>
                 </div>
             </div>
@@ -369,7 +370,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                                 <div class="form-group">
                                     <label class="labelForm">Data Previsão</label>
                                     <input type="date" class="data select form-control" name="Previsto"
-                                        autocomplete="off" >
+                                        autocomplete="off" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -419,7 +420,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 },
                 success: function (msg) {
                     if (msg.retorno == "ok") {
-                        window.location.reload();
+                        //gabriel 13102023 id 596 fix atualizar pagina correta
+                        refreshTab('execucao');
                     }
                 }
             });
@@ -440,7 +442,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 },
                 success: function (msg) {
                     if (msg.retorno == "ok") {
-                        window.location.reload();
+                        //gabriel 13102023 id 596 fix atualizar pagina correta
+                        refreshTab('execucao');
                     }
                 }
             });
@@ -461,7 +464,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 },
                 success: function (msg) {
                     if (msg.retorno == "ok") {
-                        window.location.reload();
+                        //gabriel 13102023 id 596 fix atualizar pagina correta
+                        refreshTab('execucao');
                     }
                 }
             });
@@ -483,7 +487,10 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: refreshPage,
+                    //gabriel 13102023 id 596 fix atualizar pagina correta
+                    success: function (msg) {
+                        refreshTab('execucao');
+                    }
                 });
             });
 
@@ -522,12 +529,38 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: refreshPage
+                    //gabriel 13102023 id 596 fix atualizar pagina correta
+                    success: function (msg) {
+                        refreshTab('execucao');
+                    }
                 });
             });
-            function refreshPage() {
-                window.location.reload();
-            }
+
+            //gabriel 13102023 id 596 submit stopForm para evitar redirecionamento para demanda
+            $("#stopForm").submit(function (event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                for (var pair of formData.entries()) {
+                    console.log(pair[0] + ', ' + pair[1]);
+                }
+                var vurl;
+                if ($("#realizadoFormbutton").is(":focus")) {
+                    vurl = "../database/demanda.php?operacao=realizado";
+                } 
+                if ($("#stopFormbutton").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=stop";
+                } 
+                $.ajax({
+                    url: vurl,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (msg) {
+                        refreshTab('execucao');
+                    }
+                });
+            });
         });
 
 
@@ -559,7 +592,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
             var urlParams = new URLSearchParams(window.location.search);
             var id = urlParams.get('id');
-            if (id === 'agenda') {
+            //gabriel 13102023 id 596 fix menu ao contrario
+            if (id === 'execucao') {
                 showTabsContent(1);
             }
         }
@@ -641,7 +675,6 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         });
 
         function refreshPage(tab, idDemanda) {
-            window.location.reload();
             var url = window.location.href.split('?')[0];
             var newUrl = url + '?id=' + tab + '&&idDemanda=' + idDemanda;
             window.location.href = newUrl;

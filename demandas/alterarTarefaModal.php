@@ -167,7 +167,9 @@
                                 class="bi bi-play-circle"></i> Start</button>
                         <button type="submit" id="realizadoButtonModal" class="btn btn-info"><i
                                 class="bi bi-check-circle"></i> Realizado</button>
-                        <button type="submit" id="clonarButtonModal" class="btn btn-success">Clonar</button>
+                        <!-- gabriel 13102023 id 596 identificação botão clonar  -->
+                        <button type="submit" id="clonarButtonModal" class="btn btn-success"><i
+                                class="bi bi-back"></i> Clonar</button>
                         <button type="submit" id="atualizarButtonModal" class="btn btn-warning"><i
                                 class='bi bi-pencil-square'></i> Atualizar</button>
                     </div>
@@ -309,6 +311,12 @@
     $(document).on('click', 'td[data-target="#alterarmodal"]', function () {
         var idTarefa = $(this).attr("data-idtarefa");
         BuscarAlterar(idTarefa);
+    });
+    //gabriel 13102023 id 596 sempre abrir pagina 1 do modal 
+    $(document).ready(function () {
+        $('#alterarmodal').on('shown.bs.modal', function () {
+            $('#basic-tab').tab('show');
+        });
     });
 </script>
 

@@ -243,6 +243,9 @@
             window.location.href = newUrl;
         }
 
+    </script>
+    <script>
+        //Gabriel 13102023 ID 596 script reposicionado para evitar conflito
         $(document).ready(function () {
 
             //Gabriel 11102023 ID 596 alterado para atualizar os filtros da mesma forma que a table tarefas

@@ -1,18 +1,37 @@
 <?php
+//Lucas 13102023 novo padrao
 // helio 26012023 16:16
-
-include_once('../head.php');
+include_once('../header.php');
 ?>
+<!doctype html>
+<html lang="pt-BR">
 
-<body class="bg-transparent">
+<head>
 
-    <div class="container p-4" style="margin-top:30px">
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
 
         <div class="row">
-            <div class="col-sm-8">
+            <BR> <!-- MENSAGENS/ALERTAS -->
+        </div>
+        <div class="row">
+            <BR> <!-- BOTOES AUXILIARES -->
+        </div>
+        <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
+            <div class="col-3">
+                <!-- TITULO -->
                 <h2 class="tituloTabela">Contrato Status</h2>
             </div>
-            <div class="col-sm-4" style="text-align:right">
+            <div class="col-7">
+                <!-- FILTROS -->
+            </div>
+
+            <div class="col-2 text-end">
                 <a href="../configuracao/?tab=configuracao&stab=contratoStatus" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
@@ -20,7 +39,7 @@ include_once('../head.php');
         <form class="mb-4" action="../database/contratoStatus.php?operacao=inserir" method="post">
             <div class="row">
                 <div class="col-md-8 form-group">
-                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">nome do Status</label>
+                    <label class='control-label' for='inputNormal'>nome do Status</label>
                     <div class="for-group">
                         <input type="text" name="nomeContratoStatus" class="form-control" autocomplete="off">
                     </div>
@@ -35,12 +54,17 @@ include_once('../head.php');
                 </div>
             </div>
 
-            <div style="text-align:right;margin-top:20px">
+            <div class="text-end mt-4">
                 <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Cadastrar</button>
             </div>
         </form>
     </div>
 
+    <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

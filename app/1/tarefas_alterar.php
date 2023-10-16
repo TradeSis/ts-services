@@ -45,6 +45,7 @@ if (isset($jsonEntrada['idTarefa'])) {
     $idDemandaSelect = $jsonEntrada['idDemandaSelect'];
     $tituloTarefa = $jsonEntrada['tituloTarefa'];
 
+    $idCliente = isset($jsonEntrada['idCliente']) && $jsonEntrada['idCliente'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idCliente']) : "NULL";
     $idAtendente = isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendente']) : "NULL";
     $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
     $idTipoOcorrencia = isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idTipoOcorrencia']) : "NULL";
@@ -57,11 +58,15 @@ if (isset($jsonEntrada['idTarefa'])) {
     $horaInicioPrevisto = isset($jsonEntrada['horaInicioPrevisto']) && $jsonEntrada['horaInicioPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioPrevisto']) . "'" : "NULL";
     $horaFinalPrevisto = isset($jsonEntrada['horaFinalPrevisto']) && $jsonEntrada['horaFinalPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalPrevisto']) . "'" : "NULL";
 
-    //Gabriel 11102023 ID 596 adicionado idAtendenteSelect e descricao
+    //Gabriel 11102023 ID 596 adicionado idAtendenteSelect, idClienteSelect e descricao
     $idAtendenteSelect = isset($jsonEntrada['idAtendenteSelect']) && $jsonEntrada['idAtendenteSelect'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendenteSelect']) : "NULL";
+    $idClienteSelect = isset($jsonEntrada['idClienteSelect']) && $jsonEntrada['idClienteSelect'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idClienteSelect']) : "NULL";
     $descricao = isset($jsonEntrada['descricao']) && $jsonEntrada['descricao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['descricao']) . "'" : "NULL";
     if ($idAtendenteSelect !== null){
         $idAtendente = $idAtendenteSelect;
+    }
+    if ($idClienteSelect !== null){
+        $idCliente = $idClienteSelect;
     }
     
     if ($idDemandaSelect !== null) {
@@ -78,7 +83,7 @@ if (isset($jsonEntrada['idTarefa'])) {
     WHERE `idTarefa` = $idTarefa";
     } else {
         $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `idTipoOcorrencia`=$idTipoOcorrencia, `idAtendente`=$idAtendente, `horaCobrado`=$horaCobrado,
-        `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal,
+        `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal, `idCliente`=$idCliente,
         `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao 
         WHERE `idTarefa` = $idTarefa";
     }

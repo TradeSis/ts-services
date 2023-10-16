@@ -257,6 +257,9 @@ if (isset($_GET['operacao'])) {
             //Gabriel 11102023 ID 596 adicionado Descriçao e idAtendenteSelect
             'descricao' => $_POST['descricao'],
             'idAtendenteSelect' => $_POST['idAtendenteSelect'],
+            //Gabriel 11102023 ID 596 adicionado idClienteSelect
+            'idCliente' => $_POST['idCliente'],
+            'idClienteSelect' => $_POST['idClienteSelect'],
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
             'horaCobrado' => $_POST['horaCobrado'],

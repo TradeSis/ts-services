@@ -252,6 +252,9 @@
     var mm = String(vdata.getMinutes()).padStart(2, '0');
     var time = hh + ':' + mm;
 
+    //Gabriel 16102023 id596 variavel dia/hora 
+    var todayTime = today + " " + time;
+
     function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
       //Gabriel 11102023 ID 596 utiliza valores do buscar para gravar no h6 da tabela filtros status e periodo
       var h6Element = $(".col-sm-3 h6");
@@ -312,6 +315,8 @@
             var vhoraInicioPrevisto = formatTime(object.horaInicioPrevisto);
             var vhoraFinalPrevisto = formatTime(object.horaFinalPrevisto);
             var vhorasPrevisto = formatTime(object.horasPrevisto);
+            //Gabriel 16102023 id596 variavel dia/hora previsto
+            var dataHoraPrev = vPrevisto + " " + vhoraInicioPrevisto;
 
             var vdataReal = formatDate(object.dataReal);
             var vhoraInicioReal = formatTime(object.horaInicioReal);
@@ -332,7 +337,8 @@
             linha += "<td>" + object.nomeUsuario + "</td>";
             linha += "<td>" + object.nomeCliente + "</td>";
             linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            if (vPrevisto < today && vdataReal == "00/00/0000" && vPrevisto != "00/00/0000") {
+            //Gabriel 16102023 id596 ajustado if
+            if (dataHoraPrev < todayTime && vdataReal == "00/00/0000" && vPrevisto != "00/00/0000") {
               linha += "<td style='background:firebrick'>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
             } else {
               linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
@@ -366,10 +372,7 @@
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
               linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
             }
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal != "00:00") {
-              //gabriel 13102023 id 596 identificação botão clonar novo
-              linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1' data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
-            }
+            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1' data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
             linha += "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
 
             linha += "</td>";

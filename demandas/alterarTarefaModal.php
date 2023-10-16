@@ -27,11 +27,11 @@
                         <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-4" style="margin-top: 10px;">
+                                    <div class="col-md-4" style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="labelForm">Tarefa</label>
                                             <input type="text" class="data select form-control" id="titulo"
-                                                name="tituloTarefa" autocomplete="off">
+                                                name="tituloTarefa" autocomplete="off" style="margin-top: 18px;">
                                         </div>
                                     </div>
                                     <div class="col-md-4" style="margin-top: -10px;">
@@ -57,8 +57,18 @@
                                     <div class="col-md-4" style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="labelForm">Cliente</label>
-                                            <input type="text" class="data select form-control" id="nomeCliente"
-                                                style="margin-top: 18px;" autocomplete="off" readonly>
+                                            <input type="hidden" class="data select form-control" id="idCliente">
+                                            <input type="text" style="margin-top: 18px;" class="data select form-control" id="nomeCliente"
+                                                readonly>
+                                            <select class="form-control" name="idClienteSelect" id="idClienteSelect">
+                                                <?php
+                                                foreach ($clientes as $cliente) {
+                                                    ?>
+                                                <option value="<?php echo $cliente['idCliente'] ?>">
+                                                    <?php echo $cliente['nomeCliente'] ?>
+                                                </option>
+                                                <?php } ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4" style="margin-top: -15px;">
@@ -167,9 +177,6 @@
                                 class="bi bi-play-circle"></i> Start</button>
                         <button type="submit" id="realizadoButtonModal" class="btn btn-info"><i
                                 class="bi bi-check-circle"></i> Realizado</button>
-                        <!-- gabriel 13102023 id 596 identificação botão clonar  -->
-                        <button type="submit" id="clonarButtonModal" class="btn btn-success"><i
-                                class="bi bi-back"></i> Clonar</button>
                         <button type="submit" id="atualizarButtonModal" class="btn btn-warning"><i
                                 class='bi bi-pencil-square'></i> Atualizar</button>
                     </div>
@@ -239,6 +246,7 @@
                 $('#idTarefa').val(data.idTarefa);
                 $('#titulo').val(data.tituloTarefa);
                 $('#idCliente').val(data.idCliente);
+                $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
                 $('#idDemanda').val(data.idDemanda);
                 $('#idDemandaSelect').val(data.idDemanda);
@@ -265,6 +273,13 @@
                 } else {
                     $('#visualizarDemandaButton').hide();
                 }
+                if (data.idDemanda !== null) {
+                    $('#idClienteSelect').hide();
+                    $('#nomeCliente').show();
+                } else {
+                    $('#idClienteSelect').show();
+                    $('#nomeCliente').hide();
+                }
                 if (data.Previsto !== null || data.dataReal !== null) {
                     $('#idAtendenteSelect').hide();
                     $('#nomeUsuario').show();
@@ -283,19 +298,16 @@
                     $('#startButtonModal').hide();
                     $('#realizadoButtonModal').hide();
                     $('#stopButtonModal').show();
-                    $('#clonarButtonModal').hide();
                 } 
                 if (data.horaInicioReal == null) {
                     $('#startButtonModal').show();
                     $('#realizadoButtonModal').show();
                     $('#stopButtonModal').hide();
-                    $('#clonarButtonModal').hide();
                 } 
                 if (data.horaInicioReal !== null && data.horaFinalReal !== null) {
                     $('#startButtonModal').hide();
                     $('#realizadoButtonModal').hide();
                     $('#stopButtonModal').hide();
-                    $('#clonarButtonModal').show();
                 } 
 
                 $('#alterarmodal').modal('show');

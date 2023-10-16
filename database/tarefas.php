@@ -1,4 +1,5 @@
 <?php
+//Gabriel 06102023 ID 596 mudanças em agenda e tarefas
 //lucas 25092023 ID 358 Demandas/Comentarios
 //lucas 22092023 ID 358 Demandas/Comentarios 
 // helio 21032023 - compatibilidade chamada chamaApi
@@ -253,6 +254,12 @@ if (isset($_GET['operacao'])) {
             'idDemanda' => $_POST['idDemanda'],
             'idDemandaSelect' => $_POST['idDemandaSelect'],
             'idAtendente' => $_POST['idAtendente'],
+            //Gabriel 11102023 ID 596 adicionado Descriçao e idAtendenteSelect
+            'descricao' => $_POST['descricao'],
+            'idAtendenteSelect' => $_POST['idAtendenteSelect'],
+            //Gabriel 11102023 ID 596 adicionado idClienteSelect
+            'idCliente' => $_POST['idCliente'],
+            'idClienteSelect' => $_POST['idClienteSelect'],
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
             'horaCobrado' => $_POST['horaCobrado'],
@@ -339,8 +346,7 @@ if (isset($_GET['operacao'])) {
         );
         
         $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
-        //lucas 22092023 ID 358 Adicionado header
-        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        //Gabriel 06102023 ID 596 removido header (bug refresh)
         echo json_encode($tarefas);
         return $tarefas;
     }
@@ -451,6 +457,7 @@ if (isset($_GET['operacao'])) {
 
         $_SESSION['filtro_agenda'] = $apiEntrada;
     }
+
     //Gabriel 22092023 id542 operação ultimoTab em session
     if ($operacao == "ultimoTab") {
         $_SESSION['ultimoTab'] = $_POST['ultimoTab'];

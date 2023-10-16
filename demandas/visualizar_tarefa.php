@@ -1,4 +1,5 @@
 <?php
+//Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 include_once '../head.php';
 ?>
 
@@ -25,108 +26,7 @@ include_once '../head.php';
                 </thead>
                 <tbody class="fonteCorpo">
                     <?php
-                    if (isset($tarefas['idTarefa'])) { ?>
-                        <tr>
-                            <td class="text-center">
-                                <?php echo $tarefas['idTarefa'] ?>
-                            </td>
-                            <td class="text-center">
-                                <?php echo $tarefas['tituloTarefa'] ?>
-                            </td>
-                            <td class="text-center">
-                                <?php echo $tarefas['nomeUsuario'] ?>
-                            </td>
-                            <td class="text-center">
-                                <?php echo $tarefas['nomeTipoOcorrencia'] ?>
-                            </td>
-                            <?php
-                            if ($tarefas['Previsto'] != null && $tarefas['Previsto'] != "0000-00-00") {
-                                $Previsto = date('d/m/Y', strtotime($tarefas['Previsto']));
-                            } else {
-                                $Previsto = "00/00/0000";
-                            }
-                            $horaInicioPrevisto = $tarefas['horaInicioPrevisto'];
-                            if ($horaInicioPrevisto != null) {
-                                $horaInicioPrevisto = date('H:i', strtotime($horaInicioPrevisto));
-                            } else {
-                                $horaInicioPrevisto = "00:00";
-                            }
-                            $horaFinalPrevisto = $tarefas['horaFinalPrevisto'];
-                            if ($horaFinalPrevisto != null) {
-                                $horaFinalPrevisto = date('H:i', strtotime($horaFinalPrevisto));
-                            } else {
-                                $horaFinalPrevisto = "00:00";
-                            } 
-                            $horasPrevisto = $tarefas['horasPrevisto'];
-                            if ($horasPrevisto != null) {
-                                $horasPrevisto = date('H:i', strtotime($tarefas['horasPrevisto']));
-                            } else {
-                                $horasPrevisto = "00:00";
-                            } ?>
-                            <td class="text-center">
-                                <?php echo $Previsto ?>
-                                <?php echo $horaInicioPrevisto ?>
-                                <?php echo $horaFinalPrevisto ?> (<?php echo $horasPrevisto?>)
-                            </td>
-                            <?php
-                            if ($tarefas['dataReal'] != null && $tarefas['dataReal'] != "0000-00-00") {
-                                $dataReal = date('d/m/Y', strtotime($tarefas['dataReal']));
-                            } else {
-                                $dataReal = "00/00/0000";
-                            }
-                            $horaInicioReal = $tarefas['horaInicioReal'];
-                            if ($horaInicioReal != null) {
-                                $horaInicioReal = date('H:i', strtotime($horaInicioReal));
-                            } else {
-                                $horaInicioReal = "00:00";
-                            }
-                            $horaFinalReal = $tarefas['horaFinalReal'];
-                            if ($horaFinalReal != null) {
-                                $horaFinalReal = date('H:i', strtotime($horaFinalReal));
-                            } else {
-                                $horaFinalReal = "00:00";
-                            } 
-                            $horasReal = $tarefas['horasReal'];
-                            if ($horasReal != null) {
-                                $horasReal = date('H:i', strtotime($tarefas['horasReal']));
-                            } else {
-                                $horasReal = "00:00";
-                            } ?>
-                            <td class="text-center">
-                                <?php echo $dataReal ?>
-                                <?php echo $horaInicioReal ?>
-                                <?php echo $horaFinalReal ?> (<?php echo $horasReal?>)
-                            </td>                            
-                            <?php
-                            $horaCobrado = $tarefas['horaCobrado'];
-                            if ($horaCobrado != null) {
-                                $horaCobrado = date('H:i', strtotime($tarefas['horaCobrado']));
-                            } else {
-                                $horaCobrado = "00:00";
-                            } ?>
-                            <td class="text-center">
-                            <?php echo $horaCobrado ?>
-                            </td>
-                            <td class="text-center">
-                                <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
-                                    <input type="button" class="stopButton btn btn-danger btn-sm" value="Stop"
-                                        data-id="<?php echo $tarefas['idTarefa'] ?>"
-                                        data-status="<?php echo $idTipoStatus ?>"
-                                        data-data-execucao="<?php echo $tarefas['horaInicioReal'] ?>"
-                                        data-demanda="<?php echo $tarefas['idDemanda'] ?>" />
-                                <?php }
-                                if ($horaInicioReal == "00:00") { ?>
-                                    <input type="button" class="startButton btn btn-success btn-sm" value="Start"
-                                        data-id="<?php echo $tarefas['idTarefa'] ?>"
-                                        data-status="<?php echo $idTipoStatus ?>"
-                                        data-demanda="<?php echo $tarefas['idDemanda'] ?>" />
-                                <?php } ?>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                data-target="#alterarmodal"
-                                data-idTarefa="<?php echo $tarefas['idTarefa'] ?>">Alterar</button>
-                            </td>
-                        </tr>
-                    <?php } else {
+                    //Gabriel 1102023 ID 596 removido table duplicado desnecessário
                         foreach ($tarefas as $tarefa) {
                             ?>
                             <tr>
@@ -252,8 +152,7 @@ include_once '../head.php';
                                     data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i></button>
                                 </td>
                             </tr>
-                        <?php }
-                    } ?>
+                        <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -382,57 +281,10 @@ include_once '../head.php';
                     }
                 });
             });
-
-            $('button[data-target="#alterarmodal"]').click(function () {
-                var idTarefa = $(this).attr("data-idTarefa");
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'json',
-                    url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-                    data: {
-                    idTarefa: idTarefa
-                    },
-                    success: function (data) {
-                        $('#idTarefa').val(data.idTarefa);
-                        $('#tituloTarefa').val(data.tituloTarefa);
-                        $('#idCliente').val(data.idCliente);
-                        $('#nomeCliente').val(data.nomeCliente);
-                        $('#idDemanda').val(data.idDemanda);
-                        $('#idDemandaSelect').val(data.idDemanda);
-                        $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
-                        $('#idAtendente').val(data.idAtendente);
-                        $('#nomeUsuario').val(data.nomeUsuario);
-                        $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
-                        $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);
-                        $('#Previsto').val(data.Previsto);
-                        $('#horaInicioPrevisto').val(data.horaInicioPrevisto);
-                        $('#horaFinalPrevisto').val(data.horaFinalPrevisto);
-                        $('#dataReal').val(data.dataReal);
-                        $('#horaInicioReal').val(data.horaInicioReal);
-                        $('#horaFinalReal').val(data.horaFinalReal);
-                        $('#horaCobrado').val(data.horaCobrado);
-
-                        if (data.idDemanda !== null) {
-                            $('#idDemandaSelect').hide();
-                            $('#tituloDemanda').show();
-                        } else {
-                            $('#idDemandaSelect').show();
-                            $('#tituloDemanda').hide();
-                        }
-
-                        $('#alterarmodal').modal('show');
-                    }
-                });
-            });
+            //Gabriel 1102023 ID 596 removido chamada de alterarModal
 
         });
-
-        function refreshPage(tab, idDemanda) {
-            window.location.reload();
-            var url = window.location.href.split('?')[0];
-            var newUrl = url + '?id=' + tab + '&&idDemanda=' + idDemanda;
-            window.location.href = newUrl;
-        }
+        //Gabriel 1102023 ID 596 refreshPage movido para visualizar.php
 
         var inserirModal = document.getElementById("inserirModal");
 

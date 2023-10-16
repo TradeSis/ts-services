@@ -437,7 +437,26 @@ if (isset($_GET['operacao'])) {
     }
 
 
-    //Gabriel 11102023 ID 596 removido filtroAgenda
+    if ($operacao == "filtroAgenda") {
+
+        $idAtendente = $_POST['idAtendente'];
+        $statusTarefa = $_POST['statusTarefa'];
+      
+        if ($idAtendente == "") {
+            $idAtendente = null;
+        }
+        if ($statusTarefa == "") {
+            $statusTarefa = null;
+        }
+
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,  
+            'statusTarefa' => $statusTarefa,
+            'idAtendente' => $idAtendente
+        );
+
+        $_SESSION['filtro_agenda'] = $apiEntrada;
+    }
 
     //Gabriel 22092023 id542 operação ultimoTab em session
     if ($operacao == "ultimoTab") {

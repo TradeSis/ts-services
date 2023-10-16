@@ -1,5 +1,4 @@
 <?php
-//Gabriel 06102023 ID 596 mudanças em agenda e tarefas
 // lucas 09102023 novo padrao
 //Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 include_once __DIR__ . "/../config.php";
@@ -58,7 +57,10 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
 
                         if ($nivelMenu >= 1) {
                         ?>
-                        <!-- Gabriel 11102023 ID 596 Removido Agenda -->
+                            <li class="nav-item mr-1">
+                                <a class="nav-link1 nav-link <?php if ($tab == "agenda") {echo " active ";} ?>" 
+                                href="?tab=agenda" role="tab">Agenda</a>
+                            </li>
 
                         <?php }
                         if ($nivelMenu >= 1) { ?>
@@ -113,7 +115,8 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         <option value="<?php echo URLROOT ?>/services/?tab=dashboard" 
                         <?php if ($getTab == "dashboard") {echo " selected ";} ?>>Dashboard</option>
 
-                        <!-- Gabriel 11102023 ID 596 Removido Agenda -->
+                        <option value="<?php echo URLROOT ?>/services/?tab=agenda" 
+                        <?php if ($getTab == "agenda") {echo " selected ";} ?>>Agenda</option>
 
                         <option value="<?php echo URLROOT ?>/services/?tab=execucao" 
                         <?php if ($getTab == "execucao") {echo " selected ";} ?>>Execução</option>
@@ -169,15 +172,17 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                 $title = "Serviços/Projetos";
             }
             if ($tab == "execucao") {
-                //Gabriel 11102023 ID 596 alterado para index (dois apps agenda/execuçao)
-                $src = "demandas/indexTarefa.php";
+                $src = "demandas/tarefas.php";
                 $title = "Serviços/Execução";
             }
             if ($tab == "dashboard") {
                 $src = "demandas/dashboard.php";
                 $title = "Serviços/Dashboard";
             }
-            //Gabriel 11102023 ID 596 Removido Agenda
+            if ($tab == "agenda") {
+                $src = "demandas/agenda.php";
+                $title = "Serviços/Agenda";
+            }
             if ($tab == "configuracao") {
                 $src = "configuracao/";
                 $title = "Serviços/Configuração";

@@ -84,7 +84,9 @@ if (isset($jsonEntrada["statusTarefa"]) && $Periodo != 0) {
 
 if (isset($jsonEntrada["tituloTarefa"])) {
   //gabriel 16102023 ajustado buscar tarefa por titulo
-  $sql = $sql . $where . " tarefa.idTarefa= " . "'" . $jsonEntrada["tituloTarefa"] . "'" . " or tarefa.tituloTarefa like " . "'%" . $jsonEntrada["tituloTarefa"] . "%'";
+  $sql = $sql . $where . " tarefa.idTarefa= " . "'" . $jsonEntrada["tituloTarefa"] . "'" 
+                       . " or tarefa.tituloTarefa like " . "'%" . $jsonEntrada["tituloTarefa"] . "%'"
+                       . " or (demanda.tituloDemanda is not null and demanda.tituloDemanda like " . "'%" . $jsonEntrada["tituloTarefa"] . "%')";
   $where = " and ";
 }
 

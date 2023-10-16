@@ -32,7 +32,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
         <div class="container-fluid">
 
             <div class="row ">
-                <div class="col-lg-10 d-none d-md-none d-lg-block pr-0 pl-0 fundoAbas">
+                <div class="col-lg-10 d-none d-md-none d-lg-block pr-0 pl-0 ts-bgAplicativos">
                     <ul class="nav a" id="myTabs">
 
                         <?php

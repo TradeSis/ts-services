@@ -192,8 +192,8 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
             }
 
             if ($src !== "") { ?>
-                <div class="container-fluid p-0 m-0" style="overflow: hidden;">
-                    <iframe class="row p-0 m-0" id="iFrameTab" style="width: 100%; height: 86vh; border:none" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
+                <div class="container-fluid p-0 m-0">
+                    <iframe class="row p-0 m-0 ts-iframe" src="<?php echo URLROOT ?>/services/<?php echo $src ?>"></iframe>
                 </div>
             <?php } ?>
 

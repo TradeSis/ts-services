@@ -1,29 +1,39 @@
 <?php
-include_once(__DIR__ . '/../head.php');
+// Lucas 13102023 novo padrao
+include_once(__DIR__ . '/../header.php');
 $idContrato = $contrato['idContrato'];
 ?>
 
 </html>
 
-<body class="bg-transparent">
+<body>
 
-    <div class="container-fluid text-center mt-4">
+    <div class="container-fluid">
 
+    <div class="row">
+            <BR> <!-- MENSAGENS/ALERTAS -->
+        </div>
         <div class="row">
-            <div class="col-sm-3 ml-2">
-                <h2 class="tituloTabela">Notas</h2>
+            <BR> <!-- BOTOES AUXILIARES -->
+        </div>
+        <div class="row align-items-center"> <!-- LINHA SUPERIOR A TABLE -->
+            <div class="col-3 text-start">
+                <!-- TITULO -->
+                <h2 class="ts-tituloPrincipal">Notas</h2>
+            </div>
+            <div class="col-7">
+                <!-- FILTROS -->
+                
             </div>
 
-            <div class="col-sm" style="text-align:right">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModalNotas"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+            <div class="col-2 text-end">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModalNotas"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
             </div>
         </div>
 
-
-        <div class="card mt-2 text-center">
-            <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-                <table class="table">
-                    <thead class="cabecalhoTabela">
+            <div class="table mt-2 ts-divTabela">
+                <table class="table table-hover table-sm align-middle">
+                    <thead class="ts-headertabelafixo">
                         <tr>
                             <th>idNotaServico</th>
                             <th>dataFaturamento</th>
@@ -44,9 +54,12 @@ $idContrato = $contrato['idContrato'];
                     </tbody>
                 </table>
             </div>
-        </div>
+       
     </div>
 
+  <!-- LOCAL PARA COLOCAR OS JS -->
+
+  <?php include_once ROOT. "/vendor/footer_js.php";?>
 
     <script>
             $.ajax({
@@ -204,6 +217,7 @@ $idContrato = $contrato['idContrato'];
         });
     </script>
 
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

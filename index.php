@@ -48,7 +48,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                             } ?>
 
                             <li class="nav-item mr-1">
-                                <a class="nav-link1 nav-link 
+                                <a class="nav-link 
                         <?php if ($tab == "dashboard") {
                                 echo " active ";
                             } ?>" href="?tab=dashboard" role="tab">Dashboard</a>
@@ -58,44 +58,44 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         if ($nivelMenu >= 1) {
                         ?>
                             <li class="nav-item mr-1">
-                                <a class="nav-link1 nav-link <?php if ($tab == "agenda") {echo " active ";} ?>" 
+                                <a class="nav-link <?php if ($tab == "agenda") {echo " active ";} ?>" 
                                 href="?tab=agenda" role="tab">Agenda</a>
                             </li>
 
                         <?php }
                         if ($nivelMenu >= 1) { ?>
                             <li class="nav-item mr-1">
-                                <a class="nav-link1 nav-link <?php if ($tab == "execucao") {echo " active ";} ?>"
+                                <a class="nav-link <?php if ($tab == "execucao") {echo " active ";} ?>"
                                 href="?tab=execucao" role="tab">Execução</a>
                             </li>
                         <?php }
                         if ($nivelMenu >= 1) { ?>
                             <li class="nav-item mr-1">
-                                <a class="nav-link1 nav-link <?php if ($tab == "demandas") {echo " active ";} ?>" 
+                                <a class="nav-link <?php if ($tab == "demandas") {echo " active ";} ?>" 
                                 href="?tab=demandas" role="tab">Demandas</a>
                             </li>
                         <?php }
                         if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
-                                <a class="nav-link1 nav-link <?php if ($tab == "contratos") {echo " active ";} ?>" 
+                                <a class="nav-link <?php if ($tab == "contratos") {echo " active ";} ?>" 
                                 href="?tab=contratos" role="tab">Contratos</a>
                             </li>
                         <?php }
                         if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
-                                <a class="nav-link1 nav-link <?php if ($tab == "projetos") {echo " active ";} ?>" 
+                                <a class="nav-link <?php if ($tab == "projetos") {echo " active ";} ?>" 
                                 href="?tab=projetos" role="tab">Projetos</a>
                             </li>
                         <?php }
                         if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
-                                <a class="nav-link1 nav-link <?php if ($tab == "os") {echo " active ";} ?>" 
+                                <a class="nav-link <?php if ($tab == "os") {echo " active ";} ?>" 
                                 href="?tab=os" role="tab">O.S.</a>
                             </li>
                         <?php }
                         if ($nivelMenu >= 4) { ?>
                             <li class="nav-item mr-1">
-                                <a class="nav-link1 nav-link <?php if ($tab == "configuracao") {echo " active ";} ?>" 
+                                <a class="nav-link <?php if ($tab == "configuracao") {echo " active ";} ?>" 
                                 href="?tab=configuracao" role="tab" data-toggle="tooltip" data-placement="top" title="Configurações"><i class="bi bi-gear"></i> Configurações</a>
                             </li>
                         <?php } ?>

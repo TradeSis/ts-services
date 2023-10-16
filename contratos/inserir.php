@@ -76,7 +76,7 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
                         <textarea style="display: none" id="detail" name="descricao"></textarea>
                     </div>
 
-                    <div class="col-md-4 form-group-select">
+                    <div class="col-md-4 form-group-select" style="margin-top: 18px;">
                         <label class="labelForm">Status</label>
                         <select class="select form-control" name="idContratoStatus">
                             <?php
@@ -97,7 +97,7 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
                         <input type="date" class="data select form-control" name="dataEntrega">
                     </div>
 
-                    <div class="col-md-3 form-group-select">
+                    <div class="col-md-3 form-group-select" style="margin-top: 18px;">
                         <label class="labelForm">Cliente</label>
                         <select class="select form-control" name="idCliente">
                             <?php
@@ -108,17 +108,17 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
                         </select>
                     </div>
 
-                    <div class="col-md-3 form-group" style="margin-top: 6px;">
+                    <div class="col-md-3 form-group mt-4">
                         <label class='control-label' for='inputNormal' style="margin-top: 2px;">Horas</label>
                         <input type="number" class="form-control" name="horas" autocomplete="off">
                     </div>
 
-                    <div class="col-md-3 form-group" style="margin-top: 6px;">
+                    <div class="col-md-3 form-group mt-4">
                         <label class='control-label' for='inputNormal' style="margin-top: 2px;">Valor Hora</label>
                         <input type="number" class="form-control" name="valorHora" autocomplete="off">
                     </div>
 
-                    <div class="col-md-3 form-group" style="margin-top: 6px;">
+                    <div class="col-md-3 form-group mt-4">
                         <label class='control-label' for='inputNormal' style="margin-top: 2px;">Valor Contrato</label>
                         <input type="number" class="form-control" name="valorContrato" autocomplete="off">
                     </div>

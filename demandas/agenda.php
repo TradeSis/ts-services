@@ -121,233 +121,111 @@ $demandas = buscaDemandasAbertas();
         </div>
     </nav>
 
-
-    <!--------- ALTERAR --------->
-    <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog"
-        aria-labelledby="alterarmodalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Alterar Tarefa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="container">
-                    <form method="post" id="alterarForm">
-                        <div class="row">
-                            <div class="col-md-4" style="margin-top: 10px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Tarefa</label>
-                                    <input type="text" class="data select form-control" id="titulo" name="tituloTarefa"
-                                        autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -10px;">
-                                <div class="form-group" id="demandaContainer">
-                                    <label class="labelForm">ID/Demanda Relacionada</label>
-                                    <input type="text" class="data select form-control" id="tituloDemanda"
-                                        style="margin-top: 18px;" autocomplete="off" readonly>
-                                    <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
-                                        <?php
-                                        foreach ($demandas as $demanda) {
-                                            ?>
-                                        <option value="<?php echo $demanda['idDemanda'] ?>">
-                                            <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                                        </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <input type="hidden" class="form-control" name="idTarefa" id="idTarefa" />
-                            <input type="hidden" class="form-control" name="idDemanda" id="idDemanda" />
-                            <div class="col-md-4" style="margin-top: -10px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Cliente</label>
-                                    <input type="text" class="data select form-control" id="nomeCliente"
-                                        style="margin-top: 18px;" autocomplete="off" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Reponsável</label>
-                                    <select class="form-control" name="idAtendente" id="idAtendente">
-                                        <?php
-                                        foreach ($atendentes as $atendente) {
-                                            ?>
-                                        <option value="<?php echo $atendente['idUsuario'] ?>">
-                                            <?php echo $atendente['nomeUsuario'] ?>
-                                        </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
-                                    <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
-                                        <?php
-                                        foreach ($ocorrencias as $ocorrencia) {
-                                            ?>
-                                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                                        </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -14px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Horas Cobrado</label>
-                                    <input type="time" class="data select form-control" id="horaCobrado"
-                                        name="horaCobrado" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -30px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" id="Previsto" name="Previsto"
-                                        autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -30px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" id="horaInicioPrevisto"
-                                        name="horaInicioPrevisto" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -30px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" id="horaFinalPrevisto"
-                                        name="horaFinalPrevisto" autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent" style="text-align:right">
-                            <button id="AtualizarButton" type="submit" class="btn btn-warning">Atualizar</button>
-                            <a id="visualizarDemandaButton" class="btn btn-primary" style="float:left">Visualizar</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<!--------- INSERIR/AGENDAR --------->
+<div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
+    aria-labelledby="inserirModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
-
-    <!--------- AGENDAR --------->
-    <div class="modal fade bd-example-modal-lg" id="agendarModal" tabindex="-1" role="dialog"
-        aria-labelledby="agendarModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agendar Tarefa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <div class="container">
+          <form method="post" id="inserirForm">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
+                <div class="for-group" style="margin-top: 22px;">
+                  <input type="text" class="form-control" name="tituloTarefa" id="newtitulo" autocomplete="off"
+                    required>
                 </div>
-                <div class="container">
-                    <form method="post" id="agendarForm">
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                                <div class="for-group" style="margin-top: 22px;">
-                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off"
-                                        required>
-                                </div>
-                                <input type="hidden" class="form-control" name="idDemanda" value="null">
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Cliente</label>
-                                    <div class="form-group" style="margin-top: 40px;">
-                                        <select class="form-control" name="idCliente">
-                                            <option value="null"></option>
-                                            <?php
-                                            foreach ($clientes as $cliente) {
-                                                ?>
-                                            <option value="<?php echo $cliente['idCliente'] ?>">
-                                                <?php echo $cliente['nomeCliente'] ?>
-                                            </option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Reponsável</label>
-                                    <select class="form-control" name="idAtendente">
-                                        <option value="<?php echo null ?>">
-                                            <?php echo "Selecione" ?>
-                                        </option>
-                                        <?php
-                                        foreach ($atendentes as $atendente) {
-                                            ?>
-                                        <option <?php
-                                        if ($atendente['idUsuario'] == $_SESSION['idUsuario']) {
-                                            echo "selected";
-                                        } ?> value="
-                                            <?php echo $atendente['idUsuario'] ?>">
-                                            <?php echo $atendente['nomeUsuario'] ?>
-                                        </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
-                                    <select class="form-control" name="idTipoOcorrencia">
-                                        <option value="<?php echo null ?>">
-                                            <?php echo "Selecione" ?>
-                                        </option>
-                                        <?php
-                                        foreach ($ocorrencias as $ocorrencia) {
-                                            ?>
-                                        <option <?php
-                                        if ($ocorrencia['ocorrenciaInicial'] == 1) {
-                                            echo "selected";
-                                        } ?>   value="
-                                            <?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                                            <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                                        </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" name="Previsto"
-                                        autocomplete="off" required>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" name="horaInicioPrevisto"
-                                        autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" name="horaFinalPrevisto"
-                                        autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" class="btn btn-success">Inserir</button>
-                        </div>
-                    </form>
+                <input type="hidden" class="form-control" name="idDemanda" value="null" id="newidDemanda">
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class='control-label' for='inputNormal'>Cliente</label>
+                  <div class="form-group" style="margin-top: 40px;">
+                    <select class="form-control" name="idCliente" id="newidCliente">
+                      <option value="null"></option>
+                      <?php
+                      foreach ($clientes as $cliente) {
+                        ?>
+                      <option value="<?php echo $cliente['idCliente'] ?>">
+                        <?php echo $cliente['nomeCliente'] ?>
+                      </option>
+                      <?php } ?>
+                    </select>
+                  </div>
                 </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class='control-label' for='inputNormal'>Reponsável</label>
+                  <div class="form-group" style="margin-top: 20px;">
+                    <select class="form-control" name="idAtendente" id="newidAtendente">
+                      <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
+                      <?php
+                      foreach ($atendentes as $atendente) {
+                        ?>
+                        <option value="<?php echo $atendente['idUsuario'] ?>">
+                          <?php echo $atendente['nomeUsuario'] ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class='control-label' for='inputNormal'>Ocorrência</label>
+                  <div class="form-group" style="margin-top: 20px;">
+                    <select class="form-control" name="idTipoOcorrencia" id="newidTipoOcorrencia">
+                      <option value="null">Selecione</option>
+                      <?php
+                      foreach ($ocorrencias as $ocorrencia) {
+                        ?>
+                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                          <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="labelForm">Data Previsão</label>
+                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="labelForm">Inicio</label>
+                  <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="labelForm">Fim</label>
+                  <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
+                </div>
+              </div>
             </div>
+            <div class="card-footer bg-transparent" style="text-align:right">
+              <button type="submit" class="btn btn-warning" id="inserirStartBtn">Start</button>
+              <button type="submit" class="btn btn-success" id="inserirBtn">Inserir</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 
-    <script type="text/javascript">
+  <?php include 'alterarTarefaModal.php'; ?>
+
+  <script type="text/javascript">
         $(document).on('click', '.fc-month-button', function () {
             gravaUltimo('month');
         });
@@ -365,19 +243,19 @@ $demandas = buscaDemandasAbertas();
         function gravaUltimo(tab) {
             $.ajax({
                 type: 'POST',
-                url: '../database/tarefas.php?operacao=ultimoTab', 
-                data: { ultimoTab: tab }, 
-                success: function(response) {
-                console.log('Session variable set successfully.');
+                url: '../database/tarefas.php?operacao=ultimoTab',
+                data: { ultimoTab: tab },
+                success: function (response) {
+                    console.log('Session variable set successfully.');
                 },
-                error: function(xhr, status, error) {
-                console.error('An error occurred:', error);
+                error: function (xhr, status, error) {
+                    console.error('An error occurred:', error);
                 }
             });
         }
 
         $(document).ready(function () {
-             //Gabriel 22092023 id542 verifica se possui $_SESSION['ultimoTab'] se não, padrão (mês)
+            //Gabriel 22092023 id542 verifica se possui $_SESSION['ultimoTab'] se não, padrão (mês)
             var vdefaultView = '<?php echo isset($_SESSION['ultimoTab']) ? $_SESSION['ultimoTab'] : 'month' ?>';
             var today = new Date();
             var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 3, 0);
@@ -420,14 +298,16 @@ $demandas = buscaDemandasAbertas();
                     filtro: {
                         text: 'Filtro',
                         click: function () {
-                            $('.menuFiltros').toggleClass('mostra');
+                            //Gabriel 06102023 ID 596 ajustado para ID ao invés de classe
+                            $('#menuFiltros').toggleClass('mostra');
                             $('.diviFrame').toggleClass('mostra');
                         }
                     },
                     novo: {
                         text: 'Novo',
                         click: function () {
-                            $('#agendarModal').modal('show');
+                            //Gabriel 11102023 ID 596 alterado para utilizar o mesmo modal de inserir
+                            $('#inserirModal').modal('show');
                         }
                     }
                 },
@@ -435,9 +315,9 @@ $demandas = buscaDemandasAbertas();
                     <?php
                     $colors = array('#FF6B6B', '#77DD77', '#6CA6CD', '#FFD700', '#FF69B4', '#00CED1');
                     // helio 26092023 - inicio teste de cores
-                    $cor_previsto   = '#77DD77';
+                    $cor_previsto = '#77DD77';
                     $cor_executando = '#FF6B6B';
-                    $cor_diatodo    = '#6CA6CD';
+                    $cor_diatodo = '#6CA6CD';
                     $colorIndex = 0;
                     foreach ($tarefas as $tarefa) {
                         $color = $colors[$colorIndex % count($colors)];
@@ -450,93 +330,55 @@ $demandas = buscaDemandasAbertas();
                         }
 
                         // substituindo dataPrevisto por Real, quando Real existir
-                        if ($tarefa['dataReal']!=null) {
+                        if ($tarefa['dataReal'] != null) {
                             $dataPrevisto = $tarefa['dataReal'];
                             $allDay = false;
                             $dtf = $tarefa['horaFinalReal'];
                             // sem realfinal, coloca sempre mais 1 hora, para melhorar visualmente
-                            if ($tarefa['horaFinalReal']==null) {
-                                $dtf   = date('H:00:00', strtotime('1 hour')); 
+                            if ($tarefa['horaFinalReal'] == null) {
+                                $dtf = date('H:00:00', strtotime('1 hour'));
                                 $color = $cor_executando; // helio 26092023 - inicio teste de cores
                             }
                             $horaInicioPrevisto = is_null($tarefa['horaInicioReal']) ? "08:00:00" : $tarefa['horaInicioReal'];
                             $horaFinalPrevisto = is_null($tarefa['horaFinalReal']) ? $dtf : $tarefa['horaFinalReal'];
                         } else {
-                            $cor = $cor_previsto ; // helio 26092023 - inicio teste de cores
-                            if ($tarefa['horaInicioPrevisto']==null) { $allDay = true;} else { $allDay = false;} // teste de allDay
+                            $cor = $cor_previsto; // helio 26092023 - inicio teste de cores
+                            if ($tarefa['horaInicioPrevisto'] == null) {
+                                $allDay = true;
+                            } else {
+                                $allDay = false;
+                            } // teste de allDay
                             $dataPrevisto = $tarefa['Previsto'];
                             $horaInicioPrevisto = is_null($tarefa['horaInicioPrevisto']) ? "08:00:00" : $tarefa['horaInicioPrevisto'];
                             $horaFinalPrevisto = is_null($tarefa['horaFinalPrevisto']) ? "19:00:00" : $tarefa['horaFinalPrevisto'];
                         }
-                        if ($allDay==true) {$color = $cor_diatodo;}
+                        if ($allDay == true) {
+                            $color = $cor_diatodo;
+                        }
                         ?>
-                    {
-                        allDay: <?php if ($allDay==true) { echo 'true';} else { echo 'false';} // teste de allDay ?> ,
-                        _id: '<?php echo $tarefa['idTarefa']; ?>',
-                        title: '<?php echo $tituloTarefa ?>',
-                        start: '<?php echo $dataPrevisto . ' ' . $horaInicioPrevisto; // uso dataPrevisto com real/previsto ?>',
-                        end: '<?php echo $dataPrevisto . ' ' . $horaFinalPrevisto; // uso dataPrevisto com real/previsto ?>',
-                        idTarefa: '<?php echo $tarefa['idTarefa']; ?>',
-                        tituloTarefa: '<?php echo $tarefa['tituloTarefa']; ?>',
-                        idCliente: '<?php echo $tarefa['idCliente']; ?>',
-                        nomeCliente: '<?php echo $tarefa['nomeCliente']; ?>',
-                        idDemanda: '<?php echo $tarefa['idDemanda']; ?>',
-                        tituloDemanda: '<?php echo $tarefa['tituloDemanda']; ?>',
-                        idAtendente: '<?php echo $tarefa['idAtendente']; ?>',
-                        nomeUsuario: '<?php echo $tarefa['nomeUsuario']; ?>',
-                        idTipoOcorrencia: '<?php echo $tarefa['idTipoOcorrencia']; ?>',
-                        nomeTipoOcorrencia: '<?php echo $tarefa['nomeTipoOcorrencia']; ?>',
-                        Previsto: '<?php echo $tarefa['Previsto']; ?>',
-                        horaInicioPrevisto: '<?php echo $tarefa['horaInicioPrevisto']; ?>',
-                        horaFinalPrevisto: '<?php echo $tarefa['horaFinalPrevisto']; ?>',
-                        horaCobrado: '<?php echo $tarefa['horaCobrado']; ?>',
-                        color: '<?php echo $color; ?>'
-                    },
+                        {
+                            allDay: <?php if ($allDay == true) {
+                                echo 'true';
+                            } else {
+                                echo 'false';
+                            } // teste de allDay ?>,
+                            _id: '<?php echo $tarefa['idTarefa']; ?>',
+                            title: '<?php echo $tituloTarefa ?>',
+                            start: '<?php echo $dataPrevisto . ' ' . $horaInicioPrevisto; // uso dataPrevisto com real/previsto ?>',
+                            end: '<?php echo $dataPrevisto . ' ' . $horaFinalPrevisto; // uso dataPrevisto com real/previsto ?>',
+                            idTarefa: '<?php echo $tarefa['idTarefa']; ?>',
+                            color: '<?php echo $color; ?>'
+                            //Gabriel 11102023 ID 596 removido dados desnecessários
+                        },
                     <?php } ?>
                 ],
                 eventRender: function (event, element) {
                     element.css('font-weight', 'bold');
                 },
                 eventClick: function (calEvent, jsEvent, view) {
-                    $('#idTarefa').val(calEvent.idTarefa);
-                    $('#titulo').val(calEvent.tituloTarefa);
-                    $('#idCliente').val(calEvent.idCliente);
-                    $('#nomeCliente').val(calEvent.nomeCliente);
-                    $('#idDemanda').val(calEvent.idDemanda);
-                    $('#idDemandaSelect').val(calEvent.idDemanda);
-                    $('#tituloDemanda').val(calEvent.idDemanda + ' - ' + calEvent.tituloDemanda);
-                    $('#idAtendente').val(calEvent.idAtendente);
-                    $('#nomeUsuario').val(calEvent.nomeUsuario);
-                    $('#idTipoOcorrencia').val(calEvent.idTipoOcorrencia);
-                    $('#nomeTipoOcorrencia').val(calEvent.nomeTipoOcorrencia);
-                    $('#Previsto').val(calEvent.Previsto);
-                    $('#horaInicioPrevisto').val(calEvent.horaInicioPrevisto);
-                    $('#horaFinalPrevisto').val(calEvent.horaFinalPrevisto);
-                    $('#dataReal').val(calEvent.dataReal);
-                    $('#horaInicioReal').val(calEvent.horaInicioReal);
-                    $('#horaFinalReal').val(calEvent.horaFinalReal);
-                    $('#horaCobrado').val(calEvent.horaCobrado);
-
-                    if (calEvent.idDemanda !== "") {
-                        var visualizarDemandaUrl = "visualizar.php?idDemanda=" + calEvent.idDemanda;
-                        $("#visualizarDemandaButton").attr("href", "javascript:void(0);");
-                        $("#visualizarDemandaButton").attr("onclick", "loadPage('" + visualizarDemandaUrl + "')");
-                        $('#visualizarDemandaButton').show();
-                    } else {
-                        $('#visualizarDemandaButton').hide();
-                    }
-
-                    if (calEvent.idDemanda !== "") {
-                        $('#idDemandaSelect').hide();
-                        $('#tituloDemanda').show();
-                    } else {
-                        $('#idDemandaSelect').show();
-                        $('#tituloDemanda').hide();
-                    }
-
-
-
-                    $('#alterarmodal').modal('show');
+                    //Gabriel 11102023 ID 596 chama o mesmo script que preenche o alterarModal
+                    var idTarefa = calEvent.idTarefa;
+                    BuscarAlterar(idTarefa);
                 }
             });
         });
@@ -552,30 +394,32 @@ $demandas = buscaDemandasAbertas();
                 document.close();
             }
         }
+        //Gabriel 11102023 ID 596 alterado para utilizar o mesmo modal de inserir
+        var inserirModal = document.getElementById("inserirModal");
 
-        var agendarModal = document.getElementById("agendarModal");
+        var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
 
-        var agendarBtn = document.querySelector("button[data-target='#agendarModal']");
-
-        agendarBtn.onclick = function () {
-            agendarModal.style.display = "block";
+        inserirBtn.onclick = function () {
+            inserirModal.style.display = "block";
         };
 
 
         window.onclick = function (event) {
-            if (event.target == agendarModal) {
-                agendarModal.style.display = "none";
+            if (event.target == inserirModal) {
+                inserirModal.style.display = "none";
             }
         };
+
+        $('.btnAbre').click(function () {
+            //Gabriel 06102023 ID 596 ajustado para ID ao invés de classe
+            $('#menuFiltros').toggleClass('mostra');
+            $('.diviFrame').toggleClass('mostra');
+        });
 
         function refreshPage() {
             window.location.reload();
         }
 
-        $('.btnAbre').click(function () {
-            $('.menuFiltros').toggleClass('mostra');
-            $('.diviFrame').toggleClass('mostra');
-        });
     </script>
 
     <script>
@@ -620,37 +464,63 @@ $demandas = buscaDemandasAbertas();
         });
 
         $(document).ready(function () {
-            $("#agendarForm").submit(function () {
+            $("#inserirForm").submit(function (event) {
+                event.preventDefault();
                 var formData = new FormData(this);
+                var vurl;
+                if ($("#inserirStartBtn").prop("clicked")) {
+                    vurl = "../database/tarefas.php?operacao=inserirStart";
+                } else {
+                    vurl = "../database/tarefas.php?operacao=inserir";
+                }
                 $.ajax({
-                    url: "../database/tarefas.php?operacao=inserir",
+                    url: vurl,
                     type: 'POST',
-                    dataType: "json",
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function (msg) {
-                        if (msg.retorno == "ok") {
-                            window.location.reload();
-                        }
-                    }
+                    //gabriel 13102023 id 596 fix atualizar pagina correta
+                    success: refreshPage
                 });
             });
 
-            $("#alterarForm").submit(function () {
+            $("#inserirStartBtn").click(function () {
+                $("#inserirBtn").prop("clicked", false);
+                $(this).prop("clicked", true);
+            });
+
+            $("#inserirBtn").click(function () {
+                $("#inserirStartBtn").prop("clicked", false);
+                $(this).prop("clicked", true);
+            });
+
+            $("#alterarForm").submit(function (event) {
+                event.preventDefault();
                 var formData = new FormData(this);
+                for (var pair of formData.entries()) {
+                    console.log(pair[0] + ', ' + pair[1]);
+                }
+                var vurl;
+                if ($("#stopButtonModal").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=stop";
+                }
+                if ($("#startButtonModal").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=start";
+                }
+                if ($("#realizadoButtonModal").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=realizado";
+                }
+                if ($("#atualizarButtonModal").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=alterar";
+                }
                 $.ajax({
-                    url: "../database/tarefas.php?operacao=alterar",
+                    url: vurl,
                     type: 'POST',
-                    dataType: "json",
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function (msg) {
-                        if (msg.retorno == "ok") {
-                            window.location.reload();
-                        }
-                    }
+                    success: refreshPage
+
                 });
             });
             function refreshPage() {

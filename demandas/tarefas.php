@@ -1,4 +1,5 @@
 <?php
+//Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
 //lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 // gabriel 04082023
@@ -66,12 +67,33 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 </html>
 
+<style>
+  .nav-link {
+        display: inline-block;
+        padding: 5px 10px;
+        cursor: pointer;
+        position: relative;
+        z-index: 5;
+        border-radius: 3px 3px 0 0;
+        background-color: #567381;
+        color: #EEEEEE;
+    }
+    .nav-link .active {
+        border: 1px solid #707070;
+        border-bottom: 1px solid #fff;
+        border-radius: 3px 3px 0 0;
+        background-color: #EEEEEE;
+        color: #567381;
+    }
+</style>
+
 <body class="bg-transparent">
 
-  <nav id="menuFiltros" class="menuFiltros" style="width: 170px;margin-top:-90px;margin-left:11px">
+  <nav id="menuFiltros" class="menuFiltros" style="width: 163px;margin-top:-58px;margin-left:40px">
     <div class="titulo"><span>Filtrar por:</span></div>
     <ul>
-      <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+      <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
+      <li class="ls-label col-sm-12 mr-1" style="list-style-type: none;"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post" style="text-align: right;">
           <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
             style="font-size: 14px; width: 150px; height: 35px">
@@ -95,7 +117,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   </nav>
 
 
-  <div class="container-fluid text-center mt-4">
+  <div class="container-fluid text-center mt-2">
 
     <div class="row">
       <div class="btnAbre" style="height:33px">
@@ -108,45 +130,11 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
       <div class="col-sm-3 ml-2">
         <h2 class="tituloTabela">Tarefas</h2>
-        <h6 style="font-size: 10px;font-style:italic;text-align:left;">
-          <?php
-          $var = [];
-
-          if ($statusTarefa != null) {
-            $varStatus = ($statusTarefa == 1) ? "Aberto" : "Realizado";
-            $var[] = "Status = $varStatus";
-          }
-
-          if ($Periodo != null) {
-            $varPeriodo = ($Periodo == 1) ? "Previsão" : "Realizado";
-            $var[] = "Periodo = $varPeriodo";
-            if ($PeriodoInicio != null) {
-              $varPeriodoInicio = date('d/m/Y', strtotime($PeriodoInicio));
-              $var[] = "De $varPeriodoInicio";
-
-              if ($PeriodoFim != null) {
-                $varPeriodoFimFormatted = date('d/m/Y', strtotime($PeriodoFim));
-                $var[] = "Até $varPeriodoFimFormatted";
-              }
-            }
-          }
-
-          echo implode(" - ", $var);
-          ?>
-        </h6>
+        <!-- Gabriel 11102023 ID 596 removido, h6 agora preenche via script -->
+        <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
       </div>
 
-      <!-- <div class="col-sm-4" style="margin-top:-10px;">
-        <div class="input-group">
-          <input type="text" class="form-control" id="tituloTarefa" placeholder="Buscar por...">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
-                class="material-symbols-outlined">search</span>
-            </button>
-          </span>
-        </div>
-      </div> -->
+      <!-- Gabriel 06102023 ID 596 removido buscar duplicado -->
       <div class="col-sm-4">
         <div class="input-group">
           <input type="text" class="form-control" id="buscaTarefa" placeholder="Buscar por id ou titulo">
@@ -298,8 +286,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   </div>
 
 
-  <!--------- FILTRO PERIODO --------->
-  <div class="modal fade bd-example-modal-lg" id="periodoModal" tabindex="-1" role="dialog"
+<!--------- FILTRO PERIODO --------->
+<div class="modal fade bd-example-modal-lg" id="periodoModal" tabindex="-1" role="dialog"
     aria-labelledby="periodoModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -361,7 +349,54 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     </div>
   </div>
 
-  <!--------- INSERIR/NOVA --------->
+
+  <!--------- MODAL STOP Tab EXECUCAO --------->
+  <div class="modal fade bd-example-modal-lg" id="stopexecucaomodal" tabindex="-1" role="dialog"
+    aria-labelledby="stopexecucaomodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- gabriel 13102023 id 596 adicionado id -->
+          <form method="post" id="stopForm">
+            <div class="container-fluid p-0">
+              <div class="col">
+                <span class="tituloEditor">Comentários</span>
+              </div>
+              <div class="quill-stop" style="height:20vh !important"></div>
+              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
+            </div>
+            <div class="col-md form-group" style="margin-top: 5px;">
+              <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>"
+                readonly>
+              <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>"
+                readonly>
+              <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
+              <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
+              <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
+              <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2"
+                readonly style="display: none;" />
+
+            </div>
+        </div>
+        <div class="modal-footer">
+          <div class="col align-self-start pl-0">
+            <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
+            <button type="submit" id="realizadoFormbutton" class="btn btn-warning float-left">Entregar</button>
+          </div>
+          <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
+          <button type="submit" id="stopFormbutton" class="btn btn-danger">Stop</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--------- INSERIR/AGENDAR --------->
   <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
     aria-labelledby="inserirModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -377,16 +412,17 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             <div class="row">
               <div class="col-md-6 form-group">
                 <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                <div class="form-group" style="margin-top: 22px;">
-                  <input type="text" class="form-control" name="tituloTarefa" autocomplete="off" required>
+                <div class="for-group" style="margin-top: 22px;">
+                  <input type="text" class="form-control" name="tituloTarefa" id="newtitulo" autocomplete="off"
+                    required>
                 </div>
-                <input type="hidden" class="form-control" name="idDemanda" value="null">
+                <input type="hidden" class="form-control" name="idDemanda" value="null" id="newidDemanda">
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label class='control-label' for='inputNormal'>Cliente</label>
                   <div class="form-group" style="margin-top: 40px;">
-                    <select class="form-control" name="idCliente">
+                    <select class="form-control" name="idCliente" id="newidCliente">
                       <option value="null"></option>
                       <?php
                       foreach ($clientes as $cliente) {
@@ -399,58 +435,53 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="form-group">
                   <label class='control-label' for='inputNormal'>Reponsável</label>
-                  <select class="form-control" name="idAtendente">
-                    <?php
-                    foreach ($atendentes as $atendente) {
-                      ?>
-                    <option <?php
-                    if ($atendente['idUsuario'] == $idAtendente) {
-                      echo "selected";
-                    } ?> value="
-                      <?php echo $atendente['idUsuario'] ?>">
-                      <?php echo $atendente['nomeUsuario'] ?>
-                    </option>
-                    <?php } ?>
-                  </select>
+                  <div class="form-group" style="margin-top: 20px;">
+                    <select class="form-control" name="idAtendente" id="newidAtendente">
+                      <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
+                      <?php
+                      foreach ($atendentes as $atendente) {
+                        ?>
+                        <option value="<?php echo $atendente['idUsuario'] ?>">
+                          <?php echo $atendente['nomeUsuario'] ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class='control-label' for='inputNormal'>Ocorrência</label>
+                  <div class="form-group" style="margin-top: 20px;">
+                    <select class="form-control" name="idTipoOcorrencia" id="newidTipoOcorrencia">
+                      <option value="null">Selecione</option>
+                      <?php
+                      foreach ($ocorrencias as $ocorrencia) {
+                        ?>
+                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                          <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Ocorrência</label>
-                  <select class="form-control" name="idTipoOcorrencia">
-                    <option></option>
-                    <?php
-                    foreach ($ocorrencias as $ocorrencia) {
-                      ?>
-                    <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                      <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                    </option>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -14px;">
-                <div class="form-group">
-                  <label class="labelForm">Horas Cobrado</label>
-                  <input type="time" class="data select form-control" name="horaCobrado">
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -20px;">
                 <div class="form-group">
                   <label class="labelForm">Data Previsão</label>
                   <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
                 </div>
               </div>
-              <div class="col-md-4" style="margin-top: -20px;">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label class="labelForm">Inicio</label>
                   <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
                 </div>
               </div>
-              <div class="col-md-4" style="margin-top: -20px;">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label class="labelForm">Fim</label>
                   <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
@@ -467,191 +498,40 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     </div>
   </div>
 
-  <!--------- ALTERAR --------->
-  <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog"
-    aria-labelledby="alterarmodalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Alterar Tarefa</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="container">
-          <form method="post" id="alterarForm">
-            <div class="row">
-              <div class="col-md-4" style="margin-top: 10px;">
-                <div class="form-group">
-                  <label class="labelForm">Tarefa</label>
-                  <input type="text" class="data select form-control" id="titulo" name="tituloTarefa"
-                    autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -10px;">
-                <div class="form-group" id="demandaContainer">
-                  <label class="labelForm">ID/Demanda Relacionada</label>
-                  <input type="text" class="data select form-control" id="tituloDemanda" style="margin-top: 18px;"
-                    autocomplete="off" readonly>
-                  <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
-                    <?php
-                    foreach ($demandas as $demanda) {
-                      ?>
-                    <option value="<?php echo $demanda['idDemanda'] ?>">
-                      <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                    </option>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-              <input type="hidden" class="form-control" name="idTarefa" id="idTarefa" />
-              <input type="hidden" class="form-control" name="idDemanda" id="idDemanda" />
-              <div class="col-md-4" style="margin-top: -10px;">
-                <div class="form-group">
-                  <label class="labelForm">Cliente</label>
-                  <input type="text" class="data select form-control" id="nomeCliente" style="margin-top: 18px;"
-                    autocomplete="off" readonly>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Reponsável</label>
-                  <select class="form-control" name="idAtendente" id="idAtendente">
-                    <?php
-                    foreach ($atendentes as $atendente) {
-                      ?>
-                    <option value="<?php echo $atendente['idUsuario'] ?>">
-                      <?php echo $atendente['nomeUsuario'] ?>
-                    </option>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Ocorrência</label>
-                  <select class="form-control" name="idTipoOcorrencia" id="idTipoOcorrencia">
-                    <?php
-                    foreach ($ocorrencias as $ocorrencia) {
-                      ?>
-                    <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                      <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                    </option>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -14px;">
-                <div class="form-group">
-                  <label class="labelForm">Horas Cobrado</label>
-                  <input type="time" class="data select form-control" id="horaCobrado" name="horaCobrado"
-                    autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -30px;">
-                <div class="form-group">
-                  <label class="labelForm">Data Previsão</label>
-                  <input type="date" class="data select form-control" id="Previsto" name="Previsto" autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -30px;">
-                <div class="form-group">
-                  <label class="labelForm">Inicio</label>
-                  <input type="time" class="data select form-control" id="horaInicioPrevisto" name="horaInicioPrevisto"
-                    autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -30px;">
-                <div class="form-group">
-                  <label class="labelForm">Fim</label>
-                  <input type="time" class="data select form-control" id="horaFinalPrevisto" name="horaFinalPrevisto"
-                    autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -30px;">
-                <div class="form-group">
-                  <label class="labelForm">Data Real</label>
-                  <input type="date" class="data select form-control" id="dataReal" name="dataReal" autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -30px;">
-                <div class="form-group">
-                  <label class="labelForm">Inicio</label>
-                  <input type="time" class="data select form-control" id="horaInicioReal" name="horaInicioReal"
-                    autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4" style="margin-top: -30px;">
-                <div class="form-group">
-                  <label class="labelForm">Fim</label>
-                  <input type="time" class="data select form-control" id="horaFinalReal" name="horaFinalReal"
-                    autocomplete="off">
-                </div>
-              </div>
-            </div>
-            <div class="card-footer bg-transparent" style="text-align:right">
-              <a id="visualizarDemandaButton" class="btn btn-primary" style="float:left">Visualizar</a>
-              <button type="submit" class="btn btn-warning">Atualizar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-      <!--------- MODAL STOP Tab EXECUCAO --------->
-      <div class="modal fade bd-example-modal-lg" id="stopexecucaomodal" tabindex="-1" role="dialog" aria-labelledby="stopexecucaomodalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="container-fluid p-0">
-                            <div class="col">
-                                <span class="tituloEditor">Comentários</span>
-                            </div>
-                            <div class="quill-stop" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
-                        </div>
-                        <div class="col-md form-group" style="margin-top: 5px;">
-                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-
-                            <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
-                            <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
-                            <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
-                            <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2" readonly style="display: none;" />
-                            
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="col align-self-start pl-0">
-                        <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left" >Entregar</button>
-                    </div>
-                    <button type="submit" formaction="../database/tarefas.php?operacao=stop" class="btn btn-danger">Stop</button>
-                    
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
+  <?php include 'alterarTarefaModal.php'; ?>
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     function limpar() {
       buscar(null, null, null, null, null, null, null, null, null, null, function () {
-        window.location.reload();
+      //gabriel 13102023 id 596 fix atualizar pagina correta
+      refreshTab('execucao');
       });
     }
     function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function () {
         window.location.reload();
       });
+    }
+    //Gabriel 06102023 ID 596 movido function do ajax para ser utilizado fora dele
+    function formatDate(dateString) {
+      if (dateString !== null && !isNaN(new Date(dateString))) {
+        var date = new Date(dateString);
+        var day = date.getUTCDate().toString().padStart(2, '0');
+        var month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+        var year = date.getUTCFullYear().toString().padStart(4, '0');
+        return day + "/" + month + "/" + year;
+      }
+      return "00/00/0000";
+    }
+    function formatTime(timeString) {
+      if (timeString !== null) {
+        var timeParts = timeString.split(':');
+        var hours = timeParts[0].padStart(2, '0');
+        var minutes = timeParts[1].padStart(2, '0');
+        return hours + ":" + minutes;
+      }
+      return "00:00";
     }
 
     var vdata = new Date();
@@ -665,8 +545,37 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     var mm = String(vdata.getMinutes()).padStart(2, '0');
     var time = hh + ':' + mm;
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
+    //Gabriel 16102023 id596 variavel dia/hora 
+    var todayTime = today + " " + time;
 
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
+      //Gabriel 11102023 ID 596 utiliza valores do buscar para gravar no h6 da tabela filtros status e periodo
+      var h6Element = $(".col-sm-3 h6");
+      var text = "";
+      if (statusTarefa === "1") {
+        if (text) text += ", ";
+        text += "Status = Aberto";
+      } else if (statusTarefa === "0") {
+        if (text) text += ", ";
+        text += "Status = Realizado";
+      }
+      if (Periodo === "1") {
+        if (text) text += ", ";
+        text += "Periodo = Previsão";
+      } else if (Periodo === "0") {
+        if (text) text += ", ";
+        text += "Periodo = Realizado";
+      }
+      if (PeriodoInicio !== "") {
+        if (text) text += " em ";
+        text += formatDate(PeriodoInicio);
+      }
+      if (PeriodoFim !== "") {
+        if (text) text += " até ";
+        text += formatDate(PeriodoFim);
+      }
+
+      h6Element.html(text);
       $.ajax({
         type: 'POST',
         dataType: 'html',
@@ -694,41 +603,26 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           for (var $i = 0; $i < json.length; $i++) {
             var object = json[$i];
 
-            function formatDate(dateString) {
-              if (dateString !== null && !isNaN(new Date(dateString))) {
-                var date = new Date(dateString);
-                var day = date.getUTCDate().toString().padStart(2, '0');
-                var month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-                var year = date.getUTCFullYear().toString().padStart(4, '0');
-                return day + "/" + month + "/" + year;
-              }
-              return "00/00/0000";
-            }
-
-            function formatTime(timeString) {
-              if (timeString !== null) {
-                var timeParts = timeString.split(':');
-                var hours = timeParts[0].padStart(2, '0');
-                var minutes = timeParts[1].padStart(2, '0');
-                return hours + ":" + minutes;
-              }
-              return "00:00";
-            }
 
             var vPrevisto = formatDate(object.Previsto);
             var vhoraInicioPrevisto = formatTime(object.horaInicioPrevisto);
             var vhoraFinalPrevisto = formatTime(object.horaFinalPrevisto);
             var vhorasPrevisto = formatTime(object.horasPrevisto);
+            //Gabriel 16102023 id596 ajustando if
+            var vhoraInicioPrevistoTime = vhoraInicioPrevisto.split(":");
+            var vhoraInicioPrevistoMinutes = parseInt(vhoraInicioPrevistoTime[0]) * 60 + parseInt(vhoraInicioPrevistoTime[1]);
+            var timeTime = time.split(":");
+            var timeMinutes = parseInt(timeTime[0]) * 60 + parseInt(timeTime[1]);
+           
 
             var vdataReal = formatDate(object.dataReal);
             var vhoraInicioReal = formatTime(object.horaInicioReal);
             var vhoraFinalReal = formatTime(object.horaFinalReal);
             var vhorasReal = formatTime(object.horasReal);
             var vhoraCobrado = formatTime(object.horaCobrado);
-
             linha += "<tr>";
             linha += "<td>" + object.idTarefa + "</td>";
-            linha += "<td>";
+            linha += "<td data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
 
             if (object.tituloTarefa == "") {
               linha += object.tituloDemanda;
@@ -740,7 +634,16 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             linha += "<td>" + object.nomeUsuario + "</td>";
             linha += "<td>" + object.nomeCliente + "</td>";
             linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+            //Gabriel 16102023 id596 ajustando if
+            if (
+                (vPrevisto < today || (vPrevisto === today && vhoraInicioPrevistoMinutes > 0 && vhoraInicioPrevistoMinutes < timeMinutes)) &&
+                vdataReal === "00/00/0000" &&
+                vPrevisto !== "00/00/0000"
+              ) {
+              linha += "<td style='background:firebrick'>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+            } else {
+              linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+            }
             if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
               var timeParts = time.split(':');
               var vhoraInicioRealParts = vhoraInicioReal.split(':');
@@ -757,12 +660,12 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             }
             linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>";
             linha += "<td>" + vhoraCobrado + "</td>";
-            linha += "<td class='text-center'>";
+            linha += "<td class='text-center' id='botao'>";
             if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
               //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
-              if(object.idDemanda == null){
+              if (object.idDemanda == null) {
                 linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
-              }else{
+              } else {
                 linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-toggle='modal' data-target='#stopexecucaomodal' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
               }
             }
@@ -770,6 +673,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
               linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
             }
+            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1' data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
             linha += "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
 
             linha += "</td>";
@@ -786,105 +690,66 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     }
 
     $("#FiltroClientes").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroUsuario").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#buscar").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroOcorrencia").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroDemanda").click(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroStatusTarefa").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-      window.location.reload();
+      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroPrevistoOrdem").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroRealOrdem").change(function () {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#filtrarButton").click(function () {
-      if (!$('#PrevisaoRadio').is(':checked') && !$('#RealizadoRadio').is(':checked')) {
-        alert("Por favor selecione uma opção.");
-        return false;
-      } else {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-        $('#periodoModal').modal('hide');
-        window.location.reload();
-      }
+    //Gabriel 11102023 ID 596 adicionado document ready pois o modal está em indextarefa.php
+    $(document).ready(function () {
+      $("#filtrarButton").click(function () {
+        if (!$('#PrevisaoRadio').is(':checked') && !$('#RealizadoRadio').is(':checked')) {
+          alert("Por favor selecione uma opção.");
+          return false;
+        } else {
+          //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+          $('#periodoModal').modal('hide');
+        }
+      });
     });
 
     document.addEventListener("keypress", function (e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#tituloDemanda").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+        //Gabriel 06102023 ID 596 ajustado #buscaTarefa
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
       }
     });
 
-    $(document).on('click', 'button[data-target="#alterarmodal"]', function () {
-      var idTarefa = $(this).attr("data-idtarefa");
- 
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-        data: {
-          idTarefa: idTarefa
-        },
-        success: function (data) {
-          $('#idTarefa').val(data.idTarefa);
-          $('#titulo').val(data.tituloTarefa);
-          $('#idCliente').val(data.idCliente);
-          $('#nomeCliente').val(data.nomeCliente);
-          $('#idDemanda').val(data.idDemanda);
-          $('#idDemandaSelect').val(data.idDemanda);
-          $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
-          $('#idAtendente').val(data.idAtendente);
-          $('#nomeUsuario').val(data.nomeUsuario);
-          $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
-          $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);
-          $('#Previsto').val(data.Previsto);
-          $('#horaInicioPrevisto').val(data.horaInicioPrevisto);
-          $('#horaFinalPrevisto').val(data.horaFinalPrevisto);
-          $('#dataReal').val(data.dataReal);
-          $('#horaInicioReal').val(data.horaInicioReal);
-          $('#horaFinalReal').val(data.horaFinalReal);
-          $('#horaCobrado').val(data.horaCobrado);
-
-          if (data.idDemanda !== null) {
-            var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
-            $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
-            $('#visualizarDemandaButton').show();
-          } else {
-            $('#visualizarDemandaButton').hide();
-          }
-
-          if (data.idDemanda !== null) {
-            $('#idDemandaSelect').hide();
-            $('#tituloDemanda').show();
-          } else {
-            $('#idDemandaSelect').show();
-            $('#tituloDemanda').hide();
-          }
-
-          $('#alterarmodal').modal('show');
-        }
-      });
-    });
 
     //lucas 25092023 ID 358 Adicionado script para popup de stop
     $(document).on('click', 'button[data-target="#stopexecucaomodal"]', function () {
@@ -892,7 +757,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       var idDemanda = $(this).attr("data-demanda");
       var status = $(this).attr("data-status");
       var horaInicioReal = $(this).attr("data-data-execucao");
-      
+
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -905,14 +770,15 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           $('#idDemanda-stopexecucao').val(idDemanda);
           $('#status-stopexecucao').val(status);
           $('#horaInicioReal-stopexecucao').val(horaInicioReal);
-                        
+
           $('#stopexecucaomodal').modal('show');
         }
       });
     });
 
     $('.btnAbre').click(function () {
-      $('.menuFiltros').toggleClass('mostra');
+      //Gabriel 06102023 ID 596 ajustado para ID ao invés de classe
+      $('#menuFiltros').toggleClass('mostra');
       $('.diviFrame').toggleClass('mostra');
     });
 
@@ -932,10 +798,32 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
     };
 
+    $(document).ready(function () {
+      $(document).on('click', 'button.clonarButton', function () {
+        var idTarefa = $(this).data("idtarefa"); // Use data() to access the custom data attribute
+        $.ajax({
+          type: 'POST',
+          dataType: 'json',
+          url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
+          data: {
+            idTarefa: idTarefa
+          },
+          success: function (data) {
+            $('#newtitulo').val(data.tituloTarefa);
+            $('#newidCliente').val(data.idCliente);
+            $('#newidDemanda').val(data.idDemanda);
+            $('#newidAtendente').val(data.idAtendente);
+            $('#newidTipoOcorrencia').val(data.idTipoOcorrencia);
+            $('#newtipoStatusDemanda').val(data.idTipoStatus);
+            $('#newdescricao').val(data.descricao);
 
-  </script>
+            $('#inserirModal').modal('show');
+          }
+        });
+      });
+    });
 
-  <script>
+
 
     $(document).on('click', '.stopButton', function () {
       var idTarefa = $(this).data('id');
@@ -1019,7 +907,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           data: formData,
           processData: false,
           contentType: false,
-          success: refreshPage,
+          //gabriel 13102023 id 596 fix atualizar pagina correta
+          success: refreshPage
         });
       });
 
@@ -1036,86 +925,127 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       $("#alterarForm").submit(function (event) {
         event.preventDefault();
         var formData = new FormData(this);
+        for (var pair of formData.entries()) {
+          console.log(pair[0] + ', ' + pair[1]);
+        }
+        var vurl;
+        if ($("#stopButtonModal").is(":focus")) {
+          vurl = "../database/tarefas.php?operacao=stop";
+        }
+        if ($("#startButtonModal").is(":focus")) {
+          vurl = "../database/tarefas.php?operacao=start";
+        }
+        if ($("#realizadoButtonModal").is(":focus")) {
+          vurl = "../database/tarefas.php?operacao=realizado";
+        }
+        if ($("#atualizarButtonModal").is(":focus")) {
+          vurl = "../database/tarefas.php?operacao=alterar";
+        }
         $.ajax({
-          url: "../database/tarefas.php?operacao=alterar",
+          url: vurl,
           type: 'POST',
           data: formData,
           processData: false,
           contentType: false,
-          success: refreshPage,
+          success: refreshPage
+
         });
       });
       function refreshPage() {
         window.location.reload();
       }
+
+      //gabriel 13102023 id 596 submit stopForm para evitar redirecionamento para demanda
+      $("#stopForm").submit(function (event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        for (var pair of formData.entries()) {
+          console.log(pair[0] + ', ' + pair[1]);
+        }
+        var vurl;
+        if ($("#realizadoFormbutton").is(":focus")) {
+          vurl = "../database/demanda.php?operacao=realizado";
+        }
+        if ($("#stopFormbutton").is(":focus")) {
+          vurl = "../database/tarefas.php?operacao=stop";
+        }
+        $.ajax({
+          url: vurl,
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: refreshPage
+        });
+      });
     });
 
 
     //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
-    $("#visualizarDemandaButton").click(function() {
+    $("#visualizarDemandaButton").click(function () {
       var currentPath = window.location.pathname;
       $.ajax({
         type: 'POST',
         url: '../database/demanda.php?operacao=origem',
         data: { origem: currentPath },
-        success: function(response) {
+        success: function (response) {
           console.log('Session variable set successfully.');
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error('An error occurred:', error);
         }
       });
     });
 
 
-    var quillstop = new Quill('.quill-stop', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
 
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        quillstop.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
-        });
+    var quillstop = new Quill('.quill-stop', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote'],
+          [{
+            'list': 'ordered'
+          }, {
+            'list': 'bullet'
+          }],
+          [{
+            'indent': '-1'
+          }, {
+            'indent': '+1'
+          }],
+          [{
+            'direction': 'rtl'
+          }],
+          [{
+            'size': ['small', false, 'large', 'huge']
+          }],
+          [{
+            'header': [1, 2, 3, 4, 5, 6, false]
+          }],
+          ['link', 'image', 'video', 'formula'],
+          [{
+            'color': []
+          }, {
+            'background': []
+          }],
+          [{
+            'font': []
+          }],
+          [{
+            'align': []
+          }],
+        ]
+      }
+    });
+
+    /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+    quillstop.on('text-change', function (delta, oldDelta, source) {
+      $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
+    });
 
   </script>
-
 
 </body>
 

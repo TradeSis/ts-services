@@ -251,7 +251,7 @@ if (isset($_SESSION['filtro_contrato'])) {
         <!--INICIO-->
         <!-- <div class="card-header"> -->
 
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-6 order-1 col-sm-6  col-md-6 order-md-1 col-lg-1 order-lg-1 mt-3" >
                 <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
                         filter_alt
@@ -280,27 +280,27 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
         </div>
 
-        <div class="table mt-2 ts-divTabela ts-tableFiltros">
-            <table class="table table-hover table-sm align-middle table-responsive ">
+        <div class="table ts-divTabela ts-tableFiltros table-striped table-hover">
+            <table class="table table-sm">
                 <thead class="ts-headertabelafixo">
                     <tr class="ts-headerTabelaLinhaCima">
-                        <th class="col-1">ID</th>
-                        <th class="col-1">Cliente</th>
-                        <th class="col-1">Titulo</th>
-                        <th class="col-1">Status</th>
-                        <th class="col-1">Previsão</th>
-                        <th class="col-1">Entrega</th>
-                        <th class="col-1">Atualização</th>
-                        <th class="col-1">Fechamento</th>
-                        <th class="col-1">Horas</th>
-                        <th class="col-1">hora</th>
-                        <th class="col-1">Contrato</th>
-                        <th class="col-1" colspan="2">Ação</th>
+                        <th >ID</th>
+                        <th >Cliente</th>
+                        <th >Titulo</th>
+                        <th >Status</th>
+                        <th >Previsão</th>
+                        <th >Entrega</th>
+                        <th >Atualização</th>
+                        <th >Fechamento</th>
+                        <th >Horas</th>
+                        <th >hora</th>
+                        <th >Contrato</th>
+                        <th  colspan="2">Ação</th>
                     </tr>
                     
                     <tr class="ts-headerTabelaLinhaBaixo">
-                        <th class="col-1"></th>
-                        <th class="col-1">
+                        <th ></th>
+                        <th >
                             <form action="" method="post">
                                 <select class="form-control ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
@@ -316,8 +316,8 @@ if (isset($_SESSION['filtro_contrato'])) {
                                 </select>
                             </form>
                         </th>
-                        <th class="col-1"></th>
-                        <th class="col-1">
+                        <th ></th>
+                        <th >
                             <form action="" method="post">
                                 <select class="form-control ts-selectFiltrosHeaderTabela" name="idContratoStatus" id="FiltroContratoStatus">
                                     <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
@@ -335,14 +335,14 @@ if (isset($_SESSION['filtro_contrato'])) {
 
                             </form>
                         </th>
-                        <th class="col-1"></th>
-                        <th class="col-1"></th>
-                        <th class="col-1"></th>
-                        <th class="col-1"></th>
-                        <th class="col-1"></th>
-                        <th class="col-1"></th>
-                        <th class="col-1"></th>
-                        <th class="col-1"></th>
+                        <th ></th>
+                        <th ></th>
+                        <th ></th>
+                        <th ></th>
+                        <th ></th>
+                        <th ></th>
+                        <th ></th>
+                        <th ></th>
                     </tr>
                 </thead>
 

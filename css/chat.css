@@ -1,0 +1,257 @@
+    /* Gabriel 05102023 ID 575 adicionado estilo de chat em arquivo */
+    .chat-section-pequeno {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+        color: #fff;
+        bottom: 0;
+        font-size: 12px;
+        right: 24px;
+        position: fixed;
+        width: 300px;
+    }
+
+    .chat-section-pequeno .chat-card-pequeno {
+        width: 20vw;
+        box-shadow: 0px 0px 1px 1px #000000;
+        padding: 0px;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        background: #e2dede;
+    }
+
+    @media(max-width:768px) {
+        .chat-section-pequeno .chat-card-pequeno {
+            min-width: 100% !important;
+            height: 100vh;
+        }
+
+        .chat-section-pequeno .chat-msg-pequeno {
+            height: 82vh !important;
+        }
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno {
+        width: 100%;
+        height: 40vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        transition: .2s;
+        padding: 10px;
+        position: relative;
+    }
+
+    .chat-section-pequeno .usuarios {
+        width: 100%;
+        height: 40vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        transition: .2s;
+        padding: 10px;
+        position: relative;
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno p {
+        padding: 5px;
+        font-size: 15px;
+        box-shadow: -3px 3px 20px #9b9898;
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno .incoming {
+        display: flex;
+        width: 100%;
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno .outgoing {
+        display: flex;
+        width: 100%;
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno .incoming .details {
+        margin-left: auto;
+        max-width: 250px;
+        align-items: flex-end;
+        position: relative;
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno .outgoing .details {
+        margin-right: auto;
+        max-width: 250px;
+        align-items: flex-end;
+        position: relative;
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno .details .user-img {
+        color: #000000
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno .incoming .details p {
+        background: #4256b1;
+        border-radius: 5px 0px 5px 5px;
+        word-wrap: break-word;
+    }
+
+    .chat-section-pequeno .chat-msg-pequeno .outgoing .details p {
+        background: #030f35;
+        border-radius: 0px 5px 5px 5px;
+        word-wrap: break-word;
+    }
+
+    .chat-section-pequeno .chat-card-pequeno-head {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        padding: 10px;
+        width: 100%;
+        height: 6vh;
+        background: #435fbd;
+    }
+
+    .chat-section-pequeno .chat-card-pequeno-head .user-info {
+        display: flex;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+
+    .chat-section-pequeno .chat-card-pequeno-head .user-info p {
+        display: block;
+        word-wrap: break-word;
+    }
+
+    .chat-section-pequeno .chat-card-pequeno-head .user-info .username {
+        font-weight: 30;
+        font-size: 15px;
+    }
+
+    .chat-close {
+        display: block;
+        float: right;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 15px;
+        text-align: center;
+        width: 15px;
+    }
+
+    .modal-dialog {
+        margin-left: 10vw;
+        margin-top: 0px;
+
+    }
+
+    .modal-content {
+        width: 70vw;
+        height: 75vh;
+    }
+
+    .chat-section {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+    }
+
+    .chat-section .chat-card {
+        width: 100%;
+        padding: 0px;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .chat-section .chat-msg {
+        width: 100%;
+        height: 54vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        transition: .2s;
+        padding: 10px;
+        position: relative;
+    }
+
+
+    .chat-section .chat-msg::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .chat-section .chat-msg p {
+        padding: 5px;
+        box-shadow: -3px 3px 20px #9b9898;
+    }
+
+    .chat-section .chat-msg .incoming {
+        display: flex;
+        width: 100%;
+    }
+
+    .chat-section .chat-msg .outgoing {
+        display: flex;
+        width: 100%;
+    }
+
+    .chat-section .chat-msg .incoming .details {
+        margin-left: auto;
+        max-width: 70%;
+        min-width: 70%;
+        align-items: flex-end;
+        position: relative;
+    }
+
+    .chat-section .chat-msg .outgoing .details {
+        margin-right: auto;
+        max-width: 70%;
+        min-width: 70%;
+        align-items: flex-end;
+        position: relative;
+    }
+
+    .chat-section .chat-msg .incoming .details .user-img {
+        text-align: left;
+        background: #EBF8FF;
+    }
+
+    .chat-section .chat-msg .details .user-img {
+        color: #000000
+    }
+
+    .chat-section .chat-msg .incoming .details p {
+        background: #EBF8FF;
+        border-radius: 5px 0px 5px 5px;
+        word-wrap: break-word;
+    }
+
+    .chat-section .chat-msg .outgoing .details p {
+        background: #F9FAFC;
+        border-radius: 0px 5px 5px 5px;
+        word-wrap: break-word;
+    }
+
+    .textoStyle1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        margin-top: 6px;
+    }
+
+    .textoStyle1> :not(:last-child) {
+        margin-right: 20px;
+    }
+
+    .textoStyle2 {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 15px;
+        color: var(--ui-500-500);
+    }

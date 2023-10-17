@@ -1,4 +1,5 @@
 <?php
+// Lucas 16102023 novo padrao
 //Gabriel 13102023 fix modal nova demanda 
 //lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
@@ -16,7 +17,7 @@
 // helio 01022023 alterado para include_once
 // helio 26012023 16:16
 
-include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(ROOT . '/cadastros/database/clientes.php');
 include_once(ROOT . '/cadastros/database/usuario.php');
@@ -79,131 +80,26 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
 ?>
-<style>
-  [class="<?php echo TIPOSTATUS_FILA ?>"] {
-    margin-top: 5px;
-    display: inline-block;
-    background: #5271FE;
-    color: #fff;
-    width: 160px;
-  }
+<!doctype html>
+<html lang="pt-BR">
 
-  [class="<?php echo TIPOSTATUS_AGENDADO ?>"] {
-    margin-top: 5px;
-    display: inline-block;
-    background: #FE5469;
-    color: #fff;
-    width: 160px;
-  }
+<head>
 
-  [class="<?php echo TIPOSTATUS_REALIZADO ?>"] {
-    display: inline-block;
-    background: #C34A36;
-    color: #fff;
-    width: 160px;
-  }
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+    <link rel="stylesheet" href="../css/demanda_cards.css">
 
-  [class="<?php echo TIPOSTATUS_FAZENDO ?>"] {
-    margin-top: 5px;
-    display: inline-block;
-    background: #69419D;
-    color: #fff;
-    width: 160px;
-  }
+</head>
 
-  [class="<?php echo TIPOSTATUS_RETORNO ?>"] {
-    margin-top: 5px;
-    display: inline-block;
-    background: #FEA051;
-    color: #fff;
-    width: 160px;
-  }
-
-  [class="<?php echo TIPOSTATUS_VALIDADO ?>"] {
-    margin-top: 5px;
-    display: inline-block;
-    background: #18B376;
-    color: #fff;
-    width: 160px;
-  }
-
-  [class="<?php echo TIPOSTATUS_AGUARDANDOSOLICITANTE ?>"] {
-    margin-top: 5px;
-    display: inline-block;
-    background: #00C2A8;
-    width: 160px;
-    color: #fff;
-  }
-
-  [class="<?php echo TIPOSTATUS_RESPONDIDO ?>"] {
-    margin-top: 5px;
-    display: inline-block;
-    background: blueviolet;
-    color: #fff;
-    width: 160px;
-  }
-
-  [class="<?php echo TIPOSTATUS_PAUSADO ?>"] {
-    margin-top: 5px;
-    display: inline-block;
-    background: #FFC107;
-    color: #fff;
-    width: 160px;
-  }
-
-  /* Gabriel 13102023 fix modal nova demanda, removido styles de modal */
-
-  .cardLink {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: 2;
-    opacity: 0;
-  }
-
-  .cardLink:hover {
-    cursor: pointer;
-  }
-
-  .cardColor-active {
-    background-color: #fff !important;
-    box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-    -webkit-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-    -moz-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
-    border-left: solid #158cee !important;
-
-  }
-
-  .shadowOff {
-    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-  }
-
-  .table {
-    border-top: 2px solid #EEEEEE;
-    margin-top: -3px;
-    height: 75vh;
-  }
-
-  @media only screen and (max-height: 600px) {
-    .table {
-      border-top: 2px solid #EEEEEE;
-      margin-top: -3px;
-      height: 60vh;
-    }
-  }
-</style>
+  <!-- Gabriel 13102023 fix modal nova demanda, removido styles de modal --> 
 
 
-</html>
-
-<body class="bg-transparent">
-  <div class="container-fluid py-1">
+<body>
+  <div class="container-fluid">
     <div class="header-body">
       <div class="row row-cols-6">
         <!-- lucas 26092023 ID 576 Modificado estrutura dos cards -->
         <div class="col-12 col-md my-2">
-          <div class="cardColor card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
+          <div class="ts-cardColor card border-left-success ts-shadowOff py-0 ts-cardsTotais">
             <div class="row no-gutters align-items-center">
               <div class="col-12 col-md mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-success text-uppercase ">Todos</div>
@@ -212,12 +108,12 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </div>
               </div>
             </div>
-            <button class="cardLink" onClick="clickCard(this.value)" value="" id=""></button>
+            <button class="ts-cardLink" onClick="clickCard(this.value)" value="" id=""></button>
           </div>
         </div>
 
         <div class="col-12 col-md my-2">
-          <div class="cardColor1 cardColor-active card border-left-success  py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
+          <div class="ts-cardColor1 ts-cardColor-active card border-left-success  py-0 ts-cardsTotais">
             <div class="row no-gutters align-items-center">
               <div class="col-12 col-md mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-primary text-uppercase ">Aberto</div>
@@ -226,12 +122,12 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </div>
               </div>
             </div>
-            <button class="cardLink" onClick="clickCard(this.value)" value="1" id="1"></button>
+            <button class="ts-cardLink" onClick="clickCard(this.value)" value="1" id="1"></button>
           </div>
         </div>
 
         <div class="col-12 col-md my-2">
-          <div class="cardColor2 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
+          <div class="ts-cardColor2 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
             <div class="row no-gutters align-items-center">
               <div class="col-12 col-md mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Execução</div>
@@ -241,12 +137,12 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </div>
               </div>
             </div>
-            <button class="cardLink" onClick="clickCard(this.value)" value="2" id="2"></button>
+            <button class="ts-cardLink" onClick="clickCard(this.value)" value="2" id="2"></button>
           </div>
         </div>
 
         <div class="col-12 col-md my-2">
-          <div class="cardColor3 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
+          <div class="ts-cardColor3 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
             <div class="row no-gutters align-items-center">
               <div class="col-12 col-md mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Entregue</div>
@@ -256,12 +152,12 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </div>
               </div>
             </div>
-            <button class="cardLink" onClick="clickCard(this.value)" value="3" id="3"></button>
+            <button class="ts-cardLink" onClick="clickCard(this.value)" value="3" id="3"></button>
           </div>
         </div>
 
         <div class="col-12 col-md my-2">
-          <div class="cardColor0 card border-left-success shadowOff py-0" style="border-left:solid #0b2782; height:65px;background-color: #EEEEEE">
+          <div class="ts-cardColor0 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
             <div class="row no-gutters align-items-center">
               <div class="col-12 col-md mr-2 mb-2 p-1">
                 <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Fechado</div>
@@ -271,7 +167,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </div>
               </div>
             </div>
-            <button class="cardLink" onClick="clickCard(this.value)" value="0" id="0"></button>
+            <button class="ts-cardLink" onClick="clickCard(this.value)" value="0" id="0"></button>
           </div>
         </div>
 
@@ -280,13 +176,14 @@ if (isset($_SESSION['filtro_demanda'])) {
     </div>
   </div>
 
-  <nav id="menuFiltros" class="menuFiltros"> <!-- MENUFILTROS -->
-    <div class="titulo"><span>Filtrar por:</span></div>
-    <ul>
-      <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
+<!-- MENUFILTROS -->
+  <nav class="ts-menuFiltros" style="margin-top: 65px;"> 
+  <label class="pl-2" for="">Filtrar por:</label>
+    
+      <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+        <form class="d-flex" action="" method="post">
 
-          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" onchange="mudarSelect(this.value)" style="font-size: 14px; width: 150px; height: 35px">
+          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" onchange="mudarSelect(this.value)">
             <option value="<?php echo null ?>">
               <?php echo "Todos" ?>
             </option>
@@ -305,14 +202,14 @@ if (isset($_SESSION['filtro_demanda'])) {
           </select>
 
         </form>
-      </li>
-    </ul>
+      </div>
+    
 
-    <div class="col-sm" style="text-align:right; color: #fff">
+    <div class="col-sm text-end mt-2">
       <?php if ($ClienteSession == null) { ?>
-        <a onClick="limparTrade()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+        <a onClick="limparTrade()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
       <?php } else { ?>
-        <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+        <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
       <?php } ?>
     </div>
   </nav>
@@ -478,15 +375,15 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
   <div class="container-fluid text-center ">
-    <div class="row align-items-center p-3 ">
 
+    <div class="row align-items-center">
       <div class="col-4 order-1 col-sm-4  col-md-4 order-md-1 col-lg-1 order-lg-1 mt-3">
-        <button type="button" class="btnAbre btn btn-sm btn-outline-primary"><span style="font-size: 23px; font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+        <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
             filter_alt
           </span></button>
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-2 order-lg-2 mt-4">
-        <h2 class="tituloTabela">
+        <h2 class="ts-tituloPrincipal">
           <?php echo $contratoTipo['nomeDemanda'] ?>
         </h2>
       </div>
@@ -503,7 +400,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
       <div class="col-4 order-2 col-sm-4 col-md-4 order-md-2 d-flex col-lg-2 order-lg-4">
         <div class="col-8 mb-1">
-          <form class="d-flex" action="" method="post" style="text-align: right;">
+          <form class="d-flex text-end" action="" method="post">
             <select class="form-control" name="exportoptions" id="exportoptions">
               <option value="excel">Excel</option>
               <option value="pdf">PDF</option>
@@ -517,17 +414,16 @@ if (isset($_SESSION['filtro_demanda'])) {
 
       </div>
 
-      <div class="col-4 order-3 col-sm-4 col-md-4 order-md-3 col-lg-2 order-lg-5" style="text-align: end;">
+      <div class="col-4 order-3 col-sm-4 col-md-4 order-md-3 col-lg-2 order-lg-5 mt-1 text-end">
         <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
       </div>
     </div>
 
-    <!-- <div class="card mt-2" style="background-color: #EEEEEE;"> -->
-      <div class="table table-sm table-hover  diviFrame">
-        <table class="table table-sm table-responsive table-wrapper-scroll-y table-striped">
-          <thead class="cabecalhoTabela">
+      <div class="table ts-divTabela ts-tableFiltros table-striped table-hover">
+        <table class="table table-sm">
+          <thead class="ts-headertabelafixo">
             <?php if ($ClienteSession == NULL) { ?>
-              <tr style="background-color:#13216A;position: sticky;top:0px;">
+              <tr class="ts-headerTabelaLinhaCima">
                 <th>Prioridade</th>
                 <th>ID</th>
                 <th>Cliente</th>
@@ -540,16 +436,14 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Fechamento</th>
                 <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
                 <th>Posição</th>
-                <th>Ação</th>
-                <th></th>
-
+                <th colspan="2">Ação</th>
               </tr>
-              <tr style="background-color:#13216A;position: sticky;top:34px;">
+              <tr class="ts-headerTabelaLinhaBaixo">
                 <th></th>
                 <th></th>
-                <th style="width: 10%;">
+                <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px; background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -567,9 +461,9 @@ if (isset($_SESSION['filtro_demanda'])) {
                     </select>
                   </form>
                 </th>
-                <th style="width: 10%;">
+                <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px; background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -590,7 +484,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idAtendente" id="FiltroUsuario" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px; background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -611,7 +505,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px; background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -627,9 +521,9 @@ if (isset($_SESSION['filtro_demanda'])) {
                     </select>
                   </form>
                 </th>
-                <th style="width: 10%;">
+                <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px; background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -649,9 +543,9 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th></th>
                 <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
-                <th style="width: 10%;">
+                <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="posicao" id="FiltroPosicao" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-3px; background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao" >
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <option value="0">Atendente</option>
                       <option value="1">Cliente</option>
@@ -659,11 +553,10 @@ if (isset($_SESSION['filtro_demanda'])) {
                   </form>
                 </th>
                 <th></th>
-                <th></th>
               </tr>
             <?php } //******************visão do Cliente 
             else { ?>
-              <tr>
+              <tr class="ts-headerTabelaLinhaCima">
                 <th>Prioridade</th>
                 <th>ID</th>
                 <th>Cliente</th>
@@ -676,12 +569,12 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th>Posição</th>
                 <th>Ação</th>
               </tr>
-              <tr>
+              <tr class="ts-headerTabelaLinhaBaixo">
                 <th></th>
                 <th></th>
-                <th style="width: 10%;">
+                <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idCliente" id="FiltroClientes" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#13216A" disabled>
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" disabled>
                       <?php
                       foreach ($clientes as $cliente) {
                       ?>
@@ -696,9 +589,9 @@ if (isset($_SESSION['filtro_demanda'])) {
                     </select>
                   </form>
                 </th>
-                <th style="width: 10%;">
+                <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idSolicitante" id="FiltroSolicitante" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px; background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -719,7 +612,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -735,9 +628,9 @@ if (isset($_SESSION['filtro_demanda'])) {
                     </select>
                   </form>
                 </th>
-                <th style="width: 10%;">
+                <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -757,9 +650,9 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th></th>
                 <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
-                <th style="width: 10%;">
+                <th>
                   <form action="" method="post">
-                    <select class="form-control text-center" name="posicao" id="FiltroPosicao" style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <option value="0">Atendente</option>
                       <option value="1">Cliente</option>
@@ -775,11 +668,16 @@ if (isset($_SESSION['filtro_demanda'])) {
 
           </tbody>
         </table>
-      </div>
-    <!-- </div> -->
+      
+    </div>
   </div>
 
-
+  <!-- LOCAL PARA COLOCAR OS JS -->
+  
+  <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+    <!-- script para menu de filtros -->
+    <script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+    <script src="../js/demanda_cards.js"></script>
 
   <script>
     <?php if ($ClienteSession === NULL) : ?>
@@ -1055,11 +953,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       });
     });
 
-    $('.btnAbre').click(function() {
-      $('.menuFiltros').toggleClass('mostra');
-      $('.diviFrame').toggleClass('mostra');
-    });
-
+ 
 
     //**************exporta excel 
     function exportToExcel() {
@@ -1307,71 +1201,10 @@ if (isset($_SESSION['filtro_demanda'])) {
     });
 
 
-    // Cards com Botões acionamento individual
-    $('.cardColor').click(function() {
-      $('.cardColor').addClass('cardColor-active');
-      $('.cardColor').removeClass('shadowOff');
-      $('.cardColor1').removeClass('cardColor-active');
-      $('.cardColor2').removeClass('cardColor-active');
-      $('.cardColor3').removeClass('cardColor-active');
-      $('.cardColor0').removeClass('cardColor-active');
-    });
-    $('.cardColor1').click(function() {
-      $('.cardColor1').addClass('cardColor-active');
-      $('.cardColor1').removeClass('shadowOff');
-      $('.cardColor').removeClass('cardColor-active');
-      $('.cardColor2').removeClass('cardColor-active');
-      $('.cardColor3').removeClass('cardColor-active');
-      $('.cardColor0').removeClass('cardColor-active');
-    });
-    $('.cardColor2').click(function() {
-      $('.cardColor2').addClass('cardColor-active');
-      $('.cardColor2').removeClass('shadowOff');
-      $('.cardColor').removeClass('cardColor-active');
-      $('.cardColor1').removeClass('cardColor-active');
-      $('.cardColor3').removeClass('cardColor-active');
-      $('.cardColor0').removeClass('cardColor-active');
-    });
-    $('.cardColor3').click(function() {
-      $('.cardColor3').addClass('cardColor-active');
-      $('.cardColor3').removeClass('shadowOff');
-      $('.cardColor').removeClass('cardColor-active');
-      $('.cardColor1').removeClass('cardColor-active');
-      $('.cardColor2').removeClass('cardColor-active');
-      $('.cardColor0').removeClass('cardColor-active');
-    });
-    $('.cardColor0').click(function() {
-      $('.cardColor0').addClass('cardColor-active');
-      $('.cardColor0').removeClass('shadowOff');
-      $('.cardColor').removeClass('cardColor-active');
-      $('.cardColor1').removeClass('cardColor-active');
-      $('.cardColor2').removeClass('cardColor-active');
-      $('.cardColor3').removeClass('cardColor-active');
-    });
-
-    // Cards com Botões acionamento ligado ao Select de StatusDemanda
-    let btn = document.querySelectorAll('button');
-    let select = document.querySelector('select');
-
-    function troca(e) {
-      select.value = e.currentTarget.id;
-    }
-
-    btn.forEach((el) => {
-      el.addEventListener('click', troca);
-    })
-
-    function mudarSelect(valor) {
-      $('.cardColor').removeClass('cardColor-active');
-      $('.cardColor1').removeClass('cardColor-active');
-      $('.cardColor2').removeClass('cardColor-active');
-      $('.cardColor3').removeClass('cardColor-active');
-      $('.cardColor0').removeClass('cardColor-active');
-      $('.cardColor' + valor).addClass('cardColor-active');
-      $('.cardColor' + valor).removeClass('shadowOff');
-
-    }
+   
   </script>
+
+  <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 </body>
 
 </html>

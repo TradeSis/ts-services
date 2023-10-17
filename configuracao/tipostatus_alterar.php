@@ -1,7 +1,8 @@
 <?php
+// Lucas 17102023 novo padrao
 // helio 01022023 altereado para include_once
 // helio 26012023 16:16
-include_once('../head.php');
+include_once('../header.php');
 include_once '../database/tipostatus.php';
 
 $idTipoStatus = $_GET['idTipoStatus'];
@@ -9,16 +10,34 @@ $idTipoStatus = $_GET['idTipoStatus'];
 $status = buscaTipoStatus(null, $idTipoStatus);
 
 ?>
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 <body class="bg-transparent">
 
-    <div class="container p-4" style="margin-top:10px">
-
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-sm">
-                <h2 class="tituloTabela">Alterar Status</h2>
+            <BR> <!-- MENSAGENS/ALERTAS -->
+        </div>
+        <div class="row">
+            <BR> <!-- BOTOES AUXILIARES -->
+        </div>
+        <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
+            <div class="col-3">
+                <!-- TITULO -->
+                <h2 class="ts-tituloPrincipal">Alterar Status</h2>
             </div>
-            <div class="col-sm mt-4" style="text-align:right">
+            <div class="col-7">
+                <!-- FILTROS -->
+            </div>
+
+            <div class="col-2 text-end">
                 <a href="../configuracao/?tab=configuracao&stab=tipostatus" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
             </div>
         </div>
@@ -49,13 +68,18 @@ $status = buscaTipoStatus(null, $idTipoStatus);
                 </div>
             </div>
 
-            <div style="text-align:right; margin-top:20px">
+            <div class="text-end mt-2">
                 <button type="submit" class="btn  btn-success"><i class="bi bi-sd-card-fill"></i>&#32;Salvar</button>
             </div>
         </form>
 
     </div>
 
+    <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

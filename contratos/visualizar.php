@@ -33,57 +33,16 @@ $servicos = buscaServicos();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
 ?>
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+    <link href="../css/tabs_visualizar.css" rel="stylesheet" type="text/css">
+</head>
 
 <style>
-    body {
-        margin-bottom: 30px;
-    }
-
-    .line {
-        width: 100%;
-        border-bottom: 1px solid #707070;
-    }
-
-    #tabs .tab {
-        display: inline-block;
-        padding: 5px 10px;
-        cursor: pointer;
-        position: relative;
-        z-index: 5;
-        border-radius: 3px 3px 0 0;
-        background-color: #567381;
-        color: #EEEEEE;
-    }
-
-    #tabs .whiteborder {
-        border: 1px solid #707070;
-        border-bottom: 1px solid #fff;
-        border-radius: 3px 3px 0 0;
-        background-color: #EEEEEE;
-        color: #567381;
-    }
-
-    #tabs .tabContent {
-        position: relative;
-        top: -1px;
-        z-index: 1;
-        padding: 10px;
-        border-radius: 0 0 3px 3px;
-        color: black;
-    }
-
-    #tabs .hide {
-        display: none;
-    }
-
-    #tabs .show {
-        display: block;
-    }
-
-    .modal-backdrop {
-        background-color: rgba(200, 200, 200, 0.5);
-    }
-
     .modal_lg {
         margin-left: 10vw;
         margin-top: 0px;
@@ -428,6 +387,9 @@ $ocorrencias = buscaTipoOcorrencia();
         </div>
     </div>
 
+ <!-- LOCAL PARA COLOCAR OS JS -->
+
+ <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script>
         var tab;
@@ -524,6 +486,9 @@ $ocorrencias = buscaTipoOcorrencia();
             $('#quill-demandainserir').val(demandaContrato.container.firstChild.innerHTML);
         });
     </script>
+
+    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
+    
 </body>
 
 </html>

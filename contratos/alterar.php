@@ -46,7 +46,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 					<input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>">
 				</div>
 
-				<div class="col-md-3 form-group" style="margin-top: 40px;">
+				<div class="col-md-3 form-group mt-3">
 					<label class="labelForm" style="margin-top: -20px;">Cliente</label>
 					<select class="select form-control" name="idCliente" autocomplete="off" disabled>
 						<option value="<?php echo $contrato['idCliente'] ?>"><?php echo $contrato['nomeCliente'] ?>
@@ -56,7 +56,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 					</select>
 				</div>
 
-				<div class="container-fluid p-0 mb-3">
+				<div class="container-fluid p-0 mb-3" style="margin-top: -30px;">
 					<div class="col">
 						<span class="tituloEditor">Descrição</span>
 					</div>

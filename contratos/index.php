@@ -247,10 +247,6 @@ if (isset($_SESSION['filtro_contrato'])) {
 
     <div class="container-fluid text-center ">
 
-
-        <!--INICIO-->
-        <!-- <div class="card-header"> -->
-
         <div class="row align-items-center">
             <div class="col-6 order-1 col-sm-6  col-md-6 order-md-1 col-lg-1 order-lg-1 mt-3" >
                 <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
@@ -275,8 +271,8 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
 
-            <div class="col-6 order-2 col-sm-6 col-md-6 order-md-2 col-lg-4 order-lg-4 mt-1" style="text-align: end; margin-left:-30px ">
-                <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+            <div class="col-6 order-2 col-sm-6 col-md-6 order-md-2 col-lg-4 order-lg-4 mt-1 text-end">
+                <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success mr-4"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
             </div>
         </div>
 

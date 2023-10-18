@@ -1,4 +1,5 @@
 <?php
+// Lucas 17102023 novo padrao
 //Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
 //lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
@@ -64,39 +65,27 @@ $realizadoChecked = ($Periodo === '0') ? 'checked' : '';
 $Checked = ($Periodo === null) ? 'checked' : '';
 
 ?>
+<!doctype html>
+<html lang="pt-BR">
 
-</html>
+<head>
 
-<style>
-  .nav-link {
-        display: inline-block;
-        padding: 5px 10px;
-        cursor: pointer;
-        position: relative;
-        z-index: 5;
-        border-radius: 3px 3px 0 0;
-        background-color: #567381;
-        color: #EEEEEE;
-    }
-    .nav-link .active {
-        border: 1px solid #707070;
-        border-bottom: 1px solid #fff;
-        border-radius: 3px 3px 0 0;
-        background-color: #EEEEEE;
-        color: #567381;
-    }
-</style>
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
 
-<body class="bg-transparent">
+</head>
 
-  <nav id="menuFiltros" class="menuFiltros" style="width: 163px;margin-top:-58px;margin-left:40px">
-    <div class="titulo"><span>Filtrar por:</span></div>
-    <ul>
+
+
+
+<body>
+<!-- MENUFILTROS -->
+  <nav class="ts-menuFiltros" style="margin-top: -3px;">
+  <label class="pl-2" for="">Filtrar por:</label>
+   
       <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
-      <li class="ls-label col-sm-12 mr-1" style="list-style-type: none;"> <!-- ABERTO/FECHADO -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
-          <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
-            style="font-size: 14px; width: 150px; height: 35px">
+      <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+        <form class="d-flex" action="" method="post" >
+          <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa">
             <option value="<?php echo null ?>">
               <?php echo "Todos" ?>
             </option>
@@ -108,62 +97,64 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             } ?> value="0">Realizado</option>
           </select>
         </form>
-      </li>
-    </ul>
+        </div>
+    
 
-    <div class="col-sm" style="text-align:right; color: #fff">
-      <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+    <div class="col-sm text-end mt-2">
+      <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
     </div>
   </nav>
 
 
-  <div class="container-fluid text-center mt-2">
-
+  <div class="container-fluid text-center">
     <div class="row">
-      <div class="btnAbre" style="height:33px">
-        <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;"
-          class="material-symbols-outlined">
-          filter_alt
-        </span>
+      <BR> <!-- MENSAGENS/ALERTAS -->
+    </div>
+    <div class="row">
+      <BR> <!-- BOTOES AUXILIARES -->
+    </div>
 
+    <div class="row align-items-center">
+      <div class="col-6 order-4 col-sm-6 col-md-6 order-md-4 col-lg-1 order-lg-1 mt-3 text-start">
+        <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
+            filter_alt
+          </span></button>
       </div>
 
-      <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela">Tarefas</h2>
-        <!-- Gabriel 11102023 ID 596 removido, h6 agora preenche via script -->
+      <div class="col-10 order-1 col-sm-11 col-md-11 order-md-1 col-lg-2 order-lg-2 mt-4">
+        <h2 class="ts-tituloPrincipal">Tarefas</h2>
         <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
       </div>
 
-      <!-- Gabriel 06102023 ID 596 removido buscar duplicado -->
-      <div class="col-sm-4">
+      <div class="col-12 order-3 col-sm-12 col-md-12 col-lg-5 order-lg-3">
         <div class="input-group">
           <input type="text" class="form-control" id="buscaTarefa" placeholder="Buscar por id ou titulo">
           <span class="input-group-btn">
-            <button class="btn btn-primary mt-2" id="buscar" type="button">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
-                class="material-symbols-outlined">search</span>
+            <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
             </button>
           </span>
         </div>
       </div>
 
-      <div class="col-sm-1">
+      <!-- Gabriel 06102023 ID 596 removido buscar duplicado -->
+
+      <div class="col-2 order-2 col-sm-1 col-md-1 order-md-2 col-lg-2 order-lg-4">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#periodoModal"><i
             class="bi bi-calendar3"></i></button>
       </div>
 
-      <div class="col-sm" style="text-align:right">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i
+      <div class="col-6 order-5 col-sm-6 col-md-6 order-md-4 col-lg-2 order-lg-5 mt-1 text-end">
+        <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirModal"><i
             class="bi bi-plus-square"></i>&nbsp Novo</button>
       </div>
     </div>
 
 
-    <div class="card mt-2 text-center">
-      <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-        <table class="table">
-          <thead class="cabecalhoTabela">
-            <tr>
+      <div class="table ts-divTabela ts-tableFiltros table-striped table-hover">
+        <table class="table table-sm">
+          <thead class="ts-headertabelafixo">
+            <tr class="ts-headerTabelaLinhaCima">
               <th>ID</th>
               <th>Tarefa</th>
               <th>Responsável</th>
@@ -172,15 +163,14 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <th>Previsão</th>
               <th>Real</th>
               <th>Cobrado</th>
-              <th style="width: 17%;">Ação</th>
+              <th colspan="2">Ação</th>
             </tr>
-            <tr>
+            <tr class="ts-headerTabelaLinhaBaixo">
               <th></th>
               <th></th>
               <th>
                 <form action="" method="post">
-                  <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-control ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -198,10 +188,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </select>
                 </form>
               </th>
-              <th style="width: 10%;">
+              <th>
                 <form action="" method="post">
-                  <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-control ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -219,10 +208,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </select>
                 </form>
               </th>
-              <th style="width: 10%;">
+              <th>
                 <form action="" method="post">
-                  <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-control ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -240,10 +228,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </select>
                 </form>
               </th>
-              <th style="width: 10%;">
+              <th>
                 <form action="" method="post">
-                  <select class="form-control text-center" name="PrevistoOrdem" id="FiltroPrevistoOrdem"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-control ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" id="FiltroPrevistoOrdem">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -256,10 +243,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </select>
                 </form>
               </th>
-              <th style="width: 10%;">
+              <th >
                 <form action="" method="post">
-                  <select class="form-control text-center" name="RealOrdem" id="FiltroRealOrdem"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-control ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -273,7 +259,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 </form>
               </th>
               <th></th>
-              <th style="width: 10%;"></th>
+              <th></th>
             </tr>
           </thead>
 
@@ -282,7 +268,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           </tbody>
         </table>
       </div>
-    </div>
+  
   </div>
 
 
@@ -499,6 +485,10 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   </div>
 
   <?php include 'alterarTarefaModal.php'; ?>
+
+
+    <!-- script para menu de filtros -->
+    <script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
 
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
@@ -776,13 +766,6 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     });
 
-    $('.btnAbre').click(function () {
-      //Gabriel 06102023 ID 596 ajustado para ID ao invés de classe
-      $('#menuFiltros').toggleClass('mostra');
-      $('.diviFrame').toggleClass('mostra');
-    });
-
-
 
     var inserirModal = document.getElementById("inserirModal");
 
@@ -1046,6 +1029,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     });
 
   </script>
+
+  <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

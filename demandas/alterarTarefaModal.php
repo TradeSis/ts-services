@@ -1,5 +1,23 @@
 <!-- Gabriel 06102023 ID 596 mudanças em agenda e tarefas -->
-
+<style>
+  .nav-link {
+        display: inline-block;
+        padding: 5px 10px;
+        cursor: pointer;
+        position: relative;
+        z-index: 5;
+        border-radius: 3px 3px 0 0;
+        background-color: #567381!important;
+        color: #EEEEEE!important;
+    }
+    .nav-link .active {
+        border: 1px solid #707070;
+        border-bottom: 1px solid #fff;
+        border-radius: 3px 3px 0 0;
+        background-color: #EEEEEE!important;
+        color: #567381!important;
+    }
+</style>
 <!--------- ALTERAR --------->
 <div class="modal fade bd-example-modal-lg" id="alterarmodal" tabindex="-1" role="dialog"
     aria-labelledby="alterarmodalLabel" aria-hidden="true">

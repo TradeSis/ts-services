@@ -257,7 +257,7 @@
                 $('#idCliente').val(data.idCliente);
                 $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
-                $('#idDemanda').val(data.idDemanda);
+               
                 $('#idAtendente').val(data.idAtendente);
                 $('#idAtendenteSelect').val(data.idAtendente);
                 $('#nomeUsuario').val(data.nomeUsuario);
@@ -273,6 +273,7 @@
                 $('#tipoStatusDemanda').val(data.idTipoStatus);
                 quilldescricao.root.innerHTML = data.descricao;
                 
+
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
                     $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);

@@ -1,19 +1,10 @@
 <!-- Gabriel 06102023 ID 596 mudanças em agenda e tarefas -->
 <style>
   .nav-link {
-        display: inline-block;
-        padding: 5px 10px;
-        cursor: pointer;
-        position: relative;
-        z-index: 5;
-        border-radius: 3px 3px 0 0;
         background-color: #567381!important;
         color: #EEEEEE!important;
     }
     .nav-link .active {
-        border: 1px solid #707070;
-        border-bottom: 1px solid #fff;
-        border-radius: 3px 3px 0 0;
         background-color: #EEEEEE!important;
         color: #567381!important;
     }
@@ -55,9 +46,9 @@
                                     <div class="col-md-4" style="margin-top: -10px;">
                                         <div class="form-group" id="demandaContainer">
                                             <label class="labelForm">ID/Demanda Relacionada</label>
-                                            <input type="text" class="data select form-control" id="tituloDemanda"
-                                                style="margin-top: 18px;" autocomplete="off" readonly>
+                                            
                                             <select class="form-control" name="idDemandaSelect" id="idDemandaSelect">
+                                                <option value="null"></option>
                                                 <?php
                                                 foreach ($demandas as $demanda) {
                                                     ?>
@@ -78,7 +69,7 @@
                                             <input type="hidden" class="data select form-control" id="idCliente">
                                             <input type="text" style="margin-top: 18px;" class="data select form-control" id="nomeCliente"
                                                 readonly>
-                                            <select class="form-control" name="idClienteSelect" id="idClienteSelect">
+                                            <select class="form-control" name="idClienteSelect" id="idClienteSelect"                                           >
                                                 <?php
                                                 foreach ($clientes as $cliente) {
                                                     ?>
@@ -260,15 +251,13 @@
                 idTarefa: idTarefa
             },
             success: function (data) {
-                console.log(data);
+              
                 $('#idTarefa').val(data.idTarefa);
                 $('#titulo').val(data.tituloTarefa);
                 $('#idCliente').val(data.idCliente);
                 $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
                 $('#idDemanda').val(data.idDemanda);
-                $('#idDemandaSelect').val(data.idDemanda);
-                $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
                 $('#idAtendente').val(data.idAtendente);
                 $('#idAtendenteSelect').val(data.idAtendente);
                 $('#nomeUsuario').val(data.nomeUsuario);
@@ -283,7 +272,7 @@
                 $('#horaCobrado').val(data.horaCobrado);
                 $('#tipoStatusDemanda').val(data.idTipoStatus);
                 quilldescricao.root.innerHTML = data.descricao;
-
+                
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
                     $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
@@ -305,12 +294,12 @@
                     $('#idAtendenteSelect').show();
                     $('#nomeUsuario').hide();
                 }
+
                 if (data.idDemanda !== null) {
-                    $('#idDemandaSelect').hide();
-                    $('#tituloDemanda').show();
+                    $('#idDemandaSelect').val(data.idDemanda);
+                    $('#idDemandaSelect').attr('disabled', 'disabled');
                 } else {
-                    $('#idDemandaSelect').show();
-                    $('#tituloDemanda').hide();
+                   $('#idDemandaSelect').removeAttr('disabled');
                 }
                 if (data.horaInicioReal !== null) {
                     $('#startButtonModal').hide();

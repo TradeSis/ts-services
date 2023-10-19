@@ -6,7 +6,7 @@
 // gabriel 04082023
 
 
-include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/tarefas.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
@@ -126,7 +126,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
       <div class="col-12 order-3 col-sm-12 col-md-12 col-lg-5 order-lg-3">
         <div class="input-group">
-          <input type="text" class="form-control" id="buscaTarefa" placeholder="Buscar por id ou titulo">
+          <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
           <span class="input-group-btn">
             <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
               <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
@@ -168,7 +168,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <th></th>
               <th>
                 <form action="" method="post">
-                  <select class="form-control ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -188,7 +188,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               </th>
               <th>
                 <form action="" method="post">
-                  <select class="form-control ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -208,7 +208,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               </th>
               <th>
                 <form action="" method="post">
-                  <select class="form-control ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -228,7 +228,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               </th>
               <th>
                 <form action="" method="post">
-                  <select class="form-control ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" id="FiltroPrevistoOrdem">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" id="FiltroPrevistoOrdem">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -243,7 +243,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               </th>
               <th >
                 <form action="" method="post">
-                  <select class="form-control ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>

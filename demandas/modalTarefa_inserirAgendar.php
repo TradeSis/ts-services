@@ -3,89 +3,81 @@
    <div class="modal-dialog modal-lg">
      <div class="modal-content">
        <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa</h5>
+         <h5 class="modal-title">Inserir Tarefa</h5>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
            <span aria-hidden="true">&times;</span>
          </button>
        </div>
        <div class="modal-body">
          <form method="post" id="inserirForm">
+
            <div class="row">
-             <div class="col-md-6 form-group">
-               <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-               <div class="for-group" style="margin-top: 22px;">
-                 <input type="text" class="form-control" name="tituloTarefa" id="newtitulo" autocomplete="off" required>
-               </div>
-               <input type="hidden" class="form-control" name="idDemanda" value="null" id="newidDemanda">
+             <div class="col-md-6">
+               <label class='form-label ts-label'>Tarefa</label>
+               <input type="text" class="form-control ts-input" name="tituloTarefa" id="newtitulo" autocomplete="off" required>
+               <input type="hidden" class="form-control ts-input" name="idDemanda" value="null" id="newidDemanda">
              </div>
              <div class="col-md-6">
-               <div class="form-group">
-                 <label class='control-label' for='inputNormal'>Cliente</label>
-                 <div class="form-group" style="margin-top: 40px;">
-                   <select class="form-control" name="idCliente" id="newidCliente">
-                     <option value="null"></option>
-                     <?php
-                      foreach ($clientes as $cliente) {
-                      ?>
-                       <option value="<?php echo $cliente['idCliente'] ?>">
-                         <?php echo $cliente['nomeCliente'] ?>
-                       </option>
-                     <?php } ?>
-                   </select>
-                 </div>
+               <label class='form-label ts-label'>Cliente</label>
+               <div class="form-label ts-label">
+                 <select class="form-select ts-input" name="idCliente" id="newidCliente">
+                   <option value="null"></option>
+                   <?php
+                    foreach ($clientes as $cliente) {
+                    ?>
+                     <option value="<?php echo $cliente['idCliente'] ?>">
+                       <?php echo $cliente['nomeCliente'] ?>
+                     </option>
+                   <?php } ?>
+                 </select>
                </div>
              </div>
+           </div>
+
+           <div class="row mt-4">
              <div class="col-md-6">
-               <div class="form-group">
-                 <label class='control-label' for='inputNormal'>Reponsável</label>
-                 <div class="form-group" style="margin-top: 20px;">
-                   <select class="form-control" name="idAtendente" id="newidAtendente">
-                     <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
-                     <?php
-                      foreach ($atendentes as $atendente) {
-                      ?>
-                       <option value="<?php echo $atendente['idUsuario'] ?>">
-                         <?php echo $atendente['nomeUsuario'] ?>
-                       </option>
-                     <?php } ?>
-                   </select>
-                 </div>
+               <label class='form-label ts-label'>Reponsável</label>
+               <div class="form-label ts-label">
+                 <select class="form-select ts-input" name="idAtendente" id="newidAtendente">
+                   <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
+                   <?php
+                    foreach ($atendentes as $atendente) {
+                    ?>
+                     <option value="<?php echo $atendente['idUsuario'] ?>">
+                       <?php echo $atendente['nomeUsuario'] ?>
+                     </option>
+                   <?php } ?>
+                 </select>
                </div>
              </div>
              <div class="col-md-6">
-               <div class="form-group">
-                 <label class='control-label' for='inputNormal'>Ocorrência</label>
-                 <div class="form-group" style="margin-top: 20px;">
-                   <select class="form-control" name="idTipoOcorrencia" id="newidTipoOcorrencia">
-                     <option value="null">Selecione</option>
-                     <?php
-                      foreach ($ocorrencias as $ocorrencia) {
-                      ?>
-                       <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                         <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                       </option>
-                     <?php } ?>
-                   </select>
-                 </div>
+               <label class='form-label ts-label'>Ocorrência</label>
+               <div class="form-label ts-label">
+                 <select class="form-select ts-input" name="idTipoOcorrencia" id="newidTipoOcorrencia">
+                   <option value="null">Selecione</option>
+                   <?php
+                    foreach ($ocorrencias as $ocorrencia) {
+                    ?>
+                     <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                       <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                     </option>
+                   <?php } ?>
+                 </select>
                </div>
              </div>
+           </div>
+           <div class="row mt-4">
              <div class="col-md-4">
-               <div class="form-group">
-                 <label class="labelForm">Data Previsão</label>
-                 <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
-               </div>
+               <label class="form-label ts-label">Data Previsão</label>
+               <input type="date" class="form-control ts-input" name="Previsto" autocomplete="off" required>
              </div>
              <div class="col-md-4">
-               <div class="form-group">
-                 <label class="labelForm">Inicio</label>
-                 <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
-               </div>
+               <label class="form-label ts-label">Inicio</label>
+               <input type="time" class="form-control ts-input" name="horaInicioPrevisto" autocomplete="off">
              </div>
              <div class="col-md-4">
-               <div class="form-group">
-                 <label class="labelForm">Fim</label>
-                 <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
-               </div>
+               <label class="form-label ts-label">Fim</label>
+               <input type="time" class="form-control ts-input" name="horaFinalPrevisto" autocomplete="off">
              </div>
            </div>
        </div><!--modal body-->

@@ -49,68 +49,20 @@ if (isset($_SESSION['idCliente'])) {
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
+    <link rel="stylesheet" href="../css/tabs_visualizar.css">
 
 </head>
-<style>
-    body {
-        margin-bottom: 30px;
-    }
 
-    .line {
-        width: 100%;
-        border-bottom: 1px solid #707070;
-    }
 
-    #tabs .tab {
-        display: inline-block;
-        padding: 5px 10px;
-        cursor: pointer;
-        position: relative;
-        z-index: 5;
-        border-radius: 3px 3px 0 0;
-        background-color: #567381;
-        color: #EEEEEE;
-    }
-
-    #tabs .whiteborder {
-        border: 1px solid #707070;
-        border-bottom: 1px solid #fff;
-        border-radius: 3px 3px 0 0;
-        background-color: #EEEEEE;
-        color: #567381;
-    }
-
-    #tabs .tabContent {
-        position: relative;
-        top: -1px;
-        z-index: 1;
-        padding: 10px;
-        border-radius: 0 0 3px 3px;
-        color: black;
-    }
-
-    #tabs .hide {
-        display: none;
-    }
-
-    #tabs .show {
-        display: block;
-    }
-
-    .modal-backdrop {
-        background-color: rgba(200, 200, 200, 0.5);
-    }
-</style>
-
-<body class="bg-transparent">
+<body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
+            <div class="col-sm mt-3 ml-4" >
                 <span class="titulo">Chamado -
                     <?php echo $idDemanda ?>
                 </span>
             </div>
-            <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
+            <div class="col-sm mt-3 text-end">
                 <!-- Gabriel 22092023 id544 href dinâmico com session -->
                 <?php if (isset($_SESSION['origem'])) { ?>
                     <a href="<?php echo $_SESSION['origem'] ?>" role="button" class="btn btn-primary"><i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>

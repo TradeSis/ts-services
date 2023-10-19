@@ -5,7 +5,7 @@
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
 
-include_once '../head.php';
+include_once '../header.php';
 include_once '../database/demanda.php';
 include_once '../database/contratos.php';
 include_once '../database/tarefas.php';
@@ -43,7 +43,14 @@ if (isset($_SESSION['idCliente'])) {
 }
 
 ?>
+<!doctype html>
+<html lang="pt-BR">
 
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 <style>
     body {
         margin-bottom: 30px;
@@ -457,7 +464,8 @@ if (isset($_SESSION['idCliente'])) {
         </div>
     </div>
     <!--Gabriel 11102023 ID 596 modal Alterar tarefa via include -->
-    <?php include 'alterarTarefaModal.php'; ?>
+    <!--Lucas 18102023 ID 602 alterado nome do arquivo para modalTarefa_alterar -->
+    <?php include 'modalTarefa_alterar.php'; ?>
 
 
     <script>

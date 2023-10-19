@@ -75,12 +75,19 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 </head>
 
 
-
-
 <body>
-<!-- MENUFILTROS -->
-  <nav class="ts-menuFiltros" style="margin-top: -3px;">
-  <label class="pl-2" for="">Filtrar por:</label>
+
+  <div class="container-fluid text-center">
+    <div class="row">
+      <BR> <!-- MENSAGENS/ALERTAS -->
+    </div>
+    <div class="row">
+      <BR> <!-- BOTOES AUXILIARES -->
+    </div>
+
+    <!-- MENUFILTROS -->
+    <nav class="ts-menuFiltros" style="margin-top: -3px;">
+      <label class="pl-2" for="">Filtrar por:</label>
    
       <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
       <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
@@ -104,15 +111,6 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
     </div>
   </nav>
-
-
-  <div class="container-fluid text-center">
-    <div class="row">
-      <BR> <!-- MENSAGENS/ALERTAS -->
-    </div>
-    <div class="row">
-      <BR> <!-- BOTOES AUXILIARES -->
-    </div>
 
     <div class="row align-items-center">
       <div class="col-6 order-4 col-sm-6 col-md-6 order-md-4 col-lg-1 order-lg-1 mt-3 text-start">
@@ -272,223 +270,27 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   </div>
 
 
-<!--------- FILTRO PERIODO --------->
-<div class="modal fade bd-example-modal-lg" id="periodoModal" tabindex="-1" role="dialog"
-    aria-labelledby="periodoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Filtro Periodo</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="post">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="<?php echo null ?>" id="Radio" name="FiltroPeriodo"
-                <?php echo $Checked; ?> hidden>
-              <input class="form-check-input" type="radio" value="1" id="PrevisaoRadio" name="FiltroPeriodo" <?php echo $previsaoChecked; ?>>
-              <label class="form-check-label" for="PrevisaoRadio">
-                Previsão
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="0" id="RealizadoRadio" name="FiltroPeriodo" <?php echo $realizadoChecked; ?>>
-              <label class="form-check-label" for="RealizadoRadio">
-                Realizado
-              </label>
-            </div>
-            <div class="row" id="conteudoReal">
-              <div class="col">
-                <label class="labelForm">Começo</label>
-                <?php if ($PeriodoInicio != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoInicio"
-                  value="<?php echo $PeriodoInicio ?>" name="PeriodoInicio" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoInicio" name="PeriodoInicio"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-              <div class="col">
-                <label class="labelForm">Fim</label>
-                <?php if ($PeriodoFim != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoFim"
-                  value="<?php echo $PeriodoFim ?>" name="PeriodoFim" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoFim" name="PeriodoFim"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col-sm" style="text-align:left;margin-left:10px">
-                <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
-              </div>
-              <div class="col-sm" style="text-align:right;margin-right:10px">
-                <button type="button" class="btn btn-success" id="filtrarButton" data-dismiss="modal">Filtrar</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!--------- FILTRO PERIODO --------->
+  <?php include_once 'modalTarefa_filtroPeriodo.php' ?>
 
   <!--------- MODAL STOP Tab EXECUCAO --------->
-  <div class="modal fade bd-example-modal-lg" id="stopexecucaomodal" tabindex="-1" role="dialog"
-    aria-labelledby="stopexecucaomodalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- gabriel 13102023 id 596 adicionado id -->
-          <form method="post" id="stopForm">
-            <div class="container-fluid p-0">
-              <div class="col">
-                <span class="tituloEditor">Comentários</span>
-              </div>
-              <div class="quill-stop" style="height:20vh !important"></div>
-              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
-            </div>
-            <div class="col-md form-group" style="margin-top: 5px;">
-              <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>"
-                readonly>
-              <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>"
-                readonly>
-              <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
-              <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
-              <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
-              <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2"
-                readonly style="display: none;" />
+  <?php include_once 'modalTarefa_stop.php' ?>
 
-            </div>
-        </div>
-        <div class="modal-footer">
-          <div class="col align-self-start pl-0">
-            <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
-            <button type="submit" id="realizadoFormbutton" class="btn btn-warning float-left">Entregar</button>
-          </div>
-          <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
-          <button type="submit" id="stopFormbutton" class="btn btn-danger">Stop</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
   <!--------- INSERIR/AGENDAR --------->
-  <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
-    aria-labelledby="inserirModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="container">
-          <form method="post" id="inserirForm">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                <div class="for-group" style="margin-top: 22px;">
-                  <input type="text" class="form-control" name="tituloTarefa" id="newtitulo" autocomplete="off"
-                    required>
-                </div>
-                <input type="hidden" class="form-control" name="idDemanda" value="null" id="newidDemanda">
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Cliente</label>
-                  <div class="form-group" style="margin-top: 40px;">
-                    <select class="form-control" name="idCliente" id="newidCliente">
-                      <option value="null"></option>
-                      <?php
-                      foreach ($clientes as $cliente) {
-                        ?>
-                      <option value="<?php echo $cliente['idCliente'] ?>">
-                        <?php echo $cliente['nomeCliente'] ?>
-                      </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Reponsável</label>
-                  <div class="form-group" style="margin-top: 20px;">
-                    <select class="form-control" name="idAtendente" id="newidAtendente">
-                      <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
-                      <?php
-                      foreach ($atendentes as $atendente) {
-                        ?>
-                        <option value="<?php echo $atendente['idUsuario'] ?>">
-                          <?php echo $atendente['nomeUsuario'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Ocorrência</label>
-                  <div class="form-group" style="margin-top: 20px;">
-                    <select class="form-control" name="idTipoOcorrencia" id="newidTipoOcorrencia">
-                      <option value="null">Selecione</option>
-                      <?php
-                      foreach ($ocorrencias as $ocorrencia) {
-                        ?>
-                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                          <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Data Previsão</label>
-                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Inicio</label>
-                  <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Fim</label>
-                  <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
-                </div>
-              </div>
-            </div>
-            <div class="card-footer bg-transparent" style="text-align:right">
-              <button type="submit" class="btn btn-warning" id="inserirStartBtn">Start</button>
-              <button type="submit" class="btn btn-success" id="inserirBtn">Inserir</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php include_once 'modalTarefa_inserirAgendar.php' ?>
 
-  <?php include 'alterarTarefaModal.php'; ?>
+  <!--------- TAREFAS ALTERAR--------->
+  <?php include 'modalTarefa_alterar.php'; ?>
 
+
+
+<!-- LOCAL PARA COLOCAR OS JS -->
+
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <!-- script para menu de filtros -->
     <script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+
 
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
@@ -1028,7 +830,10 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
     });
 
+    
+
   </script>
+  
 
   <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 

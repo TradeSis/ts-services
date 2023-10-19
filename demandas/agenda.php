@@ -223,7 +223,8 @@ $demandas = buscaDemandasAbertas();
     </div>
   </div>
 
-  <?php include 'alterarTarefaModal.php'; ?>
+  <!--Lucas 18102023 ID 602 alterado nome do arquivo para modalTarefa_alterar -->
+  <?php include 'modalTarefa_alterar.php'; ?>
 
   <script type="text/javascript">
         $(document).on('click', '.fc-month-button', function () {

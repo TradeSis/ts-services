@@ -3,8 +3,6 @@ include_once '../head.php';
 ?>
 
 
-<body class="bg-transparent">
-
     <div class="container-fluid">
         <form method="post" id="form" enctype="multipart/form-data">
             <div class="row">
@@ -16,9 +14,9 @@ include_once '../head.php';
                             $clientes = buscaClientes($usuario["idCliente"]);
                             $nomeCliente = $clientes["nomeCliente"];
                         } ?>
-                        <input type="hidden" class="form-control" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
-                        <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                        <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $nomeCliente ?>" readonly>
+                        <input type="hidden" class="form-control ts-label" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
+                        <input type="hidden" class="form-control ts-label" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                        <input type="text" class="form-control ts-input" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $nomeCliente ?>" readonly>
                     </div>
                     <div class="form-group">
 
@@ -173,4 +171,3 @@ include_once '../head.php';
             $('#quill-comentario').val(quillcomentario.container.firstChild.innerHTML);
         });
     </script>
-</body>

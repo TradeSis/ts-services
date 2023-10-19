@@ -64,8 +64,8 @@
 
 [class="2"] {
     margin-top: 5px;
-    display: inline-block !important;
-    background: #FFC107;
+    display: inline-block;
+    background: #FFC107!important;
     color: #fff;
     width: 160px;
 }

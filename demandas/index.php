@@ -215,7 +215,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   </nav>
 
   <!--------- MODAL DEMANDA INSERIR --------->
-  <div class="modal fade " id="inserirDemandaModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
+  <div class="modal" id="inserirDemandaModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
     <!-- Gabriel 13102023 fix modal nova demanda, ajustado para modal-lg  -->
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
@@ -229,22 +229,19 @@ if (isset($_SESSION['filtro_demanda'])) {
         </div>
         <div class="modal-body">
           <form method="post" id="form1">
-            <div class="row">
-              <div class="col-sm-8 col-md form-group" style="margin-top: 5px;">
-                <label class='control-label' for='inputNormal' style="margin-top: 4px;">
-                  <?php echo $contratoTipo['nomeDemanda'] ?>
-                </label>
-                <input type="text" class="form-control" name="tituloDemanda" autocomplete="off" required>
-                <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
-                <input type="hidden" class="form-control" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" readonly>
+            <div class="row mt-1">
+              <div class="col-sm-8 col-md">
+                <label class='form-label ts-label'><?php echo $contratoTipo['nomeDemanda'] ?></label>
+                <input type="text" class="form-control ts-input" name="tituloDemanda" autocomplete="off" required>
+                <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
+                <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" readonly>
               </div>
-              <div class="col-sm-4 col-md-2 form-group-select" style="margin-top: -20px;">
-                <div class="form-group">
-                  <label class="labelForm">Cliente</label>
+              <div class="col-sm-4 col-md-2">
+                  <label class="form-label ts-label">Cliente</label>
                   <?php
                   if ($ClienteSession == NULL) { ?>
-                    <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                    <select class="select form-control" name="idCliente" autocomplete="off" style="margin-top: -10px;">
+                    <input type="hidden" class="form-control ts-input" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                    <select class="form-select ts-input" name="idCliente" autocomplete="off">
                       <?php
                       foreach ($clientes as $cliente) {
                       ?>
@@ -254,15 +251,14 @@ if (isset($_SESSION['filtro_demanda'])) {
                       <?php } ?>
                     </select>
                   <?php } else { ?>
-                    <input type="text" class="form-control" style="margin-top: -8px;" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
-                    <input type="hidden" class="form-control" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
-                    <input type="hidden" class="form-control" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                    <input type="text" class="form-control ts-input" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $usuario['nomeCliente'] ?>" readonly>
+                    <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
+                    <input type="hidden" class="form-control ts-input" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>" readonly>
                   <?php } ?>
-                </div>
               </div>
             </div>
 
-            <div class="row" style="margin-top: 5px;">
+            <div class="row mt-3">
               <div class="col-md-6">
                 <div class="container-fluid p-0">
                   <div class="col">
@@ -273,15 +269,15 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </div>
               </div><!--col-md-6-->
 
-              <div class="col-md-6" style="margin-top: 25px;">
+              <div class="col-md-6">
                 <div class="row">
-                  <div class="col-sm-6 col-md-6 form-group" style="margin-top: -25px;">
-                    <label class="labelForm">Previsão</label>
-                    <input type="number" class="data select form-control" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                  <div class="col-sm-6 col-md-6">
+                    <label class="form-label ts-label">Previsão</label>
+                    <input type="number" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                   </div>
-                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: -25px;">
-                    <label class="labelForm">Ocorrência</label>
-                    <select class="select form-control" name="idTipoOcorrencia" autocomplete="off">
+                  <div class="col-sm-6 col-md-6">
+                    <label class="form-label ts-label">Ocorrência</label>
+                    <select class="form-select ts-input" name="idTipoOcorrencia" autocomplete="off">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -300,10 +296,10 @@ if (isset($_SESSION['filtro_demanda'])) {
                   </div>
                 </div><!--fim row 1-->
 
-                <div class="row">
-                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: -25px;">
-                    <label class="labelForm">Tamanho</label>
-                    <select class="select form-control" name="tamanho">
+                <div class="row mt-3">
+                  <div class="col-sm-6 col-md-6">
+                    <label class="form-label ts-label">Tamanho</label>
+                    <select class="form-select ts-input" name="tamanho">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -312,9 +308,9 @@ if (isset($_SESSION['filtro_demanda'])) {
                       <option value="G">G</option>
                     </select>
                   </div>
-                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: -25px;">
-                    <label class="labelForm">Serviço</label>
-                    <select class="select form-control" name="idServico" autocomplete="off">
+                  <div class="col-sm-6 col-md-6">
+                    <label class="form-label ts-label">Serviço</label>
+                    <select class="form-select ts-input" name="idServico" autocomplete="off">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -327,10 +323,10 @@ if (isset($_SESSION['filtro_demanda'])) {
                   </div>
                 </div><!--fim row 2-->
 
-                <div class="row">
-                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: 40px;">
-                    <label class="labelForm">Responsável</label>
-                    <select class="select form-control" name="idAtendente">
+                <div class="row mt-3">
+                  <div class="col-sm-6 col-md-6">
+                    <label class="form-label ts-label">Responsável</label>
+                    <select class="form-select ts-input" name="idAtendente">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -341,12 +337,12 @@ if (isset($_SESSION['filtro_demanda'])) {
                       <?php } ?>
                     </select>
                   </div>
-                  <div class="col-sm-6 col-md-6 form-group-select" style="margin-top: 40px;">
-                    <label class="labelForm">Contrato Vinculado</label>
+                  <div class="col-sm-6 col-md-6">
+                    <label class="form-label ts-label">Contrato Vinculado</label>
                     <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
-                      <select class="select form-control" name="idContrato" autocomplete="off" required>
+                      <select class="form-select ts-input" name="idContrato" autocomplete="off" required>
                       <?php } else { ?>
-                        <select class="select form-control" name="idContrato" autocomplete="off">
+                        <select class="form-select ts-input" name="idContrato" autocomplete="off">
                         <?php } ?>
 
                         <option value="<?php echo null ?>">
@@ -389,7 +385,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
         <div class="input-group">
-          <input type="text" class="form-control" id="buscaDemanda" placeholder="Buscar por id ou titulo">
+          <input type="text" class="form-control ts-input" id="buscaDemanda" placeholder="Buscar por id ou titulo">
           <span class="input-group-btn">
             <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
               <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
@@ -401,7 +397,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       <div class="col-4 order-2 col-sm-4 col-md-4 order-md-2 d-flex col-lg-2 order-lg-4">
         <div class="col-8 mb-1">
           <form class="d-flex text-end" action="" method="post">
-            <select class="form-control" name="exportoptions" id="exportoptions">
+            <select class="form-select ts-input mt-3" name="exportoptions" id="exportoptions">
               <option value="excel">Excel</option>
               <option value="pdf">PDF</option>
               <option value="csv">csv</option>
@@ -443,7 +439,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" >
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -463,7 +459,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante" >
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -484,7 +480,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario" >
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -505,7 +501,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" >
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -523,7 +519,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia" >
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia" >
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -545,7 +541,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao" >
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao" >
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <option value="0">Atendente</option>
                       <option value="1">Cliente</option>
@@ -574,7 +570,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" disabled>
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" disabled>
                       <?php
                       foreach ($clientes as $cliente) {
                       ?>
@@ -591,7 +587,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -612,7 +608,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <th></th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -630,7 +626,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </th>
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                       <option value="<?php echo null ?>">
                         <?php echo "Selecione" ?>
                       </option>
@@ -652,7 +648,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
                 <th>
                   <form action="" method="post">
-                    <select class="form-control text-center ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
+                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
                       <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                       <option value="0">Atendente</option>
                       <option value="1">Cliente</option>

@@ -261,7 +261,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="buscaContrato" placeholder="Buscar por id ou titulo">
+                    <input type="text" class="form-control ts-input" id="buscaContrato" placeholder="Buscar por id ou titulo">
                     <span class="input-group-btn">
                         <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                                 search
@@ -298,7 +298,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         <th ></th>
                         <th >
                             <form action="" method="post">
-                                <select class="form-control ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
+                                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                     <?php
                                     foreach ($clientes as $cliente) {
@@ -315,7 +315,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         <th ></th>
                         <th >
                             <form action="" method="post">
-                                <select class="form-control ts-selectFiltrosHeaderTabela" name="idContratoStatus" id="FiltroContratoStatus">
+                                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idContratoStatus" id="FiltroContratoStatus">
                                     <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
                                     <?php
 

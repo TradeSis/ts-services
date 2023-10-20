@@ -138,12 +138,12 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       <!-- Gabriel 06102023 ID 596 removido buscar duplicado -->
 
       <div class="col-2 order-2 col-sm-1 col-md-1 order-md-2 col-lg-2 order-lg-4">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#periodoModal"><i
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i
             class="bi bi-calendar3"></i></button>
       </div>
 
       <div class="col-6 order-5 col-sm-6 col-md-6 order-md-4 col-lg-2 order-lg-5 mt-1 text-end">
-        <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirModal"><i
+        <button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirModal"><i
             class="bi bi-plus-square"></i>&nbsp Novo</button>
       </div>
     </div>
@@ -288,8 +288,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
-    <!-- script para menu de filtros -->
-    <script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+<!-- script para menu de filtros -->
+<script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
 
 
   <script>
@@ -465,7 +465,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
               linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
             }
-            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1' data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
+            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1'  data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>" ;
             linha += "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
 
             linha += "</td>";
@@ -571,7 +571,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     var inserirModal = document.getElementById("inserirModal");
 
-    var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
+    var inserirBtn = document.querySelector("button[data-bs-target='#inserirModal']");
 
     inserirBtn.onclick = function () {
       inserirModal.style.display = "block";
@@ -585,6 +585,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     $(document).ready(function () {
       $(document).on('click', 'button.clonarButton', function () {
+
         var idTarefa = $(this).data("idtarefa"); // Use data() to access the custom data attribute
         $.ajax({
           type: 'POST',

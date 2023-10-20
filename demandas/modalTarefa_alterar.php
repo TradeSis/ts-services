@@ -1,22 +1,20 @@
 <!-- Gabriel 06102023 ID 596 mudanças em agenda e tarefas -->
 
 <!--------- ALTERAR --------->
-<div class="modal" id="alterarmodal" tabindex="-1" role="dialog" aria-labelledby="alterarmodalLabel" aria-hidden="true">
+<div class="modal" id="alterarmodal" tabindex="-1"  aria-labelledby="alterarmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Alterar Tarefa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link ts-tabModal active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Dados Tarefa</a>
+                        <a class="nav-link ts-tabModal active" id="basic-tab" data-bs-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Dados Tarefa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link ts-tabModal" id="advanced-tab" data-toggle="tab" href="#advanced" role="tab" aria-controls="advanced" aria-selected="false">Mais Opções</a>
+                        <a class="nav-link ts-tabModal" id="advanced-tab" data-bs-toggle="tab" href="#advanced" role="tab" aria-controls="advanced" aria-selected="false">Mais Opções</a>
                     </li>
                 </ul>
                 <form method="post" id="alterarForm">
@@ -213,7 +211,7 @@
                 $('#idCliente').val(data.idCliente);
                 $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
-
+                $('#idDemanda').val(data.idDemanda);
                 $('#idAtendente').val(data.idAtendente);
                 $('#idAtendenteSelect').val(data.idAtendente);
                 $('#nomeUsuario').val(data.nomeUsuario);
@@ -229,7 +227,7 @@
                 $('#tipoStatusDemanda').val(data.idTipoStatus);
                 quilldescricao.root.innerHTML = data.descricao;
 
-
+                
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
                     $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
@@ -237,7 +235,7 @@
                 } else {
                     $('#visualizarDemandaButton').hide();
                 }
-
+          
                 if (data.Previsto !== null || data.dataReal !== null) {
                     //se vier dataPrevisto ou dataReal o select vai estar desabilitado
                     $("#idAtendenteSelect").prop('disabled', true);
@@ -267,10 +265,10 @@
                     $('#realizadoButtonModal').hide();
                     $('#stopButtonModal').hide();
                 }
-                if (data.idCliente == null) {
+                if(data.idCliente == null){
                     //se idCliente vier nulo o select vai estar habilitado
-                    $("#idClienteSelect").prop('disabled', false);
-                } else {
+                     $("#idClienteSelect").prop('disabled', false);
+                }else{
                     //se idCliente vier Preenchido o select vai estar desabilitado
                     $("#idClienteSelect").prop('disabled', true);
                 }

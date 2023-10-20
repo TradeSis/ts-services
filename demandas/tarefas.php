@@ -261,7 +261,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             </tr>
           </thead>
 
-          <tbody id='dados' class="fonteCorpo" >
+          <tbody id='dados' class="fonteCorpo">
 
           </tbody>
         </table>

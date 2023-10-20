@@ -96,14 +96,12 @@ if (isset($_SESSION['idCliente'])) {
     </div>
 
     <!--------- INSERIR/NOVA --------->
-    <div class="modal" id="inserirModal" tabindex="-1" role="dialog" aria-labelledby="inserirModalLabel" aria-hidden="true">
+    <div class="modal" id="inserirModal" tabindex="-1"  aria-labelledby="inserirModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Inserir Tarefa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form1">
@@ -190,14 +188,12 @@ if (isset($_SESSION['idCliente'])) {
     <!--Gabriel 11102023 ID 596 removido modal Alterar tarefa -->
 
     <!--------- MODAL STOP --------->
-    <div class="modal" id="stopmodal" tabindex="-1" role="dialog" aria-labelledby="stopmodalLabel" aria-hidden="true">
+    <div class="modal" id="stopmodal" tabindex="-1" aria-labelledby="stopmodalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post">

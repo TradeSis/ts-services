@@ -22,7 +22,7 @@ include_once '../header.php';
 
             <div class="col-2 text-end">
                 <?php if ($demanda['idTipoStatus'] !== TIPOSTATUS_REALIZADO && $demanda['idTipoStatus'] !== TIPOSTATUS_VALIDADO) { ?>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
                 <?php } ?>
             </div>
         </div>
@@ -129,7 +129,7 @@ include_once '../header.php';
                             </td>
                             <td>
                                 <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
-                                    <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-toggle="modal" data-target="#stopmodal" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-stop-circle"></i></button>
+                                    <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-bs-toggle="modal" data-bs-target="#stopmodal" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-stop-circle"></i></button>
                                 <?php } ?>
                                 <?php if ($horaInicioReal == "00:00") { ?>
                                     <button type="button" class="startButton btn btn-success btn-sm" value="Start" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-play-circle"></i></button>
@@ -138,7 +138,7 @@ include_once '../header.php';
                                 <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
                                     <button type="button" class="novoStartButton btn btn-success btn-sm" value="Start" data-id="<?php echo $tarefa['idTarefa'] ?>" data-titulo="<?php echo $tarefa['tituloTarefa'] ?>" data-cliente="<?php echo $tarefa['idCliente'] ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>" data-atendente="<?php echo $tarefa['idAtendente'] ?>" data-status="<?php echo $idTipoStatus ?>" data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>" data-statusdemanda="<?php echo $idTipoStatus ?>" data-previsto="<?php echo $tarefa['Previsto'] ?>" data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>" data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>" data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>" data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>" data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>"><i class="bi bi-play-circle"></i></button>
                                 <?php } ?>
-                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i></button>
+                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i></button>
                             </td>
                         </tr>
                     <?php } ?>

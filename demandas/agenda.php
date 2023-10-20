@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/tarefas.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
@@ -25,11 +25,14 @@ $tarefas = buscaTarefas(null, null, $idAtendente, $statusTarefa);
 $demandas = buscaDemandasAbertas();
 
 ?>
-
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="pt-BR">
 
 <head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
     <style>
         ::-webkit-scrollbar {
             width: 0.5em;
@@ -62,18 +65,16 @@ $demandas = buscaDemandasAbertas();
             font-size: 20px;
         }
     </style>
-</head>
 
-</html>
 
-<body class="bg-transparent">
+<body>
 
     <nav style="margin-left:230px;margin-bottom:-50px">
         <ul>
+            <div class="col-2">
             <form action="" method="post">
-                <label class="labelForm">Responsável</label>
-                <select class="form-control text-center" name="idAtendente" id="FiltroAtendente"
-                    style="font-size: 14px; width: 150px; height: 35px;margin-top:-4px">
+                <label class="form-label ts-label">Responsável</label>
+                <select class="form-select ts-input" name="idAtendente" id="FiltroAtendente">
                     <option value="<?php echo null ?>">
                         <?php echo "Todos" ?>
                     </option>
@@ -90,6 +91,8 @@ $demandas = buscaDemandasAbertas();
                     <?php } ?>
                 </select>
             </form>
+            </div>
+           
         </ul>
     </nav>
     <div class="mt-3" id="calendar"></div>

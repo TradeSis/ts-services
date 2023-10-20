@@ -1,5 +1,10 @@
 <!-- Gabriel 06102023 ID 596 mudanças em agenda e tarefas -->
 
+<style>
+    .aqui{
+        background-color: red;
+    }
+</style>
 <!--------- ALTERAR --------->
 <div class="modal" id="alterarmodal" tabindex="-1" role="dialog" aria-labelledby="alterarmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -51,7 +56,6 @@
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Cliente</label>
                                         <input type="hidden" class="form-control ts-input" id="idCliente">
-                                        <input type="text" class="form-control ts-input" id="nomeCliente" readonly>
                                         <select class="form-select ts-input" name="idClienteSelect" id="idClienteSelect">
                                             <?php
                                             foreach ($clientes as $cliente) {
@@ -67,7 +71,6 @@
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Reponsável</label>
                                         <input type="hidden" class="form-control ts-input" id="idAtendente">
-                                        <input type="text" class="form-control ts-input" id="nomeUsuario" readonly>
                                         <select class="form-select ts-input" name="idAtendenteSelect" id="idAtendenteSelect">
                                             <?php
                                             foreach ($atendentes as $atendente) {
@@ -151,7 +154,7 @@
 </div>
 <!-- LOCAL PARA COLOCAR OS JS -->
 
-<?php /* include_once ROOT . "/vendor/footer_js.php"; */ ?>
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
 
 <script>
@@ -215,7 +218,7 @@
                 $('#idCliente').val(data.idCliente);
                 $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
-
+                
                 $('#idAtendente').val(data.idAtendente);
                 $('#idAtendenteSelect').val(data.idAtendente);
                 $('#nomeUsuario').val(data.nomeUsuario);
@@ -231,28 +234,21 @@
                 $('#tipoStatusDemanda').val(data.idTipoStatus);
                 quilldescricao.root.innerHTML = data.descricao;
 
-
+                
                 if (data.idDemanda !== null) {
-                    //alert(data.idDemanda)
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
                     $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
                     $('#visualizarDemandaButton').show();
                 } else {
                     $('#visualizarDemandaButton').hide();
                 }
-                if (data.idDemanda !== null) {
-                    $('#idClienteSelect').hide();
-                    $('#nomeCliente').show();
-                } else {
-                    $('#idClienteSelect').show();
-                    $('#nomeCliente').hide();
-                }
+          
                 if (data.Previsto !== null || data.dataReal !== null) {
-                    $('#idAtendenteSelect').hide();
-                    $('#nomeUsuario').show();
+                    //se vier dataPrevisto ou dataReal o select vai estar desabilitado
+                    $("#idAtendenteSelect").prop('disabled', true);
                 } else {
-                    $('#idAtendenteSelect').show();
-                    $('#nomeUsuario').hide();
+                    //senão vai habilitar o select
+                    $("#idAtendenteSelect").prop('disabled', false);
                 }
 
                 if (data.idDemanda !== null) {
@@ -275,6 +271,13 @@
                     $('#startButtonModal').hide();
                     $('#realizadoButtonModal').hide();
                     $('#stopButtonModal').hide();
+                }
+                if(data.idCliente == null){
+                    //se idCliente vier nulo o select vai estar habilitado
+                     $("#idClienteSelect").prop('disabled', false);
+                }else{
+                    //se idCliente vier Preenchido o select vai estar desabilitado
+                    $("#idClienteSelect").prop('disabled', true);
                 }
 
                 $('#alterarmodal').modal('show');

@@ -38,11 +38,9 @@ include_once('../header.php');
 
         <form class="mb-4" action="../database/tipoocorrencia.php?operacao=inserir" method="post">
 
-            <div class="col-md-12 form-group">
-                <label class='control-label' for='inputNormal' style="margin-top: -20px;">Tipo Ocorrência</label>
-                <div class="for-group">
-                    <input type="text" name="nomeTipoOcorrencia" class="form-control" autocomplete="off">
-                </div>
+            <div class="col-md-12">
+                <label class='form-label ts-label'>Tipo Ocorrência</label>
+                <input type="text" name="nomeTipoOcorrencia" class="form-control ts-input" autocomplete="off">
             </div>
 
             <div class="text-end">

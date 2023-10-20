@@ -46,17 +46,15 @@ $contratoStatus = buscaContratoStatus($idContratoStatus);
 
         <form class="mb-4" action="../database/contratoStatus.php?operacao=alterar" method="post">
 
-            <div class="row">
-                <div class="col-md-8 form-group mb-4">
-                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">nome do Status</label>
-                    <div class="for-group">
-                        <input type="text" class="form-control" name="nomeContratoStatus" value="<?php echo $contratoStatus['nomeContratoStatus'] ?>">
-                        <input type="text" class="form-control" name="idContratoStatus" value="<?php echo $contratoStatus['idContratoStatus'] ?>" style="display: none">
-                    </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <label class='form-label ts-label'>nome do Status</label>
+                    <input type="text" class="form-control ts-input" name="nomeContratoStatus" value="<?php echo $contratoStatus['nomeContratoStatus'] ?>">
+                    <input type="text" class="form-control ts-input" name="idContratoStatus" value="<?php echo $contratoStatus['idContratoStatus'] ?>" style="display: none">
                 </div>
-                <div class="col-md-4" style="margin-top: -7px">
-                    <label class="labelForm">Status (0=Fechado 1=Aberto 2=Orçamento)</label>
-                    <select class="form-control" name="mudaStatusPara">
+                <div class="col-md-4">
+                    <label class="form-label ts-label">Status (0=Fechado 1=Aberto 2=Orçamento)</label>
+                    <select class="form-select ts-input" name="mudaStatusPara">
                         <option value="<?php echo $contratoStatus['mudaStatusPara'] ?>"><?php echo $contratoStatus['mudaStatusPara'] ?></option>
                         <option>0</option>
                         <option>1</option>

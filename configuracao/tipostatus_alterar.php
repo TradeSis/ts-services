@@ -44,22 +44,22 @@ $status = buscaTipoStatus(null, $idTipoStatus);
 
         <form class="mb-4" action="../database/tipostatus.php?operacao=alterar" method="post">
 
-            <div class="col-md-12 form-group">
-                <label class='control-label' for='inputNormal'></label>
-                <input type="text" class="form-control" name="nomeTipoStatus" value="<?php echo $status['nomeTipoStatus'] ?>">
-                <input type="text" class="form-control" name="idTipoStatus" value="<?php echo $status['idTipoStatus'] ?>" style="display: none">
-                <div class="row">
+            <div class="col-md-12 mt-3">
+                <label class='form-label ts-label'></label>
+                <input type="text" class="form-control ts-input" name="nomeTipoStatus" value="<?php echo $status['nomeTipoStatus'] ?>">
+                <input type="hidden" class="form-control ts-input" name="idTipoStatus" value="<?php echo $status['idTipoStatus'] ?>">
+                <div class="row mt-3">
                     <div class="col-md-6">
-                        <label class="labelForm">Atendimento(0=Atendente 1=Cliente)</label>
-                        <select class="form-control" name="mudaPosicaoPara">
+                        <label class="form-label ts-label">Atendimento(0=Atendente 1=Cliente)</label>
+                        <select class="form-select ts-input" name="mudaPosicaoPara">
                             <option value="<?php echo $status['mudaPosicaoPara'] ?>"><?php echo $status['mudaPosicaoPara'] ?></option>
                             <option>0</option>
                             <option>1</option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label class="labelForm">Situação (0=Fechado 1=Aberto)</label>
-                        <select class="form-control" name="mudaStatusPara">
+                        <label class="form-label ts-label">Situação (0=Fechado 1=Aberto)</label>
+                        <select class="form-select ts-input" name="mudaStatusPara">
                             <option value="<?php echo $status['mudaStatusPara'] ?>"><?php echo $status['mudaStatusPara'] ?></option>
                             <option>0</option>
                             <option>1</option>

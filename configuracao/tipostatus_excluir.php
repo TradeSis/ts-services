@@ -45,10 +45,10 @@ $status = buscaTipoStatus(null, $idTipoStatus);
 
         <form class="mb-4" action="../database/tipostatus.php?operacao=excluir" method="post">
 
-            <div class="col-md-12 form-group">
-                <label class='control-label' for='inputNormal'></label>
-                <input type="text" class="form-control" name="nomeTipoStatus" value="<?php echo $status['nomeTipoStatus'] ?>" disabled>
-                <input type="text" class="form-control" name="idTipoStatus" value="<?php echo $status['idTipoStatus'] ?>" style="display: none">
+            <div class="col-md-12">
+                <label class='control-label'></label>
+                <input type="text" class="form-control ts-input" name="nomeTipoStatus" value="<?php echo $status['nomeTipoStatus'] ?>" disabled>
+                <input type="hidden" class="form-control ts-input" name="idTipoStatus" value="<?php echo $status['idTipoStatus'] ?>">
             </div>
 
             <div class="text-end mt-2">

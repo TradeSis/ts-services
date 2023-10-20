@@ -45,10 +45,10 @@ $ocorrencias = buscaTipoOcorrencia(null, $idTipoOcorrencia);
 
         <form class="mb-4" action="../database/tipoocorrencia.php?operacao=alterar" method="post">
 
-            <div class="col-md-12 form-group">
-                <label class='control-label' for='inputNormal'></label>
-                <input type="text" class="form-control" name="nomeTipoOcorrencia" value="<?php echo $ocorrencias['nomeTipoOcorrencia'] ?>">
-                <input type="text" class="form-control" name="idTipoOcorrencia" value="<?php echo $ocorrencias['idTipoOcorrencia'] ?>" style="display: none">
+            <div class="col-md-12">
+                <label class='form-label ts-label'></label>
+                <input type="text" class="form-control ts-input" name="nomeTipoOcorrencia" value="<?php echo $ocorrencias['nomeTipoOcorrencia'] ?>">
+                <input type="hidden" class="form-control ts-input" name="idTipoOcorrencia" value="<?php echo $ocorrencias['idTipoOcorrencia'] ?>">
             </div>
 
             <div class="text-end mt-4">

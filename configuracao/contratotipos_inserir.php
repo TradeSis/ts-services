@@ -36,24 +36,18 @@ include_once('../header.php');
 
 
         <form class="mb-4" action="../database/contratotipos.php?operacao=inserir" method="post">
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome</label>
-                    <div class="for-group">
-                        <input type="text" name="idContratoTipo" class="form-control" autocomplete="off">
-                    </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label class='form-label ts-label'>Nome</label>
+                    <input type="text" name="idContratoTipo" class="form-control ts-input" autocomplete="off">
                 </div>
-                <div class="col-md-4 form-group">
-                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome Contrato</label>
-                    <div class="for-group">
-                        <input type="text" name="nomeContrato" class="form-control" autocomplete="off">
-                    </div>
+                <div class="col-md-4">
+                    <label class='form-label ts-label'>Nome Contrato</label>
+                    <input type="text" name="nomeContrato" class="form-control ts-input" autocomplete="off">
                 </div>
-                <div class="col-md-4 form-group">
-                    <label class='control-label' for='inputNormal' style="margin-top: -5px;">Nome Demanda</label>
-                    <div class="for-group">
-                        <input type="text" name="nomeDemanda" class="form-control" autocomplete="off">
-                    </div>
+                <div class="col-md-4">
+                    <label class='form-label ts-label'>Nome Demanda</label>
+                    <input type="text" name="nomeDemanda" class="form-control ts-input" autocomplete="off">
                 </div>
             </div>
             <div class="text-end mt-4">

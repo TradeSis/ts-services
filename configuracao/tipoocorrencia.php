@@ -76,12 +76,12 @@ $ocorrencias = buscaTipoOcorrencia();
                     <form action="../database/tipoocorrencia.php?operacao=alterar" method="post">
                         <div class="row">
                             <div class="col-md-6 mt-1">
-                                <label class="labelForm">Ocorrência</label>
-                                <input type="text" name="nomeTipoOcorrencia" id="nomeTipoOcorrencia" class="form-control" />
+                                <label class="form-label ts-label">Ocorrência</label>
+                                <input type="text" name="nomeTipoOcorrencia" id="nomeTipoOcorrencia" class="form-control ts-input" />
                             </div>
                             <div class="col-md-6">
-                                <label class="labelForm">Inicial</label>
-                                <select class="form-control" id="ocorrenciaInicial" name="ocorrenciaInicial">
+                                <label class="form-label ts-label">Inicial</label>
+                                <select class="form-control ts-input" id="ocorrenciaInicial" name="ocorrenciaInicial">
                                     <option value="0">Não</option>
                                     <option value="1">Sim</option>
                                 </select>

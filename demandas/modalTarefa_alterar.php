@@ -1,10 +1,5 @@
 <!-- Gabriel 06102023 ID 596 mudanças em agenda e tarefas -->
 
-<style>
-    .aqui{
-        background-color: red;
-    }
-</style>
 <!--------- ALTERAR --------->
 <div class="modal" id="alterarmodal" tabindex="-1" role="dialog" aria-labelledby="alterarmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -218,7 +213,7 @@
                 $('#idCliente').val(data.idCliente);
                 $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
-                
+
                 $('#idAtendente').val(data.idAtendente);
                 $('#idAtendenteSelect').val(data.idAtendente);
                 $('#nomeUsuario').val(data.nomeUsuario);
@@ -234,7 +229,7 @@
                 $('#tipoStatusDemanda').val(data.idTipoStatus);
                 quilldescricao.root.innerHTML = data.descricao;
 
-                
+
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
                     $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
@@ -242,7 +237,7 @@
                 } else {
                     $('#visualizarDemandaButton').hide();
                 }
-          
+
                 if (data.Previsto !== null || data.dataReal !== null) {
                     //se vier dataPrevisto ou dataReal o select vai estar desabilitado
                     $("#idAtendenteSelect").prop('disabled', true);
@@ -272,10 +267,10 @@
                     $('#realizadoButtonModal').hide();
                     $('#stopButtonModal').hide();
                 }
-                if(data.idCliente == null){
+                if (data.idCliente == null) {
                     //se idCliente vier nulo o select vai estar habilitado
-                     $("#idClienteSelect").prop('disabled', false);
-                }else{
+                    $("#idClienteSelect").prop('disabled', false);
+                } else {
                     //se idCliente vier Preenchido o select vai estar desabilitado
                     $("#idClienteSelect").prop('disabled', true);
                 }

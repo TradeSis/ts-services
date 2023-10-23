@@ -215,7 +215,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   </nav>
 
   <!--------- MODAL DEMANDA INSERIR --------->
-  <div class="modal" id="inserirDemandaModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
+  <div class="modal" id="inserirDemandaModal" tabindex="-1"  aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
     <!-- Gabriel 13102023 fix modal nova demanda, ajustado para modal-lg  -->
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
@@ -223,9 +223,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           <h5 class="modal-title" id="exampleModalLabel">Inserir
             <?php echo $contratoTipo['nomeDemanda'] ?>
           </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form method="post" id="form1">
@@ -411,7 +409,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
 
       <div class="col-4 order-3 col-sm-4 col-md-4 order-md-3 col-lg-2 order-lg-5 mt-1 text-end">
-        <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+        <button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
       </div>
     </div>
 

@@ -150,8 +150,6 @@ include_once '../header.php';
 
 
 
-
-
     <script>
         $(document).ready(function() {
             //lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada
@@ -289,6 +287,7 @@ include_once '../header.php';
                 inserirModal.style.display = "none";
             }
         };
+        
     </script>
 </body>
 

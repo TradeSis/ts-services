@@ -17,7 +17,7 @@
                         <a class="nav-link ts-tabModal" id="advanced-tab" data-bs-toggle="tab" href="#advanced" role="tab" aria-controls="advanced" aria-selected="false">Mais Opções</a>
                     </li>
                 </ul>
-                <form method="post" id="alterarForm">
+                <form method="post"  id="alterarForm">
                     <div class="tab-content" id="myTabsContent">
                         <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                             <div class="container">
@@ -59,6 +59,7 @@
                                             <?php } ?>
                                         </select>
                                     </div>
+                                    
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-md-4">
@@ -212,6 +213,8 @@
                 $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
                 $('#idDemanda').val(data.idDemanda);
+                $('#tituloDemanda').val(data.tituloDemanda);
+                //alert(data.idDemanda)
                 $('#idAtendente').val(data.idAtendente);
                 $('#idAtendenteSelect').val(data.idAtendente);
                 $('#nomeUsuario').val(data.nomeUsuario);
@@ -236,6 +239,7 @@
                     $('#visualizarDemandaButton').hide();
                 }
           
+                // Lucas 23102023 - simplificado select
                 if (data.Previsto !== null || data.dataReal !== null) {
                     //se vier dataPrevisto ou dataReal o select vai estar desabilitado
                     $("#idAtendenteSelect").prop('disabled', true);
@@ -244,12 +248,12 @@
                     $("#idAtendenteSelect").prop('disabled', false);
                 }
 
-                if (data.idDemanda !== null) {
+               /*  if (data.idDemanda !== null) {
                     $('#idDemandaSelect').val(data.idDemanda);
                     $('#idDemandaSelect').attr('disabled', 'disabled');
                 } else {
                     $('#idDemandaSelect').removeAttr('disabled');
-                }
+                } */
                 if (data.horaInicioReal !== null) {
                     $('#startButtonModal').hide();
                     $('#realizadoButtonModal').hide();
@@ -265,6 +269,7 @@
                     $('#realizadoButtonModal').hide();
                     $('#stopButtonModal').hide();
                 }
+                // Lucas 23102023 - simplificado select
                 if(data.idCliente == null){
                     //se idCliente vier nulo o select vai estar habilitado
                      $("#idClienteSelect").prop('disabled', false);
@@ -273,17 +278,25 @@
                     $("#idClienteSelect").prop('disabled', true);
                 }
 
+                if(data.idDemanda == null){
+                    //se idDemanda vier nulo o select vai estar habilitado
+                     $("#idDemandaSelect").prop('disabled', false);
+                }else{
+                    //se idDemanda vier Preenchido o select vai estar desabilitado
+                    $("#idDemandaSelect").prop('disabled', true);
+                }
+
                 $('#alterarmodal').modal('show');
             }
         });
     }
-    $(document).on('click', 'button[data-target="#alterarmodal"]', function() {
+    $(document).on('click', 'button[data-bs-target="#alterarmodal"]', function() {
         var idTarefa = $(this).attr("data-idtarefa");
         BuscarAlterar(idTarefa);
     });
 
     // Click event for tr[data-target="#alterarmodal"]
-    $(document).on('click', 'td[data-target="#alterarmodal"]', function() {
+    $(document).on('click', 'td[data-bs-target="#alterarmodal"]', function() {
         var idTarefa = $(this).attr("data-idtarefa");
         BuscarAlterar(idTarefa);
     });
@@ -294,3 +307,5 @@
         });
     });
 </script>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->

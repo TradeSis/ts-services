@@ -59,8 +59,8 @@ if (isset($jsonEntrada['idTarefa'])) {
     $horaFinalPrevisto = isset($jsonEntrada['horaFinalPrevisto']) && $jsonEntrada['horaFinalPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalPrevisto']) . "'" : "NULL";
 
     //Gabriel 11102023 ID 596 adicionado idAtendenteSelect, idClienteSelect e descricao
-    $idAtendenteSelect = isset($jsonEntrada['idAtendenteSelect']) && $jsonEntrada['idAtendenteSelect'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendenteSelect']) : "NULL";
-    $idClienteSelect = isset($jsonEntrada['idClienteSelect']) && $jsonEntrada['idClienteSelect'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idClienteSelect']) : "NULL";
+    $idAtendenteSelect = $jsonEntrada['idAtendenteSelect'];
+    $idClienteSelect = $jsonEntrada['idClienteSelect'];
     $descricao = isset($jsonEntrada['descricao']) && $jsonEntrada['descricao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['descricao']) . "'" : "NULL";
     if ($idAtendenteSelect !== null){
         $idAtendente = $idAtendenteSelect;

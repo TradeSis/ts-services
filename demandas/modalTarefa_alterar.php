@@ -30,6 +30,7 @@
                                     <div class="col-md-4">
                                         <div id="demandaContainer">
                                             <label class="form-label ts-label">ID/Demanda Relacionada</label>
+                                            <input type="text" class="form-control ts-input" name="tituloDemanda" id="tituloDemanda" readonly />
                                             <select class="form-select ts-input" name="idDemandaSelect" id="idDemandaSelect">
                                                 <option value="null"></option>
                                                 <?php
@@ -48,7 +49,7 @@
 
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Cliente</label>
-                                        <input type="hidden" class="form-control ts-input" id="idCliente">
+                                        <input type="hidden" class="form-control ts-input" name="idCliente" id="idCliente" />
                                         <select class="form-select ts-input" name="idClienteSelect" id="idClienteSelect">
                                             <?php
                                             foreach ($clientes as $cliente) {
@@ -63,8 +64,8 @@
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-md-4">
-                                        <label class="form-label ts-label">Reponsável</label>
-                                        <input type="hidden" class="form-control ts-input" id="idAtendente">
+                                        <label class="form-label ts-label">Responsável</label>
+                                        <input type="hidden" class="form-control ts-input" name="idAtendente" id="idAtendente">
                                         <select class="form-select ts-input" name="idAtendenteSelect" id="idAtendenteSelect">
                                             <?php
                                             foreach ($atendentes as $atendente) {
@@ -213,7 +214,7 @@
                 $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
                 $('#idDemanda').val(data.idDemanda);
-                $('#tituloDemanda').val(data.tituloDemanda);
+                $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
                 //alert(data.idDemanda)
                 $('#idAtendente').val(data.idAtendente);
                 $('#idAtendenteSelect').val(data.idAtendente);
@@ -280,10 +281,16 @@
 
                 if(data.idDemanda == null){
                     //se idDemanda vier nulo o select vai estar habilitado
-                     $("#idDemandaSelect").prop('disabled', false);
+                    $("#idDemandaSelect").prop('disabled', false);
+                    $('#idDemandaSelect').show();
+                    $('#tituloDemanda').hide();
+
                 }else{
                     //se idDemanda vier Preenchido o select vai estar desabilitado
                     $("#idDemandaSelect").prop('disabled', true);
+                    $('#idDemandaSelect').hide();
+                    $('#tituloDemanda').show();
+
                 }
 
                 $('#alterarmodal').modal('show');

@@ -248,18 +248,33 @@ if (isset($_GET['operacao'])) {
     }
 
     if ($operacao == "alterar") {
+        
+        $idDemandaSelect = null;
+        $idAtendenteSelect = null;
+        $idClienteSelect = null;
+        if(isset($_POST['idDemandaSelect'])) {
+            $idDemandaSelect = $_POST['idDemandaSelect'];
+        }
+        if(isset($_POST['idAtendenteSelect'])) {
+            $idAtendenteSelect = $_POST['idAtendenteSelect'];
+        }
+        if(isset($_POST['idClienteSelect'])) {
+            $idClienteSelect = $_POST['idClienteSelect'];
+        }
+
+
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
-            'idDemandaSelect' => $_POST['idDemandaSelect'],
+            'idDemandaSelect' => $idDemandaSelect,
             'idAtendente' => $_POST['idAtendente'],
             //Gabriel 11102023 ID 596 adicionado Descriçao e idAtendenteSelect
             'descricao' => $_POST['descricao'],
-            'idAtendenteSelect' => $_POST['idAtendenteSelect'],
+            'idAtendenteSelect' => $idAtendenteSelect,
             //Gabriel 11102023 ID 596 adicionado idClienteSelect
             'idCliente' => $_POST['idCliente'],
-            'idClienteSelect' => $_POST['idClienteSelect'],
+            'idClienteSelect' => $idClienteSelect,
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
             'horaCobrado' => $_POST['horaCobrado'],
@@ -271,8 +286,8 @@ if (isset($_GET['operacao'])) {
             'horaFinalPrevisto' => $_POST['horaFinalPrevisto']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'POST');
-        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
-        echo json_encode($tarefas);
+        //header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        echo json_encode($apiEntrada);
         return $tarefas;
 
     }

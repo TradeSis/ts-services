@@ -30,8 +30,7 @@
                                     <div class="col-md-4">
                                         <div id="demandaContainer">
                                             <label class="form-label ts-label">ID/Demanda Relacionada</label>
-                                            <input type="text" class="form-control ts-input" name="tituloDemanda" id="tituloDemanda" readonly />
-                                            <select class="form-select ts-input" name="idDemandaSelect" id="idDemandaSelect">
+                                            <select class="form-select ts-input" name="idDemanda" id="idDemanda">
                                                 <option value="null"></option>
                                                 <?php
                                                 foreach ($demandas as $demanda) {
@@ -45,12 +44,10 @@
                                     </div>
                                     <input type="hidden" class="form-control ts-input" name="idTarefa" id="idTarefa" />
                                     <input type="hidden" class="form-control ts-input" name="tipoStatusDemanda" id="tipoStatusDemanda" />
-                                    <input type="hidden" class="form-control ts-input" name="idDemanda" id="idDemanda" />
 
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Cliente</label>
-                                        <input type="hidden" class="form-control ts-input" name="idCliente" id="idCliente" />
-                                        <select class="form-select ts-input" name="idClienteSelect" id="idClienteSelect">
+                                        <select class="form-select ts-input" name="idCliente" id="idCliente">
                                             <?php
                                             foreach ($clientes as $cliente) {
                                             ?>
@@ -65,8 +62,7 @@
                                 <div class="row mt-4">
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Responsável</label>
-                                        <input type="hidden" class="form-control ts-input" name="idAtendente" id="idAtendente">
-                                        <select class="form-select ts-input" name="idAtendenteSelect" id="idAtendenteSelect">
+                                        <select class="form-select ts-input" name="idAtendente" id="idAtendente">
                                             <?php
                                             foreach ($atendentes as $atendente) {
                                             ?>
@@ -211,13 +207,9 @@
                 $('#idTarefa').val(data.idTarefa);
                 $('#titulo').val(data.tituloTarefa);
                 $('#idCliente').val(data.idCliente);
-                $('#idClienteSelect').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
                 $('#idDemanda').val(data.idDemanda);
-                $('#tituloDemanda').val(data.idDemanda + ' - ' + data.tituloDemanda);
-                //alert(data.idDemanda)
                 $('#idAtendente').val(data.idAtendente);
-                $('#idAtendenteSelect').val(data.idAtendente);
                 $('#nomeUsuario').val(data.nomeUsuario);
                 $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
                 $('#nomeTipoOcorrencia').val(data.nomeTipoOcorrencia);
@@ -243,10 +235,10 @@
                 // Lucas 23102023 - simplificado select
                 if (data.Previsto !== null || data.dataReal !== null) {
                     //se vier dataPrevisto ou dataReal o select vai estar desabilitado
-                    $("#idAtendenteSelect").prop('disabled', true);
+                    $("#idAtendente").prop('disabled', true);
                 } else {
                     //senão vai habilitar o select
-                    $("#idAtendenteSelect").prop('disabled', false);
+                    $("#idAtendente").prop('disabled', false);
                 }
 
                /*  if (data.idDemanda !== null) {
@@ -273,23 +265,29 @@
                 // Lucas 23102023 - simplificado select
                 if(data.idCliente == null){
                     //se idCliente vier nulo o select vai estar habilitado
-                     $("#idClienteSelect").prop('disabled', false);
+                     $("#idCliente").prop('disabled', false);
                 }else{
                     //se idCliente vier Preenchido o select vai estar desabilitado
-                    $("#idClienteSelect").prop('disabled', true);
+                    $("#idCliente").prop('disabled', true);
                 }
 
                 if(data.idDemanda == null){
                     //se idDemanda vier nulo o select vai estar habilitado
-                    $("#idDemandaSelect").prop('disabled', false);
-                    $('#idDemandaSelect').show();
-                    $('#tituloDemanda').hide();
+                    $("#idDemanda").prop('disabled', false);
 
                 }else{
                     //se idDemanda vier Preenchido o select vai estar desabilitado
-                    $("#idDemandaSelect").prop('disabled', true);
-                    $('#idDemandaSelect').hide();
-                    $('#tituloDemanda').show();
+                    $("#idDemanda").prop('disabled', true);
+
+                }
+
+                if(data.idDemanda == null){
+                    //se idDemanda vier nulo o select vai estar habilitado
+                    $("#idDemanda").prop('disabled', false);
+
+                }else{
+                    //se idDemanda vier Preenchido o select vai estar desabilitado
+                    $("#idDemanda").prop('disabled', true);
 
                 }
 

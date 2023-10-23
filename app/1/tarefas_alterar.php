@@ -42,13 +42,8 @@ $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idTarefa'])) {
     $idTarefa = $jsonEntrada['idTarefa'];
     $idDemanda = $jsonEntrada['idDemanda'];
-    $idDemandaSelect = $jsonEntrada['idDemandaSelect'];
     $tituloTarefa = $jsonEntrada['tituloTarefa'];
-
-    $idCliente = isset($jsonEntrada['idCliente']) && $jsonEntrada['idCliente'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idCliente']) : "NULL";
-    $idAtendente = isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendente']) : "NULL";
-    $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
-    $idTipoOcorrencia = isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idTipoOcorrencia']) : "NULL";
+    
     $tipoStatusDemanda = isset($jsonEntrada['tipoStatusDemanda']) && $jsonEntrada['tipoStatusDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['tipoStatusDemanda']) : "NULL";
     $dataReal = isset($jsonEntrada['dataReal']) && $jsonEntrada['dataReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataReal']) . "'" : "NULL";
     $horaInicioReal = isset($jsonEntrada['horaInicioReal']) && $jsonEntrada['horaInicioReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioReal']) . "'" : "NULL";
@@ -57,36 +52,39 @@ if (isset($jsonEntrada['idTarefa'])) {
     $Previsto = isset($jsonEntrada['Previsto']) && $jsonEntrada['Previsto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['Previsto']) . "'" : "NULL";
     $horaInicioPrevisto = isset($jsonEntrada['horaInicioPrevisto']) && $jsonEntrada['horaInicioPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioPrevisto']) . "'" : "NULL";
     $horaFinalPrevisto = isset($jsonEntrada['horaFinalPrevisto']) && $jsonEntrada['horaFinalPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalPrevisto']) . "'" : "NULL";
-
-    //Gabriel 11102023 ID 596 adicionado idAtendenteSelect, idClienteSelect e descricao
-    $idAtendenteSelect = $jsonEntrada['idAtendenteSelect'];
-    $idClienteSelect = $jsonEntrada['idClienteSelect'];
     $descricao = isset($jsonEntrada['descricao']) && $jsonEntrada['descricao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['descricao']) . "'" : "NULL";
-    if ($idAtendenteSelect !== null){
-        $idAtendente = $idAtendenteSelect;
-    }
-    if ($idClienteSelect !== null){
-        $idCliente = $idClienteSelect;
-    }
     
-    if ($idDemandaSelect !== null) {
+    //Gabriel 11102023 ID 596 adicionado idAtendenteSelect, idClienteSelect e descricao
+    $idTipoOcorrencia = isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== NULL ? mysqli_real_escape_string($conexao, $jsonEntrada['idTipoOcorrencia']) : "NULL";
+    $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== NULL ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
+    $idAtendente = isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== NULL ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendente']) : "NULL";
+    $idCliente = isset($jsonEntrada['idCliente']) && $jsonEntrada['idCliente'] !== NULL ? mysqli_real_escape_string($conexao, $jsonEntrada['idCliente']) : "NULL";
+
+    
+    $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `horaCobrado`=$horaCobrado,
+        `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal, 
+        `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao";
+
+    if (isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== NULL) {
         // busca dados idCliente/Demanda
-        $sql2 = "SELECT * FROM demanda WHERE idDemanda = $idDemandaSelect";
+        $sql2 = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
         $buscar2 = mysqli_query($conexao, $sql2);
         $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
         $idCliente = $row["idCliente"];
-
-
-        $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `idTipoOcorrencia`=$idTipoOcorrencia, `idAtendente`=$idAtendente, `horaCobrado`=$horaCobrado,
-    `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal, `idDemanda`=$idDemandaSelect, `idCliente`=$idCliente,
-    `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao
-    WHERE `idTarefa` = $idTarefa";
-    } else {
-        $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `idTipoOcorrencia`=$idTipoOcorrencia, `idAtendente`=$idAtendente, `horaCobrado`=$horaCobrado,
-        `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal, `idCliente`=$idCliente,
-        `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao 
-        WHERE `idTarefa` = $idTarefa";
+        $sql = $sql . ", `idDemanda`=$idDemanda, `idCliente`=$idCliente";
     }
+    //Gabriel 23102023 novo modelo de sql para alterar
+    if (isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== NULL) {
+        $sql = $sql . ", `idAtendente`=$idAtendente";
+    }
+    if (isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== NULL) {
+        $sql = $sql . ", `idTipoOcorrencia`=$idTipoOcorrencia";
+    }
+    if (isset($jsonEntrada['idCliente']) && $jsonEntrada['idCliente'] !== NULL && $jsonEntrada['idDemanda'] == NULL) {
+        $sql = $sql . ", `idCliente`=$idCliente";
+    }
+        
+    $sql = $sql . " WHERE `idTarefa` = $idTarefa";
 
     if (isset($jsonEntrada['idDemanda'])) {
         if (isset($jsonEntrada['Previsto'])) {
@@ -111,7 +109,6 @@ if (isset($jsonEntrada['idTarefa'])) {
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 2) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-            fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
         }
     }
     //LOG

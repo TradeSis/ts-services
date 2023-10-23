@@ -248,35 +248,33 @@ if (isset($_GET['operacao'])) {
     }
 
     if ($operacao == "alterar") {
-        
-        $idDemandaSelect = null;
-        $idAtendenteSelect = null;
-        $idClienteSelect = null;
-        if(isset($_POST['idDemandaSelect'])) {
-            $idDemandaSelect = $_POST['idDemandaSelect'];
+
+        //Gabriel 23102023 novo modelo de sql para alterar
+        if(isset($_POST['idDemanda'])) {
+            $idDemanda = $_POST['idDemanda'];
         }
-        if(isset($_POST['idAtendenteSelect'])) {
-            $idAtendenteSelect = $_POST['idAtendenteSelect'];
+        if(isset($_POST['idAtendente'])) {
+            $idAtendente = $_POST['idAtendente'];
         }
-        if(isset($_POST['idClienteSelect'])) {
-            $idClienteSelect = $_POST['idClienteSelect'];
+        if(isset($_POST['idCliente'])) {
+            $idCliente = $_POST['idCliente'];
+        }
+        if(isset($_POST['idTipoOcorrencia'])) {
+            $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
         }
 
 
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
-            'idDemanda' => $_POST['idDemanda'],
-            'idDemandaSelect' => $idDemandaSelect,
-            'idAtendente' => $_POST['idAtendente'],
-            //Gabriel 11102023 ID 596 adicionado Descriçao e idAtendenteSelect
+            'idDemanda' => $idDemanda,
+            //Gabriel 11102023 ID 596 adicionado Descriçao e idAtendente
             'descricao' => $_POST['descricao'],
-            'idAtendenteSelect' => $idAtendenteSelect,
-            //Gabriel 11102023 ID 596 adicionado idClienteSelect
-            'idCliente' => $_POST['idCliente'],
-            'idClienteSelect' => $idClienteSelect,
+            'idAtendente' => $idAtendente,
+            //Gabriel 11102023 ID 596 adicionado idCliente
+            'idCliente' => $idCliente,
             'tituloTarefa' => $_POST['tituloTarefa'],
-            'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+            'idTipoOcorrencia' => $idTipoOcorrencia,
             'horaCobrado' => $_POST['horaCobrado'],
             'dataReal' => $_POST['dataReal'],
             'horaInicioReal' => $_POST['horaInicioReal'],

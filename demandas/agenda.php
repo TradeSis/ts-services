@@ -54,13 +54,6 @@ $demandas = buscaDemandasAbertas();
             border-color: #28a745
         }
 
-        .filtroresponsavel {
-            width: 180px;
-            position: fixed;
-            top: -112px;
-            left: 230px;
-        }
-
         #calendar .fc-toolbar h2 {
             font-size: 20px;
         }

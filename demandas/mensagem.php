@@ -1,6 +1,6 @@
 <?php
 //Gabriel 26092023 ID 575 Demandas/Comentarios - Layout de chat
-include_once '../head.php';
+include_once '../header.php';
 ?>
 <!-- Gabriel 05102023 ID 575 removido style, formato arquivo /excluido style -->
 <link href="../chat.css" rel="stylesheet" type="text/css">
@@ -47,7 +47,9 @@ include_once '../head.php';
     </div>
 
 
+<!-- LOCAL PARA COLOCAR OS JS -->
 
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script>
         let chatCont = document.querySelector(".chat-msg");

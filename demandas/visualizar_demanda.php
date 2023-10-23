@@ -1,6 +1,6 @@
 <?php
 //lucas 22092023 ID 358 Demandas/Comentarios 
-include_once '../head.php';
+include_once '../header.php';
 $statusEncerrar = array(
     TIPOSTATUS_FILA,
     TIPOSTATUS_PAUSADO,
@@ -311,7 +311,9 @@ $statusEncerrar = array(
             </form>
         <?php } ?>
     </div>
+<!-- LOCAL PARA COLOCAR OS JS -->
 
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script>
         var quilldescricao = new Quill('.quill-textarea', {

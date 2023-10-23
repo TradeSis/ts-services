@@ -1,6 +1,6 @@
 <?php
 //Gabriel 28092023 ID 575 Demandas/Comentarios - Layout de chat
-include_once '../header.php';
+include_once '../head.php';
 include_once '../database/mensagem.php';
 $HOJE = strtotime(date("Y-m-d"));
 

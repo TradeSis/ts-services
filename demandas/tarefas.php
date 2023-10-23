@@ -126,9 +126,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
       <div class="col-12 order-3 col-sm-12 col-md-12 col-lg-5 order-lg-3">
         <div class="input-group">
-          <input type="text" class="form-control ts-input mt-4" id="buscaTarefa" placeholder="Buscar por id ou titulo">
+          <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
           <span class="input-group-btn">
-            <button class="btn btn-primary mt-4" id="buscar" type="button">
+            <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
               <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
             </button>
           </span>

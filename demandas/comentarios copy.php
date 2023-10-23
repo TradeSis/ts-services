@@ -3,6 +3,8 @@ include_once '../head.php';
 ?>
 
 
+<body class="bg-transparent">
+
     <div class="container-fluid">
         <form method="post" id="form" enctype="multipart/form-data">
             <div class="row">
@@ -14,9 +16,9 @@ include_once '../head.php';
                             $clientes = buscaClientes($usuario["idCliente"]);
                             $nomeCliente = $clientes["nomeCliente"];
                         } ?>
-                        <input type="hidden" class="form-control ts-label" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
-                        <input type="hidden" class="form-control ts-label" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                        <input type="text" class="form-control ts-input" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $nomeCliente ?>" readonly>
+                        <input type="hidden" class="form-control" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
+                        <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                        <input type="text" class="form-control" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $nomeCliente ?>" readonly>
                     </div>
                     <div class="form-group">
 
@@ -28,32 +30,41 @@ include_once '../head.php';
                             <textarea style="display: none" id="quill-comentario" name="comentario"></textarea>
                         </div>
 
+                        <!-- <textarea name="comentario" id="comentario" class="form-control" placeholder="Inserir Comentario" rows="5"></textarea> -->
                         <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
                         <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
 
-                        <div class="row mt-2">
-                            <div class="col-md">
+
+                        <div class="mt-2" style="text-align:right">
                             <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo" onchange="myFunction()" style="color:#567381; display:none">
                             <label for="myFile">
                                 <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i>&#32;<h7 style="color: #fff;">Anexos</h7></a>
 
                             </label>
-                            </div>
-                            <div class="col-md">
-                            <?php
-                            if ($ClienteSession == NULL) { ?>
-                                <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente" class="btn btn-info" style="float: right;">Salvar</button>
-                                
-                            <?php } //*************** visão cliente
-                            if ($ClienteSession >= 1) { ?>
-                                <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="float: right;">Enviar</button>
-                            <?php } ?>
-                            </div>
                         </div>
                         <p id="mostraNomeAnexo"></p>
                     </div>
 
-                   
+                    <div class="row">
+                        <div class="col-md ml-auto">
+                            <?php
+                            if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
+                                <button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger" style="margin-right:10px;float: left;">Validar</button>
+                            <?php }
+                            if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
+                                <button type="submit" formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning" style="margin-right:10px;float: left;">Retornar</button>
+                            <?php } ?>
+                            <?php
+                            if ($ClienteSession == NULL) { ?>
+                                <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente" class="btn btn-info" style="float: right;">Comentar</button>
+                                <button type="submit" formaction="../database/demanda.php?operacao=solicitar" class="btn btn-warning" style="margin-right:10px;float: right;">Encaminhar</button>
+                            <?php } //*************** visão cliente
+                            if ($ClienteSession >= 1) { ?>
+                                <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="margin-right:20px;float: right;">Enviar</button>
+                            <?php } ?>
+
+                        </div>
+                    </div>
 
                     <!-- <h4 class="mt-5">Anexos:</h4>
                     <div class="card"></div> -->
@@ -171,3 +182,4 @@ include_once '../head.php';
             $('#quill-comentario').val(quillcomentario.container.firstChild.innerHTML);
         });
     </script>
+</body>

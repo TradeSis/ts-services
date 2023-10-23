@@ -261,9 +261,9 @@ if (isset($_SESSION['filtro_contrato'])) {
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
                 <div class="input-group">
-                    <input type="text" class="form-control ts-input mt-4" id="buscaContrato" placeholder="Buscar por id ou titulo">
+                    <input type="text" class="form-control ts-input" id="buscaContrato" placeholder="Buscar por id ou titulo">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary mt-4" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
+                        <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                                 search
                             </span></button>
                     </span>

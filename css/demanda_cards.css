@@ -1,0 +1,100 @@
+/* STATUS DEMANDA */
+[class="1"] {
+    margin-top: 5px;
+    display: inline-block;
+    background: #5271FE !important;
+    color: #fff;
+    width: 160px;
+}
+
+[class="9"] {
+    margin-top: 5px;
+    display: inline-block;
+    background: #FE5469 !important;
+    color: #fff;
+    width: 160px;
+}
+
+[class="4"] {
+    display: inline-block;
+    background: #C34A36 !important;
+    color: #fff;
+    width: 160px;
+}
+
+[class="3"] {
+    margin-top: 5px;
+    display: inline-block;
+    background: #69419D !important;
+    color: #fff;
+    width: 160px;
+}
+
+[class="5"] {
+    margin-top: 5px;
+    display: inline-block;
+    background: #FEA051 !important;
+    color: #fff;
+    width: 160px;
+}
+
+[class="6"] {
+    margin-top: 5px;
+    display: inline-block;
+    background: #18B376 !important;
+    color: #fff;
+    width: 160px;
+}
+
+[class="7"] {
+    margin-top: 5px;
+    display: inline-block;
+    background: #00C2A8 !important;
+    width: 160px;
+    color: #fff;
+}
+
+[class="8"] {
+    margin-top: 5px;
+    display: inline-block;
+    background: blueviolet !important;
+    color: #fff;
+    width: 160px;
+}
+
+[class="2"] {
+    margin-top: 5px;
+    display: inline-block;
+    background: #FFC107!important;
+    color: #fff;
+    width: 160px;
+}
+/* fim - STATUS DEMANDA*/
+
+/* CARDS/BOTOES DE STATUS */
+.ts-cardLink {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+    opacity: 0;
+}
+
+.ts-cardLink:hover {
+    cursor: pointer;
+}
+
+.ts-cardColor-active {
+    background-color: #fff !important;
+    box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+    -webkit-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+    -moz-box-shadow: -2px 3px 10px 0px rgba(207, 169, 169, 0.75);
+    border-left: solid #158cee !important;
+
+}
+
+.ts-shadowOff {
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+/* fim - CARDS/BOTOES DE STATUS */

@@ -16,6 +16,8 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
     
     <?php include_once ROOT. "/vendor/head_css.php";?>
     <!-- Gabriel 05102023 ID 575 removido style, formato arquivo /excluido style -->
+    <link href="chat.css" rel="stylesheet" type="text/css">
+
     <title>Serviços</title>
 
 </head>

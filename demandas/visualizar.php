@@ -49,6 +49,7 @@ if (isset($_SESSION['idCliente'])) {
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
+    <link rel="stylesheet" href="../css/tabs_visualizar.css">
 
 </head>
 
@@ -68,7 +69,7 @@ if (isset($_SESSION['idCliente'])) {
                 <?php } ?>
             </div>
         </div>
-        <div id="ts-tabs">
+        <div id="tabs">
             <div class="tab whiteborder" id="tab-demanda">Demanda</div>
             <div class="tab" id="tab-comentarios">Comentarios</div>
             <?php if ($ClienteSession == NULL) { ?>
@@ -418,7 +419,7 @@ if (isset($_SESSION['idCliente'])) {
             }
         }
 
-        document.getElementById('ts-tabs').onclick = function(event) {
+        document.getElementById('tabs').onclick = function(event) {
             var target = event.target;
             if (target.className == 'tab') {
                 for (var i = 0; i < tab.length; i++) {

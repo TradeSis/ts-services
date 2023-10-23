@@ -148,11 +148,7 @@ include_once '../header.php';
     </div>
 
 
- <!-- LOCAL PARA COLOCAR OS JS -->
 
- <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
-<!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
     <script>
         $(document).ready(function() {

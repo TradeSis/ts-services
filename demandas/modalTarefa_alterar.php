@@ -30,18 +30,28 @@
                                     <div class="col-md-4">
                                         <div id="demandaContainer">
                                             <label class="form-label ts-label">ID/Demanda Relacionada</label>
+            
+                                    <input type="hidden" class="form-control ts-input" name="tituloDemanda" id="tituloDemanda" />
+                                            
                                             <select class="form-select ts-input" name="idDemanda" id="idDemanda">
                                                 <option value="null"></option>
+                                                
                                                 <?php
+                                                if(isset($demanda)){ ?>
+                                                    <option value="<?php echo $demanda['idDemanda'] ?>">
+                                                    <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
+                                                </option>
+                                                <?php }else{
                                                 foreach ($demandas as $demanda) {
                                                 ?>
                                                     <option value="<?php echo $demanda['idDemanda'] ?>">
                                                         <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
                                                     </option>
-                                                <?php } ?>
+                                                <?php } }?>
                                             </select>
                                         </div>
                                     </div>
+                                    
                                     <input type="hidden" class="form-control ts-input" name="idTarefa" id="idTarefa" />
                                     <input type="hidden" class="form-control ts-input" name="tipoStatusDemanda" id="tipoStatusDemanda" />
 
@@ -209,6 +219,7 @@
                 $('#idCliente').val(data.idCliente);
                 $('#nomeCliente').val(data.nomeCliente);
                 $('#idDemanda').val(data.idDemanda);
+                $('#tituloDemanda').val(data.tituloDemanda);
                 $('#idAtendente').val(data.idAtendente);
                 $('#nomeUsuario').val(data.nomeUsuario);
                 $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
@@ -274,22 +285,12 @@
                 if(data.idDemanda == null){
                     //se idDemanda vier nulo o select vai estar habilitado
                     $("#idDemanda").prop('disabled', false);
-
+                    
                 }else{
                     //se idDemanda vier Preenchido o select vai estar desabilitado
                     $("#idDemanda").prop('disabled', true);
-
                 }
-
-                if(data.idDemanda == null){
-                    //se idDemanda vier nulo o select vai estar habilitado
-                    $("#idDemanda").prop('disabled', false);
-
-                }else{
-                    //se idDemanda vier Preenchido o select vai estar desabilitado
-                    $("#idDemanda").prop('disabled', true);
-
-                }
+             
 
                 $('#alterarmodal').modal('show');
             }

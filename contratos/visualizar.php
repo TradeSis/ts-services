@@ -99,14 +99,12 @@ $ocorrencias = buscaTipoOcorrencia();
     </div>
 
     <!--------- INSERIR Demanda de Contrato--------->
-    <div class="modal" id="inserirDemandaContratoModal" tabindex="-1" role="dialog" aria-labelledby="inserirDemandaContratoModalLabel" aria-hidden="true">
+    <div class="modal" id="inserirDemandaContratoModal" tabindex="-1" aria-labelledby="inserirDemandaContratoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal_lg">
             <div class="modal-content containermodal_lg">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Inserir <?php echo $contratoTipo['nomeDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form1">

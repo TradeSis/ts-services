@@ -66,7 +66,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             <div class="row row-cols-6">
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase ">
@@ -90,7 +90,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
@@ -113,7 +113,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1 ">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
@@ -136,7 +136,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase ">
@@ -161,7 +161,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
@@ -184,7 +184,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">

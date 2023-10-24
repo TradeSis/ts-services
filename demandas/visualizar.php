@@ -69,7 +69,7 @@ if (isset($_SESSION['idCliente'])) {
                 <?php } ?>
             </div>
         </div>
-        <div id="tabs">
+        <div id="ts-tabs">
             <div class="tab whiteborder" id="tab-demanda">Demanda</div>
             <div class="tab" id="tab-comentarios">Comentarios</div>
             <?php if ($ClienteSession == NULL) { ?>
@@ -395,6 +395,9 @@ if (isset($_SESSION['idCliente'])) {
     <!--Lucas 18102023 ID 602 alterado nome do arquivo para modalTarefa_alterar -->
     <?php include 'modalTarefa_alterar.php'; ?>
 
+    <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script>
         var tab;
@@ -419,7 +422,7 @@ if (isset($_SESSION['idCliente'])) {
             }
         }
 
-        document.getElementById('tabs').onclick = function(event) {
+        document.getElementById('ts-tabs').onclick = function(event) {
             var target = event.target;
             if (target.className == 'tab') {
                 for (var i = 0; i < tab.length; i++) {

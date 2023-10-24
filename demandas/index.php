@@ -86,7 +86,6 @@ if (isset($_SESSION['filtro_demanda'])) {
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
-    <link rel="stylesheet" href="../css/demanda_cards.css">
 
 </head>
 

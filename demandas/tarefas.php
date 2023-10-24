@@ -119,7 +119,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           </span></button>
       </div>
 
-      <div class="col-10 order-1 col-sm-11 col-md-11 order-md-1 col-lg-2 order-lg-2 mt-4">
+      <div class="col-10 order-1 col-sm-11 col-md-11 order-md-1 col-lg-2 order-lg-2 mt-4" id="filtroh6">
         <h2 class="ts-tituloPrincipal">Tarefas</h2>
         <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
       </div>
@@ -297,7 +297,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     function limpar() {
       buscar(null, null, null, null, null, null, null, null, null, null, function () {
       //gabriel 13102023 id 596 fix atualizar pagina correta
-      refreshTab('execucao');
+      window.location.reload();
       });
     }
     function limparPeriodo() {
@@ -342,7 +342,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
       //Gabriel 11102023 ID 596 utiliza valores do buscar para gravar no h6 da tabela filtros status e periodo
-      var h6Element = $(".col-sm-3 h6");
+      var h6Element = $("#filtroh6 h6");
       var text = "";
       if (statusTarefa === "1") {
         if (text) text += ", ";

@@ -37,7 +37,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
 			</div>
 
 			<div class="col-2 text-end">
-				<button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#inserirDemandaContratoModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+				<button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaContratoModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
 			</div>
 		</div>
 

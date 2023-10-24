@@ -3,18 +3,25 @@
 include_once(__DIR__ . '/../header.php');
 $idContrato = $contrato['idContrato'];
 ?>
+<!doctype html>
+<html lang="pt-BR">
 
-</html>
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
+
 
 <body>
 
     <div class="container-fluid">
 
-    <div class="row">
-            <BR> <!-- MENSAGENS/ALERTAS -->
+        <div class="row">
+            <!-- MENSAGENS/ALERTAS -->
         </div>
         <div class="row">
-            <BR> <!-- BOTOES AUXILIARES -->
+             <!-- BOTOES AUXILIARES -->
         </div>
         <div class="row align-items-center"> <!-- LINHA SUPERIOR A TABLE -->
             <div class="col-3 text-start">

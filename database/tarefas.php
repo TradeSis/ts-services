@@ -248,20 +248,33 @@ if (isset($_GET['operacao'])) {
     }
 
     if ($operacao == "alterar") {
+
+        //Gabriel 23102023 novo modelo de sql para alterar
+        if(isset($_POST['idDemanda'])) {
+            $idDemanda = $_POST['idDemanda'];
+        }
+        if(isset($_POST['idAtendente'])) {
+            $idAtendente = $_POST['idAtendente'];
+        }
+        if(isset($_POST['idCliente'])) {
+            $idCliente = $_POST['idCliente'];
+        }
+        if(isset($_POST['idTipoOcorrencia'])) {
+            $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+        }
+
+
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
-            'idDemanda' => $_POST['idDemanda'],
-            'idDemandaSelect' => $_POST['idDemandaSelect'],
-            'idAtendente' => $_POST['idAtendente'],
-            //Gabriel 11102023 ID 596 adicionado Descriçao e idAtendenteSelect
+            'idDemanda' => $idDemanda,
+            //Gabriel 11102023 ID 596 adicionado Descriçao e idAtendente
             'descricao' => $_POST['descricao'],
-            'idAtendenteSelect' => $_POST['idAtendenteSelect'],
-            //Gabriel 11102023 ID 596 adicionado idClienteSelect
-            'idCliente' => $_POST['idCliente'],
-            'idClienteSelect' => $_POST['idClienteSelect'],
+            'idAtendente' => $idAtendente,
+            //Gabriel 11102023 ID 596 adicionado idCliente
+            'idCliente' => $idCliente,
             'tituloTarefa' => $_POST['tituloTarefa'],
-            'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
+            'idTipoOcorrencia' => $idTipoOcorrencia,
             'horaCobrado' => $_POST['horaCobrado'],
             'dataReal' => $_POST['dataReal'],
             'horaInicioReal' => $_POST['horaInicioReal'],
@@ -271,8 +284,8 @@ if (isset($_GET['operacao'])) {
             'horaFinalPrevisto' => $_POST['horaFinalPrevisto']
         );
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'POST');
-        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
-        echo json_encode($tarefas);
+        //header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
+        echo json_encode($apiEntrada);
         return $tarefas;
 
     }

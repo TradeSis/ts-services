@@ -66,7 +66,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             <div class="row row-cols-6">
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-secondary text-uppercase ">
@@ -90,7 +90,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
@@ -113,7 +113,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1 ">
                                 <div class="text-xs font-weight-bold text-success text-uppercase ">
@@ -136,7 +136,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase ">
@@ -161,7 +161,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
@@ -184,7 +184,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </div>
 
                 <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
+                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                         <div class="row no-gutters align-items-center">
                             <div class="col-12 col-md-12 col-lg p-1">
                                 <div class="text-xs font-weight-bold text-danger text-uppercase ">
@@ -247,10 +247,6 @@ if (isset($_SESSION['filtro_contrato'])) {
 
     <div class="container-fluid text-center ">
 
-
-        <!--INICIO-->
-        <!-- <div class="card-header"> -->
-
         <div class="row align-items-center">
             <div class="col-6 order-1 col-sm-6  col-md-6 order-md-1 col-lg-1 order-lg-1 mt-3" >
                 <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
@@ -265,7 +261,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
             <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="buscaContrato" placeholder="Buscar por id ou titulo">
+                    <input type="text" class="form-control ts-input" id="buscaContrato" placeholder="Buscar por id ou titulo">
                     <span class="input-group-btn">
                         <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
                                 search
@@ -275,8 +271,8 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
 
-            <div class="col-6 order-2 col-sm-6 col-md-6 order-md-2 col-lg-4 order-lg-4 mt-1" style="text-align: end; margin-left:-30px ">
-                <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+            <div class="col-6 order-2 col-sm-6 col-md-6 order-md-2 col-lg-4 order-lg-4 mt-1 text-end">
+                <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success mr-4"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
             </div>
         </div>
 
@@ -302,7 +298,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         <th ></th>
                         <th >
                             <form action="" method="post">
-                                <select class="form-control ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
+                                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                     <?php
                                     foreach ($clientes as $cliente) {
@@ -319,7 +315,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         <th ></th>
                         <th >
                             <form action="" method="post">
-                                <select class="form-control ts-selectFiltrosHeaderTabela" name="idContratoStatus" id="FiltroContratoStatus">
+                                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idContratoStatus" id="FiltroContratoStatus">
                                     <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
                                     <?php
 

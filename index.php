@@ -16,7 +16,6 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
     
     <?php include_once ROOT. "/vendor/head_css.php";?>
     <!-- Gabriel 05102023 ID 575 removido style, formato arquivo /excluido style -->
-    <link href="chat.css" rel="stylesheet" type="text/css">
 
     <title>Serviços</title>
 
@@ -203,8 +202,11 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
     <!-- LOCAL PARA COLOCAR OS JS -->
 
     <?php include_once ROOT. "/vendor/footer_js.php";
+
+    /***  helio 24.10.2023 - retirado CHAT, pois estava derrubando oservidor 
       //Gabriel 05102023 ID 575 removido chat, formato include 
-      include "demandas/chat.php";
+    **  include "demandas/chat.php";
+    ***/
     ?>
 
     <script src="<?php echo URLROOT ?>/sistema/js/mobileSelectTabs.js"></script>

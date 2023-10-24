@@ -1,11 +1,12 @@
 <?php
+// Lucas 17102023 novo padrao
 //Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
 //lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 // gabriel 04082023
 
 
-include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/tarefas.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
@@ -64,39 +65,34 @@ $realizadoChecked = ($Periodo === '0') ? 'checked' : '';
 $Checked = ($Periodo === null) ? 'checked' : '';
 
 ?>
+<!doctype html>
+<html lang="pt-BR">
 
-</html>
+<head>
 
-<style>
-  .nav-link {
-        display: inline-block;
-        padding: 5px 10px;
-        cursor: pointer;
-        position: relative;
-        z-index: 5;
-        border-radius: 3px 3px 0 0;
-        background-color: #567381;
-        color: #EEEEEE;
-    }
-    .nav-link .active {
-        border: 1px solid #707070;
-        border-bottom: 1px solid #fff;
-        border-radius: 3px 3px 0 0;
-        background-color: #EEEEEE;
-        color: #567381;
-    }
-</style>
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
 
-<body class="bg-transparent">
+</head>
 
-  <nav id="menuFiltros" class="menuFiltros" style="width: 163px;margin-top:-58px;margin-left:40px">
-    <div class="titulo"><span>Filtrar por:</span></div>
-    <ul>
+
+<body>
+
+  <div class="container-fluid text-center">
+    <div class="row">
+      <BR> <!-- MENSAGENS/ALERTAS -->
+    </div>
+    <div class="row">
+      <BR> <!-- BOTOES AUXILIARES -->
+    </div>
+
+    <!-- MENUFILTROS -->
+    <nav class="ts-menuFiltros" style="margin-top: -3px;">
+      <label class="pl-2" for="">Filtrar por:</label>
+   
       <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
-      <li class="ls-label col-sm-12 mr-1" style="list-style-type: none;"> <!-- ABERTO/FECHADO -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
-          <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
-            style="font-size: 14px; width: 150px; height: 35px">
+      <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+        <form class="d-flex" action="" method="post" >
+          <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa">
             <option value="<?php echo null ?>">
               <?php echo "Todos" ?>
             </option>
@@ -108,62 +104,55 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             } ?> value="0">Realizado</option>
           </select>
         </form>
-      </li>
-    </ul>
+        </div>
+    
 
-    <div class="col-sm" style="text-align:right; color: #fff">
-      <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
+    <div class="col-sm text-end mt-2">
+      <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
     </div>
   </nav>
 
-
-  <div class="container-fluid text-center mt-2">
-
-    <div class="row">
-      <div class="btnAbre" style="height:33px">
-        <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;"
-          class="material-symbols-outlined">
-          filter_alt
-        </span>
-
+    <div class="row align-items-center">
+      <div class="col-6 order-4 col-sm-6 col-md-6 order-md-4 col-lg-1 order-lg-1 mt-3 text-start">
+        <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
+            filter_alt
+          </span></button>
       </div>
 
-      <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela">Tarefas</h2>
-        <!-- Gabriel 11102023 ID 596 removido, h6 agora preenche via script -->
+      <div class="col-10 order-1 col-sm-11 col-md-11 order-md-1 col-lg-2 order-lg-2 mt-4" id="filtroh6">
+        <h2 class="ts-tituloPrincipal">Tarefas</h2>
         <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
       </div>
 
-      <!-- Gabriel 06102023 ID 596 removido buscar duplicado -->
-      <div class="col-sm-4">
+      <div class="col-12 order-3 col-sm-12 col-md-12 col-lg-5 order-lg-3">
         <div class="input-group">
-          <input type="text" class="form-control" id="buscaTarefa" placeholder="Buscar por id ou titulo">
+          <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
           <span class="input-group-btn">
-            <button class="btn btn-primary mt-2" id="buscar" type="button">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
-                class="material-symbols-outlined">search</span>
+            <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
             </button>
           </span>
         </div>
       </div>
 
-      <div class="col-sm-1">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#periodoModal"><i
+      <!-- Gabriel 06102023 ID 596 removido buscar duplicado -->
+
+      <div class="col-2 order-2 col-sm-1 col-md-1 order-md-2 col-lg-2 order-lg-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i
             class="bi bi-calendar3"></i></button>
       </div>
 
-      <div class="col-sm" style="text-align:right">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i
+      <div class="col-6 order-5 col-sm-6 col-md-6 order-md-4 col-lg-2 order-lg-5 mt-1 text-end">
+        <button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirModal"><i
             class="bi bi-plus-square"></i>&nbsp Novo</button>
       </div>
     </div>
 
 
-    <div class="card mt-2 text-center">
-      <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-        <table class="table">
-          <thead class="cabecalhoTabela">
-            <tr>
+      <div class="table ts-divTabela ts-tableFiltros table-striped table-hover">
+        <table class="table table-sm">
+          <thead class="ts-headertabelafixo">
+            <tr class="ts-headerTabelaLinhaCima">
               <th>ID</th>
               <th>Tarefa</th>
               <th>Responsável</th>
@@ -172,15 +161,14 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <th>Previsão</th>
               <th>Real</th>
               <th>Cobrado</th>
-              <th style="width: 17%;">Ação</th>
+              <th colspan="2">Ação</th>
             </tr>
-            <tr>
+            <tr class="ts-headerTabelaLinhaBaixo">
               <th></th>
               <th></th>
               <th>
                 <form action="" method="post">
-                  <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -198,10 +186,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </select>
                 </form>
               </th>
-              <th style="width: 10%;">
+              <th>
                 <form action="" method="post">
-                  <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -219,10 +206,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </select>
                 </form>
               </th>
-              <th style="width: 10%;">
+              <th>
                 <form action="" method="post">
-                  <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -240,10 +226,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </select>
                 </form>
               </th>
-              <th style="width: 10%;">
+              <th>
                 <form action="" method="post">
-                  <select class="form-control text-center" name="PrevistoOrdem" id="FiltroPrevistoOrdem"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" id="FiltroPrevistoOrdem">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -256,10 +241,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                   </select>
                 </form>
               </th>
-              <th style="width: 10%;">
+              <th >
                 <form action="" method="post">
-                  <select class="form-control text-center" name="RealOrdem" id="FiltroRealOrdem"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
                     <option value="<?php echo null ?>">
                       <?php echo "Selecione" ?>
                     </option>
@@ -273,7 +257,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 </form>
               </th>
               <th></th>
-              <th style="width: 10%;"></th>
+              <th></th>
             </tr>
           </thead>
 
@@ -282,230 +266,38 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           </tbody>
         </table>
       </div>
-    </div>
+  
   </div>
 
 
-<!--------- FILTRO PERIODO --------->
-<div class="modal fade bd-example-modal-lg" id="periodoModal" tabindex="-1" role="dialog"
-    aria-labelledby="periodoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Filtro Periodo</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="post">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="<?php echo null ?>" id="Radio" name="FiltroPeriodo"
-                <?php echo $Checked; ?> hidden>
-              <input class="form-check-input" type="radio" value="1" id="PrevisaoRadio" name="FiltroPeriodo" <?php echo $previsaoChecked; ?>>
-              <label class="form-check-label" for="PrevisaoRadio">
-                Previsão
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="0" id="RealizadoRadio" name="FiltroPeriodo" <?php echo $realizadoChecked; ?>>
-              <label class="form-check-label" for="RealizadoRadio">
-                Realizado
-              </label>
-            </div>
-            <div class="row" id="conteudoReal">
-              <div class="col">
-                <label class="labelForm">Começo</label>
-                <?php if ($PeriodoInicio != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoInicio"
-                  value="<?php echo $PeriodoInicio ?>" name="PeriodoInicio" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoInicio" name="PeriodoInicio"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-              <div class="col">
-                <label class="labelForm">Fim</label>
-                <?php if ($PeriodoFim != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoFim"
-                  value="<?php echo $PeriodoFim ?>" name="PeriodoFim" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoFim" name="PeriodoFim"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col-sm" style="text-align:left;margin-left:10px">
-                <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
-              </div>
-              <div class="col-sm" style="text-align:right;margin-right:10px">
-                <button type="button" class="btn btn-success" id="filtrarButton" data-dismiss="modal">Filtrar</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!--------- FILTRO PERIODO --------->
+  <?php include_once 'modalTarefa_filtroPeriodo.php' ?>
 
   <!--------- MODAL STOP Tab EXECUCAO --------->
-  <div class="modal fade bd-example-modal-lg" id="stopexecucaomodal" tabindex="-1" role="dialog"
-    aria-labelledby="stopexecucaomodalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- gabriel 13102023 id 596 adicionado id -->
-          <form method="post" id="stopForm">
-            <div class="container-fluid p-0">
-              <div class="col">
-                <span class="tituloEditor">Comentários</span>
-              </div>
-              <div class="quill-stop" style="height:20vh !important"></div>
-              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
-            </div>
-            <div class="col-md form-group" style="margin-top: 5px;">
-              <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>"
-                readonly>
-              <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>"
-                readonly>
-              <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
-              <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
-              <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
-              <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2"
-                readonly style="display: none;" />
+  <?php include_once 'modalTarefa_stop.php' ?>
 
-            </div>
-        </div>
-        <div class="modal-footer">
-          <div class="col align-self-start pl-0">
-            <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
-            <button type="submit" id="realizadoFormbutton" class="btn btn-warning float-left">Entregar</button>
-          </div>
-          <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
-          <button type="submit" id="stopFormbutton" class="btn btn-danger">Stop</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
   <!--------- INSERIR/AGENDAR --------->
-  <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
-    aria-labelledby="inserirModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="container">
-          <form method="post" id="inserirForm">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                <div class="for-group" style="margin-top: 22px;">
-                  <input type="text" class="form-control" name="tituloTarefa" id="newtitulo" autocomplete="off"
-                    required>
-                </div>
-                <input type="hidden" class="form-control" name="idDemanda" value="null" id="newidDemanda">
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Cliente</label>
-                  <div class="form-group" style="margin-top: 40px;">
-                    <select class="form-control" name="idCliente" id="newidCliente">
-                      <option value="null"></option>
-                      <?php
-                      foreach ($clientes as $cliente) {
-                        ?>
-                      <option value="<?php echo $cliente['idCliente'] ?>">
-                        <?php echo $cliente['nomeCliente'] ?>
-                      </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Reponsável</label>
-                  <div class="form-group" style="margin-top: 20px;">
-                    <select class="form-control" name="idAtendente" id="newidAtendente">
-                      <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
-                      <?php
-                      foreach ($atendentes as $atendente) {
-                        ?>
-                        <option value="<?php echo $atendente['idUsuario'] ?>">
-                          <?php echo $atendente['nomeUsuario'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Ocorrência</label>
-                  <div class="form-group" style="margin-top: 20px;">
-                    <select class="form-control" name="idTipoOcorrencia" id="newidTipoOcorrencia">
-                      <option value="null">Selecione</option>
-                      <?php
-                      foreach ($ocorrencias as $ocorrencia) {
-                        ?>
-                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                          <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Data Previsão</label>
-                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Inicio</label>
-                  <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Fim</label>
-                  <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
-                </div>
-              </div>
-            </div>
-            <div class="card-footer bg-transparent" style="text-align:right">
-              <button type="submit" class="btn btn-warning" id="inserirStartBtn">Start</button>
-              <button type="submit" class="btn btn-success" id="inserirBtn">Inserir</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php include_once 'modalTarefa_inserirAgendar.php' ?>
 
-  <?php include 'alterarTarefaModal.php'; ?>
+  <!--------- TAREFAS ALTERAR--------->
+  <?php include 'modalTarefa_alterar.php'; ?>
+
+
+
+<!-- LOCAL PARA COLOCAR OS JS -->
+
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+<!-- script para menu de filtros -->
+<script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+
 
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     function limpar() {
       buscar(null, null, null, null, null, null, null, null, null, null, function () {
       //gabriel 13102023 id 596 fix atualizar pagina correta
-      refreshTab('execucao');
+      window.location.reload();
       });
     }
     function limparPeriodo() {
@@ -550,7 +342,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
       //Gabriel 11102023 ID 596 utiliza valores do buscar para gravar no h6 da tabela filtros status e periodo
-      var h6Element = $(".col-sm-3 h6");
+      var h6Element = $("#filtroh6 h6");
       var text = "";
       if (statusTarefa === "1") {
         if (text) text += ", ";
@@ -673,8 +465,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
               linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
             }
-            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1' data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
-            linha += "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
+            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1'  data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>" ;
+            linha += "<button type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
 
             linha += "</td>";
             linha += "</tr>";
@@ -776,17 +568,10 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     });
 
-    $('.btnAbre').click(function () {
-      //Gabriel 06102023 ID 596 ajustado para ID ao invés de classe
-      $('#menuFiltros').toggleClass('mostra');
-      $('.diviFrame').toggleClass('mostra');
-    });
-
-
 
     var inserirModal = document.getElementById("inserirModal");
 
-    var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
+    var inserirBtn = document.querySelector("button[data-bs-target='#inserirModal']");
 
     inserirBtn.onclick = function () {
       inserirModal.style.display = "block";
@@ -800,6 +585,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     $(document).ready(function () {
       $(document).on('click', 'button.clonarButton', function () {
+
         var idTarefa = $(this).data("idtarefa"); // Use data() to access the custom data attribute
         $.ajax({
           type: 'POST',
@@ -1045,7 +831,12 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
     });
 
+    
+
   </script>
+  
+
+  <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

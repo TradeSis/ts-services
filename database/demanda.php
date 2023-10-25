@@ -1,4 +1,5 @@
 <?php
+// Lucas 25102023 id643 revisao geral
 //Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 //lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
@@ -157,8 +158,8 @@ if (isset($_GET['operacao'])) {
 
 		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 	
-		header('Location: ../demandas/index.php?tipo='.$_POST['idContratoTipo']);
-		/* header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']); */
+		// Lucas 25102023 id643 removido header
+		/* header('Location: ../demandas/index.php?tipo='.$_POST['idContratoTipo']); */
 	}
 
 	//Gabriel 05102023 ID 575 inserir com mensagens do chat

@@ -1,4 +1,5 @@
 <?php
+// Lucas 25102023 id643 revisao geral
 // Lucas 13102023 novo padrao
 include_once '../header.php';
 include_once '../database/contratos.php';
@@ -37,7 +38,8 @@ $demandas = buscaDemandas(null, null, $idContrato);
 			</div>
 
 			<div class="col-2 text-end">
-				<button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaContratoModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+			 <!-- Lucas 25102023 id643 alterado nome do target do botão para chamada do modal -->
+				<button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
 			</div>
 		</div>
 

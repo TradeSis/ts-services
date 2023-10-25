@@ -34,7 +34,7 @@ $idContrato = $contrato['idContrato'];
             </div>
 
             <div class="col-2 text-end">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModalNotas"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inserirModalNotas"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
             </div>
         </div>
 
@@ -124,7 +124,7 @@ $idContrato = $contrato['idContrato'];
                         linha = linha + "<td>" + object.valorNota + "</td>";
                         linha = linha + "<td>" + novoStatusNota + "</td>";
                         linha = linha + "<td>" + object.condicao + "</td>";
-                        linha = linha + "<td>" + "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarModalNotas' data-idNotaServico='" + object.idNotaServico + "'><i class='bi bi-pencil-square'></i></button>"
+                        linha = linha + "<td>" + "<button type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#alterarModalNotas' data-idNotaServico='" + object.idNotaServico + "'><i class='bi bi-pencil-square'></i></button>"
                         linha = linha + "</tr>";
                     }
                     $("#dados").html(linha);
@@ -133,7 +133,7 @@ $idContrato = $contrato['idContrato'];
         
        
 
-        $(document).on('click', 'button[data-target="#alterarModalNotas"]', function() {
+        $(document).on('click', 'button[data-bs-target="#alterarModalNotas"]', function() {
             var idNotaServico = $(this).attr("data-idNotaServico");
             //alert(idNotaServico)
             $.ajax({
@@ -172,7 +172,7 @@ $idContrato = $contrato['idContrato'];
 
         var inserirModal = document.getElementById("inserirModal");
 
-        var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
+        var inserirBtn = document.querySelector("button[data-bs-target='#inserirModal']");
 
         inserirBtn.onclick = function() {
             inserirModal.style.display = "block";

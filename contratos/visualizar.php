@@ -51,12 +51,12 @@ $ocorrencias = buscaTipoOcorrencia();
             <BR> <!-- BOTOES AUXILIARES -->
         </div>
         <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
-            <div class="col-3">
+            <div class="col-7">
                 <!-- TITULO -->
                 <h2 class="ts-tituloPrincipal"><?php echo $contrato['idContrato'] ?> -
                     <?php echo $contrato['tituloContrato'] ?></h2>
             </div>
-            <div class="col-7">
+            <div class="col-3">
                 <!-- FILTROS -->
             </div>
 

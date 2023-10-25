@@ -39,20 +39,7 @@ $ocorrencias = buscaTipoOcorrencia();
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
-    <link href="../css/tabs_visualizar.css" rel="stylesheet" type="text/css">
 </head>
-
-<style>
-    .modal_lg {
-        margin-left: 10vw;
-        margin-top: 0px;
-    }
-
-    .containermodal_lg {
-        width: 80vw;
-        height: 85vh;
-    }
-</style>
 
 <body>
     <div class="container-fluid">
@@ -64,12 +51,12 @@ $ocorrencias = buscaTipoOcorrencia();
             <BR> <!-- BOTOES AUXILIARES -->
         </div>
         <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
-            <div class="col-3">
+            <div class="col-7">
                 <!-- TITULO -->
                 <h2 class="ts-tituloPrincipal"><?php echo $contrato['idContrato'] ?> -
                     <?php echo $contrato['tituloContrato'] ?></h2>
             </div>
-            <div class="col-7">
+            <div class="col-3">
                 <!-- FILTROS -->
             </div>
 
@@ -79,7 +66,7 @@ $ocorrencias = buscaTipoOcorrencia();
             </div>
         </div>
 
-        <div id="tabs">
+        <div id="ts-tabs">
             <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
             <div class="tab" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
             <div class="tab" id="tab-notascontrato">Notas</div>
@@ -100,8 +87,8 @@ $ocorrencias = buscaTipoOcorrencia();
 
     <!--------- INSERIR Demanda de Contrato--------->
     <div class="modal" id="inserirDemandaContratoModal" tabindex="-1" aria-labelledby="inserirDemandaContratoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal_lg">
-            <div class="modal-content containermodal_lg">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Inserir <?php echo $contratoTipo['nomeDemanda'] ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -225,11 +212,9 @@ $ocorrencias = buscaTipoOcorrencia();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Inserir Nota</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="container-fluid">
+                <div class="modal-body">
                     <form method="post" id="inserirFormNotaContrato">
                         <div class="row mt-3">
                             <div class="col-md-6">
@@ -286,12 +271,14 @@ $ocorrencias = buscaTipoOcorrencia();
                                 <input type="text" class="form-control ts-input" name="condicao" autocomplete="off">
                             </div>
                         </div>
-
-                        <div class="card-footer text-end mt-4">
-                            <button type="submit" class="btn btn-success">Cadastrar</button>
-                        </div>
-                    </form>
+                </div><!--modal body-->
+                <div class="modal-footer">
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </div>
                 </div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -303,11 +290,9 @@ $ocorrencias = buscaTipoOcorrencia();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Alterar Nota</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="container">
+                <div class="modal-body">
                     <form method="post" id="alterarFormNotaContrato">
                         <div class="row mt-3">
                             <div class="col-md-2">
@@ -365,11 +350,13 @@ $ocorrencias = buscaTipoOcorrencia();
                                 <input type="text" class="form-control ts-input" name="condicao" id="condicao">
                             </div>
                         </div>
-                        <div class="card-footer text-end mt-4">
-                            <button type="submit" class="btn btn-success">Salvar</button>
-                        </div>
-                    </form>
+                </div><!--modal body-->
+                <div class="modal-footer">
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -397,7 +384,7 @@ $ocorrencias = buscaTipoOcorrencia();
             }
         }
 
-        document.getElementById('tabs').onclick = function(event) {
+        document.getElementById('ts-tabs').onclick = function(event) {
             var target = event.target;
             if (target.className == 'tab') {
                 for (var i = 0; i < tab.length; i++) {

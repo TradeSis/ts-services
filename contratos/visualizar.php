@@ -89,6 +89,82 @@ $tipoocorrencias = buscaTipoOcorrencia();
     <!--------- MODAL DEMANDA INSERIR --------->
     <?php include_once '../demandas/modalDemanda_inserir.php' ?>
     
+     <!--------- MODAL INSERIR NOTAS --------->
+     <div class="modal" id="inserirModalNotas" tabindex="-1" role="dialog" aria-labelledby="inserirModalNotasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Inserir Nota</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="inserirFormNotaContrato">
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="form-label ts-label">Cliente</label>
+                                <input type="text" class="form-control ts-input" name="nomeCliente" value="<?php echo $contrato['nomeCliente'] ?>" disabled>
+                                <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $contrato['idCliente'] ?>" readonly>
+                                <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
+                            </div>
+                            <div class="col-md-3 ">
+                                <label class='form-label ts-label'>dataFaturamento</label>
+                                <input type="date" class="form-control ts-input" name="dataFaturamento" autocomplete="off" required>
+                            </div>
+                            <div class="col-md-3 ">
+                                <label class='form-label ts-label'>dataEmissao</label>
+                                <input type="date" class="form-control ts-input" name="dataEmissao" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6 ">
+                                <label class='form-label ts-label'>serieNota</label>
+                                <input type="text" class="form-control ts-input" name="serieNota" autocomplete="off">
+                            </div>
+                            <div class="col-md-6 ">
+                                <label class='form-label ts-label'>numeroNota</label>
+                                <input type="text" class="form-control ts-input" name="numeroNota" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-3 ">
+                                <label class='form-label ts-label'>serieRPS</label>
+                                <input type="text" class="form-control ts-input" name="serieRPS" autocomplete="off">
+                            </div>
+                            <div class="col-md-3 ">
+                                <label class='form-label ts-label'>numeroRPS</label>
+                                <input type="text" class="form-control ts-input" name="numeroRPS" autocomplete="off">
+                            </div>
+                            <div class="col-md-3 ">
+                                <label class='form-label ts-label'>valorNota</label>
+                                <input type="text" class="form-control ts-input" name="valorNota" autocomplete="off" value="<?php echo $contrato['valorContrato'] ?>" required style="margin-top: -5px;">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label ts-label">statusNota</label>
+                                <select class="form-select ts-input" name="statusNota" autocomplete="off" required>
+                                    <option value="0">Aberto</option>
+                                    <option value="1">Emitida</option>
+                                    <option value="2">Recebida</option>
+                                    <option value="3">Cancelada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label class='form-label ts-label'>condicao</label>
+                                <input type="text" class="form-control ts-input" name="condicao" autocomplete="off">
+                            </div>
+                        </div>
+                </div><!--modal body-->
+                <div class="modal-footer">
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    </div>
+                </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 
     <!--------- MODAL ALTERAR NOTAS --------->
     <div class="modal" id="alterarModalNotas" tabindex="-1" role="dialog" aria-labelledby="alterarModalNotasLabel" aria-hidden="true">

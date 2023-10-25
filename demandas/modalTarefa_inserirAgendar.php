@@ -1,3 +1,6 @@
+<?php 
+// Lucas 25102023 id643 revisao geral 
+?>
  <!--------- INSERIR/AGENDAR --------->
  <div class="modal" id="inserirModal" tabindex="-1" role="dialog" aria-labelledby="inserirModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-lg">
@@ -38,12 +41,19 @@
                <div class="form-label ts-label">
                  <select class="form-select ts-input" name="idAtendente" id="newidAtendente">
                    <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
+                   <option value="null">Selecione</option>
                    <?php
                     foreach ($atendentes as $atendente) {
                     ?>
-                     <option value="<?php echo $atendente['idUsuario'] ?>">
-                       <?php echo $atendente['nomeUsuario'] ?>
-                     </option>
+                    <!-- Lucas 25102023 id643 select vai trazer o usuario logado como primeira opção -->
+                     <option <?php
+                                if ($atendente['idUsuario'] == $usuario['idUsuario']) {
+                                  echo "selected";
+                                }
+                                ?> value="<?php echo $atendente['idUsuario'] ?>">
+                                <?php echo $atendente['nomeUsuario'] ?>
+                        </option>
+
                    <?php } ?>
                  </select>
                </div>

@@ -153,7 +153,7 @@ include_once '../header.php';
     <script>
         $(document).ready(function() {
             //lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada
-            $('button[data-target="#stopmodal"]').click(function() {
+            $('button[data-bs-target="#stopmodal"]').click(function() {
                 var idTarefa = $(this).attr("data-id");
                 var idDemanda = $(this).attr("data-demanda");
                 var status = $(this).attr("data-status");

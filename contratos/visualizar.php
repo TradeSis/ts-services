@@ -27,7 +27,7 @@ if (isset($_SESSION['idCliente'])) {
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $clientes = buscaClientes();
-$contratos = buscaContratosAbertos();
+//$contratos = buscaContratosAbertos();
 $servicos = buscaServicos();
 $atendentes = buscaAtendente();
 // Lucas 25102023 id643 ajustado variavel $tipoocorrencias para ficar igual de demanda

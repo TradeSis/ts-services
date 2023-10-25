@@ -1,10 +1,15 @@
+<?php 
+// Lucas 25102023 id643 revisao geral 
+include_once(ROOT . '/cadastros/database/servicos.php');
+$servicos = buscaServicos();
+?>
 <!--------- MODAL DEMANDA INSERIR --------->
 <div class="modal" id="inserirDemandaModal" tabindex="-1" aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
     <!-- Gabriel 13102023 fix modal nova demanda, ajustado para modal-lg  -->
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">XInserir
+                <h5 class="modal-title" id="exampleModalLabel">Inserir
                     <?php echo $contratoTipo['nomeDemanda'] ?>
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -113,7 +118,12 @@
                                             <?php echo "Selecione" ?>
                                         </option>
                                         <?php foreach ($atendentes as $atendente) { ?>
-                                            <option value="<?php echo $atendente['idUsuario'] ?>">
+                                            <!-- Lucas 25102023 id643 select vai trazer o usuario logado como primeira opção -->
+                                            <option <?php
+                                                if ($atendente['idUsuario'] == $usuario['idUsuario']) {
+                                                    echo "selected";
+                                                }
+                                                ?> value="<?php echo $atendente['idUsuario'] ?>">
                                                 <?php echo $atendente['nomeUsuario'] ?>
                                             </option>
                                         <?php } ?>

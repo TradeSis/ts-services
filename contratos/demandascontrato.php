@@ -44,7 +44,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
 		</div>
 
 		<div class="table mt-2 ts-divTabela">
-			<table class="table table-hover table-sm align-middle">
+			<table class="table table-hover table-sm text-center">
 				<thead class="ts-headertabelafixo">
 					<tr>
 						<th>Prioridade</th>

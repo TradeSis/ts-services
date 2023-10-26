@@ -177,7 +177,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   </div>
 
 <!-- MENUFILTROS -->
-  <nav class="ts-menuFiltros" style="margin-top: 65px;"> 
+  <nav class="ts-menuFiltros" style="margin-top: 20px;"> 
   <label class="pl-2" for="">Filtrar por:</label>
     
       <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->

@@ -37,7 +37,7 @@
 
            <div class="row mt-4">
              <div class="col-md-6">
-               <label class='form-label ts-label'>Reponsável</label>
+               <label class='form-label ts-label'>Responsável</label>
                <div class="form-label ts-label">
                  <select class="form-select ts-input" name="idAtendente" id="newidAtendente">
                    <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->

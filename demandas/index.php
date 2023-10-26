@@ -234,7 +234,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
         <div class="input-group">
-          <input type="text" class="form-control ts-input" id="buscaDemanda" placeholder="Buscar por id ou titulo">
+          <input type="text" class="form-control ts-input m-0" id="buscaDemanda" placeholder="Buscar por id ou titulo">
           <span class="input-group-btn">
             <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
               <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>

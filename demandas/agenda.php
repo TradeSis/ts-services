@@ -1,4 +1,5 @@
 <?php
+// Lucas 26102023 id643 revisao geral
 include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/tarefas.php');
 include_once(__DIR__ . '/../database/demanda.php');
@@ -23,7 +24,8 @@ if (isset($_SESSION['filtro_agenda'])) {
 $tarefas = buscaTarefas(null, null, $idAtendente, $statusTarefa);
 
 $demandas = buscaDemandasAbertas();
-
+// Lucas 26102023 id643 adicionado buscaUsuarios para usar no select de Responsavel - trazer o usuario logado como primeira opção
+$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -98,13 +100,13 @@ $demandas = buscaDemandasAbertas();
     <div class="mt-3" id="calendar"></div>
 
     <!--------- MENUFILTROS --------->
+    <!-- Lucas 26102023 id643 ajustado estutura do filtro para o novo padrao -->
     <nav id="menuFiltros" class="menuFiltros" style="margin-top:-115px">
-        <div class="titulo"><span>Filtrar por:</span></div>
-        <ul>
-            <li class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
-                <form class="d-flex" action="" method="post" style="text-align: right;">
-                    <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
-                        style="font-size: 14px; width: 150px; height: 35px">
+    <label class="pl-2" for="">Filtrar por:</label>
+        
+            <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+                <form class="d-flex" action="" method="post">
+                    <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa">
                         <option value="<?php echo null ?>">
                             <?php echo "Todos" ?>
                         </option>
@@ -116,41 +118,34 @@ $demandas = buscaDemandasAbertas();
                         } ?> value="0">Fechado</option>
                     </select>
                 </form>
-            </li>
-        </ul>
+                    </div>
 
-        <div class="col-sm" style="text-align:right; color: #fff">
-            <a id="limpar-button" role="button" class="btn btn-sm mb-2" style="background-color:#84bfc3;">Limpar</a>
+        <div class="col-sm text-end mt-2">
+            <a id="limpar-button" role="button" class="btn btn-sm bg-info text-white">Limpar</a>
         </div>
     </nav>
 
 <!--------- INSERIR/AGENDAR --------->
-<div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
+<!-- Lucas 26102023 id643 alterado estrutura do modal para modelo Boostrap 5 -->
+<div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1"
     aria-labelledby="inserirModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="container">
+        <div class="modal-body">
           <form method="post" id="inserirForm">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                <div class="for-group" style="margin-top: 22px;">
-                  <input type="text" class="form-control" name="tituloTarefa" id="newtitulo" autocomplete="off"
-                    required>
-                </div>
-                <input type="hidden" class="form-control" name="idDemanda" value="null" id="newidDemanda">
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label class='form-label ts-label'>Tarefa</label>
+                    <input type="text" class="form-control ts-input" name="tituloTarefa" id="newtitulo" autocomplete="off" required>
+                    <input type="hidden" class="form-control ts-input" name="idDemanda" value="null" id="newidDemanda">
               </div>
               <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Cliente</label>
-                  <div class="form-group" style="margin-top: 40px;">
-                    <select class="form-control" name="idCliente" id="newidCliente">
+                  <label class='form-label ts-label'>Cliente</label>
+                    <select class="form-select ts-input" name="idCliente" id="newidCliente">
                       <option value="null"></option>
                       <?php
                       foreach ($clientes as $cliente) {
@@ -160,31 +155,31 @@ $demandas = buscaDemandasAbertas();
                       </option>
                       <?php } ?>
                     </select>
-                  </div>
-                </div>
               </div>
+            </div>
+            <div class="row mt-3">
               <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Reponsável</label>
-                  <div class="form-group" style="margin-top: 20px;">
-                    <select class="form-control" name="idAtendente" id="newidAtendente">
+                  <label class='form-label ts-label'>Reponsável</label>
+                    <select class="form-select ts-input" name="idAtendente" id="newidAtendente">
                       <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
                       <?php
                       foreach ($atendentes as $atendente) {
                         ?>
-                        <option value="<?php echo $atendente['idUsuario'] ?>">
-                          <?php echo $atendente['nomeUsuario'] ?>
+                        <!-- Lucas 26102023 id643 select vai trazer o usuario logado como primeira opção -->
+                        <option <?php
+                            if ($atendente['idUsuario'] == $usuario['idUsuario']) {
+                                echo "selected";
+                            }
+                            ?> value="<?php echo $atendente['idUsuario'] ?>">
+                            <?php echo $atendente['nomeUsuario'] ?>
                         </option>
+
                       <?php } ?>
                     </select>
-                  </div>
-                </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Ocorrência</label>
-                  <div class="form-group" style="margin-top: 20px;">
-                    <select class="form-control" name="idTipoOcorrencia" id="newidTipoOcorrencia">
+                  <label class='form-label ts-label'>Ocorrência</label>
+                    <select class="form-select ts-input" name="idTipoOcorrencia" id="newidTipoOcorrencia">
                       <option value="null">Selecione</option>
                       <?php
                       foreach ($ocorrencias as $ocorrencia) {
@@ -194,34 +189,29 @@ $demandas = buscaDemandasAbertas();
                         </option>
                       <?php } ?>
                     </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Data Previsão</label>
-                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Inicio</label>
-                  <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Fim</label>
-                  <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
-                </div>
               </div>
             </div>
-            <div class="card-footer bg-transparent" style="text-align:right">
+            <div class="row mt-3">
+              <div class="col-md-4">
+                  <label class="form-label ts-label">Data Previsão</label>
+                  <input type="date" class="form-control ts-input" name="Previsto" autocomplete="off" required>
+              </div>
+              <div class="col-md-4">
+                  <label class="form-label ts-label">Inicio</label>
+                  <input type="time" class="form-control ts-input" name="horaInicioPrevisto" autocomplete="off">
+              </div>
+              <div class="col-md-4">
+                  <label class="form-label ts-label">Fim</label>
+                  <input type="time" class="form-control ts-input" name="horaFinalPrevisto" autocomplete="off">
+              </div>
+            </div>
+            </div><!--modal body-->
+            <div class="modal-footer">
               <button type="submit" class="btn btn-warning" id="inserirStartBtn">Start</button>
               <button type="submit" class="btn btn-success" id="inserirBtn">Inserir</button>
             </div>
           </form>
-        </div>
+        
       </div>
     </div>
   </div>

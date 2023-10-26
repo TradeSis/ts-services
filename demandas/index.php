@@ -86,100 +86,20 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 <head>
 
-    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+  <?php include_once ROOT . "/vendor/head_css.php"; ?>
 
 </head>
 
-  <!-- Gabriel 13102023 fix modal nova demanda, removido styles de modal --> 
+<!-- Gabriel 13102023 fix modal nova demanda, removido styles de modal -->
 
 
 <body>
   <div class="container-fluid">
-    <div class="header-body">
-      <div class="row row-cols-6">
-        <!-- lucas 26092023 ID 576 Modificado estrutura dos cards -->
-        <div class="col-12 col-md my-2">
-          <div class="ts-cardColor card border-left-success ts-shadowOff py-0 ts-cardsTotais">
-            <div class="row no-gutters align-items-center">
-              <div class="col-12 col-md mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-success text-uppercase ">Todos</div>
-                <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalDemandas'] ?>
-                </div>
-              </div>
-            </div>
-            <button class="ts-cardLink" onClick="clickCard(this.value)" value="" id=""></button>
-          </div>
-        </div>
 
-        <div class="col-12 col-md my-2">
-          <div class="ts-cardColor1 ts-cardColor-active card border-left-success  py-0 ts-cardsTotais">
-            <div class="row no-gutters align-items-center">
-              <div class="col-12 col-md mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-primary text-uppercase ">Aberto</div>
-                <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalAbertas'] ?>
-                </div>
-              </div>
-            </div>
-            <button class="ts-cardLink" onClick="clickCard(this.value)" value="1" id="1"></button>
-          </div>
-        </div>
+    <!-- MENUFILTROS -->
+    <nav class="ts-menuFiltros">
+      <label class="pl-2" for="">Filtrar por:</label>
 
-        <div class="col-12 col-md my-2">
-          <div class="ts-cardColor2 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
-            <div class="row no-gutters align-items-center">
-              <div class="col-12 col-md mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Execução</div>
-
-                <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalExecucao'] ?>
-                </div>
-              </div>
-            </div>
-            <button class="ts-cardLink" onClick="clickCard(this.value)" value="2" id="2"></button>
-          </div>
-        </div>
-
-        <div class="col-12 col-md my-2">
-          <div class="ts-cardColor3 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
-            <div class="row no-gutters align-items-center">
-              <div class="col-12 col-md mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Entregue</div>
-
-                <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalEntregue'] ?>
-                </div>
-              </div>
-            </div>
-            <button class="ts-cardLink" onClick="clickCard(this.value)" value="3" id="3"></button>
-          </div>
-        </div>
-
-        <div class="col-12 col-md my-2">
-          <div class="ts-cardColor0 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
-            <div class="row no-gutters align-items-center">
-              <div class="col-12 col-md mr-2 mb-2 p-1">
-                <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Fechado</div>
-
-                <div class="h5 mb-0  text-gray-800 ml-1">
-                  <?php echo $cards['totalFechado'] ?>
-                </div>
-              </div>
-            </div>
-            <button class="ts-cardLink" onClick="clickCard(this.value)" value="0" id="0"></button>
-          </div>
-        </div>
-
-        <!--  -->
-      </div>
-    </div>
-  </div>
-
-<!-- MENUFILTROS -->
-  <nav class="ts-menuFiltros" style="margin-top: 20px;"> 
-  <label class="pl-2" for="">Filtrar por:</label>
-    
       <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post">
 
@@ -203,326 +123,399 @@ if (isset($_SESSION['filtro_demanda'])) {
 
         </form>
       </div>
-    
 
-    <div class="col-sm text-end mt-2">
-      <?php if ($ClienteSession == null) { ?>
-        <a onClick="limparTrade()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-      <?php } else { ?>
-        <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-      <?php } ?>
+      <div class="col-sm text-end mt-2">
+        <?php if ($ClienteSession == null) { ?>
+          <a onClick="limparTrade()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+        <?php } else { ?>
+          <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+        <?php } ?>
+      </div>
+    </nav>
+    <div class="row ">
+      <!-- <BR> MENSAGENS/ALERTAS -->
     </div>
-  </nav>
+    <div class="row row-cols-6">
+      <!-- BOTOES AUXILIARES -->
+      <!-- lucas 26092023 ID 576 Modificado estrutura dos cards -->
+      <div class="col-12 col-md my-2">
+        <div class="ts-cardColor card border-left-success ts-shadowOff py-0 ts-cardsTotais">
+          <div class="row no-gutters align-items-center">
+            <div class="col-12 col-md mr-2 mb-2 p-1">
+              <div class="text-xs font-weight-bold text-secondary text-success text-uppercase ">Todos</div>
+              <div class="h5 mb-0  text-gray-800 ml-1">
+                <?php echo $cards['totalDemandas'] ?>
+              </div>
+            </div>
+          </div>
+          <button class="ts-cardLink" onClick="clickCard(this.value)" value="" id=""></button>
+        </div>
+      </div>
 
-  <!-- Lucas 25102023 id643 include de modalDemanda_inserir -->
-  <!--------- MODAL DEMANDA INSERIR --------->
-  <?php include_once 'modalDemanda_inserir.php' ?>
+      <div class="col-12 col-md my-2">
+        <div class="ts-cardColor1 ts-cardColor-active card border-left-success  py-0 ts-cardsTotais">
+          <div class="row no-gutters align-items-center">
+            <div class="col-12 col-md mr-2 mb-2 p-1">
+              <div class="text-xs font-weight-bold text-primary text-uppercase ">Aberto</div>
+              <div class="h5 mb-0  text-gray-800 ml-1">
+                <?php echo $cards['totalAbertas'] ?>
+              </div>
+            </div>
+          </div>
+          <button class="ts-cardLink" onClick="clickCard(this.value)" value="1" id="1"></button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md my-2">
+        <div class="ts-cardColor2 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
+          <div class="row no-gutters align-items-center">
+            <div class="col-12 col-md mr-2 mb-2 p-1">
+              <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Execução</div>
+              <div class="h5 mb-0  text-gray-800 ml-1">
+                <?php echo $cards['totalExecucao'] ?>
+              </div>
+            </div>
+          </div>
+          <button class="ts-cardLink" onClick="clickCard(this.value)" value="2" id="2"></button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md my-2">
+        <div class="ts-cardColor3 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
+          <div class="row no-gutters align-items-center">
+            <div class="col-12 col-md mr-2 mb-2 p-1">
+              <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Entregue</div>
+              <div class="h5 mb-0  text-gray-800 ml-1">
+                <?php echo $cards['totalEntregue'] ?>
+              </div>
+            </div>
+          </div>
+          <button class="ts-cardLink" onClick="clickCard(this.value)" value="3" id="3"></button>
+        </div>
+      </div>
+
+      <div class="col-12 col-md my-2">
+        <div class="ts-cardColor0 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
+          <div class="row no-gutters align-items-center">
+            <div class="col-12 col-md mr-2 mb-2 p-1">
+              <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Fechado</div>
+              <div class="h5 mb-0  text-gray-800 ml-1">
+                <?php echo $cards['totalFechado'] ?>
+              </div>
+            </div>
+          </div>
+          <button class="ts-cardLink" onClick="clickCard(this.value)" value="0" id="0"></button>
+        </div>
+      </div>
+
+    </div> <!-- fim- BOTOES AUXILIARES -->
 
 
-  <div class="container-fluid text-center ">
+    <!-- Lucas 25102023 id643 include de modalDemanda_inserir -->
+    <!--------- MODAL DEMANDA INSERIR --------->
+    <?php include_once 'modalDemanda_inserir.php' ?>
 
-    <div class="row align-items-center">
-      <div class="col-4 order-1 col-sm-4  col-md-4 order-md-1 col-lg-1 order-lg-1 mt-3">
+    <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
+
+      <div class="col-2 col-lg-1 order-lg-1">
+
         <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
             filter_alt
           </span></button>
       </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-2 order-lg-2 mt-4">
-        <h2 class="ts-tituloPrincipal">
-          <?php echo $contratoTipo['nomeDemanda'] ?>
-        </h2>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
-        <div class="input-group">
-          <input type="text" class="form-control ts-input m-0" id="buscaDemanda" placeholder="Buscar por id ou titulo">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
-            </button>
-          </span>
-        </div>
+
+      <div class="col-4 col-lg-3 order-lg-2">
+        <h2 class="ts-tituloPrincipal"><?php echo $contratoTipo['nomeDemanda'] ?></h2>
+        <span>Filtro Aplicado</span>
       </div>
 
-      <div class="col-4 order-2 col-sm-4 col-md-4 order-md-2 d-flex col-lg-2 order-lg-4">
-        <div class="col-8 mb-1">
-          <form class="d-flex text-end" action="" method="post">
-            <select class="form-select ts-input mt-3" name="exportoptions" id="exportoptions">
+      <div class="col-6 col-lg-2 order-lg-3">
+        <form class="text-end" action="" method="post">
+          <div class="input-group">
+            <select class="form-select ts-input" name="exportoptions" id="exportoptions">
               <option value="excel">Excel</option>
               <option value="pdf">PDF</option>
               <option value="csv">csv</option>
             </select>
-          </form>
-        </div>
-        <div class="col-4 mt-2">
-          <button class="btn btn-warning" id="export" name="export" type="submit">Gerar</button>
-        </div>
-
+            <button class="btn btn-warning" id="export" name="export" type="submit">Gerar</button>
+          </div>
+        </form>
       </div>
 
-      <div class="col-4 order-3 col-sm-4 col-md-4 order-md-3 col-lg-2 order-lg-5 mt-1 text-end">
-        <button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+      <div class="col-12 col-lg-6 order-lg-4">
+        <div class="input-group">
+          <input type="text" class="form-control ts-input" id="buscaDemanda" placeholder="Buscar por id ou titulo" placeholder="Buscar aplicativo">
+          <span class="input-group-btn">
+            <button class="btn btn-primary ml-2" id="buscar" type="button">
+              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
+            </button>
+          </span>
+          <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+        </div>
       </div>
+
     </div>
 
-      <div class="table ts-divTabela ts-tableFiltros table-striped table-hover">
-        <table class="table table-sm">
-          <thead class="ts-headertabelafixo">
-            <?php if ($ClienteSession == NULL) { ?>
-              <tr class="ts-headerTabelaLinhaCima">
-                <th>Prioridade</th>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Solicitante</th>
-                <th>Titulo</th>
-                <th>Responsavel</th>
-                <th>Abertura</th>
-                <th>Status</th>
-                <th>Ocorrência</th>
-                <th>Fechamento</th>
-                <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
-                <th>Posição</th>
-                <th colspan="2">Ação</th>
-              </tr>
-              <tr class="ts-headerTabelaLinhaBaixo">
-                <th></th>
-                <th></th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" >
-                      <option value="<?php echo null ?>">
-                        <?php echo "Selecione" ?>
-                      </option>
-                      <?php
-                      foreach ($clientes as $cliente) {
-                      ?>
-                        <option <?php
-                                if ($cliente['idCliente'] == $idCliente) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $cliente['idCliente'] ?>">
-                          <?php echo $cliente['nomeCliente'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante" >
-                      <option value="<?php echo null ?>">
-                        <?php echo "Selecione" ?>
-                      </option>
-                      <?php
-                      foreach ($usuarios as $usuario) {
-                      ?>
-                        <option <?php
-                                if ($usuario['idUsuario'] == $idSolicitante) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $usuario['idUsuario'] ?>">
-                          <?php echo $usuario['nomeUsuario'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th></th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario" >
-                      <option value="<?php echo null ?>">
-                        <?php echo "Selecione" ?>
-                      </option>
-                      <?php
-                      foreach ($atendentes as $atendente) {
-                      ?>
-                        <option <?php
-                                if ($atendente['idUsuario'] == $idAtendente) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $atendente['idUsuario'] ?>">
-                          <?php echo $atendente['nomeUsuario'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th></th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off" >
-                      <option value="<?php echo null ?>">
-                        <?php echo "Selecione" ?>
-                      </option>
-                      <?php foreach ($tiposstatus as $tipostatus) { ?>
-                        <option <?php
-                                if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
-                          <?php echo $tipostatus['nomeTipoStatus'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia" >
-                      <option value="<?php echo null ?>">
-                        <?php echo "Selecione" ?>
-                      </option>
-                      <?php
-                      foreach ($tipoocorrencias as $tipoocorrencia) {
-                      ?>
-                        <option <?php
-                                if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
-                          <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th></th>
-                <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao" >
-                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                      <option value="0">Atendente</option>
-                      <option value="1">Cliente</option>
-                    </select>
-                  </form>
-                </th>
-                <th></th>
-              </tr>
-            <?php } //******************visão do Cliente 
-            else { ?>
-              <tr class="ts-headerTabelaLinhaCima">
-                <th>Prioridade</th>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Solicitante</th>
-                <th>Titulo</th>
-                <th>Status</th>
-                <th>Ocorrência</th>
-                <th>Fechamento</th>
-                <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
-                <th>Posição</th>
-                <th>Ação</th>
-              </tr>
-              <tr class="ts-headerTabelaLinhaBaixo">
-                <th></th>
-                <th></th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" disabled>
-                      <?php
-                      foreach ($clientes as $cliente) {
-                      ?>
-                        <option <?php
-                                if ($cliente['idCliente'] == $idCliente) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $cliente['idCliente'] ?>">
-                          <?php echo $cliente['nomeCliente'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
-                      <option value="<?php echo null ?>">
-                        <?php echo "Selecione" ?>
-                      </option>
-                      <?php
-                      foreach ($usuarios as $usuario) {
-                      ?>
-                        <option <?php
-                                if ($usuario['idUsuario'] == $idSolicitante) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $usuario['idUsuario'] ?>">
-                          <?php echo $usuario['nomeUsuario'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th></th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
-                      <option value="<?php echo null ?>">
-                        <?php echo "Selecione" ?>
-                      </option>
-                      <?php foreach ($tiposstatus as $tipostatus) { ?>
-                        <option <?php
-                                if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
-                          <?php echo $tipostatus['nomeTipoStatus'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
-                      <option value="<?php echo null ?>">
-                        <?php echo "Selecione" ?>
-                      </option>
-                      <?php
-                      foreach ($tipoocorrencias as $tipoocorrencia) {
-                      ?>
-                        <option <?php
-                                if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                                  echo "selected";
-                                }
-                                ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
-                          <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </form>
-                </th>
-                <th></th>
-                <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
-                <th>
-                  <form action="" method="post">
-                    <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
-                      <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                      <option value="0">Atendente</option>
-                      <option value="1">Cliente</option>
-                    </select>
-                  </form>
-                </th>
-                <th></th>
-              </tr>
-            <?php } ?>
-          </thead>
 
-          <tbody id='dados' class="fonteCorpo">
+    <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
+      <table class="table table-sm">
+        <thead class="ts-headertabelafixo">
+          <?php if ($ClienteSession == NULL) { ?>
+            <tr class="ts-headerTabelaLinhaCima">
+              <th>Prioridade</th>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Solicitante</th>
+              <th>Titulo</th>
+              <th>Responsavel</th>
+              <th>Abertura</th>
+              <th>Status</th>
+              <th>Ocorrência</th>
+              <th>Fechamento</th>
+              <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
+              <th>Posição</th>
+              <th colspan="2">Ação</th>
+            </tr>
+            <tr class="ts-headerTabelaLinhaBaixo">
+              <th></th>
+              <th></th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
+                    <?php
+                    foreach ($clientes as $cliente) {
+                    ?>
+                      <option <?php
+                              if ($cliente['idCliente'] == $idCliente) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $cliente['idCliente'] ?>">
+                        <?php echo $cliente['nomeCliente'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
+                    <?php
+                    foreach ($usuarios as $usuario) {
+                    ?>
+                      <option <?php
+                              if ($usuario['idUsuario'] == $idSolicitante) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $usuario['idUsuario'] ?>">
+                        <?php echo $usuario['nomeUsuario'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th></th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
+                    <?php
+                    foreach ($atendentes as $atendente) {
+                    ?>
+                      <option <?php
+                              if ($atendente['idUsuario'] == $idAtendente) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $atendente['idUsuario'] ?>">
+                        <?php echo $atendente['nomeUsuario'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th></th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
+                    <?php foreach ($tiposstatus as $tipostatus) { ?>
+                      <option <?php
+                              if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
+                        <?php echo $tipostatus['nomeTipoStatus'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
+                    <?php
+                    foreach ($tipoocorrencias as $tipoocorrencia) {
+                    ?>
+                      <option <?php
+                              if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
+                        <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th></th>
+              <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
+                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option value="0">Atendente</option>
+                    <option value="1">Cliente</option>
+                  </select>
+                </form>
+              </th>
+              <th></th>
+            </tr>
+          <?php } //******************visão do Cliente 
+          else { ?>
+            <tr class="ts-headerTabelaLinhaCima">
+              <th>Prioridade</th>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Solicitante</th>
+              <th>Titulo</th>
+              <th>Status</th>
+              <th>Ocorrência</th>
+              <th>Fechamento</th>
+              <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
+              <th>Posição</th>
+              <th>Ação</th>
+            </tr>
+            <tr class="ts-headerTabelaLinhaBaixo">
+              <th></th>
+              <th></th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" disabled>
+                    <?php
+                    foreach ($clientes as $cliente) {
+                    ?>
+                      <option <?php
+                              if ($cliente['idCliente'] == $idCliente) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $cliente['idCliente'] ?>">
+                        <?php echo $cliente['nomeCliente'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
+                    <?php
+                    foreach ($usuarios as $usuario) {
+                    ?>
+                      <option <?php
+                              if ($usuario['idUsuario'] == $idSolicitante) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $usuario['idUsuario'] ?>">
+                        <?php echo $usuario['nomeUsuario'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th></th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
+                    <?php foreach ($tiposstatus as $tipostatus) { ?>
+                      <option <?php
+                              if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
+                        <?php echo $tipostatus['nomeTipoStatus'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                    <option value="<?php echo null ?>">
+                      <?php echo "Selecione" ?>
+                    </option>
+                    <?php
+                    foreach ($tipoocorrencias as $tipoocorrencia) {
+                    ?>
+                      <option <?php
+                              if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                                echo "selected";
+                              }
+                              ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
+                        <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
+                      </option>
+                    <?php } ?>
+                  </select>
+                </form>
+              </th>
+              <th></th>
+              <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
+              <th>
+                <form action="" method="post">
+                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
+                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                    <option value="0">Atendente</option>
+                    <option value="1">Cliente</option>
+                  </select>
+                </form>
+              </th>
+              <th></th>
+            </tr>
+          <?php } ?>
+        </thead>
 
-          </tbody>
-        </table>
-      
+        <tbody id='dados' class="fonteCorpo">
+
+        </tbody>
+      </table>
+
     </div>
   </div>
 
   <!-- LOCAL PARA COLOCAR OS JS -->
-  
+
   <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-    <!-- script para menu de filtros -->
-    <script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
-    <script src="../js/demanda_cards.js"></script>
+  <!-- script para menu de filtros -->
+  <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+  <script src="../js/demanda_cards.js"></script>
 
   <script>
     <?php if ($ClienteSession === NULL) : ?>
@@ -798,7 +791,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       });
     });
 
- 
+
 
     //**************exporta excel 
     function exportToExcel() {
@@ -1044,9 +1037,6 @@ if (isset($_SESSION['filtro_demanda'])) {
     demandaContrato.on('text-change', function(delta, oldDelta, source) {
       $('#quill-demandainserir').val(demandaContrato.container.firstChild.innerHTML);
     });
-
-
-   
   </script>
 
   <!-- LOCAL PARA COLOCAR OS JS -FIM -->

@@ -79,8 +79,40 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
   <div class="container-fluid">
 
+    <div class="row">
+      <!--<BR>  MENSAGENS/ALERTAS -->
+    </div>
+    <div class="row mt-3">
+       <!-- <BR><BR><BR> BOTOES AUXILIARES -->
+    </div>
+
+    <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
+
+      <div class="col-2 col-lg-1 order-lg-1">
+        <button class="btn btn-outline-secondary ts-btnFiltros" type="button"><i class="bi bi-funnel"></i></button>
+      </div>
+
+      <div class="col-4 col-lg-3 order-lg-2" id="filtroh6">
+        <h2 class="ts-tituloPrincipal">Tarefas</h2>
+        <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
+      </div>
+
+      <div class="col-6 col-lg-2 order-lg-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i class="bi bi-calendar3"></i></button>
+      </div>
+
+      <div class="col-12 col-lg-6 order-lg-4">
+        <div class="input-group">
+          <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
+          <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
+          <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+        </div>
+      </div>
+
+    </div>
+
     <!-- MENUFILTROS -->
-    <nav class="ts-menuFiltros" style="margin-top: -3px;">
+    <div class="ts-menuFiltros mt-2">
       <label class="pl-2" for="">Filtrar por:</label>
 
       <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
@@ -103,43 +135,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       <div class="col-sm text-end mt-2">
         <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
       </div>
-    </nav>
-
-    <div class="row">
-      <!--<BR>  MENSAGENS/ALERTAS -->
     </div>
-    <div class="row mt-3">
-      <BR><BR><BR> <!-- BOTOES AUXILIARES -->
-    </div>
-
-    <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
-
-      <div class="col-2 col-lg-1 order-lg-1">
-        <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
-            filter_alt
-          </span></button>
-      </div>
-
-      <div class="col-4 col-lg-3 order-lg-2" id="filtroh6">
-        <h2 class="ts-tituloPrincipal">Tarefas</h2>
-        <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
-      </div>
-
-      <div class="col-6 col-lg-2 order-lg-3">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i class="bi bi-calendar3"></i></button>
-      </div>
-
-      <div class="col-12 col-lg-6 order-lg-4">
-        <div class="input-group">
-          <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
-          <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
-          <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
-        </div>
-      </div>
-
-    </div>
-
-
 
     <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
       <table class="table table-sm">

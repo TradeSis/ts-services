@@ -96,42 +96,6 @@ if (isset($_SESSION['filtro_demanda'])) {
 <body>
   <div class="container-fluid">
 
-    <!-- MENUFILTROS -->
-    <nav class="ts-menuFiltros">
-      <label class="pl-2" for="">Filtrar por:</label>
-
-      <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
-        <form class="d-flex" action="" method="post">
-
-          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" onchange="mudarSelect(this.value)">
-            <option value="<?php echo null ?>">
-              <?php echo "Todos" ?>
-            </option>
-            <option <?php if ($statusDemanda == "1") {
-                      echo "selected";
-                    } ?> value="1">Aberto</option>
-            <option <?php if ($statusDemanda == "2") {
-                      echo "selected";
-                    } ?> value="2">Execução</option>
-            <option <?php if ($statusDemanda == "3") {
-                      echo "selected";
-                    } ?> value="3">Entregue</option>
-            <option <?php if ($statusDemanda == "0") {
-                      echo "selected";
-                    } ?> value="0">Fechado</option>
-          </select>
-
-        </form>
-      </div>
-
-      <div class="col-sm text-end mt-2">
-        <?php if ($ClienteSession == null) { ?>
-          <a onClick="limparTrade()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-        <?php } else { ?>
-          <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-        <?php } ?>
-      </div>
-    </nav>
     <div class="row ">
       <!-- <BR> MENSAGENS/ALERTAS -->
     </div>
@@ -249,6 +213,42 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     </div>
 
+    <!-- MENUFILTROS -->
+    <div class="ts-menuFiltros mt-2">
+      <label class="pl-2" for="">Filtrar por:</label>
+
+      <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+        <form class="d-flex" action="" method="post">
+
+          <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" onchange="mudarSelect(this.value)">
+            <option value="<?php echo null ?>">
+              <?php echo "Todos" ?>
+            </option>
+            <option <?php if ($statusDemanda == "1") {
+                      echo "selected";
+                    } ?> value="1">Aberto</option>
+            <option <?php if ($statusDemanda == "2") {
+                      echo "selected";
+                    } ?> value="2">Execução</option>
+            <option <?php if ($statusDemanda == "3") {
+                      echo "selected";
+                    } ?> value="3">Entregue</option>
+            <option <?php if ($statusDemanda == "0") {
+                      echo "selected";
+                    } ?> value="0">Fechado</option>
+          </select>
+
+        </form>
+      </div>
+
+      <div class="col-sm text-end mt-2">
+        <?php if ($ClienteSession == null) { ?>
+          <a onClick="limparTrade()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+        <?php } else { ?>
+          <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+        <?php } ?>
+      </div>
+    </div>
 
     <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
       <table class="table table-sm">

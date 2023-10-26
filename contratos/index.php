@@ -63,35 +63,6 @@ if (isset($_SESSION['filtro_contrato'])) {
 <body>
     <div class="container-fluid">
 
-        <!-- MENUFILTROS -->
-        <nav class="ts-menuFiltros">
-            <label class="pl-2" for="">Filtrar por:</label>
-
-            <div class="col-12"> <!-- ABERTO/FECHADO -->
-                <form class="d-flex" action="" method="post">
-
-                    <select class="form-control" name="statusContrato" id="FiltroStatusContrato">
-                        <option value="<?php echo NULL ?>"><?php echo "Todos" ?></option>
-                        <option <?php if ($statusContrato == "2") {
-                                    echo "selected";
-                                } ?> value="2">Orçamento</option>
-
-                        <option <?php if ($statusContrato == "1") {
-                                    echo "selected";
-                                } ?> value="1">Ativo</option>
-
-                        <option <?php if ($statusContrato == "0") {
-                                    echo "selected";
-                                } ?> value="0">Encerrado</option>
-                    </select>
-
-                </form>
-            </div>
-
-            <div class="col-sm text-end mt-2">
-                <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-            </div>
-        </nav>
         <div class="row ">
             <!-- <BR> MENSAGENS/ALERTAS -->
         </div>
@@ -244,9 +215,7 @@ if (isset($_SESSION['filtro_contrato'])) {
         <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
 
             <div class="col-2 col-lg-1 order-lg-1">
-                <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
-                        filter_alt
-                    </span></button>
+            <button class="btn btn-outline-secondary ts-btnFiltros" type="button"><i class="bi bi-funnel"></i></button>
             </div>
 
             <div class="col-4 col-lg-3 order-lg-2">
@@ -268,7 +237,35 @@ if (isset($_SESSION['filtro_contrato'])) {
             
         </div>
 
+        <!-- MENUFILTROS -->
+        <div class="ts-menuFiltros mt-2">
+            <label class="pl-2" for="">Filtrar por:</label>
 
+            <div class="col-12"> <!-- ABERTO/FECHADO -->
+                <form class="d-flex" action="" method="post">
+
+                    <select class="form-control" name="statusContrato" id="FiltroStatusContrato">
+                        <option value="<?php echo NULL ?>"><?php echo "Todos" ?></option>
+                        <option <?php if ($statusContrato == "2") {
+                                    echo "selected";
+                                } ?> value="2">Orçamento</option>
+
+                        <option <?php if ($statusContrato == "1") {
+                                    echo "selected";
+                                } ?> value="1">Ativo</option>
+
+                        <option <?php if ($statusContrato == "0") {
+                                    echo "selected";
+                                } ?> value="0">Encerrado</option>
+                    </select>
+
+                </form>
+            </div>
+
+            <div class="col-sm text-end mt-2">
+                <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+            </div>
+        </div>
 
         <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
             <table class="table table-sm">

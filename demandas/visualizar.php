@@ -58,10 +58,11 @@ if (isset($_SESSION['idCliente'])) {
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm mt-3 ml-4" >
-                <span class="titulo">Chamado -
-                    <?php echo $idDemanda ?>
+                <span class="titulo">
+                    <?php echo $idDemanda ?> - <?php echo $demanda['tituloDemanda'] ?>
                 </span>
             </div>
+         
             <div class="col-sm mt-3 text-end">
                 <!-- Gabriel 22092023 id544 href dinâmico com session -->
                 <?php if (isset($_SESSION['origem'])) { ?>

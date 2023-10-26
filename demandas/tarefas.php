@@ -70,203 +70,195 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 <head>
 
-    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+  <?php include_once ROOT . "/vendor/head_css.php"; ?>
 
 </head>
 
 
 <body>
 
-  <div class="container-fluid text-center">
-    <div class="row">
-      <BR> <!-- MENSAGENS/ALERTAS -->
-    </div>
-    <div class="row">
-      <BR> <!-- BOTOES AUXILIARES -->
-    </div>
+  <div class="container-fluid">
 
     <!-- MENUFILTROS -->
     <nav class="ts-menuFiltros" style="margin-top: -3px;">
       <label class="pl-2" for="">Filtrar por:</label>
-   
+
       <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
       <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
-        <form class="d-flex" action="" method="post" >
+        <form class="d-flex" action="" method="post">
           <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa">
             <option value="<?php echo null ?>">
               <?php echo "Todos" ?>
             </option>
             <option <?php if ($statusTarefa == "1") {
-              echo "selected";
-            } ?> value="1">Aberto</option>
+                      echo "selected";
+                    } ?> value="1">Aberto</option>
             <option <?php if ($statusTarefa == "0") {
-              echo "selected";
-            } ?> value="0">Realizado</option>
+                      echo "selected";
+                    } ?> value="0">Realizado</option>
           </select>
         </form>
-        </div>
-    
+      </div>
 
-    <div class="col-sm text-end mt-2">
-      <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+      <div class="col-sm text-end mt-2">
+        <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+      </div>
+    </nav>
+
+    <div class="row">
+      <!--<BR>  MENSAGENS/ALERTAS -->
     </div>
-  </nav>
+    <div class="row mt-3">
+      <BR><BR><BR> <!-- BOTOES AUXILIARES -->
+    </div>
 
-    <div class="row align-items-center">
-      <div class="col-6 order-4 col-sm-6 col-md-6 order-md-4 col-lg-1 order-lg-1 mt-3 text-start">
+    <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
+
+      <div class="col-2 col-lg-1 order-lg-1">
         <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
             filter_alt
           </span></button>
       </div>
 
-      <div class="col-10 order-1 col-sm-11 col-md-11 order-md-1 col-lg-2 order-lg-2 mt-4" id="filtroh6">
+      <div class="col-4 col-lg-3 order-lg-2" id="filtroh6">
         <h2 class="ts-tituloPrincipal">Tarefas</h2>
         <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
       </div>
 
-      <div class="col-12 order-3 col-sm-12 col-md-12 col-lg-5 order-lg-3">
+      <div class="col-6 col-lg-2 order-lg-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i class="bi bi-calendar3"></i></button>
+      </div>
+
+      <div class="col-12 col-lg-6 order-lg-4">
         <div class="input-group">
           <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
-            </button>
-          </span>
+          <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
+          <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
       </div>
 
-      <!-- Gabriel 06102023 ID 596 removido buscar duplicado -->
-
-      <div class="col-2 order-2 col-sm-1 col-md-1 order-md-2 col-lg-2 order-lg-4">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i
-            class="bi bi-calendar3"></i></button>
-      </div>
-
-      <div class="col-6 order-5 col-sm-6 col-md-6 order-md-4 col-lg-2 order-lg-5 mt-1 text-end">
-        <button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirModal"><i
-            class="bi bi-plus-square"></i>&nbsp Novo</button>
-      </div>
     </div>
 
 
-      <div class="table ts-divTabela ts-tableFiltros table-striped table-hover">
-        <table class="table table-sm">
-          <thead class="ts-headertabelafixo">
-            <tr class="ts-headerTabelaLinhaCima">
-              <th>ID</th>
-              <th>Tarefa</th>
-              <th>Responsável</th>
-              <th>Cliente</th>
-              <th>Ocorrência</th>
-              <th>Previsão</th>
-              <th>Real</th>
-              <th>Cobrado</th>
-              <th colspan="2">Ação</th>
-            </tr>
-            <tr class="ts-headerTabelaLinhaBaixo">
-              <th></th>
-              <th></th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <?php
-                    foreach ($atendentes as $atendente) {
-                      ?>
-                      <option <?php
-                      if ($atendente['idUsuario'] == $idAtendente) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $atendente['idUsuario'] ?>">
-                        <?php echo $atendente['nomeUsuario'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <?php
-                    foreach ($clientes as $cliente) {
-                      ?>
-                      <option <?php
-                      if ($cliente['idCliente'] == $idCliente) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $cliente['idCliente'] ?>">
-                        <?php echo $cliente['nomeCliente'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <?php
-                    foreach ($ocorrencias as $ocorrencia) {
-                      ?>
-                      <option <?php
-                      if ($ocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                        <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" id="FiltroPrevistoOrdem">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <option <?php if ($PrevistoOrdem == "1") {
-                      echo "selected";
-                    } ?> value="1">DESC</option>
-                    <option <?php if ($PrevistoOrdem == "0") {
-                      echo "selected";
-                    } ?> value="0">ASC</option>
-                  </select>
-                </form>
-              </th>
-              <th >
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <option <?php if ($RealOrdem == "1") {
-                      echo "selected";
-                    } ?> value="1">DESC</option>
-                    <option <?php if ($RealOrdem == "0") {
-                      echo "selected";
-                    } ?> value="0">ASC</option>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
 
-          <tbody id='dados' class="fonteCorpo">
+    <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
+      <table class="table table-sm">
+        <thead class="ts-headertabelafixo">
+          <tr class="ts-headerTabelaLinhaCima">
+            <th>ID</th>
+            <th>Tarefa</th>
+            <th>Responsável</th>
+            <th>Cliente</th>
+            <th>Ocorrência</th>
+            <th>Previsão</th>
+            <th>Real</th>
+            <th>Cobrado</th>
+            <th colspan="2">Ação</th>
+          </tr>
+          <tr class="ts-headerTabelaLinhaBaixo">
+            <th></th>
+            <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($atendentes as $atendente) {
+                  ?>
+                    <option <?php
+                            if ($atendente['idUsuario'] == $idAtendente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $atendente['idUsuario'] ?>">
+                      <?php echo $atendente['nomeUsuario'] ?>
+                    </option>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($clientes as $cliente) {
+                  ?>
+                    <option <?php
+                            if ($cliente['idCliente'] == $idCliente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $cliente['idCliente'] ?>">
+                      <?php echo $cliente['nomeCliente'] ?>
+                    </option>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($ocorrencias as $ocorrencia) {
+                  ?>
+                    <option <?php
+                            if ($ocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                      <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
+                    </option>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" id="FiltroPrevistoOrdem">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <option <?php if ($PrevistoOrdem == "1") {
+                            echo "selected";
+                          } ?> value="1">DESC</option>
+                  <option <?php if ($PrevistoOrdem == "0") {
+                            echo "selected";
+                          } ?> value="0">ASC</option>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <option <?php if ($RealOrdem == "1") {
+                            echo "selected";
+                          } ?> value="1">DESC</option>
+                  <option <?php if ($RealOrdem == "0") {
+                            echo "selected";
+                          } ?> value="0">ASC</option>
+                </select>
+              </form>
+            </th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
 
-          </tbody>
-        </table>
-      </div>
-  
+        <tbody id='dados' class="fonteCorpo">
+
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
 
@@ -284,24 +276,26 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 
 
-<!-- LOCAL PARA COLOCAR OS JS -->
+  <!-- LOCAL PARA COLOCAR OS JS -->
 
-<?php include_once ROOT . "/vendor/footer_js.php"; ?>
+  <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
-<!-- script para menu de filtros -->
-<script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+  <!-- script para menu de filtros -->
+  <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
 
 
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+
     function limpar() {
-      buscar(null, null, null, null, null, null, null, null, null, null, function () {
-      //gabriel 13102023 id 596 fix atualizar pagina correta
-      window.location.reload();
+      buscar(null, null, null, null, null, null, null, null, null, null, function() {
+        //gabriel 13102023 id 596 fix atualizar pagina correta
+        window.location.reload();
       });
     }
+
     function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function() {
         window.location.reload();
       });
     }
@@ -316,6 +310,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
       return "00/00/0000";
     }
+
     function formatTime(timeString) {
       if (timeString !== null) {
         var timeParts = timeString.split(':');
@@ -372,7 +367,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         type: 'POST',
         dataType: 'html',
         url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=filtrar',
-        beforeSend: function () {
+        beforeSend: function() {
           $("#dados").html("Carregando...");
         },
         data: {
@@ -388,7 +383,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           RealOrdem: RealOrdem,
           buscaTarefa: buscaTarefa
         },
-        success: function (msg) {
+        success: function(msg) {
 
           var json = JSON.parse(msg);
           var linha = "";
@@ -405,7 +400,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             var vhoraInicioPrevistoMinutes = parseInt(vhoraInicioPrevistoTime[0]) * 60 + parseInt(vhoraInicioPrevistoTime[1]);
             var timeTime = time.split(":");
             var timeMinutes = parseInt(timeTime[0]) * 60 + parseInt(timeTime[1]);
-           
+
 
             var vdataReal = formatDate(object.dataReal);
             var vhoraInicioReal = formatTime(object.horaInicioReal);
@@ -428,10 +423,10 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
             //Gabriel 16102023 id596 ajustando if
             if (
-                (vPrevisto < today || (vPrevisto === today && vhoraInicioPrevistoMinutes > 0 && vhoraInicioPrevistoMinutes < timeMinutes)) &&
-                vdataReal === "00/00/0000" &&
-                vPrevisto !== "00/00/0000"
-              ) {
+              (vPrevisto < today || (vPrevisto === today && vhoraInicioPrevistoMinutes > 0 && vhoraInicioPrevistoMinutes < timeMinutes)) &&
+              vdataReal === "00/00/0000" &&
+              vPrevisto !== "00/00/0000"
+            ) {
               linha += "<td style='background:firebrick'>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
             } else {
               linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
@@ -465,7 +460,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
               linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
             }
-            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1'  data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>" ;
+            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1'  data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
             linha += "<button type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
 
             linha += "</td>";
@@ -481,49 +476,49 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     }
 
-    $("#FiltroClientes").change(function () {
+    $("#FiltroClientes").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroUsuario").change(function () {
+    $("#FiltroUsuario").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#buscar").click(function () {
+    $("#buscar").click(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroOcorrencia").change(function () {
+    $("#FiltroOcorrencia").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroDemanda").click(function () {
+    $("#FiltroDemanda").click(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroStatusTarefa").change(function () {
+    $("#FiltroStatusTarefa").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroPrevistoOrdem").change(function () {
+    $("#FiltroPrevistoOrdem").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroRealOrdem").change(function () {
+    $("#FiltroRealOrdem").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
       buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
     });
 
     //Gabriel 11102023 ID 596 adicionado document ready pois o modal está em indextarefa.php
-    $(document).ready(function () {
-      $("#filtrarButton").click(function () {
+    $(document).ready(function() {
+      $("#filtrarButton").click(function() {
         if (!$('#PrevisaoRadio').is(':checked') && !$('#RealizadoRadio').is(':checked')) {
           alert("Por favor selecione uma opção.");
           return false;
@@ -535,7 +530,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     });
 
-    document.addEventListener("keypress", function (e) {
+    document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
         //Gabriel 06102023 ID 596 ajustado #buscaTarefa
         buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
@@ -544,7 +539,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 
     //lucas 25092023 ID 358 Adicionado script para popup de stop
-    $(document).on('click', 'button[data-target="#stopexecucaomodal"]', function () {
+    $(document).on('click', 'button[data-target="#stopexecucaomodal"]', function() {
       var idTarefa = $(this).attr("data-id");
       var idDemanda = $(this).attr("data-demanda");
       var status = $(this).attr("data-status");
@@ -557,7 +552,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         data: {
           idTarefa: idTarefa
         },
-        success: function (data) {
+        success: function(data) {
           $('#idTarefa-stopexecucao').val(data.idTarefa);
           $('#idDemanda-stopexecucao').val(idDemanda);
           $('#status-stopexecucao').val(status);
@@ -573,18 +568,18 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     var inserirBtn = document.querySelector("button[data-bs-target='#inserirModal']");
 
-    inserirBtn.onclick = function () {
+    inserirBtn.onclick = function() {
       inserirModal.style.display = "block";
     };
 
-    window.onclick = function (event) {
+    window.onclick = function(event) {
       if (event.target == inserirModal) {
         inserirModal.style.display = "none";
       }
     };
 
-    $(document).ready(function () {
-      $(document).on('click', 'button.clonarButton', function () {
+    $(document).ready(function() {
+      $(document).on('click', 'button.clonarButton', function() {
 
         var idTarefa = $(this).data("idtarefa"); // Use data() to access the custom data attribute
         $.ajax({
@@ -594,7 +589,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           data: {
             idTarefa: idTarefa
           },
-          success: function (data) {
+          success: function(data) {
             $('#newtitulo').val(data.tituloTarefa);
             $('#newidCliente').val(data.idCliente);
             $('#newidDemanda').val(data.idDemanda);
@@ -611,7 +606,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 
 
-    $(document).on('click', '.stopButton', function () {
+    $(document).on('click', '.stopButton', function() {
       var idTarefa = $(this).data('id');
       var tipoStatusDemanda = $(this).data('status');
       var horaInicioCobrado = $(this).data('data-execucao');
@@ -627,7 +622,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           horaInicioCobrado: horaInicioCobrado,
           idDemanda: idDemanda
         },
-        success: function (msg) {
+        success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
@@ -635,7 +630,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     });
 
-    $(document).on('click', '.startButton', function () {
+    $(document).on('click', '.startButton', function() {
       var idTarefa = $(this).data('id');
       var tipoStatusDemanda = $(this).data('status');
       var idDemanda = $(this).data('demanda');
@@ -648,7 +643,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           tipoStatusDemanda: tipoStatusDemanda,
           idDemanda: idDemanda
         },
-        success: function (msg) {
+        success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
@@ -656,7 +651,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     });
 
-    $(document).on('click', '.realizadoButton', function () {
+    $(document).on('click', '.realizadoButton', function() {
       var idTarefa = $(this).data('id');
       var tipoStatusDemanda = $(this).data('status');
       var idDemanda = $(this).data('demanda');
@@ -669,7 +664,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           tipoStatusDemanda: tipoStatusDemanda,
           idDemanda: idDemanda
         },
-        success: function (msg) {
+        success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
@@ -677,8 +672,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     });
 
-    $(document).ready(function () {
-      $("#inserirForm").submit(function (event) {
+    $(document).ready(function() {
+      $("#inserirForm").submit(function(event) {
         event.preventDefault();
         var formData = new FormData(this);
         var vurl;
@@ -698,17 +693,17 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         });
       });
 
-      $("#inserirStartBtn").click(function () {
+      $("#inserirStartBtn").click(function() {
         $("#inserirBtn").prop("clicked", false);
         $(this).prop("clicked", true);
       });
 
-      $("#inserirBtn").click(function () {
+      $("#inserirBtn").click(function() {
         $("#inserirStartBtn").prop("clicked", false);
         $(this).prop("clicked", true);
       });
 
-      $("#alterarForm").submit(function (event) {
+      $("#alterarForm").submit(function(event) {
         event.preventDefault();
         var formData = new FormData(this);
         for (var pair of formData.entries()) {
@@ -737,12 +732,13 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
         });
       });
+
       function refreshPage() {
         window.location.reload();
       }
 
       //gabriel 13102023 id 596 submit stopForm para evitar redirecionamento para demanda
-      $("#stopForm").submit(function (event) {
+      $("#stopForm").submit(function(event) {
         event.preventDefault();
         var formData = new FormData(this);
         for (var pair of formData.entries()) {
@@ -768,16 +764,18 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 
     //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
-    $("#visualizarDemandaButton").click(function () {
+    $("#visualizarDemandaButton").click(function() {
       var currentPath = window.location.pathname;
       $.ajax({
         type: 'POST',
         url: '../database/demanda.php?operacao=origem',
-        data: { origem: currentPath },
-        success: function (response) {
+        data: {
+          origem: currentPath
+        },
+        success: function(response) {
           console.log('Session variable set successfully.');
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error('An error occurred:', error);
         }
       });
@@ -827,14 +825,11 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     });
 
     /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-    quillstop.on('text-change', function (delta, oldDelta, source) {
+    quillstop.on('text-change', function(delta, oldDelta, source) {
       $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
     });
-
-    
-
   </script>
-  
+
 
   <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 

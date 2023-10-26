@@ -218,10 +218,7 @@ if (isset($_SESSION['filtro_demanda'])) {
     <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
 
       <div class="col-2 col-lg-1 order-lg-1">
-
-        <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
-            filter_alt
-          </span></button>
+        <button class="btn btn-outline-secondary ts-btnFiltros" type="button"><i class="bi bi-funnel"></i></button>
       </div>
 
       <div class="col-4 col-lg-3 order-lg-2">
@@ -244,12 +241,8 @@ if (isset($_SESSION['filtro_demanda'])) {
 
       <div class="col-12 col-lg-6 order-lg-4">
         <div class="input-group">
-          <input type="text" class="form-control ts-input" id="buscaDemanda" placeholder="Buscar por id ou titulo" placeholder="Buscar aplicativo">
-          <span class="input-group-btn">
-            <button class="btn btn-primary ml-2" id="buscar" type="button">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">search</span>
-            </button>
-          </span>
+          <input type="text" class="form-control ts-input" id="buscaDemanda" placeholder="Buscar por id ou titulo">
+          <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
           <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
       </div>

@@ -213,7 +213,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
 <!-- MENUFILTROS -->
-    <nav class="ts-menuFiltros" style="margin-top: 40px;"> 
+    <nav class="ts-menuFiltros" style="margin-top: 25px;"> 
     <label class="pl-2" for="">Filtrar por:</label>
        
             <div class="col-12"> <!-- ABERTO/FECHADO -->

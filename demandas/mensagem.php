@@ -3,7 +3,7 @@
 include_once '../header.php';
 ?>
 <!-- Gabriel 05102023 ID 575 removido style, formato arquivo /excluido style -->
-<link href="../chat.css" rel="stylesheet" type="text/css">
+<link href="<?php URLROOT ?>/sistema/css/chat.css" rel="stylesheet" type="text/css">
 
 <body class="bg-transparent">
     <div class="container-fluid" style="margin-bottom:70px">

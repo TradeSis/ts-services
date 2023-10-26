@@ -91,7 +91,11 @@ if (isset($_SESSION['idCliente'])) {
             <?php } ?>
             <!-- Gabriel 26092023 ID 575 adicionado tab mensagens -->
             <div class="tabContent">
-                <?php include_once 'mensagem.php'; ?>
+                <?php 
+                 /***  helio 24.10.2023 - retirado CHAT, pois estava derrubando oservidor 
+                  **  include_once 'mensagem.php'; 
+                    **/
+                    ?>
             </div>
         </div>
     </div>

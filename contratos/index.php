@@ -68,7 +68,6 @@ if (isset($_SESSION['filtro_contrato'])) {
         </div>
         <div class="row row-cols-6">
             <!-- BOTOES AUXILIARES -->
-
             <div class="col-12 col-md-12 col-lg my-2">
                 <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
                     <div class="row no-gutters align-items-center">

@@ -87,7 +87,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 <head>
 
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
-
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
 <!-- Gabriel 13102023 fix modal nova demanda, removido styles de modal -->
@@ -509,6 +509,8 @@ if (isset($_SESSION['filtro_demanda'])) {
   <!-- script para menu de filtros -->
   <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
   <script src="../js/demanda_cards.js"></script>
+  <!-- QUILL editor -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
   <script>
     <?php if ($ClienteSession === NULL) : ?>

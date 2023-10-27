@@ -71,6 +71,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 <head>
 
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 </head>
 
@@ -275,10 +276,10 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   <!-- LOCAL PARA COLOCAR OS JS -->
 
   <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
   <!-- script para menu de filtros -->
   <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
-
+  <!-- QUILL editor -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());

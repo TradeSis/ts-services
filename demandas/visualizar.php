@@ -238,9 +238,7 @@ if (isset($_SESSION['idCliente'])) {
                 <div class="modal-header">
                     <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
                     <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post">
@@ -277,9 +275,7 @@ if (isset($_SESSION['idCliente'])) {
                 <div class="modal-header">
                     <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
                     <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post">
@@ -315,9 +311,7 @@ if (isset($_SESSION['idCliente'])) {
                 <div class="modal-header">
                     <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
                     <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post">

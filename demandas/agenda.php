@@ -69,7 +69,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
     <!--------- MENUFILTROS --------->
     <!-- Lucas 26102023 id643 ajustado estutura do filtro para o novo padrao -->
-    <div id="ts-menuFiltros" class="ts-menuFiltros" style="margin-top:50px">
+    <div id="ts-menuFiltros" class="ts-menuFiltros px-3" style="margin-top:48px">
     <label class="pl-2" for="">Filtrar por:</label>
         
             <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
@@ -196,6 +196,10 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
   <?php include_once ROOT . "/vendor/footer_js.php"; ?>
   <!-- QUILL editor -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <!-- Calendario -->
+  <script type="text/javascript" src="<?php echo URLROOT ?>/vendor/fullcalendar/moment.min.js"></script>
+  <script type="text/javascript" src="<?php echo URLROOT ?>/vendor/fullcalendar/fullcalendar.min.js"></script>
+  <script type="text/javascript" src="<?php echo URLROOT ?>/vendor/fullcalendar/pt-br.min.js"></script>
 
   <script type="text/javascript">
 

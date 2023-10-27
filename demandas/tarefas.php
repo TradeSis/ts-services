@@ -103,21 +103,21 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       </div>
 
       <div class="col-12 col-lg-6 order-lg-4">
-        <div class="input-group">
+        <div class="input-group gap-3">
           <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
           <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
-          <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
       </div>
 
     </div>
 
     <!-- MENUFILTROS -->
-    <div class="ts-menuFiltros mt-2">
-      <label class="pl-2" for="">Filtrar por:</label>
+    <div class="ts-menuFiltros mt-2 px-3">
+      <label>Filtrar por:</label>
 
       <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
-      <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+      <div class="ls-label col-sm-12"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post">
           <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa">
             <option value="<?php echo null ?>">

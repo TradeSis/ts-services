@@ -157,16 +157,16 @@ $statusEncerrar = array(
                         <?php
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
                         <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para encerrar-->
-                            <button type="button" data-toggle="modal" data-target="#encerrarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Encerrar</button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#encerrarModal" class="btn btn-danger" style="margin-right:10px;float: left;">Encerrar</button>
                         <?php }
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
                         <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para reabrir-->
-                            <button type="button" data-toggle="modal" data-target="#reabrirModal" class="btn btn-warning" style="margin-right:10px;float: left;">Reabrir</button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#reabrirModal" class="btn btn-warning" style="margin-right:10px;float: left;">Reabrir</button>
                         <?php } ?>
                         <?php
                         if ($ClienteSession == NULL) { ?>
 
-                            <button type="button" data-toggle="modal" data-target="#encaminharModal" class="btn btn-warning" style="margin-right:10px;float: left;">Encaminhar</button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#encaminharModal" class="btn btn-warning" style="margin-right:10px;float: left;">Encaminhar</button>
                         <?php } ?>
 
                         <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>

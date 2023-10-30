@@ -231,8 +231,8 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
-      <table class="table table-sm">
+    <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
+      <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <?php if ($ClienteSession == NULL) { ?>
             <tr class="ts-headerTabelaLinhaCima">

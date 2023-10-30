@@ -227,8 +227,8 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
         </div>
 
-        <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
-            <table class="table table-sm">
+        <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
+            <table class="table table-sm table-hover">
                 <thead class="ts-headertabelafixo">
                     <tr class="ts-headerTabelaLinhaCima">
                         <th>ID</th>

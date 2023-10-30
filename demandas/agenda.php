@@ -33,41 +33,10 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
-
+    <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/vendor/fullcalendar/fullcalendar.min.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/sistema/css/calendario.css">
 </head>
-    <style>
-        ::-webkit-scrollbar {
-            width: 0.5em;
-            background-color: #F5F5F5;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: #000000;
-        }
-
-        ::-webkit-scrollbar {
-            width: 0;
-            background-color: transparent;
-        }
-
-        .fc-novo-button {
-            color: #fff;
-            background-color: #28a745;
-            border-color: #28a745
-        }
-
-        .filtroresponsavel {
-            width: 180px;
-            position: fixed;
-            top: -112px;
-            left: 230px;
-        }
-
-        #calendar .fc-toolbar h2 {
-            font-size: 20px;
-        }
-    </style>
-
 
 <body>
 
@@ -97,11 +66,10 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
            
         </ul>
     </nav>
-    <div class="mt-3" id="calendar"></div>
 
     <!--------- MENUFILTROS --------->
     <!-- Lucas 26102023 id643 ajustado estutura do filtro para o novo padrao -->
-    <nav id="menuFiltros" class="menuFiltros" style="margin-top:-115px">
+    <div id="ts-menuFiltros" class="ts-menuFiltros px-3" style="margin-top:48px">
     <label class="pl-2" for="">Filtrar por:</label>
         
             <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
@@ -123,7 +91,11 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
         <div class="col-sm text-end mt-2">
             <a id="limpar-button" role="button" class="btn btn-sm bg-info text-white">Limpar</a>
         </div>
-    </nav>
+    </div>
+
+    <div class="mt-3" id="calendar"></div>
+
+
 
 <!--------- INSERIR/AGENDAR --------->
 <!-- Lucas 26102023 id643 alterado estrutura do modal para modelo Boostrap 5 -->
@@ -219,7 +191,18 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
   <!--Lucas 18102023 ID 602 alterado nome do arquivo para modalTarefa_alterar -->
   <?php include 'modalTarefa_alterar.php'; ?>
 
+  <!-- LOCAL PARA COLOCAR OS JS -->
+
+  <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+  <!-- QUILL editor -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <!-- Calendario -->
+  <script type="text/javascript" src="<?php echo URLROOT ?>/vendor/fullcalendar/moment.min.js"></script>
+  <script type="text/javascript" src="<?php echo URLROOT ?>/vendor/fullcalendar/fullcalendar.min.js"></script>
+  <script type="text/javascript" src="<?php echo URLROOT ?>/vendor/fullcalendar/pt-br.min.js"></script>
+
   <script type="text/javascript">
+
         $(document).on('click', '.fc-month-button', function () {
             gravaUltimo('month');
         });
@@ -292,9 +275,9 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
                     filtro: {
                         text: 'Filtro',
                         click: function () {
+                            /* alert('oi') */
                             //Gabriel 06102023 ID 596 ajustado para ID ao invés de classe
-                            $('#menuFiltros').toggleClass('mostra');
-                            $('.diviFrame').toggleClass('mostra');
+                            $('#ts-menuFiltros').toggleClass('mostra');
                         }
                     },
                     novo: {

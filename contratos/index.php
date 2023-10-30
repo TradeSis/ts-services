@@ -66,17 +66,12 @@ if (isset($_SESSION['filtro_contrato'])) {
         <div class="row ">
             <!-- <BR> MENSAGENS/ALERTAS -->
         </div>
-        <div class="row row-cols-6">
+        <div class="row row-cols-1 row-cols-md-6 pt-2">
             <!-- BOTOES AUXILIARES -->
-
-            <div class="col-12 col-md-12 col-lg my-2">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-12 col-md-12 col-lg p-1">
-                            <div class="text-xs font-weight-bold text-secondary text-uppercase ">
-                                Total</div>
-
-                            <div class="h5 mb-0  text-gray-800"><?php
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-secondary">TOTAL</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
                                                                 foreach ($cards as $card)
                                                                     if ($card["idContratoStatus"] == "0") {
                                                                         echo "(" . $card['qtdContratos'] . ") ";
@@ -86,20 +81,14 @@ if (isset($_SESSION['filtro_contrato'])) {
                                                                     }
 
                                                                 ?>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-md-12 col-lg my-2">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-12 col-md-12 col-lg p-1">
-                            <div class="text-xs font-weight-bold text-success text-uppercase ">
-                                Orçamento</div>
-                            <div class="h5 mb-0  text-gray-800"><?php
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-success">ORÇAMENTO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
                                                                 foreach ($cards as $card)
                                                                     if ($card["idContratoStatus"] == "1") {
                                                                         echo "(" . $card['qtdContratos'] . ") ";
@@ -109,20 +98,14 @@ if (isset($_SESSION['filtro_contrato'])) {
                                                                     }
 
                                                                 ?>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-md-12 col-lg my-2">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-12 col-md-12 col-lg p-1 ">
-                            <div class="text-xs font-weight-bold text-success text-uppercase ">
-                                Aprovação</div>
-                            <div class="h5 mb-0 text-gray-800"><?php
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-success">APROVAÇÂO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
                                                                 foreach ($cards as $card)
                                                                     if ($card["idContratoStatus"] == "2") {
                                                                         echo "(" . $card['qtdContratos'] . ") ";
@@ -132,20 +115,14 @@ if (isset($_SESSION['filtro_contrato'])) {
                                                                     }
 
                                                                 ?>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-md-12 col-lg my-2">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-12 col-md-12 col-lg p-1">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase ">
-                                Desenvolvimento</div>
-                            <div class="h5 mb-0  text-gray-800"><?php
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-warning">DESENVOLVIMENTO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
                                                                 foreach ($cards as $card)
                                                                     if ($card["idContratoStatus"] == "3") {
                                                                         echo "(" . $card['qtdContratos'] . ") ";
@@ -155,22 +132,14 @@ if (isset($_SESSION['filtro_contrato'])) {
                                                                     }
 
                                                                 ?>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
-
-
-            <div class="col-12 col-md-12 col-lg my-2">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-12 col-md-12 col-lg p-1">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase ">
-                                Faturamento</div>
-                            <div class="h5 mb-0  text-gray-800"><?php
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-danger">FATURAMENTO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
                                                                 foreach ($cards as $card)
                                                                     if ($card["idContratoStatus"] == "4") {
                                                                         echo "(" . $card['qtdContratos'] . ") ";
@@ -180,20 +149,14 @@ if (isset($_SESSION['filtro_contrato'])) {
                                                                     }
 
                                                                 ?>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-md-12 col-lg my-2">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col-12 col-md-12 col-lg p-1">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase ">
-                                Recebimento</div>
-                            <div class="h5 mb-0  text-gray-800"><?php
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-danger">RECEBIMENTO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
                                                                 foreach ($cards as $card)
                                                                     if ($card["idContratoStatus"] == "5") {
                                                                         echo "(" . $card['qtdContratos'] . ") ";
@@ -203,9 +166,6 @@ if (isset($_SESSION['filtro_contrato'])) {
                                                                     }
 
                                                                 ?>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -215,7 +175,7 @@ if (isset($_SESSION['filtro_contrato'])) {
         <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
 
             <div class="col-2 col-lg-1 order-lg-1">
-            <button class="btn btn-outline-secondary ts-btnFiltros" type="button"><i class="bi bi-funnel"></i></button>
+                <button class="btn btn-outline-secondary ts-btnFiltros" type="button"><i class="bi bi-funnel"></i></button>
             </div>
 
             <div class="col-4 col-lg-3 order-lg-2">
@@ -229,17 +189,17 @@ if (isset($_SESSION['filtro_contrato'])) {
 
             <div class="col-12 col-lg-6 order-lg-4">
                 <div class="input-group">
-                    <input type="text" class="form-control ts-input"  id="buscaContrato" placeholder="Buscar por id ou titulo">
+                    <input type="text" class="form-control ts-input" id="buscaContrato" placeholder="Buscar por id ou titulo">
                     <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
-                    <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success ml-4"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+                    <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="ms-4 btn btn-success ml-4"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
                 </div>
             </div>
-            
+
         </div>
 
         <!-- MENUFILTROS -->
-        <div class="ts-menuFiltros mt-2">
-            <label class="pl-2" for="">Filtrar por:</label>
+        <div class="ts-menuFiltros mt-2 px-3">
+            <label>Filtrar por:</label>
 
             <div class="col-12"> <!-- ABERTO/FECHADO -->
                 <form class="d-flex" action="" method="post">
@@ -267,8 +227,8 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
         </div>
 
-        <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
-            <table class="table table-sm">
+        <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
+            <table class="table table-sm table-hover">
                 <thead class="ts-headertabelafixo">
                     <tr class="ts-headerTabelaLinhaCima">
                         <th>ID</th>

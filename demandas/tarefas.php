@@ -71,6 +71,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 <head>
 
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 </head>
 
@@ -105,18 +106,18 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         <div class="input-group">
           <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
           <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
-          <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+          <button type="button" class="ms-4 btn btn-success" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
       </div>
 
     </div>
 
     <!-- MENUFILTROS -->
-    <div class="ts-menuFiltros mt-2">
-      <label class="pl-2" for="">Filtrar por:</label>
+    <div class="ts-menuFiltros mt-2 px-3">
+      <label>Filtrar por:</label>
 
       <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
-      <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+      <div class="ls-label col-sm-12"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post">
           <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa">
             <option value="<?php echo null ?>">
@@ -137,8 +138,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
-      <table class="table table-sm">
+    <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
+      <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
             <th>ID</th>
@@ -275,10 +276,10 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   <!-- LOCAL PARA COLOCAR OS JS -->
 
   <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
   <!-- script para menu de filtros -->
   <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
-
+  <!-- QUILL editor -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());

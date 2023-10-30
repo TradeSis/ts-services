@@ -87,7 +87,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 <head>
 
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
-
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
 <!-- Gabriel 13102023 fix modal nova demanda, removido styles de modal -->
@@ -99,75 +99,56 @@ if (isset($_SESSION['filtro_demanda'])) {
     <div class="row ">
       <!-- <BR> MENSAGENS/ALERTAS -->
     </div>
-    <div class="row row-cols-6">
+
+    <div class="row row-cols-1 row-cols-md-5 pt-2">
       <!-- BOTOES AUXILIARES -->
       <!-- lucas 26092023 ID 576 Modificado estrutura dos cards -->
-      <div class="col-12 col-md my-2">
-        <div class="ts-cardColor card border-left-success ts-shadowOff py-0 ts-cardsTotais">
-          <div class="row no-gutters align-items-center">
-            <div class="col-12 col-md mr-2 mb-2 p-1">
-              <div class="text-xs font-weight-bold text-secondary text-success text-uppercase ">Todos</div>
+      <div class="col">
+        <div class="ts-cardColor card border-left-success ts-shadowOff ts-cardsTotais p-1">
+              <div class="text-xs fw-bold text-success">TODOS</div>
               <div class="h5 mb-0  text-gray-800 ml-1">
                 <?php echo $cards['totalDemandas'] ?>
               </div>
-            </div>
-          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="" id=""></button>
         </div>
       </div>
 
-      <div class="col-12 col-md my-2">
-        <div class="ts-cardColor1 ts-cardColor-active card border-left-success  py-0 ts-cardsTotais">
-          <div class="row no-gutters align-items-center">
-            <div class="col-12 col-md mr-2 mb-2 p-1">
-              <div class="text-xs font-weight-bold text-primary text-uppercase ">Aberto</div>
+      <div class="col">
+        <div class="ts-cardColor1 ts-cardColor-active card border-left-success  ts-cardsTotais p-1">
+              <div class="text-xs fw-bold text-primary">ABERTO</div>
               <div class="h5 mb-0  text-gray-800 ml-1">
                 <?php echo $cards['totalAbertas'] ?>
               </div>
-            </div>
-          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="1" id="1"></button>
         </div>
       </div>
 
-      <div class="col-12 col-md my-2">
-        <div class="ts-cardColor2 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
-          <div class="row no-gutters align-items-center">
-            <div class="col-12 col-md mr-2 mb-2 p-1">
-              <div class="text-xs font-weight-bold text-secondary text-info text-uppercase ">Execução</div>
+      <div class="col">
+        <div class="ts-cardColor2 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+              <div class="text-xs fw-bold text-info">EXECUÇÃO</div>
               <div class="h5 mb-0  text-gray-800 ml-1">
                 <?php echo $cards['totalExecucao'] ?>
               </div>
-            </div>
-          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="2" id="2"></button>
         </div>
       </div>
 
-      <div class="col-12 col-md my-2">
-        <div class="ts-cardColor3 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
-          <div class="row no-gutters align-items-center">
-            <div class="col-12 col-md mr-2 mb-2 p-1">
-              <div class="text-xs font-weight-bold text-secondary text-warning text-uppercase ">Entregue</div>
+      <div class="col">
+        <div class="ts-cardColor3 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+              <div class="text-xs fw-bold text-warning">ENTREGUE</div>
               <div class="h5 mb-0  text-gray-800 ml-1">
                 <?php echo $cards['totalEntregue'] ?>
               </div>
-            </div>
-          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="3" id="3"></button>
         </div>
       </div>
 
-      <div class="col-12 col-md my-2">
-        <div class="ts-cardColor0 card border-left-success ts-shadowOff py-0 ts-cardsTotais">
-          <div class="row no-gutters align-items-center">
-            <div class="col-12 col-md mr-2 mb-2 p-1">
-              <div class="text-xs font-weight-bold text-secondary text-danger text-uppercase ">Fechado</div>
+      <div class="col">
+        <div class="ts-cardColor0 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+              <div class="text-xs fw-bold text-danger pl-4">FECHADO</div>
               <div class="h5 mb-0  text-gray-800 ml-1">
                 <?php echo $cards['totalFechado'] ?>
               </div>
-            </div>
-          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="0" id="0"></button>
         </div>
       </div>
@@ -207,17 +188,17 @@ if (isset($_SESSION['filtro_demanda'])) {
         <div class="input-group">
           <input type="text" class="form-control ts-input" id="buscaDemanda" placeholder="Buscar por id ou titulo">
           <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
-          <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+          <button type="button" class="ms-4 btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
       </div>
 
     </div>
 
     <!-- MENUFILTROS -->
-    <div class="ts-menuFiltros mt-2">
-      <label class="pl-2" for="">Filtrar por:</label>
+    <div class="ts-menuFiltros mt-2 px-3">
+      <label>Filtrar por:</label>
 
-      <div class="ls-label col-sm-12 mr-1"> <!-- ABERTO/FECHADO -->
+      <div class="ls-label col-sm-12"> <!-- ABERTO/FECHADO -->
         <form class="d-flex" action="" method="post">
 
           <select class="form-control" name="statusDemanda" id="FiltroStatusDemanda" onchange="mudarSelect(this.value)">
@@ -250,8 +231,8 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela ts-tableFiltros table-hover text-center">
-      <table class="table table-sm">
+    <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
+      <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <?php if ($ClienteSession == NULL) { ?>
             <tr class="ts-headerTabelaLinhaCima">
@@ -509,6 +490,8 @@ if (isset($_SESSION['filtro_demanda'])) {
   <!-- script para menu de filtros -->
   <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
   <script src="../js/demanda_cards.js"></script>
+  <!-- QUILL editor -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
   <script>
     <?php if ($ClienteSession === NULL) : ?>

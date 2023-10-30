@@ -49,8 +49,7 @@ if (isset($_SESSION['idCliente'])) {
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
-    <link rel="stylesheet" href="../css/tabs_visualizar.css">
-
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
 
@@ -397,7 +396,9 @@ if (isset($_SESSION['idCliente'])) {
     <!-- LOCAL PARA COLOCAR OS JS -->
 
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
+    <!-- QUILL editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    
     <script>
         var tab;
         var tabContent;

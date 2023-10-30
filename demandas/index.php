@@ -185,10 +185,10 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
 
       <div class="col-12 col-lg-6 order-lg-4">
-        <div class="input-group gap-3">
+        <div class="input-group">
           <input type="text" class="form-control ts-input" id="buscaDemanda" placeholder="Buscar por id ou titulo">
           <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
-          <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+          <button type="button" class="ms-4 btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
       </div>
 

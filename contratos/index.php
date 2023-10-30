@@ -188,10 +188,10 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
             <div class="col-12 col-lg-6 order-lg-4">
-                <div class="input-group gap-3">
+                <div class="input-group">
                     <input type="text" class="form-control ts-input" id="buscaContrato" placeholder="Buscar por id ou titulo">
                     <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
-                    <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success ml-4"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+                    <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="ms-4 btn btn-success ml-4"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
                 </div>
             </div>
 

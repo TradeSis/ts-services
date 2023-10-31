@@ -14,7 +14,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
 <head>
 
 	<?php include_once ROOT . "/vendor/head_css.php"; ?>
-
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
 
@@ -39,7 +39,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
 
 			<div class="col-2 text-end">
 			 <!-- Lucas 25102023 id643 alterado nome do target do botão para chamada do modal -->
-				<button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+				<button type="button" class="btn btn-success mr-4" data-bs-toggle="modal" data-bs-target="#novoinserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
 			</div>
 		</div>
 
@@ -86,9 +86,10 @@ $demandas = buscaDemandas(null, null, $idContrato);
 	<!-- LOCAL PARA COLOCAR OS JS -->
 
 	<?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
+    <!-- QUILL editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 	<script>
-		function refreshPage(tab, idContrato) {
+	/* 	function refreshPage(tab, idContrato) {
 			window.location.reload();
 			var url = window.location.href.split('?')[0];
 			var newUrl = url + '?id=' + tab + '&&idContrato=' + idContrato;
@@ -107,7 +108,7 @@ $demandas = buscaDemandas(null, null, $idContrato);
 			if (event.target == inserirModal) {
 				inserirModal.style.display = "none";
 			}
-		};
+		}; */
 	</script>
 
 	<!-- LOCAL PARA COLOCAR OS JS -FIM -->

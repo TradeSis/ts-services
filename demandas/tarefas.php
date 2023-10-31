@@ -424,7 +424,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               vdataReal === "00/00/0000" &&
               vPrevisto !== "00/00/0000"
             ) {
-              linha += "<td style='background:firebrick'>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+              linha += "<td style='background:firebrick;color:white'>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
             } else {
               linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
             }

@@ -72,7 +72,7 @@ $contratos = buscaContratosAbertos();
 </section>
 
 <!--------- MODAL DEMANDA INSERIR --------->
-<div class="modal fade bd-example-modal-lg" id="inserirDemandaModal" tabindex="-1" role="dialog"
+<!-- <div class="modal fade bd-example-modal-lg" id="inserirDemandaModal" tabindex="-1" role="dialog"
     aria-labelledby="inserirDemandaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -210,7 +210,7 @@ $contratos = buscaContratosAbertos();
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <script>
     $(document).ready(function () {

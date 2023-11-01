@@ -44,7 +44,7 @@ if (isset($jsonEntrada['idDemanda'])) {
 
 
 //lucas 22092023 ID 358 modificado o teste para gravar a data quando for tipo encerrado
-    if ($statusDemanda == 0) { //se status for do tipo encerrar
+    if ($statusDemanda == 3) { //se status for do tipo encerrar
         if ($dataFechamento == null) { //e a data for null
             $dataFechamento = 'CURRENT_TIMESTAMP ()'; //grava a data de fechamento
             $sql2 = "UPDATE demanda SET dataFechamento=$dataFechamento, dataAtualizacaoAtendente=CURRENT_TIMESTAMP () WHERE demanda.idDemanda = $idDemanda ";

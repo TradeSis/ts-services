@@ -719,6 +719,51 @@ if (isset($_SESSION['idCliente'])) {
             var newUrl = url + '?id=' + tab + '&&idDemanda=' + idDemanda;
             window.location.href = newUrl;
         }
+
+        var quilldescricao = new Quill('.quill-textarea', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    ['link', 'image', 'video', 'formula'],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        quilldescricao.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
+        });
     </script>
 </body>
 

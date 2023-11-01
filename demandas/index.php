@@ -1,31 +1,14 @@
 <?php
-// Lucas 25102023 id643 revisao geral
-// Lucas 16102023 novo padrao
-//Gabriel 13102023 fix modal nova demanda 
-//lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
-// Gabriel 22092023 id 544 Demandas - Botão Voltar
-//lucas 22092023 ID 358 Demandas/Comentarios 
-// Lucas 22032023 ajustado função do botão de limpar
-// Lucas 22032023 adicionado busca por barra de pesquisa, funcionado com pressionamento do Enter
-// Lucas 21032023 adicionado forms para filtro de cliente, responsavel, usuario e ocorrencia, fazendo a requisição via ajax.
-// Lucas 20032023 alterado select de idTipoStatus para acionar uma função js, botão "buscar" foi removido, 
-//  alterado botão de limpar para usar função onclick="buscar(null)"
-// Lucas 20032023 Modificada a tabela ser construida via Javascript
-// Lucas 13032023 - adicionado novo modelo para os cards
-// helio 20022023 - Incluido class="table" no HTML <table>
-// Helio 20022023 - integrado modificações para receber idTipoStatus no $_POST
-// gabriel 06022023 ajuste na tabela
-// helio 01022023 alterado para include_once
-// helio 26012023 16:16
-
+// lucas 31102023 id650/erros
 include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(ROOT . '/cadastros/database/clientes.php');
 include_once(ROOT . '/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipostatus.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
-include '../database/contratotipos.php';
+include_once '../database/contratotipos.php';
 include_once '../database/contratos.php';
+include_once(ROOT . '/cadastros/database/servicos.php');
 
 $urlContratoTipo = null;
 if (isset($_GET["tipo"])) {
@@ -47,6 +30,7 @@ $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
 $cards = buscaCardsDemanda();
 $contratos = buscaContratosAbertos();
+$servicos = buscaServicos();
 
 if ($_SESSION['idCliente'] == null) {
   $idCliente = null;
@@ -75,12 +59,10 @@ if (isset($_SESSION['filtro_demanda'])) {
   $idTipoStatus = $filtroEntrada['idTipoStatus'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusDemanda = $filtroEntrada['statusDemanda'];
-  //lucas 26092023 ID 576 Adicionado posicao no filtro_demanda
   $posicao = $filtroEntrada['posicao'];
 }
-
-
 ?>
+
 <!doctype html>
 <html lang="pt-BR">
 
@@ -90,75 +72,66 @@ if (isset($_SESSION['filtro_demanda'])) {
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
-<!-- Gabriel 13102023 fix modal nova demanda, removido styles de modal -->
-
-
 <body>
   <div class="container-fluid">
 
-    <div class="row ">
+    <div class="row">
       <!-- <BR> MENSAGENS/ALERTAS -->
     </div>
 
     <div class="row row-cols-1 row-cols-md-5 pt-2">
       <!-- BOTOES AUXILIARES -->
-      <!-- lucas 26092023 ID 576 Modificado estrutura dos cards -->
       <div class="col">
         <div class="ts-cardColor card border-left-success ts-shadowOff ts-cardsTotais p-1">
-              <div class="text-xs fw-bold text-success">TODOS</div>
-              <div class="h5 mb-0  text-gray-800 ml-1">
-                <?php echo $cards['totalDemandas'] ?>
-              </div>
+          <div class="text-xs fw-bold text-success">TODOS</div>
+          <div class="h5 mb-0  text-gray-800 ml-1">
+            <?php echo $cards['totalDemandas'] ?>
+          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="" id=""></button>
         </div>
       </div>
 
       <div class="col">
         <div class="ts-cardColor1 ts-cardColor-active card border-left-success  ts-cardsTotais p-1">
-              <div class="text-xs fw-bold text-primary">ABERTO</div>
-              <div class="h5 mb-0  text-gray-800 ml-1">
-                <?php echo $cards['totalAbertas'] ?>
-              </div>
+          <div class="text-xs fw-bold text-primary">ABERTO</div>
+          <div class="h5 mb-0  text-gray-800 ml-1">
+            <?php echo $cards['totalAbertas'] ?>
+          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="1" id="1"></button>
         </div>
       </div>
 
       <div class="col">
         <div class="ts-cardColor2 card border-left-success ts-shadowOff ts-cardsTotais p-1">
-              <div class="text-xs fw-bold text-info">EXECUÇÃO</div>
-              <div class="h5 mb-0  text-gray-800 ml-1">
-                <?php echo $cards['totalExecucao'] ?>
-              </div>
+          <div class="text-xs fw-bold text-info">EXECUÇÃO</div>
+          <div class="h5 mb-0  text-gray-800 ml-1">
+            <?php echo $cards['totalExecucao'] ?>
+          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="2" id="2"></button>
         </div>
       </div>
 
       <div class="col">
         <div class="ts-cardColor3 card border-left-success ts-shadowOff ts-cardsTotais p-1">
-              <div class="text-xs fw-bold text-warning">ENTREGUE</div>
-              <div class="h5 mb-0  text-gray-800 ml-1">
-                <?php echo $cards['totalEntregue'] ?>
-              </div>
+          <div class="text-xs fw-bold text-warning">ENTREGUE</div>
+          <div class="h5 mb-0  text-gray-800 ml-1">
+            <?php echo $cards['totalEntregue'] ?>
+          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="3" id="3"></button>
         </div>
       </div>
 
       <div class="col">
         <div class="ts-cardColor0 card border-left-success ts-shadowOff ts-cardsTotais p-1">
-              <div class="text-xs fw-bold text-danger pl-4">FECHADO</div>
-              <div class="h5 mb-0  text-gray-800 ml-1">
-                <?php echo $cards['totalFechado'] ?>
-              </div>
+          <div class="text-xs fw-bold text-danger pl-4">FECHADO</div>
+          <div class="h5 mb-0  text-gray-800 ml-1">
+            <?php echo $cards['totalFechado'] ?>
+          </div>
           <button class="ts-cardLink" onClick="clickCard(this.value)" value="0" id="0"></button>
         </div>
       </div>
 
     </div> <!-- fim- BOTOES AUXILIARES -->
-
-
-    <!-- Lucas 25102023 id643 include de modalDemanda_inserir -->
-    <!--------- MODAL DEMANDA INSERIR --------->
-    <?php include_once 'modalDemanda_inserir.php' ?>
 
     <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
 
@@ -188,7 +161,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         <div class="input-group">
           <input type="text" class="form-control ts-input" id="buscaDemanda" placeholder="Buscar por id ou titulo">
           <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
-          <button type="button" class="ms-4 btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+          <button type="button" class="ms-4 btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#novoinserirDemandaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
         </div>
       </div>
 
@@ -223,530 +196,288 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
 
       <div class="col-sm text-end mt-2">
-        <?php if ($ClienteSession == null) { ?>
-          <a onClick="limparTrade()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-        <?php } else { ?>
-          <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-        <?php } ?>
+        <a onClick="limparTrade()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
       </div>
     </div>
 
     <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
       <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
-          <?php if ($ClienteSession == NULL) { ?>
-            <tr class="ts-headerTabelaLinhaCima">
-              <th>Prioridade</th>
-              <th>ID</th>
-              <th>Cliente</th>
-              <th>Solicitante</th>
-              <th>Titulo</th>
-              <th>Responsavel</th>
-              <th>Abertura</th>
-              <th>Status</th>
-              <th>Ocorrência</th>
-              <th>Fechamento</th>
-              <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
-              <th>Posição</th>
-              <th colspan="2">Ação</th>
-            </tr>
-            <tr class="ts-headerTabelaLinhaBaixo">
-              <th></th>
-              <th></th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
+          <tr class="ts-headerTabelaLinhaCima">
+            <th>Prioridade</th>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Solicitante</th>
+            <th>Titulo</th>
+            <th>Responsavel</th>
+            <th>Abertura</th>
+            <th>Status</th>
+            <th>Ocorrência</th>
+            <th>Data Entrega</th>
+            <th>Posição</th>
+            <th colspan="2">Ação</th>
+          </tr>
+          <tr class="ts-headerTabelaLinhaBaixo">
+            <th></th>
+            <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($clientes as $cliente) {
+                  ?>
+                    <option <?php
+                            if ($cliente['idCliente'] == $idCliente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $cliente['idCliente'] ?>">
+                      <?php echo $cliente['nomeCliente'] ?>
                     </option>
-                    <?php
-                    foreach ($clientes as $cliente) {
-                    ?>
-                      <option <?php
-                              if ($cliente['idCliente'] == $idCliente) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $cliente['idCliente'] ?>">
-                        <?php echo $cliente['nomeCliente'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($usuarios as $usuariofiltro) {
+                  ?>
+                    <option <?php
+                            if ($usuariofiltro['idUsuario'] == $idSolicitante) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $usuariofiltro['idUsuario'] ?>">
+                      <?php echo $usuariofiltro['nomeUsuario'] ?>
                     </option>
-                    <?php
-                    foreach ($usuarios as $usuario) {
-                    ?>
-                      <option <?php
-                              if ($usuario['idUsuario'] == $idSolicitante) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $usuario['idUsuario'] ?>">
-                        <?php echo $usuario['nomeUsuario'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($atendentes as $atendente) {
+                  ?>
+                    <option <?php
+                            if ($atendente['idUsuario'] == $idAtendente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $atendente['idUsuario'] ?>">
+                      <?php echo $atendente['nomeUsuario'] ?>
                     </option>
-                    <?php
-                    foreach ($atendentes as $atendente) {
-                    ?>
-                      <option <?php
-                              if ($atendente['idUsuario'] == $idAtendente) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $atendente['idUsuario'] ?>">
-                        <?php echo $atendente['nomeUsuario'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php foreach ($tiposstatus as $tipostatus) { ?>
+                    <option <?php
+                            if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
+                      <?php echo $tipostatus['nomeTipoStatus'] ?>
                     </option>
-                    <?php foreach ($tiposstatus as $tipostatus) { ?>
-                      <option <?php
-                              if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
-                        <?php echo $tipostatus['nomeTipoStatus'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($tipoocorrencias as $tipoocorrencia) {
+                  ?>
+                    <option <?php
+                            if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
+                      <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
                     </option>
-                    <?php
-                    foreach ($tipoocorrencias as $tipoocorrencia) {
-                    ?>
-                      <option <?php
-                              if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
-                        <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-              <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                    <option value="0">Atendente</option>
-                    <option value="1">Cliente</option>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-            </tr>
-          <?php } //******************visão do Cliente 
-          else { ?>
-            <tr class="ts-headerTabelaLinhaCima">
-              <th>Prioridade</th>
-              <th>ID</th>
-              <th>Cliente</th>
-              <th>Solicitante</th>
-              <th>Titulo</th>
-              <th>Status</th>
-              <th>Ocorrência</th>
-              <th>Fechamento</th>
-              <!-- lucas 22092023 ID 358 Adicionado campo posição na tabela-->
-              <th>Posição</th>
-              <th>Ação</th>
-            </tr>
-            <tr class="ts-headerTabelaLinhaBaixo">
-              <th></th>
-              <th></th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes" disabled>
-                    <?php
-                    foreach ($clientes as $cliente) {
-                    ?>
-                      <option <?php
-                              if ($cliente['idCliente'] == $idCliente) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $cliente['idCliente'] ?>">
-                        <?php echo $cliente['nomeCliente'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idSolicitante" id="FiltroSolicitante">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <?php
-                    foreach ($usuarios as $usuario) {
-                    ?>
-                      <option <?php
-                              if ($usuario['idUsuario'] == $idSolicitante) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $usuario['idUsuario'] ?>">
-                        <?php echo $usuario['nomeUsuario'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <?php foreach ($tiposstatus as $tipostatus) { ?>
-                      <option <?php
-                              if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
-                        <?php echo $tipostatus['nomeTipoStatus'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <?php
-                    foreach ($tipoocorrencias as $tipoocorrencia) {
-                    ?>
-                      <option <?php
-                              if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                                echo "selected";
-                              }
-                              ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
-                        <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-              <!-- lucas 26092023 ID 576 Adicionado filtro posicao -->
-              <th>
-                <form action="" method="post">
-                  <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
-                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                    <option value="0">Atendente</option>
-                    <option value="1">Cliente</option>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-            </tr>
-          <?php } ?>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
+                  <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                  <option value="0">Atendente</option>
+                  <option value="1">Cliente</option>
+                </select>
+              </form>
+            </th>
+            <th></th>
+          </tr>
         </thead>
 
         <tbody id='dados' class="fonteCorpo">
 
         </tbody>
       </table>
-
     </div>
-  </div>
+
+    <?php include_once 'modalDemanda_inserir.php' ?>
+
+
+
+  </div><!--container-fluid-->
 
   <!-- LOCAL PARA COLOCAR OS JS -->
 
   <?php include_once ROOT . "/vendor/footer_js.php"; ?>
   <!-- script para menu de filtros -->
   <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
-  <script src="../js/demanda_cards.js"></script>
   <!-- QUILL editor -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <!-- Cards funcionado como botões -->
+  <script src="../js/demanda_cards.js"></script>
 
   <script>
-    <?php if ($ClienteSession === NULL) : ?>
-      var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-      //lucas 26092023 ID 576 Adicionado posicao no buscar
+    var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
+
+    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+
+    function limparTrade() {
+      buscar(null, null, null, null, null, null, null, null, function() {
+        window.location.reload();
+      });
+    }
+
+    function clickCard(statusDemanda) {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(),
+        statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+    }
+
+    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
+      //alert(posicao)
+      $.ajax({
+        type: 'POST',
+        dataType: 'html',
+        url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
+        beforeSend: function() {
+          $("#dados").html("Carregando...");
+        },
+        data: {
+          idCliente: idCliente,
+          idSolicitante: idSolicitante,
+          idAtendente: idAtendente,
+          idTipoStatus: idTipoStatus,
+          idTipoOcorrencia: idTipoOcorrencia,
+          statusDemanda: statusDemanda,
+          buscaDemanda: buscaDemanda,
+          urlContratoTipo: urlContratoTipo,
+          posicao: posicao
+        },
+        success: function(msg) {
+          var json = JSON.parse(msg);
+          var linha = "";
+          for (var $i = 0; $i < json.length; $i++) {
+            var object = json[$i];
+            var dataAbertura = new Date(object.dataAbertura);
+            var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
+
+            if (object.dataFechamento == null) {
+              var dataFechamentoFormatada = "<p>---</p>";
+            } else {
+              var dataFechamento = new Date(object.dataFechamento);
+              dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
+            }
+
+            if (object.posicao == 0) {
+              var posicao = "Atendente"
+            }
+            if (object.posicao == 1) {
+              var posicao = "Cliente"
+            }
+
+            linha += "<tr>";
+            linha += "<td>" + object.prioridade + "</td>";
+            linha += "<td>" + object.idDemanda + "</td>";
+            linha += "<td>" + object.nomeCliente + "</td>";
+            linha += "<td>" + object.nomeSolicitante + "</td>";
+            linha += "<td>" + object.tituloDemanda + "</td>";
+            linha += "<td>" + object.nomeAtendente + "</td>";
+            linha += "<td>" + dataFormatada + "</td>";
+            linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
+            linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
+            linha += "<td>" + dataFechamentoFormatada + "</td>";
+            linha += "<td>" + posicao + "</td>";
+            linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+
+            linha += "</tr>";
+          }
+
+          $("#dados").html(linha);
+
+          if (typeof callback === 'function') {
+            callback();
+          }
+        }
+      });
+    }
+
+    $("#FiltroTipoStatus").change(function() {
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    });
 
-      function limparTrade() {
-        buscar(null, null, null, null, null, null, null, null, function() {
-          window.location.reload();
-        });
+    $("#FiltroClientes").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    });
+
+    $("#FiltroSolicitante").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    });
+
+    $("#FiltroOcorrencia").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    });
+
+    $("#FiltroUsuario").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    });
+
+    $("#FiltroStatusDemanda").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    });
+
+    $("#buscar").click(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    });
+
+    $("#FiltroPosicao").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    });
+
+    document.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       }
+    });
 
-      //lucas 26092023 ID 576 Modificado função clickCard, passando os valores dos outros filtros
-      function clickCard(statusDemanda) {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(),
-          statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
-      }
-
-      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
-        //alert(posicao)
-        $.ajax({
-          type: 'POST',
-          dataType: 'html',
-          url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
-          beforeSend: function() {
-            $("#dados").html("Carregando...");
-          },
-          data: {
-            idCliente: idCliente,
-            idSolicitante: idSolicitante,
-            idAtendente: idAtendente,
-            idTipoStatus: idTipoStatus,
-            idTipoOcorrencia: idTipoOcorrencia,
-            statusDemanda: statusDemanda,
-            buscaDemanda: buscaDemanda,
-            urlContratoTipo: urlContratoTipo,
-            /* lucas 26092023 ID 576 Adicionado posicao */
-            posicao: posicao
-          },
-          success: function(msg) {
-            var json = JSON.parse(msg);
-            var linha = "";
-            for (var $i = 0; $i < json.length; $i++) {
-              var object = json[$i];
-              var dataAbertura = new Date(object.dataAbertura);
-              var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
-
-              if (object.dataFechamento == null) {
-                var dataFechamentoFormatada = "<p>---</p>";
-              } else {
-                var dataFechamento = new Date(object.dataFechamento);
-                dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
-              }
-              /* lucas 22092023 ID 358 logica para mostar o nome em vez do numero */
-              if (object.posicao == 0) {
-                var posicao = "Atendente"
-              }
-              if (object.posicao == 1) {
-                var posicao = "Cliente"
-              }
-              /*  */
-              linha += "<tr>";
-              linha += "<td>" + object.prioridade + "</td>";
-              linha += "<td>" + object.idDemanda + "</td>";
-              linha += "<td>" + object.nomeCliente + "</td>";
-              linha += "<td>" + object.nomeSolicitante + "</td>";
-              linha += "<td>" + object.tituloDemanda + "</td>";
-              linha += "<td>" + object.nomeAtendente + "</td>";
-              linha += "<td>" + dataFormatada + "</td>";
-              linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
-              linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-              /* lucas 22092023 ID 358 Removido comentario */
-              linha += "<td>" + dataFechamentoFormatada + "</td>";
-              /* lucas 22092023 ID 358 Adicionado campo na tabela */
-              linha += "<td>" + posicao + "</td>";
-              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
-
-              linha += "</tr>";
-            }
-
-            $("#dados").html(linha);
-
-            if (typeof callback === 'function') {
-              callback();
-            }
-          }
-        });
-      }
-
-      /* lucas 26092023 ID 576 Adicionado filtro posicao */
-      $("#FiltroTipoStatus").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-      });
-
-      $("#FiltroClientes").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-      });
-
-      $("#FiltroSolicitante").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-      });
-
-      $("#FiltroOcorrencia").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-      });
-
-      $("#FiltroUsuario").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-      });
-
-      $("#FiltroStatusDemanda").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-      });
-
-      $("#buscar").click(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-      });
-
-      $("#FiltroPosicao").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-      });
-
-      document.addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
-        }
-      });
-      /*  */
-    <?php else : ?>
-      var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
-      /* lucas 26092023 ID 576 Adicionado filtro posicao */
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-
-
-      function limpar() {
-        var idClienteOriginal = $("#FiltroClientes").val();
-        buscar(idClienteOriginal, null, null, null, null, null, null, null, function() {
-          window.location.reload();
-        });
-      }
-
-      //lucas 26092023 ID 576 Modificado função clickCard, passando os valores dos outros filtros
-      function clickCard(statusDemanda) {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(),
-          statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
-      }
-
-      /* lucas 26092023 ID 576 Adicionado posicao no buscar */
-      function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
-
-        $.ajax({
-          type: 'POST',
-          dataType: 'html',
-          url: '<?php echo URLROOT ?>/services/database/demanda.php?operacao=filtrar',
-          beforeSend: function() {
-            $("#dados").html("Carregando...");
-          },
-          data: {
-            idCliente: idCliente,
-            idSolicitante: idSolicitante,
-            idAtendente: idAtendente,
-            idTipoStatus: idTipoStatus,
-            idTipoOcorrencia: idTipoOcorrencia,
-            statusDemanda: statusDemanda,
-            buscaDemanda: buscaDemanda,
-            urlContratoTipo: urlContratoTipo,
-            /* lucas 26092023 ID 576 Adicionado posicao */
-            posicao: posicao
-          },
-          success: function(msg) {
-
-            var json = JSON.parse(msg);
-            var linha = "";
-            for (var $i = 0; $i < json.length; $i++) {
-              var object = json[$i];
-
-              if (object.dataFechamento == null) {
-                var dataFechamentoFormatada = "<p>---</p>";
-              } else {
-                var dataFechamento = new Date(object.dataFechamento);
-                dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
-              }
-
-              if (object.posicao == 0) {
-                var posicao = "Atendente"
-              }
-              if (object.posicao == 1) {
-                var posicao = "Cliente"
-              }
-
-              linha += "<tr>";
-              linha += "<td>" + object.prioridade + "</td>";
-              linha += "<td>" + object.idDemanda + "</td>";
-              linha += "<td>" + object.nomeCliente + "</td>";
-              linha += "<td>" + object.nomeSolicitante + "</td>";
-              linha += "<td>" + object.tituloDemanda + "</td>";
-              linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
-              linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-              linha += "<td>" + dataFechamentoFormatada + "</td>";
-              /* lucas 22092023 ID 358 Adicionado campo na tabela */
-              linha += "<td>" + posicao + "</td>";
-              linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
-
-              linha += "</tr>";
-            }
-
-            $("#dados").html(linha);
-
-            if (typeof callback === 'function') {
-              callback();
-            }
-          }
-        });
-      }
-      /* lucas 26092023 ID 576 Adicionado filtro posicao */
-      $("#FiltroTipoStatus").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-      });
-
-      $("#FiltroClientes").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-      });
-
-      $("#FiltroSolicitante").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-      });
-
-      $("#FiltroOcorrencia").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-      });
-
-      $("#FiltroUsuario").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-      });
-
-      $("#FiltroStatusDemanda").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-      });
-
-      $("#buscar").click(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-      });
-
-      $("#FiltroPosicao").change(function() {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-      });
-
-      document.addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
-          buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), null, $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val(), null);
-        }
-      });
-      /*  */
-    <?php endif; ?>
 
 
     //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
@@ -966,9 +697,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         exportToCSV();
       }
     });
-  </script>
 
-  <script>
     var demandaContrato = new Quill('.quill-demandainserir', {
       theme: 'snow',
       modules: {
@@ -1016,6 +745,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   </script>
 
   <!-- LOCAL PARA COLOCAR OS JS -FIM -->
+
 </body>
 
 </html>

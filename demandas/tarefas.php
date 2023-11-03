@@ -1,4 +1,5 @@
 <?php
+// lucas id654 - Melhorias Tarefas
 // Lucas 17102023 novo padrao
 //Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
 //lucas 25092023 ID 358 Demandas/Comentarios
@@ -44,8 +45,8 @@ $filtroEntrada = null;
 $idTipoOcorrencia = null;
 $PeriodoInicio = null;
 $PeriodoFim = null;
-$PrevistoOrdem = null;
-$RealOrdem = null;
+ // lucas id654 - Removido PrevistoOrderm e RealOrdem, e adicionado dataOrdem no lugar
+$dataOrdem = null;
 
 
 if (isset($_SESSION['filtro_tarefas'])) {
@@ -57,8 +58,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $Periodo = $filtroEntrada['Periodo'];
   $PeriodoInicio = $filtroEntrada['PeriodoInicio'];
   $PeriodoFim = $filtroEntrada['PeriodoFim'];
-  $PrevistoOrdem = $filtroEntrada['PrevistoOrdem'];
-  $RealOrdem = $filtroEntrada['RealOrdem'];
+   // lucas id654 - Removido PrevistoOrderm e RealOrdem, e adicionado dataOrdem no lugar
+  $dataOrdem = $filtroEntrada['dataOrdem'];
+
 }
 $previsaoChecked = ($Periodo === '1') ? 'checked' : '';
 $realizadoChecked = ($Periodo === '0') ? 'checked' : '';
@@ -142,17 +144,15 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
-            <th>ID</th>
             <th>Tarefa</th>
-            <th>Responsável</th>
-            <th>Cliente</th>
+            <th class="col-1">Responsável</th>
+            <th class="col-1">Cliente</th>
             <th>Ocorrência</th>
-            <th>Datas</th>
-            <th>Cobrado</th>
+            <th class="col-4">Datas</th>
+            <th class="col-1">Cobrado</th>
             <th colspan="2">Ação</th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
-            <th></th>
             <th></th>
             <th>
               <form action="" method="post">
@@ -214,35 +214,22 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 </select>
               </form>
             </th>
-            <!-- <th>
+             <!-- lucas id654 - Removido filtro RealOrdem e substituido filtro PrevistoOrdem por dataOrdem -->
+            <th>
               <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" null              <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
-                  </option>
-                  <option <?php if ($PrevistoOrdem == "1") {
-                            echo "selected";
-                          } ?> value="1">DESC</option>
-                  <option <?php if ($PrevistoOrdem == "0") {
-                            echo "selected";
-                          } ?> value="0">ASC</option>
-                </select>
-              </form>
-            </th> -->
-            <!-- <th>
-              <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="dataOrdem" id="FiltrodataOrdem">
                   <option value="<?php echo null ?>">
                     <?php echo "Selecione" ?>
                   </option>
-                  <option <?php if ($RealOrdem == "1") {
+                  <option <?php if ($dataOrdem == "1") {
                             echo "selected";
                           } ?> value="1">DESC</option>
-                  <option <?php if ($RealOrdem == "0") {
+                  <option <?php if ($dataOrdem == "0") {
                             echo "selected";
                           } ?> value="0">ASC</option>
                 </select>
               </form>
-            </th> -->
+            </th>
             <th></th>
             <th></th>
             <th></th>
@@ -281,7 +268,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), null , null , $("#buscaTarefa").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val() , $("#buscaTarefa").val());
 
     function limpar() {
       buscar(null, null, null, null, null, null, null, null, null, null, function() {
@@ -291,7 +278,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     }
 
     function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, function() {
         window.location.reload();
       });
     }
@@ -331,7 +318,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     //Gabriel 16102023 id596 variavel dia/hora 
     var todayTime = today + " " + time;
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, dataOrdem, buscaTarefa, callback) {
       //Gabriel 11102023 ID 596 utiliza valores do buscar para gravar no h6 da tabela filtros status e periodo
       var h6Element = $("#filtroh6 h6");
       var text = "";
@@ -375,8 +362,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           Periodo: Periodo,
           PeriodoInicio: PeriodoInicio,
           PeriodoFim: PeriodoFim,
-          PrevistoOrdem: PrevistoOrdem,
-          RealOrdem: RealOrdem,
+          dataOrdem: dataOrdem,
+          /* RealOrdem: RealOrdem, */
           buscaTarefa: buscaTarefa
         },
         success: function(msg) {
@@ -404,7 +391,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             var vhorasReal = formatTime(object.horasReal);
             var vhoraCobrado = formatTime(object.horaCobrado);
             linha += "<tr>";
-            linha += "<td>" + object.idTarefa + "</td>";
+            /* linha += "<td>" + object.idTarefa + "</td>"; */
             linha += "<td data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
 
             if (object.tituloTarefa == "") {
@@ -418,6 +405,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             linha += "<td>" + object.nomeCliente + "</td>";
             linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
             //Gabriel 16102023 id596 ajustando if
+            // lucas id654 - Eliminado linha de dataReal e deixado somente uma linha com Prevista e dataReal, chamada de data
             if (
               (vPrevisto < today || (vPrevisto === today && vhoraInicioPrevistoMinutes > 0 && vhoraInicioPrevistoMinutes < timeMinutes)) &&
               vdataReal === "00/00/0000" &&
@@ -453,7 +441,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
               var vhorasReal = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
             }
-            /* linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>"; */
+            // lucas id654 - Removido linha de dataReal
             linha += "<td>" + vhoraCobrado + "</td>";
             linha += "<td class='text-center' id='botao'>";
             if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
@@ -486,43 +474,39 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     $("#FiltroClientes").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroUsuario").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#buscar").click(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroOcorrencia").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroDemanda").click(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroStatusTarefa").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroPrevistoOrdem").change(function() {
+    $("#FiltrodataOrdem").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroRealOrdem").change(function() {
-      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-    });
 
     //Gabriel 11102023 ID 596 adicionado document ready pois o modal está em indextarefa.php
     $(document).ready(function() {
@@ -532,7 +516,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           return false;
         } else {
           //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
           $('#periodoModal').modal('hide');
         }
       });
@@ -541,7 +525,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
         //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
       }
     });
 

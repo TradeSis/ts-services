@@ -1,4 +1,5 @@
 <?php
+// lucas id654 - Melhorias Tarefas
 //Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 // helio 12072023 - ajustes de horas
 //gabriel 07022023 16:25
@@ -60,10 +61,18 @@ if (isset($jsonEntrada['idTarefa'])) {
     $idAtendente = isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== NULL ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendente']) : "NULL";
     $idCliente = isset($jsonEntrada['idCliente']) && $jsonEntrada['idCliente'] !== NULL ? mysqli_real_escape_string($conexao, $jsonEntrada['idCliente']) : "NULL";
 
-    
+    // lucas id654 - Adicionado campos de dataOrdem e horaInicioOrdem
+    if($jsonEntrada['dataReal'] == NULL){
+        $dataOrdem = $Previsto;
+        $horaInicioOrdem = $horaInicioPrevisto;
+    }else{ 
+        $dataOrdem = $dataReal;
+        $horaInicioOrdem = $horaInicioReal;
+    } 
+
     $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `horaCobrado`=$horaCobrado,
         `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal, 
-        `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao";
+        `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao, `dataOrdem`=$dataOrdem, `horaInicioOrdem`=$horaInicioOrdem";
 
     if (isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== NULL) {
         // busca dados idCliente/Demanda

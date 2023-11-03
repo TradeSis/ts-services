@@ -1,4 +1,5 @@
 <?php
+// lucas id654 - Melhorias Tarefas
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 //LOG
@@ -47,7 +48,12 @@ if (isset($jsonEntrada['idTarefa'])) {
     $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
     $tipoStatusDemanda = isset($jsonEntrada['tipoStatusDemanda']) && $jsonEntrada['tipoStatusDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['tipoStatusDemanda']) : "NULL";
 
-    $sql = "UPDATE `tarefa` SET `horaInicioReal`='$horaInicioReal', `dataReal`='$dataReal' WHERE idTarefa = $idTarefa";
+    // lucas id654 - Adicionado dataOrdem e horaInicioReal
+    $dataOrdem = $dataReal;
+    $horaInicioOrdem = $horaInicioReal;
+    
+
+    $sql = "UPDATE `tarefa` SET `horaInicioReal`='$horaInicioReal', `dataReal`='$dataReal',`dataOrdem`='$dataOrdem', `horaInicioOrdem`='$horaInicioOrdem' WHERE idTarefa = $idTarefa";
 
     
     if ($idDemanda !== null) {

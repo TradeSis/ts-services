@@ -1,4 +1,5 @@
 <?php
+// lucas id654 - Melhorias Tarefas
 //Gabriel 06102023 ID 596 mudanças em agenda e tarefas
 //lucas 25092023 ID 358 Demandas/Comentarios
 //lucas 22092023 ID 358 Demandas/Comentarios 
@@ -374,8 +375,8 @@ if (isset($_GET['operacao'])) {
         $Periodo = $_POST['Periodo'];
         $PeriodoInicio = $_POST['PeriodoInicio'];
         $PeriodoFim = $_POST['PeriodoFim'];
-        $PrevistoOrdem = $_POST['PrevistoOrdem'];
-        $RealOrdem = $_POST['RealOrdem'];
+        // lucas id654 - Removido PrevistoOrderm e RealOrdem, e adicionado dataOrdem no lugar
+        $dataOrdem = $_POST['dataOrdem'];
         $buscaTarefa = $_POST['buscaTarefa'];
 
         if ($idCliente == "") {
@@ -402,11 +403,8 @@ if (isset($_GET['operacao'])) {
         if ($PeriodoFim == "") {
             $PeriodoFim = null;
         }
-        if ($PrevistoOrdem == "") {
-            $PrevistoOrdem = null;
-        }
-        if ($RealOrdem == "") {
-            $RealOrdem = null;
+        if ($dataOrdem == "") {
+            $dataOrdem = null;
         }
         if ($buscaTarefa == "") {
             $buscaTarefa = null;
@@ -422,8 +420,7 @@ if (isset($_GET['operacao'])) {
             'Periodo' => $Periodo,
             'PeriodoInicio' => $PeriodoInicio,
             'PeriodoFim' => $PeriodoFim,
-            'PrevistoOrdem' => $PrevistoOrdem,
-            'RealOrdem' => $RealOrdem,
+            'dataOrdem' => $dataOrdem,
             'buscaTarefa' => $buscaTarefa
         );
 

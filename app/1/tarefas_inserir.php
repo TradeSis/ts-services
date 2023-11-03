@@ -1,4 +1,5 @@
 <?php
+// lucas id654 - Melhorias Tarefas
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
@@ -70,10 +71,15 @@ if (isset($jsonEntrada['idDemanda'])) {
     if (($Previsto) != "NULL" && $tituloTarefa == '') {
         $tituloTarefa = $jsonEntrada['tituloDemanda'];
     }
+    // lucas id654 - Adicionado campos de dataOrdem e horaInicioOrdem
+    if(isset($Previsto) && isset($horaInicioPrevisto)){
+        $dataOrdem = $Previsto;
+        $horaInicioOrdem = $horaInicioPrevisto;
+    }
     if ($start == true) {
         $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, horaCobrado, Previsto, horaInicioPrevisto, horaFinalPrevisto, horaInicioReal, dataReal) VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $horaCobrado, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto, '$horaInicioReal', '$dataReal')";
     } else {
-        $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, horaCobrado, Previsto, horaInicioPrevisto, horaFinalPrevisto) VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $horaCobrado, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto)";
+        $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, horaCobrado, Previsto, horaInicioPrevisto, horaFinalPrevisto,dataOrdem,horaInicioOrdem) VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $horaCobrado, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto, $dataOrdem, $horaInicioOrdem)";
     }
 
 

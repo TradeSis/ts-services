@@ -1,4 +1,5 @@
 <?php
+// lucas id654 - Melhorias Tarefas
 //gabriel 28022023 16:33 alterado para LEFT JOIN no usuario
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
@@ -115,28 +116,19 @@ if (isset($jsonEntrada["Periodo"])) {
   }
 }
 
+// lucas id654 - Removido filtro RealOrdem e substituido filtro PrevistoOrdem por dataOrdem
 $order = " ORDER BY ";
-if (isset($jsonEntrada["PrevistoOrdem"])) {
-  if ($jsonEntrada["PrevistoOrdem"] == 1) {
-    $sql .= $order . " `tarefa`.`Previsto` DESC ";
+if (isset($jsonEntrada["dataOrdem"])) {
+  if ($jsonEntrada["dataOrdem"] == 1) {
+    $sql .= $order . " `tarefa`.`dataOrdem` DESC ";
     $order = ",";
   }
-  if ($jsonEntrada["PrevistoOrdem"] == 0) {
-    $sql .= $order . " `tarefa`.`Previsto` ASC ";
+  if ($jsonEntrada["dataOrdem"] == 0) {
+    $sql .= $order . " `tarefa`.`dataOrdem` ASC ";
     $order = ",";
   }
 }
 
-if (isset($jsonEntrada["RealOrdem"])) {
-  if ($jsonEntrada["RealOrdem"] == 1) {
-    $sql .= $order . " `tarefa`.`dataReal` DESC ";
-    $order = ",";
-  }
-  if ($jsonEntrada["RealOrdem"] == 0) {
-    $sql .= $order . " `tarefa`.`dataReal` ASC ";
-    $order = ",";
-  }
-}
 $sql .= $order . " idTarefa DESC ";
 
 //echo "-SQL->".json_encode($sql)."\n";

@@ -147,8 +147,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             <th>Responsável</th>
             <th>Cliente</th>
             <th>Ocorrência</th>
-            <th>Previsão</th>
-            <th>Real</th>
+            <th>Datas</th>
             <th>Cobrado</th>
             <th colspan="2">Ação</th>
           </tr>
@@ -215,10 +214,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 </select>
               </form>
             </th>
-            <th>
+            <!-- <th>
               <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" id="FiltroPrevistoOrdem">
-                  <option value="<?php echo null ?>">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" null              <option value="<?php echo null ?>">
                     <?php echo "Selecione" ?>
                   </option>
                   <option <?php if ($PrevistoOrdem == "1") {
@@ -229,8 +227,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                           } ?> value="0">ASC</option>
                 </select>
               </form>
-            </th>
-            <th>
+            </th> -->
+            <!-- <th>
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
                   <option value="<?php echo null ?>">
@@ -244,7 +242,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                           } ?> value="0">ASC</option>
                 </select>
               </form>
-            </th>
+            </th> -->
+            <th></th>
             <th></th>
             <th></th>
           </tr>
@@ -282,7 +281,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), null , null , $("#buscaTarefa").val());
 
     function limpar() {
       buscar(null, null, null, null, null, null, null, null, null, null, function() {
@@ -424,9 +423,21 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               vdataReal === "00/00/0000" &&
               vPrevisto !== "00/00/0000"
             ) {
-              linha += "<td style='background:firebrick;color:white'>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+              if(vdataReal === "00/00/0000"){
+                linha += "<td style='background:firebrick;color:white'>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "<p></p>" + "</td>";
+              }
+              else{
+                linha += "<td style='background:firebrick;color:white'>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "</td>";
+
+              }
+              
             } else {
-              linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+              if(vPrevisto === "00/00/0000"){
+                linha += "<td>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "<p></p>" + "</td>";
+
+              }else{
+              linha += "<td>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "</td>";
+              }
             }
             if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
               var timeParts = time.split(':');
@@ -442,7 +453,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
               var vhorasReal = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
             }
-            linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>";
+            /* linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>"; */
             linha += "<td>" + vhoraCobrado + "</td>";
             linha += "<td class='text-center' id='botao'>";
             if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {

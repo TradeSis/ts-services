@@ -120,11 +120,11 @@ if (isset($jsonEntrada["Periodo"])) {
 $order = " ORDER BY ";
 if (isset($jsonEntrada["dataOrdem"])) {
   if ($jsonEntrada["dataOrdem"] == 1) {
-    $sql .= $order . " `tarefa`.`dataOrdem` DESC ";
+    $sql .= $order . " `tarefa`.`dataOrdem`, `tarefa`.`horaInicioOrdem`  DESC ";
     $order = ",";
   }
   if ($jsonEntrada["dataOrdem"] == 0) {
-    $sql .= $order . " `tarefa`.`dataOrdem` ASC ";
+    $sql .= $order . " `tarefa`.`dataOrdem`, `tarefa`.`horaInicioOrdem` ASC ";
     $order = ",";
   }
 }

@@ -77,6 +77,11 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 </head>
 
+<style>
+  table tr td{
+    cursor: pointer;
+  }
+</style>
 
 <body>
 
@@ -141,7 +146,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     </div>
 
     <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
-      <table class="table table-sm table-hover">
+      <table class="table table-sm table-hover" id="tblEditavel">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
             <th>Tarefa</th>
@@ -149,8 +154,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             <th class="col-1">Cliente</th>
             <th>Ocorrência</th>
             <th class="col-4">Datas</th>
-            <th class="col-1">Cobrado</th>
-            <th colspan="2">Ação</th>
+            <!-- <th class="col-1">Cobrado</th> -->
+            <th colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
             <th></th>
@@ -230,9 +235,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 </select>
               </form>
             </th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <!-- <th></th> -->
+            <th colspan="2"></th>
           </tr>
         </thead>
 
@@ -392,18 +396,17 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             var vhoraCobrado = formatTime(object.horaCobrado);
             linha += "<tr>";
             /* linha += "<td>" + object.idTarefa + "</td>"; */
-            linha += "<td data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
-
+            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
             if (object.tituloTarefa == "") {
               linha += object.tituloDemanda;
             } else {
               linha += object.tituloTarefa;
             }
-
             linha += "</td>";
-            linha += "<td>" + object.nomeUsuario + "</td>";
-            linha += "<td>" + object.nomeCliente + "</td>";
-            linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
+
+            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
+            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";
+            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeTipoOcorrencia + "</td>";
             //Gabriel 16102023 id596 ajustando if
             // lucas id654 - Eliminado linha de dataReal e deixado somente uma linha com Prevista e dataReal, chamada de data
             if (
@@ -412,19 +415,19 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               vPrevisto !== "00/00/0000"
             ) {
               if(vdataReal === "00/00/0000"){
-                linha += "<td style='background:firebrick;color:white'>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "<p></p>" + "</td>";
+                linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "' style='background:firebrick;color:white'>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "<p></p>" + "</td>";
               }
               else{
-                linha += "<td style='background:firebrick;color:white'>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "</td>";
+                linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "' style='background:firebrick;color:white'>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "</td>";
 
               }
               
             } else {
               if(vPrevisto === "00/00/0000"){
-                linha += "<td>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "<p></p>" + "</td>";
+                linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "<p></p>" + "</td>";
 
               }else{
-              linha += "<td>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "</td>";
+              linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + "Previsto: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>" + "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "</td>";
               }
             }
             if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
@@ -442,8 +445,11 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               var vhorasReal = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
             }
             // lucas id654 - Removido linha de dataReal
-            linha += "<td>" + vhoraCobrado + "</td>";
-            linha += "<td class='text-center' id='botao'>";
+            //linha += "<td>" + vhoraCobrado + "</td>";
+            
+            linha += "<td>" ; //INICIO DO TD
+
+            linha += "<id='botao'>";
             if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
               //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
               if (object.idDemanda == null) {
@@ -454,12 +460,25 @@ $Checked = ($Periodo === null) ? 'checked' : '';
             }
             if (vhoraInicioReal == "00:00") {
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
-              linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
             }
-            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1'  data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
-            linha += "<button type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
 
-            linha += "</td>";
+            linha += "</td>";//FINAL DO TD
+
+            linha += "<td>"; //INICIO DO TD
+            linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
+
+            linha += "<id='botao'>";
+            if (vhoraInicioReal == "00:00") {
+              linha += "<li class='ms-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button> <span style='font-size: 13px;font-style:italic;'>Realizado</span></li>"
+            }
+            linha += "<li class='ms-1 mt-1'><button type='button' class='clonarButton btn btn-success btn-sm mr-1'  data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button> <span style='font-size: 13px;font-style:italic;'>Clonar</span></li>";
+            linha += "<li class='ms-1 mt-1'><button type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button> <span style='font-size: 13px;font-style:italic;'>Alterar</span></li>"
+            
+
+            linha +="</ul></div>"
+            linha += "</td>";//FINAL DO TD
+
+
             linha += "</tr>";
           }
 
@@ -471,6 +490,17 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         }
       });
     }
+/*     function myFunction() {
+      var idTarefa = $(this).attr("data-idnovo");
+      alert('oi');
+} */
+
+    $(document).ready(function(){
+      $('#tblEditavel tr td').click(function(){
+        /* alert('oi'); */
+      
+      })
+    })
 
     $("#FiltroClientes").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
@@ -529,6 +559,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
     });
 
+  
 
     //lucas 25092023 ID 358 Adicionado script para popup de stop
     $(document).on('click', 'button[data-target="#stopexecucaomodal"]', function() {

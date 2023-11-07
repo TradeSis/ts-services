@@ -36,10 +36,12 @@ $conexao = conectaMysql($idEmpresa);
 $tarefa = array();
 $sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda, demanda.idTipoStatus, tipoocorrencia.nomeTipoOcorrencia,
         TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal, 
+        TIMEDIFF(CURRENT_TIME(), tarefa.horaInicioReal ) AS horasRealCorrente, 
         TIMEDIFF(tarefa.horaFinalPrevisto, tarefa.horaInicioPrevisto) AS horasPrevisto,
         DATEDIFF(Previsto,CURRENT_DATE() ) as DIAS, 
         timestampdiff(SECOND,CURRENT_TIME(),horaInicioPrevisto) as SEGUNDOS,
-        'NAO' as Atrasado
+        'NAO' as Atrasado,
+        DATEDIFF(dataReal,CURRENT_DATE() ) as DIASREAL
         FROM tarefa
         LEFT JOIN usuario ON tarefa.idAtendente = usuario.idUsuario 
         LEFT JOIN demanda ON tarefa.idDemanda = demanda.idDemanda 
@@ -141,6 +143,15 @@ try {
 
   while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
     
+    if (!isset($row["horasPrevisto"])) {
+      $row["horasPrevisto"] = "00:00:00";
+    }
+    if (!isset($row["horasReal"])) {
+      $row["horasReal"] = "00:00:00";
+    }
+    if (!isset($row["horasRealCorrente"])) {
+      $row["horasRealCorrente"]= "00:00:00";
+    }
     if ($row["DIAS"] < 0) {
         $row["Atrasado"] = "SIM";
     }
@@ -148,10 +159,17 @@ try {
         if ($row["SEGUNDOS"] < 0) {
           $row["Atrasado"] = "SIM";
         }
-    }
-    
-    unset($row["DIAS"]);
-    unset($row["SEGUNDOS"]);
+    } 
+    if ($row["DIASREAL"] == 0) {
+      if ($row["horasReal"] == "00:00:00") {
+        $row["horasReal"] = $row["horasRealCorrente"] ;
+      }
+  } 
+  
+   unset($row["DIAS"]);
+   unset($row["SEGUNDOS"]);
+   unset($row["horasRealCorrente"] );
+   unset($row["DIASREAL"]);
 
     array_push($tarefa, $row);
     $rows = $rows + 1;

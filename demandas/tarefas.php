@@ -179,11 +179,11 @@ span.horas {
           <tr class="ts-headerTabelaLinhaCima">
 
             <!-- Helio 071123 - Ajuste nas TD por col -->
-            <th class="col-6">Tarefa</th>
+            <th class="col-4">Tarefa</th>
             <th class="col-1">Responsável</th>
             <th class="col-1">Cliente</th>
             <th class="col-1">Ocorrência</th>
-            <th class="col-3">Datas</th>
+            <th class="col-4">Datas</th>
             <th class="col-1" colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
@@ -501,21 +501,7 @@ span.horas {
               }
           linha += horas;
           
-   
-            if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
-              var timeParts = time.split(':');
-              var valorhoraInicioRealParts = valorhoraInicioReal.split(':');
-
-              var timeMinutes = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
-              var valorhoraInicioRealMinutes = parseInt(valorhoraInicioRealParts[0]) * 60 + parseInt(valorhoraInicioRealParts[1]);
-
-              var differenceMinutes = timeMinutes - valorhoraInicioRealMinutes;
-
-              var hours = Math.floor(differenceMinutes / 60);
-              var minutes = differenceMinutes % 60;
-
-              var valorhorasReal = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
-            }
+          
             // lucas id654 - Removido linha de dataReal
             
             linha += "<td>" ; 

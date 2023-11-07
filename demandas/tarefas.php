@@ -275,7 +275,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
     function limpar() {
       buscar(null, null, null, null, null, null, null, null, null, function() {
         //gabriel 13102023 id 596 fix atualizar pagina correta
-        window.location.reload();
+        //window.location.reload();
       });
     }
 
@@ -394,7 +394,31 @@ if (isset($_SESSION['filtro_tarefas'])) {
             var vhoraFinalReal = formatTime(object.horaFinalReal);
             var vhorasReal = formatTime(object.horasReal);
             var vhoraCobrado = formatTime(object.horaCobrado);
-           
+      
+           if(vhoraInicioPrevisto === '00:00'){
+              vhoraInicioPrevisto = '--:--'
+            }
+
+           if(vhoraFinalPrevisto === '00:00'){
+              vhoraFinalPrevisto = '--:--'
+            }
+
+            if(vhoraInicioReal === '00:00'){
+              vhoraInicioReal = '--:--'
+            }
+
+            if(vhoraFinalReal === '00:00'){
+              vhoraFinalReal = '--:--'
+            }
+
+            if(vhorasPrevisto === '00:00'){
+              vhorasPrevisto = '--:--'
+            }
+
+            if(vhorasReal === '00:00'){
+              vhorasReal = '--:--'
+            }
+
             linha += "<tr>";
 
             //linha += "<td>" + object.idTarefa + "</td>";
@@ -426,7 +450,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                   datas += " style='background:firebrick;color:white'";
                 }
                 datas += ">";
-                datas += "prev: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+                datas += "Prev: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
                 //alert(datas)
               }
           }

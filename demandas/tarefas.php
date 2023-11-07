@@ -456,10 +456,10 @@ span.horas {
             }
 
 
-            linha += "<tr>";
+            linha += "<tr class='text-center'>";
 
             //linha += "<td>" + object.idTarefa + "</td>";
-            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+            linha += "<td class='text-start' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
             if (object.tituloTarefa == "") {
               linha += object.tituloDemanda;
             } else {
@@ -473,7 +473,7 @@ span.horas {
             /* Lucas 07112023 id965 - Reajustado condição para horas */
             horas = '';
             if(vdataReal !== ""){
-              horas += "<td  class='font-italic' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+              horas += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
               if(vPrevisto !== ""){
               horas += "<span class='datas previsto'>Prev: " + vPrevisto + "</span><span  class='horas previsto'>" + valorhoraInicioPrevisto + "</span><span class='horas previsto'>" + vhoraFinalPrevisto + "</span><span class='horas previsto'>" + valorhorasPrevisto + "</span>" + "<br>";
             }

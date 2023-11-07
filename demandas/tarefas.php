@@ -461,7 +461,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
           linha += datas;
           
    
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
+            if (vhoraInicioReal != "--:--" && vhoraFinalReal == "--:--" && vdataReal == today) {
               var timeParts = time.split(':');
               var vhoraInicioRealParts = vhoraInicioReal.split(':');
 
@@ -480,7 +480,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td>" ; 
 
             linha += "<id='botao'>";
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
+            if (vhoraInicioReal != "--:--" && vhoraFinalReal == "--:--" && vdataReal == today) {
               //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
               if (object.idDemanda == null) {
                 linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
@@ -491,7 +491,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 "'><i class='bi bi-stop-circle'></i></button>"
               }
             }
-            if (vhoraInicioReal == "00:00") {
+            if (vhoraInicioReal == "--:--") {
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
               "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
             }
@@ -503,7 +503,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
 
             linha += "<id='botao'>";
-            if (vhoraInicioReal == "00:00") {
+            if (vhoraInicioReal == "--:--") {
               linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + "' data-status='" +
                object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span style='font-size: 13px;font-style:italic;' " + 
                ">Realizado</span></button></li>"

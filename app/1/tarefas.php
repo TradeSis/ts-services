@@ -36,7 +36,11 @@ $conexao = conectaMysql($idEmpresa);
 $tarefa = array();
 $sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda, demanda.idTipoStatus, tipoocorrencia.nomeTipoOcorrencia,
         TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal, 
-        TIMEDIFF(tarefa.horaFinalPrevisto, tarefa.horaInicioPrevisto) AS horasPrevisto FROM tarefa
+        TIMEDIFF(tarefa.horaFinalPrevisto, tarefa.horaInicioPrevisto) AS horasPrevisto,
+        DATEDIFF(Previsto,CURRENT_DATE() ) as DIAS, 
+        timestampdiff(SECOND,CURRENT_TIME(),horaInicioPrevisto) as SEGUNDOS,
+        'NAO' as Atrasado
+        FROM tarefa
         LEFT JOIN usuario ON tarefa.idAtendente = usuario.idUsuario 
         LEFT JOIN demanda ON tarefa.idDemanda = demanda.idDemanda 
         LEFT JOIN tipoocorrencia ON tarefa.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
@@ -120,11 +124,11 @@ if (isset($jsonEntrada["Periodo"])) {
 $order = " ORDER BY ";
 if (isset($jsonEntrada["dataOrdem"])) {
   if ($jsonEntrada["dataOrdem"] == 1) {
-    $sql .= $order . " `tarefa`.`dataOrdem`, `tarefa`.`horaInicioOrdem`  DESC ";
+    $sql .= $order . " `tarefa`.`dataOrdem` DESC, `tarefa`.`horaInicioOrdem`  DESC ";
     $order = ",";
   }
   if ($jsonEntrada["dataOrdem"] == 0) {
-    $sql .= $order . " `tarefa`.`dataOrdem`, `tarefa`.`horaInicioOrdem` ASC ";
+    $sql .= $order . " `tarefa`.`dataOrdem` ASC, `tarefa`.`horaInicioOrdem` ASC ";
     $order = ",";
   }
 }
@@ -151,6 +155,19 @@ try {
     throw new Exception(mysqli_error($conexao));
 
   while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
+    
+    if ($row["DIAS"] < 0) {
+        $row["Atrasado"] = "SIM";
+    }
+    if ($row["DIAS"] == 0) {
+        if ($row["SEGUNDOS"] < 0) {
+          $row["Atrasado"] = "SIM";
+        }
+    }
+    
+    unset($row["DIAS"]);
+    unset($row["SEGUNDOS"]);
+
     array_push($tarefa, $row);
     $rows = $rows + 1;
   }

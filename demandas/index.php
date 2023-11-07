@@ -200,7 +200,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
+    <div class="table mt-2 ts-divTabela70 ts-tableFiltros text-center">
       <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">

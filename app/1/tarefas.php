@@ -71,21 +71,8 @@ if (isset($jsonEntrada["idAtendente"])) {
   $where = " and ";
 }
 
+//Lucas 07112023 id965 - removido condições de filtro periodo
 
-$Periodo = 1;
-if (isset($jsonEntrada["Periodo"])) {
-  $Periodo = $jsonEntrada["Periodo"];
-}
-if (isset($jsonEntrada["statusTarefa"]) && $Periodo != 0) {
-  if ($jsonEntrada["statusTarefa"] == 1) {
-    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
-    $where = " and ";
-  }
-  if ($jsonEntrada["statusTarefa"] == 0) {
-    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL";
-    $where = " and ";
-  }
-}
 
 if (isset($jsonEntrada["tituloTarefa"])) {
   //gabriel 16102023 ajustado buscar tarefa por titulo
@@ -96,29 +83,16 @@ if (isset($jsonEntrada["tituloTarefa"])) {
 }
 
 
-if (isset($jsonEntrada["Periodo"])) {
-  if ($jsonEntrada["Periodo"] == 1) {
-    if (isset($jsonEntrada["PeriodoInicio"])) {
-      $sql .= $where . " tarefa.Previsto >= '" . $jsonEntrada["PeriodoInicio"] . "'";
-      $where = " and ";
-    }
-    if (isset($jsonEntrada["PeriodoFim"])) {
-      $sql .= $where . " tarefa.Previsto <= '" . $jsonEntrada["PeriodoFim"] . "'";
-      $where = " and ";
-    }
-  }
-  if ($jsonEntrada["Periodo"] == 0) {
-    if (isset($jsonEntrada["PeriodoInicio"])) {
-      $sql .= $where . " tarefa.dataReal >= '" . $jsonEntrada["PeriodoInicio"] . "'";
-      $where = " and ";
-    }
-    if (isset($jsonEntrada["PeriodoFim"])) {
-      $sql .= $where . " tarefa.dataReal <= '" . $jsonEntrada["PeriodoFim"] . "'";
-      $where = " and ";
-    }
-
-  }
+//Lucas 07112023 id965 - removido condições de filtro periodo substituido por novo campo dataOrdem
+if (isset($jsonEntrada["PeriodoInicio"])) {
+  $sql .= $where . " tarefa.dataOrdem >= '" . $jsonEntrada["PeriodoInicio"] . "'";
+  $where = " and ";
 }
+if (isset($jsonEntrada["PeriodoFim"])) {
+  $sql .= $where . " tarefa.dataOrdem <= '" . $jsonEntrada["PeriodoFim"] . "'";
+  $where = " and ";
+}
+
 
 // lucas id654 - Removido filtro RealOrdem e substituido filtro PrevistoOrdem por dataOrdem
 $order = " ORDER BY ";

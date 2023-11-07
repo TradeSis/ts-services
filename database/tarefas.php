@@ -1,4 +1,5 @@
 <?php
+//Lucas 07112023 id965 - Melhorias Tarefas 
 // lucas id654 - Melhorias Tarefas
 //Gabriel 06102023 ID 596 mudanças em agenda e tarefas
 //lucas 25092023 ID 358 Demandas/Comentarios
@@ -372,7 +373,7 @@ if (isset($_GET['operacao'])) {
         $tituloTarefa = $_POST['tituloTarefa'];
         $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
         $statusTarefa = $_POST['statusTarefa'];
-        $Periodo = $_POST['Periodo'];
+        //Lucas 07112023 id965 - removido variavel do filtro periodo 
         $PeriodoInicio = $_POST['PeriodoInicio'];
         $PeriodoFim = $_POST['PeriodoFim'];
         // lucas id654 - Removido PrevistoOrderm e RealOrdem, e adicionado dataOrdem no lugar
@@ -394,9 +395,9 @@ if (isset($_GET['operacao'])) {
         if ($statusTarefa == "") {
             $statusTarefa = null;
         }
-        if ($Periodo == "") {
-            $Periodo = null;
-        }
+        
+        //Lucas 07112023 id965 - removido variavel do filtro periodo 
+        
         if ($PeriodoInicio == "") {
             $PeriodoInicio = null;
         }
@@ -417,7 +418,7 @@ if (isset($_GET['operacao'])) {
             'tituloTarefa' => $tituloTarefa,
             'idTipoOcorrencia' => $idTipoOcorrencia,
             'statusTarefa' => $statusTarefa,
-            'Periodo' => $Periodo,
+            //Lucas 07112023 id965 - removido variavel do filtro periodo 
             'PeriodoInicio' => $PeriodoInicio,
             'PeriodoFim' => $PeriodoFim,
             'dataOrdem' => $dataOrdem,

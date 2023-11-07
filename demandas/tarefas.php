@@ -145,7 +145,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
+    <div class="table mt-2 ts-divTabela ts-tableFiltros">
       <table class="table table-sm table-hover" id="tblEditavel">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
@@ -153,7 +153,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             <th class="col-1">Responsável</th>
             <th class="col-1">Cliente</th>
             <th>Ocorrência</th>
-            <th class="col-4">Datas</th>
+            <th class="col-3">Datas</th>
             <th colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
@@ -321,7 +321,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
     var todayTime = today + " " + time;
 
     function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, PeriodoInicio, PeriodoFim, dataOrdem, buscaTarefa, callback) {
-      //alert(Periodo)
       //Gabriel 11102023 ID 596 utiliza valores do buscar para gravar no h6 da tabela filtros status e periodo
       var h6Element = $("#filtroh6 h6");
       var text = "";
@@ -333,13 +332,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
         text += "Status = Realizado";
       }
       /* Lucas 07112023 id965 - removido status de periodo */
-      /* if (Periodo === "1") {
-        if (text) text += ", ";
-        text += "Periodo = Previsão";
-      } else if (Periodo === "0") {
-        if (text) text += ", ";
-        text += "Periodo = Realizado";
-      } */
       
       if (PeriodoInicio !== "") {
         if (text) text += " em ";
@@ -380,8 +372,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
             var vPrevisto = formatDate(object.Previsto);
             var vhoraInicioPrevisto = formatTime(object.horaInicioPrevisto);
+            var valorhoraInicioPrevisto = formatTime(object.horaInicioPrevisto); //criado
             var vhoraFinalPrevisto = formatTime(object.horaFinalPrevisto);
             var vhorasPrevisto = formatTime(object.horasPrevisto);
+            var valorhorasPrevisto = formatTime(object.horasPrevisto); //criado
             //Gabriel 16102023 id596 ajustando if
             var vhoraInicioPrevistoTime = vhoraInicioPrevisto.split(":");
             var vhoraInicioPrevistoMinutes = parseInt(vhoraInicioPrevistoTime[0]) * 60 + parseInt(vhoraInicioPrevistoTime[1]);
@@ -391,32 +385,35 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
             var vdataReal = formatDate(object.dataReal);
             var vhoraInicioReal = formatTime(object.horaInicioReal);
+            var valorhoraInicioReal = formatTime(object.horaInicioReal); //criado
             var vhoraFinalReal = formatTime(object.horaFinalReal);
+            var valorhoraFinalReal = formatTime(object.horaFinalReal); //criado
             var vhorasReal = formatTime(object.horasReal);
+            var valorhorasReal = formatTime(object.horasReal);//criado
             var vhoraCobrado = formatTime(object.horaCobrado);
       
-           if(vhoraInicioPrevisto === '00:00'){
-              vhoraInicioPrevisto = '--:--'
+           if(valorhoraInicioPrevisto === '00:00'){
+              valorhoraInicioPrevisto = ' '
             }
 
            if(vhoraFinalPrevisto === '00:00'){
-              vhoraFinalPrevisto = '--:--'
+              vhoraFinalPrevisto = ' '
             }
 
-            if(vhoraInicioReal === '00:00'){
-              vhoraInicioReal = '--:--'
+            if(valorhoraInicioReal === '00:00'){
+              valorhoraInicioReal = ' '
             }
 
-            if(vhoraFinalReal === '00:00'){
-              vhoraFinalReal = '--:--'
+            if(valorhoraFinalReal === '00:00'){
+              valorhoraFinalReal = ' '
             }
 
-            if(vhorasPrevisto === '00:00'){
-              vhorasPrevisto = '--:--'
+            if(valorhorasPrevisto === '00:00'){
+              valorhorasPrevisto = ' '
             }
 
-            if(vhorasReal === '00:00'){
-              vhorasReal = '--:--'
+            if(valorhorasReal === '00:00'){
+              valorhorasReal = ' '
             }
 
             linha += "<tr>";
@@ -438,9 +435,20 @@ if (isset($_SESSION['filtro_tarefas'])) {
             if(vdataReal !== "00/00/0000"){
               datas += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
               if(vPrevisto !== "00/00/0000"){
-              datas += "Prev: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "<br>";
+                if(valorhorasPrevisto == " "){
+                  datas += "<span class='fw-bold'>Prev: " + "</span>" + vPrevisto  + " " +  valorhoraInicioPrevisto + " " + vhoraFinalPrevisto  +  valorhorasPrevisto + "<br>";
+                }else{
+                  datas += "<span class='fw-bold'>Prev: " + "</span>" + vPrevisto + " " +  valorhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + valorhorasPrevisto + ")" +
+                   "<br>";
+                }
             }
-              datas += "Real: " + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")"  + "</td>";
+            if(valorhorasReal == " "){
+                  datas += "<span class='fw-bold'>Real: " + "</span>" + vdataReal  + " "  + valorhoraInicioReal + " "  + valorhoraFinalReal  + valorhorasReal  + "</td>";
+                }else{
+                  datas += "<span class='fw-bold'>Real: " + "</span>" + vdataReal  + " " + valorhoraInicioReal  + " "  + valorhoraFinalReal + " (" + valorhorasReal + ")"  + 
+                  "</td>";
+                }
+             
               //alert(datas)
             }else{
 
@@ -450,7 +458,12 @@ if (isset($_SESSION['filtro_tarefas'])) {
                   datas += " style='background:firebrick;color:white'";
                 }
                 datas += ">";
-                datas += "Prev: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+                if(valorhorasPrevisto == " "){
+                  datas += "Prev: " + vPrevisto + " " + valorhoraInicioPrevisto + " " + vhoraFinalPrevisto + valorhorasPrevisto + "</td>";
+                }else{
+                  datas += "Prev: " + vPrevisto + " " + valorhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + valorhorasPrevisto + ")" + "</td>";
+                }
+                
                 //alert(datas)
               }
           }
@@ -461,7 +474,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
           linha += datas;
           
    
-            if (vhoraInicioReal != "--:--" && vhoraFinalReal == "--:--" && vdataReal == today) {
+            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
               var timeParts = time.split(':');
               var vhoraInicioRealParts = vhoraInicioReal.split(':');
 
@@ -480,7 +493,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td>" ; 
 
             linha += "<id='botao'>";
-            if (vhoraInicioReal != "--:--" && vhoraFinalReal == "--:--" && vdataReal == today) {
+            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
               //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
               if (object.idDemanda == null) {
                 linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
@@ -491,7 +504,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 "'><i class='bi bi-stop-circle'></i></button>"
               }
             }
-            if (vhoraInicioReal == "--:--") {
+            if (vhoraInicioReal == "00:00") {
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
               "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
             }
@@ -503,7 +516,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
 
             linha += "<id='botao'>";
-            if (vhoraInicioReal == "--:--") {
+            if (vhoraInicioReal == "00:00") {
               linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + "' data-status='" +
                object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span style='font-size: 13px;font-style:italic;' " + 
                ">Realizado</span></button></li>"

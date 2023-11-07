@@ -455,6 +455,11 @@ span.horas {
               valorhorasReal = '(' + valorhorasReal + ')';
             }
 
+            vnomeTipoOcorrencia = object.nomeTipoOcorrencia;
+            if (vnomeTipoOcorrencia === null) {
+              vnomeTipoOcorrencia = '';
+            }
+
 
             linha += "<tr class='text-center'>";
 
@@ -469,7 +474,7 @@ span.horas {
 
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";
-            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeTipoOcorrencia + "</td>";
+            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + vnomeTipoOcorrencia + "</td>";
             /* Lucas 07112023 id965 - Reajustado condição para horas */
             horas = '';
             if(vdataReal !== ""){

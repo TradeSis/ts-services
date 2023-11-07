@@ -192,7 +192,7 @@ span.horas {
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
                   <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
+                    <?php echo "Todos" ?>
                   </option>
                   <?php
                   foreach ($atendentes as $atendente) {
@@ -212,7 +212,7 @@ span.horas {
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                   <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
+                    <?php echo "Todos" ?> 
                   </option>
                   <?php
                   foreach ($clientes as $cliente) {
@@ -232,7 +232,7 @@ span.horas {
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                   <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
+                    <?php echo "Todos" ?>
                   </option>
                   <?php
                   foreach ($ocorrencias as $ocorrencia) {

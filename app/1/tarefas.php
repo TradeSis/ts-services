@@ -73,6 +73,17 @@ if (isset($jsonEntrada["idAtendente"])) {
 
 //Lucas 07112023 id965 - removido condições de filtro periodo
 
+if (isset($jsonEntrada["statusTarefa"])) {
+  if ($jsonEntrada["statusTarefa"] == 1) {
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
+    $where = " and ";
+  }
+  if ($jsonEntrada["statusTarefa"] == 0) {
+    $sql = $sql . $where . " tarefa.horaFinalReal IS NOT NULL";
+    $where = " and ";
+  }
+}
+
 
 if (isset($jsonEntrada["tituloTarefa"])) {
   //gabriel 16102023 ajustado buscar tarefa por titulo

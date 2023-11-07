@@ -421,12 +421,12 @@ if (isset($_SESSION['filtro_tarefas'])) {
             }else{
 
               if(vPrevisto !== "00/00/0000"){
-                datas += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa +"'";
+                datas += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'";
                 if(object.Atrasado == 'SIM'){
                   datas += " style='background:firebrick;color:white'";
                 }
                 datas += ">";
-                datas += "Prev: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+                datas += "prev: " + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
                 //alert(datas)
               }
           }
@@ -480,14 +480,14 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
             linha += "<id='botao'>";
             if (vhoraInicioReal == "00:00") {
-              linha += "<li class='ms-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" +
+              linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + "' data-status='" +
                object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span style='font-size: 13px;font-style:italic;' " + 
                ">Realizado</span></button></li>"
             }
-            linha += "<li class='ms-1 mt-1'><button type='button' class='clonarButton btn btn-success btn-sm mr-1'  data-idtarefa='" + object.idTarefa + 
+            linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='clonarButton btn btn-success btn-sm w-100 text-start'  data-idtarefa='" + object.idTarefa + 
             "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i> <span style='font-size: 13px;font-style:italic;' " +
             ">Clonar</span></button></li>";
-            linha += "<li class='ms-1 mt-1'><button type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + 
+            linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='btn btn-warning btn-sm w-100 text-start' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + 
             object.idTarefa + "'><i class='bi bi-pencil-square'></i> <span style='font-size: 13px;font-style:italic;'>Alterar</span></button></li>"
             
 

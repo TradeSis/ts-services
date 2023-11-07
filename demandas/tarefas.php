@@ -81,6 +81,34 @@ if (isset($_SESSION['filtro_tarefas'])) {
   table tr td{
     cursor: pointer;
   }
+
+/* Style para previsto, quando existe Real */  
+span.previsto {
+  font-weight: lighter;
+}
+
+/* Style para as datas */
+span.datas {
+    font-size:13px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:110px;
+    float:left;
+    /*border:1px solid red;*/
+}
+
+/* Style para as horas */
+span.horas {
+    font-size:13px; 
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    width:43px;
+    float:left;
+    /*border:1px solid red;*/
+}
+
 </style>
 
 <body>
@@ -149,12 +177,14 @@ if (isset($_SESSION['filtro_tarefas'])) {
       <table class="table table-sm table-hover" id="tblEditavel">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
-            <th>Tarefa</th>
+
+            <!-- Helio 071123 - Ajuste nas TD por col -->
+            <th class="col-6">Tarefa</th>
             <th class="col-1">Responsável</th>
             <th class="col-1">Cliente</th>
-            <th>Ocorrência</th>
+            <th class="col-1">Ocorrência</th>
             <th class="col-3">Datas</th>
-            <th colspan="2"></th>
+            <th class="col-1" colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
             <th></th>
@@ -371,50 +401,60 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
 
             var vPrevisto = formatDate(object.Previsto);
-            var vhoraInicioPrevisto = formatTime(object.horaInicioPrevisto);
             var valorhoraInicioPrevisto = formatTime(object.horaInicioPrevisto); //criado
             var vhoraFinalPrevisto = formatTime(object.horaFinalPrevisto);
-            var vhorasPrevisto = formatTime(object.horasPrevisto);
             var valorhorasPrevisto = formatTime(object.horasPrevisto); //criado
             //Gabriel 16102023 id596 ajustando if
-            var vhoraInicioPrevistoTime = vhoraInicioPrevisto.split(":");
-            var vhoraInicioPrevistoMinutes = parseInt(vhoraInicioPrevistoTime[0]) * 60 + parseInt(vhoraInicioPrevistoTime[1]);
+            var valorhoraInicioPrevistoTime = valorhoraInicioPrevisto.split(":");
+            var valorhoraInicioPrevistoMinutes = parseInt(valorhoraInicioPrevistoTime[0]) * 60 + parseInt(valorhoraInicioPrevistoTime[1]);
             var timeTime = time.split(":");
             var timeMinutes = parseInt(timeTime[0]) * 60 + parseInt(timeTime[1]);
 
 
             var vdataReal = formatDate(object.dataReal);
-            var vhoraInicioReal = formatTime(object.horaInicioReal);
             var valorhoraInicioReal = formatTime(object.horaInicioReal); //criado
-            var vhoraFinalReal = formatTime(object.horaFinalReal);
             var valorhoraFinalReal = formatTime(object.horaFinalReal); //criado
-            var vhorasReal = formatTime(object.horasReal);
             var valorhorasReal = formatTime(object.horasReal);//criado
             var vhoraCobrado = formatTime(object.horaCobrado);
       
+
+            /* Helio 07112023 - Campos ficam em Branco quando Zerados */
+            if(vdataReal === "00/00/0000"){
+                vdataReal = '';
+            }
+            if(vPrevisto === "00/00/0000"){
+                vPrevisto = '';
+            }
+
            if(valorhoraInicioPrevisto === '00:00'){
-              valorhoraInicioPrevisto = ' '
+              valorhoraInicioPrevisto = ''
             }
 
            if(vhoraFinalPrevisto === '00:00'){
-              vhoraFinalPrevisto = ' '
+              vhoraFinalPrevisto = ''
             }
 
             if(valorhoraInicioReal === '00:00'){
-              valorhoraInicioReal = ' '
+              valorhoraInicioReal = ''
             }
 
             if(valorhoraFinalReal === '00:00'){
-              valorhoraFinalReal = ' '
+              valorhoraFinalReal = ''
             }
 
             if(valorhorasPrevisto === '00:00'){
-              valorhorasPrevisto = ' '
+              valorhorasPrevisto = ''
+            } else {
+              valorhorasPrevisto = '(' + valorhorasPrevisto + ')';
             }
 
+           
             if(valorhorasReal === '00:00'){
-              valorhorasReal = ' '
+              valorhorasReal = ''
+            } else {
+              valorhorasReal = '(' + valorhorasReal + ')';
             }
+
 
             linha += "<tr>";
 
@@ -430,70 +470,53 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeTipoOcorrencia + "</td>";
-            /* Lucas 07112023 id965 - Reajustado condição para datas */
-            datas = '';
-            if(vdataReal !== "00/00/0000"){
-              datas += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
-              if(vPrevisto !== "00/00/0000"){
-                if(valorhorasPrevisto == " "){
-                  datas += "<span class='fw-bold'>Prev: " + "</span>" + vPrevisto  + " " +  valorhoraInicioPrevisto + " " + vhoraFinalPrevisto  +  valorhorasPrevisto + "<br>";
-                }else{
-                  datas += "<span class='fw-bold'>Prev: " + "</span>" + vPrevisto + " " +  valorhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + valorhorasPrevisto + ")" +
-                   "<br>";
-                }
+            /* Lucas 07112023 id965 - Reajustado condição para horas */
+            horas = '';
+            if(vdataReal !== ""){
+              horas += "<td  class='font-italic' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+              if(vPrevisto !== ""){
+              horas += "<span class='datas previsto'>Prev: " + vPrevisto + "</span><span  class='horas previsto'>" + valorhoraInicioPrevisto + "</span><span class='horas previsto'>" + vhoraFinalPrevisto + "</span><span class='horas previsto'>" + valorhorasPrevisto + "</span>" + "<br>";
             }
-            if(valorhorasReal == " "){
-                  datas += "<span class='fw-bold'>Real: " + "</span>" + vdataReal  + " "  + valorhoraInicioReal + " "  + valorhoraFinalReal  + valorhorasReal  + "</td>";
-                }else{
-                  datas += "<span class='fw-bold'>Real: " + "</span>" + vdataReal  + " " + valorhoraInicioReal  + " "  + valorhoraFinalReal + " (" + valorhorasReal + ")"  + 
-                  "</td>";
-                }
-             
-              //alert(datas)
+              horas += "<span class='datas'>Real: " + vdataReal + "</span><span class='horas'>" + valorhoraInicioReal + "</span><span class='horas'>" + valorhoraFinalReal + "</span><span class='horas'>" + valorhorasReal + "</span>"  + "</td>";
+              //alert(horas)
             }else{
 
-              if(vPrevisto !== "00/00/0000"){
-                datas += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'";
+              if(vPrevisto !== ""){
+                horas += "<td  data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'";
                 if(object.Atrasado == 'SIM'){
-                  datas += " style='background:firebrick;color:white'";
+                  horas += " style='background:firebrick;color:white'";
                 }
-                datas += ">";
-                if(valorhorasPrevisto == " "){
-                  datas += "Prev: " + vPrevisto + " " + valorhoraInicioPrevisto + " " + vhoraFinalPrevisto + valorhorasPrevisto + "</td>";
-                }else{
-                  datas += "Prev: " + vPrevisto + " " + valorhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + valorhorasPrevisto + ")" + "</td>";
-                }
-                
-                //alert(datas)
+                horas += ">";
+                horas += "<span class='datas'>Prev: " + vPrevisto + "</span><span class='horas'>" + valorhoraInicioPrevisto + "</span><span class='horas'>" + vhoraFinalPrevisto + "</span><span class='horas'>" + valorhorasPrevisto + "</span>" + "</td>";
+                //alert(horas)
               }
           }
-
-          if((vdataReal === "00/00/0000") && (vPrevisto === "00/00/0000")){
-                datas += "<td></td> "
+          if((vdataReal === "") && (vPrevisto === "")){
+                horas += "<td></td> "
               }
-          linha += datas;
+          linha += horas;
           
    
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
+            if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
               var timeParts = time.split(':');
-              var vhoraInicioRealParts = vhoraInicioReal.split(':');
+              var valorhoraInicioRealParts = valorhoraInicioReal.split(':');
 
               var timeMinutes = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
-              var vhoraInicioRealMinutes = parseInt(vhoraInicioRealParts[0]) * 60 + parseInt(vhoraInicioRealParts[1]);
+              var valorhoraInicioRealMinutes = parseInt(valorhoraInicioRealParts[0]) * 60 + parseInt(valorhoraInicioRealParts[1]);
 
-              var differenceMinutes = timeMinutes - vhoraInicioRealMinutes;
+              var differenceMinutes = timeMinutes - valorhoraInicioRealMinutes;
 
               var hours = Math.floor(differenceMinutes / 60);
               var minutes = differenceMinutes % 60;
 
-              var vhorasReal = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+              var valorhorasReal = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
             }
             // lucas id654 - Removido linha de dataReal
             
             linha += "<td>" ; 
 
             linha += "<id='botao'>";
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
+            if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
               //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
               if (object.idDemanda == null) {
                 linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
@@ -504,7 +527,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 "'><i class='bi bi-stop-circle'></i></button>"
               }
             }
-            if (vhoraInicioReal == "00:00") {
+            if (valorhoraInicioReal == "") {
               linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
               "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
             }
@@ -516,7 +539,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
 
             linha += "<id='botao'>";
-            if (vhoraInicioReal == "00:00") {
+            if (valorhoraInicioReal == "") {
               linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + "' data-status='" +
                object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span style='font-size: 13px;font-style:italic;' " + 
                ">Realizado</span></button></li>"

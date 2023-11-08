@@ -9,7 +9,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ul class="nav nav-tabs" id="tabs" role="tablist">
+                <span class="titulo" id="tituloContratodeTarefas"></span>
+                <span class="titulo" id="tituloDemandadeTarefas"></span>
+
+                <ul class="nav nav-tabs mt-2" id="tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link ts-tabModal active" id="basic-tab" data-bs-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Dados Tarefa</a>
                     </li>
@@ -23,38 +26,24 @@
                             <div class="container">
 
                                 <div class="row mt-2">
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <label class='form-label ts-label'>Tarefa</label>
                                         <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off">
                                     </div>
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <div id="demandaContainer">
                                             <label class="form-label ts-label">ID/Demanda Relacionada</label>
-            
-                                    <input type="hidden" class="form-control ts-input" name="tituloDemanda" id="tituloDemanda" />
-                                            
-                                            <select class="form-select ts-input" name="idDemanda" id="idDemanda">
-                                                <option value="null"></option>
-                                                
-                                                <?php
-                                                if(isset($demanda)){ ?>
-                                                    <option value="<?php echo $demanda['idDemanda'] ?>">
-                                                    <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                                                </option>
-                                                <?php }else{
-                                                foreach ($demandas as $demanda) {
-                                                ?>
-                                                    <option value="<?php echo $demanda['idDemanda'] ?>">
-                                                        <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                                                    </option>
-                                                <?php } }?>
-                                            </select>
+                                            <input type="text" class="form-control ts-input" name="tituloDemanda" id="tituloDemanda" readonly/>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     
                                     <input type="hidden" class="form-control ts-input" name="idTarefa" id="idTarefa" />
                                     <input type="hidden" class="form-control ts-input" name="tipoStatusDemanda" id="tipoStatusDemanda" />
 
+                                    
+                                    
+                                </div>
+                                <div class="row mt-4">
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Cliente</label>
                                         <select class="form-select ts-input" name="idCliente" id="idCliente">
@@ -67,9 +56,6 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    
-                                </div>
-                                <div class="row mt-4">
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Responsável</label>
                                         <select class="form-select ts-input" name="idAtendente" id="idAtendente">
@@ -95,14 +81,10 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label ts-label">Horas Cobrado</label>
-                                        <input type="time" class="form-control ts-input" id="horaCobrado" name="horaCobrado" autocomplete="off">
-                                    </div>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-md-4">
-                                        <label class="form-label ts-label">Data Previsão</label>
+                                        <label class="form-label ts-label">Data Prevista</label>
                                         <input type="date" class="form-control ts-input" id="Previsto" name="Previsto" autocomplete="off">
                                     </div>
                                     <div class="col-md-4">
@@ -117,7 +99,7 @@
                                 <div class="row mt-4">
                                     <?php if ($_SESSION['idCliente'] == null) { ?>
                                         <div class="col-md-4">
-                                            <label class="form-label ts-label">Data Real</label>
+                                            <label class="form-label ts-label">Data Realizado</label>
                                             <input type="date" class="form-control ts-input" id="dataReal" name="dataReal" autocomplete="off">
                                         </div>
                                         <div class="col-md-4">
@@ -233,9 +215,28 @@
                 $('#horaFinalReal').val(data.horaFinalReal);
                 $('#horaCobrado').val(data.horaCobrado);
                 $('#tipoStatusDemanda').val(data.idTipoStatus);
+                $('#nomeContrato').val(data.nomeContrato);
+                $('#tituloContrato').val(data.tituloContrato);
+                $('#idContrato').val(data.idContrato);
+                //alert(data.tituloContrato)
                 quilldescricao.root.innerHTML = data.descricao;
 
-                
+                if ((data.idDemanda !== null) && (data.idContrato !== null)) {
+                    var tituloModal = $("#tituloContratodeTarefas");
+                    var text = data.nomeContrato + " :" + " " + data.idContrato + " - " + data.tituloContrato + "<br>";
+                    tituloModal.html(text);
+                    var tituloModal = $("#tituloDemandadeTarefas");
+                    var text = data.nomeDemanda + " :" + " " + data.idDemanda + " - " + data.tituloDemanda;
+                    tituloModal.html(text);
+                }
+
+                if((data.idDemanda !== null) && (data.idContrato === null)){
+                    var tituloModal = $("#tituloDemandadeTarefas");
+                    var text = data.nomeDemanda + " :" + " " + data.idDemanda + " - " + data.tituloDemanda;
+                    tituloModal.html(text);
+                }
+
+                //alert(data.tituloDemanda)
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
                     $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
@@ -253,12 +254,6 @@
                     $("#idAtendente").prop('disabled', false);
                 }
 
-               /*  if (data.idDemanda !== null) {
-                    $('#idDemandaSelect').val(data.idDemanda);
-                    $('#idDemandaSelect').attr('disabled', 'disabled');
-                } else {
-                    $('#idDemandaSelect').removeAttr('disabled');
-                } */
                 if (data.horaInicioReal !== null) {
                     $('#startButtonModal').hide();
                     $('#realizadoButtonModal').hide();
@@ -282,21 +277,13 @@
                     //se idCliente vier Preenchido o select vai estar desabilitado
                     $("#idCliente").prop('disabled', true);
                 }
-
-                if(data.idDemanda == null){
-                    //se idDemanda vier nulo o select vai estar habilitado
-                    $("#idDemanda").prop('disabled', false);
-                    
-                }else{
-                    //se idDemanda vier Preenchido o select vai estar desabilitado
-                    $("#idDemanda").prop('disabled', true);
-                }
              
 
                 $('#alterarmodal').modal('show');
             }
         });
     }
+    
     $(document).on('click', 'button[data-bs-target="#alterarmodal"]', function() {
         var idTarefa = $(this).attr("data-idtarefa");
         BuscarAlterar(idTarefa);

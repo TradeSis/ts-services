@@ -1,4 +1,5 @@
 <?php
+// Lucas 08112023 - id965 Melhorias Tarefas
 // lucas id654 - Melhorias Tarefas
 //Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 // helio 12072023 - ajustes de horas
@@ -49,7 +50,7 @@ if (isset($jsonEntrada['idTarefa'])) {
     $dataReal = isset($jsonEntrada['dataReal']) && $jsonEntrada['dataReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['dataReal']) . "'" : "NULL";
     $horaInicioReal = isset($jsonEntrada['horaInicioReal']) && $jsonEntrada['horaInicioReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioReal']) . "'" : "NULL";
     $horaFinalReal = isset($jsonEntrada['horaFinalReal']) && $jsonEntrada['horaFinalReal'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalReal']) . "'" : "NULL";
-    $horaCobrado = isset($jsonEntrada['horaCobrado']) && $jsonEntrada['horaCobrado'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaCobrado']) . "'" : "NULL";
+    // Lucas 08112023 - id965 removido horascobrado
     $Previsto = isset($jsonEntrada['Previsto']) && $jsonEntrada['Previsto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['Previsto']) . "'" : "NULL";
     $horaInicioPrevisto = isset($jsonEntrada['horaInicioPrevisto']) && $jsonEntrada['horaInicioPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioPrevisto']) . "'" : "NULL";
     $horaFinalPrevisto = isset($jsonEntrada['horaFinalPrevisto']) && $jsonEntrada['horaFinalPrevisto'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalPrevisto']) . "'" : "NULL";
@@ -70,7 +71,7 @@ if (isset($jsonEntrada['idTarefa'])) {
         $horaInicioOrdem = $horaInicioReal;
     } 
 
-    $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', `horaCobrado`=$horaCobrado,
+    $sql = "UPDATE `tarefa` SET `tituloTarefa`='$tituloTarefa', 
         `dataReal`=$dataReal, `horaInicioReal`=$horaInicioReal, `horaFinalReal`=$horaFinalReal, 
         `Previsto`=$Previsto, `horaInicioPrevisto`=$horaInicioPrevisto, `horaFinalPrevisto`=$horaFinalPrevisto, `descricao`=$descricao, `dataOrdem`=$dataOrdem, `horaInicioOrdem`=$horaInicioOrdem";
 

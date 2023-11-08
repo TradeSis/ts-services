@@ -1,4 +1,5 @@
 <?php
+//Lucas 08112023 - id965 Melhorias Tarefas
 //Lucas 07112023 id965 - Melhorias Tarefas 
 // lucas id654 - Melhorias Tarefas
 //Gabriel 06102023 ID 596 mudanças em agenda e tarefas
@@ -277,7 +278,7 @@ if (isset($_GET['operacao'])) {
             'idCliente' => $idCliente,
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idTipoOcorrencia' => $idTipoOcorrencia,
-            'horaCobrado' => $_POST['horaCobrado'],
+            // Lucas 08112023 - id965 removido horascobrado
             'dataReal' => $_POST['dataReal'],
             'horaInicioReal' => $_POST['horaInicioReal'],
             'horaFinalReal' => $_POST['horaFinalReal'],

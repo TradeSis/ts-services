@@ -463,19 +463,16 @@ span.horas {
 
             linha += "<tr>";
 
-            //dados de variaveis:
-            //alert(object.tituloDemanda)
-            //alert(object.idContrato) 
-            //alert(object.tituloTarefa)
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
             if ((object.idDemanda !== null) && (object.idContrato !== null)) {
-              linha += object.nomeContrato + " : " + " " + object.idContrato + " / " +  " " + object.nomeDemanda + " : " +  object.idDemanda + " - " +  object.tituloDemanda;
-              linha += " - " + object.tituloTarefa;
+              linha += object.nomeContrato + " : " + " " + object.idContrato + " - " + object.tituloContrato + "<br>";
+              linha += object.nomeDemanda + " : " +  object.idDemanda + " - " +  object.tituloDemanda + "<br>"; 
+              linha += object.tituloTarefa;
             }
 
             if((object.idDemanda !== null) && (object.idContrato === null)){
-              linha += object.nomeDemanda + " : " + " " + object.idDemanda + " - " +  object.tituloDemanda;
-              linha += " - " + object.tituloTarefa;
+              linha += object.nomeDemanda + " : " + " " + object.idDemanda + " - " +  object.tituloDemanda + "<br>";
+              linha += object.tituloTarefa;
             }
 
             if(object.tituloDemanda === null){
@@ -484,15 +481,6 @@ span.horas {
 
             linha += "</td>";
 
-
-            //linha += "<td>" + object.idTarefa + "</td>";
-            /* linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
-            if (object.tituloTarefa == "") {
-              linha += object.tituloDemanda;
-            } else {
-              linha += object.tituloTarefa;
-            }
-            linha += "</td>"; */
 
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";

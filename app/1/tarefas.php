@@ -34,7 +34,8 @@ if (isset($jsonEntrada["idEmpresa"])) {
 
 $conexao = conectaMysql($idEmpresa);
 $tarefa = array();
-$sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda, demanda.idTipoStatus, tipoocorrencia.nomeTipoOcorrencia,
+$sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda,demanda.idContrato,demanda.idContratoTipo, demanda.idTipoStatus,contratotipos.nomeContrato,
+        contratotipos.nomeDemanda, tipoocorrencia.nomeTipoOcorrencia,
         TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal, 
         TIMEDIFF(CURRENT_TIME(), tarefa.horaInicioReal ) AS horasRealCorrente, 
         TIMEDIFF(tarefa.horaFinalPrevisto, tarefa.horaInicioPrevisto) AS horasPrevisto,
@@ -46,7 +47,8 @@ $sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.titul
         LEFT JOIN usuario ON tarefa.idAtendente = usuario.idUsuario 
         LEFT JOIN demanda ON tarefa.idDemanda = demanda.idDemanda 
         LEFT JOIN tipoocorrencia ON tarefa.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
-        LEFT JOIN cliente ON tarefa.idCliente = cliente.idCliente";
+        LEFT JOIN cliente ON tarefa.idCliente = cliente.idCliente
+        LEFT JOIN contratotipos ON tarefa.idDemanda = demanda.idDemanda";
 $where = " where ";
 if (isset($jsonEntrada["idTarefa"])) {
   $sql = $sql . $where . " tarefa.idTarefa = " . $jsonEntrada["idTarefa"];

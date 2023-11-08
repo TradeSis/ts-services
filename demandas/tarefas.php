@@ -91,22 +91,22 @@ span.previsto {
 span.datas {
     font-size:13px;
     display:flex;
-    justify-content:center;
-    align-items: center;
+    /* justify-content:center;
+    align-items: center; */
     width:110px;
     float:left;
-    /*border:1px solid red;*/
+    /* border:1px solid red; */
 }
 
 /* Style para as horas */
 span.horas {
     font-size:13px; 
     display:flex;
-    justify-content:center;
-    align-items: center;
+    /* justify-content:center;
+    align-items: center; */
     width:43px;
     float:left;
-    /*border:1px solid red;*/
+    /* border:1px solid red; */
 }
 
 </style>
@@ -461,16 +461,38 @@ span.horas {
             }
 
 
-            linha += "<tr class='text-center'>";
+            linha += "<tr>";
+
+            //dados de variaveis:
+            //alert(object.tituloDemanda)
+            //alert(object.idContrato) 
+            //alert(object.tituloTarefa)
+            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+            if ((object.idDemanda !== null) && (object.idContrato !== null)) {
+              linha += object.nomeContrato + " : " + " " + object.idContrato + " / " +  " " + object.nomeDemanda + " : " +  object.idDemanda + " - " +  object.tituloDemanda;
+              linha += " - " + object.tituloTarefa;
+            }
+
+            if((object.idDemanda !== null) && (object.idContrato === null)){
+              linha += object.nomeDemanda + " : " + " " + object.idDemanda + " - " +  object.tituloDemanda;
+              linha += " - " + object.tituloTarefa;
+            }
+
+            if(object.tituloDemanda === null){
+              linha += object.tituloTarefa;
+            }
+
+            linha += "</td>";
+
 
             //linha += "<td>" + object.idTarefa + "</td>";
-            linha += "<td class='text-start' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+            /* linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
             if (object.tituloTarefa == "") {
               linha += object.tituloDemanda;
             } else {
               linha += object.tituloTarefa;
             }
-            linha += "</td>";
+            linha += "</td>"; */
 
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";

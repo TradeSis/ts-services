@@ -48,7 +48,7 @@ $sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.titul
         LEFT JOIN demanda ON tarefa.idDemanda = demanda.idDemanda 
         LEFT JOIN tipoocorrencia ON tarefa.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
         LEFT JOIN cliente ON tarefa.idCliente = cliente.idCliente
-        LEFT JOIN contratotipos ON tarefa.idDemanda = demanda.idDemanda";
+        LEFT JOIN contratotipos on demanda.idContratoTipo = contratotipos.idContratoTipo";
 $where = " where ";
 if (isset($jsonEntrada["idTarefa"])) {
   $sql = $sql . $where . " tarefa.idTarefa = " . $jsonEntrada["idTarefa"];

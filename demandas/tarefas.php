@@ -77,12 +77,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
 </head>
 
-<style>
-  table tr td{
-    cursor: pointer;
-  }
-</style>
-
 <body>
 
   <div class="container-fluid">
@@ -435,7 +429,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
             linha += "<tr>";
 
-            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+            linha += "<td class='ts-cursor' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
             if ((object.idDemanda !== null) && (object.idContrato !== null)) {
               linha += object.nomeContrato + " : " + " " + object.idContrato + "  " + object.tituloContrato + " / ";
               linha += object.idDemanda + "  " +  object.tituloDemanda + "<br>"; 
@@ -454,13 +448,13 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "</td>";
 
 
-            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
-            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";
-            linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + vnomeTipoOcorrencia + "</td>";
+            linha += "<td class='ts-cursor' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
+            linha += "<td class='ts-cursor' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";
+            linha += "<td class='ts-cursor' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + vnomeTipoOcorrencia + "</td>";
             /* Lucas 07112023 id965 - Reajustado condição para horas */
             horas = '';
             if(vdataReal !== ""){
-              horas += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+              horas += "<td class='ts-cursor' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
               if(vPrevisto !== ""){
               horas += "<span class='ts-datas ts-previsto'>Prev: " + vPrevisto + "</span><span  class='ts-horas ts-previsto'>" + valorhoraInicioPrevisto + "</span><span class='ts-horas ts-previsto'>" + vhoraFinalPrevisto + "</span><span class='ts-horas ts-previsto'>" + valorhorasPrevisto + "</span>" + "<br>";
             }
@@ -469,7 +463,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             }else{
 
               if(vPrevisto !== ""){
-                horas += "<td  data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'";
+                horas += "<td  class='ts-cursor' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'";
                 if(object.Atrasado == 'SIM'){
                   horas += " style='background:firebrick;color:white'";
                 }

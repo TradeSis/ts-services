@@ -71,7 +71,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <style>
-<!-- helio 09112023 - Tr Ganha a maozinha -->
+
 table tr:hover{cursor:pointer;}
 
 </style>
@@ -431,7 +431,7 @@ table tr:hover{cursor:pointer;}
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFormatada + "</td>";
-            linha += "<td  data-idDemanda='" + object.idDemanda + "' class='ts-click " + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
+            linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFechamentoFormatada + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + posicao + "</td>";

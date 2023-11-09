@@ -1,16 +1,23 @@
 <?php
+// Lucas 09112023 ID 965 Melhorias em Tarefas
 // Lucas 19102023 novo padrao
 //Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 include_once '../header.php';
 ?>
 
+<style>
+  table tr td{
+    cursor: pointer;
+  }
+</style>
+
 <body>
     <div class="container-fluid">
         <div class="row">
-            <BR> <!-- MENSAGENS/ALERTAS -->
+        <!-- MENSAGENS/ALERTAS -->
         </div>
         <div class="row">
-            <BR> <!-- BOTOES AUXILIARES -->
+        <!-- BOTOES AUXILIARES -->
         </div>
         <div class="row align-items-center"> <!-- LINHA SUPERIOR A TABLE -->
             <div class="col-3 text-start">
@@ -38,25 +45,26 @@ include_once '../header.php';
                         <th>Previsão</th>
                         <th>Real</th>
                         <th>Cobrado</th>
-                        <th>Editar</th>
+                        <th colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody class="fonteCorpo">
                     <?php
                     //Gabriel 1102023 ID 596 removido table duplicado desnecessário
+                    //Lucas 09112023 ID 965 Alterado TD
                     foreach ($tarefas as $tarefa) {
                     ?>
                         <tr>
-                            <td>
+                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['idTarefa'] ?>
                             </td>
-                            <td>
+                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['tituloTarefa'] ?>
                             </td>
-                            <td>
+                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['nomeUsuario'] ?>
                             </td>
-                            <td>
+                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['nomeTipoOcorrencia'] ?>
                             </td>
                             <?php
@@ -83,7 +91,7 @@ include_once '../header.php';
                             } else {
                                 $horasPrevisto = "00:00";
                             } ?>
-                            <td>
+                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $Previsto ?>
                                 <?php echo $horaInicioPrevisto ?>
                                 <?php echo $horaFinalPrevisto ?> (<?php echo $horasPrevisto ?>)
@@ -112,7 +120,7 @@ include_once '../header.php';
                             } else {
                                 $horasReal = "00:00";
                             } ?>
-                            <td>
+                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $dataReal ?>
                                 <?php echo $horaInicioReal ?>
                                 <?php echo $horaFinalReal ?> (<?php echo $horasReal ?>)
@@ -124,21 +132,39 @@ include_once '../header.php';
                             } else {
                                 $horaCobrado = "00:00";
                             } ?>
-                            <td>
+                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $horaCobrado ?>
                             </td>
+                            <!-- Lucas 09112023 ID 965 Alterado modelo de botões -->
                             <td>
                                 <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
                                     <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-bs-toggle="modal" data-bs-target="#stopmodal" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-stop-circle"></i></button>
                                 <?php } ?>
                                 <?php if ($horaInicioReal == "00:00") { ?>
                                     <button type="button" class="startButton btn btn-success btn-sm" value="Start" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-play-circle"></i></button>
-                                    <button type="button" class="realizadoButton btn btn-info btn-sm" value="Realizado" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-check-circle"></i></button>
                                 <?php } ?>
-                                <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
-                                    <button type="button" class="novoStartButton btn btn-success btn-sm" value="Start" data-id="<?php echo $tarefa['idTarefa'] ?>" data-titulo="<?php echo $tarefa['tituloTarefa'] ?>" data-cliente="<?php echo $tarefa['idCliente'] ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>" data-atendente="<?php echo $tarefa['idAtendente'] ?>" data-status="<?php echo $idTipoStatus ?>" data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>" data-statusdemanda="<?php echo $idTipoStatus ?>" data-previsto="<?php echo $tarefa['Previsto'] ?>" data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>" data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>" data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>" data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>" data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>"><i class="bi bi-play-circle"></i></button>
-                                <?php } ?>
-                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i></button>
+                            </td>
+                            <!-- Lucas 09112023 ID 965 Alterado modelo de botões -->
+                            <td>
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn" data-toggle="tooltip" data-placement="left" title="Opções" data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow:none"><i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <?php if ($horaInicioReal == "00:00") { ?>
+                                    <li class="ms-1 me-1 mt-1">
+                                        <button type="button" class="realizadoButton btn btn-info btn-sm w-100 text-start" value="Realizado" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-check-circle"></i> Realizado</button>
+                                    </li>
+                                    <?php } ?>
+                                    <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
+                                    <li class="ms-1 me-1 mt-1">
+                                        <button type="button" class="novoStartButton btn btn-success btn-sm w-100 text-start" value="Start" data-id="<?php echo $tarefa['idTarefa'] ?>" data-titulo="<?php echo $tarefa['tituloTarefa'] ?>" data-cliente="<?php echo $tarefa['idCliente'] ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>" data-atendente="<?php echo $tarefa['idAtendente'] ?>" data-status="<?php echo $idTipoStatus ?>" data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>" data-statusdemanda="<?php echo $idTipoStatus ?>" data-previsto="<?php echo $tarefa['Previsto'] ?>" data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>" data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>" data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>" data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>" data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>"><i class="bi bi-play-circle"></i> Clonar</button>
+                                    </li>
+                                    <?php } ?>
+                                    <li class="ms-1 me-1 mt-1">
+                                    <button type="button" class="btn btn-warning btn-sm w-100 text-start" data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i> Alterar</button>
+                                    </li>
+                                </ul>
+                            </div>
                             </td>
                         </tr>
                     <?php } ?>

@@ -9,6 +9,15 @@ include_once '../header.php';
   table tr td{
     cursor: pointer;
   }
+
+  span.previsto {
+  font-weight: lighter;
+}
+
+  span.ts-datas{
+    font-size:13px;
+    float:left;
+  }
 </style>
 
 <body>
@@ -38,21 +47,19 @@ include_once '../header.php';
             <table class="table table-hover table-sm align-middle">
                 <thead class="ts-headertabelafixo">
                     <tr>
-                        <th>ID</th>
-                        <th>Título</th>
-                        <th>Atendente</th>
-                        <th>Ocorrência</th>
-                        <th>Previsão</th>
-                        <th>Real</th>
-                        <th>Cobrado</th>
-                        <th colspan="2"></th>
+                        <th class="col-1">ID</th>
+                        <th class="col-5">Título</th>
+                        <th class="col-1">Atendente</th>
+                        <th class="col-1">Ocorrência</th>
+                        <th class="col-3">Datas</th>
+                        <th class="col-1" colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody class="fonteCorpo">
                     <?php
                     //Gabriel 1102023 ID 596 removido table duplicado desnecessário
                     //Lucas 09112023 ID 965 Alterado TD
-                    foreach ($tarefas as $tarefa) {
+                    foreach ($tarefas as $tarefa) { 
                     ?>
                         <tr>
                             <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
@@ -68,73 +75,77 @@ include_once '../header.php';
                                 <?php echo $tarefa['nomeTipoOcorrencia'] ?>
                             </td>
                             <?php
+                            //Lucas 09112023 ID 965 Alterado modelo de datas
+                            //PREVISTO
                             if ($tarefa['Previsto'] != null && $tarefa['Previsto'] != "0000-00-00") {
                                 $Previsto = date('d/m/Y', strtotime($tarefa['Previsto']));
                             } else {
                                 $Previsto = "00/00/0000";
                             }
-                            $horaInicioPrevisto = $tarefa['horaInicioPrevisto'];
-                            if ($horaInicioPrevisto != null) {
-                                $horaInicioPrevisto = date('H:i', strtotime($horaInicioPrevisto));
+                            if ($tarefa['horaInicioPrevisto'] != null) {
+                                $horaInicioPrevisto = date('H:i', strtotime($tarefa['horaInicioPrevisto']));
                             } else {
                                 $horaInicioPrevisto = "00:00";
                             }
-                            $horaFinalPrevisto = $tarefa['horaFinalPrevisto'];
-                            if ($horaFinalPrevisto != null) {
-                                $horaFinalPrevisto = date('H:i', strtotime($horaFinalPrevisto));
+                            if ($tarefa['horaFinalPrevisto'] != null) {
+                                $horaFinalPrevisto = date('H:i', strtotime($tarefa['horaFinalPrevisto']));
                             } else {
                                 $horaFinalPrevisto = "00:00";
                             }
-                            $horasPrevisto = $tarefa['horasPrevisto'];
-                            if ($horasPrevisto != null) {
+                            if ($tarefa['horasPrevisto'] != null) {
                                 $horasPrevisto = date('H:i', strtotime($tarefa['horasPrevisto']));
                             } else {
                                 $horasPrevisto = "00:00";
-                            } ?>
-                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
-                                <?php echo $Previsto ?>
-                                <?php echo $horaInicioPrevisto ?>
-                                <?php echo $horaFinalPrevisto ?> (<?php echo $horasPrevisto ?>)
-                            </td>
-                            <?php
+                            }
+                             
+                            //REALIZADO
                             if ($tarefa['dataReal'] != null && $tarefa['dataReal'] != "0000-00-00") {
                                 $dataReal = date('d/m/Y', strtotime($tarefa['dataReal']));
                             } else {
                                 $dataReal = "00/00/0000";
                             }
-                            $horaInicioReal = $tarefa['horaInicioReal'];
-                            if ($horaInicioReal != null) {
-                                $horaInicioReal = date('H:i', strtotime($horaInicioReal));
+                            if ($tarefa['horaInicioReal'] != null) {
+                                $horaInicioReal = date('H:i', strtotime($tarefa['horaInicioReal']));
                             } else {
                                 $horaInicioReal = "00:00";
                             }
-                            $horaFinalReal = $tarefa['horaFinalReal'];
-                            if ($horaFinalReal != null) {
-                                $horaFinalReal = date('H:i', strtotime($horaFinalReal));
+                            if ($tarefa['horaFinalReal'] != null) {
+                                $horaFinalReal = date('H:i', strtotime($tarefa['horaFinalReal']));
                             } else {
                                 $horaFinalReal = "00:00";
-                            }
-                            $horasReal = $tarefa['horasReal'];
-                            if ($horasReal != null) {
+                            } 
+                            if ($tarefa['horasReal'] != null) {
                                 $horasReal = date('H:i', strtotime($tarefa['horasReal']));
                             } else {
                                 $horasReal = "00:00";
                             } ?>
-                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
-                                <?php echo $dataReal ?>
-                                <?php echo $horaInicioReal ?>
-                                <?php echo $horaFinalReal ?> (<?php echo $horasReal ?>)
+                            
+                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
+                                <?php 
+                                if($tarefa['Previsto'] !== null){  
+                                    echo '<span class="ts-datas previsto">Prev: ' . $Previsto; 
+                                    if($horaInicioPrevisto != "00:00"){ echo ' '. $horaInicioPrevisto;}else{ echo '';}
+                                    if($horaFinalPrevisto != "00:00"){ echo ' '. $horaFinalPrevisto;}else{ echo '';}
+                                    if($horasPrevisto != "00:00"){ echo ' ' . '(' . $horasPrevisto .')'; }else{ echo '';}
+                                    echo '</span>';
+                                    }else{ 
+                                        echo ' '; 
+                                } ?>  
+                               
+                                <br>
+                                <?php 
+                                if($tarefa['dataReal'] !== null){  
+                                    echo '<span class="ts-datas">Real: ' . $dataReal; 
+                                    if($horaInicioReal != "00:00"){ echo ' '. $horaInicioReal;}else{ echo '';}
+                                    if($horaFinalReal != "00:00"){ echo ' '. $horaFinalReal;}else{ echo '';}
+                                    if($horasReal != "00:00"){ echo ' ' . '(' . $horasReal .')'; }else{ echo '';}
+                                    echo '</span>';
+                                    }else{ 
+                                        echo ' '; 
+                                } ?>
+
                             </td>
-                            <?php
-                            $horaCobrado = $tarefa['horaCobrado'];
-                            if ($horaCobrado != null) {
-                                $horaCobrado = date('H:i', strtotime($tarefa['horaCobrado']));
-                            } else {
-                                $horaCobrado = "00:00";
-                            } ?>
-                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
-                                <?php echo $horaCobrado ?>
-                            </td>
+                        
                             <!-- Lucas 09112023 ID 965 Alterado modelo de botões -->
                             <td>
                                 <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>

@@ -419,17 +419,17 @@ if (isset($_SESSION['filtro_demanda'])) {
             linha += "<tr>";  
             /* helio 09112023 - classe ts-click para quando clicar,
                data-idDemanda para guardar o id da demanda */
-            linha += "<td class='ts-cursort s-click' data-idDemanda='" + object.idDemanda + "'>" + object.prioridade + "</td>";
-            linha += "<td class='ts-cursort s-click' data-idDemanda='" + object.idDemanda + "'>" + object.idDemanda + "</td>";
-            linha += "<td class='ts-cursor ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeCliente + "</td>";
-            linha += "<td class='ts-cursor ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
-            linha += "<td class='ts-cursor ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
-            linha += "<td class='ts-cursor ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
-            linha += "<td class='ts-cursor ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFormatada + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.prioridade + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.idDemanda + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeCliente + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFormatada + "</td>";
             linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
-            linha += "<td class='ts-cursor ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td class='ts-cursor ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFechamentoFormatada + "</td>";
-            linha += "<td class='ts-cursor ts-click' data-idDemanda='" + object.idDemanda + "'>" + posicao + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFechamentoFormatada + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + posicao + "</td>";
 
             linha += "<td>"; 
             linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +

@@ -415,24 +415,23 @@ if (isset($_SESSION['filtro_demanda'])) {
             }
 
             linha += "<tr>";
-            linha += "<td>" + object.prioridade + "</td>";
-            linha += "<td>" + object.idDemanda + "</td>";
-            linha += "<td>" + object.nomeCliente + "</td>";
-            linha += "<td>" + object.nomeSolicitante + "</td>";
-            linha += "<td>" + object.tituloDemanda + "</td>";
-            linha += "<td>" + object.nomeAtendente + "</td>";
-            linha += "<td>" + dataFormatada + "</td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.prioridade + "</a></td>";
+            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.idDemanda + "</a></td>";
+            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeCliente + "</a></td>";
+            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeSolicitante + "</a></td>";
+            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.tituloDemanda + "</a></td>";
+            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeAtendente + "</a></td>";
+            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + dataFormatada + "</a></td>";
             linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
-            linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td>" + dataFechamentoFormatada + "</td>";
-            linha += "<td>" + posicao + "</td>";
-            //linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + dataFechamentoFormatada + "</a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + posicao + "</a></td>";
 
             linha += "<td>"; 
             linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
             " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
 
-            linha += "<li class='ms-1 me-1 mt-1'><a class='btn btn-warning btn-sm w-100 text-start' href='visualizar.php?idDemanda=" + object.idDemanda + 
+            linha += "<li class='ms-1 me-1 mt-1'><a class='btn btn-warning btn-sm w-100 text-white text-start' href='visualizar.php?idDemanda=" + object.idDemanda + 
             "' role='button'><i class='bi bi-pencil-square'></i> Alterar</a></li>";
 
             linha += "</tr>";

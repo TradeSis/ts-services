@@ -6,18 +6,28 @@ include_once '../header.php';
 ?>
 
 <style>
-  table tr td{
+
+table tr td{
     cursor: pointer;
   }
 
-  span.previsto {
+/* Style para previsto, quando existe Real */  
+span.previsto {
   font-weight: lighter;
 }
 
-  span.ts-datas{
+/* Style para as datas */
+span.datas {
     font-size:13px;
-    float:left;
-  }
+    width:110px;
+}
+
+/* Style para as horas */
+span.horas {
+    font-size:13px; 
+    width:43px;
+}
+
 </style>
 
 <body>
@@ -75,7 +85,7 @@ include_once '../header.php';
                                 <?php echo $tarefa['nomeTipoOcorrencia'] ?>
                             </td>
                             <?php
-                            //Lucas 09112023 ID 965 Alterado modelo de datas
+                            //Lucas 09112023 ID 965 Alterado modelo de
                             //PREVISTO
                             if ($tarefa['Previsto'] != null && $tarefa['Previsto'] != "0000-00-00") {
                                 $Previsto = date('d/m/Y', strtotime($tarefa['Previsto']));
@@ -123,11 +133,10 @@ include_once '../header.php';
                             <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
                                 <?php 
                                 if($tarefa['Previsto'] !== null){  
-                                    echo '<span class="ts-datas previsto">Prev: ' . $Previsto; 
-                                    if($horaInicioPrevisto != "00:00"){ echo ' '. $horaInicioPrevisto;}else{ echo '';}
-                                    if($horaFinalPrevisto != "00:00"){ echo ' '. $horaFinalPrevisto;}else{ echo '';}
-                                    if($horasPrevisto != "00:00"){ echo ' ' . '(' . $horasPrevisto .')'; }else{ echo '';}
-                                    echo '</span>';
+                                    echo '<span class="datas previsto">Prev: ' . $Previsto . '</span>'; 
+                                    if($horaInicioPrevisto != "00:00"){ echo ' '. '<span class="horas">'.$horaInicioPrevisto. '</span>';}else{ echo '';}
+                                    if($horaFinalPrevisto != "00:00"){ echo ' '. '<span class="horas">'.$horaFinalPrevisto. '</span>';}else{ echo '';}
+                                    if($horasPrevisto != "00:00"){ echo ' ' . '<span class="horas">'.'(' . $horasPrevisto .')'. '</span>'; }else{ echo '';}
                                     }else{ 
                                         echo ' '; 
                                 } ?>  
@@ -135,11 +144,10 @@ include_once '../header.php';
                                 <br>
                                 <?php 
                                 if($tarefa['dataReal'] !== null){  
-                                    echo '<span class="ts-datas">Real: ' . $dataReal; 
-                                    if($horaInicioReal != "00:00"){ echo ' '. $horaInicioReal;}else{ echo '';}
-                                    if($horaFinalReal != "00:00"){ echo ' '. $horaFinalReal;}else{ echo '';}
-                                    if($horasReal != "00:00"){ echo ' ' . '(' . $horasReal .')'; }else{ echo '';}
-                                    echo '</span>';
+                                    echo '<span class="ts-datas">Real: ' . $dataReal . '</span>'; 
+                                    if($horaInicioReal != "00:00"){ echo ' '. '<span class="horas">'. $horaInicioReal. '</span>';}else{ echo '';}
+                                    if($horaFinalReal != "00:00"){ echo ' '. '<span class="horas">'. $horaFinalReal. '</span>';}else{ echo '';}
+                                    if($horasReal != "00:00"){ echo ' ' . '<span class="horas">'. '(' . $horasReal .')'. '</span>'; }else{ echo '';}
                                     }else{ 
                                         echo ' '; 
                                 } ?>

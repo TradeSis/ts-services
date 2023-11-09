@@ -5,31 +5,6 @@
 include_once '../header.php';
 ?>
 
-<style>
-
-table tr td{
-    cursor: pointer;
-  }
-
-/* Style para previsto, quando existe Real */  
-span.previsto {
-  font-weight: lighter;
-}
-
-/* Style para as datas */
-span.datas {
-    font-size:13px;
-    width:110px;
-}
-
-/* Style para as horas */
-span.horas {
-    font-size:13px; 
-    width:43px;
-}
-
-</style>
-
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -133,10 +108,10 @@ span.horas {
                             <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
                                 <?php 
                                 if($tarefa['Previsto'] !== null){  
-                                    echo '<span class="datas previsto">Prev: ' . $Previsto . '</span>'; 
-                                    if($horaInicioPrevisto != "00:00"){ echo ' '. '<span class="horas">'.$horaInicioPrevisto. '</span>';}else{ echo '';}
-                                    if($horaFinalPrevisto != "00:00"){ echo ' '. '<span class="horas">'.$horaFinalPrevisto. '</span>';}else{ echo '';}
-                                    if($horasPrevisto != "00:00"){ echo ' ' . '<span class="horas">'.'(' . $horasPrevisto .')'. '</span>'; }else{ echo '';}
+                                    echo '<span class="ts-datas ts-previsto">Prev: ' . $Previsto . '</span>'; 
+                                    if($horaInicioPrevisto != "00:00"){ echo ' '. '<span class="ts-horas">'.$horaInicioPrevisto. '</span>';}else{ echo '';}
+                                    if($horaFinalPrevisto != "00:00"){ echo ' '. '<span class="ts-horas">'.$horaFinalPrevisto. '</span>';}else{ echo '';}
+                                    if($horasPrevisto != "00:00"){ echo ' ' . '<span class="ts-horas">'.'(' . $horasPrevisto .')'. '</span>'; }else{ echo '';}
                                     }else{ 
                                         echo ' '; 
                                 } ?>  
@@ -145,9 +120,9 @@ span.horas {
                                 <?php 
                                 if($tarefa['dataReal'] !== null){  
                                     echo '<span class="ts-datas">Real: ' . $dataReal . '</span>'; 
-                                    if($horaInicioReal != "00:00"){ echo ' '. '<span class="horas">'. $horaInicioReal. '</span>';}else{ echo '';}
-                                    if($horaFinalReal != "00:00"){ echo ' '. '<span class="horas">'. $horaFinalReal. '</span>';}else{ echo '';}
-                                    if($horasReal != "00:00"){ echo ' ' . '<span class="horas">'. '(' . $horasReal .')'. '</span>'; }else{ echo '';}
+                                    if($horaInicioReal != "00:00"){ echo ' '. '<span class="ts-horas">'. $horaInicioReal. '</span>';}else{ echo '';}
+                                    if($horaFinalReal != "00:00"){ echo ' '. '<span class="ts-horas">'. $horaFinalReal. '</span>';}else{ echo '';}
+                                    if($horasReal != "00:00"){ echo ' ' . '<span class="ts-horas">'. '(' . $horasReal .')'. '</span>'; }else{ echo '';}
                                     }else{ 
                                         echo ' '; 
                                 } ?>

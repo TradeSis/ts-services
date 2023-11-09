@@ -81,34 +81,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
   table tr td{
     cursor: pointer;
   }
-
-/* Style para previsto, quando existe Real */  
-span.previsto {
-  font-weight: lighter;
-}
-
-/* Style para as datas */
-span.datas {
-    font-size:13px;
-    display:flex;
-    /* justify-content:center;
-    align-items: center; */
-    width:110px;
-    float:left;
-    /* border:1px solid red; */
-}
-
-/* Style para as horas */
-span.horas {
-    font-size:13px; 
-    display:flex;
-    /* justify-content:center;
-    align-items: center; */
-    width:43px;
-    float:left;
-    /* border:1px solid red; */
-}
-
 </style>
 
 <body>
@@ -490,9 +462,9 @@ span.horas {
             if(vdataReal !== ""){
               horas += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
               if(vPrevisto !== ""){
-              horas += "<span class='datas previsto'>Prev: " + vPrevisto + "</span><span  class='horas previsto'>" + valorhoraInicioPrevisto + "</span><span class='horas previsto'>" + vhoraFinalPrevisto + "</span><span class='horas previsto'>" + valorhorasPrevisto + "</span>" + "<br>";
+              horas += "<span class='ts-datas ts-previsto'>Prev: " + vPrevisto + "</span><span  class='ts-horas ts-previsto'>" + valorhoraInicioPrevisto + "</span><span class='ts-horas ts-previsto'>" + vhoraFinalPrevisto + "</span><span class='ts-horas ts-previsto'>" + valorhorasPrevisto + "</span>" + "<br>";
             }
-              horas += "<span class='datas'>Real: " + vdataReal + "</span><span class='horas'>" + valorhoraInicioReal + "</span><span class='horas'>" + valorhoraFinalReal + "</span><span class='horas'>" + valorhorasReal + "</span>"  + "</td>";
+              horas += "<span class='ts-datas'>Real: " + vdataReal + "</span><span class='ts-horas'>" + valorhoraInicioReal + "</span><span class='ts-horas'>" + valorhoraFinalReal + "</span><span class='ts-horas'>" + valorhorasReal + "</span>"  + "</td>";
               //alert(horas)
             }else{
 
@@ -502,7 +474,7 @@ span.horas {
                   horas += " style='background:firebrick;color:white'";
                 }
                 horas += ">";
-                horas += "<span class='datas'>Prev: " + vPrevisto + "</span><span class='horas'>" + valorhoraInicioPrevisto + "</span><span class='horas'>" + vhoraFinalPrevisto + "</span><span class='horas'>" + valorhorasPrevisto + "</span>" + "</td>";
+                horas += "<span class='ts-datas'>Prev: " + vPrevisto + "</span><span class='ts-horas'>" + valorhoraInicioPrevisto + "</span><span class='ts-horas'>" + vhoraFinalPrevisto + "</span><span class='ts-horas'>" + valorhorasPrevisto + "</span>" + "</td>";
                 //alert(horas)
               }
           }

@@ -416,12 +416,12 @@ if (isset($_SESSION['filtro_demanda'])) {
 
             linha += "<tr>";
             linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.prioridade + "</a></td>";
-            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.idDemanda + "</a></td>";
-            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeCliente + "</a></td>";
-            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeSolicitante + "</a></td>";
-            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.tituloDemanda + "</a></td>";
-            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeAtendente + "</a></td>";
-            linha += "<td> <a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + dataFormatada + "</a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.idDemanda + "</a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeCliente + "</a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeSolicitante + "</a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.tituloDemanda + "</a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeAtendente + "</a></td>";
+            linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + dataFormatada + "</a></td>";
             linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
             linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</a></td>";
             linha += "<td><a href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + dataFechamentoFormatada + "</a></td>";

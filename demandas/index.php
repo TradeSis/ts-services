@@ -70,6 +70,12 @@ if (isset($_SESSION['filtro_demanda'])) {
 
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<style>
+<!-- helio 09112023 - Tr Ganha a maozinha -->
+table tr:hover{cursor:pointer;}
+
+</style>
+
 </head>
 
 <body>
@@ -414,18 +420,21 @@ if (isset($_SESSION['filtro_demanda'])) {
               var posicao = "Cliente"
             }
 
-            linha += "<tr>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.prioridade + "</a></td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.idDemanda + "</a></td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeCliente + "</a></td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeSolicitante + "</a></td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.tituloDemanda + "</a></td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeAtendente + "</a></td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + dataFormatada + "</a></td>";
-            linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</a></td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + dataFechamentoFormatada + "</a></td>";
-            linha += "<td><a class='btn w-100' href='visualizar.php?idDemanda=" + object.idDemanda + "'>" + posicao + "</a></td>";
+
+            linha += "<tr>";  
+            /* helio 09112023 - classe ts-click para quando clicar,
+               data-idDemanda para guardar o id da demanda */
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.prioridade + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.idDemanda + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeCliente + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFormatada + "</td>";
+            linha += "<td  data-idDemanda='" + object.idDemanda + "' class='ts-click " + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFechamentoFormatada + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + posicao + "</td>";
 
             linha += "<td>"; 
             linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
@@ -447,6 +456,17 @@ if (isset($_SESSION['filtro_demanda'])) {
         }
       });
     }
+
+    /* helio 09112023 - ao clicar em ts-click, chama visualizar */
+    $(document).on('click', '.ts-click', function() {
+        window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
+    });
+
+   function trabrelinkx(parametros)
+   {
+       
+   }
+
 
     $("#FiltroTipoStatus").change(function() {
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());

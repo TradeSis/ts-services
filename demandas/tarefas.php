@@ -24,7 +24,7 @@ if (isset($_SESSION['idCliente'])) {
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
-$demandas = buscaDemandasAbertas();
+//Lucas 09112023 id965 - removido variavel $demandas
 //lucas 25092023 ID 358 Adicionado buscaUsuarios
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
@@ -179,11 +179,11 @@ span.horas {
           <tr class="ts-headerTabelaLinhaCima">
 
             <!-- Helio 071123 - Ajuste nas TD por col -->
-            <th class="col-4">Tarefa</th>
+            <th class="col-5">Tarefa</th>
             <th class="col-1">Responsável</th>
             <th class="col-1">Cliente</th>
             <th class="col-1">Ocorrência</th>
-            <th class="col-4">Datas</th>
+            <th class="col-3">Datas</th>
             <th class="col-1" colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
@@ -465,13 +465,13 @@ span.horas {
 
             linha += "<td data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
             if ((object.idDemanda !== null) && (object.idContrato !== null)) {
-              linha += object.nomeContrato + " : " + " " + object.idContrato + " - " + object.tituloContrato + "<br>";
-              linha += object.nomeDemanda + " : " +  object.idDemanda + " - " +  object.tituloDemanda + "<br>"; 
+              linha += object.nomeContrato + " : " + " " + object.idContrato + "  " + object.tituloContrato + " / ";
+              linha += object.idDemanda + "  " +  object.tituloDemanda + "<br>"; 
               linha += object.tituloTarefa;
             }
 
             if((object.idDemanda !== null) && (object.idContrato === null)){
-              linha += object.nomeDemanda + " : " + " " + object.idDemanda + " - " +  object.tituloDemanda + "<br>";
+              linha += object.nomeDemanda + " : " + " " + object.idDemanda + "  " +  object.tituloDemanda + "<br>";
               linha += object.tituloTarefa;
             }
 

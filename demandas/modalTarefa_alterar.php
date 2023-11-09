@@ -1,4 +1,7 @@
-<!-- Gabriel 06102023 ID 596 mudanças em agenda e tarefas -->
+<!--
+    Lucas 09112023 ID 965 Melhorias em Tarefas 
+    Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
+-->
 
 <!--------- ALTERAR --------->
 <div class="modal" id="alterarmodal" tabindex="-1"  aria-labelledby="alterarmodalLabel" aria-hidden="true">
@@ -9,6 +12,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- Lucas 09112023 ID 965 informações da tarefa dinamica -->
                 <span class="titulo" id="tituloContratodeTarefas"></span>
                 <span class="titulo" id="tituloDemandadeTarefas"></span>
 
@@ -30,18 +34,12 @@
                                         <label class='form-label ts-label'>Tarefa</label>
                                         <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off">
                                     </div>
-                                    <!-- <div class="col-md-4">
-                                        <div id="demandaContainer">
-                                            <label class="form-label ts-label">ID/Demanda Relacionada</label>
-                                            <input type="text" class="form-control ts-input" name="tituloDemanda" id="tituloDemanda" readonly/>
-                                        </div>
-                                    </div> -->
-                                    
+                        
+                                    <!-- Lucas 09112023 ID 965 Removido Select de demandaRelacionada -->
+
                                     <input type="hidden" class="form-control ts-input" name="idTarefa" id="idTarefa" />
                                     <input type="hidden" class="form-control ts-input" name="tipoStatusDemanda" id="tipoStatusDemanda" />
 
-                                    
-                                    
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-md-4">
@@ -215,26 +213,13 @@
                 $('#horaFinalReal').val(data.horaFinalReal);
                 $('#horaCobrado').val(data.horaCobrado);
                 $('#tipoStatusDemanda').val(data.idTipoStatus);
-                $('#nomeContrato').val(data.nomeContrato);
-                $('#tituloContrato').val(data.tituloContrato);
-                $('#idContrato').val(data.idContrato);
-                //alert(data.tituloContrato)
+                vidDemanda = data.idDemanda;
+                vtituloDemanda = data.tituloDemanda;
+                vnomeDemanda= data.nomeDemanda;
+                vnomeContrato = data.nomeContrato;
+                vtituloContrato = data.tituloContrato;
+                vidContrato = data.idContrato;
                 quilldescricao.root.innerHTML = data.descricao;
-
-                if ((data.idDemanda !== null) && (data.idContrato !== null)) {
-                    var tituloModal = $("#tituloContratodeTarefas");
-                    var text = data.nomeContrato + " :" + " " + data.idContrato + " - " + data.tituloContrato + "<br>";
-                    tituloModal.html(text);
-                    var tituloModal = $("#tituloDemandadeTarefas");
-                    var text = data.nomeDemanda + " :" + " " + data.idDemanda + " - " + data.tituloDemanda;
-                    tituloModal.html(text);
-                }
-
-                if((data.idDemanda !== null) && (data.idContrato === null)){
-                    var tituloModal = $("#tituloDemandadeTarefas");
-                    var text = data.nomeDemanda + " :" + " " + data.idDemanda + " - " + data.tituloDemanda;
-                    tituloModal.html(text);
-                }
 
                 //alert(data.tituloDemanda)
                 if (data.idDemanda !== null) {
@@ -277,12 +262,40 @@
                     //se idCliente vier Preenchido o select vai estar desabilitado
                     $("#idCliente").prop('disabled', true);
                 }
-             
-
+            
                 $('#alterarmodal').modal('show');
+
+                // Lucas 09112023 ID 965 informações da tarefa dinamica
+                if((vidContrato == null) && (vidDemanda == null)){
+                    var tituloModal = $("#tituloContratodeTarefas");
+                    var text = ' ';
+                    tituloModal.html(text);
+                    var tituloModal = $("#tituloDemandadeTarefas");
+                    var text = ' ';
+                    tituloModal.html(text);
+                }
+                if((vidDemanda !== null) && (vidContrato == null)) { 
+                    var tituloModal = $("#tituloContratodeTarefas");
+                    var text = ' ';
+                    tituloModal.html(text);
+                    var tituloModal = $("#tituloDemandadeTarefas");
+                    var text = vnomeDemanda + " :" + " " + vidDemanda + " - " + vtituloDemanda;
+                    tituloModal.html(text);
+                }
+                if((vidDemanda !== null) && (vidContrato !== null)) { 
+                    var tituloModal = $("#tituloContratodeTarefas");
+                    var text = vnomeContrato + " :" + " " + vidContrato + " - " + vtituloContrato + "<br>";
+                    tituloModal.html(text);
+                    var tituloModal = $("#tituloDemandadeTarefas");
+                    var text = vnomeDemanda + " :" + " " + vidDemanda + " - " + vtituloDemanda;
+                    tituloModal.html(text);
+                }
+                
             }
+            
         });
     }
+    
     
     $(document).on('click', 'button[data-bs-target="#alterarmodal"]', function() {
         var idTarefa = $(this).attr("data-idtarefa");

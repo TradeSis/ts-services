@@ -435,7 +435,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
             " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
 
-            linha += "<li class='ms-1 me-1 mt-1'><a class='btn btn-warning btn-sm w-100 text-white text-start' href='visualizar.php?idDemanda=" + object.idDemanda + 
+            linha += "<li class='ms-1 me-1 mt-1'><a class='btn btn-warning btn-sm w-100 text-start' href='visualizar.php?idDemanda=" + object.idDemanda + 
             "' role='button'><i class='bi bi-pencil-square'></i> Alterar</a></li>";
 
             linha += "</tr>";

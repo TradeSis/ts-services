@@ -145,7 +145,7 @@ if (isset($_GET['operacao'])) {
             'Previsto' => $_POST['Previsto'],
             'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
             'horaFinalPrevisto' => $_POST['horaFinalPrevisto'],
-            'horaCobrado' => $_POST['horaCobrado'],
+            //'horaCobrado' => $_POST['horaCobrado'],
             'tituloDemanda' => $_POST['tituloDemanda']
         );
        

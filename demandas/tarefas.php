@@ -489,7 +489,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
                 "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
               } else {
-                linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-toggle='modal' data-target='#stopexecucaomodal' data-id='" + object.idTarefa + 
+                linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-bs-toggle='modal' data-bs-target='#stopmodal' data-id='" + object.idTarefa + 
                 "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + 
                 "'><i class='bi bi-stop-circle'></i></button>"
               }
@@ -508,14 +508,14 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<id='botao'>";
             if (valorhoraInicioReal == "") {
               linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + "' data-status='" +
-               object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span style='font-size: 13px;font-style:italic;' " + 
+               object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span class='ts-btnAcoes' " + 
                ">Realizado</span></button></li>"
             }
             linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='clonarButton btn btn-success btn-sm w-100 text-start'  data-idtarefa='" + object.idTarefa + 
-            "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i> <span style='font-size: 13px;font-style:italic;' " +
+            "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i> <span class='ts-btnAcoes' " +
             ">Clonar</span></button></li>";
             linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='btn btn-warning btn-sm w-100 text-start' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + 
-            object.idTarefa + "'><i class='bi bi-pencil-square'></i> <span style='font-size: 13px;font-style:italic;'>Alterar</span></button></li>"
+            object.idTarefa + "'><i class='bi bi-pencil-square'></i> <span class='ts-btnAcoes'>Alterar</span></button></li>"
             
 
             linha +="</ul></div>"
@@ -533,17 +533,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
         }
       });
     }
-/*     function myFunction() {
-      var idTarefa = $(this).attr("data-idnovo");
-      alert('oi');
-} */
-
-    $(document).ready(function(){
-      $('#tblEditavel tr td').click(function(){
-        /* alert('oi'); */
-      
-      })
-    })
 
     $("#FiltroClientes").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
@@ -602,7 +591,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
   
 
     //lucas 25092023 ID 358 Adicionado script para popup de stop
-    $(document).on('click', 'button[data-target="#stopexecucaomodal"]', function() {
+    $(document).on('click', 'button[data-bs-target="#stopmodal"]', function() {
       var idTarefa = $(this).attr("data-id");
       var idDemanda = $(this).attr("data-demanda");
       var status = $(this).attr("data-status");
@@ -621,7 +610,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
           $('#status-stopexecucao').val(status);
           $('#horaInicioReal-stopexecucao').val(horaInicioReal);
 
-          $('#stopexecucaomodal').modal('show');
+          $('#stopmodal').modal('show');
         }
       });
     });
@@ -844,53 +833,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
       });
     });
 
-
-
-    var quillstop = new Quill('.quill-stop', {
-      theme: 'snow',
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote'],
-          [{
-            'list': 'ordered'
-          }, {
-            'list': 'bullet'
-          }],
-          [{
-            'indent': '-1'
-          }, {
-            'indent': '+1'
-          }],
-          [{
-            'direction': 'rtl'
-          }],
-          [{
-            'size': ['small', false, 'large', 'huge']
-          }],
-          [{
-            'header': [1, 2, 3, 4, 5, 6, false]
-          }],
-          ['link', 'image', 'video', 'formula'],
-          [{
-            'color': []
-          }, {
-            'background': []
-          }],
-          [{
-            'font': []
-          }],
-          [{
-            'align': []
-          }],
-        ]
-      }
-    });
-
-    /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-    quillstop.on('text-change', function(delta, oldDelta, source) {
-      $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
-    });
+  //Lucas 10112023 ID 965 Removido script do editor de stop
   </script>
 
 

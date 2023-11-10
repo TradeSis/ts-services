@@ -1,44 +1,134 @@
- <!--------- MODAL STOP Tab EXECUCAO --------->
- <div class="modal" id="stopexecucaomodal" tabindex="-1"
-    aria-labelledby="stopexecucaomodalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- gabriel 13102023 id 596 adicionado id -->
-          <form method="post" id="stopForm">
-            <div class="container-fluid p-0">
-              <div class="col">
-                <span class="tituloEditor">Comentários</span>
-              </div>
-              <div class="quill-stop" style="height:20vh !important"></div>
-              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
-            </div>
-            <div class="col-md form-group">
-              <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>"
-                readonly>
-              <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>"
-                readonly>
-              <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
-              <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
-              <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
-              <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2"
-                readonly style="display: none;" />
+ <!-- Lucas 10112023 id965 Melhorias em Tarefas -->
 
-            </div>
-        </div>
-        <div class="modal-footer">
-          <div class="col align-self-start pl-0">
-            <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
-            <button type="submit" id="realizadoFormbutton" class="btn btn-warning float-left">Entregar</button>
-          </div>
-          <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
-          <button type="submit" id="stopFormbutton" class="btn btn-danger">Stop</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+
+ <!--------- MODAL STOP Tab EXECUCAO --------->
+ <div class="modal" id="stopmodal" tabindex="-1" aria-labelledby="stopmodalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa novo</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <?php if (isset($demanda)) { ?>
+         <!-- COM Demanda Associada-->
+         <div class="modal-body">
+           <form method="post">
+             <div class="container-fluid p-0">
+               <div class="col">
+                 <span class="tituloEditor">Comentários</span>
+               </div>
+               <div class="quill-stop" style="height:20vh !important"></div>
+               <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
+             </div>
+             <div class="col-md">
+               <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+               <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+
+               <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stop" />
+               <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stop" />
+               <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stop" />
+               <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stop" step="2" readonly style="display: none;" />
+
+             </div>
+         </div>
+         <div class="modal-footer">
+           <div class="col align-self-start pl-0">
+             <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left">Entregar</button>
+           </div>
+           <button type="submit" formaction="../database/tarefas.php?operacao=stop" class="btn btn-danger">Stop</button>
+
+           </form>
+         </div>
+       <?php } else { ?>
+         <!-- SEM Demanda Associada-->
+         <div class="modal-body">
+           <!-- gabriel 13102023 id 596 adicionado id -->
+           <form method="post" id="stopForm">
+             <div class="container-fluid p-0">
+               <div class="col">
+                 <span class="tituloEditor">Comentários</span>
+               </div>
+               <div class="quill-stop" style="height:20vh !important"></div>
+               <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
+             </div>
+             <div class="col-md form-group">
+               <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+               <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+               <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
+               <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
+               <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
+               <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2" readonly style="display: none;" />
+
+             </div>
+         </div>
+         <div class="modal-footer">
+           <div class="col align-self-start pl-0">
+             <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
+             <button type="submit" id="realizadoFormbutton" class="btn btn-warning float-left">Entregar</button>
+           </div>
+           <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
+           <button type="submit" id="stopFormbutton" class="btn btn-danger">Stop</button>
+           </form>
+         </div>
+
+       <?php } ?>
+
+     </div>
+   </div>
+ </div>
+
+ <!-- LOCAL PARA COLOCAR OS JS -->
+
+ <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+ <!-- QUILL editor -->
+ <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+ <script>
+   var quillstop = new Quill('.quill-stop', {
+     theme: 'snow',
+     modules: {
+       toolbar: [
+         ['bold', 'italic', 'underline', 'strike'],
+         ['blockquote'],
+         [{
+           'list': 'ordered'
+         }, {
+           'list': 'bullet'
+         }],
+         [{
+           'indent': '-1'
+         }, {
+           'indent': '+1'
+         }],
+         [{
+           'direction': 'rtl'
+         }],
+         [{
+           'size': ['small', false, 'large', 'huge']
+         }],
+         [{
+           'header': [1, 2, 3, 4, 5, 6, false]
+         }],
+         ['link', 'image', 'video', 'formula'],
+         [{
+           'color': []
+         }, {
+           'background': []
+         }],
+         [{
+           'font': []
+         }],
+         [{
+           'align': []
+         }],
+       ]
+     }
+   });
+
+   /* lucas 22092023 ID 358 Modificado nome da classe do editor */
+   quillstop.on('text-change', function(delta, oldDelta, source) {
+     $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
+   });
+ </script>
+
+ <!-- LOCAL PARA COLOCAR OS JS -FIM -->

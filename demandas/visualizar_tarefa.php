@@ -132,30 +132,63 @@ include_once '../header.php';
                             <!-- Lucas 09112023 ID 965 Alterado modelo de botões -->
                             <td>
                                 <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
-                                    <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-bs-toggle="modal" data-bs-target="#stopmodal" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-stop-circle"></i></button>
+                                    <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-bs-toggle="modal" data-bs-target="#stopmodal" 
+                                        data-id="<?php echo $tarefa['idTarefa'] ?>" 
+                                        data-status="<?php echo $idTipoStatus ?>" 
+                                        data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>" 
+                                        data-demanda="<?php echo $tarefa['idDemanda'] ?>">
+                                    <i class="bi bi-stop-circle"></i></button>
                                 <?php } ?>
                                 <?php if ($horaInicioReal == "00:00") { ?>
-                                    <button type="button" class="startButton btn btn-success btn-sm" value="Start" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-play-circle"></i></button>
+                                    <button type="button" class="startButton btn btn-success btn-sm" value="Start" 
+                                        data-id="<?php echo $tarefa['idTarefa'] ?>" 
+                                        data-status="<?php echo $idTipoStatus ?>" 
+                                        data-demanda="<?php echo $tarefa['idDemanda'] ?>">
+                                    <i class="bi bi-play-circle"></i></button>
+                                <?php } ?>
+                                <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
+                                    <button type="button" class="novoStartButton btn btn-success btn-sm" value="Start" 
+                                        data-id="<?php echo $tarefa['idTarefa'] ?>" 
+                                        data-titulo="<?php echo $tarefa['tituloTarefa'] ?>" 
+                                        data-cliente="<?php echo $tarefa['idCliente'] ?>" 
+                                        data-demanda="<?php echo $tarefa['idDemanda'] ?>" 
+                                        data-atendente="<?php echo $tarefa['idAtendente'] ?>" 
+                                        data-status="<?php echo $idTipoStatus ?>" 
+                                        data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>" 
+                                        data-statusdemanda="<?php echo $idTipoStatus ?>" 
+                                        data-previsto="<?php echo $tarefa['Previsto'] ?>" 
+                                        data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>" 
+                                        data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>" 
+                                        data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>" 
+                                        data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>" 
+                                        data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>">
+                                    <i class="bi bi-play-circle"></i></button>
                                 <?php } ?>
                             </td>
                             <!-- Lucas 09112023 ID 965 Alterado modelo de botões -->
                             <td>
                             <div class="btn-group dropstart">
-                                <button type="button" class="btn" data-toggle="tooltip" data-placement="left" title="Opções" data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow:none"><i class="bi bi-three-dots-vertical"></i>
+                                <button type="button" class="btn" data-toggle="tooltip" data-placement="left" title="Opções" 
+                                data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow:none"><i class="bi bi-three-dots-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <?php if ($horaInicioReal == "00:00") { ?>
                                     <li class="ms-1 me-1 mt-1">
-                                        <button type="button" class="realizadoButton btn btn-info btn-sm w-100 text-start" value="Realizado" data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-check-circle"></i> Realizado</button>
-                                    </li>
-                                    <?php } ?>
-                                    <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
-                                    <li class="ms-1 me-1 mt-1">
-                                        <button type="button" class="novoStartButton btn btn-success btn-sm w-100 text-start" value="Start" data-id="<?php echo $tarefa['idTarefa'] ?>" data-titulo="<?php echo $tarefa['tituloTarefa'] ?>" data-cliente="<?php echo $tarefa['idCliente'] ?>" data-demanda="<?php echo $tarefa['idDemanda'] ?>" data-atendente="<?php echo $tarefa['idAtendente'] ?>" data-status="<?php echo $idTipoStatus ?>" data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>" data-statusdemanda="<?php echo $idTipoStatus ?>" data-previsto="<?php echo $tarefa['Previsto'] ?>" data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>" data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>" data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>" data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>" data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>"><i class="bi bi-play-circle"></i> Clonar</button>
+                                        <button type="button" class="realizadoButton btn btn-info btn-sm w-100 text-start" value="Realizado" 
+                                        data-id="<?php echo $tarefa['idTarefa'] ?>" data-status="<?php echo $idTipoStatus ?>" 
+                                        data-demanda="<?php echo $tarefa['idDemanda'] ?>"><i class="bi bi-check-circle"></i><span class="ts-btnAcoes"> Realizado</span></button>
                                     </li>
                                     <?php } ?>
                                     <li class="ms-1 me-1 mt-1">
-                                    <button type="button" class="btn btn-warning btn-sm w-100 text-start" data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i> Alterar</button>
+                                        <button type="button" class="clonarButton btn btn-success btn-sm w-100 text-start" 
+                                        data-idtarefa="<?php echo $tarefa['idTarefa'] ?>"
+                                        data-idDemanda="<?php echo $tarefa['idDemanda'] ?>"
+                                        ><i class='bi bi-pencil-square'></i><span class="ts-btnAcoes"> Clonar</span></button>
+
+                                    </li>
+                                    <li class="ms-1 me-1 mt-1">
+                                        <button type="button" class="btn btn-warning btn-sm w-100 text-start" data-bs-toggle="modal" data-bs-target="#alterarmodal" 
+                                        data-idTarefa="<?php echo $tarefa['idTarefa'] ?>"><i class='bi bi-pencil-square'></i><span class="ts-btnAcoes"> Alterar</span></button>
                                     </li>
                                 </ul>
                             </div>
@@ -171,6 +204,30 @@ include_once '../header.php';
 
 
     <script>
+        //Lucas 10112023 ID 965  Adicionado script para botão de clonar
+        $(document).ready(function() {
+            $(document).on('click', 'button.clonarButton', function() {
+    
+            var idTarefa = $(this).data("idtarefa"); 
+            
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
+                data: {
+                    idTarefa: idTarefa
+                },
+                success: function(data) {
+                    $('#tituloTarefa').val(data.tituloTarefa);
+                    $('#idAtendente').val(data.idAtendente);
+                    $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
+
+                    $('#inserirModal').modal('show');
+                }
+                });
+            });
+        });
+
         $(document).ready(function() {
             //lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada
             $('button[data-bs-target="#stopmodal"]').click(function() {

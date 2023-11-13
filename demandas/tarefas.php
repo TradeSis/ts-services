@@ -483,8 +483,13 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<td>" ; 
 
             linha += "<id='botao'>";
-            if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
-              //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
+            
+            if (valorhoraInicioReal == "") {
+              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
+              "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
+            }else{
+              if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
+              //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada 
               if (object.idDemanda == null) {
                 linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
                 "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
@@ -492,12 +497,26 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-bs-toggle='modal' data-bs-target='#stopmodal' data-id='" + object.idTarefa + 
                 "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + 
                 "'><i class='bi bi-stop-circle'></i></button>"
-              }
+              } 
+            }else {
+              linha += "<button type='button' class='novoStartButton btn btn-success btn-sm mr-1' "+ 
+            " data-id='" + object.idTarefa + 
+            "' data-titulo='" + object.tituloTarefa +
+            "' data-cliente='" + object.idCliente +
+            "' data-demanda='" + object.idDemanda +
+            "' data-atendente='" + object.idAtendente +
+            "' data-status='" + object.idTipoStatus +
+            "' data-ocorrencia='" + object.idTipoOcorrencia +
+            "' data-statusdemanda='" + object.idTipoStatus +
+            "' data-previsto='" + object.Previsto +
+            "' data-horainicioprevisto='" + object.horaInicioPrevisto +
+            "' data-horafinalprevisto='" + object.horaFinalPrevisto +
+            "' data-titulodemanda='" + object.tituloDemanda +
+            "' data-horainicioreal='" + object.horaInicioReal +
+              
+              "'><i class='bi bi-play-circle'></i></button>"
             }
-            if (valorhoraInicioReal == "") {
-              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
-              "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
-            }
+          }
 
             linha += "</td>";
 
@@ -642,21 +661,64 @@ if (isset($_SESSION['filtro_tarefas'])) {
             idTarefa: idTarefa
           },
           success: function(data) {
-            $('#newtitulo').val(data.tituloTarefa);
-            $('#newidCliente').val(data.idCliente);
-            $('#newidDemanda').val(data.idDemanda);
-            $('#newidAtendente').val(data.idAtendente);
-            $('#newidTipoOcorrencia').val(data.idTipoOcorrencia);
-            $('#newtipoStatusDemanda').val(data.idTipoStatus);
-            $('#newdescricao').val(data.descricao);
+            $('#clonartitulo').val(data.tituloTarefa);
+            $('#clonaridCliente').val(data.idCliente);
+            $('#clonaridDemanda').val(data.idDemanda);
+            $('#clonaridAtendente').val(data.idAtendente);
+            $('#clonaridTipoOcorrencia').val(data.idTipoOcorrencia);
+            $('#clonartipoStatusDemanda').val(data.idTipoStatus);
+            $('#clonardescricao').val(data.descricao);
 
+            //alert(data.tituloTarefa)
             $('#inserirModal').modal('show');
           }
         });
       });
     });
 
+    // Lucas 131123 ID 965 Adicionado script para botão de novoStart
+    $(document).on('click', '.novoStartButton', function() {
+      var idTarefa = $(this).data('id');
+      var tituloTarefa = $(this).data('titulo');
+      var idCliente = $(this).data('cliente');
+      var idDemanda = $(this).data('demanda');
+      var idAtendente = $(this).data('atendente');
+      var idTipoStatus = $(this).data('status');
+      var idTipoOcorrencia = $(this).data('ocorrencia');
+      var tipoStatusDemanda = $(this).data('statusdemanda');
+      var previsto = $(this).data('previsto');
+      var horaInicioPrevisto = $(this).data('horainicioprevisto');
+      var horaFinalPrevisto = $(this).data('horafinalprevisto');
+              
+      var tituloDemanda = $(this).data('titulodemanda');
+      var horaInicioReal = $(this).data('horainicioreal');
+        
+        $.ajax({
+            url: "../database/tarefas.php?operacao=novostart",
+            method: "POST",
+            dataType: "json",
+            data: {
+              tituloTarefa: tituloTarefa,
+              idCliente: idCliente,
+              idDemanda: idDemanda,
+              idAtendente: idAtendente,
+              idTipoStatus: idTipoStatus,
+              idTipoOcorrencia: idTipoOcorrencia,
+              tipoStatusDemanda: tipoStatusDemanda,
+              Previsto: previsto,
+              horaInicioPrevisto: horaInicioPrevisto,
+              horaFinalPrevisto: horaFinalPrevisto,
+              tituloDemanda: tituloDemanda,
 
+              },
+              success: function(msg) {
+              if (msg.retorno == "ok") {
+                refreshPage('tarefas', idDemanda);
+            }
+          }
+        });
+    
+    });
 
     $(document).on('click', '.stopButton', function() {
       var idTarefa = $(this).data('id');

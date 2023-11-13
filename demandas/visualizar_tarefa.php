@@ -218,10 +218,8 @@ include_once '../header.php';
                     idTarefa: idTarefa
                 },
                 success: function(data) {
-                    $('#tituloTarefa').val(data.tituloTarefa);
-                    $('#idAtendente').val(data.idAtendente);
-                    $('#idTipoOcorrencia').val(data.idTipoOcorrencia);
-
+                    $('#clonartitulo').val(data.tituloTarefa);
+            
                     $('#inserirModal').modal('show');
                 }
                 });

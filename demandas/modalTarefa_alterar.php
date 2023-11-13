@@ -32,7 +32,8 @@
                                 <div class="row mt-2">
                                     <div class="col-md-12">
                                         <label class='form-label ts-label'>Tarefa</label>
-                                        <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off">
+                                        <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off"
+                                        <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
                                     </div>
                         
                                     <!-- Lucas 09112023 ID 965 Removido Select de demandaRelacionada -->
@@ -83,7 +84,8 @@
                                 <div class="row mt-4">
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Data Prevista</label>
-                                        <input type="date" class="form-control ts-input" id="Previsto" name="Previsto" autocomplete="off">
+                                        <input type="date" class="form-control ts-input" id="Previsto" name="Previsto" autocomplete="off"
+                                        <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Inicio</label>

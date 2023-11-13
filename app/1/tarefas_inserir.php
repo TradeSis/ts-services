@@ -72,21 +72,21 @@ if (isset($jsonEntrada['idDemanda'])) {
     if (($Previsto) != "NULL" && $tituloTarefa == '') {
         $tituloTarefa = $jsonEntrada['tituloDemanda'];
     }
-    // lucas id654 - Adicionado campos de dataOrdem e horaInicioOrdem
-    if(isset($Previsto) && isset($horaInicioPrevisto)){
+
+    if ($start == true) {
+        $dataOrdem = $dataReal;
+        $horaInicioOrdem = $horaInicioReal;
+        //Lucas 10112023 ID 965 - Removido horasCobrado e quebrado a linha do programa
+        $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, Previsto, horaInicioPrevisto, horaFinalPrevisto, 
+        horaInicioReal, dataReal,dataOrdem,horaInicioOrdem) 
+        VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto, 
+        '$horaInicioReal', '$dataReal', '$dataOrdem', '$horaInicioOrdem')";
+    } else {
         $dataOrdem = $Previsto;
         $horaInicioOrdem = $horaInicioPrevisto;
-    }
-    if ($start == true) {
-        //Lucas 10112023 ID 965 - Removido horasCobrado e quebrado a linha do programa
-        $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, Previsto, horaInicioPrevisto, horaFinalPrevisto, horaInicioReal, dataReal) 
-        VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto, '$horaInicioReal', 
-        '$dataReal')";
-    } else {
          //Lucas 10112023 ID 965 - Removido horasCobrado e quebrado a linha do programa
         $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, Previsto, horaInicioPrevisto, horaFinalPrevisto,dataOrdem,horaInicioOrdem) 
-        VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto, $dataOrdem, 
-        $horaInicioOrdem)";
+        VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto, $dataOrdem, $horaInicioOrdem)";
     }
 
 

@@ -688,13 +688,12 @@ if (isset($_SESSION['filtro_tarefas'])) {
       var tipoStatusDemanda = $(this).data('statusdemanda');
       var previsto = $(this).data('previsto');
       var horaInicioPrevisto = $(this).data('horainicioprevisto');
-      var horaFinalPrevisto = $(this).data('horafinalprevisto');
-              
+      var horaFinalPrevisto = $(this).data('horafinalprevisto');       
       var tituloDemanda = $(this).data('titulodemanda');
       var horaInicioReal = $(this).data('horainicioreal');
-        
+      //alert(tituloTarefa)  
         $.ajax({
-            url: "../database/tarefas.php?operacao=novostart",
+            url: "../database/tarefas.php?operacao=inserirStart",
             method: "POST",
             dataType: "json",
             data: {

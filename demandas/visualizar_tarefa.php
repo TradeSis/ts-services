@@ -287,17 +287,15 @@ include_once '../header.php';
                 var previsto = $(this).data('previsto');
                 var horaInicioPrevisto = $(this).data('horainicioprevisto');
                 var horaFinalPrevisto = $(this).data('horafinalprevisto');
-                horaCobrado
-                var horaCobrado = $(this).data('horacobrado');
                 var tituloDemanda = $(this).data('titulodemanda');
                 var horaInicioReal = $(this).data('horainicioreal');
+                var redirecionaDemanda = '1';
 
                 $.ajax({
-                    url: "../database/tarefas.php?operacao=novostart",
+                    url: "../database/tarefas.php?operacao=inserirStart",
                     method: "POST",
                     dataType: "json",
                     data: {
-
                         tituloTarefa: tituloTarefa,
                         idCliente: idCliente,
                         idDemanda: idDemanda,
@@ -308,9 +306,8 @@ include_once '../header.php';
                         Previsto: previsto,
                         horaInicioPrevisto: horaInicioPrevisto,
                         horaFinalPrevisto: horaFinalPrevisto,
-                        horaCobrado: horaCobrado,
                         tituloDemanda: tituloDemanda,
-
+                        redirecionaDemanda: redirecionaDemanda
                     },
                     success: function(msg) {
                         //var message = msg.retorno; 

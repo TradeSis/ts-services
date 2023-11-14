@@ -69,9 +69,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     if (isset($jsonEntrada['tituloTarefa'])) {
         $tituloTarefa = $jsonEntrada['tituloTarefa'];
     }
-    if (($Previsto) != "NULL" && $tituloTarefa == '') {
-        $tituloTarefa = $jsonEntrada['tituloDemanda'];
-    }
+ 
 
     if ($start == true) {
         $dataOrdem = $dataReal;

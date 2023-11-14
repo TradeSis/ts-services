@@ -61,25 +61,41 @@ $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idEmpresa'])) {
 
     $tipoStatusDemanda = null;
-    $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
-    //echo 'IDDEMANDA: ' . json_encode($idDemanda);
-    if ($idDemanda != 'null') { 
-        //echo '_____ ESTOU AQUI ______';
+    
+    $idDemanda = null;
+    if(isset($jsonEntrada['idDemanda'])){
+        $idDemanda = $jsonEntrada['idDemanda'];
+    }
+
+    if ($idDemanda !== null) { 
         $sql2 = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
         $buscar2 = mysqli_query($conexao, $sql2);
         $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
-        //echo 'ROW: ' . json_encode($row);
-        $tipoStatusDemanda = $row["idTipoStatus"]; //idTipoStatus
+        $tipoStatusDemanda = $row["idTipoStatus"]; 
     
     }
     
-
     $idAtendente = $jsonEntrada['idAtendente'];
-    $idCliente = isset($jsonEntrada['idCliente']) && $jsonEntrada['idCliente'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idCliente']) : "NULL";
-    $idTipoOcorrencia = isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idTipoOcorrencia']) : "NULL";
-    $Previsto = isset($jsonEntrada['Previsto']) && $jsonEntrada['Previsto'] !== "" ?  mysqli_real_escape_string($conexao, $jsonEntrada['Previsto']) : "NULL";
-    $horaInicioPrevisto = isset($jsonEntrada['horaInicioPrevisto']) && $jsonEntrada['horaInicioPrevisto'] !== "" ?  mysqli_real_escape_string($conexao, $jsonEntrada['horaInicioPrevisto']) : "NULL";
-    $horaFinalPrevisto = isset($jsonEntrada['horaFinalPrevisto']) && $jsonEntrada['horaFinalPrevisto'] !== "" ?  mysqli_real_escape_string($conexao, $jsonEntrada['horaFinalPrevisto']) : "NULL";
+    $idCliente = null;
+    if(isset($jsonEntrada['idCliente'])){
+        $idCliente = $jsonEntrada['idCliente'];
+    }
+    $idTipoOcorrencia = null;
+    if(isset($jsonEntrada['idTipoOcorrencia'])){
+        $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
+    }
+    $Previsto = null;
+    if(isset($jsonEntrada['Previsto'])){
+        $Previsto = $jsonEntrada['Previsto'];
+    }
+    $horaInicioPrevisto = null;
+    if(isset($jsonEntrada['horaInicioPrevisto'])){
+        $horaInicioPrevisto = $jsonEntrada['horaInicioPrevisto'];
+    }
+    $horaFinalPrevisto = null;
+    if(isset($jsonEntrada['horaFinalPrevisto'])){
+        $horaFinalPrevisto = $jsonEntrada['horaFinalPrevisto'];
+    }
     $acao = $jsonEntrada['acao'];
 
 
@@ -94,12 +110,6 @@ if (isset($jsonEntrada['idEmpresa'])) {
     if (isset($jsonEntrada['tituloTarefa'])) {
         $tituloTarefa = $jsonEntrada['tituloTarefa'];
     }
- 
-    /* echo '-> DATA REAL : ' . json_encode($dataReal);
-    echo '-> HORA REAL : ' . json_encode($horaInicioReal);
-    echo '____';
-    echo '-> horaInicioPrevisto: ' . json_encode($horaInicioPrevisto);
-    echo '-> horaFinalPrevisto: ' . json_encode($horaFinalPrevisto); */
  
     if ($acao == 'start') {
         $dataOrdem = $dataReal;
@@ -129,7 +139,7 @@ if (isset($jsonEntrada['idEmpresa'])) {
         if (isset($jsonEntrada['Previsto']) && in_array($tipoStatusDemanda, $statusTarefa)) {
             $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
         }
-        if ($acao == true && in_array($tipoStatusDemanda, $statusStart)) {
+        if (($acao == 'start') && in_array($tipoStatusDemanda, $statusStart)) {
             $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
         } else {
             $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";

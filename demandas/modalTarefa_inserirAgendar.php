@@ -20,7 +20,6 @@
                 <input type="text" class="form-control ts-input" name="tituloTarefa" id="clonartitulo" autocomplete="off" 
                 <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
                 <input type="hidden" class="form-control ts-input" name="idDemanda" value="null" id="clonaridDemanda">
-                <!-- <input type="hidden" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>"> -->
               </div>
             
             <?php if(isset($demanda)){ ?>
@@ -28,7 +27,6 @@
                 <label class='form-label ts-label'>ID/Demanda Relacionada</label>
                 <input type="hidden" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
                 <input type="text" class="form-control ts-input" value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>" readonly>
-                <!-- <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" /> -->
             </div>
             <?php } ?>
             </div>

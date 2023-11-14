@@ -791,7 +791,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
         var formData = new FormData(this);
         var vurl;
         if ($("#inserirStartBtn").prop("clicked")) {
-          vurl = "../database/tarefas.php?operacao=inserirStart";
+          // Lucas 141123 ID 965 - Alterado url
+          vurl = "../database/tarefas.php?operacao=inserir&acao=start";
         } else {
           vurl = "../database/tarefas.php?operacao=inserir";
         }

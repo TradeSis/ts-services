@@ -20,7 +20,7 @@
                 <input type="text" class="form-control ts-input" name="tituloTarefa" id="clonartitulo" autocomplete="off" 
                 <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
                 <input type="hidden" class="form-control ts-input" name="idDemanda" value="null" id="clonaridDemanda">
-                <input type="hidden" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>">
+                <!-- <input type="hidden" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>"> -->
               </div>
             
             <?php if(isset($demanda)){ ?>
@@ -28,7 +28,7 @@
                 <label class='form-label ts-label'>ID/Demanda Relacionada</label>
                 <input type="hidden" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
                 <input type="text" class="form-control ts-input" value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>" readonly>
-                <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
+                <!-- <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" /> -->
             </div>
             <?php } ?>
             </div>
@@ -116,7 +116,7 @@
         </div><!--modal body-->
         <div class="modal-footer text-end">
         <?php if(isset($demanda)){ ?>
-          <button type="submit" formaction="../database/tarefas.php?operacao=inserirStart" class="btn btn-warning">Start</button>
+          <button type="submit" formaction="../database/tarefas.php?operacao=inserir&acao=start" class="btn btn-warning">Start</button>
           <button type="submit" formaction="../database/tarefas.php?operacao=inserir" class="btn btn-success">Inserir</button>
           <?php }else{ ?>
           <button type="submit" class="btn btn-warning" id="inserirStartBtn">Start</button>

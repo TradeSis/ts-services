@@ -247,9 +247,10 @@ if (isset($_GET['operacao'])) {
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-            'idTipoStatus' => TIPOSTATUS_FAZENDO
+            'idTipoStatus' => TIPOSTATUS_FAZENDO,
+            'start' => true
         );
-        $tarefas = chamaAPI(null, '/services/tarefas/start', json_encode($apiEntrada), 'POST');
+        $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
         echo json_encode($tarefas);
         return $tarefas;
     }
@@ -260,7 +261,8 @@ if (isset($_GET['operacao'])) {
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-            'idTipoStatus' => TIPOSTATUS_PAUSADO
+            'idTipoStatus' => TIPOSTATUS_PAUSADO,
+            'realizado' => true
         );
         $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
         echo json_encode($tarefas);
@@ -274,7 +276,8 @@ if (isset($_GET['operacao'])) {
             'idTarefa' => $_POST['idTarefa'],
             'idDemanda' => $_POST['idDemanda'],
             'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-            'idTipoStatus' => TIPOSTATUS_PAUSADO
+            'idTipoStatus' => TIPOSTATUS_PAUSADO,
+            'stop' => true
         );
         //lucas 22092023 ID 358 Adicionado condição para comentarios 
         if($_POST['comentario'] != ""){
@@ -292,7 +295,7 @@ if (isset($_GET['operacao'])) {
 			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
 		}
        
-        $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+        $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
         //lucas 22092023 ID 358 Adicionado header
         header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
         echo json_encode($tarefas);

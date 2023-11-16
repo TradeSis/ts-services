@@ -119,8 +119,6 @@ function buscaHoras($idDemanda)
 
 if (isset($_GET['operacao'])) {
 
-    
-
     $operacao = $_GET['operacao'];
     $idEmpresa = null;
     if (isset($_SESSION['idEmpresa'])) {
@@ -128,7 +126,6 @@ if (isset($_GET['operacao'])) {
     }
 
     if ($operacao == "inserir") {
-
 
         $acao = "";
         if (isset($_GET['acao'])) {
@@ -139,7 +136,7 @@ if (isset($_GET['operacao'])) {
         if($idTipoOcorrencia == ''){
             $idTipoOcorrencia = OCORRENCIA_PADRAO;
         }
-    
+
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'tituloTarefa' => $_POST['tituloTarefa'],
@@ -214,44 +211,13 @@ if (isset($_GET['operacao'])) {
 
     }
 
-    if ($operacao == "start") {
-        $apiEntrada = array(
-            'idEmpresa' => $idEmpresa,
-            'idTarefa' => $_POST['idTarefa'],
-            'idDemanda' => $_POST['idDemanda'],
-            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-            'idTipoStatus' => TIPOSTATUS_FAZENDO,
-            'start' => true
-        );
-        $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
-        echo json_encode($tarefas);
-        return $tarefas;
-    }
-
     if ($operacao == "realizado") {
-        $apiEntrada = array(
-            'idEmpresa' => $idEmpresa,
-            'idTarefa' => $_POST['idTarefa'],
-            'idDemanda' => $_POST['idDemanda'],
-            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-            'idTipoStatus' => TIPOSTATUS_PAUSADO,
-            'realizado' => true
-        );
-        $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
-        echo json_encode($tarefas);
-        return $tarefas;
-    }
+        // Operações de : REALIZADO, START e STOP
+        $acao = "realizado";
+        if (isset($_GET['acao'])) {
+            $acao = $_GET['acao'];
+        }
 
-    if ($operacao == "stop") {
-        
-        $apiEntrada = array(
-            'idEmpresa' => $idEmpresa,
-            'idTarefa' => $_POST['idTarefa'],
-            'idDemanda' => $_POST['idDemanda'],
-            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-            'idTipoStatus' => TIPOSTATUS_PAUSADO,
-            'stop' => true
-        );
         //lucas 22092023 ID 358 Adicionado condição para comentarios 
         if($_POST['comentario'] != ""){
 			$apiEntrada2 = array(
@@ -260,36 +226,27 @@ if (isset($_GET['operacao'])) {
 				'idCliente' => $_POST['idCliente'],
 				'idDemanda' => $_POST['idDemanda'],
 				'comentario' => $_POST['comentario'],
-				'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-				'idTipoStatus' => TIPOSTATUS_RESPONDIDO
-	
 			);
           
 			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
+            
 		}
-       
-        $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
-        //lucas 22092023 ID 358 Adicionado header
-        header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
-        echo json_encode($tarefas);
-        return $tarefas;
-    }
-//lucas 25092023 ID 358 Operação que é chamada quando a tarefa estiver sem uma demanda associada
-    if ($operacao == "stopsemdemanda") {
-       
+
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
-            'idDemanda' => $_POST['idDemanda'],
-            'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-            'idTipoStatus' => TIPOSTATUS_PAUSADO
+            'acao' => $acao //pode vir Start,Stop ou default Realizado
         );
-        
-        $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
-        //Gabriel 06102023 ID 596 removido header (bug refresh)
+        $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
+        if ( $acao = "stop") {
+            $idDemanda = $_POST['idDemanda'];
+            header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $idDemanda);
+        }
         echo json_encode($tarefas);
         return $tarefas;
     }
+
+  
 
     if ($operacao == "filtrar") {
 

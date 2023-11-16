@@ -241,10 +241,10 @@ include_once '../header.php';
                         idTarefa: idTarefa
                     },
                     success: function(data) {
-                        $('#idTarefa-stop').val(data.idTarefa);
-                        $('#idDemanda-stop').val(idDemanda);
-                        $('#status-stop').val(status);
-                        $('#horaInicioReal-stop').val(horaInicioReal);
+                        $('#stopmodal_idTarefa').val(data.idTarefa);
+                        $('#stopmodal_idDemanda').val(idDemanda);
+                        $('#stopmodal_status').val(status);
+                        $('#stopmodal_horaInicioReal').val(horaInicioReal);
 
                         $('#stopmodal').modal('show');
                     }
@@ -257,7 +257,7 @@ include_once '../header.php';
                 var tipoStatusDemanda = $(this).data('status');
                 var idDemanda = $(this).data('demanda');
                 $.ajax({
-                    url: "../database/tarefas.php?operacao=start",
+                    url: "../database/tarefas.php?operacao=realizado&acao=start",
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -292,7 +292,7 @@ include_once '../header.php';
                 var redirecionaDemanda = '1';
 
                 $.ajax({
-                    url: "../database/tarefas.php?operacao=inserirStart",
+                    url: "../database/tarefas.php?operacao=inserir&acao=start",
                     method: "POST",
                     dataType: "json",
                     data: {

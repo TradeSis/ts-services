@@ -383,7 +383,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
             var valorhorasReal = formatTime(object.horasReal);//criado
             var vhoraCobrado = formatTime(object.horaCobrado);
       
-
             /* Helio 07112023 - Campos ficam em Branco quando Zerados */
             if(vdataReal === "00/00/0000"){
                 vdataReal = '';
@@ -624,11 +623,11 @@ if (isset($_SESSION['filtro_tarefas'])) {
           idTarefa: idTarefa
         },
         success: function(data) {
-          $('#idTarefa-stopexecucao').val(data.idTarefa);
-          $('#idDemanda-stopexecucao').val(idDemanda);
-          $('#status-stopexecucao').val(status);
-          $('#horaInicioReal-stopexecucao').val(horaInicioReal);
-
+          $('#stopmodal_idTarefa').val(data.idTarefa);
+          $('#stopmodal_idDemanda').val(idDemanda);
+          $('#stopmodal_status').val(status);
+          $('#stopmodal_horaInicioReal').val(horaInicioReal);
+          
           $('#stopmodal').modal('show');
         }
       });
@@ -693,7 +692,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
       var horaInicioReal = $(this).data('horainicioreal');
       //alert(tituloTarefa)  
         $.ajax({
-            url: "../database/tarefas.php?operacao=inserirStart",
+            url: "../database/tarefas.php?operacao=inserir&acao=start",
             method: "POST",
             dataType: "json",
             data: {
@@ -726,7 +725,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
       var idDemanda = $(this).data('demanda');
       $.ajax({
         //lucas 25092023 ID 358 Modificado operação de tarefas
-        url: "../database/tarefas.php?operacao=stopsemdemanda",
+        url: "../database/tarefas.php?operacao=realizado&acao=stop",
         method: "POST",
         dataType: "json",
         data: {
@@ -748,7 +747,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
       var tipoStatusDemanda = $(this).data('status');
       var idDemanda = $(this).data('demanda');
       $.ajax({
-        url: "../database/tarefas.php?operacao=start",
+        url: "../database/tarefas.php?operacao=realizado&acao=start",
         method: "POST",
         dataType: "json",
         data: {
@@ -863,7 +862,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
           vurl = "../database/demanda.php?operacao=realizado";
         }
         if ($("#stopFormbutton").is(":focus")) {
-          vurl = "../database/tarefas.php?operacao=stop";
+          vurl = "../database/tarefas.php?operacao=realizado&acao=stop";
+          
         }
         $.ajax({
           url: vurl,

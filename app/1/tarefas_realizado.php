@@ -36,10 +36,23 @@ if (isset($jsonEntrada['idTarefa'])) {
     $dataReal = date('Y-m-d');
     $horaInicioReal = date('H:i:00');
     $horaFinalReal = date('H:i:00');
-    $idTipoStatus = $jsonEntrada['idTipoStatus'];
-    $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "NULL";
-    $tipoStatusDemanda = isset($jsonEntrada['tipoStatusDemanda']) && $jsonEntrada['tipoStatusDemanda'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['tipoStatusDemanda']) : "NULL";
+    
+    //Verifica se a tarefa tem Demanda, se tiver é atribuido um id para Varivel de $idDemanda
+    $sql2 = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
+    $buscar2 = mysqli_query($conexao, $sql2);
+    $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
+    $idDemanda = $row["idDemanda"];
+    if($idDemanda === null){
+        $idDemanda = null;
+    }
 
+    if ($idDemanda !== null) { 
+    //Se tiver demanda, vai ser atribuido novo valor para variavel $tipoStatusDemanda
+        $sql2 = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
+        $buscar2 = mysqli_query($conexao, $sql2);
+        $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
+        $tipoStatusDemanda = $row["idTipoStatus"]; 
+    }
     $statusStart = array(
         TIPOSTATUS_FILA,
         TIPOSTATUS_PAUSADO,
@@ -48,7 +61,8 @@ if (isset($jsonEntrada['idTarefa'])) {
         TIPOSTATUS_AGENDADO
     );
 
-    if($jsonEntrada['realizado'] == true){
+    //Teste ação Realizado
+    if($jsonEntrada['acao'] == "realizado"){
     // busca horaCobrado Tarefa    
     $sql4 = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
     $buscar4 = mysqli_query($conexao, $sql4);
@@ -64,6 +78,7 @@ if (isset($jsonEntrada['idTarefa'])) {
 
 
     if ($idDemanda !== null) {
+        $idTipoStatus = TIPOSTATUS_PAUSADO;
         // busca dados tipostatus    
         $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
         $buscar2 = mysqli_query($conexao, $sql2);
@@ -75,17 +90,16 @@ if (isset($jsonEntrada['idTarefa'])) {
     }
 }
 
-
-if($jsonEntrada['start'] == true){
+//Teste ação Start
+if($jsonEntrada['acao'] == "start"){
     // lucas id654 - Adicionado dataOrdem e horaInicioReal
     $dataOrdem = $dataReal;
     $horaInicioOrdem = $horaInicioReal;
     
-
     $sql = "UPDATE `tarefa` SET `horaInicioReal`='$horaInicioReal', `dataReal`='$dataReal',`dataOrdem`='$dataOrdem', `horaInicioOrdem`='$horaInicioOrdem' WHERE idTarefa = $idTarefa";
-
     
     if ($idDemanda !== null) {
+    $idTipoStatus = TIPOSTATUS_FAZENDO;
     // busca dados tipostatus    
     $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
     $buscar2 = mysqli_query($conexao, $sql2);
@@ -101,7 +115,8 @@ if($jsonEntrada['start'] == true){
     }
 }
 
-if($jsonEntrada['stop'] == true){
+//Teste ação Stop
+if($jsonEntrada['acao'] == "stop"){
     // busca horaCobrado Tarefa    
     $sql4 = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
     $buscar4 = mysqli_query($conexao, $sql4);
@@ -124,8 +139,8 @@ if($jsonEntrada['stop'] == true){
         $sql = "UPDATE `tarefa` SET `horaFinalReal`='$horaFinalReal' WHERE idTarefa = $idTarefa";
     }
 
-
     if ($idDemanda !== null) {
+        $idTipoStatus = TIPOSTATUS_PAUSADO;
         // busca dados tipostatus    
         $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
         $buscar2 = mysqli_query($conexao, $sql2);
@@ -152,9 +167,15 @@ if($jsonEntrada['stop'] == true){
     try {
 
         $atualizar = mysqli_query($conexao, $sql);
-        $atualizar3 = mysqli_query($conexao, $sql3);
-        if (!$atualizar || !$atualizar3)
+        if (!$atualizar)
             throw new Exception(mysqli_error($conexao));
+        if(isset($sql3)){
+            $atualizar3 = mysqli_query($conexao, $sql3);
+            if (!$atualizar3)
+            throw new Exception(mysqli_error($conexao));
+        }
+        
+        
 
         $jsonSaida = array(
             "status" => 200,

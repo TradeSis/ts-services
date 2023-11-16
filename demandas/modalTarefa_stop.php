@@ -6,72 +6,48 @@
    <div class="modal-dialog modal-lg">
      <div class="modal-content">
        <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa novo</h5>
+         <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
        </div>
-       <?php if (isset($demanda)) { ?>
-         <!-- COM Demanda Associada-->
-         <div class="modal-body">
-           <form method="post">
-             <div class="container-fluid p-0">
-               <div class="col">
-                 <span class="tituloEditor">Comentários</span>
-               </div>
-               <div class="quill-stop" style="height:20vh !important"></div>
-               <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
-             </div>
-             <div class="col-md">
-               <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-               <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
 
-               <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stop" />
-               <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stop" />
-               <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stop" />
-               <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stop" step="2" readonly style="display: none;" />
-
+       <div class="modal-body">
+         <form method="post" id="stopForm">
+           <div class="container-fluid p-0">
+             <div class="col">
+               <span class="tituloEditor">Comentários</span>
              </div>
-         </div>
-         <div class="modal-footer">
+             <div class="quill-stop" style="height:20vh !important"></div>
+             <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
+           </div>
+           <div class="col-md">
+             <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
+             <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+
+             <input type="hidden" class="form-control" name="idTarefa" id="stopmodal_idTarefa" />
+             <input type="hidden" class="form-control" name="idDemanda" id="stopmodal_idDemanda" />
+             <input type="hidden" class="form-control" name="tipoStatusDemanda" id="stopmodal_status" />
+             <input type="time" class="form-control" name="horaInicioCobrado" id="stopmodal_horaInicioReal" step="2" readonly style="display: none;" />
+
+           </div>
+       </div>
+       <div class="modal-footer">
+         <?php if (isset($demanda)) { ?>
            <div class="col align-self-start pl-0">
              <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left">Entregar</button>
            </div>
-           <button type="submit" formaction="../database/tarefas.php?operacao=stop" class="btn btn-danger">Stop</button>
-
-           </form>
-         </div>
-       <?php } else { ?>
-         <!-- SEM Demanda Associada-->
-         <div class="modal-body">
-           <!-- gabriel 13102023 id 596 adicionado id -->
-           <form method="post" id="stopForm">
-             <div class="container-fluid p-0">
-               <div class="col">
-                 <span class="tituloEditor">Comentários</span>
-               </div>
-               <div class="quill-stop" style="height:20vh !important"></div>
-               <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
-             </div>
-             <div class="col-md form-group">
-               <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-               <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-               <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
-               <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
-               <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
-               <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2" readonly style="display: none;" />
-
-             </div>
-         </div>
-         <div class="modal-footer">
+           <button type="submit" formaction="../database/tarefas.php?operacao=realizado&acao=stop" class="btn btn-danger">Stop</button>
+         <?php } else { ?>
            <div class="col align-self-start pl-0">
              <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
              <button type="submit" id="realizadoFormbutton" class="btn btn-warning float-left">Entregar</button>
            </div>
            <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
            <button type="submit" id="stopFormbutton" class="btn btn-danger">Stop</button>
-           </form>
-         </div>
+         <?php } ?>
 
-       <?php } ?>
+
+         </form>
+       </div>
 
      </div>
    </div>

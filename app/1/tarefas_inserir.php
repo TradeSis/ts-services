@@ -19,11 +19,11 @@ Exemplo de entrada
     "acao": "start"
 } 
 
-$inteiro  = isset($inteiro)  && $inteiro !== ""        ?   $inteiro    : "NULL";                  // INTEIROS
+$inteiro  = isset($inteiro)  && $inteiro !== ""        ?   $inteiro    : "null";                  // INTEIROS
 
-$caracter = isset($caracter) && $inteiro !== "NULL"    ? "'$caracter'" : "NULL";                  // CARACTER
+$caracter = isset($caracter) && $inteiro !== "null"    ? "'$caracter'" : "null";                  // CARACTER
 
-$datadia  = isset($datadia)  && $datadia !== "" && $datadia !== "NULL" ? "'$datadia'"  : "NULL"; // DATAS
+$datadia  = isset($datadia)  && $datadia !== "" && $datadia !== "null" ? "'$datadia'"  : "null"; // DATAS
 */
 
 //LOG
@@ -69,13 +69,13 @@ $conexao = conectaMysql($idEmpresa);
 
 if (isset($jsonEntrada['idEmpresa'])) {
 
-    $tituloTarefa = isset($jsonEntrada['tituloTarefa']) && $inteiro !== "NULL"    ? "'" . $jsonEntrada['tituloTarefa'] . "'" : "NULL";
-    $idDemanda  = isset($jsonEntrada['idDemanda'])  && $jsonEntrada['idDemanda'] !== ""        ?   $jsonEntrada['idDemanda']    : "NULL";
-    $idCliente  = isset($jsonEntrada['idCliente'])  && $jsonEntrada['idCliente'] !== ""        ?   $jsonEntrada['idCliente']    : "NULL";
-    $Previsto  = isset($jsonEntrada['Previsto'])  && $jsonEntrada['Previsto'] !== "" && $jsonEntrada['Previsto'] !== "NULL" ? "'". $jsonEntrada['Previsto']."'"  : "NULL";
-    $horaInicioPrevisto  = isset($jsonEntrada['horaInicioPrevisto'])  && $jsonEntrada['horaInicioPrevisto'] !== "" && $jsonEntrada['horaInicioPrevisto'] !== "NULL" ? "'". $jsonEntrada['horaInicioPrevisto']."'"  : "NULL";
-    $horaFinalPrevisto  = isset($jsonEntrada['horaFinalPrevisto'])  && $jsonEntrada['horaFinalPrevisto'] !== "" && $jsonEntrada['horaFinalPrevisto'] !== "NULL" ? "'". $jsonEntrada['horaFinalPrevisto']."'"  : "NULL";
-    
+    $tituloTarefa = isset($jsonEntrada['tituloTarefa']) && $jsonEntrada['tituloTarefa'] !== "null"    ? "'" . $jsonEntrada['tituloTarefa'] . "'" : "null";
+    $idDemanda  = isset($jsonEntrada['idDemanda'])  && $jsonEntrada['idDemanda'] !== ""        ?   $jsonEntrada['idDemanda']    : "null";
+    $idCliente  = isset($jsonEntrada['idCliente'])  && $jsonEntrada['idCliente'] !== ""        ?   $jsonEntrada['idCliente']    : "null";
+    $Previsto  = isset($jsonEntrada['Previsto'])  && $jsonEntrada['Previsto'] !== "" && $jsonEntrada['Previsto'] !== "null" ? "'". $jsonEntrada['Previsto']."'"  : "null";
+    $horaInicioPrevisto  = isset($jsonEntrada['horaInicioPrevisto'])  && $jsonEntrada['horaInicioPrevisto'] !== "" && $jsonEntrada['horaInicioPrevisto'] !== "null" ? "'". $jsonEntrada['horaInicioPrevisto']."'"  : "null";
+    $horaFinalPrevisto  = isset($jsonEntrada['horaFinalPrevisto'])  && $jsonEntrada['horaFinalPrevisto'] !== "" && $jsonEntrada['horaFinalPrevisto'] !== "null" ? "'". $jsonEntrada['horaFinalPrevisto']."'"  : "null";
+     
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
     $idAtendente = $jsonEntrada['idAtendente'];
     $acao = $jsonEntrada['acao'];
@@ -111,8 +111,7 @@ if (isset($jsonEntrada['idEmpresa'])) {
     $sqlvalue .= " ) ";
     $sql .= " ) " . $sqlvalue;
 
-
-    if ($idDemanda != 'null') {
+    if ($idDemanda !== "null") {
         //Busca dados Demanda
         $sql_consulta1 = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
         $buscar_consulta1 = mysqli_query($conexao, $sql_consulta1);

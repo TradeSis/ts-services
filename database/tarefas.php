@@ -154,11 +154,17 @@ if (isset($_GET['operacao'])) {
         if($_POST['redirecionaDemanda'] == '1'){
             // Redireciona Demanda, fica na pagina de demanda   
             $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
+            $arquivo = fopen("C:/TRADESIS/tmp/LOG.txt", "a");
+    fwrite($arquivo, json_encode($tarefas) . "\n");
+    fclose($arquivo);
             echo json_encode($tarefas);
             return $tarefas;
         }else{
             // Redireciona Tarefa, fica na pagina de tarefa  
             $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
+            $arquivo = fopen("C:/TRADESIS/tmp/LOG.txt", "a");
+    fwrite($arquivo, json_encode($tarefas) . "\n");
+    fclose($arquivo);
             header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
             echo json_encode($tarefas);
             return $tarefas;
@@ -218,9 +224,16 @@ if (isset($_GET['operacao'])) {
             $acao = $_GET['acao'];
         }
 
-        //lucas 22092023 ID 358 Adicionado condição para comentarios 
-        if(isset($_POST['comentario'])){
-            if ($_POST('comentario') != ""){
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'idTarefa' => $_POST['idTarefa'],
+            'acao' => $acao 
+        );
+        
+        $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
+
+        if ( $acao == "stop") {  
+            if(isset($_POST['comentario']) && ($_POST['comentario']) !== ""){
                 $apiEntrada2 = array(
                     'idEmpresa' => $_SESSION['idEmpresa'],
                     'idUsuario' => $_POST['idUsuario'],
@@ -229,25 +242,10 @@ if (isset($_GET['operacao'])) {
                     'comentario' => $_POST['comentario'],
                 );
                 $comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
-    
             }
-        }
-
-        $apiEntrada = array(
-            'idEmpresa' => $idEmpresa,
-            'idTarefa' => $_POST['idTarefa'],
-            'acao' => $acao //pode vir Start,Stop ou default Realizado
-        );
-        $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
-        
-        $arquivo = fopen("C:/TRADESIS/tmp/LOG.txt", "a");
-        fwrite($arquivo, json_encode($tarefas) . "\n");
-        fclose($arquivo);
-
-        /* if ( $acao == "stop") {
             $idDemanda = $_POST['idDemanda'];
             header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $idDemanda);
-        } */
+        }
         echo json_encode($tarefas);
         return $tarefas;
     }

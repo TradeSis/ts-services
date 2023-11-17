@@ -153,14 +153,11 @@ include_once '../header.php';
                                         data-cliente="<?php echo $tarefa['idCliente'] ?>" 
                                         data-demanda="<?php echo $tarefa['idDemanda'] ?>" 
                                         data-atendente="<?php echo $tarefa['idAtendente'] ?>" 
-                                        data-status="<?php echo $idTipoStatus ?>" 
                                         data-ocorrencia="<?php echo $tarefa['idTipoOcorrencia'] ?>" 
-                                        data-statusdemanda="<?php echo $idTipoStatus ?>" 
                                         data-previsto="<?php echo $tarefa['Previsto'] ?>" 
                                         data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>" 
                                         data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>" 
                                         data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>" 
-                                        data-titulodemanda="<?php echo $tarefa['tituloDemanda'] ?>" 
                                         data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>">
                                     <i class="bi bi-play-circle"></i></button>
                                 <?php } ?>
@@ -281,13 +278,10 @@ include_once '../header.php';
                 var idCliente = $(this).data('cliente');
                 var idDemanda = $(this).data('demanda');
                 var idAtendente = $(this).data('atendente');
-                var idTipoStatus = $(this).data('status');
                 var idTipoOcorrencia = $(this).data('ocorrencia');
-                var tipoStatusDemanda = $(this).data('statusdemanda');
                 var previsto = $(this).data('previsto');
                 var horaInicioPrevisto = $(this).data('horainicioprevisto');
                 var horaFinalPrevisto = $(this).data('horafinalprevisto');
-                var tituloDemanda = $(this).data('titulodemanda');
                 var horaInicioReal = $(this).data('horainicioreal');
                 var redirecionaDemanda = '1';
 
@@ -300,13 +294,10 @@ include_once '../header.php';
                         idCliente: idCliente,
                         idDemanda: idDemanda,
                         idAtendente: idAtendente,
-                        idTipoStatus: idTipoStatus,
                         idTipoOcorrencia: idTipoOcorrencia,
-                        tipoStatusDemanda: tipoStatusDemanda,
                         Previsto: previsto,
                         horaInicioPrevisto: horaInicioPrevisto,
                         horaFinalPrevisto: horaFinalPrevisto,
-                        tituloDemanda: tituloDemanda,
                         redirecionaDemanda: redirecionaDemanda
                     },
                     success: function(msg) {
@@ -315,6 +306,9 @@ include_once '../header.php';
                         if (msg.retorno == "ok") {
                             refreshPage('tarefas', idDemanda);
                         }
+                    },
+                    error: function(msg) {
+                        alert(JSON.stringify(msg));
                     }
                 });
             });

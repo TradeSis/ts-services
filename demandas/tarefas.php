@@ -497,21 +497,16 @@ if (isset($_SESSION['filtro_tarefas'])) {
               } 
             }else {
               linha += "<button type='button' class='novoStartButton btn btn-success btn-sm mr-1' "+ 
-            " data-id='" + object.idTarefa + 
-            "' data-titulo='" + object.tituloTarefa +
-            "' data-cliente='" + object.idCliente +
-            "' data-demanda='" + object.idDemanda +
-            "' data-atendente='" + object.idAtendente +
-            "' data-status='" + object.idTipoStatus +
-            "' data-ocorrencia='" + object.idTipoOcorrencia +
-            "' data-statusdemanda='" + object.idTipoStatus +
-            "' data-previsto='" + object.Previsto +
-            "' data-horainicioprevisto='" + object.horaInicioPrevisto +
-            "' data-horafinalprevisto='" + object.horaFinalPrevisto +
-            "' data-titulodemanda='" + object.tituloDemanda +
-            "' data-horainicioreal='" + object.horaInicioReal +
-              
-              "'><i class='bi bi-play-circle'></i></button>"
+                " data-id='" + object.idTarefa + 
+                "' data-titulo='" + object.tituloTarefa +
+                "' data-cliente='" + object.idCliente +
+                "' data-demanda='" + object.idDemanda +
+                "' data-atendente='" + object.idAtendente +
+                "' data-ocorrencia='" + object.idTipoOcorrencia +
+                "' data-previsto='" + object.Previsto +
+                "' data-horainicioprevisto='" + object.horaInicioPrevisto +
+                "' data-horafinalprevisto='" + object.horaFinalPrevisto +
+                "'><i class='bi bi-play-circle'></i>Restart</button>"
             }
           }
 
@@ -678,15 +673,11 @@ if (isset($_SESSION['filtro_tarefas'])) {
       var idCliente = $(this).data('cliente');
       var idDemanda = $(this).data('demanda');
       var idAtendente = $(this).data('atendente');
-      var idTipoStatus = $(this).data('status');
       var idTipoOcorrencia = $(this).data('ocorrencia');
-      var tipoStatusDemanda = $(this).data('statusdemanda');
       var previsto = $(this).data('previsto');
       var horaInicioPrevisto = $(this).data('horainicioprevisto');
-      var horaFinalPrevisto = $(this).data('horafinalprevisto');       
-      var tituloDemanda = $(this).data('titulodemanda');
-      var horaInicioReal = $(this).data('horainicioreal');
-      //alert(tituloTarefa)  
+      var horaFinalPrevisto = $(this).data('horafinalprevisto');    
+
         $.ajax({
             url: "../database/tarefas.php?operacao=inserir&acao=start",
             method: "POST",
@@ -696,20 +687,21 @@ if (isset($_SESSION['filtro_tarefas'])) {
               idCliente: idCliente,
               idDemanda: idDemanda,
               idAtendente: idAtendente,
-              idTipoStatus: idTipoStatus,
               idTipoOcorrencia: idTipoOcorrencia,
-              tipoStatusDemanda: tipoStatusDemanda,
               Previsto: previsto,
               horaInicioPrevisto: horaInicioPrevisto,
               horaFinalPrevisto: horaFinalPrevisto,
-              tituloDemanda: tituloDemanda,
 
               },
               success: function(msg) {
-              if (msg.retorno == "ok") {
-                refreshPage('tarefas', idDemanda);
-            }
+          alert(JSON.stringify(msg));
+          if (msg.retorno == "ok") {
+            window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
+        }
         });
     
     });
@@ -717,7 +709,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
     //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.stopButton', function() {
       var idTarefa = $(this).data('id');
-      var idDemanda = $(this).data('demanda');
+      //var idDemanda = $(this).data('demanda');
       $.ajax({
         //lucas 25092023 ID 358 Modificado operação de tarefas
         url: "../database/tarefas.php?operacao=realizado&acao=stop",
@@ -725,7 +717,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          idDemanda: idDemanda
+          //idDemanda: idDemanda
         },
         success: function(msg) {
           if (msg.retorno == "ok") {

@@ -136,7 +136,7 @@ if (isset($_GET['operacao'])) {
         if($idTipoOcorrencia == ''){
             $idTipoOcorrencia = OCORRENCIA_PADRAO;
         }
-
+       
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'tituloTarefa' => $_POST['tituloTarefa'],
@@ -219,18 +219,19 @@ if (isset($_GET['operacao'])) {
         }
 
         //lucas 22092023 ID 358 Adicionado condição para comentarios 
-        if($_POST['comentario'] != ""){
-			$apiEntrada2 = array(
-				'idEmpresa' => $_SESSION['idEmpresa'],
-				'idUsuario' => $_POST['idUsuario'],
-				'idCliente' => $_POST['idCliente'],
-				'idDemanda' => $_POST['idDemanda'],
-				'comentario' => $_POST['comentario'],
-			);
-          
-			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
-            
-		}
+        if(isset($_POST['comentario'])){
+            if ($_POST('comentario') != ""){
+                $apiEntrada2 = array(
+                    'idEmpresa' => $_SESSION['idEmpresa'],
+                    'idUsuario' => $_POST['idUsuario'],
+                    'idCliente' => $_POST['idCliente'],
+                    'idDemanda' => $_POST['idDemanda'],
+                    'comentario' => $_POST['comentario'],
+                );
+                $comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
+    
+            }
+        }
 
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
@@ -238,10 +239,15 @@ if (isset($_GET['operacao'])) {
             'acao' => $acao //pode vir Start,Stop ou default Realizado
         );
         $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
-        if ( $acao = "stop") {
+        
+        $arquivo = fopen("C:/TRADESIS/tmp/LOG.txt", "a");
+        fwrite($arquivo, json_encode($tarefas) . "\n");
+        fclose($arquivo);
+
+        /* if ( $acao == "stop") {
             $idDemanda = $_POST['idDemanda'];
             header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $idDemanda);
-        }
+        } */
         echo json_encode($tarefas);
         return $tarefas;
     }

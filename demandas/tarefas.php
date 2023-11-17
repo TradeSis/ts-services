@@ -484,18 +484,16 @@ if (isset($_SESSION['filtro_tarefas'])) {
             linha += "<id='botao'>";
             
             if (valorhoraInicioReal == "") {
-              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
-              "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
+              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "'><i class='bi bi-play-circle'></i></button>"
             }else{
               if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
               //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada 
               if (object.idDemanda == null) {
-                linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + 
-                "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+                linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-demanda='" + object.idDemanda + 
+                "'><i class='bi bi-stop-circle'></i></button>"
               } else {
                 linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-bs-toggle='modal' data-bs-target='#stopmodal' data-id='" + object.idTarefa + 
-                "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + 
-                "'><i class='bi bi-stop-circle'></i></button>"
+                "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
               } 
             }else {
               linha += "<button type='button' class='novoStartButton btn btn-success btn-sm mr-1' "+ 
@@ -525,9 +523,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
             linha += "<id='botao'>";
             if (valorhoraInicioReal == "") {
-              linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + "' data-status='" +
-               object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span class='ts-btnAcoes' " + 
-               ">Realizado</span></button></li>"
+              linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + 
+              object.idDemanda + "'><i class='bi bi-check-circle'></i> <span class='ts-btnAcoes' " + ">Realizado</span></button></li>"
             }
             linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='clonarButton btn btn-success btn-sm w-100 text-start'  data-idtarefa='" + object.idTarefa + 
             "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i> <span class='ts-btnAcoes' " +
@@ -608,12 +605,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
   
 
-    //lucas 25092023 ID 358 Adicionado script para popup de stop
+    //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', 'button[data-bs-target="#stopmodal"]', function() {
       var idTarefa = $(this).attr("data-id");
       var idDemanda = $(this).attr("data-demanda");
-      var status = $(this).attr("data-status");
-      var horaInicioReal = $(this).attr("data-data-execucao");
 
       $.ajax({
         type: 'POST',
@@ -625,10 +620,11 @@ if (isset($_SESSION['filtro_tarefas'])) {
         success: function(data) {
           $('#stopmodal_idTarefa').val(data.idTarefa);
           $('#stopmodal_idDemanda').val(idDemanda);
-          $('#stopmodal_status').val(status);
-          $('#stopmodal_horaInicioReal').val(horaInicioReal);
           
           $('#stopmodal').modal('show');
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
@@ -718,10 +714,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
     
     });
 
+    //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.stopButton', function() {
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
-      var horaInicioCobrado = $(this).data('data-execucao');
       var idDemanda = $(this).data('demanda');
       $.ajax({
         //lucas 25092023 ID 358 Modificado operação de tarefas
@@ -730,42 +725,44 @@ if (isset($_SESSION['filtro_tarefas'])) {
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
-          horaInicioCobrado: horaInicioCobrado,
           idDemanda: idDemanda
         },
         success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
 
+    //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.startButton', function() {
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
-      var idDemanda = $(this).data('demanda');
       $.ajax({
         url: "../database/tarefas.php?operacao=realizado&acao=start",
         method: "POST",
         dataType: "json",
         data: {
-          idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
-          idDemanda: idDemanda
+          idTarefa: idTarefa
         },
         success: function(msg) {
+          //alert(JSON.stringify(msg));
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
 
+    //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.realizadoButton', function() {
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
       var idDemanda = $(this).data('demanda');
       $.ajax({
         url: "../database/tarefas.php?operacao=realizado",
@@ -773,13 +770,15 @@ if (isset($_SESSION['filtro_tarefas'])) {
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
           idDemanda: idDemanda
         },
         success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });

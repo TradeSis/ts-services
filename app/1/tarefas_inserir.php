@@ -10,14 +10,21 @@ Exemplo de entrada
     "idEmpresa": "1",
     "tituloTarefa": "teste",
     "idCliente": "10",
-    "idDemanda": "661",
+    "idDemanda": "661", se for null não pode vir entre aspas 
     "idAtendente": "14",
     "idTipoOcorrencia": "8",
     "Previsto": "",
     "horaInicioPrevisto": "",
     "horaFinalPrevisto": "",
     "acao": "start"
-} */
+} 
+
+$inteiro  = isset($inteiro)  && $inteiro !== ""        ?   $inteiro    : "NULL";                  // INTEIROS
+
+$caracter = isset($caracter) && $inteiro !== "NULL"    ? "'$caracter'" : "NULL";                  // CARACTER
+
+$datadia  = isset($datadia)  && $datadia !== "" && $datadia !== "NULL" ? "'$datadia'"  : "NULL"; // DATAS
+*/
 
 //LOG
 $LOG_CAMINHO = defineCaminhoLog();
@@ -62,36 +69,15 @@ $conexao = conectaMysql($idEmpresa);
 
 if (isset($jsonEntrada['idEmpresa'])) {
 
-    $tipoStatusDemanda = null;
-
-    $idDemanda = isset($jsonEntrada['idDemanda']) && $jsonEntrada['idDemanda'] !== "" ? 
-    mysqli_real_escape_string($conexao, $jsonEntrada['idDemanda']) : "null";
-    //Se tiver demanda, vai ser atribuido novo valor para variavel $tipoStatusDemanda
-    if ($idDemanda != 'null') { 
-        $sql2 = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
-        $buscar2 = mysqli_query($conexao, $sql2);
-        $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
-        $tipoStatusDemanda = $row["idTipoStatus"]; 
-    }
+    $tituloTarefa = isset($jsonEntrada['tituloTarefa']) && $inteiro !== "NULL"    ? "'" . $jsonEntrada['tituloTarefa'] . "'" : "NULL";
+    $idDemanda  = isset($jsonEntrada['idDemanda'])  && $jsonEntrada['idDemanda'] !== ""        ?   $jsonEntrada['idDemanda']    : "NULL";
+    $idCliente  = isset($jsonEntrada['idCliente'])  && $jsonEntrada['idCliente'] !== ""        ?   $jsonEntrada['idCliente']    : "NULL";
+    $Previsto  = isset($jsonEntrada['Previsto'])  && $jsonEntrada['Previsto'] !== "" && $jsonEntrada['Previsto'] !== "NULL" ? "'". $jsonEntrada['Previsto']."'"  : "NULL";
+    $horaInicioPrevisto  = isset($jsonEntrada['horaInicioPrevisto'])  && $jsonEntrada['horaInicioPrevisto'] !== "" && $jsonEntrada['horaInicioPrevisto'] !== "NULL" ? "'". $jsonEntrada['horaInicioPrevisto']."'"  : "NULL";
+    $horaFinalPrevisto  = isset($jsonEntrada['horaFinalPrevisto'])  && $jsonEntrada['horaFinalPrevisto'] !== "" && $jsonEntrada['horaFinalPrevisto'] !== "NULL" ? "'". $jsonEntrada['horaFinalPrevisto']."'"  : "NULL";
     
-    $idAtendente = $jsonEntrada['idAtendente'];
-
-    $idCliente = isset($jsonEntrada['idCliente']) && $jsonEntrada['idCliente'] !== "" ? 
-    mysqli_real_escape_string($conexao, $jsonEntrada['idCliente']) : "null";
     $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
-
-    $Previsto = " ";
-    if(isset($jsonEntrada['Previsto'])){
-        $Previsto = $jsonEntrada['Previsto'];
-    }
-    $horaInicioPrevisto = " ";
-    if(isset($jsonEntrada['horaInicioPrevisto'])){
-        $horaInicioPrevisto = $jsonEntrada['horaInicioPrevisto'];
-    }
-    $horaFinalPrevisto = " ";
-    if(isset($jsonEntrada['horaFinalPrevisto'])){
-        $horaFinalPrevisto = $jsonEntrada['horaFinalPrevisto'];
-    }
+    $idAtendente = $jsonEntrada['idAtendente'];
     $acao = $jsonEntrada['acao'];
 
 
@@ -100,36 +86,46 @@ if (isset($jsonEntrada['idEmpresa'])) {
     }
     if ($acao == 'start') {
         $idTipoStatus = TIPOSTATUS_FAZENDO;
-        $dataReal = date('Y-m-d');
-        $horaInicioReal = date('H:i:00');
-    }
-    if (isset($jsonEntrada['tituloTarefa'])) {
-        $tituloTarefa = $jsonEntrada['tituloTarefa'];
-    }
- 
-    if ($acao == 'start') {
+        $dataReal = "'" . date('Y-m-d') . "'";
+        $horaInicioReal = "'" . date('H:i:00') . "'";  
         $dataOrdem = $dataReal;
         $horaInicioOrdem = $horaInicioReal;
-        
     } else {
         $dataOrdem = $Previsto;
         $horaInicioOrdem = $horaInicioPrevisto;
     }
    
-  
-    $sql = "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, Previsto, horaInicioPrevisto, horaFinalPrevisto, 
-                        horaInicioReal, dataReal,dataOrdem,horaInicioOrdem) 
-           VALUES ('$tituloTarefa', $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, '$Previsto', '$horaInicioPrevisto', '$horaFinalPrevisto', 
-                        '$horaInicioReal', '$dataReal', '$dataOrdem', '$horaInicioOrdem')";
+
+    $sql =       "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, Previsto, horaInicioPrevisto, horaFinalPrevisto, dataOrdem,horaInicioOrdem " ;
+    $sqlvalue = " VALUES ($tituloTarefa, $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto, $dataOrdem, $horaInicioOrdem ";
+
+    if ($acao == 'start') {
+        $dataOrdem = $dataReal;
+        $horaInicioOrdem = $horaInicioReal;
+        $sql .= " , horaInicioReal, dataReal ";
+        $sqlvalue .= " , $horaInicioReal, $dataReal ";
+    } else {
+        $dataOrdem = $Previsto;
+        $horaInicioOrdem = $horaInicioPrevisto;
+    }
+    $sqlvalue .= " ) ";
+    $sql .= " ) " . $sqlvalue;
+
 
     if ($idDemanda != 'null') {
-        // busca dados tipostatus    
-        $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
-        $buscar2 = mysqli_query($conexao, $sql2);
-        $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
-        $posicao = $row["mudaPosicaoPara"];
-        $statusDemanda = $row["mudaStatusPara"];
-
+        //Busca dados Demanda
+        $sql_consulta1 = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
+        $buscar_consulta1 = mysqli_query($conexao, $sql_consulta1);
+        $row_consulta1 = mysqli_fetch_array($buscar_consulta1, MYSQLI_ASSOC);
+        $tipoStatusDemanda = $row_consulta1["idTipoStatus"]; 
+        
+        //Busca dados Tipostatus    
+        $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+        $posicao = $row_consulta["mudaPosicaoPara"];
+        $statusDemanda = $row_consulta["mudaStatusPara"];
+        
         if (isset($jsonEntrada['Previsto']) && in_array($tipoStatusDemanda, $statusTarefa)) {
             $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
         }

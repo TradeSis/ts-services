@@ -25,9 +25,6 @@
 
              <input type="hidden" class="form-control" name="idTarefa" id="stopmodal_idTarefa" />
              <input type="hidden" class="form-control" name="idDemanda" id="stopmodal_idDemanda" />
-             <input type="hidden" class="form-control" name="tipoStatusDemanda" id="stopmodal_status" />
-             <input type="time" class="form-control" name="horaInicioCobrado" id="stopmodal_horaInicioReal" step="2" readonly style="display: none;" />
-
            </div>
        </div>
        <div class="modal-footer">
@@ -55,7 +52,7 @@
 
  <!-- LOCAL PARA COLOCAR OS JS -->
 
- <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+ <?php //include_once ROOT . "/vendor/footer_js.php"; ?>
  <!-- QUILL editor -->
  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 

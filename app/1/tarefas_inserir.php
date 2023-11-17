@@ -13,17 +13,11 @@ Exemplo de entrada
     "idDemanda": "661", se for null não pode vir entre aspas 
     "idAtendente": "14",
     "idTipoOcorrencia": "8",
-    "Previsto": "",
-    "horaInicioPrevisto": "",
-    "horaFinalPrevisto": "",
+    "Previsto": "2023-11-17",
+    "horaInicioPrevisto": "13:33",
+    "horaFinalPrevisto": "14:33",
     "acao": "start"
 } 
-
-$inteiro  = isset($inteiro)  && $inteiro !== ""        ?   $inteiro    : "null";                  // INTEIROS
-
-$caracter = isset($caracter) && $inteiro !== "null"    ? "'$caracter'" : "null";                  // CARACTER
-
-$datadia  = isset($datadia)  && $datadia !== "" && $datadia !== "null" ? "'$datadia'"  : "null"; // DATAS
 */
 
 //LOG

@@ -150,26 +150,14 @@ if (isset($_GET['operacao'])) {
             'acao' => $acao
             
         );
-       
-        if($_POST['redirecionaDemanda'] == '1'){
-            // Redireciona Demanda, fica na pagina de demanda   
-            $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
-            $arquivo = fopen("C:/TRADESIS/tmp/LOG.txt", "a");
-    fwrite($arquivo, json_encode($tarefas) . "\n");
-    fclose($arquivo);
-            echo json_encode($tarefas);
-            return $tarefas;
-        }else{
-            // Redireciona Tarefa, fica na pagina de tarefa  
-            $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
-            $arquivo = fopen("C:/TRADESIS/tmp/LOG.txt", "a");
-    fwrite($arquivo, json_encode($tarefas) . "\n");
-    fclose($arquivo);
+     
+        $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
+        if(isset($_GET['redirecionarDemanda'])){
             header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
-            echo json_encode($tarefas);
-            return $tarefas;
         }
-    
+        echo json_encode($tarefas);
+        return $tarefas;
+
     }
 
 
@@ -177,31 +165,19 @@ if (isset($_GET['operacao'])) {
     if ($operacao == "alterar") {
 
         //Gabriel 23102023 novo modelo de sql para alterar
-        if(isset($_POST['idDemanda'])) {
-            $idDemanda = $_POST['idDemanda'];
-        }
-        if(isset($_POST['idAtendente'])) {
-            $idAtendente = $_POST['idAtendente'];
-        }
-        if(isset($_POST['idCliente'])) {
-            $idCliente = $_POST['idCliente'];
-        }
-        if(isset($_POST['idTipoOcorrencia'])) {
-            $idTipoOcorrencia = $_POST['idTipoOcorrencia'];
-        }
-
+        // Lucas 20112023 - ID 965 - alterado teste de entrada para api
 
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
-            'idDemanda' => $idDemanda,
+            // Lucas 20112023 - ID 965 removido idDemanda
             //Gabriel 11102023 ID 596 adicionado Descriçao e idAtendente
             'descricao' => $_POST['descricao'],
-            'idAtendente' => $idAtendente,
+            'idAtendente' => $_POST['idAtendente'],
             //Gabriel 11102023 ID 596 adicionado idCliente
-            'idCliente' => $idCliente,
+            'idCliente' => $_POST['idCliente'],
             'tituloTarefa' => $_POST['tituloTarefa'],
-            'idTipoOcorrencia' => $idTipoOcorrencia,
+            'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
             // Lucas 08112023 - id965 removido horascobrado
             'dataReal' => $_POST['dataReal'],
             'horaInicioReal' => $_POST['horaInicioReal'],
@@ -210,8 +186,8 @@ if (isset($_GET['operacao'])) {
             'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
             'horaFinalPrevisto' => $_POST['horaFinalPrevisto']
         );
+        
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'POST');
-        //header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
         echo json_encode($apiEntrada);
         return $tarefas;
 
@@ -244,7 +220,10 @@ if (isset($_GET['operacao'])) {
                 $comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
             }
             $idDemanda = $_POST['idDemanda'];
-            header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $idDemanda);
+            if(isset($_GET['redirecionarDemanda'])){
+                header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $idDemanda);
+            }
+            
         }
         echo json_encode($tarefas);
         return $tarefas;

@@ -32,7 +32,7 @@
            <div class="col align-self-start pl-0">
              <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left">Entregar</button>
            </div>
-           <button type="submit" formaction="../database/tarefas.php?operacao=realizado&acao=stop" class="btn btn-danger">Stop</button>
+           <button type="submit" formaction="../database/tarefas.php?operacao=realizado&acao=stop&redirecionarDemanda" class="btn btn-danger">Stop</button>
          <?php } else { ?>
            <div class="col align-self-start pl-0">
              <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->

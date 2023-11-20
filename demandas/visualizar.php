@@ -186,6 +186,7 @@ if (isset($_SESSION['idCliente'])) {
         //Gabriel 11102023 ID 596 script para tratar o envio e retorno do form alterar tarefa
         $(document).ready(function() {
             $("#alterarForm").submit(function(event) {
+                //alert('passou aqui')
                 event.preventDefault();
                 var formData = new FormData(this);
                 var vurl;

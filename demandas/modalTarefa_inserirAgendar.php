@@ -114,8 +114,8 @@
         </div><!--modal body-->
         <div class="modal-footer text-end">
         <?php if(isset($demanda)){ ?>
-          <button type="submit" formaction="../database/tarefas.php?operacao=inserir&acao=start" class="btn btn-warning">Start</button>
-          <button type="submit" formaction="../database/tarefas.php?operacao=inserir" class="btn btn-success">Inserir</button>
+          <button type="submit" formaction="../database/tarefas.php?operacao=inserir&acao=start&redirecionarDemanda" class="btn btn-warning">Start</button>
+          <button type="submit" formaction="../database/tarefas.php?operacao=inserir&redirecionarDemanda" class="btn btn-success">Inserir</button>
           <?php }else{ ?>
           <button type="submit" class="btn btn-warning" id="inserirStartBtn">Start</button>
           <button type="submit" class="btn btn-success" id="inserirBtn">Inserir</button>

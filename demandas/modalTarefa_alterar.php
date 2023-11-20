@@ -39,7 +39,6 @@
                                     <!-- Lucas 09112023 ID 965 Removido Select de demandaRelacionada -->
 
                                     <input type="hidden" class="form-control ts-input" name="idTarefa" id="idTarefa" />
-                                    <input type="hidden" class="form-control ts-input" name="tipoStatusDemanda" id="tipoStatusDemanda" />
 
                                 </div>
                                 <div class="row mt-4">
@@ -214,7 +213,7 @@
                 $('#horaInicioReal').val(data.horaInicioReal);
                 $('#horaFinalReal').val(data.horaFinalReal);
                 $('#horaCobrado').val(data.horaCobrado);
-                $('#tipoStatusDemanda').val(data.idTipoStatus);
+             
                 vidDemanda = data.idDemanda;
                 vtituloDemanda = data.tituloDemanda;
                 vnomeDemanda= data.nomeDemanda;

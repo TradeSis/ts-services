@@ -59,10 +59,10 @@ if (isset($jsonEntrada['idTarefa'])) {
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $horaCobradoTarefa = $row_consulta["horaCobrado"];
-        echo '__ $horaCobradoTarefa __' . json_encode($horaCobradoTarefa);
+        
 
     if ($horaCobradoTarefa == null) {
-        $horaCobrado = '00:30:00';
+        $horaCobrado = "'" .'00:30:00' . "'";
         $sql = "UPDATE tarefa SET dataReal = $dataReal, horaInicioReal = $horaInicioReal , horaFinalReal = $horaFinalReal , horaCobrado = $horaCobrado WHERE idTarefa = $idTarefa";
     } else {
         $sql = "UPDATE tarefa SET dataReal = $dataReal , horaInicioReal = $horaInicioReal , horaFinalReal = $horaFinalReal WHERE idTarefa = $idTarefa";
@@ -139,10 +139,12 @@ if($jsonEntrada['acao'] == "stop"){
         $horaFinalRealObj = new DateTime($horaFinalReal);
         $horaInicioRealTarefaObj = new DateTime($horaInicioRealTarefa);
         $interval = $horaInicioRealTarefaObj->diff($horaFinalRealObj);
-        $horaCobrado = $interval->format('%H:%I:%S');
-        
-        if (strtotime($horaCobrado) < strtotime('00:30:00')) {
-            $horaCobrado = "'" . '00:30:00' . "'";
+        $horaCobrado_comparacao = $interval->format('%H:%I:%S');
+        $horaCobrado = "'" . $interval->format('%H:%I:%S') . "'";
+        //echo '__ $horaCobrado __' . $horaCobrado;
+        if (strtotime($horaCobrado_comparacao) < strtotime('00:30:00')) {
+            $horaCobrado = '00:30:00';
+            $horaCobrado = "'" .$horaCobrado . "'";
         }
         
         // adiciona aspas da variavel $horasFinalReal para ser usada no UPDATE

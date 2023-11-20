@@ -47,16 +47,16 @@ include_once '../header.php';
                     foreach ($tarefas as $tarefa) { 
                     ?>
                         <tr>
-                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['idTarefa'] ?>
                             </td>
-                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['tituloTarefa'] ?>
                             </td>
-                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['nomeUsuario'] ?>
                             </td>
-                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['nomeTipoOcorrencia'] ?>
                             </td>
                             <?php
@@ -105,7 +105,7 @@ include_once '../header.php';
                                 $horasReal = "00:00";
                             } ?>
                             
-                            <td data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
                                 <?php 
                                 if($tarefa['Previsto'] !== null){  
                                     echo '<span class="ts-datas ts-previsto">Prev: ' . $Previsto . '</span>'; 
@@ -133,9 +133,7 @@ include_once '../header.php';
                             <td>
                                 <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
                                     <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-bs-toggle="modal" data-bs-target="#stopmodal" 
-                                        data-id="<?php echo $tarefa['idTarefa'] ?>" 
-                                        data-status="<?php echo $idTipoStatus ?>" 
-                                        data-data-execucao="<?php echo $tarefa['horaInicioReal'] ?>" 
+                                        data-id="<?php echo $tarefa['idTarefa'] ?>"
                                         data-demanda="<?php echo $tarefa['idDemanda'] ?>">
                                     <i class="bi bi-stop-circle"></i></button>
                                 <?php } ?>
@@ -199,55 +197,15 @@ include_once '../header.php';
 
 
 
-
+    <script src="<?php echo URLROOT ?>/services/demandas/tarefas.js"></script>
     <script>
         //Lucas 10112023 ID 965  Adicionado script para botão de clonar
-        $(document).ready(function() {
-            $(document).on('click', 'button.clonarButton', function() {
-    
-            var idTarefa = $(this).data("idtarefa"); 
-            
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-                data: {
-                    idTarefa: idTarefa
-                },
-                success: function(data) {
-                    $('#clonartitulo').val(data.tituloTarefa);
-            
-                    $('#inserirModal').modal('show');
-                }
-                });
-            });
-        });
+
+
+        
 
         $(document).ready(function() {
-            //lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada
-            $('button[data-bs-target="#stopmodal"]').click(function() {
-                var idTarefa = $(this).attr("data-id");
-                var idDemanda = $(this).attr("data-demanda");
-                var status = $(this).attr("data-status");
-                var horaInicioReal = $(this).attr("data-data-execucao");
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'json',
-                    url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-                    data: {
-                        idTarefa: idTarefa
-                    },
-                    success: function(data) {
-                        $('#stopmodal_idTarefa').val(data.idTarefa);
-                        $('#stopmodal_idDemanda').val(idDemanda);
-                        $('#stopmodal_status').val(status);
-                        $('#stopmodal_horaInicioReal').val(horaInicioReal);
-
-                        $('#stopmodal').modal('show');
-                    }
-                });
-            });
-            /*lucas 22092023 ID 358 Removido script do botao stop, agora o modal que faz a chamada*/
+            //lucas 17112023 ID 965 Removido script do botao stop, está no arquivo tarefas.js
 
             $('.startButton').click(function() {
                 var idTarefa = $(this).data('id');
@@ -272,6 +230,7 @@ include_once '../header.php';
                 });
             });
 
+            
             $('.novoStartButton').click(function() {
                 var idTarefa = $(this).data('id');
                 var tituloTarefa = $(this).data('titulo');
@@ -283,7 +242,6 @@ include_once '../header.php';
                 var horaInicioPrevisto = $(this).data('horainicioprevisto');
                 var horaFinalPrevisto = $(this).data('horafinalprevisto');
                 var horaInicioReal = $(this).data('horainicioreal');
-                var redirecionaDemanda = '1';
 
                 $.ajax({
                     url: "../database/tarefas.php?operacao=inserir&acao=start",
@@ -297,8 +255,7 @@ include_once '../header.php';
                         idTipoOcorrencia: idTipoOcorrencia,
                         Previsto: previsto,
                         horaInicioPrevisto: horaInicioPrevisto,
-                        horaFinalPrevisto: horaFinalPrevisto,
-                        redirecionaDemanda: redirecionaDemanda
+                        horaFinalPrevisto: horaFinalPrevisto
                     },
                     success: function(msg) {
                         //var message = msg.retorno; 

@@ -265,6 +265,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
   <!-- QUILL editor -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+  <script src="<?php echo URLROOT ?>/services/demandas/tarefas.js"></script>
+
   <script>
     buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val() , $("#buscaTarefa").val());
 
@@ -506,7 +508,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
                 "' data-previsto='" + object.Previsto +
                 "' data-horainicioprevisto='" + object.horaInicioPrevisto +
                 "' data-horafinalprevisto='" + object.horaFinalPrevisto +
-                "'><i class='bi bi-play-circle'></i>Restart</button>"
+                "'><i class='bi bi-play-circle'></i></button>"
             }
           }
 
@@ -517,9 +519,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
             " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
 
             linha += "<id='botao'>";
+            
             if (valorhoraInicioReal == "") {
-              linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='realizadoButton btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + 
-              object.idDemanda + "'><i class='bi bi-check-circle'></i> <span class='ts-btnAcoes' " + ">Realizado</span></button></li>"
+              linha += "<li class='ms-1 me-1 mt-1'><button type='button' id='realizadoButton' class='btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + 
+              "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span class='ts-btnAcoes' " + ">Realizado</span></button></li>"
             }
             linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='clonarButton btn btn-success btn-sm w-100 text-start'  data-idtarefa='" + object.idTarefa + 
             "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i> <span class='ts-btnAcoes' " +
@@ -600,29 +603,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
   
 
-    //Lucas 17112023 ID 965 - removido variaveis
-    $(document).on('click', 'button[data-bs-target="#stopmodal"]', function() {
-      var idTarefa = $(this).attr("data-id");
-      var idDemanda = $(this).attr("data-demanda");
-
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-        data: {
-          idTarefa: idTarefa
-        },
-        success: function(data) {
-          $('#stopmodal_idTarefa').val(data.idTarefa);
-          $('#stopmodal_idDemanda').val(idDemanda);
-          
-          $('#stopmodal').modal('show');
-        },
-        error: function(msg) {
-          alert(JSON.stringify(msg));
-        }
-      });
-    });
+    //lucas 17112023 ID 965 Removido script do botao stop, está no arquivo tarefas.js  
 
 
     var inserirModal = document.getElementById("inserirModal");
@@ -639,32 +620,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
       }
     };
 
-    $(document).ready(function() {
-      $(document).on('click', 'button.clonarButton', function() {
+   
+    //lucas 17112023 ID 965 Removido script do botao clonarButton, está no arquivo tarefas.js 
 
-        var idTarefa = $(this).data("idtarefa"); // Use data() to access the custom data attribute
-        $.ajax({
-          type: 'POST',
-          dataType: 'json',
-          url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-          data: {
-            idTarefa: idTarefa
-          },
-          success: function(data) {
-            $('#clonartitulo').val(data.tituloTarefa);
-            $('#clonaridCliente').val(data.idCliente);
-            $('#clonaridDemanda').val(data.idDemanda);
-            $('#clonaridAtendente').val(data.idAtendente);
-            $('#clonaridTipoOcorrencia').val(data.idTipoOcorrencia);
-            $('#clonartipoStatusDemanda').val(data.idTipoStatus);
-            $('#clonardescricao').val(data.descricao);
-
-            //alert(data.tituloTarefa)
-            $('#inserirModal').modal('show');
-          }
-        });
-      });
-    });
 
     // Lucas 131123 ID 965 Adicionado script para botão de novoStart
     $(document).on('click', '.novoStartButton', function() {
@@ -694,7 +652,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
               },
               success: function(msg) {
-          alert(JSON.stringify(msg));
+          //alert(JSON.stringify(msg));
           if (msg.retorno == "ok") {
             window.location.reload();
           }
@@ -708,8 +666,9 @@ if (isset($_SESSION['filtro_tarefas'])) {
 
     //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.stopButton', function() {
+      
       var idTarefa = $(this).data('id');
-      //var idDemanda = $(this).data('demanda');
+      var idDemanda = $(this).data('demanda');
       $.ajax({
         //lucas 25092023 ID 358 Modificado operação de tarefas
         url: "../database/tarefas.php?operacao=realizado&acao=stop",
@@ -717,7 +676,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          //idDemanda: idDemanda
+          idDemanda: idDemanda
         },
         success: function(msg) {
           if (msg.retorno == "ok") {
@@ -752,10 +711,11 @@ if (isset($_SESSION['filtro_tarefas'])) {
       });
     });
 
-    //Lucas 17112023 ID 965 - removido variaveis
-    $(document).on('click', '.realizadoButton', function() {
+    //Lucas 17112023 ID 965 - substituido class por id (realizadoButton)
+    $(document).on('click', '#realizadoButton', function() {
       var idTarefa = $(this).data('id');
       var idDemanda = $(this).data('demanda');
+
       $.ajax({
         url: "../database/tarefas.php?operacao=realizado",
         method: "POST",
@@ -812,7 +772,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         var formData = new FormData(this);
         for (var pair of formData.entries()) {
           console.log(pair[0] + ', ' + pair[1]);
-        }
+        } 
         var vurl;
         if ($("#stopButtonModal").is(":focus")) {
           vurl = "../database/tarefas.php?operacao=stop";

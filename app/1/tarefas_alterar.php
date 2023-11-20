@@ -66,9 +66,27 @@ if (isset($jsonEntrada['idTarefa'])) {
     $Previsto  = isset($jsonEntrada['Previsto'])  && $jsonEntrada['Previsto'] !== "" && $jsonEntrada['Previsto'] !== "null" ? "'" . $jsonEntrada['Previsto']. "'"  : "null";
     $horaInicioPrevisto  = isset($jsonEntrada['horaInicioPrevisto'])  && $jsonEntrada['horaInicioPrevisto'] !== "" && $jsonEntrada['horaInicioPrevisto'] !== "null" ? "'" . $jsonEntrada['horaInicioPrevisto']. "'"  : "null";
     $horaFinalPrevisto  = isset($jsonEntrada['horaFinalPrevisto'])  && $jsonEntrada['horaFinalPrevisto'] !== "" && $jsonEntrada['horaFinalPrevisto'] !== "null" ? "'" . $jsonEntrada['horaFinalPrevisto'] ."'"  : "null";
-    
     $dataOrdem = $Previsto;
     $horaInicioOrdem = $horaInicioPrevisto;
+    
+    //Verifica se a tarefa tem dataReal
+    $sql_consulta = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
+    $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+    $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+
+    $dataReal = isset($row_consulta["dataReal"]) && $row_consulta["dataReal"] !== "null" ? "'" . $row_consulta["dataReal"]. "'"  : "null";
+    $horaInicioReal = isset($row_consulta["horaInicioReal"]) && $row_consulta["horaInicioReal"] !== "null" ? "'" . $row_consulta["horaInicioReal"]. "'"  : "null";
+    $horaFinalReal = isset($row_consulta["horaFinalReal"]) && $row_consulta["horaFinalReal"] !== "null" ? "'" . $row_consulta["horaFinalReal"]. "'"  : "null";
+        
+    if($dataReal === "null"){
+        $dataOrdem = $Previsto;
+        $horaInicioOrdem = $horaInicioPrevisto;
+    }else{
+        $dataOrdem = $dataReal;
+        $horaInicioOrdem = $horaInicioReal;
+    }
+
+
 
     $sql = "UPDATE tarefa SET tituloTarefa = $tituloTarefa, Previsto = $Previsto, horaInicioPrevisto = $horaInicioPrevisto, horaFinalPrevisto = $horaFinalPrevisto, descricao = $descricao, dataOrdem = $dataOrdem, horaInicioOrdem = $horaInicioOrdem ";
 

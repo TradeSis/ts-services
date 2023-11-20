@@ -99,15 +99,15 @@
                                     <?php if ($_SESSION['idCliente'] == null) { ?>
                                         <div class="col-md-4">
                                             <label class="form-label ts-label">Data Realizado</label>
-                                            <input type="date" class="form-control ts-input" id="dataReal" name="dataReal" autocomplete="off">
+                                            <input type="date" class="form-control ts-input" id="dataReal" name="dataReal" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label ts-label">Inicio</label>
-                                            <input type="time" class="form-control ts-input" id="horaInicioReal" name="horaInicioReal" autocomplete="off">
+                                            <input type="time" class="form-control ts-input" id="horaInicioReal" name="horaInicioReal" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label ts-label">Fim</label>
-                                            <input type="time" class="form-control ts-input" id="horaFinalReal" name="horaFinalReal" autocomplete="off">
+                                            <input type="time" class="form-control ts-input" id="horaFinalReal" name="horaFinalReal" readonly>
                                         </div>
                                     <?php } ?>
                                 </div><!--row-->

@@ -76,12 +76,8 @@ if (isset($jsonEntrada['idTarefa'])) {
 
     $dataReal = isset($row_consulta["dataReal"]) && $row_consulta["dataReal"] !== "null" ? "'" . $row_consulta["dataReal"]. "'"  : "null";
     $horaInicioReal = isset($row_consulta["horaInicioReal"]) && $row_consulta["horaInicioReal"] !== "null" ? "'" . $row_consulta["horaInicioReal"]. "'"  : "null";
-    $horaFinalReal = isset($row_consulta["horaFinalReal"]) && $row_consulta["horaFinalReal"] !== "null" ? "'" . $row_consulta["horaFinalReal"]. "'"  : "null";
-        
-    if($dataReal === "null"){
-        $dataOrdem = $Previsto;
-        $horaInicioOrdem = $horaInicioPrevisto;
-    }else{
+            
+    if($dataReal != "null"){
         $dataOrdem = $dataReal;
         $horaInicioOrdem = $horaInicioReal;
     }

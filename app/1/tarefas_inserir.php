@@ -74,34 +74,29 @@ if (isset($jsonEntrada['idEmpresa'])) {
     $idAtendente = $jsonEntrada['idAtendente'];
     $acao = $jsonEntrada['acao'];
 
+    $dataOrdem = $Previsto;
+    $horaInicioOrdem = $horaInicioPrevisto;
 
     if (isset($jsonEntrada['Previsto'])) {
         $idTipoStatus = TIPOSTATUS_AGENDADO;
     }
+
     if ($acao == 'start') {
         $idTipoStatus = TIPOSTATUS_FAZENDO;
         $dataReal = "'" . date('Y-m-d') . "'";
         $horaInicioReal = "'" . date('H:i:00') . "'";  
         $dataOrdem = $dataReal;
         $horaInicioOrdem = $horaInicioReal;
-    } else {
-        $dataOrdem = $Previsto;
-        $horaInicioOrdem = $horaInicioPrevisto;
-    }
+    } 
    
-
     $sql =       "INSERT INTO tarefa(tituloTarefa, idCliente, idDemanda, idAtendente, idTipoOcorrencia, Previsto, horaInicioPrevisto, horaFinalPrevisto, dataOrdem,horaInicioOrdem " ;
     $sqlvalue = " VALUES ($tituloTarefa, $idCliente, $idDemanda, $idAtendente, $idTipoOcorrencia, $Previsto, $horaInicioPrevisto, $horaFinalPrevisto, $dataOrdem, $horaInicioOrdem ";
 
     if ($acao == 'start') {
-        $dataOrdem = $dataReal;
-        $horaInicioOrdem = $horaInicioReal;
         $sql .= " , horaInicioReal, dataReal ";
         $sqlvalue .= " , $horaInicioReal, $dataReal ";
-    } else {
-        $dataOrdem = $Previsto;
-        $horaInicioOrdem = $horaInicioPrevisto;
-    }
+    } 
+
     $sqlvalue .= " ) ";
     $sql .= " ) " . $sqlvalue;
 

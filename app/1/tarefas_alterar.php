@@ -84,7 +84,8 @@ if (isset($jsonEntrada['idTarefa'])) {
 
 
 
-    $sql = "UPDATE tarefa SET tituloTarefa = $tituloTarefa, Previsto = $Previsto, horaInicioPrevisto = $horaInicioPrevisto, horaFinalPrevisto = $horaFinalPrevisto, descricao = $descricao, dataOrdem = $dataOrdem, horaInicioOrdem = $horaInicioOrdem ";
+    $sql = "UPDATE tarefa SET tituloTarefa = $tituloTarefa, idAtendente`= $idAtendente, idTipoOcorrencia`= $idTipoOcorrencia Previsto = $Previsto, horaInicioPrevisto = $horaInicioPrevisto, horaFinalPrevisto = $horaFinalPrevisto, descricao = $descricao, 
+    dataOrdem = $dataOrdem, horaInicioOrdem = $horaInicioOrdem ";
 
     //Verifica se a tarefa tem Demanda
     $sql_consulta = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
@@ -101,19 +102,11 @@ if (isset($jsonEntrada['idTarefa'])) {
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $idCliente = $row_consulta["idCliente"];
-        $sql = $sql . ", `idDemanda`=$idDemanda, `idCliente`=$idCliente";
+       
     }
-    //Gabriel 23102023 novo modelo de sql para alterar
-    if (isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== NULL) {
-        $sql = $sql . ", `idAtendente`=$idAtendente";
-    }
-    if (isset($jsonEntrada['idTipoOcorrencia']) && $jsonEntrada['idTipoOcorrencia'] !== NULL) {
-        $sql = $sql . ", `idTipoOcorrencia`=$idTipoOcorrencia";
-    }
-    if (isset($jsonEntrada['idCliente']) && $jsonEntrada['idCliente'] !== NULL && $jsonEntrada['idDemanda'] == NULL) {
-        $sql = $sql . ", `idCliente`=$idCliente";
-    }
-        
+
+    $sql = $sql . ", `idDemanda`=$idDemanda, `idCliente`=$idCliente";
+
     $sql = $sql . " WHERE `idTarefa` = $idTarefa";
 
 

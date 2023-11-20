@@ -61,25 +61,25 @@ if (isset($jsonEntrada['idTarefa'])) {
         $horaCobradoTarefa = $row_consulta["horaCobrado"];
         
 
-    if ($horaCobradoTarefa == null) {
-        $horaCobrado = "'" .'00:30:00' . "'";
-        $sql = "UPDATE tarefa SET dataReal = $dataReal, horaInicioReal = $horaInicioReal , horaFinalReal = $horaFinalReal , horaCobrado = $horaCobrado WHERE idTarefa = $idTarefa";
-    } else {
-        $sql = "UPDATE tarefa SET dataReal = $dataReal , horaInicioReal = $horaInicioReal , horaFinalReal = $horaFinalReal WHERE idTarefa = $idTarefa";
-    }
+        if ($horaCobradoTarefa == null) {
+            $horaCobrado = "'" .'00:30:00' . "'";
+            $sql = "UPDATE tarefa SET dataReal = $dataReal, horaInicioReal = $horaInicioReal , horaFinalReal = $horaFinalReal , horaCobrado = $horaCobrado WHERE idTarefa = $idTarefa";
+        } else {
+            $sql = "UPDATE tarefa SET dataReal = $dataReal , horaInicioReal = $horaInicioReal , horaFinalReal = $horaFinalReal WHERE idTarefa = $idTarefa";
+        }
 
-    if ($idDemanda !== "null") {
-        $idTipoStatus = TIPOSTATUS_PAUSADO;
-        //Busca dados Tipostatus    
-        $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
-        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
-        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-        $posicao = $row_consulta["mudaPosicaoPara"];
-        $statusDemanda = $row_consulta["mudaStatusPara"];
+        if ($idDemanda !== "null") {
+            $idTipoStatus = TIPOSTATUS_PAUSADO;
+            //Busca dados Tipostatus    
+            $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+            $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+            $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+            $posicao = $row_consulta["mudaPosicaoPara"];
+            $statusDemanda = $row_consulta["mudaStatusPara"];
 
-        $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+        }
     }
-}
 
   if ($idDemanda !== "null") { 
     //Se tiver demanda, vai ser atribuido novo valor para variavel $tipoStatusDemanda
@@ -96,81 +96,81 @@ if (isset($jsonEntrada['idTarefa'])) {
         TIPOSTATUS_AGENDADO
     );
 
-//ação : START
-if($jsonEntrada['acao'] == "start"){
-    // lucas id654 - Adicionado dataOrdem e horaInicioReal
-    $dataOrdem = $dataReal;
-    $horaInicioOrdem = $horaInicioReal;
+    //ação : START
+    if($jsonEntrada['acao'] == "start"){
+        // lucas id654 - Adicionado dataOrdem e horaInicioReal
+        $dataOrdem = $dataReal;
+        $horaInicioOrdem = $horaInicioReal;
     
-    $sql = "UPDATE tarefa SET horaInicioReal = $horaInicioReal, dataReal = $dataReal , dataOrdem = $dataOrdem, horaInicioOrdem = $horaInicioOrdem  WHERE idTarefa = $idTarefa";
+        $sql = "UPDATE tarefa SET horaInicioReal = $horaInicioReal, dataReal = $dataReal , dataOrdem = $dataOrdem, horaInicioOrdem = $horaInicioOrdem  WHERE idTarefa = $idTarefa";
     
-    if ($idDemanda !== "null") {
-        $idTipoStatus = TIPOSTATUS_FAZENDO;
-        //Busca dados Tipostatus    
-        $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+        if ($idDemanda !== "null") {
+            $idTipoStatus = TIPOSTATUS_FAZENDO;
+            //Busca dados Tipostatus    
+            $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+            $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+            $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+            $posicao = $row_consulta["mudaPosicaoPara"];
+            $statusDemanda = $row_consulta["mudaStatusPara"];
+
+            if (in_array($tipoStatusDemanda, $statusStart)) {
+                $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+            } else {
+                $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+            }
+        }
+    }
+
+    //ação : STOP
+    if($jsonEntrada['acao'] == "stop"){
+        // busca horaCobrado Tarefa    
+        $sql_consulta = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-        $posicao = $row_consulta["mudaPosicaoPara"];
-        $statusDemanda = $row_consulta["mudaStatusPara"];
-
-        if (in_array($tipoStatusDemanda, $statusStart)) {
-            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-        } else {
-            $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+        $horaInicioRealTarefa = $row_consulta["horaInicioReal"];
+        $horaCobradoTarefa = $row_consulta["horaCobrado"];
+        if($horaCobradoTarefa === null){
+            $horaCobradoTarefa = "null";
         }
-    }
-}
-
-//ação : STOP
-if($jsonEntrada['acao'] == "stop"){
-    // busca horaCobrado Tarefa    
-    $sql_consulta = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
-    $buscar_consulta = mysqli_query($conexao, $sql_consulta);
-    $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-    $horaInicioRealTarefa = $row_consulta["horaInicioReal"];
-    $horaCobradoTarefa = $row_consulta["horaCobrado"];
-    if($horaCobradoTarefa === null){
-        $horaCobradoTarefa = "null";
-    }
     
-    if ($horaCobradoTarefa === "null") {
-        // remove aspas da variavel $horasFinalReal para ser instanciada como objeto DateTime
-        $horaFinalReal = date('H:i:00');
-        $horaFinalRealObj = new DateTime($horaFinalReal);
-        $horaInicioRealTarefaObj = new DateTime($horaInicioRealTarefa);
-        $interval = $horaInicioRealTarefaObj->diff($horaFinalRealObj);
-        $horaCobrado_comparacao = $interval->format('%H:%I:%S');
-        $horaCobrado = "'" . $interval->format('%H:%I:%S') . "'";
-        //echo '__ $horaCobrado __' . $horaCobrado;
-        if (strtotime($horaCobrado_comparacao) < strtotime('00:30:00')) {
-            $horaCobrado = '00:30:00';
-            $horaCobrado = "'" .$horaCobrado . "'";
-        }
+        if ($horaCobradoTarefa === "null") {
+            // remove aspas da variavel $horasFinalReal para ser instanciada como objeto DateTime
+            $horaFinalReal = date('H:i:00');
+            $horaFinalRealObj = new DateTime($horaFinalReal);
+            $horaInicioRealTarefaObj = new DateTime($horaInicioRealTarefa);
+            $interval = $horaInicioRealTarefaObj->diff($horaFinalRealObj);
+            $horaCobrado_comparacao = $interval->format('%H:%I:%S');
+            $horaCobrado = "'" . $interval->format('%H:%I:%S') . "'";
         
-        // adiciona aspas da variavel $horasFinalReal para ser usada no UPDATE
-        $horaFinalReal = "'" .date('H:i:00') . "'";
+            if (strtotime($horaCobrado_comparacao) < strtotime('00:30:00')) {
+                $horaCobrado = '00:30:00';
+                $horaCobrado = "'" .$horaCobrado . "'";
+            }
+        
+            // adiciona aspas da variavel $horasFinalReal para ser usada no UPDATE
+            $horaFinalReal = "'" .date('H:i:00') . "'";
 
-        $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal, horaCobrado = $horaCobrado  WHERE idTarefa = $idTarefa";
-    } else {
-        $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal WHERE idTarefa = $idTarefa";
-    }
-
-    if ($idDemanda !== "null") {
-        $idTipoStatus = TIPOSTATUS_PAUSADO;
-        //Busca dados Tipostatus    
-        $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
-        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
-        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-        $posicao = $row_consulta["mudaPosicaoPara"];
-        $statusDemanda = $row_consulta["mudaStatusPara"];
-
-        if ($tipoStatusDemanda == TIPOSTATUS_FAZENDO) {
-            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+            $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal, horaCobrado = $horaCobrado  WHERE idTarefa = $idTarefa";
         } else {
-            $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+            $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal WHERE idTarefa = $idTarefa";
+        }
+
+        if ($idDemanda !== "null") {
+            $idTipoStatus = TIPOSTATUS_PAUSADO;
+            //Busca dados Tipostatus    
+            $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+            $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+            $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+            $posicao = $row_consulta["mudaPosicaoPara"];
+            $statusDemanda = $row_consulta["mudaStatusPara"];
+
+            if ($tipoStatusDemanda == TIPOSTATUS_FAZENDO) {
+                $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+            } else {
+                $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+            }
         }
     }
-}
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {

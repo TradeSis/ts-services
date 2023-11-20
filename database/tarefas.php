@@ -179,9 +179,7 @@ if (isset($_GET['operacao'])) {
             'tituloTarefa' => $_POST['tituloTarefa'],
             'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
             // Lucas 08112023 - id965 removido horascobrado
-            'dataReal' => $_POST['dataReal'],
-            'horaInicioReal' => $_POST['horaInicioReal'],
-            'horaFinalReal' => $_POST['horaFinalReal'],
+            // Lucas 20112023 - id965 removido horaReal,horaInicioReal e horaFinalReal
             'Previsto' => $_POST['Previsto'],
             'horaInicioPrevisto' => $_POST['horaInicioPrevisto'],
             'horaFinalPrevisto' => $_POST['horaFinalPrevisto']

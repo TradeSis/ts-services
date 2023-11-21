@@ -1,4 +1,6 @@
 <?php
+//Lucas 07112023 id965 - Melhorias Tarefas 
+// lucas id654 - Melhorias Tarefas
 // Lucas 17102023 novo padrao
 //Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
 //lucas 25092023 ID 358 Demandas/Comentarios
@@ -22,7 +24,7 @@ if (isset($_SESSION['idCliente'])) {
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
-$demandas = buscaDemandasAbertas();
+//Lucas 09112023 id965 - removido variavel $demandas
 //lucas 25092023 ID 358 Adicionado buscaUsuarios
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
@@ -39,13 +41,13 @@ if ($_SESSION['idCliente'] == null) {
 }
 $statusTarefa = "1"; //ABERTO
 
-$Periodo = null;
+//Lucas 07112023 id965 - removido variavel do filtro Periodo
 $filtroEntrada = null;
 $idTipoOcorrencia = null;
 $PeriodoInicio = null;
 $PeriodoFim = null;
-$PrevistoOrdem = null;
-$RealOrdem = null;
+ // lucas 07112023 id654 - Removido PrevistoOrderm e RealOrdem, e adicionado dataOrdem no lugar
+$dataOrdem = null;
 
 
 if (isset($_SESSION['filtro_tarefas'])) {
@@ -54,15 +56,15 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $idAtendente = $filtroEntrada['idAtendente'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusTarefa = $filtroEntrada['statusTarefa'];
-  $Periodo = $filtroEntrada['Periodo'];
+  //Lucas id965 - removido variavel do filtro Periodo
   $PeriodoInicio = $filtroEntrada['PeriodoInicio'];
   $PeriodoFim = $filtroEntrada['PeriodoFim'];
-  $PrevistoOrdem = $filtroEntrada['PrevistoOrdem'];
-  $RealOrdem = $filtroEntrada['RealOrdem'];
+   // lucas 07112023 id654 - Removido PrevistoOrderm e RealOrdem, e adicionado dataOrdem no lugar
+  $dataOrdem = $filtroEntrada['dataOrdem'];
+
 }
-$previsaoChecked = ($Periodo === '1') ? 'checked' : '';
-$realizadoChecked = ($Periodo === '0') ? 'checked' : '';
-$Checked = ($Periodo === null) ? 'checked' : '';
+//Lucas id965 - removido variaveis do filtro Periodo
+
 
 ?>
 <!doctype html>
@@ -74,7 +76,6 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 </head>
-
 
 <body>
 
@@ -138,28 +139,26 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
-      <table class="table table-sm table-hover">
+    <div class="table mt-2 ts-divTabela ts-tableFiltros">
+      <table class="table table-sm table-hover" id="tblEditavel">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
-            <th>ID</th>
-            <th>Tarefa</th>
-            <th>Responsável</th>
-            <th>Cliente</th>
-            <th>Ocorrência</th>
-            <th>Previsão</th>
-            <th>Real</th>
-            <th>Cobrado</th>
-            <th colspan="2">Ação</th>
+
+            <!-- Helio 071123 - Ajuste nas TD por col -->
+            <th class="col-5">Tarefa</th>
+            <th class="col-1">Responsável</th>
+            <th class="col-1">Cliente</th>
+            <th class="col-1">Ocorrência</th>
+            <th class="col-3">Datas</th>
+            <th class="col-1" colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
-            <th></th>
             <th></th>
             <th>
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
                   <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
+                    <?php echo "Todos" ?>
                   </option>
                   <?php
                   foreach ($atendentes as $atendente) {
@@ -179,7 +178,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                   <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
+                    <?php echo "Todos" ?> 
                   </option>
                   <?php
                   foreach ($clientes as $cliente) {
@@ -199,7 +198,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                   <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
+                    <?php echo "Todos" ?>
                   </option>
                   <?php
                   foreach ($ocorrencias as $ocorrencia) {
@@ -215,38 +214,23 @@ $Checked = ($Periodo === null) ? 'checked' : '';
                 </select>
               </form>
             </th>
+             <!-- lucas id654 - Removido filtro RealOrdem e substituido filtro PrevistoOrdem por dataOrdem -->
             <th>
               <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="PrevistoOrdem" id="FiltroPrevistoOrdem">
-                  <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
-                  </option>
-                  <option <?php if ($PrevistoOrdem == "1") {
-                            echo "selected";
-                          } ?> value="1">DESC</option>
-                  <option <?php if ($PrevistoOrdem == "0") {
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="dataOrdem" id="FiltrodataOrdem">
+                  <!-- Lucas 07112023 id965 - ajustado ordem do filtro -->
+                  <option <?php if ($dataOrdem == "0") {
                             echo "selected";
                           } ?> value="0">ASC</option>
+                  <option <?php if ($dataOrdem == "1") {
+                            echo "selected";
+                          } ?> value="1">DESC</option>
+                  
                 </select>
               </form>
             </th>
-            <th>
-              <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="RealOrdem" id="FiltroRealOrdem">
-                  <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
-                  </option>
-                  <option <?php if ($RealOrdem == "1") {
-                            echo "selected";
-                          } ?> value="1">DESC</option>
-                  <option <?php if ($RealOrdem == "0") {
-                            echo "selected";
-                          } ?> value="0">ASC</option>
-                </select>
-              </form>
-            </th>
-            <th></th>
-            <th></th>
+            <!-- <th></th> -->
+            <th colspan="2"></th>
           </tr>
         </thead>
 
@@ -281,18 +265,20 @@ $Checked = ($Periodo === null) ? 'checked' : '';
   <!-- QUILL editor -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+  <script src="<?php echo URLROOT ?>/services/demandas/tarefas.js"></script>
+
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val() , $("#buscaTarefa").val());
 
     function limpar() {
-      buscar(null, null, null, null, null, null, null, null, null, null, function() {
+      buscar(null, null, null, null, null, null, null, null, null, function() {
         //gabriel 13102023 id 596 fix atualizar pagina correta
-        window.location.reload();
+        //window.location.reload();
       });
     }
 
     function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, function() {
         window.location.reload();
       });
     }
@@ -332,7 +318,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     //Gabriel 16102023 id596 variavel dia/hora 
     var todayTime = today + " " + time;
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, PeriodoInicio, PeriodoFim, dataOrdem, buscaTarefa, callback) {
       //Gabriel 11102023 ID 596 utiliza valores do buscar para gravar no h6 da tabela filtros status e periodo
       var h6Element = $("#filtroh6 h6");
       var text = "";
@@ -343,13 +329,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         if (text) text += ", ";
         text += "Status = Realizado";
       }
-      if (Periodo === "1") {
-        if (text) text += ", ";
-        text += "Periodo = Previsão";
-      } else if (Periodo === "0") {
-        if (text) text += ", ";
-        text += "Periodo = Realizado";
-      }
+      /* Lucas 07112023 id965 - removido status de periodo */
+      
       if (PeriodoInicio !== "") {
         if (text) text += " em ";
         text += formatDate(PeriodoInicio);
@@ -373,11 +354,10 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           tituloTarefa: tituloTarefa,
           idTipoOcorrencia: idTipoOcorrencia,
           statusTarefa: statusTarefa,
-          Periodo: Periodo,
+          //Lucas 07112023 id965 - removido periodo
           PeriodoInicio: PeriodoInicio,
           PeriodoFim: PeriodoFim,
-          PrevistoOrdem: PrevistoOrdem,
-          RealOrdem: RealOrdem,
+          dataOrdem: dataOrdem,
           buscaTarefa: buscaTarefa
         },
         success: function(msg) {
@@ -389,78 +369,172 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 
             var vPrevisto = formatDate(object.Previsto);
-            var vhoraInicioPrevisto = formatTime(object.horaInicioPrevisto);
+            var valorhoraInicioPrevisto = formatTime(object.horaInicioPrevisto); //criado
             var vhoraFinalPrevisto = formatTime(object.horaFinalPrevisto);
-            var vhorasPrevisto = formatTime(object.horasPrevisto);
+            var valorhorasPrevisto = formatTime(object.horasPrevisto); //criado
             //Gabriel 16102023 id596 ajustando if
-            var vhoraInicioPrevistoTime = vhoraInicioPrevisto.split(":");
-            var vhoraInicioPrevistoMinutes = parseInt(vhoraInicioPrevistoTime[0]) * 60 + parseInt(vhoraInicioPrevistoTime[1]);
+            var valorhoraInicioPrevistoTime = valorhoraInicioPrevisto.split(":");
+            var valorhoraInicioPrevistoMinutes = parseInt(valorhoraInicioPrevistoTime[0]) * 60 + parseInt(valorhoraInicioPrevistoTime[1]);
             var timeTime = time.split(":");
             var timeMinutes = parseInt(timeTime[0]) * 60 + parseInt(timeTime[1]);
 
 
             var vdataReal = formatDate(object.dataReal);
-            var vhoraInicioReal = formatTime(object.horaInicioReal);
-            var vhoraFinalReal = formatTime(object.horaFinalReal);
-            var vhorasReal = formatTime(object.horasReal);
+            var valorhoraInicioReal = formatTime(object.horaInicioReal); //criado
+            var valorhoraFinalReal = formatTime(object.horaFinalReal); //criado
+            var valorhorasReal = formatTime(object.horasReal);//criado
             var vhoraCobrado = formatTime(object.horaCobrado);
-            linha += "<tr>";
-            linha += "<td>" + object.idTarefa + "</td>";
-            linha += "<td data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+      
+            /* Helio 07112023 - Campos ficam em Branco quando Zerados */
+            if(vdataReal === "00/00/0000"){
+                vdataReal = '';
+            }
+            if(vPrevisto === "00/00/0000"){
+                vPrevisto = '';
+            }
 
-            if (object.tituloTarefa == "") {
-              linha += object.tituloDemanda;
+           if(valorhoraInicioPrevisto === '00:00'){
+              valorhoraInicioPrevisto = ''
+            }
+
+           if(vhoraFinalPrevisto === '00:00'){
+              vhoraFinalPrevisto = ''
+            }
+
+            if(valorhoraInicioReal === '00:00'){
+              valorhoraInicioReal = ''
+            }
+
+            if(valorhoraFinalReal === '00:00'){
+              valorhoraFinalReal = ''
+            }
+
+            if(valorhorasPrevisto === '00:00'){
+              valorhorasPrevisto = ''
             } else {
+              valorhorasPrevisto = '(' + valorhorasPrevisto + ')';
+            }
+
+           
+            if(valorhorasReal === '00:00'){
+              valorhorasReal = ''
+            } else {
+              valorhorasReal = '(' + valorhorasReal + ')';
+            }
+
+            vnomeTipoOcorrencia = object.nomeTipoOcorrencia;
+            if (vnomeTipoOcorrencia === null) {
+              vnomeTipoOcorrencia = '';
+            }
+
+
+            linha += "<tr>";
+
+            linha += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+            if ((object.idDemanda !== null) && (object.idContrato !== null)) {
+              linha += object.nomeContrato + " : " + " " + object.idContrato + "  " + object.tituloContrato + " / ";
+              linha += object.idDemanda + "  " +  object.tituloDemanda + "<br>"; 
+              linha += object.tituloTarefa;
+            }
+
+            if((object.idDemanda !== null) && (object.idContrato === null)){
+              linha += object.nomeDemanda + " : " + " " + object.idDemanda + "  " +  object.tituloDemanda + "<br>";
+              linha += object.tituloTarefa;
+            }
+
+            if(object.tituloDemanda === null){
               linha += object.tituloTarefa;
             }
 
             linha += "</td>";
-            linha += "<td>" + object.nomeUsuario + "</td>";
-            linha += "<td>" + object.nomeCliente + "</td>";
-            linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            //Gabriel 16102023 id596 ajustando if
-            if (
-              (vPrevisto < today || (vPrevisto === today && vhoraInicioPrevistoMinutes > 0 && vhoraInicioPrevistoMinutes < timeMinutes)) &&
-              vdataReal === "00/00/0000" &&
-              vPrevisto !== "00/00/0000"
-            ) {
-              linha += "<td style='background:firebrick;color:white'>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
-            } else {
-              linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+
+
+            linha += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
+            linha += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";
+            linha += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + vnomeTipoOcorrencia + "</td>";
+            /* Lucas 07112023 id965 - Reajustado condição para horas */
+            horas = '';
+            if(vdataReal !== ""){
+              horas += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+              if(vPrevisto !== ""){
+              horas += "<span class='ts-datas ts-previsto'>Prev: " + vPrevisto + "</span><span  class='ts-horas ts-previsto'>" + valorhoraInicioPrevisto + "</span><span class='ts-horas ts-previsto'>" + vhoraFinalPrevisto + "</span><span class='ts-horas ts-previsto'>" + valorhorasPrevisto + "</span>" + "<br>";
             }
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
-              var timeParts = time.split(':');
-              var vhoraInicioRealParts = vhoraInicioReal.split(':');
+              horas += "<span class='ts-datas'>Real: " + vdataReal + "</span><span class='ts-horas'>" + valorhoraInicioReal + "</span><span class='ts-horas'>" + valorhoraFinalReal + "</span><span class='ts-horas'>" + valorhorasReal + "</span>"  + "</td>";
+              //alert(horas)
+            }else{
 
-              var timeMinutes = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
-              var vhoraInicioRealMinutes = parseInt(vhoraInicioRealParts[0]) * 60 + parseInt(vhoraInicioRealParts[1]);
-
-              var differenceMinutes = timeMinutes - vhoraInicioRealMinutes;
-
-              var hours = Math.floor(differenceMinutes / 60);
-              var minutes = differenceMinutes % 60;
-
-              var vhorasReal = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
-            }
-            linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>";
-            linha += "<td>" + vhoraCobrado + "</td>";
-            linha += "<td class='text-center' id='botao'>";
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
-              //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
-              if (object.idDemanda == null) {
-                linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
-              } else {
-                linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-toggle='modal' data-target='#stopexecucaomodal' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+              if(vPrevisto !== ""){
+                horas += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'";
+                if(object.Atrasado == 'SIM'){
+                  horas += " style='background:firebrick;color:white'";
+                }
+                horas += ">";
+                horas += "<span class='ts-datas'>Prev: " + vPrevisto + "</span><span class='ts-horas'>" + valorhoraInicioPrevisto + "</span><span class='ts-horas'>" + vhoraFinalPrevisto + "</span><span class='ts-horas'>" + valorhorasPrevisto + "</span>" + "</td>";
+                //alert(horas)
               }
+          }
+          if((vdataReal === "") && (vPrevisto === "")){
+                horas += "<td></td> "
+              }
+          linha += horas;
+          
+          
+            // lucas id654 - Removido linha de dataReal
+            
+            linha += "<td>" ; 
+
+            linha += "<id='botao'>";
+            
+            if (valorhoraInicioReal == "") {
+              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "'><i class='bi bi-play-circle'></i></button>"
+            }else{
+              if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
+              //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada 
+              if (object.idDemanda == null) {
+                linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-demanda='" + object.idDemanda + 
+                "'><i class='bi bi-stop-circle'></i></button>"
+              } else {
+                linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-bs-toggle='modal' data-bs-target='#stopmodal' data-id='" + object.idTarefa + 
+                "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+              } 
+            }else {
+              linha += "<button type='button' class='novoStartButton btn btn-success btn-sm mr-1' "+ 
+                " data-id='" + object.idTarefa + 
+                "' data-titulo='" + object.tituloTarefa +
+                "' data-cliente='" + object.idCliente +
+                "' data-demanda='" + object.idDemanda +
+                "' data-atendente='" + object.idAtendente +
+                "' data-ocorrencia='" + object.idTipoOcorrencia +
+                "' data-previsto='" + object.Previsto +
+                "' data-horainicioprevisto='" + object.horaInicioPrevisto +
+                "' data-horafinalprevisto='" + object.horaFinalPrevisto +
+                "'><i class='bi bi-play-circle'></i></button>"
             }
-            if (vhoraInicioReal == "00:00") {
-              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
-              linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
-            }
-            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1'  data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
-            linha += "<button type='button' class='btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
+          }
 
             linha += "</td>";
+
+            linha += "<td>"; 
+            linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
+            " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
+
+            linha += "<id='botao'>";
+            
+            if (valorhoraInicioReal == "") {
+              linha += "<li class='ms-1 me-1 mt-1'><button type='button' id='realizadoButton' class='btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + 
+              "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span class='ts-btnAcoes' " + ">Realizado</span></button></li>"
+            }
+            linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='clonarButton btn btn-success btn-sm w-100 text-start'  data-idtarefa='" + object.idTarefa + 
+            "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i> <span class='ts-btnAcoes' " +
+            ">Clonar</span></button></li>";
+            linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='btn btn-warning btn-sm w-100 text-start' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + 
+            object.idTarefa + "'><i class='bi bi-pencil-square'></i> <span class='ts-btnAcoes'>Alterar</span></button></li>"
+            
+
+            linha +="</ul></div>"
+            linha += "</td>";
+
+
             linha += "</tr>";
           }
 
@@ -475,90 +549,61 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
     $("#FiltroClientes").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroUsuario").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#buscar").click(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroOcorrencia").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroDemanda").click(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
     $("#FiltroStatusTarefa").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroPrevistoOrdem").change(function() {
+    $("#FiltrodataOrdem").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroRealOrdem").change(function() {
-      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-    });
 
     //Gabriel 11102023 ID 596 adicionado document ready pois o modal está em indextarefa.php
     $(document).ready(function() {
       $("#filtrarButton").click(function() {
-        if (!$('#PrevisaoRadio').is(':checked') && !$('#RealizadoRadio').is(':checked')) {
-          alert("Por favor selecione uma opção.");
-          return false;
-        } else {
+       
           //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
           $('#periodoModal').modal('hide');
-        }
+        
       });
     });
 
     document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
         //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
       }
     });
 
+  
 
-    //lucas 25092023 ID 358 Adicionado script para popup de stop
-    $(document).on('click', 'button[data-target="#stopexecucaomodal"]', function() {
-      var idTarefa = $(this).attr("data-id");
-      var idDemanda = $(this).attr("data-demanda");
-      var status = $(this).attr("data-status");
-      var horaInicioReal = $(this).attr("data-data-execucao");
-
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-        data: {
-          idTarefa: idTarefa
-        },
-        success: function(data) {
-          $('#idTarefa-stopexecucao').val(data.idTarefa);
-          $('#idDemanda-stopexecucao').val(idDemanda);
-          $('#status-stopexecucao').val(status);
-          $('#horaInicioReal-stopexecucao').val(horaInicioReal);
-
-          $('#stopexecucaomodal').modal('show');
-        }
-      });
-    });
+    //lucas 17112023 ID 965 Removido script do botao stop, está no arquivo tarefas.js  
 
 
     var inserirModal = document.getElementById("inserirModal");
@@ -575,96 +620,117 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
     };
 
-    $(document).ready(function() {
-      $(document).on('click', 'button.clonarButton', function() {
+   
+    //lucas 17112023 ID 965 Removido script do botao clonarButton, está no arquivo tarefas.js 
 
-        var idTarefa = $(this).data("idtarefa"); // Use data() to access the custom data attribute
+
+    // Lucas 131123 ID 965 Adicionado script para botão de novoStart
+    $(document).on('click', '.novoStartButton', function() {
+      var idTarefa = $(this).data('id');
+      var tituloTarefa = $(this).data('titulo');
+      var idCliente = $(this).data('cliente');
+      var idDemanda = $(this).data('demanda');
+      var idAtendente = $(this).data('atendente');
+      var idTipoOcorrencia = $(this).data('ocorrencia');
+      var previsto = $(this).data('previsto');
+      var horaInicioPrevisto = $(this).data('horainicioprevisto');
+      var horaFinalPrevisto = $(this).data('horafinalprevisto');    
+
         $.ajax({
-          type: 'POST',
-          dataType: 'json',
-          url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-          data: {
-            idTarefa: idTarefa
-          },
-          success: function(data) {
-            $('#newtitulo').val(data.tituloTarefa);
-            $('#newidCliente').val(data.idCliente);
-            $('#newidDemanda').val(data.idDemanda);
-            $('#newidAtendente').val(data.idAtendente);
-            $('#newidTipoOcorrencia').val(data.idTipoOcorrencia);
-            $('#newtipoStatusDemanda').val(data.idTipoStatus);
-            $('#newdescricao').val(data.descricao);
+            url: "../database/tarefas.php?operacao=inserir&acao=start",
+            method: "POST",
+            dataType: "json",
+            data: {
+              tituloTarefa: tituloTarefa,
+              idCliente: idCliente,
+              idDemanda: idDemanda,
+              idAtendente: idAtendente,
+              idTipoOcorrencia: idTipoOcorrencia,
+              Previsto: previsto,
+              horaInicioPrevisto: horaInicioPrevisto,
+              horaFinalPrevisto: horaFinalPrevisto,
 
-            $('#inserirModal').modal('show');
+              },
+              success: function(msg) {
+          //alert(JSON.stringify(msg));
+          if (msg.retorno == "ok") {
+            window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
+        }
         });
-      });
+    
     });
 
-
-
+    //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.stopButton', function() {
+      
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
-      var horaInicioCobrado = $(this).data('data-execucao');
       var idDemanda = $(this).data('demanda');
       $.ajax({
         //lucas 25092023 ID 358 Modificado operação de tarefas
-        url: "../database/tarefas.php?operacao=stopsemdemanda",
+        url: "../database/tarefas.php?operacao=realizado&acao=stop",
         method: "POST",
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
-          horaInicioCobrado: horaInicioCobrado,
           idDemanda: idDemanda
         },
         success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
 
+    //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.startButton', function() {
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
-      var idDemanda = $(this).data('demanda');
       $.ajax({
-        url: "../database/tarefas.php?operacao=start",
+        url: "../database/tarefas.php?operacao=realizado&acao=start",
         method: "POST",
         dataType: "json",
         data: {
-          idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
-          idDemanda: idDemanda
+          idTarefa: idTarefa
         },
         success: function(msg) {
+          //alert(JSON.stringify(msg));
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
 
-    $(document).on('click', '.realizadoButton', function() {
+    //Lucas 17112023 ID 965 - substituido class por id (realizadoButton)
+    $(document).on('click', '#realizadoButton', function() {
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
       var idDemanda = $(this).data('demanda');
+
       $.ajax({
         url: "../database/tarefas.php?operacao=realizado",
         method: "POST",
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
           idDemanda: idDemanda
         },
         success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
@@ -675,7 +741,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         var formData = new FormData(this);
         var vurl;
         if ($("#inserirStartBtn").prop("clicked")) {
-          vurl = "../database/tarefas.php?operacao=inserirStart";
+          // Lucas 141123 ID 965 - Alterado url
+          vurl = "../database/tarefas.php?operacao=inserir&acao=start";
         } else {
           vurl = "../database/tarefas.php?operacao=inserir";
         }
@@ -705,7 +772,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         var formData = new FormData(this);
         for (var pair of formData.entries()) {
           console.log(pair[0] + ', ' + pair[1]);
-        }
+        } 
         var vurl;
         if ($("#stopButtonModal").is(":focus")) {
           vurl = "../database/tarefas.php?operacao=stop";
@@ -746,7 +813,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           vurl = "../database/demanda.php?operacao=realizado";
         }
         if ($("#stopFormbutton").is(":focus")) {
-          vurl = "../database/tarefas.php?operacao=stop";
+          vurl = "../database/tarefas.php?operacao=realizado&acao=stop";
+          
         }
         $.ajax({
           url: vurl,
@@ -778,53 +846,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     });
 
-
-
-    var quillstop = new Quill('.quill-stop', {
-      theme: 'snow',
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote'],
-          [{
-            'list': 'ordered'
-          }, {
-            'list': 'bullet'
-          }],
-          [{
-            'indent': '-1'
-          }, {
-            'indent': '+1'
-          }],
-          [{
-            'direction': 'rtl'
-          }],
-          [{
-            'size': ['small', false, 'large', 'huge']
-          }],
-          [{
-            'header': [1, 2, 3, 4, 5, 6, false]
-          }],
-          ['link', 'image', 'video', 'formula'],
-          [{
-            'color': []
-          }, {
-            'background': []
-          }],
-          [{
-            'font': []
-          }],
-          [{
-            'align': []
-          }],
-        ]
-      }
-    });
-
-    /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-    quillstop.on('text-change', function(delta, oldDelta, source) {
-      $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
-    });
+  //Lucas 10112023 ID 965 Removido script do editor de stop
   </script>
 
 

@@ -29,12 +29,16 @@ if (isset($jsonEntrada["idEmpresa"])) {
 }
 $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idContratoTipo'])) {
-    $idContratoTipo = $jsonEntrada['idContratoTipo'];
-    $nomeContrato = $jsonEntrada['nomeContrato'];
-    $nomeDemanda = $jsonEntrada['nomeDemanda'];
+    $idContratoTipo = "'" . $jsonEntrada['idContratoTipo']. "'";
+    $nomeContrato = isset($jsonEntrada['nomeContrato']) && $jsonEntrada['nomeContrato'] !== "null"    ? "'" . $jsonEntrada['nomeContrato'] . "'" : "null";
+    $nomeDemanda = isset($jsonEntrada['nomeDemanda']) && $jsonEntrada['nomeDemanda'] !== "null"    ? "'" . $jsonEntrada['nomeDemanda'] . "'" : "null";
+    $idTipoOcorrenciaPadrao = isset($jsonEntrada['idTipoOcorrenciaPadrao']) && $jsonEntrada['idTipoOcorrenciaPadrao'] !== "null"    ? "'" . $jsonEntrada['idTipoOcorrenciaPadrao'] . "'" : "null";
+    $idTipoStatus_fila = isset($jsonEntrada['idTipoStatus_fila']) && $jsonEntrada['idTipoStatus_fila'] !== "null"    ? "'" . $jsonEntrada['idTipoStatus_fila'] . "'" : "null";
+    $idServicoPadrao = isset($jsonEntrada['idServicoPadrao']) && $jsonEntrada['idServicoPadrao'] !== "null"    ? "'" . $jsonEntrada['idServicoPadrao'] . "'" : "null";
 
 
-    $sql = "INSERT INTO contratotipos (idContratoTipo,nomeContrato,nomeDemanda) values ('$idContratoTipo','$nomeContrato','$nomeDemanda')";
+    $sql = "INSERT INTO contratotipos (idContratoTipo,nomeContrato,nomeDemanda, idTipoOcorrenciaPadrao, idTipoStatus_fila, idServicoPadrao) 
+    values ($idContratoTipo, $nomeContrato, $nomeDemanda, $idTipoOcorrenciaPadrao, $idTipoStatus_fila, $idServicoPadrao)";
 
     //LOG
     if (isset($LOG_NIVEL)) {

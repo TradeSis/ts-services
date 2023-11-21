@@ -59,6 +59,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   $idTipoStatus = $filtroEntrada['idTipoStatus'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusDemanda = $filtroEntrada['statusDemanda'];
+  $posicao = $filtroEntrada['posicao'];
 }
 ?>
 
@@ -204,16 +205,17 @@ if (isset($_SESSION['filtro_demanda'])) {
       <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
-            <th></th>
+            <th>Prioridade</th>
             <th>ID</th>
             <th>Cliente</th>
             <th>Solicitante</th>
             <th>Titulo</th>
             <th>Responsavel</th>
-            
+            <th>Abertura</th>
             <th>Status</th>
             <th>Ocorrência</th>
-            <th>Datas</th>
+            <th>Data Entrega</th>
+            <th>Posição</th>
             <th colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
@@ -280,7 +282,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </select>
               </form>
             </th>
-            
+            <th></th>
             <th>
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
@@ -320,6 +322,15 @@ if (isset($_SESSION['filtro_demanda'])) {
               </form>
             </th>
             <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
+                  <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                  <option value="0">Atendente</option>
+                  <option value="1">Cliente</option>
+                </select>
+              </form>
+            </th>
             <th></th>
           </tr>
         </thead>
@@ -349,20 +360,20 @@ if (isset($_SESSION['filtro_demanda'])) {
   <script>
     var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
 
-    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
 
     function limparTrade() {
-      buscar(null, null, null, null, null, null, null, function() {
+      buscar(null, null, null, null, null, null, null, null, function() {
         window.location.reload();
       });
     }
 
     function clickCard(statusDemanda) {
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(),
-        statusDemanda, $("#buscaDemanda").val())
+        statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
     }
 
-    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, callback) {
+    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
       //alert(posicao)
       $.ajax({
         type: 'POST',
@@ -380,6 +391,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           statusDemanda: statusDemanda,
           buscaDemanda: buscaDemanda,
           urlContratoTipo: urlContratoTipo,
+          posicao: posicao
         },
         success: function(msg) {
           var json = JSON.parse(msg);
@@ -389,9 +401,20 @@ if (isset($_SESSION['filtro_demanda'])) {
             var dataAbertura = new Date(object.dataAbertura);
             var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
 
-            var dataFechamento = new Date(object.dataFechamento);
-            dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR");
-            
+            if (object.dataFechamento == null) {
+              var dataFechamentoFormatada = "<p>---</p>";
+            } else {
+              var dataFechamento = new Date(object.dataFechamento);
+              dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
+            }
+
+            if (object.posicao == 0) {
+              var posicao = "Atendente"
+            }
+            if (object.posicao == 1) {
+              var posicao = "Cliente"
+            }
+
 
             linha += "<tr>";  
             /* helio 09112023 - classe ts-click para quando clicar,
@@ -402,17 +425,11 @@ if (isset($_SESSION['filtro_demanda'])) {
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
-            
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFormatada + "</td>";
             linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
-
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + 'Abertura: ' + dataFormatada + '<br>'
-            if (object.dataFechamento == null) {
-              linha += '';
-            }else{
-              linha += 'Entrega : ' + ' ' + dataFechamentoFormatada 
-            }
-            linha +=  "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFechamentoFormatada + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + posicao + "</td>";
 
             linha += "<td>"; 
             linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
@@ -447,40 +464,40 @@ if (isset($_SESSION['filtro_demanda'])) {
 
 
     $("#FiltroTipoStatus").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
     });
 
     $("#FiltroClientes").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
     });
 
     $("#FiltroSolicitante").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
     });
 
     $("#FiltroOcorrencia").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
     });
 
     $("#FiltroUsuario").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
     });
 
     $("#FiltroStatusDemanda").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
     });
 
     $("#buscar").click(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
     });
 
     $("#FiltroPosicao").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
     });
 
     document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
       }
     });
 

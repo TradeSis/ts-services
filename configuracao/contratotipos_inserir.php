@@ -1,6 +1,13 @@
 <?php
 // Lucas 17102023 novo padrao
 include_once('../header.php');
+include_once '../database/tipoocorrencia.php';
+include_once '../database/tipostatus.php';
+include_once(ROOT . '/cadastros/database/servicos.php');
+
+$tipoOcorrencias = buscaTipoOcorrencia();
+$tiposStatus = buscaTipoStatus();
+$servicos = buscaServicos();
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -23,7 +30,7 @@ include_once('../header.php');
         <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
             <div class="col-3">
                 <!-- TITULO -->
-                <h2 class="ts-tituloPrincipal">Contrato Tipos</h2>
+                <h2 class="ts-tituloPrincipal">Contrato Tiposaa</h2>
             </div>
             <div class="col-7">
                 <!-- FILTROS -->
@@ -48,6 +55,40 @@ include_once('../header.php');
                 <div class="col-md-4">
                     <label class='form-label ts-label'>Nome Demanda</label>
                     <input type="text" name="nomeDemanda" class="form-control ts-input" autocomplete="off">
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <label class="form-label ts-label">Tipo Ocorrencia</label>
+                    <select class="form-select ts-input" name="idTipoOcorrenciaPadrao">
+                        <?php
+                        foreach ($tipoOcorrencias as $tipoOcorrencia) { 
+                        ?>
+                            <option value="<?php echo $tipoOcorrencia['idTipoOcorrencia'] ?>"><?php echo $tipoOcorrencia['nomeTipoOcorrencia'] ?></option>
+                        <?php  } ?> 
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label ts-label">Tipo Staus</label>
+                    <select class="form-select ts-input" name="idTipoStatus_fila">
+                        <option value="null"></option>
+                        <?php
+                        foreach ($tiposStatus as $tipoStatus) { 
+                        ?>
+                            <option value="<?php echo $tipoStatus['idTipoStatus'] ?>"><?php echo $tipoStatus['nomeTipoStatus'] ?></option>
+                        <?php  } ?> 
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label ts-label">Serviços</label>
+                    <select class="form-select ts-input" name="idServicoPadrao">
+                        <option value="null"></option>
+                        <?php
+                        foreach ($servicos as $servico) { 
+                        ?>
+                            <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?></option>
+                        <?php  } ?> 
+                    </select>
                 </div>
             </div>
             <div class="text-end mt-4">

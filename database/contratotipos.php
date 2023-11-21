@@ -42,6 +42,9 @@ if (isset($_GET['operacao'])) {
 			'idContratoTipo' => $_POST['idContratoTipo'],
 			'nomeContrato' => $_POST['nomeContrato'],
 			'nomeDemanda' => $_POST['nomeDemanda'],
+			'idTipoOcorrenciaPadrao' => $_POST['idTipoOcorrenciaPadrao'],
+			'idTipoStatus_fila' => $_POST['idTipoStatus_fila'],
+			'idServicoPadrao' => $_POST['idServicoPadrao'],
 		);
 
 		$contratotipo = chamaAPI(null, '/services/contratotipos', json_encode($apiEntrada), 'PUT');
@@ -54,6 +57,9 @@ if (isset($_GET['operacao'])) {
 			'idContratoTipo' => $_POST['idContratoTipo'],
 			'nomeContrato' => $_POST['nomeContrato'],
 			'nomeDemanda' => $_POST['nomeDemanda'],
+			'idTipoOcorrenciaPadrao' => $_POST['idTipoOcorrenciaPadrao'],
+			'idTipoStatus_fila' => $_POST['idTipoStatus_fila'],
+			'idServicoPadrao' => $_POST['idServicoPadrao'],
 		);
 		$contratotipo = chamaAPI(null, '/services/contratotipos', json_encode($apiEntrada), 'POST');
 

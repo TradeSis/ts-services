@@ -87,18 +87,8 @@
                                 </div><!--fim row 1-->
 
                                 <div class="row mt-3">
-                                    <div class="col-sm-6 col-md-6">
-                                        <label class="form-label ts-label">Tamanho</label>
-                                        <select class="form-select ts-input" name="tamanho">
-                                            <option value="<?php echo null ?>">
-                                                <?php echo "Selecione" ?>
-                                            </option>
-                                            <option value="P">P</option>
-                                            <option value="M">M</option>
-                                            <option value="G">G</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-6 col-md-6">
+                                    <!-- lucas 21112023 ID 688 - removido campo tamanho -->
+                                    <div class="col-sm-12 col-md-12">
                                         <label class="form-label ts-label">Serviço</label>
                                         <select class="form-select ts-input" name="idServico" autocomplete="off">
                                             <option value="<?php echo null ?>">

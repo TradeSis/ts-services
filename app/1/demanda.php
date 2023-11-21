@@ -86,11 +86,6 @@ if (isset($jsonEntrada["buscaDemanda"])) {
   $sql = $sql . $where . " demanda.idDemanda= " . "'" . $jsonEntrada["buscaDemanda"] . "'" . " or demanda.tituloDemanda like " . "'%" . $jsonEntrada["buscaDemanda"] . "%'";
   $where = " and ";
 }
-//lucas 26092023 ID 576 Substituido $jsonEntrada["tamanho"] para $jsonEntrada["posicao"], filtro tamanho foi removido 
-if (isset($jsonEntrada["posicao"])) {
-  $sql = $sql . $where . " demanda.posicao = " . $jsonEntrada["posicao"];
-  $where = " and ";
-}
 
 if (isset($jsonEntrada["idContrato"])) {
   $sql = $sql . $where . " demanda.idContrato = " . "'" . $jsonEntrada["idContrato"] . "'";

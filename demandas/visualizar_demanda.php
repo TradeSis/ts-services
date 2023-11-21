@@ -1,5 +1,6 @@
 <?php
 //lucas 22092023 ID 358 Demandas/Comentarios 
+//lucas 21112023 ID 688 Melhorias em Demandas
 include_once '../header.php';
 $statusEncerrar = array(
     TIPOSTATUS_FILA,
@@ -26,7 +27,7 @@ $statusEncerrar = array(
                     <div class="col-md-8">
                             <label class='form-label ts-label'>Demanda</label>
                             <input type="text" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>">
-                            <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $demanda['idContratoTipo'] ?>">
+                            <!-- lucas 21112023 id 688 - removido campo idContratoTipo -->
                     </div>
                     <div class="col-md-2">
                             <label class='form-label ts-label'>Solicitante</label>
@@ -40,7 +41,8 @@ $statusEncerrar = array(
                                 <span class="tituloEditor">Descrição</span>
                             </div>
                             <div class="quill-textarea"><?php echo $demanda['descricao'] ?></div>
-                            <textarea style="display: none" id="quill-descricao" name="descricao"></textarea>
+                            <!-- lucas 21112023 id 688 - ajuste no editor -->
+                            <textarea style="display: none" id="quill-descricao" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
                         </div>
 
                         <!-- <textarea name="descricao" id="" cols="30" rows="10"><?php echo $demanda['descricao'] ?></textarea> -->
@@ -68,18 +70,9 @@ $statusEncerrar = array(
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Previsão</label>
-                            <input type="number" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                            <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                         </div>
-                        <div class="col-md-12 mt-2">
-                            <label class="form-label ts-label">Tamanho</label>
-                            <select class="form-select ts-input" name="tamanho">
-                                <option value="<?php echo $demanda['tamanho'] ?>"><?php echo $demanda['tamanho'] ?>
-                                </option>
-                                <option value="P">P</option>
-                                <option value="M">M</option>
-                                <option value="G">G</option>
-                            </select>
-                        </div>
+                        <!-- lucas 21112023 ID 688 - removido campo tamanho -->
 
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Responsável</label>

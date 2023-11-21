@@ -31,7 +31,7 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idDemanda'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
-    $idTipoStatus = $jsonEntrada['idTipoStatus'];
+    $idTipoStatus = TIPOSTATUS_REALIZADO;
 
     //busca dados tipostatus    
     $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -56,6 +56,34 @@ if (isset($jsonEntrada['idDemanda'])) {
         }
     }
 
+    
+    // Chama a api de comentarios
+    if(isset($jsonEntrada['comentario'])){
+        echo '__ ESTOU AQUI___';
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'idUsuario' => $jsonEntrada['idUsuario'],
+            'idCliente' => $jsonEntrada['idCliente'],
+            'idDemanda' => $jsonEntrada['idDemanda'],
+            'comentario' => $jsonEntrada['comentario'],
+            'tipoStatusDemanda' => $jsonEntrada['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_RESPONDIDO
+
+        );
+        $comentario = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada), 'PUT');
+    }
+
+    // Chama a api de Tarefas
+    if(isset($jsonEntrada['idTarefa'])){
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'idTarefa' => $jsonEntrada['idTarefa'],
+            'idDemanda' => $jsonEntrada['idDemanda'],
+            'tipoStatusDemanda' => $jsonEntrada['tipoStatusDemanda'],
+            'idTipoStatus' => TIPOSTATUS_PAUSADO
+        );
+        $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+    }
 
     //LOG
     if (isset($LOG_NIVEL)) {

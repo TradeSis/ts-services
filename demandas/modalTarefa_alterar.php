@@ -1,4 +1,7 @@
-<!-- Gabriel 06102023 ID 596 mudanças em agenda e tarefas -->
+<!--
+    Lucas 09112023 ID 965 Melhorias em Tarefas 
+    Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
+-->
 
 <!--------- ALTERAR --------->
 <div class="modal" id="alterarmodal" tabindex="-1"  aria-labelledby="alterarmodalLabel" aria-hidden="true">
@@ -9,7 +12,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ul class="nav nav-tabs" id="tabs" role="tablist">
+                <!-- Lucas 09112023 ID 965 informações da tarefa dinamica -->
+                <span class="titulo" id="tituloContratodeTarefas"></span>
+                <span class="titulo" id="tituloDemandadeTarefas"></span>
+
+                <ul class="nav nav-tabs mt-2" id="tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link ts-tabModal active" id="basic-tab" data-bs-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Dados Tarefa</a>
                     </li>
@@ -23,38 +30,18 @@
                             <div class="container">
 
                                 <div class="row mt-2">
-                                    <div class="col-md-4">
+                                    <div class="col-md-12">
                                         <label class='form-label ts-label'>Tarefa</label>
-                                        <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off">
+                                        <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off"
+                                        <?php if(isset($demanda)){echo 'required';}else{ echo ' ';} ?> >
                                     </div>
-                                    <div class="col-md-4">
-                                        <div id="demandaContainer">
-                                            <label class="form-label ts-label">ID/Demanda Relacionada</label>
-            
-                                    <input type="hidden" class="form-control ts-input" name="tituloDemanda" id="tituloDemanda" />
-                                            
-                                            <select class="form-select ts-input" name="idDemanda" id="idDemanda">
-                                                <option value="null"></option>
-                                                
-                                                <?php
-                                                if(isset($demanda)){ ?>
-                                                    <option value="<?php echo $demanda['idDemanda'] ?>">
-                                                    <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                                                </option>
-                                                <?php }else{
-                                                foreach ($demandas as $demanda) {
-                                                ?>
-                                                    <option value="<?php echo $demanda['idDemanda'] ?>">
-                                                        <?php echo $demanda['idDemanda'] . " - " . $demanda['tituloDemanda'] ?>
-                                                    </option>
-                                                <?php } }?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                    <input type="hidden" class="form-control ts-input" name="idTarefa" id="idTarefa" />
-                                    <input type="hidden" class="form-control ts-input" name="tipoStatusDemanda" id="tipoStatusDemanda" />
+                        
+                                    <!-- Lucas 09112023 ID 965 Removido Select de demandaRelacionada -->
 
+                                    <input type="hidden" class="form-control ts-input" name="idTarefa" id="idTarefa" />
+
+                                </div>
+                                <div class="row mt-4">
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Cliente</label>
                                         <select class="form-select ts-input" name="idCliente" id="idCliente">
@@ -67,9 +54,6 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    
-                                </div>
-                                <div class="row mt-4">
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Responsável</label>
                                         <select class="form-select ts-input" name="idAtendente" id="idAtendente">
@@ -95,15 +79,12 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label ts-label">Horas Cobrado</label>
-                                        <input type="time" class="form-control ts-input" id="horaCobrado" name="horaCobrado" autocomplete="off">
-                                    </div>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-md-4">
-                                        <label class="form-label ts-label">Data Previsão</label>
-                                        <input type="date" class="form-control ts-input" id="Previsto" name="Previsto" autocomplete="off">
+                                        <label class="form-label ts-label">Data Prevista</label>
+                                        <input type="date" class="form-control ts-input" id="Previsto" name="Previsto" autocomplete="off"
+                                        <?php if(isset($demanda)){echo 'required';}else{ echo ' ';} ?> >
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Inicio</label>
@@ -117,16 +98,16 @@
                                 <div class="row mt-4">
                                     <?php if ($_SESSION['idCliente'] == null) { ?>
                                         <div class="col-md-4">
-                                            <label class="form-label ts-label">Data Real</label>
-                                            <input type="date" class="form-control ts-input" id="dataReal" name="dataReal" autocomplete="off">
+                                            <label class="form-label ts-label">Data Realizado</label>
+                                            <input type="date" class="form-control ts-input" id="dataReal" name="dataReal" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label ts-label">Inicio</label>
-                                            <input type="time" class="form-control ts-input" id="horaInicioReal" name="horaInicioReal" autocomplete="off">
+                                            <input type="time" class="form-control ts-input" id="horaInicioReal" name="horaInicioReal" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label ts-label">Fim</label>
-                                            <input type="time" class="form-control ts-input" id="horaFinalReal" name="horaFinalReal" autocomplete="off">
+                                            <input type="time" class="form-control ts-input" id="horaFinalReal" name="horaFinalReal" readonly>
                                         </div>
                                     <?php } ?>
                                 </div><!--row-->
@@ -232,10 +213,16 @@
                 $('#horaInicioReal').val(data.horaInicioReal);
                 $('#horaFinalReal').val(data.horaFinalReal);
                 $('#horaCobrado').val(data.horaCobrado);
-                $('#tipoStatusDemanda').val(data.idTipoStatus);
+             
+                vidDemanda = data.idDemanda;
+                vtituloDemanda = data.tituloDemanda;
+                vnomeDemanda= data.nomeDemanda;
+                vnomeContrato = data.nomeContrato;
+                vtituloContrato = data.tituloContrato;
+                vidContrato = data.idContrato;
                 quilldescricao.root.innerHTML = data.descricao;
 
-                
+                //alert(data.tituloDemanda)
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
                     $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
@@ -253,12 +240,6 @@
                     $("#idAtendente").prop('disabled', false);
                 }
 
-               /*  if (data.idDemanda !== null) {
-                    $('#idDemandaSelect').val(data.idDemanda);
-                    $('#idDemandaSelect').attr('disabled', 'disabled');
-                } else {
-                    $('#idDemandaSelect').removeAttr('disabled');
-                } */
                 if (data.horaInicioReal !== null) {
                     $('#startButtonModal').hide();
                     $('#realizadoButtonModal').hide();
@@ -282,21 +263,41 @@
                     //se idCliente vier Preenchido o select vai estar desabilitado
                     $("#idCliente").prop('disabled', true);
                 }
-
-                if(data.idDemanda == null){
-                    //se idDemanda vier nulo o select vai estar habilitado
-                    $("#idDemanda").prop('disabled', false);
-                    
-                }else{
-                    //se idDemanda vier Preenchido o select vai estar desabilitado
-                    $("#idDemanda").prop('disabled', true);
-                }
-             
-
+            
                 $('#alterarmodal').modal('show');
+
+                // Lucas 09112023 ID 965 informações da tarefa dinamica
+                if((vidContrato == null) && (vidDemanda == null)){
+                    var tituloModal = $("#tituloContratodeTarefas");
+                    var text = ' ';
+                    tituloModal.html(text);
+                    var tituloModal = $("#tituloDemandadeTarefas");
+                    var text = ' ';
+                    tituloModal.html(text);
+                }
+                if((vidDemanda !== null) && (vidContrato == null)) { 
+                    var tituloModal = $("#tituloContratodeTarefas");
+                    var text = ' ';
+                    tituloModal.html(text);
+                    var tituloModal = $("#tituloDemandadeTarefas");
+                    var text = vnomeDemanda + " :" + " " + vidDemanda + " - " + vtituloDemanda;
+                    tituloModal.html(text);
+                }
+                if((vidDemanda !== null) && (vidContrato !== null)) { 
+                    var tituloModal = $("#tituloContratodeTarefas");
+                    var text = vnomeContrato + " :" + " " + vidContrato + " - " + vtituloContrato + "<br>";
+                    tituloModal.html(text);
+                    var tituloModal = $("#tituloDemandadeTarefas");
+                    var text = vnomeDemanda + " :" + " " + vidDemanda + " - " + vtituloDemanda;
+                    tituloModal.html(text);
+                }
+                
             }
+            
         });
     }
+    
+    
     $(document).on('click', 'button[data-bs-target="#alterarmodal"]', function() {
         var idTarefa = $(this).attr("data-idtarefa");
         BuscarAlterar(idTarefa);

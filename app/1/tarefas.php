@@ -1,4 +1,5 @@
 <?php
+// lucas id654 - Melhorias Tarefas
 //gabriel 28022023 16:33 alterado para LEFT JOIN no usuario
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
@@ -33,13 +34,22 @@ if (isset($jsonEntrada["idEmpresa"])) {
 
 $conexao = conectaMysql($idEmpresa);
 $tarefa = array();
-$sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda, demanda.idTipoStatus, tipoocorrencia.nomeTipoOcorrencia,
+$sql = "SELECT tarefa.*, usuario.nomeUsuario, cliente.nomeCliente, demanda.tituloDemanda,demanda.idContrato,contrato.tituloContrato,demanda.idContratoTipo, demanda.idTipoStatus,contratotipos.nomeContrato,
+        contratotipos.nomeDemanda, tipoocorrencia.nomeTipoOcorrencia,
         TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal, 
-        TIMEDIFF(tarefa.horaFinalPrevisto, tarefa.horaInicioPrevisto) AS horasPrevisto FROM tarefa
+        TIMEDIFF(CURRENT_TIME(), tarefa.horaInicioReal ) AS horasRealCorrente, 
+        TIMEDIFF(tarefa.horaFinalPrevisto, tarefa.horaInicioPrevisto) AS horasPrevisto,
+        DATEDIFF(Previsto,CURRENT_DATE() ) as DIAS, 
+        timestampdiff(SECOND,CURRENT_TIME(),horaInicioPrevisto) as SEGUNDOS,
+        'NAO' as Atrasado,
+        DATEDIFF(dataReal,CURRENT_DATE() ) as DIASREAL
+        FROM tarefa
         LEFT JOIN usuario ON tarefa.idAtendente = usuario.idUsuario 
         LEFT JOIN demanda ON tarefa.idDemanda = demanda.idDemanda 
         LEFT JOIN tipoocorrencia ON tarefa.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
-        LEFT JOIN cliente ON tarefa.idCliente = cliente.idCliente";
+        LEFT JOIN cliente ON tarefa.idCliente = cliente.idCliente
+        LEFT JOIN contratotipos on demanda.idContratoTipo = contratotipos.idContratoTipo
+        LEFT JOIN contrato on demanda.idContrato = contrato.idContrato";
 $where = " where ";
 if (isset($jsonEntrada["idTarefa"])) {
   $sql = $sql . $where . " tarefa.idTarefa = " . $jsonEntrada["idTarefa"];
@@ -66,12 +76,9 @@ if (isset($jsonEntrada["idAtendente"])) {
   $where = " and ";
 }
 
+//Lucas 07112023 id965 - removido condições de filtro periodo
 
-$Periodo = 1;
-if (isset($jsonEntrada["Periodo"])) {
-  $Periodo = $jsonEntrada["Periodo"];
-}
-if (isset($jsonEntrada["statusTarefa"]) && $Periodo != 0) {
+if (isset($jsonEntrada["statusTarefa"])) {
   if ($jsonEntrada["statusTarefa"] == 1) {
     $sql = $sql . $where . " tarefa.horaFinalReal IS NULL";
     $where = " and ";
@@ -82,6 +89,7 @@ if (isset($jsonEntrada["statusTarefa"]) && $Periodo != 0) {
   }
 }
 
+
 if (isset($jsonEntrada["tituloTarefa"])) {
   //gabriel 16102023 ajustado buscar tarefa por titulo
   $sql = $sql . $where . " tarefa.idTarefa= " . "'" . $jsonEntrada["tituloTarefa"] . "'" 
@@ -91,52 +99,30 @@ if (isset($jsonEntrada["tituloTarefa"])) {
 }
 
 
-if (isset($jsonEntrada["Periodo"])) {
-  if ($jsonEntrada["Periodo"] == 1) {
-    if (isset($jsonEntrada["PeriodoInicio"])) {
-      $sql .= $where . " tarefa.Previsto >= '" . $jsonEntrada["PeriodoInicio"] . "'";
-      $where = " and ";
-    }
-    if (isset($jsonEntrada["PeriodoFim"])) {
-      $sql .= $where . " tarefa.Previsto <= '" . $jsonEntrada["PeriodoFim"] . "'";
-      $where = " and ";
-    }
-  }
-  if ($jsonEntrada["Periodo"] == 0) {
-    if (isset($jsonEntrada["PeriodoInicio"])) {
-      $sql .= $where . " tarefa.dataReal >= '" . $jsonEntrada["PeriodoInicio"] . "'";
-      $where = " and ";
-    }
-    if (isset($jsonEntrada["PeriodoFim"])) {
-      $sql .= $where . " tarefa.dataReal <= '" . $jsonEntrada["PeriodoFim"] . "'";
-      $where = " and ";
-    }
-
-  }
+//Lucas 07112023 id965 - removido condições de filtro periodo substituido por novo campo dataOrdem
+if (isset($jsonEntrada["PeriodoInicio"])) {
+  $sql .= $where . " tarefa.dataOrdem >= '" . $jsonEntrada["PeriodoInicio"] . "'";
+  $where = " and ";
+}
+if (isset($jsonEntrada["PeriodoFim"])) {
+  $sql .= $where . " tarefa.dataOrdem <= '" . $jsonEntrada["PeriodoFim"] . "'";
+  $where = " and ";
 }
 
+
+// lucas id654 - Removido filtro RealOrdem e substituido filtro PrevistoOrdem por dataOrdem
 $order = " ORDER BY ";
-if (isset($jsonEntrada["PrevistoOrdem"])) {
-  if ($jsonEntrada["PrevistoOrdem"] == 1) {
-    $sql .= $order . " `tarefa`.`Previsto` DESC ";
+if (isset($jsonEntrada["dataOrdem"])) {
+  if ($jsonEntrada["dataOrdem"] == 1) {
+    $sql .= $order . " `tarefa`.`dataOrdem` DESC, `tarefa`.`horaInicioOrdem`  DESC ";
     $order = ",";
   }
-  if ($jsonEntrada["PrevistoOrdem"] == 0) {
-    $sql .= $order . " `tarefa`.`Previsto` ASC ";
+  if ($jsonEntrada["dataOrdem"] == 0) {
+    $sql .= $order . " `tarefa`.`dataOrdem` ASC, `tarefa`.`horaInicioOrdem` ASC ";
     $order = ",";
   }
 }
 
-if (isset($jsonEntrada["RealOrdem"])) {
-  if ($jsonEntrada["RealOrdem"] == 1) {
-    $sql .= $order . " `tarefa`.`dataReal` DESC ";
-    $order = ",";
-  }
-  if ($jsonEntrada["RealOrdem"] == 0) {
-    $sql .= $order . " `tarefa`.`dataReal` ASC ";
-    $order = ",";
-  }
-}
 $sql .= $order . " idTarefa DESC ";
 
 //echo "-SQL->".json_encode($sql)."\n";
@@ -159,6 +145,35 @@ try {
     throw new Exception(mysqli_error($conexao));
 
   while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
+    
+    if (!isset($row["horasPrevisto"])) {
+      $row["horasPrevisto"] = "00:00:00";
+    }
+    if (!isset($row["horasReal"])) {
+      $row["horasReal"] = "00:00:00";
+    }
+    if (!isset($row["horasRealCorrente"])) {
+      $row["horasRealCorrente"]= "00:00:00";
+    }
+    if ($row["DIAS"] < 0) {
+        $row["Atrasado"] = "SIM";
+    }
+    if ($row["DIAS"] == 0) {
+        if ($row["SEGUNDOS"] < 0) {
+          $row["Atrasado"] = "SIM";
+        }
+    } 
+    if ($row["DIASREAL"] == 0) {
+      if ($row["horasReal"] == "00:00:00") {
+        $row["horasReal"] = $row["horasRealCorrente"] ;
+      }
+  } 
+  
+   unset($row["DIAS"]);
+   unset($row["SEGUNDOS"]);
+   unset($row["horasRealCorrente"] );
+   unset($row["DIASREAL"]);
+
     array_push($tarefa, $row);
     $rows = $rows + 1;
   }

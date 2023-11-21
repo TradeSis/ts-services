@@ -70,6 +70,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -200,7 +201,7 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
+    <div class="table mt-2 ts-divTabela70 ts-tableFiltros text-center">
       <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
@@ -215,7 +216,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             <th>Ocorrência</th>
             <th>Data Entrega</th>
             <th>Posição</th>
-            <th colspan="2">Ação</th>
+            <th colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
             <th></th>
@@ -414,21 +415,32 @@ if (isset($_SESSION['filtro_demanda'])) {
               var posicao = "Cliente"
             }
 
-            linha += "<tr>";
-            linha += "<td>" + object.prioridade + "</td>";
-            linha += "<td>" + object.idDemanda + "</td>";
-            linha += "<td>" + object.nomeCliente + "</td>";
-            linha += "<td>" + object.nomeSolicitante + "</td>";
-            linha += "<td>" + object.tituloDemanda + "</td>";
-            linha += "<td>" + object.nomeAtendente + "</td>";
-            linha += "<td>" + dataFormatada + "</td>";
-            linha += "<td class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
-            linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td>" + dataFechamentoFormatada + "</td>";
-            linha += "<td>" + posicao + "</td>";
-            linha += "<td><a class='btn btn-warning btn-sm' href='visualizar.php?idDemanda=" + object.idDemanda + "' role='button'><i class='bi bi-pencil-square'></i></a></td>";
+
+            linha += "<tr>";  
+            /* helio 09112023 - classe ts-click para quando clicar,
+               data-idDemanda para guardar o id da demanda */
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.prioridade + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.idDemanda + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeCliente + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFormatada + "</td>";
+            linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFechamentoFormatada + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + posicao + "</td>";
+
+            linha += "<td>"; 
+            linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
+            " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
+
+            linha += "<li class='ms-1 me-1 mt-1'><a class='btn btn-warning btn-sm w-100 text-start' href='visualizar.php?idDemanda=" + object.idDemanda + 
+            "' role='button'><i class='bi bi-pencil-square'></i> Alterar</a></li>";
 
             linha += "</tr>";
+            linha +="</ul></div>"
+            linha += "</td>";
           }
 
           $("#dados").html(linha);
@@ -439,6 +451,17 @@ if (isset($_SESSION['filtro_demanda'])) {
         }
       });
     }
+
+    /* helio 09112023 - ao clicar em ts-click, chama visualizar */
+    $(document).on('click', '.ts-click', function() {
+        window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
+    });
+
+   function trabrelinkx(parametros)
+   {
+       
+   }
+
 
     $("#FiltroTipoStatus").change(function() {
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());

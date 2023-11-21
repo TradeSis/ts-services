@@ -9,20 +9,7 @@
         </div>
         <div class="modal-body">
           <form method="post">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="<?php echo null ?>" id="Radio" name="FiltroPeriodo"
-                <?php echo $Checked; ?> hidden>
-              <input class="form-check-input" type="radio" value="1" id="PrevisaoRadio" name="FiltroPeriodo" <?php echo $previsaoChecked; ?>>
-              <label class="form-check-label" for="PrevisaoRadio">
-                Previsão
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="0" id="RealizadoRadio" name="FiltroPeriodo" <?php echo $realizadoChecked; ?>>
-              <label class="form-check-label" for="RealizadoRadio">
-                Realizado
-              </label>
-            </div>
+           <!-- Lucas 07112023 id965 - Removido Filtro de Previsto e Realizado  -->
             <div class="row" id="conteudoReal">
               <div class="col">
                 <label class="labelForm">Começo</label>

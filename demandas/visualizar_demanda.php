@@ -173,7 +173,7 @@ $statusEncerrar = array(
 
                         <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
                             <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal e do botão para entregar-->
-                            <button type="button" data-toggle="modal" data-target="#entregarModal" class="btn btn-warning mr-3">Entregar</button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#entregarModal" class="btn btn-warning mr-3">Entregar</button>
                         <?php } ?>
                     </div>
 

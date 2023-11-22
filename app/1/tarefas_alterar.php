@@ -84,7 +84,7 @@ if (isset($jsonEntrada['idTarefa'])) {
 
 
 
-    $sql = "UPDATE tarefa SET tituloTarefa = $tituloTarefa, idAtendente`= $idAtendente, idTipoOcorrencia`= $idTipoOcorrencia Previsto = $Previsto, horaInicioPrevisto = $horaInicioPrevisto, horaFinalPrevisto = $horaFinalPrevisto, descricao = $descricao, 
+    $sql = "UPDATE tarefa SET tituloTarefa = $tituloTarefa, idAtendente = $idAtendente, idTipoOcorrencia = $idTipoOcorrencia, Previsto = $Previsto, horaInicioPrevisto = $horaInicioPrevisto, horaFinalPrevisto = $horaFinalPrevisto, descricao = $descricao, 
     dataOrdem = $dataOrdem, horaInicioOrdem = $horaInicioOrdem ";
 
     //Verifica se a tarefa tem Demanda

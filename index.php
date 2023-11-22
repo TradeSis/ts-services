@@ -92,6 +92,12 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                                 href="?tab=os" role="tab">O.S.</a>
                             </li>
                         <?php }
+                        if ($nivelMenu >= 2) { ?>
+                            <li class="nav-item mr-1">
+                                <a class="nav-link <?php if ($tab == "rotinas") {echo " active ";} ?>" 
+                                href="?tab=rotinas" role="tab">Rotinas</a>
+                            </li>
+                        <?php }
                         if ($nivelMenu >= 4) { ?>
                             <li class="nav-item mr-1">
                                 <a class="nav-link <?php if ($tab == "configuracao") {echo " active ";} ?>" 
@@ -132,6 +138,9 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         <option value="<?php echo URLROOT ?>/services/?tab=os" 
                         <?php if ($getTab == "os") {echo " selected ";} ?>>O.S.</option>
 
+                        <option value="<?php echo URLROOT ?>/services/?tab=rotinas" 
+                        <?php if ($getTab == "rotinas") {echo " selected ";} ?>>Rotinas</option>
+
                         <option value="<?php echo URLROOT ?>/services/?tab=configuracao" 
                         <?php if ($getTab == "configuracao") {echo " selected ";} ?>>Configurações</option>
                     </select>
@@ -160,6 +169,10 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
             if ($tab == "os") {
                 $src = "contratos/?tipo=os";
                 $title = "Serviços/O.S.";
+            }
+            if ($tab == "rotinas") {
+                $src = "contratos/?tipo=rotinas";
+                $title = "Serviços/Rotinas";
             }
 
             if ($tab == "contratos") {

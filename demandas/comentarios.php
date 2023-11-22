@@ -1,13 +1,12 @@
 <?php
-include_once '../head.php';
+include_once '../header.php';
 ?>
-
 
     <div class="container-fluid">
         <form method="post" id="form" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group">XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
                         <?php
                         $nomeCliente = "Interno";
                         if ($usuario["idCliente"]) {
@@ -40,14 +39,12 @@ include_once '../head.php';
                             </label>
                             </div>
                             <div class="col-md">
-                            <?php
-                            if ($ClienteSession == NULL) { ?>
-                                <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente" class="btn btn-info" style="float: right;">Salvar</button>
-                                
-                            <?php } //*************** visão cliente
-                            if ($ClienteSession >= 1) { ?>
-                                <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="float: right;">Enviar</button>
-                            <?php } ?>
+                            <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
+                            <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente" class="btn btn-info" style="float: right;">Salvarx</button>
+                          
+                            <!-- if ($ClienteSession >= 1) { -->
+                            <!-- <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="float: right;">Enviarx</button> -->
+                            
                             </div>
                         </div>
                         <p id="mostraNomeAnexo"></p>
@@ -103,6 +100,11 @@ include_once '../head.php';
             </div>
         </form>
     </div>
+
+     <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <!-- QUILL editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <script>
         function myFunction() {
@@ -171,3 +173,5 @@ include_once '../head.php';
             $('#quill-comentario').val(quillcomentario.container.firstChild.innerHTML);
         });
     </script>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->

@@ -26,9 +26,8 @@
                                     <input type="text" class="form-control ts-input" value="<?php echo $contrato['nomeCliente'] ?>" readonly>
                                     <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $contrato['idCliente'] ?>" readonly>
                                 <?php } else { ?>
-                                    <select class="form-select ts-input" name="idCliente" autocomplete="off" <?php if (isset($contrato)) {
-                                                                                                                    echo " disabled ";
-                                                                                                                } ?>required>
+                                    <select class="form-select ts-input" name="idCliente" autocomplete="off" 
+                                        <?php if (isset($contrato)) { echo " disabled "; } ?>required>
                                         <option value="">
                                             <?php if (isset($contrato)) {
                                                 echo $contrato['nomeCliente'];

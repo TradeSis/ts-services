@@ -17,10 +17,7 @@ if (isset($_GET["tipo"])) {
 } else {
   $contratoTipo = buscaContratoTipos('contratos');
 }
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-  $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $clientes = buscaClientes();
@@ -210,7 +207,6 @@ if (isset($_SESSION['filtro_demanda'])) {
             <th>Solicitante</th>
             <th>Titulo</th>
             <th>Responsavel</th>
-            
             <th>Status</th>
             <th>Ocorrência</th>
             <th>Datas</th>
@@ -439,11 +435,6 @@ if (isset($_SESSION['filtro_demanda'])) {
     $(document).on('click', '.ts-click', function() {
         window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
     });
-
-   function trabrelinkx(parametros)
-   {
-       
-   }
 
 
     $("#FiltroTipoStatus").change(function() {

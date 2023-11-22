@@ -16,10 +16,7 @@ include_once(ROOT . '/cadastros/database/clientes.php');
 include_once(ROOT . '/cadastros/database/usuario.php');
 
 
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-  $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();

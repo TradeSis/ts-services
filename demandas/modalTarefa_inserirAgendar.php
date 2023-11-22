@@ -18,7 +18,7 @@
               <div class="col-md">
                 <label class='form-label ts-label'>Tarefa</label>
                 <input type="text" class="form-control ts-input" name="tituloTarefa" id="clonartitulo" autocomplete="off" 
-                <?php if(isset($demanda)){echo 'required';}else{ echo ' ';} ?> >
+                <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
                 <input type="hidden" class="form-control ts-input" name="idDemanda" value="null" id="clonaridDemanda">
               </div>
             
@@ -100,7 +100,7 @@
               <div class="col-md-4">
                 <label class="form-label ts-label">Data Previsão</label>
                 <input type="date" class="form-control ts-input" name="Previsto" autocomplete="off" 
-                <?php if(isset($demanda)){echo 'required';}else{ echo ' ';} ?> >
+                <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
               </div>
               <div class="col-md-4">
                 <label class="form-label ts-label">Inicio</label>

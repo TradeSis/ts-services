@@ -2,7 +2,14 @@
     Lucas 09112023 ID 965 Melhorias em Tarefas 
     Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
 -->
-
+<style>
+    /*Style provisorio, essa parte vai ir para sistema/estilo.css */
+    .ts-selectDisable{
+        background: #eee; 
+        pointer-events: none;
+        touch-action: none;
+    }
+</style>
 <!--------- ALTERAR --------->
 <div class="modal" id="alterarmodal" tabindex="-1"  aria-labelledby="alterarmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -33,7 +40,7 @@
                                     <div class="col-md-12">
                                         <label class='form-label ts-label'>Tarefa</label>
                                         <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off"
-                                        <?php if(isset($demanda)){echo 'required';}else{ echo ' ';} ?> >
+                                        <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
                                     </div>
                         
                                     <!-- Lucas 09112023 ID 965 Removido Select de demandaRelacionada -->
@@ -84,7 +91,7 @@
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Data Prevista</label>
                                         <input type="date" class="form-control ts-input" id="Previsto" name="Previsto" autocomplete="off"
-                                        <?php if(isset($demanda)){echo 'required';}else{ echo ' ';} ?> >
+                                        <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Inicio</label>
@@ -231,13 +238,13 @@
                     $('#visualizarDemandaButton').hide();
                 }
           
-                // Lucas 23102023 - simplificado select
+                // lucas 22112023 id 688 - alterado condições do select
                 if (data.Previsto !== null || data.dataReal !== null) {
                     //se vier dataPrevisto ou dataReal o select vai estar desabilitado
-                    $("#idAtendente").prop('disabled', true);
+                    $( "#idAtendente" ).addClass( "ts-selectDisable" );
                 } else {
                     //senão vai habilitar o select
-                    $("#idAtendente").prop('disabled', false);
+                    $( "#idAtendente" ).removeClass( "ts-selectDisable" );
                 }
 
                 if (data.horaInicioReal !== null) {
@@ -255,13 +262,13 @@
                     $('#realizadoButtonModal').hide();
                     $('#stopButtonModal').hide();
                 }
-                // Lucas 23102023 - simplificado select
+                // lucas 22112023 id 688 - alterado condições do select
                 if(data.idCliente == null){
                     //se idCliente vier nulo o select vai estar habilitado
-                     $("#idCliente").prop('disabled', false);
+                     $( "#idCliente" ).removeClass( "ts-selectDisable" );
                 }else{
                     //se idCliente vier Preenchido o select vai estar desabilitado
-                    $("#idCliente").prop('disabled', true);
+                    $( "#idCliente" ).addClass( "ts-selectDisable" );
                 }
             
                 $('#alterarmodal').modal('show');

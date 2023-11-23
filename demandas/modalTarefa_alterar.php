@@ -2,14 +2,7 @@
     Lucas 09112023 ID 965 Melhorias em Tarefas 
     Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
 -->
-<style>
-    /*Style provisorio, essa parte vai ir para sistema/estilo.css */
-    .ts-selectDisable{
-        background: #eee; 
-        pointer-events: none;
-        touch-action: none;
-    }
-</style>
+
 <!--------- ALTERAR --------->
 <div class="modal" id="alterarmodal" tabindex="-1"  aria-labelledby="alterarmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">

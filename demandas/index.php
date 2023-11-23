@@ -197,24 +197,43 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela70 ts-tableFiltros text-center">
+    <div class="table mt-2 ts-divTabela70 ts-tableFiltros">
       <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
             <th></th>
-            <th>ID</th>
-            <th>Cliente</th>
-            <th>Solicitante</th>
             <th>Titulo</th>
             <th>Responsavel</th>
-            <th>Status</th>
+            <th>Cliente</th>
+            <th>Solicitante</th>
             <th>Ocorrência</th>
-            <th>Datas</th>
+            <th class="col-2">Datas</th>
+            <th>Status</th>
             <th colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
             <th></th>
             <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($atendentes as $atendente) {
+                  ?>
+                    <option <?php
+                            if ($atendente['idUsuario'] == $idAtendente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $atendente['idUsuario'] ?>">
+                      <?php echo $atendente['nomeUsuario'] ?>
+                    </option>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
             <th>
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
@@ -258,45 +277,6 @@ if (isset($_SESSION['filtro_demanda'])) {
             <th></th>
             <th>
               <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
-                  <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
-                  </option>
-                  <?php
-                  foreach ($atendentes as $atendente) {
-                  ?>
-                    <option <?php
-                            if ($atendente['idUsuario'] == $idAtendente) {
-                              echo "selected";
-                            }
-                            ?> value="<?php echo $atendente['idUsuario'] ?>">
-                      <?php echo $atendente['nomeUsuario'] ?>
-                    </option>
-                  <?php } ?>
-                </select>
-              </form>
-            </th>
-            
-            <th>
-              <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
-                  <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
-                  </option>
-                  <?php foreach ($tiposstatus as $tipostatus) { ?>
-                    <option <?php
-                            if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
-                              echo "selected";
-                            }
-                            ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
-                      <?php echo $tipostatus['nomeTipoStatus'] ?>
-                    </option>
-                  <?php } ?>
-                </select>
-              </form>
-            </th>
-            <th>
-              <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                   <option value="<?php echo null ?>">
                     <?php echo "Selecione" ?>
@@ -310,6 +290,24 @@ if (isset($_SESSION['filtro_demanda'])) {
                             }
                             ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
                       <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
+                    </option>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php foreach ($tiposstatus as $tipostatus) { ?>
+                    <option <?php
+                            if ($tipostatus['idTipoStatus'] == $idTipoStatus) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $tipostatus['idTipoStatus'] ?>">
+                      <?php echo $tipostatus['nomeTipoStatus'] ?>
                     </option>
                   <?php } ?>
                 </select>
@@ -388,20 +386,27 @@ if (isset($_SESSION['filtro_demanda'])) {
             var dataFechamento = new Date(object.dataFechamento);
             dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR");
             
+            if(object.prioridade == '99'){
+              object.prioridade = ''
+            }
 
             linha += "<tr>";  
             /* helio 09112023 - classe ts-click para quando clicar,
                data-idDemanda para guardar o id da demanda */
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.prioridade + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.idDemanda + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>";
+            if ((object.idDemanda !== null) && (object.idContrato !== null)) {
+              linha += object.nomeContrato + " : " + " " + object.idContrato + "  " + object.tituloContrato + "<br>";
+              linha += object.idDemanda + "  " +  object.tituloDemanda; 
+            }
+            if((object.idDemanda !== null) && (object.idContrato === null)){
+              linha += object.nomeDemanda + " : " + " " + object.idDemanda + "  " +  object.tituloDemanda;
+            }
+            linha += "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeCliente + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
-            
-            linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
-
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + 'Abertura: ' + dataFormatada + '<br>'
             if (object.dataFechamento == null) {
               linha += '';
@@ -409,6 +414,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               linha += 'Entrega : ' + ' ' + dataFechamentoFormatada 
             }
             linha +=  "</td>";
+            linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
 
             linha += "<td>"; 
             linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +

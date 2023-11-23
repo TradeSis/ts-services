@@ -27,7 +27,7 @@
                 </div>
                 <div class="modal-footer">
                     <!-- lucas 22092023 ID 358 Modificado nome do botao-->
-                    <button type="submit" formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning">Reabrir</button>
+                    <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=retornar" class="btn btn-warning">Reabrir</button>
                 </div>
                 </form>
             </div>

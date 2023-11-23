@@ -30,7 +30,7 @@
        <div class="modal-footer">
          <?php if (isset($demanda)) { ?>
            <div class="col align-self-start pl-0">
-             <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left">Entregar</button>
+             <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=realizado" class="btn btn-warning float-left">Entregar</button>
            </div>
            <button type="submit" formaction="../database/tarefas.php?operacao=realizado&acao=stop&redirecionarDemanda" class="btn btn-danger">Stop</button>
          <?php } else { ?>

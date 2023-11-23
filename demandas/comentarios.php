@@ -6,7 +6,7 @@ include_once '../header.php';
         <form method="post" id="form" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                    <div class="form-group">
                         <?php
                         $nomeCliente = "Interno";
                         if ($usuario["idCliente"]) {
@@ -40,11 +40,7 @@ include_once '../header.php';
                             </div>
                             <div class="col-md">
                             <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
-                            <button type="submit" formaction="../database/demanda.php?operacao=comentarAtendente" class="btn btn-info" style="float: right;">Salvarx</button>
-                          
-                            <!-- if ($ClienteSession >= 1) { -->
-                            <!-- <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="float: right;">Enviarx</button> -->
-                            
+                                <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="float: right;">Enviar</button>  
                             </div>
                         </div>
                         <p id="mostraNomeAnexo"></p>

@@ -195,7 +195,7 @@ $contratos = buscaContratosAbertos($demanda["idCliente"]);
                     vurl = "../database/tarefas.php?operacao=start";
                 }
                 if ($("#realizadoButtonModal").is(":focus")) {
-                    vurl = "../database/tarefas.php?operacao=realizado";
+                    vurl = "../database/tarefas.php?operacao=realizado&acao=realizado";
                 }
                 if ($("#atualizarButtonModal").is(":focus")) {
                     vurl = "../database/tarefas.php?operacao=alterar";

@@ -238,12 +238,7 @@ if (isset($_GET['operacao'])) {
 		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 	
-	if ($operacao == "atualizar") {
-
-		$acao = "";
-        if (isset($_GET['acao'])) {
-            $acao = $_GET['acao'];
-        }
+	if ($operacao == "realizado") {
 
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
@@ -253,33 +248,262 @@ if (isset($_GET['operacao'])) {
 			'comentario' => $_POST['comentario'],
 			'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
 			'idTarefa' => $_POST['idTarefa'],
-			'idAtendente' => $_POST['idAtendente'],//utilizado quando ação for solicitar
-			'acao' => $acao
 		);
 		
-		$demanda = chamaAPI(null, '/services/demanda/atualizar', json_encode($apiEntrada), 'POST');
+		$demanda = chamaAPI(null, '/services/demanda/realizado', json_encode($apiEntrada), 'POST');
 		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 
 	}
 	
-
-	// lucas 22112023 id 688 - removido operação comentarioAtendente
-	if ($operacao == "comentar") {
-
+	if ($operacao == "validar") {
+		/*$anexo = $_FILES['nomeAnexo'];
+		
+		$pasta    = ROOT    . "/img/anexos/";
+		$pastaURL = URLROOT . "/img/anexos/";
+		
+		$nomeAnexo = $anexo['name'];
+		//$novoNomeDoAnexo = uniqid(); 
+		$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+		
+		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+		
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+		die("Tipo de aquivo não aceito"); 
+		
+		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+		
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
+		
 		$apiEntrada = array(
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
 			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
-			'comentario' => $_POST['comentario']
+			//'comentario' => $_POST['comentario'],
+			'idTipoStatus' => TIPOSTATUS_VALIDADO
 
 		);
 
-		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
+		if($_POST['comentario'] != ""){
+			$apiEntrada2 = array(
+				//'nomeAnexo' => $nomeAnexo,
+				//'pathAnexo' => $pathURL,
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'idUsuario' => $_POST['idUsuario'],
+				'idCliente' => $_POST['idCliente'],
+				'idDemanda' => $_POST['idDemanda'],
+				'comentario' => $_POST['comentario'],
+				'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+				'idTipoStatus' => TIPOSTATUS_RESPONDIDO
+	
+			);
+			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
+		}
+		
+		$comentario = chamaAPI(null, '/services/demanda/validar', json_encode($apiEntrada), 'PUT');
+		
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "retornar") {
+		/*$anexo = $_FILES['nomeAnexo'];
+		
+		$pasta    = ROOT    . "/img/anexos/";
+		$pastaURL = URLROOT . "/img/anexos/";
+		
+		$nomeAnexo = $anexo['name'];
+		//$novoNomeDoAnexo = uniqid(); 
+		$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+		
+		$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+		
+		if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+		die("Tipo de aquivo não aceito"); 
+		
+		$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+		$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+		
+		move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
+
+		
+		$apiEntrada = array(
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
+			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			//'comentario' => $_POST['comentario'],
+			'idTipoStatus' => TIPOSTATUS_RETORNO
+
+		);
+
+		if($_POST['comentario'] != ""){
+			$apiEntrada2 = array(
+				//'nomeAnexo' => $nomeAnexo,
+				//'pathAnexo' => $pathURL,
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'idUsuario' => $_POST['idUsuario'],
+				'idCliente' => $_POST['idCliente'],
+				'idDemanda' => $_POST['idDemanda'],
+				'comentario' => $_POST['comentario'],
+				'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+				'idTipoStatus' => TIPOSTATUS_RESPONDIDO
+	
+			);
+			$comentario2 = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada2), 'PUT');
+		}
+
+		$comentario = chamaAPI(null, '/services/demanda/retornar', json_encode($apiEntrada), 'PUT');
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "comentar") {
+
+		/*$anexo = $_FILES['nomeAnexo'];
+							
+								$pasta    = ROOT    . "/img/anexos/";
+								$pastaURL = URLROOT . "/img/anexos/";
+
+								$nomeAnexo = $anexo['name'];
+								//$novoNomeDoAnexo = uniqid(); 
+								$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
+								$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+								 if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+								die("Tipo de aquivo não aceito"); 
+
+								$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+								$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
+								move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
+
+
+		$apiEntrada = array(
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
+			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $_POST['comentario'],
+			'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
+			'idTipoStatus' => TIPOSTATUS_RESPONDIDO
+
+		);
+
+		$comentario = chamaAPI(null, '/services/comentario/cliente', json_encode($apiEntrada), 'PUT');
 
 		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
+	if ($operacao == "comentarAtendente") {
+
+		/* echo json_encode($_FILES);
+		//echo json_encode($_POST);
+		return; */
+		/*$anexo = $_FILES['nomeAnexo'];
+							
+								$pasta    = ROOT    . "/img/anexos/";
+								$pastaURL = URLROOT . "/img/anexos/";
+
+								$nomeAnexo = $anexo['name'];
+								//$novoNomeDoAnexo = uniqid(); 
+								$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
+								$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+								 if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+								die("Tipo de aquivo não aceito"); 
+
+								$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+								$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
+								move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
+
+								$anexo = $_FILES['nomeAnexo'];
+
+								if($anexo !== null) {
+									preg_match("/\.(png|jpg|jpeg|txt|xlsx|pdf|csv|doc|docx|zip){1}$/i", $anexo["name"],$ext);
+								
+									if($ext == true) {
+										$pasta = ROOT . "/img/";
+										
+										$novoNomeAnexo = $_POST['idDemanda']. "_" .$anexo["name"];
+										$pathAnexo = 'http://' . $_SERVER["HTTP_HOST"] .'/img/' . $novoNomeAnexo;
+										move_uploaded_file($anexo['tmp_name'], $pasta.$novoNomeAnexo);
+								
+										
+									}else{
+										$novoNomeAnexo = " ";
+									}
+							
+								}
+
+		$apiEntrada = array(
+			'nomeAnexo' => $novoNomeAnexo,
+			'pathAnexo' => $pathAnexo,
+			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $_POST['comentario'],
+			'idTipoStatus' => null
+
+		);
+
+		$comentario = chamaAPI(null, '/services/comentario/atendente', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
+	}
+
+	if ($operacao == "solicitar") {
+
+		/*$anexo = $_FILES['nomeAnexo'];
+							
+								$pasta    = ROOT    . "/img/anexos/";
+								$pastaURL = URLROOT . "/img/anexos/";
+
+								$nomeAnexo = $anexo['name'];
+								//$novoNomeDoAnexo = uniqid(); 
+								$novoNomeDoAnexo = $_POST['idDemanda'] . "_" . $nomeAnexo;
+
+								$extensao = strtolower(pathinfo($nomeAnexo,PATHINFO_EXTENSION)); 
+
+								if($extensao != "" && $extensao != "jpg" && $extensao != "png" && $extensao != "xlsx" && $extensao != "pdf" && $extensao != "cvs" && $extensao != "doc" && $extensao != "docx" && $extensao != "zip")
+								die("Tipo de aquivo não aceito"); 
+
+								$pathAnexo = $pasta    . $novoNomeDoAnexo . "." . $extensao;
+								$pathURL   = $pastaURL . $novoNomeDoAnexo . "." . $extensao;
+
+								move_uploaded_file($anexo["tmp_name"],$pathAnexo); */
+
+		if($_POST['comentario'] != ""){
+			$comentario = $_POST['comentario'];
+		} else{
+			$comentario = null;
+		}
+		$apiEntrada = array(
+			//'nomeAnexo' => $nomeAnexo,
+			//'pathAnexo' => $pathURL,
+			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idUsuario' => $_POST['idUsuario'],
+			'idCliente' => $_POST['idCliente'],
+			'idDemanda' => $_POST['idDemanda'],
+			'comentario' => $comentario,
+			'idTipoStatus' => TIPOSTATUS_AGUARDANDOSOLICITANTE,
+			//lucas 22092023 ID 358 Adicionado idAtendente
+			'idAtendente' => $_POST['idAtendente'],
+		);
+
+		$comentario = chamaAPI(null, '/services/comentario/atendente', json_encode($apiEntrada), 'PUT');
+
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
 
 	if ($operacao == "filtrar") {
 

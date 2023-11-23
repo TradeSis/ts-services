@@ -42,7 +42,7 @@ if (isset($LOG_NIVEL)) {
 }
 //LOG
 
-$statusTarefa = array(
+$statusAgendado = array(
     TIPOSTATUS_FILA,
     TIPOSTATUS_RESPONDIDO
 );
@@ -77,12 +77,7 @@ if (isset($jsonEntrada['idEmpresa'])) {
     $dataOrdem = $Previsto;
     $horaInicioOrdem = $horaInicioPrevisto;
 
-    if (isset($jsonEntrada['Previsto'])) {
-        $idTipoStatus = TIPOSTATUS_AGENDADO;
-    }
-
     if ($acao == 'start') {
-        $idTipoStatus = TIPOSTATUS_FAZENDO;
         $dataReal = "'" . date('Y-m-d') . "'";
         $horaInicioReal = "'" . date('H:i:00') . "'";  
         $dataOrdem = $dataReal;
@@ -116,14 +111,14 @@ if (isset($jsonEntrada['idEmpresa'])) {
         if ($LOG_NIVEL >= 2) {
             fwrite($arquivo, $identificacao . "-Previsto->" . $jsonEntrada['Previsto'] . " tipoStatusDemanda=" . $tipoStatusDemanda . " statusTarefa=" . json_encode($statusTarefa) . "\n");
         }
-        if (isset($jsonEntrada['Previsto']) && in_array($tipoStatusDemanda, $statusTarefa, true)) {
-            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
+        if (($acao == 'start') && in_array($tipoStatusDemanda, $statusStart, true)) {
+            $idTipoStatus = TIPOSTATUS_FAZENDO;
+            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
         } else {
-            if (($acao == 'start') && in_array($tipoStatusDemanda, $statusStart, true)) {
-                $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
-            } else {
-                $sql3 = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), idTipoOcorrencia=$idTipoOcorrencia WHERE idDemanda = $idDemanda";
-            }
+            if ($jsonEntrada['Previsto'] != "" && in_array($tipoStatusDemanda, $statusAgendado, true)) {
+                $idTipoStatus = TIPOSTATUS_AGENDADO;
+                $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+            } 
         }
     }
     //LOG

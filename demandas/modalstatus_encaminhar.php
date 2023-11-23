@@ -38,7 +38,7 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=solicitar" class="btn btn-warning">Encaminharx</button>
+                <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=solicitar" class="btn btn-warning">Encaminhar</button>
             </div>
             </form>
         </div>

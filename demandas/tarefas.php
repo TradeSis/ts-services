@@ -442,6 +442,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
             if(object.tituloDemanda === null){
               linha += object.tituloTarefa;
             }
+            // lucas 23112023 - tratamento quando cliente vir null
+            if(object.nomeCliente === null){
+              object.nomeCliente = '';
+            }
 
             linha += "</td>";
 
@@ -477,7 +481,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
           
           
             // lucas id654 - Removido linha de dataReal
-            
+          
             linha += "<td>" ; 
 
             linha += "<id='botao'>";
@@ -660,6 +664,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         });
     
     });
+    
 
     //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.stopButton', function() {
@@ -807,7 +812,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         }
         var vurl;
         if ($("#realizadoFormbutton").is(":focus")) {
-          vurl = "../database/demanda.php?operacao=realizado";
+          vurl = "../database/demanda.php?operacao=atualizar&acao=realizado";
         }
         if ($("#stopFormbutton").is(":focus")) {
           vurl = "../database/tarefas.php?operacao=realizado&acao=stop";

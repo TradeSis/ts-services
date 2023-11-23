@@ -20,9 +20,10 @@
              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
            </div>
            <div class="col-md">
+           
              <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
              <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-
+          
              <input type="hidden" class="form-control" name="idTarefa" id="stopmodal_idTarefa" />
              <input type="hidden" class="form-control" name="idDemanda" id="stopmodal_idDemanda" />
            </div>

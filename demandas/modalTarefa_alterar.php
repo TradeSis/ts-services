@@ -238,6 +238,15 @@
                     $('#visualizarDemandaButton').hide();
                 }
           
+                //condição para adicionar classe de required em titulo e Previsto
+                if (data.idDemanda !== null) {
+                    $("#titulo").prop('required', false);
+                    $("#Previsto").prop('required', false);
+                } else {
+                    $("#titulo").prop('required', true);
+                    $("#Previsto").prop('required', true);
+                }
+
                 // lucas 22112023 id 688 - alterado condições do select
                 if (data.Previsto !== null || data.dataReal !== null) {
                     //se vier dataPrevisto ou dataReal o select vai estar desabilitado

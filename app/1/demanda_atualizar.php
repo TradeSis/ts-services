@@ -35,6 +35,8 @@ if (isset($jsonEntrada['idDemanda'])) {
     if ($jsonEntrada['acao'] == "realizado") {
         $idDemanda = $jsonEntrada['idDemanda'];
         $idUsuario = $jsonEntrada['idUsuario'];
+        $idTarefa = $jsonEntrada['idTarefa'];
+        $idTarefa = isset($jsonEntrada['idTarefa'])  && $jsonEntrada['idTarefa'] !== ""        ?   $jsonEntrada['idTarefa']    : "null";
         $comentario = isset($jsonEntrada['comentario']) && $jsonEntrada['comentario'] !== "null" && $jsonEntrada['comentario'] !== "" ? "'" . $jsonEntrada['comentario'] . "'" : "null";
         $idTipoStatus = TIPOSTATUS_REALIZADO;
 
@@ -68,21 +70,22 @@ if (isset($jsonEntrada['idDemanda'])) {
         }
 
         if ($comentario !== "null") {
-            //echo '__ ESTOU AQUI Cometario__';
-            $sql3 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";
+            $sql3 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario, $idUsuario, CURRENT_TIMESTAMP())";
         }
 
         // Chama a api de Tarefas
-        if (isset($jsonEntrada['idTarefa'])) {
+        if ($idTarefa !== "null") {
             $apiEntrada = array(
                 'idEmpresa' => $idEmpresa,
                 'idTarefa' => $jsonEntrada['idTarefa'],
                 'idDemanda' => $jsonEntrada['idDemanda'],
                 'tipoStatusDemanda' => $jsonEntrada['tipoStatusDemanda'],
-                'idTipoStatus' => TIPOSTATUS_PAUSADO
+                'idTipoStatus' => TIPOSTATUS_PAUSADO,
+                'acao' => 'stop'
             );
-            $tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada), 'POST');
+            $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
         }
+
     }
 
 
@@ -171,11 +174,6 @@ if (isset($jsonEntrada['idDemanda'])) {
 
     }
 
-
-
-
-
-    //PARTE DE ATUALIZAÇÂO
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {

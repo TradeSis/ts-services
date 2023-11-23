@@ -426,7 +426,10 @@ if (isset($_SESSION['filtro_tarefas'])) {
             if (vnomeTipoOcorrencia === null) {
               vnomeTipoOcorrencia = '';
             }
-
+            // lucas 23112023 - tratamento quando cliente vir null
+            if(object.nomeCliente === null){
+              object.nomeCliente = '';
+            }
 
             linha += "<tr>";
 

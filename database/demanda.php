@@ -331,10 +331,11 @@ if (isset($_GET['operacao'])) {
 				'idTarefa' => $_POST['idTarefa'],
 				'idDemanda' => $_POST['idDemanda'],
 				'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-				'idTipoStatus' => TIPOSTATUS_PAUSADO
+				'idTipoStatus' => TIPOSTATUS_PAUSADO,
+				'acao' => 'stop'
 			);
 			
-			$tarefas = chamaAPI(null, '/services/tarefas/stop', json_encode($apiEntrada3), 'POST');
+			$tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada3), 'POST');
 		}
 		
 		$demanda = chamaAPI(null, '/services/demanda/realizado', json_encode($apiEntrada), 'POST');

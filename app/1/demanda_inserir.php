@@ -50,11 +50,13 @@ if (isset($jsonEntrada['tituloDemanda'])) {
         $idCliente = isset($row_consulta['idTipoOcorrenciaPadrao'])  && $row_consulta['idTipoOcorrenciaPadrao'] !== "" ?  $row_consulta['idTipoOcorrenciaPadrao']    : "null";
         $idServicoPadrao = isset($row_consulta['idServicoPadrao'])  && $row_consulta['idServicoPadrao'] !== "" ?  $row_consulta['idServicoPadrao']    : "null";
         $idTipoStatus_fila = isset($row_consulta['idTipoStatus_fila'])  && $row_consulta['idTipoStatus_fila'] !== "" ?  $row_consulta['idTipoStatus_fila']    : "null";
+        $idTipoOcorrenciaPadrao = isset($row_consulta['idTipoOcorrenciaPadrao'])  && $row_consulta['idTipoOcorrenciaPadrao'] !== "" ?  $row_consulta['idTipoOcorrenciaPadrao']    : "null";
 
         $idTipoOcorrencia  = isset($jsonEntrada['idTipoOcorrencia'])  && $jsonEntrada['idTipoOcorrencia'] !== "" ?  $jsonEntrada['idTipoOcorrencia']    : "null";
         if($idTipoOcorrencia === "null"){
             $idTipoOcorrencia = $idTipoOcorrenciaPadrao;
         }
+
         $idServico  = isset($jsonEntrada['idServico'])  && $jsonEntrada['idServico'] !== "" ?  $jsonEntrada['idServico']    : "null";
         if($idServico === "null"){
             $idServico = $idServicoPadrao;
@@ -81,6 +83,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo, horasPrevisao, idAtendente)
      VALUES (99, $tituloDemanda, $descricao, CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, $idContratoTipo, $horasPrevisao, $idAtendente)";
     
+    echo '__ SQL __' . $sql;
     //Envio de Email
     $tituloEmail = $jsonEntrada['tituloDemanda'];
     $corpoEmail = $jsonEntrada['descricao'];

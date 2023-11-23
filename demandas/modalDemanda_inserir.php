@@ -73,11 +73,7 @@
                                             <?php
                                             foreach ($tipoocorrencias as $tipoocorrencia) {
                                             ?>
-                                                <option <?php
-                                                        if ($tipoocorrencia['ocorrenciaInicial'] == 1) {
-                                                            echo "selected";
-                                                        }
-                                                        ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
+                                                <option  value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
                                                     <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
                                                 </option>
                                             <?php } ?>

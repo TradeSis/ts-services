@@ -1,3 +1,9 @@
+    
+    <style>
+        .ts-disable{
+            display: none;
+        }
+    </style>
     <!--------- MODAL DEMANDA INSERIR --------->
     <div class="modal" id="novoinserirDemandaModal" tabindex="-1" aria-labelledby="novoinserirDemandaModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -59,10 +65,47 @@
                             </div><!--col-md-6-->
 
                             <div class="col-md-6">
-                                <div class="row">
+                                <div class="row"> 
+                                    <?php if (empty($contrato)) { ?>
+                                        <div class="col-md-10">
+                                            <label class="form-label ts-label">Desvincular Contrato</label>
+                                        </div>
+                                        <div class="col-sm-2 col-md-2">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="desvinculaContrato">
+                                        </div>
+                                        </div>
+                                    <?php  } ?>    
+                                    <div class="col-sm-12 col-md-12 mt-3">
+                                        
+                                        <?php
+                                        if (isset($contrato)) { ?>
+                                            <input type="text" class="form-control ts-input" value="<?php echo $contrato['tituloContrato'] ?>" readonly>
+                                            <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
+                                        <?php } else { ?>
+                                            <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
+                                                <select class="form-select ts-input" name="idContrato" autocomplete="off" required>
+                                                <?php } else { ?>
+                                                    <input type="hidden" class="form-control ts-input" id="contrato" name="idContrato" value="null" >
+                                                    <select class="form-select ts-input" id="idContrato" name="idContrato" autocomplete="off">  
+                                                    <?php } ?>
+                                                    <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
+                                                    <?php foreach ($contratos as $contrato) {  ?>
+                                            
+                                                        <option data-idcliente="<?php echo $contrato['idCliente'] ?>" value="<?php echo $contrato['idContrato'] ?>">
+                                                            <?php echo $contrato['tituloContrato'] ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                    </select>
+                                                <?php  } ?>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-4">
                                     <div class="col-sm-6 col-md-6">
                                         <label class="form-label ts-label">Previsão</label>
-                                        <input type="number" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                                        <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                                     </div>
                                     <div class="col-sm-6 col-md-6">
                                         <label class="form-label ts-label">Ocorrência</label>
@@ -83,7 +126,7 @@
 
                                 <div class="row mt-3">
                                     <!-- lucas 21112023 ID 688 - removido campo tamanho -->
-                                    <div class="col-sm-12 col-md-12">
+                                    <div class="col-sm-6 col-md-6">
                                         <label class="form-label ts-label">Serviço</label>
                                         <select class="form-select ts-input" name="idServico" autocomplete="off">
                                             <option value="<?php echo null ?>">
@@ -96,9 +139,7 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                </div><!--fim row 2-->
 
-                                <div class="row mt-3">
                                     <div class="col-sm-6 col-md-6">
                                         <label class="form-label ts-label">Responsável</label>
                                         <select class="form-select ts-input" name="idAtendente">
@@ -116,32 +157,9 @@
                                             <?php } ?>
                                         </select>
                                     </div>
+                                </div><!--fim row 2-->
 
-                                    <div class="col-sm-6 col-md-6">
-                                        <label class="form-label ts-label">Contrato Vinculado</label>
-                                        <?php
-                                        if (isset($contrato)) { ?>
-                                            <input type="text" class="form-control ts-input" value="<?php echo $contrato['tituloContrato'] ?>" readonly>
-                                            <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
-                                        <?php } else { ?>
-                                            <?php if ($contratoTipo['idContratoTipo'] == 'os') { ?>
-                                                <select class="form-select ts-input" name="idContrato" autocomplete="off" required>
-                                                <?php } else { ?>
-                                                    <select class="form-select ts-input" name="idContrato" autocomplete="off">
-                                                    <?php } ?>
-                                                    <option value="<?php echo null ?>">
-                                                        <?php echo "Selecione" ?>
-                                                    </option>
-                                                    <?php foreach ($contratos as $contrato) {  ?>
-                                                        <option data-idcliente="<?php echo $contrato['idCliente'] ?>" value="<?php echo $contrato['idContrato'] ?>">
-                                                            <?php echo $contrato['tituloContrato'] ?>
-                                                        </option>
-                                                    <?php } ?>
-                                                    </select>
-                                                <?php  } ?>
-
-                                    </div>
-                                </div><!--fim row 3-->
+                                
 
                             </div><!--col-md-6-->
 
@@ -162,6 +180,16 @@
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script>
+
+
+$('#desvinculaContrato').click(function() {
+    //$("#txtAge").toggle(this.checked);
+    $( "#idContrato" ).toggleClass( "ts-disable" );
+    $("#idContrato").prop('disabled', true);
+    $("#contrato").prop('disabled', false);
+});
+        
+
         //Select de Contrato Vinculado troca de acordo com o Select de Cliente
         var contratos = $('select[name="idContrato"] option');
         $('select[name="idCliente"]').on('change', function() {

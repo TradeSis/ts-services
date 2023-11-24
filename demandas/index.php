@@ -274,7 +274,6 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </select>
               </form>
             </th>
-            <th></th>
             <th>
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
@@ -295,6 +294,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </select>
               </form>
             </th>
+            <th></th>
             <th>
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoStatus" id="FiltroTipoStatus" autocomplete="off">

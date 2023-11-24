@@ -103,7 +103,7 @@ if (isset($_GET['operacao'])) {
 
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
-			//'idCliente' => $_POST['idCliente'],
+			'idCliente' => $_POST['idCliente'],
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],

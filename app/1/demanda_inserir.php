@@ -66,12 +66,15 @@ if (isset($jsonEntrada['tituloDemanda'])) {
 
 
     $idContrato = isset($jsonEntrada['idContrato'])  && $jsonEntrada['idContrato'] !== "" ?  $jsonEntrada['idContrato']    : "null";
+
+    if($idContrato !== "null"){
         //Pega o campo idCliente de contrato
         $sql_consulta = "SELECT * FROM contrato WHERE idContrato = $idContrato";
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $idCliente = isset($row_consulta['idCliente'])  && $row_consulta['idCliente'] !== "" ?  $row_consulta['idCliente']    : "null";
-    
+    }
+
 
     //busca dados tipostatus    
     $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -83,7 +86,6 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo, horasPrevisao, idAtendente)
      VALUES (99, $tituloDemanda, $descricao, CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, $idContratoTipo, $horasPrevisao, $idAtendente)";
     
-    echo '__ SQL __' . $sql;
     //Envio de Email
     $tituloEmail = $jsonEntrada['tituloDemanda'];
     $corpoEmail = $jsonEntrada['descricao'];

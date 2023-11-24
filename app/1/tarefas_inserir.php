@@ -27,7 +27,7 @@ if (isset($LOG_CAMINHO)) {
     $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "tarefas_inserir";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
-            $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
+            $arquivo = fopen(defineCaminhoLog() . "services_inserir_" . date("dmY") . ".log", "a");
         }
     }
 
@@ -76,8 +76,13 @@ if (isset($jsonEntrada['idEmpresa'])) {
 
     $dataOrdem = $Previsto;
     $horaInicioOrdem = $horaInicioPrevisto;
+    
+    if (isset($jsonEntrada['Previsto'])) {
+        $idTipoStatus = TIPOSTATUS_AGENDADO;
+    }
 
     if ($acao == 'start') {
+        $idTipoStatus = TIPOSTATUS_FAZENDO;
         $dataReal = "'" . date('Y-m-d') . "'";
         $horaInicioReal = "'" . date('H:i:00') . "'";  
         $dataOrdem = $dataReal;

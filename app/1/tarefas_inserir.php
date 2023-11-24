@@ -114,7 +114,7 @@ if (isset($jsonEntrada['idEmpresa'])) {
         $posicao = $row_consulta["mudaPosicaoPara"];
         $statusDemanda = $row_consulta["mudaStatusPara"] ;
         if ($LOG_NIVEL >= 2) {
-            fwrite($arquivo, $identificacao . "-Previsto->" . $jsonEntrada['Previsto'] . " tipoStatusDemanda=" . $tipoStatusDemanda . " statusTarefa=" . json_encode($statusTarefa) . "\n");
+            fwrite($arquivo, $identificacao . "-Previsto->" . $jsonEntrada['Previsto'] . " tipoStatusDemanda=" . $tipoStatusDemanda . " statusTarefa=" . json_encode($statusAgendado) . "\n");
         }
         if (($acao == 'start') && in_array($tipoStatusDemanda, $statusStart, true)) {
             $idTipoStatus = TIPOSTATUS_FAZENDO;

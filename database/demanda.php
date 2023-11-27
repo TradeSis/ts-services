@@ -251,8 +251,6 @@ if (isset($_GET['operacao'])) {
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'comentario' => $_POST['comentario'],
-			'tipoStatusDemanda' => $_POST['tipoStatusDemanda'],
-			'idTarefa' => $_POST['idTarefa'],
 			'idAtendente' => $_POST['idAtendente'],//utilizado quando ação for solicitar
 			'acao' => $acao
 		);

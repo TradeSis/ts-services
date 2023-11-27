@@ -3,6 +3,14 @@
 //gabriel 220323
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
+/* 
+Exemplo de entrada :
+{"idEmpresa":"1","idDemanda":"749","idUsuario":"14","idCliente":"1","comentario":"<p>texto<\/p>","idAtendente":null,"acao":"entregar"}
+{"idEmpresa":"1","idDemanda":"749","idUsuario":"14","idCliente":"1","comentario":"<p>texto<\/p>","idAtendente":null,"acao":"retornar"}
+{"idEmpresa":"1","idDemanda":"748","idUsuario":"14","idCliente":"1","comentario":"<p>texto<\/p>","idAtendente":null,"acao":"validar"} 
+{"idEmpresa":"1","idDemanda":"749","idUsuario":"14","idCliente":"1","comentario":"<p>texto<\/p>","idAtendente":"10","acao":"solicitar"}
+*/
+
 //LOG
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
@@ -31,46 +39,39 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idDemanda'])) {
 
+    $idDemanda = $jsonEntrada['idDemanda'];
+    $idUsuario = $jsonEntrada['idUsuario'];
+    $comentario = isset($jsonEntrada['comentario']) && $jsonEntrada['comentario'] !== "null" && $jsonEntrada['comentario'] !== "" ? "'" . $jsonEntrada['comentario'] . "'" : "null";
+    $idAtendente = $jsonEntrada['idAtendente']; // solicitar  
+
+    //Busca data de fechamento atual
+    $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
+    $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+    $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+    $dataFechamento = isset($row_consulta["dataFechamento"])  && $row_consulta["dataFechamento"] !== "" && $row_consulta["dataFechamento"] !== "null" ? "'". $row_consulta["dataFechamento"]."'"  : "null";
+
     //REALIZADO
-    if ($jsonEntrada['acao'] == "realizado") {
-        $idDemanda = $jsonEntrada['idDemanda'];
-        $idUsuario = $jsonEntrada['idUsuario'];
-        $idTarefa = $jsonEntrada['idTarefa'];
-        $idTarefa = isset($jsonEntrada['idTarefa'])  && $jsonEntrada['idTarefa'] !== ""        ?   $jsonEntrada['idTarefa']    : "null";
-        $comentario = isset($jsonEntrada['comentario']) && $jsonEntrada['comentario'] !== "null" && $jsonEntrada['comentario'] !== "" ? "'" . $jsonEntrada['comentario'] . "'" : "null";
+    if ($jsonEntrada['acao'] == "entregar") { 
+        
         $idTipoStatus = TIPOSTATUS_REALIZADO;
 
-        //busca dados tipostatus    
+        //Busca dados tipostatus    
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $posicao = $row_consulta["mudaPosicaoPara"];
         $statusDemanda = $row_consulta["mudaStatusPara"];
 
-        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-
-        //busca data de fechamento atual
-        $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
-        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
-        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-        $dataFechamento = $row_consulta["dataFechamento"];
-
-
         //lucas 22092023 ID 358 modificado o teste para gravar a data quando for tipo encerrado
-        if ($statusDemanda == 3) { //se status for do tipo encerrar
-            if ($dataFechamento == null) { //e a data for null
-                $dataFechamento = 'CURRENT_TIMESTAMP ()'; //grava a data de fechamento
-                $sql2 = "UPDATE demanda SET dataFechamento = $dataFechamento, dataAtualizacaoAtendente=CURRENT_TIMESTAMP () WHERE demanda.idDemanda = $idDemanda ";
-            }
-        } else {
-            if ($dataFechamento != null) { // se for outro status
-                $dataFechamento = 'null'; //grava null na data de fechamento
-                $sql2 = "UPDATE demanda SET dataFechamento=$dataFechamento, dataAtualizacaoAtendente=CURRENT_TIMESTAMP () WHERE demanda.idDemanda = $idDemanda ";
-            }
-        }
+        if (($statusDemanda == 3) && ($dataFechamento === 'null')) { //se status for do tipo encerrar
+                $dataFechamento = 'CURRENT_TIMESTAMP ()'; //grava a data de fechamento      
+        } 
+
+        $sql = "UPDATE demanda SET posicao = $posicao, idTipoStatus = $idTipoStatus, dataFechamento = $dataFechamento, dataAtualizacaoAtendente = CURRENT_TIMESTAMP(), 
+        statusDemanda = $statusDemanda  WHERE demanda.idDemanda = $idDemanda ";
 
         if ($comentario !== "null") {
-            $sql3 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario, $idUsuario, CURRENT_TIMESTAMP())";
+            $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario, $idUsuario, CURRENT_TIMESTAMP())";
         }
 
     }
@@ -78,15 +79,10 @@ if (isset($jsonEntrada['idDemanda'])) {
 
     //RETORNAR
     if ($jsonEntrada['acao'] == "retornar") {
-
-        $idDemanda = $jsonEntrada['idDemanda'];
-        $comentario = $jsonEntrada['comentario'];
-        $comentario = isset($jsonEntrada['comentario']) && $jsonEntrada['comentario'] !== "null" && $jsonEntrada['comentario'] !== "" ? "'" . $jsonEntrada['comentario'] . "'" : "null";
-        $idUsuario = $jsonEntrada['idUsuario'];
-        $idCliente = $jsonEntrada['idCliente'];
+        
         $idTipoStatus = TIPOSTATUS_RETORNO;
 
-        // busca dados tipostatus    
+        //Busca dados tipostatus     
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
@@ -96,58 +92,39 @@ if (isset($jsonEntrada['idDemanda'])) {
         $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataFechamento=NULL, statusDemanda=$statusDemanda, dataAtualizacaoCliente=CURRENT_TIMESTAMP(), QtdRetornos=QtdRetornos+1 WHERE idDemanda = $idDemanda;";
 
         if ($comentario !== "null") {
-            $sql2 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario ,$idUsuario,CURRENT_TIMESTAMP())";
+            $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario ,$idUsuario,CURRENT_TIMESTAMP())";
         }
+      
     }
 
 
     //VALIDAR
     if ($jsonEntrada['acao'] == "validar") {
-
-        $idDemanda = $jsonEntrada['idDemanda'];
-        $comentario = isset($jsonEntrada['comentario']) && $jsonEntrada['comentario'] !== "null" && $jsonEntrada['comentario'] !== "" ? "'" . $jsonEntrada['comentario'] . "'" : "null";
-        $idUsuario = $jsonEntrada['idUsuario'];
-        $idCliente = $jsonEntrada['idCliente'];
+        
         $idTipoStatus = TIPOSTATUS_VALIDADO;
 
-        // busca dados tipostatus    
+        //Busca dados tipostatus    
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $posicao = $row_consulta["mudaPosicaoPara"];
         $statusDemanda = $row_consulta["mudaStatusPara"];
 
-        //busca data de fechamento atual
-        $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
-        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
-        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-        $dataFechamento = $row_consulta["dataFechamento"];
-
-        if ($dataFechamento == null) {
+        if ($dataFechamento === 'null') {
             $dataFechamento = 'CURRENT_TIMESTAMP ()';
-        } else {
-            $dataFechamento = "'" . $dataFechamento . "'";
-        }
+        } 
         $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento = $dataFechamento, statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
 
         if ($comentario !== "null") {
-            $sql2 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";
+            $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario ,$idUsuario,CURRENT_TIMESTAMP())";
         }
+
     }
 
     //RETORNAR
     if ($jsonEntrada['acao'] == "solicitar") {
 
-        $idDemanda = $jsonEntrada['idDemanda'];
-        $comentario = isset($jsonEntrada['comentario']) && $jsonEntrada['comentario'] !== "null" && $jsonEntrada['comentario'] !== "" ? "'" . $jsonEntrada['comentario'] . "'" : "null";
-        $idUsuario = $jsonEntrada['idUsuario'];
-        $idCliente = $jsonEntrada['idCliente'];
-        $idAtendente = $jsonEntrada['idAtendente']; //****/
         $idTipoStatus = TIPOSTATUS_AGUARDANDOSOLICITANTE;
-
-
-        $sql = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,$comentario,$idUsuario,CURRENT_TIMESTAMP())";
-
 
         // busca dados tipostatus    
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -157,8 +134,12 @@ if (isset($jsonEntrada['idDemanda'])) {
         $statusDemanda = $row_consulta["mudaStatusPara"];
 
         //lucas 22092023 ID 358 Adicionado idAtendente
-        $sql2 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, idAtendente=$idAtendente , dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, idAtendente=$idAtendente , dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
 
+        if ($comentario !== "null") {
+            $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,$comentario,$idUsuario,CURRENT_TIMESTAMP())";
+        }
+        
     }
 
     //LOG
@@ -166,10 +147,7 @@ if (isset($jsonEntrada['idDemanda'])) {
         if ($LOG_NIVEL >= 3) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
             if (isset($sql2)) {
-                fwrite($arquivo, $identificacao . "-SQL2->" . $sql2 . "\n");
-            }
-            if (isset($sql3)) {
-                fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
+                fwrite($arquivo, $identificacao . "-SQL INSERT COMENTARIOS ->" . $sql_insert_comentario . "\n");
             }
         }
     }
@@ -182,16 +160,12 @@ if (isset($jsonEntrada['idDemanda'])) {
         if (!$atualizar)
             throw new Exception(mysqli_error($conexao));
 
-        if (isset($sql2)) {
-            $atualizar2 = mysqli_query($conexao, $sql2);
+        if (isset($sql_insert_comentario)) {
+            $atualizar2 = mysqli_query($conexao, $sql_insert_comentario);
             if (!$atualizar2)
                 throw new Exception(mysqli_error($conexao));
         }
-        if (isset($sql3)) {
-            $atualizar3 = mysqli_query($conexao, $sql3);
-            if (!$atualizar3)
-                throw new Exception(mysqli_error($conexao));
-        }
+    
         $jsonSaida = array(
             "status" => 200,
             "retorno" => "ok"

@@ -678,7 +678,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          idDemanda: idDemanda
+          idDemanda: idDemanda,
+          comentario: null
         },
         success: function(msg) {
           if (msg.retorno == "ok") {

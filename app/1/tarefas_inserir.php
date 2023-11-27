@@ -77,7 +77,9 @@ if (isset($jsonEntrada['idEmpresa'])) {
     $dataOrdem = $Previsto;
     $horaInicioOrdem = $horaInicioPrevisto;
 
+    $idTipoStatus = TIPOSTATUS_FILA;
     if ($acao == 'start') {
+        $idTipoStatus = TIPOSTATUS_FAZENDO;
         $dataReal = "'" . date('Y-m-d') . "'";
         $horaInicioReal = "'" . date('H:i:00') . "'";  
         $dataOrdem = $dataReal;

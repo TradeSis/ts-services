@@ -812,7 +812,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         }
         var vurl;
         if ($("#realizadoFormbutton").is(":focus")) {
-          vurl = "../database/demanda.php?operacao=atualizar&acao=realizado";
+          vurl = "../database/tarefas.php?operacao=realizado&acao=entregue";
         }
         if ($("#stopFormbutton").is(":focus")) {
           vurl = "../database/tarefas.php?operacao=realizado&acao=stop";

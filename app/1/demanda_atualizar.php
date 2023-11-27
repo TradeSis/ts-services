@@ -73,19 +73,6 @@ if (isset($jsonEntrada['idDemanda'])) {
             $sql3 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario, $idUsuario, CURRENT_TIMESTAMP())";
         }
 
-        // Chama a api de Tarefas
-        if ($idTarefa !== "null") {
-            $apiEntrada = array(
-                'idEmpresa' => $idEmpresa,
-                'idTarefa' => $jsonEntrada['idTarefa'],
-                'idDemanda' => $jsonEntrada['idDemanda'],
-                'tipoStatusDemanda' => $jsonEntrada['tipoStatusDemanda'],
-                'idTipoStatus' => TIPOSTATUS_PAUSADO,
-                'acao' => 'stop'
-            );
-            $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
-        }
-
     }
 
 

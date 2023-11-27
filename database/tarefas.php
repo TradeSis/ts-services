@@ -192,7 +192,7 @@ if (isset($_GET['operacao'])) {
     }
 
     if ($operacao == "realizado") {
-        // Operações de : REALIZADO, START e STOP
+        // Operações de : REALIZADO, START, STOP e ENTREGUE
         $acao = "realizado";
         if (isset($_GET['acao'])) {
             $acao = $_GET['acao'];
@@ -201,10 +201,16 @@ if (isset($_GET['operacao'])) {
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
+            'comentario' => $_POST['comentario'],// ação entregue,quando tiver demanda associada
             'acao' => $acao 
         );
-        
+    
         $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
+        
+            if(isset($_GET['redirecionar'])){
+                $idDemanda = $_POST['idDemanda'];
+                header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $idDemanda);
+            }
 
         if ( $acao == "stop") {  
             if(isset($_POST['comentario']) && ($_POST['comentario']) !== ""){

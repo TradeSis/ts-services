@@ -101,7 +101,7 @@ if (isset($jsonEntrada['idTarefa'])) {
                 TIPOSTATUS_RESPONDIDO,
                 TIPOSTATUS_AGENDADO
             );
-            
+
             $idTipoStatus = TIPOSTATUS_FAZENDO;
             //Busca dados Tipostatus    
             $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -112,7 +112,6 @@ if (isset($jsonEntrada['idTarefa'])) {
 
             $sql_update_demanda = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() ";
                 if (in_array($tipoStatusDemanda, $statusStart)) {
-                    echo '__ ESTA AQUI __';
                     $sql_update_demanda = $sql_update_demanda . ", posicao=$posicao, idTipoStatus=$idTipoStatus, statusDemanda=$statusDemanda ";
                 }
             $sql_update_demanda = $sql_update_demanda . "  WHERE idDemanda = $idDemanda";

@@ -206,7 +206,6 @@ if (isset($_GET['operacao'])) {
         );
     
         $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
-        
 
         if (($acao == "stop") || ($acao == "entregue")) {  
             if(isset($_POST['comentario']) && ($_POST['comentario']) !== ""){

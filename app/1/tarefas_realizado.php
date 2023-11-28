@@ -42,7 +42,7 @@ if (isset($jsonEntrada['idTarefa'])) {
     $horaInicioReal = "'" . date('H:i:00') . "'";
     $horaFinalReal = "'" . date('H:i:00') . "'";
     $comentario = isset($jsonEntrada['comentario']) && $jsonEntrada['comentario'] !== "null" && $jsonEntrada['comentario'] !== "" ? "'" . $jsonEntrada['comentario'] . "'" : "null";
-       
+
     //Busca dados de Tarefa    
     $sql_consulta = "SELECT * FROM tarefa WHERE idTarefa = $idTarefa";
     $buscar_consulta = mysqli_query($conexao, $sql_consulta);
@@ -65,8 +65,11 @@ if (isset($jsonEntrada['idTarefa'])) {
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $tipoStatusDemanda = $row_consulta["idTipoStatus"];
-        $tipoStatusDemanda = $row_consulta["idTipoStatus"];
         $idUsuario = $row_consulta["idAtendente"];
+    }
+
+    if (($idDemanda !== "null") && ($comentario !== "null")) {
+        $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario, $idUsuario, CURRENT_TIMESTAMP())";
     }
 
     //ação : REALIZADO
@@ -190,10 +193,6 @@ if (isset($jsonEntrada['idTarefa'])) {
             $statusDemanda = $row_consulta["mudaStatusPara"];
 
             $sql_update_demanda = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), dataFechamento = CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-
-            if ($comentario !== "null") {
-                $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario, $idUsuario, CURRENT_TIMESTAMP())";
-            }
         }
         
     }

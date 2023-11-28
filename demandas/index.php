@@ -202,7 +202,7 @@ if (isset($_SESSION['filtro_demanda'])) {
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
             <th></th>
-            <th>Titulo</th>
+            <th class="col-3">Titulo</th>
             <th>Responsavel</th>
             <th>Cliente</th>
             <th>Solicitante</th>

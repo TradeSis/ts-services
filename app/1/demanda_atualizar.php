@@ -70,10 +70,6 @@ if (isset($jsonEntrada['idDemanda'])) {
         $sql = "UPDATE demanda SET posicao = $posicao, idTipoStatus = $idTipoStatus, dataFechamento = $dataFechamento, dataAtualizacaoAtendente = CURRENT_TIMESTAMP(), 
         statusDemanda = $statusDemanda  WHERE demanda.idDemanda = $idDemanda ";
 
-        if ($comentario !== "null") {
-            $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario, $idUsuario, CURRENT_TIMESTAMP())";
-        }
-
     }
 
 
@@ -91,10 +87,6 @@ if (isset($jsonEntrada['idDemanda'])) {
 
         $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataFechamento=NULL, statusDemanda=$statusDemanda, dataAtualizacaoCliente=CURRENT_TIMESTAMP(), QtdRetornos=QtdRetornos+1 WHERE idDemanda = $idDemanda;";
 
-        if ($comentario !== "null") {
-            $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario ,$idUsuario,CURRENT_TIMESTAMP())";
-        }
-      
     }
 
 
@@ -115,10 +107,6 @@ if (isset($jsonEntrada['idDemanda'])) {
         } 
         $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoCliente=CURRENT_TIMESTAMP(),dataFechamento = $dataFechamento, statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
 
-        if ($comentario !== "null") {
-            $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario ,$idUsuario,CURRENT_TIMESTAMP())";
-        }
-
     }
 
     //RETORNAR
@@ -135,11 +123,11 @@ if (isset($jsonEntrada['idDemanda'])) {
 
         //lucas 22092023 ID 358 Adicionado idAtendente
         $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, idAtendente=$idAtendente , dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-
-        if ($comentario !== "null") {
-            $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,$comentario,$idUsuario,CURRENT_TIMESTAMP())";
-        }
         
+    }
+
+    if ($comentario !== "null") {
+        $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario ,$idUsuario,CURRENT_TIMESTAMP())";
     }
 
     //LOG

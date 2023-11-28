@@ -51,6 +51,13 @@ if (isset($jsonEntrada['idTarefa'])) {
     $horaCobrado = isset($row_consulta["horaCobrado"])  && $row_consulta["horaCobrado"] !== "" && $row_consulta["horaCobrado"] !== "null" ? "'". $row_consulta["horaCobrado"]."'"  : "null";
     $horaInicioRealTarefa = $row_consulta["horaInicioReal"];
 
+    $statusStart = array(
+        TIPOSTATUS_FILA,
+        TIPOSTATUS_PAUSADO,
+        TIPOSTATUS_RETORNO,
+        TIPOSTATUS_RESPONDIDO,
+        TIPOSTATUS_AGENDADO
+    );
 
     if ($idDemanda !== "null") {
         //Se tiver demanda, vai ser atribuido novo valor para variavel $tipoStatusDemanda
@@ -94,13 +101,6 @@ if (isset($jsonEntrada['idTarefa'])) {
         $sql = "UPDATE tarefa SET horaInicioReal = $horaInicioReal, dataReal = $dataReal , dataOrdem = $dataOrdem, horaInicioOrdem = $horaInicioOrdem  WHERE idTarefa = $idTarefa";
 
         if ($idDemanda !== "null") {
-            $statusStart = array(
-                TIPOSTATUS_FILA,
-                TIPOSTATUS_PAUSADO,
-                TIPOSTATUS_RETORNO,
-                TIPOSTATUS_RESPONDIDO,
-                TIPOSTATUS_AGENDADO
-            );
 
             $idTipoStatus = TIPOSTATUS_FAZENDO;
             //Busca dados Tipostatus    

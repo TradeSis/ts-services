@@ -63,7 +63,7 @@
                          <div class="col-md-6">
                              <div class="row">
                                  <div class="col-sm-12 col-md-12 mt-3">
-                                     <label class="form-label ts-label">Contrato Vinculado</label>
+                                     <label class="form-label ts-label"><?php echo $contratoTipo['nomeContrato'] ?> Vinculado</label>
                                      <?php
                                         if (isset($contrato)) { ?>
                                          <input type="text" class="form-control ts-input" value="<?php echo $contrato['tituloContrato'] ?>" readonly>

@@ -383,16 +383,21 @@ if (isset($_SESSION['filtro_demanda'])) {
             var object = json[$i];
             var dataAbertura = new Date(object.dataAbertura);
             var dataAberturaFormatada = dataAbertura.toLocaleDateString("pt-BR");
-
+           
             var dataFechamento = new Date(object.dataFechamento);
             dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR");
-            
-            var dataEntrega = new Date(object.dataPrevisaoEntrega);
-            var dataPrevisaoEntregaFormatada = dataEntrega.toLocaleDateString("pt-BR");
 
+            dataPrevisaoEntrega = object.dataPrevisaoEntrega
+            if(object.dataPrevisaoEntrega == null){
+              dataPrevisaoEntrega = "null"
+            }
+            var dataEntrega = new Date(dataPrevisaoEntrega);
+            dataPrevisaoEntregaFormatada = (`${dataEntrega.getUTCDate().toString().padStart(2, '0')}/${(dataEntrega.getUTCMonth()+1).toString().padStart(2, '0')}/${dataEntrega.getUTCFullYear()}`);
+                       
             if(object.prioridade == '99'){
               object.prioridade = ''
             }
+
             const date = new Date();
             dataAtual = date.toLocaleDateString("pt-BR");
 

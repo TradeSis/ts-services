@@ -39,14 +39,16 @@ if (isset($jsonEntrada['idDemanda'])) {
     $tituloDemanda = "'" . $jsonEntrada['tituloDemanda'] . "'";
     $descricao = "'" . $jsonEntrada['descricao'] . "'";
     $prioridade = $jsonEntrada['prioridade'];
-    $idContrato = $jsonEntrada['idContrato'];
-    $idTipoOcorrencia  = $jsonEntrada['idTipoOcorrencia'];
+    $idContrato = isset($jsonEntrada['idContrato'])  && $jsonEntrada['idContrato'] !== "" ?  $jsonEntrada['idContrato']    : "null";
+    //lucas 28112023 id706 - removido tipoOcorrencia 
     $idServico = $jsonEntrada['idServico'];
     $horasPrevisao  = isset($jsonEntrada['horasPrevisao'])  && $jsonEntrada['horasPrevisao'] !== "" && $jsonEntrada['horasPrevisao'] !== "null" ? "'". $jsonEntrada['horasPrevisao']."'"  : "null";
     $idAtendente = $jsonEntrada['idAtendente'];
+    $dataPrevisaoEntrega  = isset($jsonEntrada['dataPrevisaoEntrega'])  && $jsonEntrada['dataPrevisaoEntrega'] !== "" && $jsonEntrada['dataPrevisaoEntrega'] !== "null" ? "'". $jsonEntrada['dataPrevisaoEntrega']."'"  : "null";
+    $dataPrevisaoInicio  = isset($jsonEntrada['dataPrevisaoInicio'])  && $jsonEntrada['dataPrevisaoInicio'] !== "" && $jsonEntrada['dataPrevisaoInicio'] !== "null" ? "'". $jsonEntrada['dataPrevisaoInicio']."'"  : "null";
 
     $sql = "UPDATE demanda SET prioridade = $prioridade, tituloDemanda = $tituloDemanda, descricao = $descricao, idServico = $idServico, idAtendente = $idAtendente,
-             horasPrevisao = $horasPrevisao, idContrato = $idContrato,  idTipoOcorrencia = $idTipoOcorrencia, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+             horasPrevisao = $horasPrevisao, idContrato = $idContrato, dataPrevisaoEntrega = $dataPrevisaoEntrega, dataPrevisaoInicio = $dataPrevisaoInicio, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
    
     //LOG
     if (isset($LOG_NIVEL)) {

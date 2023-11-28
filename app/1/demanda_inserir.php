@@ -1,4 +1,5 @@
 <?php
+// lucas 28112023 id706 - Melhorias Demandas 2
 //Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
@@ -41,7 +42,10 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $idSolicitante = isset($jsonEntrada['idSolicitante'])  && $jsonEntrada['idSolicitante'] !== "" ?  $jsonEntrada['idSolicitante']    : "null";
     $idAtendente = isset($jsonEntrada['idAtendente'])  && $jsonEntrada['idAtendente'] !== "" ?  $jsonEntrada['idAtendente']    : "null";
     $idCliente = isset($jsonEntrada['idCliente'])  && $jsonEntrada['idCliente'] !== "" ?  $jsonEntrada['idCliente']    : "null";
+    $dataPrevisaoEntrega  = isset($jsonEntrada['dataPrevisaoEntrega'])  && $jsonEntrada['dataPrevisaoEntrega'] !== "" && $jsonEntrada['dataPrevisaoEntrega'] !== "null" ? "'". $jsonEntrada['dataPrevisaoEntrega']."'"  : "null";
+    $dataPrevisaoInicio  = isset($jsonEntrada['dataPrevisaoInicio'])  && $jsonEntrada['dataPrevisaoInicio'] !== "" && $jsonEntrada['dataPrevisaoInicio'] !== "null" ? "'". $jsonEntrada['dataPrevisaoInicio']."'"  : "null";
 
+    // lucas 28112023 id706 - removido idTipoOcorrencia
     $idContratoTipo   = isset($jsonEntrada['idContratoTipo'])  && $jsonEntrada['idContratoTipo'] !== "" ?  "'" . $jsonEntrada['idContratoTipo'] . "'"  : "null";
         //Verifica o Tipo de Contrato
         $sql_consulta = "SELECT * FROM contratotipos WHERE idContratoTipo = $idContratoTipo";
@@ -50,12 +54,6 @@ if (isset($jsonEntrada['tituloDemanda'])) {
 
         $idServicoPadrao = isset($row_consulta['idServicoPadrao'])  && $row_consulta['idServicoPadrao'] !== "" ?  $row_consulta['idServicoPadrao']    : "null";
         $idTipoStatus_fila = isset($row_consulta['idTipoStatus_fila'])  && $row_consulta['idTipoStatus_fila'] !== "" ?  $row_consulta['idTipoStatus_fila']    : "null";
-        $idTipoOcorrenciaPadrao = isset($row_consulta['idTipoOcorrenciaPadrao'])  && $row_consulta['idTipoOcorrenciaPadrao'] !== "" ?  $row_consulta['idTipoOcorrenciaPadrao']    : "null";
-
-        $idTipoOcorrencia  = isset($jsonEntrada['idTipoOcorrencia'])  && $jsonEntrada['idTipoOcorrencia'] !== "" ?  $jsonEntrada['idTipoOcorrencia']    : "null";
-        if($idTipoOcorrencia === "null"){
-            $idTipoOcorrencia = $idTipoOcorrenciaPadrao;
-        }
 
         $idServico  = isset($jsonEntrada['idServico'])  && $jsonEntrada['idServico'] !== "" ?  $jsonEntrada['idServico']    : "null";
         if($idServico === "null"){
@@ -83,8 +81,8 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $posicao = $row["mudaPosicaoPara"];
     $statusDemanda = $row["mudaStatusPara"];
 
-    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo, horasPrevisao, idAtendente)
-     VALUES (99, $tituloDemanda, $descricao, CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, $idContratoTipo, $horasPrevisao, $idAtendente)";
+    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo, horasPrevisao, idAtendente, dataPrevisaoEntrega, dataPrevisaoInicio)
+     VALUES (99, $tituloDemanda, $descricao, CURRENT_TIMESTAMP(), $idTipoStatus, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, $idContratoTipo, $horasPrevisao, $idAtendente, $dataPrevisaoEntrega, $dataPrevisaoInicio)";
     
     //Envio de Email
     $tituloEmail = $jsonEntrada['tituloDemanda'];

@@ -1,4 +1,5 @@
 <?php
+//lucas 28112023 id706 - Melhorias Demandas 2
 //lucas 22112023 ID 688 Melhorias em Demandas
 //lucas 22092023 ID 358 Demandas/Comentarios 
 include_once '../header.php';
@@ -69,6 +70,11 @@ $statusEncerrar = array(
                             <label class="form-label ts-label">Previsão</label>
                             <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                         </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="form-label ts-label">Previsão Inicio</label>
+                            <input type="date" class="form-control ts-input" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>">
+                        </div>
+                        
                         <!-- lucas 21112023 ID 688 - removido campo tamanho -->
 
                         <div class="col-md-12 mt-2">
@@ -92,7 +98,7 @@ $statusEncerrar = array(
                             ?>
                             <input type="text" class="form-control ts-input" name="dataAtualizacaoCliente" value="<?php echo $dataCobradoAtualizacaoCliente ?>" readonly>
                         </div>
-                        <div class="col-md-12 mt-2">
+                        <div class="col-md-12">
                             <label class="form-label ts-label">Data Entrega</label>
                             <?php
                             $dataCobradoFechamento = $demanda['dataFechamento'];
@@ -112,14 +118,7 @@ $statusEncerrar = array(
                             <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
                         </div>
                         <div class="col-md-12 mt-2">
-                            <label class="form-label ts-label">Ocorrência</label>
-                            <select class="form-select ts-input" name="idTipoOcorrencia" autocomplete="off">
-                                <option value="<?php echo $demanda['idTipoOcorrencia'] ?>"><?php echo $demanda['nomeTipoOcorrencia'] ?></option>
-                                <?php foreach ($ocorrencias as $ocorrencia) { ?>
-                                    <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
+                        <!-- Lucas 28112023 id706 - removido tipoOcorrencia -->
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Serviço</label>
@@ -131,6 +130,10 @@ $statusEncerrar = array(
                                     </option>
                                 <?php } ?>
                             </select>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label class="form-label ts-label">Previsão Entrega</label>
+                            <input type="date" class="form-control ts-input" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Contrato Vinculado</label>

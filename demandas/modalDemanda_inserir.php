@@ -1,3 +1,4 @@
+<!-- lucas 28112023 id706 - Melhorias Demandas 2 -->
  <!--------- MODAL DEMANDA INSERIR --------->
  <div class="modal" id="novoinserirDemandaModal" tabindex="-1" aria-labelledby="novoinserirDemandaModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -84,22 +85,19 @@
                                      <label class="form-label ts-label">Previsão</label>
                                      <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                                  </div>
-                                 <div class="col-sm-6 col-md-6">
-                                     <label class="form-label ts-label">Ocorrência</label>
-                                     <select class="form-select ts-input" name="idTipoOcorrencia" autocomplete="off">
-                                         <option value="<?php echo null ?>">
-                                             <?php echo "Selecione" ?>
-                                         </option>
-                                         <?php
-                                            foreach ($tipoocorrencias as $tipoocorrencia) {
-                                            ?>
-                                             <option value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
-                                                 <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
-                                             </option>
-                                         <?php } ?>
-                                     </select>
-                                 </div>
+                                 <!-- lucas 28112023 id706 - removido tipoOcorrencia -->
                              </div><!--fim row 1-->
+
+                             <div class="row mt-3">
+                                <div class="col-sm-6 col-md-6">
+                                     <label class="form-label ts-label">Previsão Inicio</label>
+                                     <input type="date" class="form-control ts-input" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>">
+                                 </div>
+                                <div class="col-sm-6 col-md-6">
+                                     <label class="form-label ts-label">Previsão Entrega</label>
+                                     <input type="date" class="form-control ts-input" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>">
+                                 </div>
+                             </div>
 
                              <div class="row mt-3">
                                  <!-- lucas 21112023 ID 688 - removido campo tamanho -->

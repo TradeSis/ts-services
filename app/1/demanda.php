@@ -1,4 +1,5 @@
 <?php
+//Lucas 28112023 id706 Melhorias Demandas 2
 //lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Lucas 19052023 adicionado if para filtro de tamanho
 // Lucas 22032023 adicionado if para filtro de tituloDemanda
@@ -38,13 +39,12 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 $demanda = array();
 
-$sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipoocorrencia.nomeTipoOcorrencia, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
+$sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
         LEFT JOIN cliente ON demanda.idCliente = cliente.idCliente
         LEFT JOIN usuario AS atendente ON demanda.idAtendente = atendente.idUsuario
         LEFT JOIN usuario AS solicitante ON demanda.idSolicitante = solicitante.idUsuario
         LEFT JOIN contrato ON demanda.idContrato = contrato.idContrato
         LEFT JOIN servicos ON demanda.idServico = servicos.idServico
-        LEFT JOIN tipoocorrencia ON demanda.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
         LEFT JOIN tipostatus ON demanda.idTipoStatus = tipostatus.idTipoStatus
         LEFT JOIN contratotipos  on  demanda.idContratoTipo = contratotipos.idContratoTipo ";
 $where = " where ";
@@ -67,8 +67,9 @@ if (isset($jsonEntrada["idTipoStatus"])) {
   $where = " and ";
 }
 
-if (isset($jsonEntrada["idTipoOcorrencia"])) {
-  $sql = $sql . $where . " demanda.idTipoOcorrencia = " . $jsonEntrada["idTipoOcorrencia"];
+//Lucas 28112023 id706 - removido idTipoOcorrencia e adicionado idServico
+if (isset($jsonEntrada["idServico"])) {
+  $sql = $sql . $where . " demanda.idServico = " . $jsonEntrada["idServico"];
   $where = " and ";
 }
 

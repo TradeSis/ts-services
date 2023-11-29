@@ -28,6 +28,21 @@ if (isset($LOG_NIVEL)) {
 }
 //LOG
 
+function buscaHorasRealizado($conexao, $idDemanda, $tempoCobradoDigitado)
+{
+    $totalHorasReal = "null";
+
+    if($tempoCobradoDigitado == "0"){
+        $sql_consulta = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(subquery.horasReal))) AS totalHorasReal
+        FROM (SELECT TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal FROM tarefa
+        where tarefa.idDemanda = $idDemanda) AS subquery";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+        $totalHorasReal  = $row_consulta["totalHorasReal"];
+    }
+    return $totalHorasReal;
+}
+
 date_default_timezone_set('America/Sao_Paulo');
 $idEmpresa = null;
 if (isset($jsonEntrada["idEmpresa"])) {
@@ -48,7 +63,6 @@ if (isset($jsonEntrada['idTarefa'])) {
     $buscar_consulta = mysqli_query($conexao, $sql_consulta);
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
     $idDemanda = isset($row_consulta["idDemanda"])  && $row_consulta["idDemanda"] !== ""  ? "'". $row_consulta["idDemanda"]."'"  : "null";
-    $horaInicioRealTarefa = $row_consulta["horaInicioReal"];
 
 
     $statusStart = array(
@@ -70,14 +84,6 @@ if (isset($jsonEntrada['idTarefa'])) {
         $idUsuario = $row_consulta["idAtendente"];
         $tempoCobradoDigitado = $row_consulta["tempoCobradoDigitado"];
 
-        if($tempoCobradoDigitado == 0){
-            $sql_consulta = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(subquery.horasReal))) AS totalHorasReal
-            FROM (SELECT TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal FROM tarefa
-            where tarefa.idDemanda = $idDemanda) AS subquery;";
-            $buscar_consulta = mysqli_query($conexao, $sql_consulta);
-            $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-            $totalHorasReal  = $row_consulta["totalHorasReal"];
-        }
         
     }
 
@@ -133,7 +139,9 @@ if (isset($jsonEntrada['idTarefa'])) {
     //ação : STOP
     if ($jsonEntrada['acao'] == "stop") {
 
-        $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal  WHERE idTarefa = $idTarefa"; //remover horas Cobrado
+        $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal  WHERE idTarefa = $idTarefa"; 
+        //Vai executar o UPDATE primerio, para depois atualizar o $totalHorasReal
+        $atualizar = mysqli_query($conexao, $sql);
 
         if ($idDemanda !== "null") {
            
@@ -146,22 +154,25 @@ if (isset($jsonEntrada['idTarefa'])) {
             $statusDemanda = $row_consulta["mudaStatusPara"];
 
             $sql_update_demanda = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() ";
-                if ($tempoCobradoDigitado === "0") {
-
+                if ($tempoCobradoDigitado == "0") {
+                    $totalHorasReal = buscaHorasRealizado($conexao, $idDemanda, $tempoCobradoDigitado);
                     $tempoCobrado = $totalHorasReal;
+                    //echo $totalHorasReal;
                     if (strtotime($totalHorasReal) < strtotime('00:30:00')) {
                         $tempoCobrado = '00:30:00';
-                        $tempoCobrado = "'" . $tempoCobrado . "'";
                     }
+                    
+                    $tempoCobrado = "'" . $tempoCobrado . "'";
                     $sql_update_demanda = $sql_update_demanda . ",tempoCobrado = $tempoCobrado ";
                 }
 
                 if ($tipoStatusDemanda == TIPOSTATUS_FAZENDO) {
                     $sql_update_demanda = $sql_update_demanda . ",idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda ";
                 }
-            $sql_update_demandal = $sql_update_demanda . "  WHERE idDemanda = $idDemanda";
+            $sql_update_demanda = $sql_update_demanda . "  WHERE idDemanda = $idDemanda";
         }
     }
+
 
     //ação : ENTREGUE
     if ($jsonEntrada['acao'] == "entregue") {

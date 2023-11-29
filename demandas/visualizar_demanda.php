@@ -60,7 +60,7 @@ $statusEncerrar = array(
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Tempo Cobrado</label>
-                            <input type="text" class="form-control ts-input" value="<?php echo $horas['totalHoraCobrado'] ?>" readonly>
+                            <input type="time" class="form-control ts-input" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Quantidade Retornos</label>
@@ -69,10 +69,6 @@ $statusEncerrar = array(
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Previsão</label>
                             <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
-                        </div>
-                        <div class="col-md-12 mt-2">
-                            <label class="form-label ts-label">tempo Cobrado</label>
-                            <input type="time" class="form-control ts-input" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Previsão Inicio</label>
@@ -115,7 +111,7 @@ $statusEncerrar = array(
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Tempo Real</label>
-                            <input type="text" class="form-control ts-input" value="<?php echo $horas['totalHorasReal'] ?>" readonly>
+                            <input type="time" class="form-control ts-input" value="<?php echo $horas['totalHorasReal'] ?>" readonly>
                         </div>
 
                         <div class="col-md-12 mt-2">

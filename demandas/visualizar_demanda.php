@@ -71,9 +71,14 @@ $statusEncerrar = array(
                             <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                         </div>
                         <div class="col-md-12 mt-2">
+                            <label class="form-label ts-label">tempo Cobrado</label>
+                            <input type="time" class="form-control ts-input" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
+                        </div>
+                        <div class="col-md-12 mt-2">
                             <label class="form-label ts-label">Previsão Inicio</label>
                             <input type="date" class="form-control ts-input" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>">
                         </div>
+                       
                         
                         <!-- lucas 21112023 ID 688 - removido campo tamanho -->
 

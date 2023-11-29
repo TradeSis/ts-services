@@ -44,6 +44,11 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $idCliente = isset($jsonEntrada['idCliente'])  && $jsonEntrada['idCliente'] !== "" ?  $jsonEntrada['idCliente']    : "null";
     $dataPrevisaoEntrega  = isset($jsonEntrada['dataPrevisaoEntrega'])  && $jsonEntrada['dataPrevisaoEntrega'] !== "" && $jsonEntrada['dataPrevisaoEntrega'] !== "null" ? "'". $jsonEntrada['dataPrevisaoEntrega']."'"  : "null";
     $dataPrevisaoInicio  = isset($jsonEntrada['dataPrevisaoInicio'])  && $jsonEntrada['dataPrevisaoInicio'] !== "" && $jsonEntrada['dataPrevisaoInicio'] !== "null" ? "'". $jsonEntrada['dataPrevisaoInicio']."'"  : "null";
+    $tempoCobrado = isset($jsonEntrada["tempoCobrado"])  && $jsonEntrada["tempoCobrado"] !== "" && $jsonEntrada["tempoCobrado"] !== "null" ? "'". $jsonEntrada["tempoCobrado"]."'"  : "null";
+    $tempoCobradoDigitado = '0';
+    if($tempoCobrado !== "null"){
+        $tempoCobradoDigitado = '1';
+    }
 
     // lucas 28112023 id706 - removido idTipoOcorrencia
     $idContratoTipo   = isset($jsonEntrada['idContratoTipo'])  && $jsonEntrada['idContratoTipo'] !== "" ?  "'" . $jsonEntrada['idContratoTipo'] . "'"  : "null";
@@ -81,8 +86,10 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $posicao = $row["mudaPosicaoPara"];
     $statusDemanda = $row["mudaStatusPara"];
 
-    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo, horasPrevisao, idAtendente, dataPrevisaoEntrega, dataPrevisaoInicio)
-     VALUES (99, $tituloDemanda, $descricao, CURRENT_TIMESTAMP(), $idTipoStatus, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, $idContratoTipo, $horasPrevisao, $idAtendente, $dataPrevisaoEntrega, $dataPrevisaoInicio)";
+    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, 
+    idContratoTipo, horasPrevisao, idAtendente, dataPrevisaoEntrega, dataPrevisaoInicio, tempoCobrado, tempoCobradoDigitado)
+     VALUES (99, $tituloDemanda, $descricao, CURRENT_TIMESTAMP(), $idTipoStatus, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, 
+     $idContratoTipo, $horasPrevisao, $idAtendente, $dataPrevisaoEntrega, $dataPrevisaoInicio, $tempoCobrado, $tempoCobradoDigitado)";
     
     //Envio de Email
     $tituloEmail = $jsonEntrada['tituloDemanda'];

@@ -117,7 +117,7 @@ if (isset($_GET['operacao'])) {
 			'idAtendente' => $_POST['idAtendente'],
 			'dataPrevisaoEntrega' => $_POST['dataPrevisaoEntrega'],
 			'dataPrevisaoInicio' => $_POST['dataPrevisaoInicio'],
-			
+			'tempoCobrado' => $_POST['tempoCobrado'],
 		);
 	
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
@@ -235,6 +235,7 @@ if (isset($_GET['operacao'])) {
 			// lucas 21112023 id 688 - removido campo idContratoTipo
 			'dataPrevisaoEntrega' => $_POST['dataPrevisaoEntrega'],
 			'dataPrevisaoInicio' => $_POST['dataPrevisaoInicio'],
+			'tempoCobrado' => $_POST['tempoCobrado'],
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 

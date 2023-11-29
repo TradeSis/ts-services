@@ -46,9 +46,14 @@ if (isset($jsonEntrada['idDemanda'])) {
     $idAtendente = $jsonEntrada['idAtendente'];
     $dataPrevisaoEntrega  = isset($jsonEntrada['dataPrevisaoEntrega'])  && $jsonEntrada['dataPrevisaoEntrega'] !== "" && $jsonEntrada['dataPrevisaoEntrega'] !== "null" ? "'". $jsonEntrada['dataPrevisaoEntrega']."'"  : "null";
     $dataPrevisaoInicio  = isset($jsonEntrada['dataPrevisaoInicio'])  && $jsonEntrada['dataPrevisaoInicio'] !== "" && $jsonEntrada['dataPrevisaoInicio'] !== "null" ? "'". $jsonEntrada['dataPrevisaoInicio']."'"  : "null";
+    $tempoCobrado = isset($jsonEntrada["tempoCobrado"])  && $jsonEntrada["tempoCobrado"] !== "" && $jsonEntrada["tempoCobrado"] !== "null" ? "'". $jsonEntrada["tempoCobrado"]."'"  : "null";
 
+    $tempoCobradoDigitado = '0';
+    if($tempoCobrado !== "null"){
+        $tempoCobradoDigitado = '1';
+    }
     $sql = "UPDATE demanda SET prioridade = $prioridade, tituloDemanda = $tituloDemanda, descricao = $descricao, idServico = $idServico, idAtendente = $idAtendente,
-             horasPrevisao = $horasPrevisao, idContrato = $idContrato, dataPrevisaoEntrega = $dataPrevisaoEntrega, dataPrevisaoInicio = $dataPrevisaoInicio, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+             horasPrevisao = $horasPrevisao, idContrato = $idContrato, dataPrevisaoEntrega = $dataPrevisaoEntrega, dataPrevisaoInicio = $dataPrevisaoInicio, tempoCobrado = $tempoCobrado, tempoCobradoDigitado = $tempoCobradoDigitado, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
    
     //LOG
     if (isset($LOG_NIVEL)) {

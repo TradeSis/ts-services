@@ -124,6 +124,13 @@ if ($metodo == "GET") {
       include 'contratotipos.php';
       break;
 
+    case "demanda_horasCobrado":
+      include 'demanda_horasCobrado.php';
+      break;
+
+    case "demanda_horasReal":
+      include 'demanda_horasReal.php';
+      break;
     default:
       $jsonSaida = json_decode(
         json_encode(

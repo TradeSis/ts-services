@@ -96,6 +96,42 @@ function buscaDemandasAbertas($statusDemanda=1) //Aberto
 	return $demanda;
 }
 
+function buscaTotalHorasCobrada($idContrato=null)
+{
+	$horas = array();
+
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+	
+	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
+		'idContrato' => $idContrato
+	);
+	$horas = chamaAPI(null, '/services/demanda_horasCobrado', json_encode($apiEntrada), 'GET');
+	return $horas;
+}
+
+function buscaTotalHorasReal($idContrato=null)
+{
+	$horas = array();
+
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+	
+	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
+		'idContrato' => $idContrato
+	);
+	$horas = chamaAPI(null, '/services/demanda_horasReal', json_encode($apiEntrada), 'GET');
+	return $horas;
+}
+
 if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];

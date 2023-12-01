@@ -1,4 +1,5 @@
 <?php
+// Lucas 30112023 id706 Melhorias Demandas 2
 // Lucas 25102023 id643 revisao geral
 // Lucas 13102023 novo padrao
 include_once '../header.php';
@@ -9,6 +10,18 @@ $idContrato = $_GET['idContrato'];
 $demandas = buscaDemandas(null, null, $idContrato);
 $horasCobrado = buscaTotalHorasCobrada($idContrato);
 $horasReal = buscaTotalHorasReal($idContrato);
+//Remover os zeros de segundo de totalHorasCobrado
+if($horasCobrado['totalHorasCobrado'] !== null){
+	$totalHorasCobrado = date('H:i', strtotime($horasCobrado['totalHorasCobrado']));
+}else{
+	$totalHorasCobrado = "00:00";
+}
+//Remover os zeros de segundo de totalHorasReal
+if($horasReal['totalHorasReal'] !== null){
+	$totalHorasReal = date('H:i', strtotime($horasReal['totalHorasReal']));
+}else{
+	$totalHorasReal = "00:00";
+}
 
 ?>
 <!doctype html>
@@ -22,7 +35,6 @@ $horasReal = buscaTotalHorasReal($idContrato);
 
 <style>
 	.ts-tituloTotais{
-		/* font-style: italic; */
 		font-size: 13px;
 	}
 </style>
@@ -39,8 +51,8 @@ $horasReal = buscaTotalHorasReal($idContrato);
 			<div class="col-3 text-start">
 				<!-- TITULO -->
 				<div class="row">
-			<span class="ts-tituloTotais">Total Cobrado: <?php echo date('H:i', strtotime($horasCobrado['totalHorasCobrado'])) ?></span>
-			<span class="ts-tituloTotais">Total Real: <?php echo date('H:i', strtotime($horasReal['totalHorasReal'])) ?></span>
+			<span class="ts-tituloTotais">Total Cobrado: <?php echo $totalHorasCobrado ?></span>
+			<span class="ts-tituloTotais">Total Real: <?php echo $totalHorasReal ?></span>
 		</div>
 			</div>
 			<div class="col-7">
@@ -69,7 +81,7 @@ $horasReal = buscaTotalHorasReal($idContrato);
 						<th>Serviços</th>
 						<th class="col-1">Tempo Cobrado</th>
 						<th class="col-1">Tempo Real</th>
-						<th>Ação</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody class="fonteCorpo">
@@ -81,19 +93,41 @@ $horasReal = buscaTotalHorasReal($idContrato);
 						if($prioridade == '99'){
 							$prioridade = '';
 						  }
+
+						if($demanda['tempoCobrado'] !== null){
+							$tempoCobrado = date('H:i', strtotime($demanda['tempoCobrado']));
+						}else{
+							$tempoCobrado = " ";
+						}
+						
+						if($horas['totalHorasReal'] !== null){
+							$totalHorasReal = date('H:i', strtotime($horas['totalHorasReal']));
+						}else{
+							$totalHorasReal = " ";
+						}
 					?>
 						<tr>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $prioridade ?></td>
-							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?></td>
+							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['idDemanda'] ?> <?php echo $demanda['tituloDemanda'] ?></td>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeSolicitante'] ?></td>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeAtendente'] ?></td>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo date('d/m/Y', strtotime($demanda['dataAbertura'])) ?></td>
 							<td class="ts-click <?php echo $demanda['nomeTipoStatus'] ?>" data-status='Finalizado' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeTipoStatus'] ?></td>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeServico'] ?></td>
-							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo date('H:i', strtotime($demanda['tempoCobrado'])) ?></td> 
-							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo date('H:i', strtotime($horas['totalHorasReal'])) ?></td>
+							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $tempoCobrado ?></td> 
+							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $totalHorasReal ?></td>
 							<td>
-								<a class='btn btn-warning btn-sm' href='../demandas/visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>' role='button'><i class='bi bi-pencil-square'></i></i></a>
+							<div class="btn-group dropstart">
+                                <button type="button" class="btn" data-toggle="tooltip" data-placement="left" title="Opções" 
+                                data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow:none"><i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li class="ms-1 me-1 mt-1">
+										<a class='btn btn-warning btn-sm w-100 text-start' href='../demandas/visualizar.php?idDemanda=<?php echo $demanda['idDemanda'] ?>' role='button'>
+										<i class='bi bi-pencil-square'></i>Alterar</a>
+                                    </li>
+                                </ul>
+                            </div>
 							</td>
 						</tr>
 					<?php } ?>

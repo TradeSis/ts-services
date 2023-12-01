@@ -87,7 +87,7 @@
                                  </div>
                                  <div class="col-sm-6 col-md-6">
                                      <label class="form-label ts-label">tempo Cobrado</label>
-                                     <input type="time" class="form-control ts-input" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
+                                     <input type="time" class="form-control ts-input" name="tempoCobrado">
                                  </div>
                                  <!-- lucas 28112023 id706 - removido tipoOcorrencia -->
                              </div><!--fim row 1-->

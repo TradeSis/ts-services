@@ -79,7 +79,6 @@ $statusEncerrar = array(
 
         .divLateral {
             padding-left: 20px;
-
         }
 
     }
@@ -100,11 +99,39 @@ $statusEncerrar = array(
     .divLateral {
         position: sticky;
         display: flex;
-        height: 95.3vh;
+        height: 95.4vh;
         margin-top: 10px;
         margin-right: 10px;
-        width: 25vw;
+        /*  width: 25vw; */
     }
+
+    .ts-input {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        /* border-bottom: 1px solid #484848; */
+        border-bottom: none;
+        /* border-radius: 0px; */
+        margin-top: -5px;
+
+        background: #F1F2F4;
+    }
+
+    .ts-input:any-link{
+        border: 12px solid #000000!important;
+        margin-top: -5px;
+
+        background: #fff;
+    }
+
+    .ts-setaSelect{
+      cursor: pointer;
+      /* -webkit-appearance: none;
+      -moz-appearance: none;
+      text-indent: 1px;
+      text-overflow: ''; */
+    } 
+  
 </style>
 
 <body>
@@ -112,7 +139,7 @@ $statusEncerrar = array(
 
         <!-- Modal -->
         <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-labelledby="modalDemandaVizualizarLabel" aria-hidden="true">
-            <div class="col-12 col-md-3 float-end divLateral bg-white">
+            <div class="col-12 col-md-3 float-end divLateral" style="background-color: #F1F2F4;">
                 <div class="col border-start">
                     <div class="modal-header">
 
@@ -177,11 +204,11 @@ $statusEncerrar = array(
                             </div>
                             <hr>
                             <div class="row mt-1">
-                                <div class="col-sm-4 col-md">
+                                <div class="col-sm-4 col-md border-end">
                                     <label class='form-label ts-label mb-1'>Previsão</label>
                                     <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                                 </div>
-                                <div class="col-sm-4 col-md">
+                                <div class="col-sm-4 col-md border-end">
                                     <label class='form-label ts-label mb-1'>Realizado</label>
                                     <input type="time" class="form-control ts-input" name="realizado">
                                 </div>
@@ -208,12 +235,15 @@ $statusEncerrar = array(
                         <?php } ?>
 
                     </div>
+                    <div class="modal-footer mt-4">
+                        <button type="submit" form="my-form" class="btn btn-success btn-demanda">Atualizar</button>
+                    </div>
                 </div>
             </div>
 
 
-            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen" >
-                <div class="modal-content">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen">
+                <div class="modal-content" style="background-color: #F1F2F4;">
 
                     <div class="container">
                         <div class="row g-3 mt-1">
@@ -231,7 +261,7 @@ $statusEncerrar = array(
                                 <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
                             </div>
                         </div>
-                        <div class="row g-3 mt-1 pt-0 ">
+                        <div class="row g-3" style="margin-top: 1px;">
                             <div class="col-md-3 d-flex">
                                 <label class="form-label ts-label">Cliente</label>
                                 <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeCliente'] ?>" readonly>
@@ -242,7 +272,7 @@ $statusEncerrar = array(
                             </div>
                             <div class="col-md-5 d-flex">
                                 <label class="form-label ts-label">Serviço</label>
-                                <select class="form-select ts-input" name="idServico" id="idServico" autocomplete="off">
+                                <select class="form-select ts-input ts-setaSelect" name="idServico" id="idServico" autocomplete="off">
                                     <option value="<?php echo $demanda['idServico'] ?>"><?php echo $demanda['nomeServico'] ?>
                                         <?php foreach ($servicos as $servico) { ?>
                                     <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
@@ -255,7 +285,7 @@ $statusEncerrar = array(
 
                     </form>
 
-                    <hr>
+                    <hr style="border-top: 2px solid #000000;">
                     <div class="row mt-2">
                         <div id="ts-tabs">
                             <div class="tab whiteborder" id="tab-demanda">Demanda</div>
@@ -266,7 +296,7 @@ $statusEncerrar = array(
                     <div class="modal-body">
 
                         <div id="ts-tabs">
-                            <div class="tabContent">
+                            <div class="tabContent" style="margin-top: -10px;">
                                 <?php include_once 'demanda_descricao.php'; ?>
                             </div>
                             <div class="tabContent">
@@ -276,9 +306,9 @@ $statusEncerrar = array(
                         </div>
 
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" form="my-form" class="btn btn-success btn-demanda">Atualizar</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -313,6 +343,7 @@ $statusEncerrar = array(
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <script>
+
         var myModal = new bootstrap.Modal(document.getElementById("modalDemandaVizualizar"), {});
         document.onreadystatechange = function() {
             myModal.show();

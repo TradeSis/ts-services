@@ -4,8 +4,8 @@ include_once '../header.php';
 
 <!-- <button type="button" class="btn btn-primary mt-2 btnAdicionarComentario">Adicionar comentario</button> -->
 <div class="input-group mt-2 ts-inputComentario">
-  <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-circle" style="font-size: 1rem;"></i></span>
-  <input type="button" class="form-control text-start btnAdicionarComentario" value="Adicionar comentário">
+    <span class="input-group-text" id="basic-addon1"><i class="bi bi-chat-dots"></i></span>
+    <input type="button" class="form-control text-start btnAdicionarComentario" value="Adicionar comentário">
 </div>
 
 <div class="container-fluid mt-3 containerComentario sumir">
@@ -27,7 +27,7 @@ include_once '../header.php';
 
                     <div class="container-fluid p-0">
                         <div class="col">
-                            <span class="tituloEditor">Comentario</span>
+                            <span class="tituloEditor">Comentário</span>
                         </div>
                         <div class="quill-comentario"></div>
                         <textarea style="display: none" id="quill-comentario" name="comentario"></textarea>
@@ -46,7 +46,7 @@ include_once '../header.php';
                         </div>
                         <div class="col-md">
                             <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
-                            <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="float: right;">Enviar</button>
+                            <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="float: right;">Salvar</button>
                         </div>
                     </div>
                     <p id="mostraNomeAnexo"></p>
@@ -60,21 +60,29 @@ include_once '../header.php';
 
 <div class="container mt-3 col-md-12">
     <?php foreach ($comentarios as $comentario) {  ?>
-        <div class="card mb-3" style="border-radius: 15px;">
+
+        <div class="row">
+            <div class="col ms-2 pe-0" style="margin-bottom: -10px;">
+                <i class="bi bi-person-circle" style="font-size: 30px;"></i>
+            </div>
+            <div class="col-md-11 ms-0 ps-0" style="margin-bottom: -10px;">
+                <p class="mt-3 ms-0">
+                    <span class="" style="font-style: italic;">
+                        <strong><?php echo $comentario['nomeUsuario'] ?></strong> &#32;
+                      
+                        &#32;<?php echo date('H:i d/m/Y', strtotime($comentario['dataComentario'])) ?>
+                </p>
+            </div>
+        </div>
+        <div class="card mb-3" style="border-radius: 15px;box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-1">
+                    <!-- <div class="col-md-1">
                         <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
-                    </div>
+                    </div> -->
                     <div class="col-md-11">
-                        <p>
-                            <a class="float-left me-2"><strong>
-                                    <?php echo $comentario['nomeUsuario'] ?>
-                                </strong></a>
-                            <span class="float-right">
-                                <?php echo date('H:i d/m/Y', strtotime($comentario['dataComentario'])) ?>
-                            </span>
-                        </p>
+
+
                         <div class="clearfix"></div>
                         <p>
                             <?php echo $comentario['comentario'] ?>
@@ -106,7 +114,6 @@ include_once '../header.php';
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script>
-
     function myFunction() {
         var x = document.getElementById("myFile");
         var txt = "";

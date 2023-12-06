@@ -8,18 +8,28 @@
     .sumir {
         display: none;
     }
+    .ql-toolbar{
+        display: none;
+    }
+    .btnEditar{
+        color: #000000;
+        cursor: pointer;
+    }
 </style>
 
 <form action="../database/demanda.php?operacao=descricao" method="post">
     <div class="col-md-12">
         <div class="container-fluid p-0">
-            <div class="col text-end" style="margin-bottom: -15px;">
-                <button type="button" class="btn btn-primary  btnEditar">Editar</button>
-            </div>
-            <div class="col">
+            <div class="row">
+                <div class="col">
                 <span class="tituloEditor">Descrição</span>
+                </div>
+                <div class="col text-end">
+                <a class="btnEditar"><i class="bi bi-pen"></i>&#32;Editar</a>
+                </div>
             </div>
-            <div class="quill-textarea ts-displayDisable"><?php echo $demanda['descricao'] ?></div>
+          
+            <div class="quill-textarea ts-displayDisable" style="height: 30vh!important;"><?php echo $demanda['descricao'] ?></div>
             <textarea style="display: none" id="quill-descricao" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
             <input type="hidden" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
         </div>
@@ -38,8 +48,8 @@
     $('.btnEditar').click(function() {
         $('.quill-textarea').toggleClass('ts-displayDisable');
         $('.btnSalvarComentario').toggleClass('sumir');
-
-    });
+        $('.ql-toolbar').show();
+    }); 
 
     $('.btnAdicionarComentario').click(function() {
         $('.containerComentario').toggleClass('sumir'); 

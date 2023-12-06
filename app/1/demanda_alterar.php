@@ -37,7 +37,7 @@ $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idDemanda'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
     $tituloDemanda = "'" . $jsonEntrada['tituloDemanda'] . "'";
-    $descricao = "'" . $jsonEntrada['descricao'] . "'";
+    // lucas 06122023 id715  - removido descricao
     $prioridade = $jsonEntrada['prioridade'];
     $idContrato = isset($jsonEntrada['idContrato'])  && $jsonEntrada['idContrato'] !== "" ?  $jsonEntrada['idContrato']    : "null";
     //lucas 28112023 id706 - removido tipoOcorrencia 
@@ -55,7 +55,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     $tempoCobradoAutal = $row_consulta["tempoCobrado"];
     $tempoCobradoAutal = "'". $tempoCobradoAutal . "'";
    
-   $sql = "UPDATE demanda SET prioridade = $prioridade, tituloDemanda = $tituloDemanda, descricao = $descricao, idServico = $idServico, idAtendente = $idAtendente,
+   $sql = "UPDATE demanda SET prioridade = $prioridade, tituloDemanda = $tituloDemanda, idServico = $idServico, idAtendente = $idAtendente,
    horasPrevisao = $horasPrevisao, idContrato = $idContrato, dataPrevisaoEntrega = $dataPrevisaoEntrega, dataPrevisaoInicio = $dataPrevisaoInicio ";
 
     if ($tempoCobradoEntrada != $tempoCobradoAutal) {

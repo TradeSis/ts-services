@@ -59,9 +59,10 @@ $tiposstatus = buscaTipoStatus();
                         <td>
                             <a class="btn btn-warning btn-sm" href="tipostatus_alterar.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-pencil-square"></i></a>
                             <a class="btn btn-danger btn-sm" href="tipostatus_excluir.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-trash3"></i></a>
-
+                            
                             <button id="<?php echo $tipostatus['idTipoStatus'] ?>" class='btn btn-outline-warning btn-sm' onclick="popTipoStatus(<?php echo $tipostatus['idTipoStatus'] ?>)">Editar</button>
                         </td>
+                       
                     </tr>
                 <?php } ?>
 
@@ -123,6 +124,7 @@ $tiposstatus = buscaTipoStatus();
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script>
+
         const editForm = document.getElementById("edit-form");
         const popTipoStatusModal = new bootstrap.Modal(document.getElementById("popTipoStatus"));
 
@@ -131,6 +133,7 @@ $tiposstatus = buscaTipoStatus();
 
             const dados = await fetch("<?php echo URLROOT ?>/services/database/tipostatus.php?operacao=GET_JSON&idTipoStatus=" + idTipoStatus);
             const resposta = await dados.json();
+            alert(JSON.stringify(resposta, null, 2));
             //const popTipoStatus = new bootstrap.Modal(document.getElementById("popTipoStatus"));
             popTipoStatusModal.show();
             document.getElementById("idTipoStatus").innerHTML = resposta.idTipoStatus;

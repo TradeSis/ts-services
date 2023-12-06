@@ -105,6 +105,7 @@ $statusEncerrar = array(
         margin-right: 10px;
         width: 25vw;
     }
+
 </style>
 
 <body>
@@ -112,7 +113,7 @@ $statusEncerrar = array(
 
         <!-- Modal -->
         <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-labelledby="modalDemandaVizualizarLabel" aria-hidden="true">
-            <div class="col-12 col-md-3 float-end divLateral bg-white">
+            <div class="col-12 col-md-3 bg-white float-end divLateral">
                 <div class="col border-start">
                     <div class="modal-header">
 
@@ -191,8 +192,8 @@ $statusEncerrar = array(
                                 </div>
                             </div>
 
-                    </div><!-- container -->
 
+                    </div><!-- container -->
                     <div class="modal-footer" style="margin-top: 60px;">
                         <?php
                         if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
@@ -207,14 +208,11 @@ $statusEncerrar = array(
                             <button type="button" data-bs-toggle="modal" data-bs-target="#entregarModal" class="btn btn-warning">Entregar</button>
                         <?php } ?>
 
-                    </div>
                 </div>
             </div>
 
-
-            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen" >
+            <div class="modal-dialog modal-xl modal-dialog-scrollable modal-fullscreen">
                 <div class="modal-content">
-
                     <div class="container">
                         <div class="row g-3 mt-1">
                             <div class="col-md-2 d-flex">
@@ -253,8 +251,6 @@ $statusEncerrar = array(
                         </div>
                     </div>
 
-                    </form>
-
                     <hr>
                     <div class="row mt-2">
                         <div id="ts-tabs">
@@ -277,8 +273,9 @@ $statusEncerrar = array(
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" form="my-form" class="btn btn-success btn-demanda">Atualizar</button>
+                        <button type="submit" form="my-form"  class="btn btn-success btn-demanda">Atualizar</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -313,6 +310,83 @@ $statusEncerrar = array(
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <script>
+        /* $(document).ready(function() {
+            $("#modalDemandaInserir").submit(function(event) {
+                alert('passou aqui')
+                event.preventDefault();
+                var formData = new FormData(this);
+                var vurl;
+                if ($("#btn_atualizarDemanda").is(":focus")) {
+                    vurl = "../database/demanda.php?operacao=alterar";
+                }
+                $.ajax({
+                    url: vurl,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: refreshPage
+
+                });
+            });
+        }); */
+
+ /*        $('#btn_atualizarDemanda').click(function() {
+            //alert('passou aqui')
+            
+                //alert('oi')
+                event.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "../database/demanda.php?operacao=alterar",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: refreshPage,
+                });
+            
+            }); 
+
+            $('#btn_atualizarDemanda').focusout(function () {
+     var dados = $(this).closest('form_demandaAtualizar').serialize();
+     alert(dados)
+     $.ajax({
+         url: CI_ROOT + "backend/home/salva_preco",
+         data: {
+             dados: dados
+         },
+         dataType: "json",
+         type: "POST",
+         success: function (data) {
+
+         }
+     });
+ }); */
+ /* $(document).on('click', '.btn-demanda', function() {
+    alert('entrou aqui')
+        //window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
+   
+        //Envio form modalDemandaInserir
+         $("#form_demandaAtualizar").on(function(event) {
+            alert('form')
+            event.preventDefault();
+            var formData = new FormData(this);
+            //alert (formDate)
+            $.ajax({
+                url: "../database/demanda.php?operacao=alterar",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: refreshPage,
+            });
+        }); 
+    }); */
+        function refreshPage() {
+            window.location.reload();
+        }
+
         var myModal = new bootstrap.Modal(document.getElementById("modalDemandaVizualizar"), {});
         document.onreadystatechange = function() {
             myModal.show();

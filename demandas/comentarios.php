@@ -2,7 +2,6 @@
 include_once '../header.php';
 ?>
 
-<!-- <button type="button" class="btn btn-primary mt-2 btnAdicionarComentario">Adicionar comentario</button> -->
 <div class="input-group mt-2 ts-inputComentario">
     <span class="input-group-text" id="basic-addon1"><i class="bi bi-chat-dots"></i></span>
     <input type="button" class="form-control text-start btnAdicionarComentario" value="Adicionar comentário">
@@ -46,7 +45,7 @@ include_once '../header.php';
                         </div>
                         <div class="col-md">
                             <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
-                            <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-info" style="float: right;">Salvar</button>
+                            <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-success" style="float: right;">Salvar</button>
                         </div>
                     </div>
                     <p id="mostraNomeAnexo"></p>
@@ -160,7 +159,6 @@ include_once '../header.php';
                 [{
                     'header': [1, 2, 3, 4, 5, 6, false]
                 }],
-                ['link', 'image', 'video', 'formula'],
                 [{
                     'color': []
                 }, {

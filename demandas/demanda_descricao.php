@@ -8,7 +8,7 @@
     .sumir {
         display: none;
     }
-    .ql-toolbar{
+    .ts-containerDescricaoDemanda .ql-toolbar{
         display: none;
     }
     .btnEditar{
@@ -19,7 +19,7 @@
 
 <form action="../database/demanda.php?operacao=descricao" method="post">
     <div class="col-md-12">
-        <div class="container-fluid p-0">
+        <div class="container-fluid p-0 ts-containerDescricaoDemanda">
             <div class="row">
                 <div class="col">
                 <span class="tituloEditor">Descrição</span>

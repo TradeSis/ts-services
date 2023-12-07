@@ -48,7 +48,6 @@ $statusEncerrar = array(
     TIPOSTATUS_AGENDADO
 );
 ?>
-
 <!doctype html>
 <html lang="pt-BR">
 
@@ -57,31 +56,51 @@ $statusEncerrar = array(
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
-
 <style>
     .modal-fullscreen {
-        max-width: 75vw;
+        /* padding: 10px; */
+        padding: 10px 0px 10px 5px;
+        max-width: 74vw;
         height: 98vh;
         margin-top: 0px;
         margin-bottom: 0px;
         margin-left: 0px;
     }
 
-    .ts-divLateralModalDemanda {
+    .divLateral {
         position: sticky;
         display: flex;
-        height: 98vh;
-        background-color: #F1F2F4;
+        height: 94.5vh;
+        margin-top: 10px;
+        margin-right: 0.5vw;
+        /* width: 25vw; */
+        max-width: 25vw;;
+        /* width: 25vw; */
+        padding-left: 0px;
     }
 
     @media only screen and (max-width: 785px) {
         .modal-fullscreen {
+            /* max-width:1200px; */
             max-width: 100vw;
             height: 98vh;
         }
 
-        .ts-divLateralModalDemanda {
-            height: 650px;
+        .divLateral {
+            padding-left: 20px;
+        }
+
+    }
+
+    @media only screen and (max-width: 600px) {
+
+        .divLateral {
+            margin-bottom: 75px;
+            position: absolute;
+        }
+
+        .divLateral .col {
+            height: 750px;
         }
 
     }
@@ -105,8 +124,14 @@ $statusEncerrar = array(
         background: #fff;
     }
 
+    .ts-setaSelect {
+        cursor: pointer;
+        /* -webkit-appearance: none;
+      -moz-appearance: none;
+      text-indent: 1px;
+      text-overflow: ''; */
+    }
 
-    /* STYLE SCROLL BAR */
     /* width */
     ::-webkit-scrollbar {
         width: 7px;
@@ -129,18 +154,21 @@ $statusEncerrar = array(
 </style>
 
 <body>
-    <div class="container-fluid">
+    <!-- <div class="container-fluid"> -->
 
-        <!-- Modal -->
-        <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-hidden="true" style="margin: 5px;">
-            <div class="col-12 col-md-3 float-end ts-divLateralModalDemanda">
-                <div class="col">
-                    <div class="modal-header p-2 pe-3">
-                        <a href="../demandas/" role="button" class="btn-close"></a>
-                    </div>
+    <!-- Modal -->
+    <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-labelledby="modalDemandaVizualizarLabel" aria-hidden="true">
+        <div class="col-12 float-end divLateral" style="background-color: #F1F2F4;">
+            <div class="col border-start m-0">
+                <div class="modal-header">
+
+                    <a href="../demandas/" role="button" class="btn-close"></a>
+
+                </div>
+                <div class="container m-0">
                     <form id="my-form" action="../database/demanda.php?operacao=alterar" method="post">
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
+                        <div class="row mt-3">
+                            <div class="col-md-5 ps-2">
                                 <label class="form-label ts-label">Responsável</label>
                             </div>
                             <div class="col-md-7">
@@ -152,8 +180,8 @@ $statusEncerrar = array(
                                 </select>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
+                        <div class="row mt-3">
+                            <div class="col-md-5 ps-2">
                                 <label class="form-label ts-label">Data de Abertura</label>
                             </div>
                             <div class="col-md-7">
@@ -161,178 +189,167 @@ $statusEncerrar = array(
                             </div>
                         </div>
 
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
+                        <div class="row mt-3">
+                            <div class="col-md-5 ps-2">
                                 <label class="form-label ts-label">Inicio Previsto</label>
                             </div>
                             <div class="col-md-7">
                                 <input type="date" class="form-control ts-input" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>">
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
+                        <div class="row mt-3">
+                            <div class="col-md-5 ps-2">
                                 <label class="form-label ts-label">Inicio</label>
                             </div>
                             <div class="col-md-7">
                                 <input type="date" class="form-control ts-input" name="dataAbertura" value="<?php echo $demanda['dataAbertura'] ?>" readonly>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
+                        <div class="row mt-3">
+                            <div class="col-md-5 ps-2">
                                 <label class="form-label ts-label">Entrega Prevista</label>
                             </div>
                             <div class="col-md-7">
                                 <input type="date" class="form-control ts-input" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>">
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
+                        <div class="row mt-3">
+                            <div class="col-md-5 ps-2">
                                 <label class="form-label ts-label">Entrega</label>
                             </div>
                             <div class="col-md-7">
                                 <input type="date" class="form-control ts-input" name="dataFechamento" value="<?php echo $demanda['dataFechamento'] ?>" readonly>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
-                                <label class="form-label ts-label">Previsão</label>
-                            </div>
-                            <div class="col-md-7">
+                        <hr>
+                        <div class="row mt-1">
+                            <div class="col-sm-4 col-md border-end">
+                                <label class='form-label ts-label mb-1'>Previsão</label>
                                 <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                             </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
-                                <label class="form-label ts-label">Realizado</label>
-                            </div>
-                            <div class="col-md-7">
+                            <div class="col-sm-4 col-md border-end">
+                                <label class='form-label ts-label mb-1'>Realizado</label>
                                 <input type="time" class="form-control ts-input" name="realizado">
                             </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-5 ps-3">
-                                <label class="form-label ts-label">Cobrado</label>
-                            </div>
-                            <div class="col-md-7">
+                            <div class="col-sm-4 col-md">
+                                <label class='form-label ts-label mb-1'>Cobrado</label>
                                 <input type="time" class="form-control ts-input" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
                             </div>
                         </div>
 
+                </div><!-- container -->
 
-                        <div class="modal-footer">
-                            <?php
-                            if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#encerrarModal" class="btn btn-sm btn-danger">Encerrar</button>
-                            <?php }
-                            if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#reabrirModal" class="btn btn-sm btn-warning">Reabrir</button>
-                            <?php } ?>
+                <div class="modal-footer">
+                    <?php
+                    if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#encerrarModal" class="btn btn-danger">Encerrar</button>
+                    <?php }
+                    if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#reabrirModal" class="btn btn-warning">Reabrir</button>
+                    <?php } ?>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#encaminharModal" class="btn btn-warning">Encaminhar</button>
 
-                            <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#entregarModal" class="btn btn-sm btn-warning">Entregar</button>
-                            <?php } ?>
+                    <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#entregarModal" class="btn btn-warning">Entregar</button>
+                    <?php } ?>
 
-                        </div>
-
-                        <div class="modal-footer">
-                            <div class="col align-self-start pl-0">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#encaminharModal" class="btn btn-warning">Encaminhar</button>
-                            </div>
-                            <button type="submit" form="my-form" class="btn btn-success">Atualizar</button>
-                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="my-form" class="btn btn-success btn-demanda">Atualizar</button>
                 </div>
             </div>
+        </div>
 
-            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen"> <!-- Modal 1 -->
-                <div class="modal-content" style="background-color: #F1F2F4;">
-                    <div class="container">
-                        <div class="row g-3 mt-1">
-                            <div class="col-md-2 d-flex">
-                                <label class='form-label ts-label'>Prioridade</label>
-                                <input type="number" min="1" max="99" class="form-control ts-input" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
-                            </div>
-                            <div class="col-md-7 d-flex">
-                                <label class='form-label ts-label'>Demanda: </label>
-                                <input type="text" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly style="width: 50px;" />
-                                <input type="text" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>">
-                            </div>
-                            <div class="col-md-3 d-flex">
-                                <label class="form-label ts-label">Status</label>
-                                <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
-                            </div>
+        <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content" style="background-color: #F1F2F4;">
+                <div class="container">
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-2 d-flex">
+                            <label class='form-label ts-label'>Prioridade</label>
+                            <input type="number" min="1" max="99" class="form-control ts-input" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
                         </div>
-                        <div class="row g-3" style="margin-top: 1px;">
-                            <div class="col-md-3 d-flex">
-                                <label class="form-label ts-label">Cliente</label>
-                                <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeCliente'] ?>" readonly>
-                            </div>
-                            <div class="col-md-4 d-flex">
-                                <label class="form-label ts-label">Solicitante</label>
-                                <input type="text" class="form-control ts-input" id="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
-                            </div>
-                            <div class="col-md-5 d-flex">
-                                <label class="form-label ts-label">Serviço</label>
-                                <select class="form-select ts-input ts-setaSelect" name="idServico" id="idServico" autocomplete="off">
-                                    <option value="<?php echo $demanda['idServico'] ?>"><?php echo $demanda['nomeServico'] ?>
-                                        <?php foreach ($servicos as $servico) { ?>
-                                    <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
-                                    </option>
-                                <?php } ?>
-                                </select>
-                            </div>
+                        <div class="col-md-7 d-flex">
+                            <label class='form-label ts-label'>Demanda: </label>
+                            <input type="text" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly style="width: 50px;" />
+                            <input type="text" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>">
+                        </div>
+                        <div class="col-md-3 d-flex">
+                            <label class="form-label ts-label">Status</label>
+                            <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
                         </div>
                     </div>
-
-                    </form>
-
-                    <hr style="border-top: 2px solid #000000;">
-                    <div class="row mt-2">
-                        <div id="ts-tabs">
-                            <div class="tab whiteborder" id="tab-demanda">Demanda</div>
-                            <div class="tab" id="tab-tarefas">Tarefas</div>
-                            <div class="line"></div>
+                    <div class="row g-3" style="margin-top: 1px;">
+                        <div class="col-md-3 d-flex">
+                            <label class="form-label ts-label">Cliente</label>
+                            <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeCliente'] ?>" readonly>
                         </div>
-                    </div>
-                    <div class="modal-body">
-
-                        <div id="ts-tabs">
-                            <div class="tabContent" style="margin-top: -10px;">
-                                <?php include_once 'demanda_descricao.php'; ?>
-                            </div>
-                            <div class="tabContent">
-                                <?php include_once 'visualizar_tarefa.php'; ?>
-                            </div>
-
+                        <div class="col-md-4 d-flex">
+                            <label class="form-label ts-label">Solicitante</label>
+                            <input type="text" class="form-control ts-input" id="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
                         </div>
-
+                        <div class="col-md-5 d-flex">
+                            <label class="form-label ts-label">Serviço</label>
+                            <select class="form-select ts-input ts-setaSelect" name="idServico" id="idServico" autocomplete="off">
+                                <option value="<?php echo $demanda['idServico'] ?>"><?php echo $demanda['nomeServico'] ?>
+                                    <?php foreach ($servicos as $servico) { ?>
+                                <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
+                                </option>
+                            <?php } ?>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div><!-- Modal 1 -->
 
+                </form>
 
+                <hr style="border-top: 2px solid #000000;">
+                <div class="row mt-2">
+                    <div id="ts-tabs">
+                        <div class="tab whiteborder" id="tab-demanda">Demanda</div>
+                        <div class="tab" id="tab-tarefas">Tarefas</div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="modal-body">
+
+                    <div id="ts-tabs">
+                        <div class="tabContent" style="margin-top: -10px;">
+                            <?php include_once 'demanda_descricao.php'; ?>
+                        </div>
+                        <div class="tabContent">
+                            <?php include_once 'visualizar_tarefa.php'; ?>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <!--------- INSERIR/NOVA --------->
-        <?php include_once 'modalTarefa_inserirAgendar.php' ?>
 
-        <!--------- MODAL STOP --------->
-        <?php include_once 'modalTarefa_stop.php' ?>
+    </div>
 
-        <!--------- MODAL ENCERRAR --------->
-        <?php include_once 'modalstatus_encerrar.php' ?>
+    <!--------- INSERIR/NOVA --------->
+    <?php include_once 'modalTarefa_inserirAgendar.php' ?>
 
-        <!--------- MODAL REABRIR --------->
-        <?php include_once 'modalstatus_reabrir.php' ?>
+    <!--------- MODAL STOP --------->
+    <?php include_once 'modalTarefa_stop.php' ?>
 
-        <!--------- MODAL ENCAMINHAR --------->
-        <?php include_once 'modalstatus_encaminhar.php' ?>
+    <!--------- MODAL ENCERRAR --------->
+    <?php include_once 'modalstatus_encerrar.php' ?>
 
-        <!--------- MODAL ENTREGAR --------->
-        <?php include_once 'modalstatus_entregar.php' ?>
+    <!--------- MODAL REABRIR --------->
+    <?php include_once 'modalstatus_reabrir.php' ?>
 
-        <!--Gabriel 11102023 ID 596 modal Alterar tarefa via include -->
-        <!--Lucas 18102023 ID 602 alterado nome do arquivo para modalTarefa_alterar -->
-        <?php include 'modalTarefa_alterar.php'; ?>
-    </div><!--container-fluid-->
+    <!--------- MODAL ENCAMINHAR --------->
+    <?php include_once 'modalstatus_encaminhar.php' ?>
+
+    <!--------- MODAL ENTREGAR --------->
+    <?php include_once 'modalstatus_entregar.php' ?>
+
+    <!--Gabriel 11102023 ID 596 modal Alterar tarefa via include -->
+    <!--Lucas 18102023 ID 602 alterado nome do arquivo para modalTarefa_alterar -->
+    <?php include 'modalTarefa_alterar.php'; ?>
+    <!-- </div> -->
 
     <!-- LOCAL PARA COLOCAR OS JS -->
 
@@ -464,6 +481,7 @@ $statusEncerrar = array(
                     [{
                         'header': [1, 2, 3, 4, 5, 6, false]
                     }],
+                    ['link', 'image', 'video', 'formula'],
                     [{
                         'color': []
                     }, {
@@ -483,7 +501,6 @@ $statusEncerrar = array(
             $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
         });
     </script>
-
 </body>
 
 </html>

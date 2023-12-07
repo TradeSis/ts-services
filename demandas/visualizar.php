@@ -94,7 +94,6 @@ $statusEncerrar = array(
         border-bottom: none;
         /* border-radius: 0px; */
         margin-top: -5px;
-
         background: #F1F2F4;
     }
 
@@ -103,6 +102,11 @@ $statusEncerrar = array(
         margin-top: -5px;
 
         background: #fff;
+    }
+
+    .ts-selectDemandaModalVisualizar{
+        border-radius: 3px;
+        border-bottom: 1px solid #C1C1C1;
     }
 
 
@@ -124,7 +128,7 @@ $statusEncerrar = array(
 
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #a0a0a0;
     }
 </style>
 
@@ -134,17 +138,23 @@ $statusEncerrar = array(
         <!-- Modal -->
         <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-hidden="true" style="margin: 5px;">
             <div class="col-12 col-md-3 float-end ts-divLateralModalDemanda">
-                <div class="col">
+                <div class="col border-start">
+                <form id="my-form" action="../database/demanda.php?operacao=alterar" method="post">
                     <div class="modal-header p-2 pe-3">
-                        <a href="../demandas/" role="button" class="btn-close"></a>
+                        <div class="col-md-6 d-flex pt-1">
+                            <label class='form-label ts-label'>Prioridade</label>
+                            <input type="number" min="1" max="99" class="form-control ts-input" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
+                        </div>
+                        <div class="col-md-2 border-start d-flex me-2">
+                            <a href="../demandas/" role="button" class="btn-close"></a>
+                        </div>
                     </div>
-                    <form id="my-form" action="../database/demanda.php?operacao=alterar" method="post">
                         <div class="row mt-2">
                             <div class="col-md-5 ps-3">
                                 <label class="form-label ts-label">Responsável</label>
                             </div>
                             <div class="col-md-7">
-                                <select class="form-select ts-input" name="idAtendente">
+                                <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idAtendente">
                                     <option value="<?php echo $demanda['idAtendente'] ?>"><?php echo $demanda['nomeAtendente'] ?></option>
                                     <?php foreach ($atendentes as $atendente) { ?>
                                         <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
@@ -247,32 +257,28 @@ $statusEncerrar = array(
                 <div class="modal-content" style="background-color: #F1F2F4;">
                     <div class="container">
                         <div class="row g-3 mt-1">
-                            <div class="col-md-2 d-flex">
-                                <label class='form-label ts-label'>Prioridade</label>
-                                <input type="number" min="1" max="99" class="form-control ts-input" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
-                            </div>
-                            <div class="col-md-7 d-flex">
-                                <label class='form-label ts-label'>Demanda: </label>
-                                <input type="text" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly style="width: 50px;" />
-                                <input type="text" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>">
+                            <div class="col-md-9 d-flex">
+                                <span style="font-size:18px;font-weight: 600;color:#172B4D"><?php echo $demanda['idDemanda'] ?></span>
+                                <input type="hidden" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
+                                <input type="text" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="font-size:18px;font-weight: 600;color:#172B4D">
                             </div>
                             <div class="col-md-3 d-flex">
-                                <label class="form-label ts-label">Status</label>
-                                <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeTipoStatus'] ?>" readonly>
+                                <span> <strong>Status : </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
                             </div>
                         </div>
-                        <div class="row g-3" style="margin-top: 1px;">
-                            <div class="col-md-3 d-flex">
-                                <label class="form-label ts-label">Cliente</label>
-                                <input type="text" class="form-control ts-input" value="<?php echo $demanda['nomeCliente'] ?>" readonly>
+                        <div class="row g-3" style="margin-top: -10px;">
+                            <div class="col-md-3">
+                                <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $demanda['idCliente'] ?>">
+                                <strong>Cliente : </strong><span><?php echo $demanda['nomeCliente'] ?></span>
                             </div>
-                            <div class="col-md-4 d-flex">
-                                <label class="form-label ts-label">Solicitante</label>
-                                <input type="text" class="form-control ts-input" id="idSolicitante" value="<?php echo $demanda['nomeSolicitante'] ?>" readonly>
+                            <div class="col-md-4">
+                                <input type="hidden" class="form-control ts-input" name="idSolicitante" id="idSolicitante" value="<?php echo $demanda['idSolicitante'] ?>" readonly>
+                                <span> <strong>Solicitante : </strong> <?php echo $demanda['nomeSolicitante'] ?></span>
                             </div>
+
                             <div class="col-md-5 d-flex">
-                                <label class="form-label ts-label">Serviço</label>
-                                <select class="form-select ts-input ts-setaSelect" name="idServico" id="idServico" autocomplete="off">
+                                <span> <strong>Serviço: </strong></span>
+                                <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idServico" id="idServico" autocomplete="off">
                                     <option value="<?php echo $demanda['idServico'] ?>"><?php echo $demanda['nomeServico'] ?>
                                         <?php foreach ($servicos as $servico) { ?>
                                     <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
@@ -285,8 +291,8 @@ $statusEncerrar = array(
 
                     </form>
 
-                    <hr style="border-top: 2px solid #000000;">
-                    <div class="row mt-2">
+                    <!-- <hr style="border-top: 2px solid #000000;"> -->
+                    <div class="row mt-1">
                         <div id="ts-tabs">
                             <div class="tab whiteborder" id="tab-demanda">Demanda</div>
                             <div class="tab" id="tab-tarefas">Tarefas</div>

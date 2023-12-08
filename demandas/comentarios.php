@@ -2,60 +2,79 @@
 include_once '../header.php';
 ?>
 
-<div class="input-group mt-2 ts-inputComentario">
-    <span class="input-group-text" id="basic-addon1"><i class="bi bi-chat-dots"></i></span>
-    <input type="button" class="form-control text-start btnAdicionarComentario" value="Adicionar comentário">
-</div>
 
-<div class="container-fluid mt-3 containerComentario ts-sumir">
-    <form method="post" id="form" enctype="multipart/form-data">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <?php
-                    $nomeCliente = "Interno";
-                    if ($usuario["idCliente"]) {
-                        $clientes = buscaClientes($usuario["idCliente"]);
-                        $nomeCliente = $clientes["nomeCliente"];
-                    } ?>
-                    <input type="hidden" class="form-control ts-label" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
-                    <input type="hidden" class="form-control ts-label" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                    <!-- <input type="text" class="form-control ts-input" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $nomeCliente ?>" readonly> -->
-                </div>
-                <div class="form-group">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-sm btn-primary mt-1" data-bs-toggle="modal" data-bs-target="#comentarioModal">
+    Adicionar comentário
+</button>
 
-                    <div class="container-fluid p-0">
-                        <div class="col">
-                            <span class="tituloEditor">Comentário</span>
+<!-- <div class="container-fluid mt-3 containerComentario ts-sumir"> -->
+<!-- Modal -->
+<div class="modal fade" id="comentarioModal" tabindex="-1" aria-labelledby="comentarioModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Comentário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" id="form" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <?php
+                                $nomeCliente = "Interno";
+                                if ($usuario["idCliente"]) {
+                                    $clientes = buscaClientes($usuario["idCliente"]);
+                                    $nomeCliente = $clientes["nomeCliente"];
+                                } ?>
+                                <input type="hidden" class="form-control ts-label" name="idCliente" value="<?php echo $usuario['idCliente'] ?>" readonly>
+                                <input type="hidden" class="form-control ts-label" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+                                <!-- <input type="text" class="form-control ts-input" value="<?php echo $_SESSION['usuario'] ?> - <?php echo $nomeCliente ?>" readonly> -->
+                            </div>
+                            <div class="form-group">
+
+                                <div class="container-fluid p-0">
+                                    <div class="col">
+                                        <span class="tituloEditor">Comentário</span>
+                                    </div>
+                                    <div class="quill-comentario"></div>
+                                    <textarea style="display: none" id="quill-comentario" name="comentario"></textarea>
+                                </div>
+
+                                <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
+                                <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
+
+                                <p id="mostraNomeAnexo"></p>
+                            </div>
+
                         </div>
-                        <div class="quill-comentario"></div>
-                        <textarea style="display: none" id="quill-comentario" name="comentario"></textarea>
+
                     </div>
 
-                    <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
-                    <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
-
-                    <div class="row mt-2">
-                        <div class="col-md">
-                            <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo" onchange="myFunction()" style="color:#567381; display:none">
-                            <label for="myFile">
-                                <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i>&#32;<h7 style="color: #fff;">Anexos</h7></a>
-
-                            </label>
-                        </div>
-                        <div class="col-md">
-                            <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
-                            <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-success" style="float: right;">Salvar</button>
-                        </div>
-                    </div>
-                    <p id="mostraNomeAnexo"></p>
-                </div>
 
             </div>
+            <div class="modal-footer">
+                <div class="col-md">
+                    <input type="file" id="myFile" class="custom-file-upload" name="nomeAnexo" onchange="myFunction()" style="color:#567381; display:none">
+                    <label for="myFile">
+                        <a class="btn btn-primary"><i class="bi bi-file-earmark-arrow-down-fill" style="color:#fff"></i>&#32;<h7 style="color: #fff;">Anexos</h7></a>
 
+                    </label>
+                </div>
+                <div class="col-md">
+                    <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
+                    <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-success" style="float: right;">Salvar</button>
+                </div>
+            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
+<!-- </div> -->
+
+
 
 <div class="container mt-3 col-md-12">
     <?php foreach ($comentarios as $comentario) {  ?>
@@ -68,7 +87,7 @@ include_once '../header.php';
                 <p class="mt-3 ms-0">
                     <span class="" style="font-style: italic;">
                         <strong><?php echo $comentario['nomeUsuario'] ?></strong> &#32;
-                      
+
                         &#32;<?php echo date('H:i d/m/Y', strtotime($comentario['dataComentario'])) ?>
                 </p>
             </div>
@@ -76,7 +95,7 @@ include_once '../header.php';
         <div class="card mb-3" style="border-radius: 15px;box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);">
             <div class="card-body p-1">
                 <div class="row">
-                    
+
                     <div class="col-md-11">
                         <div class="clearfix"></div>
                         <p>

@@ -517,6 +517,50 @@ $statusEncerrar = array(
         quilldescricao.on('text-change', function(delta, oldDelta, source) {
             $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
         });
+
+        var quilldescricao = new Quill('.quill-textarea2', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            }
+        });
+
+        quilldescricao.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-descricao2').val(quilldescricao.container.firstChild.innerHTML);
+        });
     </script>
 
 </body>

@@ -104,7 +104,7 @@ $statusEncerrar = array(
         background: #fff;
     }
 
-    .ts-selectDemandaModalVisualizar{
+    .ts-selectDemandaModalVisualizar {
         border-radius: 3px;
         border-bottom: 1px solid #C1C1C1;
     }
@@ -139,16 +139,16 @@ $statusEncerrar = array(
         <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-hidden="true" style="margin: 5px;">
             <div class="col-12 col-md-3 float-end ts-divLateralModalDemanda">
                 <div class="col border-start">
-                <form id="my-form" action="../database/demanda.php?operacao=alterar" method="post">
-                    <div class="modal-header p-2 pe-3">
-                        <div class="col-md-6 d-flex pt-1">
-                            <label class='form-label ts-label'>Prioridade</label>
-                            <input type="number" min="1" max="99" class="form-control ts-input" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
+                    <form id="my-form" action="../database/demanda.php?operacao=alterar" method="post">
+                        <div class="modal-header p-2 pe-3">
+                            <div class="col-md-6 d-flex pt-1">
+                                <label class='form-label ts-label'>Prioridade</label>
+                                <input type="number" min="1" max="99" class="form-control ts-input" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
+                            </div>
+                            <div class="col-md-2 border-start d-flex me-2">
+                                <a href="../demandas/" role="button" class="btn-close"></a>
+                            </div>
                         </div>
-                        <div class="col-md-2 border-start d-flex me-2">
-                            <a href="../demandas/" role="button" class="btn-close"></a>
-                        </div>
-                    </div>
                         <div class="row mt-2">
                             <div class="col-md-5 ps-3">
                                 <label class="form-label ts-label">Responsável</label>
@@ -200,7 +200,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Entrega</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="date" class="form-control ts-input" name="dataFechamento" value="<?php echo $demanda['dataFechamento'] ?>" readonly>
+                                <input type="datetime" class="form-control ts-input" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataFechamento'])) ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">

@@ -16,8 +16,6 @@ include_once '../header.php';
         <div class="row align-items-center"> <!-- LINHA SUPERIOR A TABLE -->
             <div class="col-3 text-start">
                 <!-- TITULO -->
-                <span class="ts-subTitulo"><strong>Tarefas</strong></span>
-
             </div>
             <div class="col-7">
                 <!-- FILTROS -->
@@ -25,37 +23,45 @@ include_once '../header.php';
 
             <div class="col-2 text-end">
                 <!-- lucas 29112023 - modelo de botão refresh para demanda(TESTE) -->
+                <button type="button" class="demandaRefresh btn btn-info btn-sm" value="Start" 
+                    data-demandaRefresh="<?php echo $demanda['idDemanda'] ?>">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </button>
                 <?php if ($demanda['idTipoStatus'] !== TIPOSTATUS_REALIZADO && $demanda['idTipoStatus'] !== TIPOSTATUS_VALIDADO) { ?>
-                    <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
                 <?php } ?>
             </div>
         </div>
 
         <div class="table mt-2 ts-divTabela">
             <table class="table table-hover table-sm align-middle">
-                <!-- <thead class="ts-headertabelafixo">
+                <thead class="ts-headertabelafixo">
                     <tr>
+                        <th class="col-1">ID</th>
                         <th class="col-5">Título</th>
                         <th class="col-1">Atendente</th>
-                        <th class="col-2">Ocorrência</th>
+                        <th class="col-1">Ocorrência</th>
                         <th class="col-3">Datas</th>
                         <th class="col-1" colspan="2"></th>
                     </tr>
-                </thead> -->
+                </thead>
                 <tbody class="fonteCorpo">
                     <?php
                     //Gabriel 1102023 ID 596 removido table duplicado desnecessário
                     //Lucas 09112023 ID 965 Alterado TD
                     foreach ($tarefas as $tarefa) { 
                     ?>
-                        <tr class="mt-2" style="box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);">
-                            <td class='col-5 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                        <tr>
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                                <?php echo $tarefa['idTarefa'] ?>
+                            </td>
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['tituloTarefa'] ?>
                             </td>
-                            <td class='col-1 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
-                                <i class="bi bi-person-fill" data-toggle="tooltip" data-placement="top" title="<?php echo $tarefa['nomeUsuario'] ?>" style="font-size: 20px;color: gray"></i>
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                                <?php echo $tarefa['nomeUsuario'] ?>
                             </td>
-                            <td class='col-2 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['nomeTipoOcorrencia'] ?>
                             </td>
                             <?php
@@ -104,7 +110,7 @@ include_once '../header.php';
                                 $horasReal = "00:00";
                             } ?>
                             
-                            <td class='col-3 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
                                 <?php 
                                 if($tarefa['Previsto'] !== null){  
                                     echo '<span class="ts-datas ts-previsto">Prev: ' . $Previsto . '</span>'; 
@@ -200,6 +206,9 @@ include_once '../header.php';
     <script src="<?php echo URLROOT ?>/services/demandas/tarefas.js"></script>
     <script>
         //Lucas 10112023 ID 965  Adicionado script para botão de clonar
+
+
+        
 
         $(document).ready(function() {
             //lucas 17112023 ID 965 Removido script do botao stop, está no arquivo tarefas.js

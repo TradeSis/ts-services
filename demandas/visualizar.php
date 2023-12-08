@@ -158,7 +158,9 @@ $statusEncerrar = array(
         background: #a0a0a0;
     }
 
-    
+    .ts-subTitulo{
+        color:#172B4D;
+    }
 </style>
 
 <body>
@@ -292,21 +294,21 @@ $statusEncerrar = array(
                                 <input type="text" class="form-control ts-inputSemBorda ts-tituloPrincipalModal" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>">
                             </div>
                             <div class="col-md-3 d-flex">
-                                <span> <strong>Status : </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
+                                <span class="ts-subTitulo"><strong>Status : </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
                             </div>
                         </div>
                         <div class="row g-3" style="margin-top: -10px;">
                             <div class="col-md-3">
                                 <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $demanda['idCliente'] ?>">
-                                <strong>Cliente : </strong><span><?php echo $demanda['nomeCliente'] ?></span>
+                                <span class="ts-subTitulo"><strong>Cliente : </strong><span><?php echo $demanda['nomeCliente'] ?></span>
                             </div>
                             <div class="col-md-4">
                                 <input type="hidden" class="form-control ts-input" name="idSolicitante" id="idSolicitante" value="<?php echo $demanda['idSolicitante'] ?>" readonly>
-                                <span> <strong>Solicitante : </strong> <?php echo $demanda['nomeSolicitante'] ?></span>
+                                <span class="ts-subTitulo"><strong>Solicitante : </strong> <?php echo $demanda['nomeSolicitante'] ?></span>
                             </div>
 
                             <div class="col-md-5 d-flex">
-                                <span> <strong>Serviço: </strong></span>
+                                <span class="ts-subTitulo"><strong>Serviço: </strong></span>
                                 <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idServico" id="idServico" autocomplete="off">
                                     <option value="<?php echo $demanda['idServico'] ?>"><?php echo $demanda['nomeServico'] ?>
                                         <?php foreach ($servicos as $servico) { ?>

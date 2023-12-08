@@ -213,7 +213,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Inicio</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="date" class="form-control ts-inputSemBorda" name="dataAbertura" value="<?php echo $demanda['dataAbertura'] ?>" readonly>
+                                <input type="date" class="form-control ts-inputSemBorda"  value="<?php echo $demanda['dataInicio'] ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">

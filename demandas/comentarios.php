@@ -7,7 +7,7 @@ include_once '../header.php';
     <input type="button" class="form-control text-start btnAdicionarComentario" value="Adicionar comentário">
 </div>
 
-<div class="container-fluid mt-3 containerComentario sumir">
+<div class="container-fluid mt-3 containerComentario ts-sumir">
     <form method="post" id="form" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-12">
@@ -74,14 +74,10 @@ include_once '../header.php';
             </div>
         </div>
         <div class="card mb-3" style="border-radius: 15px;box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);">
-            <div class="card-body">
+            <div class="card-body p-1">
                 <div class="row">
-                    <!-- <div class="col-md-1">
-                        <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
-                    </div> -->
+                    
                     <div class="col-md-11">
-
-
                         <div class="clearfix"></div>
                         <p>
                             <?php echo $comentario['comentario'] ?>

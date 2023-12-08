@@ -40,6 +40,11 @@ $contratos = buscaContratosAbertos($demanda["idCliente"]);
 
 //Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
+if($demanda['dataFechamento'] == null){
+    $dataFechamento =  'dd/mm/aaaa';
+}else{
+    $dataFechamento = date('d/m/Y H:i', strtotime($demanda['dataFechamento']));
+}
 $statusEncerrar = array(
     TIPOSTATUS_FILA,
     TIPOSTATUS_PAUSADO,
@@ -86,18 +91,16 @@ $statusEncerrar = array(
 
     }
 
-    .ts-input {
+    .ts-inputSemBorda {
         border-top: none;
         border-left: none;
         border-right: none;
-        /* border-bottom: 1px solid #484848; */
         border-bottom: none;
-        /* border-radius: 0px; */
         margin-top: -5px;
         background: #F1F2F4;
     }
 
-    .ts-input:any-link {
+    .ts-inputSemBorda:any-link {
         border: 12px solid #000000 !important;
         margin-top: -5px;
 
@@ -107,9 +110,33 @@ $statusEncerrar = array(
     .ts-selectDemandaModalVisualizar {
         border-radius: 3px;
         border-bottom: 1px solid #C1C1C1;
+        background: #F1F2F4;
     }
 
+    .ts-tituloPrincipalModal{
+        font-size:18px;
+        font-weight: 600;
+        color:#172B4D;
+    }
 
+    .ts-displayDisable { /*  */
+        background: #eee;
+        pointer-events: none;
+        touch-action: none;
+    }
+
+    .ts-sumir {
+        display: none;
+    }
+    .ts-containerDescricaoDemanda .ql-toolbar{
+        display: none;
+    }
+    .ts-btnDescricaoEditar{
+        color: #000000;
+        cursor: pointer;
+    }
+
+    
     /* STYLE SCROLL BAR */
     /* width */
     ::-webkit-scrollbar {
@@ -130,6 +157,8 @@ $statusEncerrar = array(
     ::-webkit-scrollbar-thumb:hover {
         background: #a0a0a0;
     }
+
+    
 </style>
 
 <body>
@@ -143,7 +172,7 @@ $statusEncerrar = array(
                         <div class="modal-header p-2 pe-3">
                             <div class="col-md-6 d-flex pt-1">
                                 <label class='form-label ts-label'>Prioridade</label>
-                                <input type="number" min="1" max="99" class="form-control ts-input" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
+                                <input type="number" min="1" max="99" class="form-control ts-inputSemBorda" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
                             </div>
                             <div class="col-md-2 border-start d-flex me-2">
                                 <a href="../demandas/" role="button" class="btn-close"></a>
@@ -167,7 +196,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Data de Abertura</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="text" class="form-control ts-input" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
+                                <input type="text" class="form-control ts-inputSemBorda" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
                             </div>
                         </div>
 
@@ -176,7 +205,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Inicio Previsto</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="date" class="form-control ts-input" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>">
+                                <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -184,7 +213,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Inicio</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="date" class="form-control ts-input" name="dataAbertura" value="<?php echo $demanda['dataAbertura'] ?>" readonly>
+                                <input type="date" class="form-control ts-inputSemBorda" name="dataAbertura" value="<?php echo $demanda['dataAbertura'] ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -192,7 +221,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Entrega Prevista</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="date" class="form-control ts-input" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>">
+                                <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -200,7 +229,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Entrega</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="datetime" class="form-control ts-input" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataFechamento'])) ?>" readonly>
+                                <input type="datetime" class="form-control ts-inputSemBorda" name="dataFechamento" value="<?php echo $dataFechamento ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -208,7 +237,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Previsão</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                                <input type="time" class="form-control ts-inputSemBorda" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -216,7 +245,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Realizado</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="time" class="form-control ts-input" name="realizado">
+                                <input type="time" class="form-control ts-inputSemBorda" name="realizado">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -224,7 +253,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Cobrado</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="time" class="form-control ts-input" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
+                                <input type="time" class="form-control ts-inputSemBorda" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
                             </div>
                         </div>
 
@@ -258,9 +287,9 @@ $statusEncerrar = array(
                     <div class="container">
                         <div class="row g-3 mt-1">
                             <div class="col-md-9 d-flex">
-                                <span style="font-size:18px;font-weight: 600;color:#172B4D"><?php echo $demanda['idDemanda'] ?></span>
-                                <input type="hidden" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
-                                <input type="text" class="form-control ts-input" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="font-size:18px;font-weight: 600;color:#172B4D">
+                                <span class="ts-tituloPrincipalModal"><?php echo $demanda['idDemanda'] ?></span>
+                                <input type="hidden" class="form-control ts-inputSemBorda" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
+                                <input type="text" class="form-control ts-inputSemBorda ts-tituloPrincipalModal" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>">
                             </div>
                             <div class="col-md-3 d-flex">
                                 <span> <strong>Status : </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
@@ -305,7 +334,7 @@ $statusEncerrar = array(
                             <div class="tabContent" style="margin-top: -10px;">
                                 <?php include_once 'demanda_descricao.php'; ?>
                             </div>
-                            <div class="tabContent">
+                            <div class="tabContent" style="margin-top: -10px;">
                                 <?php include_once 'visualizar_tarefa.php'; ?>
                             </div>
 

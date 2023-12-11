@@ -16,10 +16,7 @@ include_once(ROOT . '/cadastros/database/clientes.php');
 include_once(ROOT . '/cadastros/database/usuario.php');
 
 
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-  $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
@@ -426,6 +423,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             if (vnomeTipoOcorrencia === null) {
               vnomeTipoOcorrencia = '';
             }
+
             // lucas 23112023 - tratamento quando cliente vir null
             if(object.nomeCliente === null){
               object.nomeCliente = '';
@@ -448,7 +446,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             if(object.tituloDemanda === null){
               linha += object.tituloTarefa;
             }
-
+            
             linha += "</td>";
 
 
@@ -483,7 +481,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
           
           
             // lucas id654 - Removido linha de dataReal
-            
+          
             linha += "<td>" ; 
 
             linha += "<id='botao'>";
@@ -666,6 +664,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         });
     
     });
+    
 
     //Lucas 17112023 ID 965 - removido variaveis
     $(document).on('click', '.stopButton', function() {
@@ -679,7 +678,8 @@ if (isset($_SESSION['filtro_tarefas'])) {
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          idDemanda: idDemanda
+          idDemanda: idDemanda,
+          comentario: null
         },
         success: function(msg) {
           if (msg.retorno == "ok") {
@@ -813,7 +813,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
         }
         var vurl;
         if ($("#realizadoFormbutton").is(":focus")) {
-          vurl = "../database/demanda.php?operacao=realizado";
+          vurl = "../database/tarefas.php?operacao=realizado&acao=entregue";
         }
         if ($("#stopFormbutton").is(":focus")) {
           vurl = "../database/tarefas.php?operacao=realizado&acao=stop";

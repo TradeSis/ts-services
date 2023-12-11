@@ -14,7 +14,7 @@
                             <span class="tituloEditor">Comentários</span>
                         </div>
                         <div class="quill-encaminhar" style="height:20vh !important"></div>
-                        <textarea style="display: none" id="quill-encaminhar" name="comentario" required></textarea>
+                        <textarea style="display: none" id="quill-encaminhar" name="comentario"></textarea>
                     </div>
                     <div class="col-md">
                         <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">

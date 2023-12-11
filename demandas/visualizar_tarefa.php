@@ -140,7 +140,6 @@ include_once '../header.php';
                                 <?php if ($horaInicioReal == "00:00") { ?>
                                     <button type="button" class="startButton btn btn-success btn-sm" value="Start" 
                                         data-id="<?php echo $tarefa['idTarefa'] ?>" 
-                                        data-status="<?php echo $idTipoStatus ?>" 
                                         data-demanda="<?php echo $tarefa['idDemanda'] ?>">
                                     <i class="bi bi-play-circle"></i></button>
                                 <?php } ?>
@@ -212,7 +211,6 @@ include_once '../header.php';
 
             $('.startButton').click(function() {
                 var idTarefa = $(this).data('id');
-                var tipoStatusDemanda = $(this).data('status');
                 var idDemanda = $(this).data('demanda');
                 $.ajax({
                     url: "../database/tarefas.php?operacao=realizado&acao=start",
@@ -220,7 +218,6 @@ include_once '../header.php';
                     dataType: "json",
                     data: {
                         idTarefa: idTarefa,
-                        tipoStatusDemanda: tipoStatusDemanda,
                         idDemanda: idDemanda
                     },
                     success: function(msg) {
@@ -229,6 +226,9 @@ include_once '../header.php';
                         if (msg.retorno == "ok") {
                             refreshPage('tarefas', idDemanda);
                         }
+                    },
+                    error: function(msg) {
+                        alert(JSON.stringify(msg));
                     }
                 });
             });

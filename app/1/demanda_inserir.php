@@ -40,6 +40,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $horasPrevisao  = isset($jsonEntrada['horasPrevisao'])  && $jsonEntrada['horasPrevisao'] !== "" && $jsonEntrada['horasPrevisao'] !== "null" ? "'". $jsonEntrada['horasPrevisao']."'"  : "0";
     $idSolicitante = isset($jsonEntrada['idSolicitante'])  && $jsonEntrada['idSolicitante'] !== "" ?  $jsonEntrada['idSolicitante']    : "null";
     $idAtendente = isset($jsonEntrada['idAtendente'])  && $jsonEntrada['idAtendente'] !== "" ?  $jsonEntrada['idAtendente']    : "null";
+    $idCliente = isset($jsonEntrada['idCliente'])  && $jsonEntrada['idCliente'] !== "" ?  $jsonEntrada['idCliente']    : "null";
 
     $idContratoTipo   = isset($jsonEntrada['idContratoTipo'])  && $jsonEntrada['idContratoTipo'] !== "" ?  "'" . $jsonEntrada['idContratoTipo'] . "'"  : "null";
         //Verifica o Tipo de Contrato
@@ -47,7 +48,6 @@ if (isset($jsonEntrada['tituloDemanda'])) {
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
 
-        $idCliente = isset($row_consulta['idTipoOcorrenciaPadrao'])  && $row_consulta['idTipoOcorrenciaPadrao'] !== "" ?  $row_consulta['idTipoOcorrenciaPadrao']    : "null";
         $idServicoPadrao = isset($row_consulta['idServicoPadrao'])  && $row_consulta['idServicoPadrao'] !== "" ?  $row_consulta['idServicoPadrao']    : "null";
         $idTipoStatus_fila = isset($row_consulta['idTipoStatus_fila'])  && $row_consulta['idTipoStatus_fila'] !== "" ?  $row_consulta['idTipoStatus_fila']    : "null";
         $idTipoOcorrenciaPadrao = isset($row_consulta['idTipoOcorrenciaPadrao'])  && $row_consulta['idTipoOcorrenciaPadrao'] !== "" ?  $row_consulta['idTipoOcorrenciaPadrao']    : "null";

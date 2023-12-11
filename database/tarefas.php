@@ -152,6 +152,7 @@ if (isset($_GET['operacao'])) {
         );
      
         $tarefas = chamaAPI(null, '/services/tarefas', json_encode($apiEntrada), 'PUT');
+      
         if(isset($_GET['redirecionarDemanda'])){
             header('Location: ../demandas/visualizar.php?id=tarefas&&idDemanda=' . $apiEntrada['idDemanda']);
         }
@@ -192,21 +193,21 @@ if (isset($_GET['operacao'])) {
     }
 
     if ($operacao == "realizado") {
-        // Operações de : REALIZADO, START e STOP
+        // Operações de : REALIZADO, START, STOP e ENTREGUE
         $acao = "realizado";
         if (isset($_GET['acao'])) {
             $acao = $_GET['acao'];
         }
-
+      
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idTarefa' => $_POST['idTarefa'],
             'acao' => $acao 
         );
-        
+    
         $tarefas = chamaAPI(null, '/services/tarefas/realizado', json_encode($apiEntrada), 'POST');
 
-        if ( $acao == "stop") {  
+        if (($acao == "stop") || ($acao == "entregue")) {  
             if(isset($_POST['comentario']) && ($_POST['comentario']) !== ""){
                 $apiEntrada2 = array(
                     'idEmpresa' => $_SESSION['idEmpresa'],
@@ -223,6 +224,7 @@ if (isset($_GET['operacao'])) {
             }
             
         }
+        
         echo json_encode($tarefas);
         return $tarefas;
     }

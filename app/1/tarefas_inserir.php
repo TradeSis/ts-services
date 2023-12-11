@@ -27,7 +27,7 @@ if (isset($LOG_CAMINHO)) {
     $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "tarefas_inserir";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
-            $arquivo = fopen(defineCaminhoLog() . "services_inserir_" . date("dmY") . ".log", "a");
+            $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
         }
     }
 
@@ -76,11 +76,8 @@ if (isset($jsonEntrada['idEmpresa'])) {
 
     $dataOrdem = $Previsto;
     $horaInicioOrdem = $horaInicioPrevisto;
-    
-    if (isset($jsonEntrada['Previsto'])) {
-        $idTipoStatus = TIPOSTATUS_AGENDADO;
-    }
 
+    $idTipoStatus = TIPOSTATUS_FILA;
     if ($acao == 'start') {
         $idTipoStatus = TIPOSTATUS_FAZENDO;
         $dataReal = "'" . date('Y-m-d') . "'";
@@ -114,7 +111,7 @@ if (isset($jsonEntrada['idEmpresa'])) {
         $posicao = $row_consulta["mudaPosicaoPara"];
         $statusDemanda = $row_consulta["mudaStatusPara"] ;
         if ($LOG_NIVEL >= 2) {
-            fwrite($arquivo, $identificacao . "-Previsto->" . $jsonEntrada['Previsto'] . " tipoStatusDemanda=" . $tipoStatusDemanda . " statusTarefa=" . json_encode($statusAgendado) . "\n");
+            fwrite($arquivo, $identificacao . "-Previsto->" . $jsonEntrada['Previsto'] . " tipoStatusDemanda=" . $tipoStatusDemanda . " statusTarefa=" . json_encode($statusStart) . "\n");
         }
         if (($acao == 'start') && in_array($tipoStatusDemanda, $statusStart, true)) {
             $idTipoStatus = TIPOSTATUS_FAZENDO;

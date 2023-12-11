@@ -101,7 +101,6 @@ $statusEncerrar = array(
     }
 
     .ts-inputSemBorda:any-link {
-        border: 12px solid #000000 !important;
         margin-top: -5px;
 
         background: #fff;
@@ -111,12 +110,14 @@ $statusEncerrar = array(
         border-radius: 3px;
         border-bottom: 1px solid #C1C1C1;
         background: #F1F2F4;
+        cursor: pointer;
     }
 
     .ts-tituloPrincipalModal{
         font-size:18px;
         font-weight: 600;
         color:#172B4D;
+        cursor: pointer;
     }
 
     .ts-displayDisable { /*  */
@@ -169,9 +170,9 @@ $statusEncerrar = array(
         <!-- Modal -->
         <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-hidden="true" style="margin: 5px;">
             <div class="col-12 col-md-3 float-end ts-divLateralModalDemanda">
-                <div class="col border-start">
+                <div class="col ">
                     <form id="my-form" action="../database/demanda.php?operacao=alterar" method="post">
-                        <div class="modal-header p-2 pe-3">
+                        <div class="modal-header p-2 pe-3 border-start">
                             <div class="col-md-6 d-flex pt-1">
                                 <label class='form-label ts-label'>Prioridade</label>
                                 <input type="number" min="1" max="99" class="form-control ts-inputSemBorda" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
@@ -286,18 +287,24 @@ $statusEncerrar = array(
 
             <div class="modal-dialog modal-dialog-scrollable modal-fullscreen"> <!-- Modal 1 -->
                 <div class="modal-content" style="background-color: #F1F2F4;">
+                
                     <div class="container">
-                        <div class="row g-3 mt-1">
+                    <?php if(isset($demanda['tituloContrato'])){ ?>
+                            <div class="row">
+                            <span class="ts-subTitulo"><strong>Contrato: </strong> <?php echo $demanda['tituloContrato'] ?></span>
+                            </div>
+                        <?php } ?>
+                        <div class="row g-3">
                             <div class="col-md-9 d-flex">
                                 <span class="ts-tituloPrincipalModal"><?php echo $demanda['idDemanda'] ?></span>
                                 <input type="hidden" class="form-control ts-inputSemBorda" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
-                                <input type="text" class="form-control ts-inputSemBorda ts-tituloPrincipalModal" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>">
+                                <input type="text" class="form-control ts-inputSemBorda ts-tituloPrincipalModal" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="z-index: 1;">
                             </div>
                             <div class="col-md-3 d-flex">
-                                <span class="ts-subTitulo"><strong>Status : </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
+                                <span class="ts-subTitulo"><strong>Contrato: </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
                             </div>
                         </div>
-                        <div class="row g-3" style="margin-top: -10px;">
+                        <div class="row g-3">
                             <div class="col-md-3">
                                 <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $demanda['idCliente'] ?>">
                                 <span class="ts-subTitulo"><strong>Cliente : </strong><span><?php echo $demanda['nomeCliente'] ?></span>
@@ -336,7 +343,7 @@ $statusEncerrar = array(
                             <div class="tabContent" style="margin-top: -10px;">
                                 <?php include_once 'demanda_descricao.php'; ?>
                             </div>
-                            <div class="tabContent" style="margin-top: -10px;">
+                            <div class="tabContent p-0" style="margin-top: -10px;">
                                 <?php include_once 'visualizar_tarefa.php'; ?>
                             </div>
 

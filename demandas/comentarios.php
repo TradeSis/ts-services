@@ -130,12 +130,12 @@ include_once '../header.php';
 </script>
 
 <script>
-    var quillcomentario = new Quill('.quill-comentario', {
+       var quillcomentario = new Quill('.quill-comentario', {
         theme: 'snow',
         modules: {
             toolbar: [
                 ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote'],
+             
                 [{
                     'list': 'ordered'
                 }, {
@@ -146,23 +146,17 @@ include_once '../header.php';
                 }, {
                     'indent': '+1'
                 }],
-                [{
-                    'direction': 'rtl'
-                }],
-                [{
-                    'size': ['small', false, 'large', 'huge']
-                }],
+               
                 [{
                     'header': [1, 2, 3, 4, 5, 6, false]
                 }],
+                ['link', 'image'],
                 [{
                     'color': []
                 }, {
                     'background': []
                 }],
-                [{
-                    'font': []
-                }],
+               
                 [{
                     'align': []
                 }],

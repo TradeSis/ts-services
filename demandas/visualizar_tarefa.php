@@ -6,7 +6,7 @@ include_once '../header.php';
 ?>
 
 <body>
-    <div class="container-fluid">
+    <!-- <div class="container-fluid"> -->
         <div class="row">
         <!-- MENSAGENS/ALERTAS -->
         </div>
@@ -53,7 +53,7 @@ include_once '../header.php';
                                 <?php echo $tarefa['tituloTarefa'] ?>
                             </td>
                             <td class='col-1 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
-                                <i class="bi bi-person-fill" data-toggle="tooltip" data-placement="top" title="<?php echo $tarefa['nomeUsuario'] ?>" style="font-size: 20px;color: gray"></i>
+                                <?php echo $tarefa['nomeUsuario'] ?>
                             </td>
                             <td class='col-2 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['nomeTipoOcorrencia'] ?>
@@ -104,7 +104,7 @@ include_once '../header.php';
                                 $horasReal = "00:00";
                             } ?>
                             
-                            <td class='col-3 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
+                            <td class='col-4 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
                                 <?php 
                                 if($tarefa['Previsto'] !== null){  
                                     echo '<span class="ts-datas ts-previsto">Prev: ' . $Previsto . '</span>'; 
@@ -190,7 +190,7 @@ include_once '../header.php';
                 </tbody>
             </table>
         </div>
-    </div>
+    <!-- </div> -->
 
 
     <!-- LOCAL PARA COLOCAR OS JS -->

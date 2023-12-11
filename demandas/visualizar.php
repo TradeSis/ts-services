@@ -153,7 +153,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Realizado</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="time" class="form-control ts-inputSemBorda" name="realizado" value="<?php echo $totalHorasReal ?>">
+                                <input type="time" class="form-control ts-inputSemBorda" name="realizado" value="<?php echo $totalHorasReal ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -195,8 +195,8 @@ $statusEncerrar = array(
                 
                     <div class="container">
                         <?php if (isset($demanda['tituloContrato'])) { ?>
-                            <div class="row">
-                                <span class="ts-subTitulo"><strong>Contrato: </strong> <?php echo $demanda['tituloContrato'] ?></span>
+                            <div class="row pb-1">
+                                <span class="ts-subTitulo"><strong><?php echo $demanda['tituloContrato'] ?>: </strong> <?php echo $demanda['tituloContrato'] ?></span>
                             </div>
                         <?php } ?>
                         <div class="row g-3">

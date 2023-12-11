@@ -69,7 +69,7 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
                 <div class="col">
                     <span class="tituloEditor">Descrição</span>
                 </div>
-                <div class="quill-textarea"></div>
+                <div class="quill-textarea" style="height:300px!important"></div>
                 <textarea style="display: none" id="detail" name="descricao"></textarea>
             </div>
 

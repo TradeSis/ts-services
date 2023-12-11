@@ -24,7 +24,10 @@ include_once '../header.php';
             </div>
 
             <div class="col-2 text-end">
-                <!-- lucas 29112023 - modelo de botão refresh para demanda(TESTE) -->
+                <button type="button" class="demandaRefresh btn btn-info btn-sm" value="Start" 
+                    data-demandaRefresh="<?php echo $demanda['idDemanda'] ?>">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </button>
                 <?php if ($demanda['idTipoStatus'] !== TIPOSTATUS_REALIZADO && $demanda['idTipoStatus'] !== TIPOSTATUS_VALIDADO) { ?>
                     <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
                 <?php } ?>
@@ -33,15 +36,7 @@ include_once '../header.php';
 
         <div class="table mt-2 ts-divTabela">
             <table class="table table-hover table-sm align-middle">
-                <!-- <thead class="ts-headertabelafixo">
-                    <tr>
-                        <th class="col-5">Título</th>
-                        <th class="col-1">Atendente</th>
-                        <th class="col-2">Ocorrência</th>
-                        <th class="col-3">Datas</th>
-                        <th class="col-1" colspan="2"></th>
-                    </tr>
-                </thead> -->
+            
                 <tbody class="fonteCorpo">
                     <?php
                     //Gabriel 1102023 ID 596 removido table duplicado desnecessário
@@ -293,7 +288,7 @@ include_once '../header.php';
             //Gabriel 1102023 ID 596 removido chamada de alterarModal
 
             $(document).on('click', '.demandaRefresh', function() {
-                 window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-demandaRefresh');
+                 window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-demandaRefresh') + '&&idTarefa';
             });
 
         });

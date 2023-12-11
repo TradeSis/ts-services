@@ -127,8 +127,8 @@ if (isset($jsonEntrada['idTarefa'])) {
             $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
             $posicao = $row_consulta["mudaPosicaoPara"];
             $statusDemanda = $row_consulta["mudaStatusPara"];
-
-            $sql_update_demanda = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() ";
+            $dataInicio = "'". date('Y/m/d') . "'";
+            $sql_update_demanda = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), dataInicio = $dataInicio ";
                 if (in_array($tipoStatusDemanda, $statusStart)) {
                     $sql_update_demanda = $sql_update_demanda . ", posicao=$posicao, idTipoStatus=$idTipoStatus, statusDemanda=$statusDemanda ";
                 }

@@ -325,6 +325,11 @@ if ($metodo == "POST") {
     case "contratotipos":
       include 'contratotipos_alterar.php';
       break;
+
+    case "demanda_descricao":
+      include 'demanda_descricao.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(

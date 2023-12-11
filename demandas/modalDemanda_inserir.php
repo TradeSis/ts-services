@@ -1,7 +1,7 @@
 <!-- lucas 28112023 id706 - Melhorias Demandas 2 -->
  <!--------- MODAL DEMANDA INSERIR --------->
  <div class="modal" id="novoinserirDemandaModal" tabindex="-1" aria-labelledby="novoinserirDemandaModalLabel" aria-hidden="true">
-     <div class="modal-dialog modal-lg modal-dialog-scrollable">
+     <div class="modal-dialog modal-xl modal-dialog-scrollable">
          <div class="modal-content">
              <div class="modal-header">
                  <h5 class="modal-title" id="exampleModalLabel">Inserir
@@ -56,7 +56,7 @@
                                  <div class="col">
                                      <span class="tituloEditor">Descrição</span>
                                  </div>
-                                 <div class="quill-demandainserir" style="height:20vh !important"></div>
+                                 <div class="quill-demandainserir" style="height:30vh !important"></div>
                                  <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
                              </div>
                          </div><!--col-md-6-->

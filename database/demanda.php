@@ -262,7 +262,7 @@ if (isset($_GET['operacao'])) {
 			'idDemanda' => $_POST['idDemanda'],
 			'idContrato' => $_POST['idContrato'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
-			'descricao' => $_POST['descricao'],
+			// lucas 06122023 id715  - removido descricao
 			'prioridade' => $_POST['prioridade'],
 			'idServico' => $_POST['idServico'],
 			// lucas 21112023 id 688 - removido campo tamanho
@@ -314,10 +314,20 @@ if (isset($_GET['operacao'])) {
 		);
 
 		$comentario = chamaAPI(null, '/services/comentario', json_encode($apiEntrada), 'PUT');
-
-		header('Location: ../demandas/visualizar.php?id=comentarios&&idDemanda=' . $apiEntrada['idDemanda']);
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 
+	if ($operacao == "descricao") {
+		
+		$apiEntrada = array(
+			'idEmpresa' => $_SESSION['idEmpresa'],
+			'idDemanda' => $_POST['idDemanda'],
+			'descricao' => $_POST['descricao'],
+		);
+		$demanda = chamaAPI(null, '/services/demanda_descricao', json_encode($apiEntrada), 'POST');
+
+		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+	}
 
 	if ($operacao == "filtrar") {
 

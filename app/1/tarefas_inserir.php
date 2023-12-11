@@ -110,12 +110,13 @@ if (isset($jsonEntrada['idEmpresa'])) {
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $posicao = $row_consulta["mudaPosicaoPara"];
         $statusDemanda = $row_consulta["mudaStatusPara"] ;
+        $dataInicio = "'". date('Y/m/d') . "'";
         if ($LOG_NIVEL >= 2) {
             fwrite($arquivo, $identificacao . "-Previsto->" . $jsonEntrada['Previsto'] . " tipoStatusDemanda=" . $tipoStatusDemanda . " statusTarefa=" . json_encode($statusStart) . "\n");
         }
         if (($acao == 'start') && in_array($tipoStatusDemanda, $statusStart, true)) {
             $idTipoStatus = TIPOSTATUS_FAZENDO;
-            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+            $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), dataInicio = $dataInicio, statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
         } else {
             if ($jsonEntrada['Previsto'] != "" && in_array($tipoStatusDemanda, $statusAgendado, true)) {
                 $idTipoStatus = TIPOSTATUS_AGENDADO;

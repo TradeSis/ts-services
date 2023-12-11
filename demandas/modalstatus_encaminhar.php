@@ -14,13 +14,13 @@
                             <span class="tituloEditor">Comentários</span>
                         </div>
                         <div class="quill-encaminhar" style="height:20vh !important"></div>
-                        <textarea style="display: none" id="quill-encaminhar" name="comentario"></textarea>
+                        <textarea style="display: none" id="quill-encaminhar" name="comentario" required></textarea>
                     </div>
                     <div class="col-md">
-                        <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
-                        <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-                        <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                        <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
+                        <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
+                        <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>">
+                        <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>">
+                        <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>">
                     </div>
                     <div class="col-md-3 mt-2">
                         <label class='form-label ts-label'>Reponsável</label>
@@ -38,7 +38,7 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" formaction="../database/demanda.php?operacao=solicitar" class="btn btn-warning">Encaminhar</button>
+                <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=solicitar" class="btn btn-warning">Encaminhar</button>
             </div>
             </form>
         </div>

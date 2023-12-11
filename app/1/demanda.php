@@ -23,7 +23,7 @@ if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL == 1) {
     fwrite($arquivo, $identificacao . "\n");
   }
-  if ($LOG_NIVEL >= 2) {
+  if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
   }
 }
@@ -86,11 +86,6 @@ if (isset($jsonEntrada["buscaDemanda"])) {
   $sql = $sql . $where . " demanda.idDemanda= " . "'" . $jsonEntrada["buscaDemanda"] . "'" . " or demanda.tituloDemanda like " . "'%" . $jsonEntrada["buscaDemanda"] . "%'";
   $where = " and ";
 }
-//lucas 26092023 ID 576 Substituido $jsonEntrada["tamanho"] para $jsonEntrada["posicao"], filtro tamanho foi removido 
-if (isset($jsonEntrada["posicao"])) {
-  $sql = $sql . $where . " demanda.posicao = " . $jsonEntrada["posicao"];
-  $where = " and ";
-}
 
 if (isset($jsonEntrada["idContrato"])) {
   $sql = $sql . $where . " demanda.idContrato = " . "'" . $jsonEntrada["idContrato"] . "'";
@@ -111,7 +106,7 @@ $rows = 0;
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 3) {
+  if ($LOG_NIVEL >= 5) {
     fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
   }
 }
@@ -153,7 +148,7 @@ try {
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 3) {
+  if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
   }
 }

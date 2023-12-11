@@ -196,6 +196,9 @@ include_once '../header.php';
     </div>
 
 
+    <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script src="<?php echo URLROOT ?>/services/demandas/tarefas.js"></script>
     <script>
@@ -275,7 +278,7 @@ include_once '../header.php';
                 var tipoStatusDemanda = $(this).data('status');
                 var idDemanda = $(this).data('demanda');
                 $.ajax({
-                    url: "../database/tarefas.php?operacao=realizado",
+                    url: "../database/tarefas.php?operacao=realizado&acao=realizado",
                     method: "POST",
                     dataType: "json",
                     data: {

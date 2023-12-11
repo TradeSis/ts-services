@@ -36,19 +36,18 @@ $conexao = conectaMysql($idEmpresa);
 
 if (isset($jsonEntrada['idDemanda'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
-    $tituloDemanda = $jsonEntrada['tituloDemanda'];
-    $descricao = $jsonEntrada['descricao'];
+    $tituloDemanda = "'" . $jsonEntrada['tituloDemanda'] . "'";
+    $descricao = "'" . $jsonEntrada['descricao'] . "'";
     $prioridade = $jsonEntrada['prioridade'];
+    $idContrato = $jsonEntrada['idContrato'];
+    $idTipoOcorrencia  = $jsonEntrada['idTipoOcorrencia'];
     $idServico = $jsonEntrada['idServico'];
-    $tamanho = isset($jsonEntrada['tamanho']) && $jsonEntrada['tamanho'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['tamanho']) . "'" : "NULL";
-    $idAtendente = isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== "" ? $jsonEntrada['idAtendente'] : "NULL";
-    $horasPrevisao = $jsonEntrada['horasPrevisao'];
-    $idContrato = isset($jsonEntrada['idContrato']) && $jsonEntrada['idContrato'] !== "" ? $jsonEntrada['idContrato'] : "NULL";
-    $idContratoTipo = $jsonEntrada['idContratoTipo'];
-    $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
+    $horasPrevisao  = isset($jsonEntrada['horasPrevisao'])  && $jsonEntrada['horasPrevisao'] !== "" && $jsonEntrada['horasPrevisao'] !== "null" ? "'". $jsonEntrada['horasPrevisao']."'"  : "null";
+    $idAtendente = $jsonEntrada['idAtendente'];
 
-    $sql = "UPDATE demanda SET prioridade=$prioridade, tituloDemanda='$tituloDemanda', descricao='$descricao', idServico=$idServico, tamanho=$tamanho, idAtendente=$idAtendente, horasPrevisao='$horasPrevisao', idContrato=$idContrato, idContratoTipo='$idContratoTipo', idTipoOcorrencia='$idTipoOcorrencia', dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
-
+    $sql = "UPDATE demanda SET prioridade = $prioridade, tituloDemanda = $tituloDemanda, descricao = $descricao, idServico = $idServico, idAtendente = $idAtendente,
+             horasPrevisao = $horasPrevisao, idContrato = $idContrato,  idTipoOcorrencia = $idTipoOcorrencia, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+   
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {

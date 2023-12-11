@@ -17,10 +17,7 @@ if (isset($_GET["tipo"])) {
 } else {
   $contratoTipo = buscaContratoTipos('contratos');
 }
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-  $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $clientes = buscaClientes();
@@ -59,7 +56,6 @@ if (isset($_SESSION['filtro_demanda'])) {
   $idTipoStatus = $filtroEntrada['idTipoStatus'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusDemanda = $filtroEntrada['statusDemanda'];
-  $posicao = $filtroEntrada['posicao'];
 }
 ?>
 
@@ -201,26 +197,43 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela70 ts-tableFiltros text-center">
+    <div class="table mt-2 ts-divTabela70 ts-tableFiltros">
       <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
-            <th>Prioridade</th>
-            <th>ID</th>
-            <th>Cliente</th>
-            <th>Solicitante</th>
+            <th></th>
             <th>Titulo</th>
             <th>Responsavel</th>
-            <th>Abertura</th>
-            <th>Status</th>
+            <th>Cliente</th>
+            <th>Solicitante</th>
             <th>Ocorrência</th>
-            <th>Data Entrega</th>
-            <th>Posição</th>
+            <th class="col-2">Datas</th>
+            <th>Status</th>
             <th colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
             <th></th>
             <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($atendentes as $atendente) {
+                  ?>
+                    <option <?php
+                            if ($atendente['idUsuario'] == $idAtendente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $atendente['idUsuario'] ?>">
+                      <?php echo $atendente['nomeUsuario'] ?>
+                    </option>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
             <th>
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
@@ -261,22 +274,21 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </select>
               </form>
             </th>
-            <th></th>
             <th>
               <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
                   <option value="<?php echo null ?>">
                     <?php echo "Selecione" ?>
                   </option>
                   <?php
-                  foreach ($atendentes as $atendente) {
+                  foreach ($tipoocorrencias as $tipoocorrencia) {
                   ?>
                     <option <?php
-                            if ($atendente['idUsuario'] == $idAtendente) {
+                            if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
                               echo "selected";
                             }
-                            ?> value="<?php echo $atendente['idUsuario'] ?>">
-                      <?php echo $atendente['nomeUsuario'] ?>
+                            ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
+                      <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
                     </option>
                   <?php } ?>
                 </select>
@@ -301,36 +313,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </select>
               </form>
             </th>
-            <th>
-              <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
-                  <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
-                  </option>
-                  <?php
-                  foreach ($tipoocorrencias as $tipoocorrencia) {
-                  ?>
-                    <option <?php
-                            if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                              echo "selected";
-                            }
-                            ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
-                      <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
-                    </option>
-                  <?php } ?>
-                </select>
-              </form>
-            </th>
             <th></th>
-            <th>
-              <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
-                  <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                  <option value="0">Atendente</option>
-                  <option value="1">Cliente</option>
-                </select>
-              </form>
-            </th>
             <th></th>
           </tr>
         </thead>
@@ -360,20 +343,20 @@ if (isset($_SESSION['filtro_demanda'])) {
   <script>
     var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
 
-    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
 
     function limparTrade() {
-      buscar(null, null, null, null, null, null, null, null, function() {
+      buscar(null, null, null, null, null, null, null, function() {
         window.location.reload();
       });
     }
 
     function clickCard(statusDemanda) {
       buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(),
-        statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+        statusDemanda, $("#buscaDemanda").val())
     }
 
-    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
+    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, callback) {
       //alert(posicao)
       $.ajax({
         type: 'POST',
@@ -391,7 +374,6 @@ if (isset($_SESSION['filtro_demanda'])) {
           statusDemanda: statusDemanda,
           buscaDemanda: buscaDemanda,
           urlContratoTipo: urlContratoTipo,
-          posicao: posicao
         },
         success: function(msg) {
           var json = JSON.parse(msg);
@@ -401,35 +383,38 @@ if (isset($_SESSION['filtro_demanda'])) {
             var dataAbertura = new Date(object.dataAbertura);
             var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
 
-            if (object.dataFechamento == null) {
-              var dataFechamentoFormatada = "<p>---</p>";
-            } else {
-              var dataFechamento = new Date(object.dataFechamento);
-              dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
+            var dataFechamento = new Date(object.dataFechamento);
+            dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR");
+            
+            if(object.prioridade == '99'){
+              object.prioridade = ''
             }
-
-            if (object.posicao == 0) {
-              var posicao = "Atendente"
-            }
-            if (object.posicao == 1) {
-              var posicao = "Cliente"
-            }
-
 
             linha += "<tr>";  
             /* helio 09112023 - classe ts-click para quando clicar,
                data-idDemanda para guardar o id da demanda */
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.prioridade + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.idDemanda + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>";
+            if ((object.idDemanda !== null) && (object.idContrato !== null)) {
+              linha += object.nomeContrato + " : " + " " + object.idContrato + "  " + object.tituloContrato + "<br>";
+              linha += object.idDemanda + "  " +  object.tituloDemanda; 
+            }
+            if((object.idDemanda !== null) && (object.idContrato === null)){
+              linha += object.nomeDemanda + " : " + " " + object.idDemanda + "  " +  object.tituloDemanda;
+            }
+            linha += "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeCliente + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFormatada + "</td>";
-            linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFechamentoFormatada + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + posicao + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + 'Abertura: ' + dataFormatada + '<br>'
+            if (object.dataFechamento == null) {
+              linha += '';
+            }else{
+              linha += 'Entrega : ' + ' ' + dataFechamentoFormatada 
+            }
+            linha +=  "</td>";
+            linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
 
             linha += "<td>"; 
             linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
@@ -457,47 +442,42 @@ if (isset($_SESSION['filtro_demanda'])) {
         window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
     });
 
-   function trabrelinkx(parametros)
-   {
-       
-   }
-
 
     $("#FiltroTipoStatus").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroClientes").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroSolicitante").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroOcorrencia").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroUsuario").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroStatusDemanda").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#buscar").click(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroPosicao").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       }
     });
 

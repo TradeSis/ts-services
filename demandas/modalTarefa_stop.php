@@ -20,9 +20,10 @@
              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
            </div>
            <div class="col-md">
+           
              <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
              <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-
+          
              <input type="hidden" class="form-control" name="idTarefa" id="stopmodal_idTarefa" />
              <input type="hidden" class="form-control" name="idDemanda" id="stopmodal_idDemanda" />
            </div>
@@ -30,7 +31,7 @@
        <div class="modal-footer">
          <?php if (isset($demanda)) { ?>
            <div class="col align-self-start pl-0">
-             <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left">Entregar</button>
+             <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=realizado" class="btn btn-warning float-left">Entregar</button>
            </div>
            <button type="submit" formaction="../database/tarefas.php?operacao=realizado&acao=stop&redirecionarDemanda" class="btn btn-danger">Stop</button>
          <?php } else { ?>
@@ -52,7 +53,6 @@
 
  <!-- LOCAL PARA COLOCAR OS JS -->
 
- <?php //include_once ROOT . "/vendor/footer_js.php"; ?>
  <!-- QUILL editor -->
  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 

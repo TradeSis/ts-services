@@ -1,8 +1,8 @@
 // Modal stop
 $(document).on('click', 'button[data-bs-target="#stopmodal"]', function () {
+  alert('oi')
   var idTarefa = $(this).attr("data-id");
   var idDemanda = $(this).attr("data-demanda");
-
   $.ajax({
     type: 'POST',
     dataType: 'json',
@@ -11,6 +11,7 @@ $(document).on('click', 'button[data-bs-target="#stopmodal"]', function () {
       idTarefa: idTarefa
     },
     success: function (data) {
+  
       $('#stopmodal_idTarefa').val(data.idTarefa);
       $('#stopmodal_idDemanda').val(idDemanda);
 

@@ -1,4 +1,5 @@
 <?php
+//lucas 28112023 id706 - Melhorias Demandas 2
 // lucas 31102023 id650/erros
 include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/demanda.php');
@@ -17,10 +18,7 @@ if (isset($_GET["tipo"])) {
 } else {
   $contratoTipo = buscaContratoTipos('contratos');
 }
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-  $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $clientes = buscaClientes();
@@ -47,7 +45,7 @@ $statusDemanda = "1"; //ABERTO
 
 $filtroEntrada = null;
 $idTipoStatus = null;
-$idTipoOcorrencia = null;
+$idServico = null;
 $idSolicitante = null;
 
 
@@ -57,9 +55,8 @@ if (isset($_SESSION['filtro_demanda'])) {
   $idSolicitante = $filtroEntrada['idSolicitante'];
   $idAtendente = $filtroEntrada['idAtendente'];
   $idTipoStatus = $filtroEntrada['idTipoStatus'];
-  $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
+  $idServico = $filtroEntrada['idServico'];
   $statusDemanda = $filtroEntrada['statusDemanda'];
-  $posicao = $filtroEntrada['posicao'];
 }
 ?>
 
@@ -201,26 +198,43 @@ if (isset($_SESSION['filtro_demanda'])) {
       </div>
     </div>
 
-    <div class="table mt-2 ts-divTabela70 ts-tableFiltros text-center">
+    <div class="table mt-2 ts-divTabela70 ts-tableFiltros">
       <table class="table table-sm table-hover">
         <thead class="ts-headertabelafixo">
           <tr class="ts-headerTabelaLinhaCima">
-            <th>Prioridade</th>
-            <th>ID</th>
+            <th></th>
+            <th class="col-3">Titulo</th>
+            <th>Responsavel</th>
             <th>Cliente</th>
             <th>Solicitante</th>
-            <th>Titulo</th>
-            <th>Responsavel</th>
-            <th>Abertura</th>
+            <th>Serviço</th>
+            <th class="col-2">Datas</th>
             <th>Status</th>
-            <th>Ocorrência</th>
-            <th>Data Entrega</th>
-            <th>Posição</th>
             <th colspan="2"></th>
           </tr>
           <tr class="ts-headerTabelaLinhaBaixo">
             <th></th>
             <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Selecione" ?>
+                  </option>
+                  <?php
+                  foreach ($atendentes as $atendente) {
+                  ?>
+                    <option <?php
+                            if ($atendente['idUsuario'] == $idAtendente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $atendente['idUsuario'] ?>">
+                      <?php echo $atendente['nomeUsuario'] ?>
+                    </option>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
             <th>
               <form action="" method="post">
                 <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
@@ -261,22 +275,21 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </select>
               </form>
             </th>
-            <th></th>
             <th>
               <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idServico" id="FiltroServico">
                   <option value="<?php echo null ?>">
                     <?php echo "Selecione" ?>
                   </option>
                   <?php
-                  foreach ($atendentes as $atendente) {
+                  foreach ($servicos as $servico) {
                   ?>
                     <option <?php
-                            if ($atendente['idUsuario'] == $idAtendente) {
+                            if ($servico['idServico'] == $idServico) {
                               echo "selected";
                             }
-                            ?> value="<?php echo $atendente['idUsuario'] ?>">
-                      <?php echo $atendente['nomeUsuario'] ?>
+                            ?> value="<?php echo $servico['idServico'] ?>">
+                      <?php echo $servico['nomeServico'] ?>
                     </option>
                   <?php } ?>
                 </select>
@@ -301,36 +314,7 @@ if (isset($_SESSION['filtro_demanda'])) {
                 </select>
               </form>
             </th>
-            <th>
-              <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
-                  <option value="<?php echo null ?>">
-                    <?php echo "Selecione" ?>
-                  </option>
-                  <?php
-                  foreach ($tipoocorrencias as $tipoocorrencia) {
-                  ?>
-                    <option <?php
-                            if ($tipoocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                              echo "selected";
-                            }
-                            ?> value="<?php echo $tipoocorrencia['idTipoOcorrencia'] ?>">
-                      <?php echo $tipoocorrencia['nomeTipoOcorrencia'] ?>
-                    </option>
-                  <?php } ?>
-                </select>
-              </form>
-            </th>
             <th></th>
-            <th>
-              <form action="" method="post">
-                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="posicao" id="FiltroPosicao">
-                  <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
-                  <option value="0">Atendente</option>
-                  <option value="1">Cliente</option>
-                </select>
-              </form>
-            </th>
             <th></th>
           </tr>
         </thead>
@@ -360,20 +344,20 @@ if (isset($_SESSION['filtro_demanda'])) {
   <script>
     var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
 
-    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
 
     function limparTrade() {
-      buscar(null, null, null, null, null, null, null, null, function() {
+      buscar(null, null, null, null, null, null, null, function() {
         window.location.reload();
       });
     }
 
     function clickCard(statusDemanda) {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(),
-        statusDemanda, $("#buscaDemanda").val(), $("#FiltroPosicao").val())
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(),
+        statusDemanda, $("#buscaDemanda").val())
     }
 
-    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idTipoOcorrencia, statusDemanda, buscaDemanda, posicao, callback) {
+    function buscar(idCliente, idSolicitante, idAtendente, idTipoStatus, idServico, statusDemanda, buscaDemanda, callback) {
       //alert(posicao)
       $.ajax({
         type: 'POST',
@@ -387,11 +371,10 @@ if (isset($_SESSION['filtro_demanda'])) {
           idSolicitante: idSolicitante,
           idAtendente: idAtendente,
           idTipoStatus: idTipoStatus,
-          idTipoOcorrencia: idTipoOcorrencia,
+          idServico: idServico,
           statusDemanda: statusDemanda,
           buscaDemanda: buscaDemanda,
           urlContratoTipo: urlContratoTipo,
-          posicao: posicao
         },
         success: function(msg) {
           var json = JSON.parse(msg);
@@ -399,37 +382,66 @@ if (isset($_SESSION['filtro_demanda'])) {
           for (var $i = 0; $i < json.length; $i++) {
             var object = json[$i];
             var dataAbertura = new Date(object.dataAbertura);
-            var dataFormatada = dataAbertura.toLocaleDateString("pt-BR");
+            var dataAberturaFormatada = dataAbertura.toLocaleDateString("pt-BR");
+           
+            var dataFechamento = new Date(object.dataFechamento);
+            dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR");
 
-            if (object.dataFechamento == null) {
-              var dataFechamentoFormatada = "<p>---</p>";
-            } else {
-              var dataFechamento = new Date(object.dataFechamento);
-              dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR") + "<br> " + dataFechamento.toLocaleTimeString("pt-BR");
+            dataPrevisaoEntrega = object.dataPrevisaoEntrega
+            if(object.dataPrevisaoEntrega == null){
+              dataPrevisaoEntrega = "null"
+            }
+            var dataEntrega = new Date(dataPrevisaoEntrega);
+            dataPrevisaoEntregaFormatada = (`${dataEntrega.getUTCDate().toString().padStart(2, '0')}/${(dataEntrega.getUTCMonth()+1).toString().padStart(2, '0')}/${dataEntrega.getUTCFullYear()}`);
+                       
+            if(object.prioridade == '99'){
+              object.prioridade = ''
             }
 
-            if (object.posicao == 0) {
-              var posicao = "Atendente"
-            }
-            if (object.posicao == 1) {
-              var posicao = "Cliente"
-            }
-
+            const date = new Date();
+            dataAtual = date.toLocaleDateString("pt-BR");
 
             linha += "<tr>";  
             /* helio 09112023 - classe ts-click para quando clicar,
                data-idDemanda para guardar o id da demanda */
             linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.prioridade + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.idDemanda + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeCliente + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.tituloDemanda + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFormatada + "</td>";
+            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>";
+            if ((object.idDemanda !== null) && (object.idContrato !== null)) {
+              linha += object.nomeContrato + " : " + " " + object.idContrato + "  " + object.tituloContrato + "<br>";
+              linha += object.idDemanda + "  " +  object.tituloDemanda; 
+            }
+            if((object.idDemanda !== null) && (object.idContrato === null)){
+              linha += object.nomeDemanda + " : " + " " + object.idDemanda + "  " +  object.tituloDemanda;
+            }
+            datas = '';
+            datas += "</td>";
+            datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeAtendente + "</td>";
+            datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeCliente + "</td>";
+            datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
+            datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeServico + "</td>";
+            datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'" 
+            
+            if((dataPrevisaoEntregaFormatada < dataAtual) && (object.dataFechamento == null)){
+              datas += " style='background:firebrick;color:white'";
+                }
+                
+            datas += ">" + 'Abertura: ' + dataAberturaFormatada + '<br>' 
+            if (object.dataPrevisaoEntrega == null) {
+              datas += '';
+            }else{
+              datas += 'Previsao : ' + ' ' + dataPrevisaoEntregaFormatada + '<br>' 
+            }
+
+            if (object.dataFechamento == null) {
+              datas += '';
+            }else{
+              datas += 'Entrega : ' + ' ' + dataFechamentoFormatada 
+            }
+            
+            linha += datas;
+            linha +=  "</td>";
+
             linha += "<td  data-idDemanda='" + object.idDemanda + "' class='" + object.idTipoStatus + "'>" + object.nomeTipoStatus + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeTipoOcorrencia + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + dataFechamentoFormatada + "</td>";
-            linha += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + posicao + "</td>";
 
             linha += "<td>"; 
             linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
@@ -457,47 +469,42 @@ if (isset($_SESSION['filtro_demanda'])) {
         window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
     });
 
-   function trabrelinkx(parametros)
-   {
-       
-   }
-
 
     $("#FiltroTipoStatus").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroClientes").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroSolicitante").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
-    $("#FiltroOcorrencia").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+    $("#FiltroServico").change(function() {
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroUsuario").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroStatusDemanda").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#buscar").click(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     $("#FiltroPosicao").change(function() {
-      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
     });
 
     document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
-        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val(), $("#FiltroPosicao").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroSolicitante").val(), $("#FiltroUsuario").val(), $("#FiltroTipoStatus").val(), $("#FiltroServico").val(), $("#FiltroStatusDemanda").val(), $("#buscaDemanda").val());
       }
     });
 
@@ -536,7 +543,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           idSolicitante: $("#FiltroSolicitante").val(),
           idAtendente: idAtendenteValue,
           idTipoStatus: $("#FiltroTipoStatus").val(),
-          idTipoOcorrencia: $("#FiltroOcorrencia").val(),
+          idServico: $("#FiltroServico").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
           buscaDemanda: $("#buscaDemanda").val(),
           tamanho: tamanhoValue,
@@ -563,7 +570,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               "<td>" + object.nomeAtendente + "</td>" +
               "<td>" + object.dataAbertura + "</td>" +
               "<td>" + object.nomeTipoStatus + "</td>" +
-              "<td>" + object.nomeTipoOcorrencia + "</td>" +
+              "<td>" + object.nomeServico + "</td>" +
               "<td>" + object.tamanho + "</td></tr>";
           }
 
@@ -603,7 +610,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           idSolicitante: $("#FiltroSolicitante").val(),
           idAtendente: idAtendenteValue,
           idTipoStatus: $("#FiltroTipoStatus").val(),
-          idTipoOcorrencia: $("#FiltroOcorrencia").val(),
+          idServico: $("#FiltroServico").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
           buscaDemanda: $("#buscaDemanda").val(),
           tamanho: tamanhoValue,
@@ -623,7 +630,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               object.nomeAtendente + "," +
               object.dataAbertura + "," +
               object.nomeTipoStatus + "," +
-              object.nomeTipoOcorrencia + "," +
+              object.nomeServico + "," +
               object.tamanho + "," +
               object.horasPrevisao + "\n";
           }
@@ -657,7 +664,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           idSolicitante: $("#FiltroSolicitante").val(),
           idAtendente: idAtendenteValue,
           idTipoStatus: $("#FiltroTipoStatus").val(),
-          idTipoOcorrencia: $("#FiltroOcorrencia").val(),
+          idServico: $("#FiltroServico").val(),
           statusDemanda: $("#FiltroStatusDemanda").val(),
           buscaDemanda: $("#buscaDemanda").val(),
           tamanho: tamanhoValue,
@@ -678,7 +685,7 @@ if (isset($_SESSION['filtro_demanda'])) {
               "<td>" + object.nomeAtendente + "</td>" +
               "<td>" + object.dataAbertura + "</td>" +
               "<td>" + object.nomeTipoStatus + "</td>" +
-              "<td>" + object.nomeTipoOcorrencia + "</td>" +
+              "<td>" + object.nomeServico + "</td>" +
               "<td>" + object.tamanho + "</td></tr>";
           }
 

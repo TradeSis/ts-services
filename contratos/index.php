@@ -227,7 +227,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
         </div>
 
-        <div class="table mt-2 ts-divTabela70 ts-tableFiltros text-center">
+        <div class="table mt-2 ts-divTabela70 ts-tableFiltros">
             <table class="table table-sm table-hover">
                 <thead class="ts-headertabelafixo">
                     <tr class="ts-headerTabelaLinhaCima">
@@ -381,18 +381,30 @@ if (isset($_SESSION['filtro_contrato'])) {
                         // alert("quarto alert: " + JSON.stringify(object))
                         /*  alert(object); */
                         linha = linha + "<tr>";
-                        linha = linha + "<td>" + object.idContrato + "</td>";
-                        linha = linha + "<td>" + object.nomeCliente + "</td>";
-                        linha = linha + "<td>" + object.tituloContrato + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.idContrato + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.nomeCliente + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.tituloContrato + "</td>";
                         linha = linha + "<td class='" + object.nomeContratoStatus + "' data-status='Finalizado' >" + object.nomeContratoStatus + " </td>";
-                        linha = linha + "<td>" + dataPrevisaoFormatada + "</td>";
-                        linha = linha + "<td>" + dataEntregaFormatada + "</td>";
-                        linha = linha + "<td>" + dataAtualizacaoFormatada + "</td>";
-                        linha = linha + "<td>" + dataFechamentoFormatada + "</td>";
-                        linha = linha + "<td>" + object.horas + "</td>";
-                        linha = linha + "<td>" + object.valorHora + "</td>";
-                        linha = linha + "<td>" + object.valorContrato + "</td>";
-                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a>" + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + dataPrevisaoFormatada + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + dataEntregaFormatada + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + dataAtualizacaoFormatada + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + dataFechamentoFormatada + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.horas + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.valorHora + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.valorContrato + "</td>";
+                        
+                        linha += "<td>"; 
+                        linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
+                        " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
+
+                        linha += "<li class='ms-1 me-1 mt-1'><a class='btn btn-warning btn-sm w-100 text-start' href='visualizar.php?idContrato=" + object.idContrato + 
+                        "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i> Alterar</a></li>";
+
+                        linha += "</tr>";
+                        linha +="</ul></div>"
+                        linha += "</td>";
+                        
+                        
                         linha = linha + "</tr>";
                     }
 
@@ -450,6 +462,11 @@ if (isset($_SESSION['filtro_contrato'])) {
                 buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
             }
         });
+
+        $(document).on('click', '.ts-click', function() {
+        	window.location.href='visualizar.php?idContrato=' + $(this).attr('data-idContrato');
+    	});
+
     </script>
 
     <!-- LOCAL PARA COLOCAR OS JS -FIM -->

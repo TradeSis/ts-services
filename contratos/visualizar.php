@@ -45,12 +45,12 @@ $tipoocorrencias = buscaTipoOcorrencia();
     <div class="container-fluid">
 
         <div class="row">
-            <BR> <!-- MENSAGENS/ALERTAS -->
+        <!-- MENSAGENS/ALERTAS -->
         </div>
         <div class="row">
-            <BR> <!-- BOTOES AUXILIARES -->
+        <!-- BOTOES AUXILIARES -->
         </div>
-        <div class="row"> <!-- LINHA SUPERIOR A TABLE -->
+        <div class="row mt-2"> <!-- LINHA SUPERIOR A TABLE -->
             <div class="col-7">
                 <!-- TITULO -->
                 <h2 class="ts-tituloPrincipal"><?php echo $contrato['idContrato'] ?> -

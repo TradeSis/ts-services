@@ -1,4 +1,5 @@
 <?php
+//Lucas 22112023 id 688 - Melhorias em Demandas
 //Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 //Gabriel 26092023 ID 575 Demandas/Comentarios - Layout de chat
 //lucas 25092023 ID 358 Demandas/Comentarios
@@ -37,10 +38,8 @@ $cliente = buscaClientes($demanda["idCliente"]);
 $clientes = buscaClientes();
 $contratos = buscaContratosAbertos($demanda["idCliente"]);
 
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-    $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
+
 
 ?>
 <!doctype html>
@@ -72,9 +71,8 @@ if (isset($_SESSION['idCliente'])) {
         <div id="ts-tabs">
             <div class="tab whiteborder" id="tab-demanda">Demanda</div>
             <div class="tab" id="tab-comentarios">Comentarios</div>
-            <?php if ($ClienteSession == NULL) { ?>
-                <div class="tab" id="tab-tarefas">Tarefas</div>
-            <?php } ?>
+            <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
+            <div class="tab" id="tab-tarefas">Tarefas</div>
             <div class="tab" id="tab-mensagem">mensagem</div>
             <div class="line"></div>
             <div class="tabContent">
@@ -83,11 +81,11 @@ if (isset($_SESSION['idCliente'])) {
             <div class="tabContent">
                 <?php include_once 'comentarios.php'; ?>
             </div>
-            <?php if ($ClienteSession == NULL) { ?>
-                <div class="tabContent">
-                    <?php include_once 'visualizar_tarefa.php'; ?>
-                </div>
-            <?php } ?>
+            <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
+            <div class="tabContent">
+                <?php include_once 'visualizar_tarefa.php'; ?>
+            </div>
+            
             <!-- Gabriel 26092023 ID 575 adicionado tab mensagens -->
             <div class="tabContent">
                 <?php 
@@ -197,7 +195,7 @@ if (isset($_SESSION['idCliente'])) {
                     vurl = "../database/tarefas.php?operacao=start";
                 }
                 if ($("#realizadoButtonModal").is(":focus")) {
-                    vurl = "../database/tarefas.php?operacao=realizado";
+                    vurl = "../database/tarefas.php?operacao=realizado&acao=realizado";
                 }
                 if ($("#atualizarButtonModal").is(":focus")) {
                     vurl = "../database/tarefas.php?operacao=alterar";

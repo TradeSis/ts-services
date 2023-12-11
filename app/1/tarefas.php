@@ -21,7 +21,7 @@ if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL == 1) {
     fwrite($arquivo, $identificacao . "\n");
   }
-  if ($LOG_NIVEL >= 2) {
+  if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
   }
 }
@@ -130,7 +130,7 @@ $rows = 0;
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 3) {
+  if ($LOG_NIVEL >= 5) {
     fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
   }
 }
@@ -201,7 +201,7 @@ try {
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 3) {
+  if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
   }
 }

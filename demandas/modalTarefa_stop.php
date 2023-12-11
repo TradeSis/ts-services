@@ -6,7 +6,7 @@
    <div class="modal-dialog modal-lg">
      <div class="modal-content">
        <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
+         <h5 class="modal-title" id="exampleModalLabel">Stop Tarefax</h5>
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
        </div>
 
@@ -20,17 +20,17 @@
              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
            </div>
            <div class="col-md">
-             <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-             <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-
-             <input type="hidden" class="form-control" name="idTarefa" id="stopmodal_idTarefa" />
-             <input type="hidden" class="form-control" name="idDemanda" id="stopmodal_idDemanda" />
+            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+            <input type="hidden" class="form-control" name="idTarefa" id="stopmodal_idTarefa" />
+            <input type="hidden" class="form-control" name="idDemanda" id="stopmodal_idDemanda" />
+            <input type="hidden" class="form-control" name="idCliente" id="stopmodal_idCliente" />
            </div>
        </div>
        <div class="modal-footer">
+       
          <?php if (isset($demanda)) { ?>
            <div class="col align-self-start pl-0">
-             <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left">Entregar</button>
+             <button type="submit" formaction="../database/tarefas.php?operacao=realizado&acao=entregue&redirecionarDemanda" class="btn btn-warning float-left">Entregar</button>
            </div>
            <button type="submit" formaction="../database/tarefas.php?operacao=realizado&acao=stop&redirecionarDemanda" class="btn btn-danger">Stop</button>
          <?php } else { ?>
@@ -51,10 +51,10 @@
  </div>
 
  <!-- LOCAL PARA COLOCAR OS JS -->
-
- <?php //include_once ROOT . "/vendor/footer_js.php"; ?>
+ 
  <!-- QUILL editor -->
  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
 
  <script>
    var quillstop = new Quill('.quill-stop', {

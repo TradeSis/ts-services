@@ -149,6 +149,22 @@ if (isset($_GET['operacao'])) {
 		header('Location: ../contratos/index.php');
 	}
 
+	if ($operacao == "buscar") {
+        $idCliente = $_POST["idCliente"];
+        if ($idCliente == "") {
+            $idCliente = null;
+        }
+        $apiEntrada = array(
+            'idEmpresa' => $idEmpresa,
+            'idCliente' => $idCliente,
+			'statusContrato' => '1', //Aberto
+        );
+        $contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
+
+        echo json_encode($contrato);
+        return $contrato;
+    }
+
 	if ($operacao == "filtrar") {
 
 		$idCliente = $_POST["idCliente"];

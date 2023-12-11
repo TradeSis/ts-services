@@ -2,11 +2,16 @@
 // Lucas 17102023 novo padrao
 include_once('../header.php');
 include_once '../database/contratotipos.php';
+include_once '../database/tipoocorrencia.php';
+include_once '../database/tipostatus.php';
+include_once(ROOT . '/cadastros/database/servicos.php');
+
 
 $idContratoTipo = $_GET['idContratoTipo'];
-
 $contratotipo = buscaContratoTipos($idContratoTipo);
-
+$tipoOcorrencias = buscaTipoOcorrencia();
+$tiposStatus = buscaTipoStatus();
+$servicos = buscaServicos();
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -54,6 +59,67 @@ $contratotipo = buscaContratoTipos($idContratoTipo);
                 <div class="col-md-4">
                     <label class='form-label ts-label'>Nome Demanda</label>
                     <input type="text" name="nomeDemanda" class="form-control ts-input" value="<?php echo $contratotipo['nomeDemanda'] ?>">
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <label class="form-label ts-label">Tipo Ocorrencia</label>
+                    <select class="form-select ts-input" name="idTipoOcorrenciaPadrao">
+                        <option value="<?php echo null ?>">
+                            <?php echo "Selecione" ?>
+                        </option>
+                        <?php
+                        foreach ($tipoOcorrencias as $tipoOcorrencia) {
+                        ?>
+                            <option <?php
+                                    if ($tipoOcorrencia['idTipoOcorrencia'] == $contratotipo['idTipoOcorrenciaPadrao']) {
+                                        echo "selected";
+                                    }
+                                    ?> value="<?php echo $tipoOcorrencia['idTipoOcorrencia'] ?>">
+                                <?php echo $tipoOcorrencia['nomeTipoOcorrencia'] ?>
+                            </option>
+                        <?php  } ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label ts-label">Tipo Staus</label>
+                    <select class="form-select ts-input" name="idTipoStatus_fila">
+                        <option value="<?php echo null ?>">
+                            <?php echo "Selecione" ?>
+                        </option>
+                        <?php
+                        foreach ($tiposStatus as $tipoStatus) {
+                        ?>
+                            <option <?php
+                                    if ($tipoStatus['idTipoStatus'] == $contratotipo['idTipoStatus_fila']) {
+                                        echo "selected";
+                                    }
+                                    ?> value="<?php echo $tipoStatus['idTipoStatus'] ?>">
+                                <?php echo $tipoStatus['nomeTipoStatus'] ?>
+                            </option>
+                        <?php  } ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label ts-label">Serviços</label>
+                    <select class="form-select ts-input" name="idServicoPadrao">
+                        <option value="<?php echo null ?>">
+                            <?php echo "Selecione" ?>
+                        </option>
+                        <?php
+                        foreach ($servicos as $servico) {
+                        ?>
+                            <option <?php
+                                    if ($servico['idServico'] == $contratotipo['idServicoPadrao']) {
+                                        echo "selected";
+                                    }
+                                    ?> value="<?php echo $servico['idServico'] ?>">
+                                <?php echo $servico['nomeServico'] ?>
+                            </option>
+                        <?php  } ?>
+                    </select>
+
                 </div>
             </div>
 

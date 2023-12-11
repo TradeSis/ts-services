@@ -2,7 +2,6 @@
 $(document).on('click', 'button[data-bs-target="#stopmodal"]', function () {
   var idTarefa = $(this).attr("data-id");
   var idDemanda = $(this).attr("data-demanda");
-
   $.ajax({
     type: 'POST',
     dataType: 'json',
@@ -11,9 +10,10 @@ $(document).on('click', 'button[data-bs-target="#stopmodal"]', function () {
       idTarefa: idTarefa
     },
     success: function (data) {
-      $('#stopmodal_idTarefa').val(data.idTarefa);
-      $('#stopmodal_idDemanda').val(idDemanda);
 
+      $('#stopmodal_idTarefa').val(data.idTarefa);
+      $('#stopmodal_idDemanda').val(data.idDemanda);
+      $('#stopmodal_idCliente').val(data.idCliente);
       $('#stopmodal').modal('show');
     },
     error: function (msg) {

@@ -22,12 +22,11 @@
                             <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
                             <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
                             <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <!-- lucas 22092023 ID 358 Modificado nome do botao-->
-                    <button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger">Encerrar</button>
+                    <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=validar" class="btn btn-danger">Encerrar</button>
                 </div>
                 </form>
             </div>

@@ -1,4 +1,5 @@
 <?php
+// lucas 28112023 id706 - Melhorias Demandas 2
 //Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 //gabriel 07022023 16:25
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
@@ -10,7 +11,7 @@ if (isset($LOG_CAMINHO)) {
     $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_inserir";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
-            $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
+            $arquivo = fopen(defineCaminhoLog() . "services_inserir" . date("dmY") . ".log", "a");
         }
     }
 
@@ -35,18 +36,48 @@ $posicao = null;
 $statusDemanda = null;
 
 if (isset($jsonEntrada['tituloDemanda'])) {
-    $idCliente = $jsonEntrada['idCliente'];
-    $tituloDemanda = $jsonEntrada['tituloDemanda'];
-    $descricao = $jsonEntrada['descricao'];
-    $idTipoStatus = $jsonEntrada['idTipoStatus'];
-    $idTipoOcorrencia = $jsonEntrada['idTipoOcorrencia'];
-    $idSolicitante = isset($jsonEntrada['idSolicitante']) && $jsonEntrada['idSolicitante'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idSolicitante']) : "NULL";
-    $idServico = isset($jsonEntrada['idServico']) && $jsonEntrada['idServico'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idServico']) : "NULL";
-    $idContrato = isset($jsonEntrada['idContrato']) && $jsonEntrada['idContrato'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idContrato']) : "NULL";
-    $idContratoTipo = isset($jsonEntrada['idContratoTipo']) && $jsonEntrada['idContratoTipo'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['idContratoTipo']) . "'" : "NULL";
-    $horasPrevisao = isset($jsonEntrada['horasPrevisao']) && $jsonEntrada['horasPrevisao'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['horasPrevisao']) . "'" : "0";
-    $tamanho = isset($jsonEntrada['tamanho']) && $jsonEntrada['tamanho'] !== "" ? "'" . mysqli_real_escape_string($conexao, $jsonEntrada['tamanho']) . "'" : "NULL";
-    $idAtendente = isset($jsonEntrada['idAtendente']) && $jsonEntrada['idAtendente'] !== "" ? mysqli_real_escape_string($conexao, $jsonEntrada['idAtendente']) : "NULL";
+    $tituloDemanda = "'" . $jsonEntrada['tituloDemanda'] . "'";
+    $descricao = "'" . $jsonEntrada['descricao'] . "'";
+    $horasPrevisao  = isset($jsonEntrada['horasPrevisao'])  && $jsonEntrada['horasPrevisao'] !== "" && $jsonEntrada['horasPrevisao'] !== "null" ? "'". $jsonEntrada['horasPrevisao']."'"  : "0";
+    $idSolicitante = isset($jsonEntrada['idSolicitante'])  && $jsonEntrada['idSolicitante'] !== "" ?  $jsonEntrada['idSolicitante']    : "null";
+    $idAtendente = isset($jsonEntrada['idAtendente'])  && $jsonEntrada['idAtendente'] !== "" ?  $jsonEntrada['idAtendente']    : "null";
+    $idCliente = isset($jsonEntrada['idCliente'])  && $jsonEntrada['idCliente'] !== "" ?  $jsonEntrada['idCliente']    : "null";
+    $dataPrevisaoEntrega  = isset($jsonEntrada['dataPrevisaoEntrega'])  && $jsonEntrada['dataPrevisaoEntrega'] !== "" && $jsonEntrada['dataPrevisaoEntrega'] !== "null" ? "'". $jsonEntrada['dataPrevisaoEntrega']."'"  : "null";
+    $dataPrevisaoInicio  = isset($jsonEntrada['dataPrevisaoInicio'])  && $jsonEntrada['dataPrevisaoInicio'] !== "" && $jsonEntrada['dataPrevisaoInicio'] !== "null" ? "'". $jsonEntrada['dataPrevisaoInicio']."'"  : "null";
+    $tempoCobrado = isset($jsonEntrada["tempoCobrado"])  && $jsonEntrada["tempoCobrado"] !== "" && $jsonEntrada["tempoCobrado"] !== "null" ? "'". $jsonEntrada["tempoCobrado"]."'"  : "null";
+    $tempoCobradoDigitado = '0';
+    if($tempoCobrado !== "null"){
+        $tempoCobradoDigitado = '1';
+    }
+
+    // lucas 28112023 id706 - removido idTipoOcorrencia
+    $idContratoTipo   = isset($jsonEntrada['idContratoTipo'])  && $jsonEntrada['idContratoTipo'] !== "" ?  "'" . $jsonEntrada['idContratoTipo'] . "'"  : "null";
+        //Verifica o Tipo de Contrato
+        $sql_consulta = "SELECT * FROM contratotipos WHERE idContratoTipo = $idContratoTipo";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+
+        $idServicoPadrao = isset($row_consulta['idServicoPadrao'])  && $row_consulta['idServicoPadrao'] !== "" ?  $row_consulta['idServicoPadrao']    : "null";
+        $idTipoStatus_fila = isset($row_consulta['idTipoStatus_fila'])  && $row_consulta['idTipoStatus_fila'] !== "" ?  $row_consulta['idTipoStatus_fila']    : "null";
+
+        $idServico  = isset($jsonEntrada['idServico'])  && $jsonEntrada['idServico'] !== "" ?  $jsonEntrada['idServico']    : "null";
+        if($idServico === "null"){
+            $idServico = $idServicoPadrao;
+        }
+ 
+        $idTipoStatus = $idTipoStatus_fila;
+
+
+    $idContrato = isset($jsonEntrada['idContrato'])  && $jsonEntrada['idContrato'] !== "" ?  $jsonEntrada['idContrato']    : "null";
+
+    if($idContrato !== "null"){
+        //Pega o campo idCliente de contrato
+        $sql_consulta = "SELECT * FROM contrato WHERE idContrato = $idContrato";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+        $idCliente = isset($row_consulta['idCliente'])  && $row_consulta['idCliente'] !== "" ?  $row_consulta['idCliente']    : "null";
+    }
+
 
     //busca dados tipostatus    
     $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -55,7 +86,28 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     $posicao = $row["mudaPosicaoPara"];
     $statusDemanda = $row["mudaStatusPara"];
 
-    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, idTipoOcorrencia, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, idContratoTipo, horasPrevisao, tamanho, idAtendente) VALUES (99, '$tituloDemanda','$descricao', CURRENT_TIMESTAMP(), $idTipoStatus, $idTipoOcorrencia, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, $idContratoTipo, $horasPrevisao, $tamanho, $idAtendente)";
+    $sql = "INSERT INTO demanda(prioridade, tituloDemanda, descricao, dataAbertura, idTipoStatus, posicao, statusDemanda, idCliente, idSolicitante, idServico, idContrato, 
+    idContratoTipo, horasPrevisao, idAtendente, dataPrevisaoEntrega, dataPrevisaoInicio, tempoCobrado, tempoCobradoDigitado)
+     VALUES (99, $tituloDemanda, $descricao, CURRENT_TIMESTAMP(), $idTipoStatus, $posicao, $statusDemanda, $idCliente, $idSolicitante, $idServico, $idContrato, 
+     $idContratoTipo, $horasPrevisao, $idAtendente, $dataPrevisaoEntrega, $dataPrevisaoInicio, $tempoCobrado, $tempoCobradoDigitado)";
+    
+    //Envio de Email
+    $tituloEmail = $jsonEntrada['tituloDemanda'];
+    $corpoEmail = $jsonEntrada['descricao'];
+
+    $arrayPara = array(
+
+        array(
+            'email' => 'tradesis@tradesis.com.br',
+            'nome' => 'TradeSis'
+        ),
+        array(
+            'email' => $_SESSION['email'],
+            'nome' => $_SESSION['usuario']
+        ),
+    );
+
+    $envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 
     //LOG
     if (isset($LOG_NIVEL)) {

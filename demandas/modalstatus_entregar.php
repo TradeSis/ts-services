@@ -28,7 +28,7 @@
             </div>
             <div class="modal-footer">
                 <!-- lucas 22092023 ID 358 Modificado nome do botao-->
-                <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning">Entregar</button>
+                <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=entregar" class="btn btn-warning">Entregar</button>
             </div>
             </form>
         </div>

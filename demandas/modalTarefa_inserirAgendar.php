@@ -83,12 +83,7 @@
                     <?php
                     foreach ($ocorrencias as $ocorrencia) {
                     ?>
-                      <option <?php if(isset($demanda)){
-                            if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {
-                              echo "selected";
-                            }
-                          } ?>
-                      value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                      <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
                         <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
                       </option>
                     <?php } ?>

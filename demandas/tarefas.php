@@ -380,7 +380,6 @@ if (isset($_SESSION['filtro_tarefas'])) {
             var valorhoraInicioReal = formatTime(object.horaInicioReal); //criado
             var valorhoraFinalReal = formatTime(object.horaFinalReal); //criado
             var valorhorasReal = formatTime(object.horasReal);//criado
-            var vhoraCobrado = formatTime(object.horaCobrado);
       
             /* Helio 07112023 - Campos ficam em Branco quando Zerados */
             if(vdataReal === "00/00/0000"){

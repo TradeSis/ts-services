@@ -28,6 +28,21 @@ if (isset($LOG_NIVEL)) {
 }
 //LOG
 
+function buscaHorasRealizado($conexao, $idDemanda, $tempoCobradoDigitado)
+{
+    $totalHorasReal = "null";
+
+    if($tempoCobradoDigitado == "0"){
+        $sql_consulta = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(subquery.horasReal))) AS totalHorasReal
+        FROM (SELECT TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal FROM tarefa
+        where tarefa.idDemanda = $idDemanda) AS subquery";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+        $totalHorasReal  = $row_consulta["totalHorasReal"];
+    }
+    return $totalHorasReal;
+}
+
 date_default_timezone_set('America/Sao_Paulo');
 $idEmpresa = null;
 if (isset($jsonEntrada["idEmpresa"])) {
@@ -48,8 +63,7 @@ if (isset($jsonEntrada['idTarefa'])) {
     $buscar_consulta = mysqli_query($conexao, $sql_consulta);
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
     $idDemanda = isset($row_consulta["idDemanda"])  && $row_consulta["idDemanda"] !== ""  ? "'". $row_consulta["idDemanda"]."'"  : "null";
-    $horaCobrado = isset($row_consulta["horaCobrado"])  && $row_consulta["horaCobrado"] !== "" && $row_consulta["horaCobrado"] !== "null" ? "'". $row_consulta["horaCobrado"]."'"  : "null";
-    $horaInicioRealTarefa = $row_consulta["horaInicioReal"];
+
 
     $statusStart = array(
         TIPOSTATUS_FILA,
@@ -59,6 +73,8 @@ if (isset($jsonEntrada['idTarefa'])) {
         TIPOSTATUS_AGENDADO
     );
 
+    $tempoCobradoDigitado = "null";
+
     if ($idDemanda !== "null") {
         //Se tiver demanda, vai ser atribuido novo valor para variavel $tipoStatusDemanda
         $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
@@ -66,6 +82,9 @@ if (isset($jsonEntrada['idTarefa'])) {
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $tipoStatusDemanda = $row_consulta["idTipoStatus"];
         $idUsuario = $row_consulta["idAtendente"];
+        $tempoCobradoDigitado = $row_consulta["tempoCobradoDigitado"];
+
+        
     }
 
     if (($idDemanda !== "null") && ($comentario !== "null")) {
@@ -74,12 +93,8 @@ if (isset($jsonEntrada['idTarefa'])) {
 
     //ação : REALIZADO
     if ($jsonEntrada['acao'] == "realizado") {
-        
-        if ($horaCobrado === 'null') {
-            $horaCobrado = "'" . '00:31:00' . "'";  
-        } 
       
-        $sql = "UPDATE tarefa SET dataReal = $dataReal, horaInicioReal = $horaInicioReal , horaFinalReal = $horaFinalReal , horaCobrado = $horaCobrado WHERE idTarefa = $idTarefa";
+        $sql = "UPDATE tarefa SET dataReal = $dataReal, horaInicioReal = $horaInicioReal , horaFinalReal = $horaFinalReal  WHERE idTarefa = $idTarefa";
 
         if ($idDemanda !== "null") {
             $idTipoStatus = TIPOSTATUS_PAUSADO;
@@ -124,26 +139,12 @@ if (isset($jsonEntrada['idTarefa'])) {
     //ação : STOP
     if ($jsonEntrada['acao'] == "stop") {
 
-        if ($horaCobrado === "null") {
-            // remove aspas da variavel $horasFinalReal para ser instanciada como objeto DateTime
-            $horaFinalReal = date('H:i:00');
-            $horaFinalRealObj = new DateTime($horaFinalReal);
-            $horaInicioRealTarefaObj = new DateTime($horaInicioRealTarefa);
-            $interval = $horaInicioRealTarefaObj->diff($horaFinalRealObj);
-            $horaCobrado_comparacao = $interval->format('%H:%I:%S');
-            $horaCobrado = "'" . $interval->format('%H:%I:%S') . "'";
-
-            if (strtotime($horaCobrado_comparacao) < strtotime('00:30:00')) {
-                $horaCobrado = '00:30:00';
-                $horaCobrado = "'" . $horaCobrado . "'";
-            }
-            // adiciona aspas da variavel $horasFinalReal para ser usada no UPDATE
-            $horaFinalReal = "'" . date('H:i:00') . "'";
-        } 
-
-        $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal, horaCobrado = $horaCobrado  WHERE idTarefa = $idTarefa";
+        $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal  WHERE idTarefa = $idTarefa"; 
+        //Vai executar o UPDATE primerio, para depois atualizar o $totalHorasReal
+        $atualizar = mysqli_query($conexao, $sql);
 
         if ($idDemanda !== "null") {
+           
             $idTipoStatus = TIPOSTATUS_PAUSADO;
             //Busca dados Tipostatus    
             $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -153,35 +154,30 @@ if (isset($jsonEntrada['idTarefa'])) {
             $statusDemanda = $row_consulta["mudaStatusPara"];
 
             $sql_update_demanda = "UPDATE demanda SET dataAtualizacaoAtendente=CURRENT_TIMESTAMP() ";
+                if ($tempoCobradoDigitado == "0") {
+                    $totalHorasReal = buscaHorasRealizado($conexao, $idDemanda, $tempoCobradoDigitado);
+                    $tempoCobrado = $totalHorasReal;
+                    //echo $totalHorasReal;
+                    if (strtotime($totalHorasReal) < strtotime('00:30:00')) {
+                        $tempoCobrado = '00:30:00';
+                    }
+                    
+                    $tempoCobrado = "'" . $tempoCobrado . "'";
+                    $sql_update_demanda = $sql_update_demanda . ",tempoCobrado = $tempoCobrado ";
+                }
+
                 if ($tipoStatusDemanda == TIPOSTATUS_FAZENDO) {
                     $sql_update_demanda = $sql_update_demanda . ",idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda ";
                 }
-            $sql_update_demandal = $sql_update_demanda . "  WHERE idDemanda = $idDemanda";
-
+            $sql_update_demanda = $sql_update_demanda . "  WHERE idDemanda = $idDemanda";
         }
     }
+
 
     //ação : ENTREGUE
     if ($jsonEntrada['acao'] == "entregue") {
 
-        if ($horaCobrado === "null") {
-            // remove aspas da variavel $horasFinalReal para ser instanciada como objeto DateTime
-            $horaFinalReal = date('H:i:00');
-            $horaFinalRealObj = new DateTime($horaFinalReal);
-            $horaInicioRealTarefaObj = new DateTime($horaInicioRealTarefa);
-            $interval = $horaInicioRealTarefaObj->diff($horaFinalRealObj);
-            $horaCobrado_comparacao = $interval->format('%H:%I:%S');
-            $horaCobrado = "'" . $interval->format('%H:%I:%S') . "'";
-
-            if (strtotime($horaCobrado_comparacao) < strtotime('00:30:00')) {
-                $horaCobrado = '00:30:00';
-                $horaCobrado = "'" . $horaCobrado . "'";
-            }
-            // adiciona aspas da variavel $horasFinalReal para ser usada no UPDATE
-            $horaFinalReal = "'" . date('H:i:00') . "'";
-        }
-
-        $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal, horaCobrado = $horaCobrado  WHERE idTarefa = $idTarefa";
+        $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal  WHERE idTarefa = $idTarefa";
 
         if ($idDemanda !== "null") {
             $idTipoStatus = TIPOSTATUS_REALIZADO;

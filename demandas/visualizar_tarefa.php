@@ -22,6 +22,11 @@ include_once '../header.php';
             </div>
 
             <div class="col-2 text-end">
+                <!-- lucas 29112023 - modelo de botão refresh para demanda(TESTE) -->
+                <button type="button" class="demandaRefresh btn btn-info btn-sm" value="Start" 
+                    data-demandaRefresh="<?php echo $demanda['idDemanda'] ?>">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </button>
                 <?php if ($demanda['idTipoStatus'] !== TIPOSTATUS_REALIZADO && $demanda['idTipoStatus'] !== TIPOSTATUS_VALIDADO) { ?>
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
                 <?php } ?>
@@ -154,7 +159,6 @@ include_once '../header.php';
                                         data-previsto="<?php echo $tarefa['Previsto'] ?>" 
                                         data-horainicioprevisto="<?php echo $tarefa['horaInicioPrevisto'] ?>" 
                                         data-horafinalprevisto="<?php echo $tarefa['horaFinalPrevisto'] ?>" 
-                                        data-horacobrado="<?php echo $tarefa['horaCobrado'] ?>" 
                                         data-horainicioreal="<?php echo $tarefa['horaInicioReal'] ?>">
                                     <i class="bi bi-play-circle"></i></button>
                                 <?php } ?>
@@ -296,6 +300,10 @@ include_once '../header.php';
                 });
             });
             //Gabriel 1102023 ID 596 removido chamada de alterarModal
+
+            $(document).on('click', '.demandaRefresh', function() {
+                 window.location.href='visualizar.php?idDemanda=' + $(this).attr('data-demandaRefresh');
+            });
 
         });
         //Gabriel 1102023 ID 596 refreshPage movido para visualizar.php

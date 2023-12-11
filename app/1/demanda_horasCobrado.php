@@ -6,7 +6,7 @@
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
   $LOG_NIVEL = defineNivelLog();
-  $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "tarefas_horas";
+  $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_horasCobrada";
   if (isset($LOG_NIVEL)) {
     if ($LOG_NIVEL >= 1) {
       $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
@@ -32,11 +32,10 @@ $conexao = conectaMysql($idEmpresa);
 
 $tarefa = array();
 //lucas 29112023 id706 - Removido horaCobrado
-$sql = "SELECT  SEC_TO_TIME(SUM(TIME_TO_SEC(subquery.horasReal))) AS totalHorasReal
-        FROM (SELECT TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal FROM tarefa";
+$sql = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(tempoCobrado))) AS totalHorasCobrado FROM demanda ";
 
-if (isset($jsonEntrada["idDemanda"])) {
-  $sql = $sql . " where tarefa.idDemanda = " . $jsonEntrada["idDemanda"] . ") AS subquery";
+if (isset($jsonEntrada["idContrato"])) {
+  $sql = $sql . " where idContrato = " . $jsonEntrada["idContrato"];
 }
 
 //echo "-SQL->".json_encode($sql)."\n";
@@ -61,7 +60,7 @@ try {
     array_push($tarefa, $row);
     $rows = $rows + 1;
   }
-  if (isset($jsonEntrada["idDemanda"]) && $rows == 1) {
+  if (isset($jsonEntrada["idContrato"]) && $rows == 1) {
     $tarefa = $tarefa[0];
   }
   $jsonSaida = $tarefa;

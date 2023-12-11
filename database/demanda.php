@@ -1,4 +1,5 @@
 <?php
+//lucas 28112023 id706 - Melhorias Demandas 2
 // Lucas 25102023 id643 revisao geral
 //Gabriel 05102023 ID 575 Demandas/Comentarios - Layout de chat
 //lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
@@ -95,6 +96,42 @@ function buscaDemandasAbertas($statusDemanda=1) //Aberto
 	return $demanda;
 }
 
+function buscaTotalHorasCobrada($idContrato=null)
+{
+	$horas = array();
+
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+	
+	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
+		'idContrato' => $idContrato
+	);
+	$horas = chamaAPI(null, '/services/demanda_horasCobrado', json_encode($apiEntrada), 'GET');
+	return $horas;
+}
+
+function buscaTotalHorasReal($idContrato=null)
+{
+	$horas = array();
+
+
+	$idEmpresa = null;
+	if (isset($_SESSION['idEmpresa'])) {
+    	$idEmpresa = $_SESSION['idEmpresa'];
+	}
+	
+	$apiEntrada = array(
+		'idEmpresa' => $idEmpresa,
+		'idContrato' => $idContrato
+	);
+	$horas = chamaAPI(null, '/services/demanda_horasReal', json_encode($apiEntrada), 'GET');
+	return $horas;
+}
+
 if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];
@@ -107,7 +144,6 @@ if (isset($_GET['operacao'])) {
 			'idSolicitante' => $_POST['idSolicitante'],
 			'tituloDemanda' => $_POST['tituloDemanda'],
 			'descricao' => $_POST['descricao'],
-			'idTipoOcorrencia' => $_POST['idTipoOcorrencia'],
 			'idServico' => $_POST['idServico'], //SERVICOS_PADRAO,
 			'idTipoStatus' => $_POST['idTipoStatus'], //TIPOSTATUS_FILA,
 			'idContrato' => $_POST['idContrato'],
@@ -115,7 +151,9 @@ if (isset($_GET['operacao'])) {
 			'horasPrevisao' => $_POST['horasPrevisao'],
 			// lucas 21112023 - removido campo tamanho
 			'idAtendente' => $_POST['idAtendente'],
-			
+			'dataPrevisaoEntrega' => $_POST['dataPrevisaoEntrega'],
+			'dataPrevisaoInicio' => $_POST['dataPrevisaoInicio'],
+			'tempoCobrado' => $_POST['tempoCobrado'],
 		);
 	
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
@@ -231,7 +269,9 @@ if (isset($_GET['operacao'])) {
 			'idAtendente' => $_POST['idAtendente'],
 			'horasPrevisao' => $_POST['horasPrevisao'],
 			// lucas 21112023 id 688 - removido campo idContratoTipo
-			'idTipoOcorrencia' => $_POST['idTipoOcorrencia']
+			'dataPrevisaoEntrega' => $_POST['dataPrevisaoEntrega'],
+			'dataPrevisaoInicio' => $_POST['dataPrevisaoInicio'],
+			'tempoCobrado' => $_POST['tempoCobrado'],
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 
@@ -284,7 +324,8 @@ if (isset($_GET['operacao'])) {
 		$idCliente = $_POST['idCliente'];
 		$idSolicitante = $_POST['idSolicitante'];
 		$idTipoStatus = $_POST['idTipoStatus'];
-		$idTipoOcorrencia = $_POST['idTipoOcorrencia'];
+		//Lucas 28112023 id706 - removido idTipoOcorrencia e adicionado idServico
+		$idServico = $_POST['idServico'];
 		$idAtendente = $_POST['idAtendente'];
 		$statusDemanda = $_POST['statusDemanda'];
 		$buscaDemanda = $_POST['buscaDemanda'];
@@ -306,11 +347,9 @@ if (isset($_GET['operacao'])) {
 			$idTipoStatus = null;
 		}
 
-
-		if ($idTipoOcorrencia == "") {
-			$idTipoOcorrencia = null;
+		if ($idServico == "") {
+			$idServico = null;
 		}
-
 
 		if ($statusDemanda == "") {
 			$statusDemanda = null;
@@ -337,7 +376,7 @@ if (isset($_GET['operacao'])) {
 			'idSolicitante' => $idSolicitante,
 			'idAtendente' => $idAtendente,
 			'idTipoStatus' => $idTipoStatus,
-			'idTipoOcorrencia' => $idTipoOcorrencia,
+			'idServico' => $idServico,
 			'statusDemanda' => $statusDemanda,
 			'buscaDemanda' => $buscaDemanda,
 			'idContratoTipo' => $idContratoTipo,

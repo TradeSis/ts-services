@@ -39,15 +39,35 @@ if (isset($jsonEntrada['idDemanda'])) {
     $tituloDemanda = "'" . $jsonEntrada['tituloDemanda'] . "'";
     $descricao = "'" . $jsonEntrada['descricao'] . "'";
     $prioridade = $jsonEntrada['prioridade'];
-    $idContrato = $jsonEntrada['idContrato'];
-    $idTipoOcorrencia  = $jsonEntrada['idTipoOcorrencia'];
+    $idContrato = isset($jsonEntrada['idContrato'])  && $jsonEntrada['idContrato'] !== "" ?  $jsonEntrada['idContrato']    : "null";
+    //lucas 28112023 id706 - removido tipoOcorrencia 
     $idServico = $jsonEntrada['idServico'];
     $horasPrevisao  = isset($jsonEntrada['horasPrevisao'])  && $jsonEntrada['horasPrevisao'] !== "" && $jsonEntrada['horasPrevisao'] !== "null" ? "'". $jsonEntrada['horasPrevisao']."'"  : "null";
     $idAtendente = $jsonEntrada['idAtendente'];
+    $dataPrevisaoEntrega  = isset($jsonEntrada['dataPrevisaoEntrega'])  && $jsonEntrada['dataPrevisaoEntrega'] !== "" && $jsonEntrada['dataPrevisaoEntrega'] !== "null" ? "'". $jsonEntrada['dataPrevisaoEntrega']."'"  : "null";
+    $dataPrevisaoInicio  = isset($jsonEntrada['dataPrevisaoInicio'])  && $jsonEntrada['dataPrevisaoInicio'] !== "" && $jsonEntrada['dataPrevisaoInicio'] !== "null" ? "'". $jsonEntrada['dataPrevisaoInicio']."'"  : "null";
+    $tempoCobradoEntrada = isset($jsonEntrada["tempoCobrado"])  && $jsonEntrada["tempoCobrado"] !== "" && $jsonEntrada["tempoCobrado"] !== "null" ? "'". $jsonEntrada["tempoCobrado"]."'"  : "null";
 
-    $sql = "UPDATE demanda SET prioridade = $prioridade, tituloDemanda = $tituloDemanda, descricao = $descricao, idServico = $idServico, idAtendente = $idAtendente,
-             horasPrevisao = $horasPrevisao, idContrato = $idContrato,  idTipoOcorrencia = $idTipoOcorrencia, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
+    //Busca tempoCObrado de Demanda  
+    $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
+    $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+    $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+    $tempoCobradoAutal = $row_consulta["tempoCobrado"];
+    $tempoCobradoAutal = "'". $tempoCobradoAutal . "'";
    
+   $sql = "UPDATE demanda SET prioridade = $prioridade, tituloDemanda = $tituloDemanda, descricao = $descricao, idServico = $idServico, idAtendente = $idAtendente,
+   horasPrevisao = $horasPrevisao, idContrato = $idContrato, dataPrevisaoEntrega = $dataPrevisaoEntrega, dataPrevisaoInicio = $dataPrevisaoInicio ";
+
+    if ($tempoCobradoEntrada != $tempoCobradoAutal) {
+        $tempoCobrado = $tempoCobradoEntrada;
+        $tempoCobradoDigitado = '1';
+       
+       $sql = $sql . ",tempoCobrado = $tempoCobrado, tempoCobradoDigitado = $tempoCobradoDigitado ";
+    }
+
+    $sql = $sql . ", dataAtualizacaoAtendente=CURRENT_TIMESTAMP()  WHERE idDemanda = $idDemanda";
+
+  
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {

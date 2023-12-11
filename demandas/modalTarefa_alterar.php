@@ -212,7 +212,6 @@
                 $('#dataReal').val(data.dataReal);
                 $('#horaInicioReal').val(data.horaInicioReal);
                 $('#horaFinalReal').val(data.horaFinalReal);
-                $('#horaCobrado').val(data.horaCobrado);
              
                 vidDemanda = data.idDemanda;
                 vtituloDemanda = data.tituloDemanda;

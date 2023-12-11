@@ -37,12 +37,17 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $cliente = buscaClientes($demanda["idCliente"]);
 $clientes = buscaClientes();
 $contratos = buscaContratosAbertos($demanda["idCliente"]);
-
+$horasReal = buscaTotalHorasReal(null, $idDemanda);
+if($horasReal['totalHorasReal'] !== null){
+	$totalHorasReal = date('H:i', strtotime($horasReal['totalHorasReal']));
+}else{
+	$totalHorasReal = "00:00";
+}
 //Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
-if($demanda['dataFechamento'] == null){
+if ($demanda['dataFechamento'] == null) {
     $dataFechamento =  'dd/mm/aaaa';
-}else{
+} else {
     $dataFechamento = date('d/m/Y H:i', strtotime($demanda['dataFechamento']));
 }
 $statusEncerrar = array(
@@ -61,108 +66,8 @@ $statusEncerrar = array(
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 </head>
-
-<style>
-    .modal-fullscreen {
-        max-width: 75vw;
-        height: 98vh;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        margin-left: 0px;
-    }
-
-    .ts-divLateralModalDemanda {
-        position: sticky;
-        display: flex;
-        height: 98vh;
-        background-color: #F1F2F4;
-    }
-
-    @media only screen and (max-width: 785px) {
-        .modal-fullscreen {
-            max-width: 100vw;
-            height: 98vh;
-        }
-
-        .ts-divLateralModalDemanda {
-            height: 650px;
-        }
-
-    }
-
-    .ts-inputSemBorda {
-        border-top: none;
-        border-left: none;
-        border-right: none;
-        border-bottom: none;
-        margin-top: -5px;
-        background: #F1F2F4;
-    }
-
-    .ts-inputSemBorda:any-link {
-        margin-top: -5px;
-
-        background: #fff;
-    }
-
-    .ts-selectDemandaModalVisualizar {
-        border-radius: 3px;
-        border-bottom: 1px solid #C1C1C1;
-        background: #F1F2F4;
-        cursor: pointer;
-    }
-
-    .ts-tituloPrincipalModal{
-        font-size:18px;
-        font-weight: 600;
-        color:#172B4D;
-        cursor: pointer;
-    }
-
-    .ts-displayDisable { /*  */
-        background: #eee;
-        pointer-events: none;
-        touch-action: none;
-    }
-
-    .ts-sumir {
-        display: none;
-    }
-    .ts-containerDescricaoDemanda .ql-toolbar{
-        display: none;
-    }
-    .ts-btnDescricaoEditar{
-        color: #000000;
-        cursor: pointer;
-    }
-
-    
-    /* STYLE SCROLL BAR */
-    /* width */
-    ::-webkit-scrollbar {
-        width: 7px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #C1C1C1;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #a0a0a0;
-    }
-
-    .ts-subTitulo{
-        color:#172B4D;
-    }
-</style>
 
 <body>
     <div class="container-fluid">
@@ -216,7 +121,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Inicio</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="date" class="form-control ts-inputSemBorda"  value="<?php echo $demanda['dataInicio'] ?>" readonly>
+                                <input type="date" class="form-control ts-inputSemBorda" value="<?php echo $demanda['dataInicio'] ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -248,7 +153,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Realizado</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="time" class="form-control ts-inputSemBorda" name="realizado">
+                                <input type="time" class="form-control ts-inputSemBorda" name="realizado" value="<?php echo $totalHorasReal ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -289,9 +194,9 @@ $statusEncerrar = array(
                 <div class="modal-content" style="background-color: #F1F2F4;">
                 
                     <div class="container">
-                    <?php if(isset($demanda['tituloContrato'])){ ?>
+                        <?php if (isset($demanda['tituloContrato'])) { ?>
                             <div class="row">
-                            <span class="ts-subTitulo"><strong>Contrato: </strong> <?php echo $demanda['tituloContrato'] ?></span>
+                                <span class="ts-subTitulo"><strong>Contrato: </strong> <?php echo $demanda['tituloContrato'] ?></span>
                             </div>
                         <?php } ?>
                         <div class="row g-3">
@@ -301,7 +206,7 @@ $statusEncerrar = array(
                                 <input type="text" class="form-control ts-inputSemBorda ts-tituloPrincipalModal" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="z-index: 1;">
                             </div>
                             <div class="col-md-3 d-flex">
-                                <span class="ts-subTitulo"><strong>Contrato: </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
+                                <span class="ts-subTitulo"><strong>Status: </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
                             </div>
                         </div>
                         <div class="row g-3">
@@ -483,6 +388,7 @@ $statusEncerrar = array(
             window.location.href = newUrl;
         }
 
+
         var quilldescricao = new Quill('.quill-textarea', {
             theme: 'snow',
             modules: {
@@ -520,7 +426,8 @@ $statusEncerrar = array(
                         'align': []
                     }],
                 ]
-            }
+            },
+            scrollingContainer: '#scrolling-container'
         });
 
         quilldescricao.on('text-change', function(delta, oldDelta, source) {

@@ -9,7 +9,7 @@ include_once '../database/demanda.php';
 $idContrato = $_GET['idContrato'];
 $demandas = buscaDemandas(null, null, $idContrato);
 $horasCobrado = buscaTotalHorasCobrada($idContrato);
-$horasReal = buscaTotalHorasReal($idContrato);
+$horasReal = buscaTotalHorasReal($idContrato, null);
 //Remover os zeros de segundo de totalHorasCobrado
 if($horasCobrado['totalHorasCobrado'] !== null){
 	$totalHorasCobrado = date('H:i', strtotime($horasCobrado['totalHorasCobrado']));

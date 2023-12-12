@@ -54,11 +54,11 @@ if (isset($jsonEntrada['idDemanda'])) {
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
     $tempoCobradoAutal = $row_consulta["tempoCobrado"];
     $tempoCobradoAutal = "'". $tempoCobradoAutal . "'";
-   
+
    $sql = "UPDATE demanda SET prioridade = $prioridade, tituloDemanda = $tituloDemanda, idServico = $idServico, idAtendente = $idAtendente,
    horasPrevisao = $horasPrevisao, idContrato = $idContrato, dataPrevisaoEntrega = $dataPrevisaoEntrega, dataPrevisaoInicio = $dataPrevisaoInicio ";
 
-    if ($tempoCobradoEntrada != $tempoCobradoAutal) {
+    if (($tempoCobradoEntrada != $tempoCobradoAutal) && ($tempoCobradoEntrada != "null")) {
         $tempoCobrado = $tempoCobradoEntrada;
         $tempoCobradoDigitado = '1';
        

@@ -61,7 +61,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 				<div class="col">
 					<span class="tituloEditor">Descrição</span>
 				</div>
-				<div class="quill-textarea"><?php echo $contrato['descricao'] ?></div>
+				<div class="quill-textarea" style="height:300px!important"><?php echo $contrato['descricao'] ?></div>
 				<textarea style="display: none" id="detail" name="descricao"><?php echo $contrato['descricao'] ?></textarea>
 			</div>
 			<div class="row mt-4">

@@ -114,7 +114,7 @@ function buscaTotalHorasCobrada($idContrato=null)
 	return $horas;
 }
 
-function buscaTotalHorasReal($idContrato=null)
+function buscaTotalHorasReal($idContrato=null, $idDemanda=null)
 {
 	$horas = array();
 
@@ -126,7 +126,8 @@ function buscaTotalHorasReal($idContrato=null)
 	
 	$apiEntrada = array(
 		'idEmpresa' => $idEmpresa,
-		'idContrato' => $idContrato
+		'idContrato' => $idContrato,
+		'idDemanda' => $idDemanda
 	);
 	$horas = chamaAPI(null, '/services/demanda_horasReal', json_encode($apiEntrada), 'GET');
 	return $horas;

@@ -251,10 +251,10 @@
                 // lucas 22112023 id 688 - alterado condições do select
                 if (data.Previsto !== null || data.dataReal !== null) {
                     //se vier dataPrevisto ou dataReal o select vai estar desabilitado
-                    $( "#idAtendente" ).addClass( "ts-selectDisable" );
+                    $( "#idAtendente" ).addClass( "ts-displayDisable" );
                 } else {
                     //senão vai habilitar o select
-                    $( "#idAtendente" ).removeClass( "ts-selectDisable" );
+                    $( "#idAtendente" ).removeClass( "ts-displayDisable" );
                 }
 
                 if (data.horaInicioReal !== null) {
@@ -275,10 +275,10 @@
                 // lucas 22112023 id 688 - alterado condições do select
                 if(data.idCliente == null){
                     //se idCliente vier nulo o select vai estar habilitado
-                     $( "#idCliente" ).removeClass( "ts-selectDisable" );
+                     $( "#idCliente" ).removeClass( "ts-displayDisable" );
                 }else{
                     //se idCliente vier Preenchido o select vai estar desabilitado
-                    $( "#idCliente" ).addClass( "ts-selectDisable" );
+                    $( "#idCliente" ).addClass( "ts-displayDisable" );
                 }
             
                 $('#alterarmodal').modal('show');

@@ -39,7 +39,7 @@ if($horasReal['totalHorasReal'] !== null){
 	}
 </style>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid m-0 p-0">
 
 		<div class="row">
 			<!-- MENSAGENS/ALERTAS -->
@@ -73,14 +73,14 @@ if($horasReal['totalHorasReal'] !== null){
 				<thead class="ts-headertabelafixo">
 					<tr>
 						<th></th>
-						<th class="col-3">Demanda</th>
+						<th class="col-4">Demanda</th>
 						<th>Responsável</th>
-						<th>Solicitante</th>
+						<!-- <th>Solicitante</th> -->
 						<th>Abertura</th>
 						<th>Status</th>
 						<th>Serviços</th>
-						<th class="col-1">Tempo Cobrado</th>
-						<th class="col-1">Tempo Real</th>
+						<th colspan="2" >Tempo</th>
+						<!-- <th class="col-1">Tempo Real</th> -->
 						<th></th>
 					</tr>
 				</thead>
@@ -109,13 +109,15 @@ if($horasReal['totalHorasReal'] !== null){
 						<tr>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $prioridade ?></td>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['idDemanda'] ?> <?php echo $demanda['tituloDemanda'] ?></td>
-							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeSolicitante'] ?></td>
+							<!-- <td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeSolicitante'] ?></td> -->
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeAtendente'] ?></td>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo date('d/m/Y', strtotime($demanda['dataAbertura'])) ?></td>
 							<td class="ts-click <?php echo $demanda['nomeTipoStatus'] ?>" data-status='Finalizado' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeTipoStatus'] ?></td>
 							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $demanda['nomeServico'] ?></td>
-							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $tempoCobrado ?></td> 
-							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'><?php echo $totalHorasReal ?></td>
+							<td class='ts-click' data-idDemanda='<?php echo $demanda['idDemanda'] ?>'>
+								<span style="font-size: 13px;">Cobrado: &nbsp; <?php echo $tempoCobrado ?> <br>
+								Realizado: <?php echo $totalHorasReal ?></span>
+							</td>
 							<td>
 							<div class="btn-group dropstart">
                                 <button type="button" class="btn" data-toggle="tooltip" data-placement="left" title="Opções" 

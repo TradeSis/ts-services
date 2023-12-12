@@ -42,206 +42,144 @@ $tipoocorrencias = buscaTipoOcorrencia();
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid p-0 m-0">
+        <div class="row p-0 m-0">
+            <!-- <div class="d-flex justify-content-between"> -->
+            <div class="col-12 col-md-9 ">
+                <form action="../database/contratos.php?operacao=alterar" method="post">
+                    <div class="row mt-1">
+                        <div class="col-md-9 d-flex align-items-center">
+                            <!--     <h2 class="ts-tituloPrincipal"><?php echo $contrato['idContrato'] ?> -
+                                <?php echo $contrato['tituloContrato'] ?></h2> -->
+                            <span class="ts-tituloPrincipalModal"><?php echo $contrato['idContrato'] ?></span>
+                            <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>">
+                            <input type="text" class="form-control ts-tituloPrincipalModal border-0" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>" style="z-index: 1;">
+                            <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>">
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $contrato['idCliente'] ?>" readonly>
+                            <span class="ts-subTitulo"><strong>Cliente : </strong> <?php echo $contrato['nomeCliente'] ?></span>
 
-        <div class="row">
-        <!-- MENSAGENS/ALERTAS -->
-        </div>
-        <div class="row">
-        <!-- BOTOES AUXILIARES -->
-        </div>
-        <div class="row mt-2"> <!-- LINHA SUPERIOR A TABLE -->
-            <div class="col-7">
-                <!-- TITULO -->
-                <h2 class="ts-tituloPrincipal"><?php echo $contrato['idContrato'] ?> -
-                    <?php echo $contrato['tituloContrato'] ?></h2>
-            </div>
-            <div class="col-3">
-                <!-- FILTROS -->
-            </div>
+                        </div>
 
-            <div class="col-2 text-end">
-                <a href="javascript:history.back()" role="button" class="btn btn-primary">
-                    <i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
-            </div>
-        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div id="ts-tabs">
+                            <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
+                            <div class="tab" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
+                            <div class="tab" id="tab-notascontrato">Notas</div>
+                        </div>
+                        <div id="ts-tabs">
+                            <div class="line"></div>
+                            <div class="tabContent">
+                                <?php include_once 'alterar.php'; ?>
+                            </div>
+                            <div class="tabContent">
+                                <?php include_once 'demandascontrato.php'; ?>
+                            </div>
+                            <div class="tabContent">
+                                <?php include_once 'notascontrato.php'; ?>
+                            </div>
 
-        <div id="ts-tabs">
-            <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
-            <div class="tab" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
-            <div class="tab" id="tab-notascontrato">Notas</div>
+                        </div>
+                    </div>
 
-            <div class="line"></div>
-            <div class="tabContent">
-                <?php include_once 'alterar.php'; ?>
             </div>
-            <div class="tabContent">
-                <?php include_once 'demandascontrato.php'; ?>
-            </div>
-            <div class="tabContent">
-                <?php include_once 'notascontrato.php'; ?>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Lucas 25102023 id643 include de modalDemanda_inserir -->
-    <!--------- MODAL DEMANDA INSERIR --------->
-    <?php include_once '../demandas/modalDemanda_inserir.php' ?>
-    
-     <!--------- MODAL INSERIR NOTAS --------->
-     <div class="modal" id="inserirModalNotas" tabindex="-1" role="dialog" aria-labelledby="inserirModalNotasLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Inserir Nota</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="col-12 col-md-3 border-start" style="height: 100vh;box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);">
+                <div class="text-end pt-2">
+                    <a href="javascript:history.back()" role="button" class="btn btn-primary">
+                        <i class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
                 </div>
-                <div class="modal-body">
-                    <form method="post" id="inserirFormNotaContrato">
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label class="form-label ts-label">Cliente</label>
-                                <input type="text" class="form-control ts-input" name="nomeCliente" value="<?php echo $contrato['nomeCliente'] ?>" disabled>
-                                <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $contrato['idCliente'] ?>" readonly>
-                                <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
-                            </div>
-                            <div class="col-md-3 ">
-                                <label class='form-label ts-label'>dataFaturamento</label>
-                                <input type="date" class="form-control ts-input" name="dataFaturamento" autocomplete="off" required>
-                            </div>
-                            <div class="col-md-3 ">
-                                <label class='form-label ts-label'>dataEmissao</label>
-                                <input type="date" class="form-control ts-input" name="dataEmissao" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6 ">
-                                <label class='form-label ts-label'>serieNota</label>
-                                <input type="text" class="form-control ts-input" name="serieNota" autocomplete="off">
-                            </div>
-                            <div class="col-md-6 ">
-                                <label class='form-label ts-label'>numeroNota</label>
-                                <input type="text" class="form-control ts-input" name="numeroNota" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-3 ">
-                                <label class='form-label ts-label'>serieRPS</label>
-                                <input type="text" class="form-control ts-input" name="serieRPS" autocomplete="off">
-                            </div>
-                            <div class="col-md-3 ">
-                                <label class='form-label ts-label'>numeroRPS</label>
-                                <input type="text" class="form-control ts-input" name="numeroRPS" autocomplete="off">
-                            </div>
-                            <div class="col-md-3 ">
-                                <label class='form-label ts-label'>valorNota</label>
-                                <input type="text" class="form-control ts-input" name="valorNota" autocomplete="off" value="<?php echo $contrato['valorContrato'] ?>" required style="margin-top: -5px;">
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label ts-label">statusNota</label>
-                                <select class="form-select ts-input" name="statusNota" autocomplete="off" required>
-                                    <option value="0">Aberto</option>
-                                    <option value="1">Emitida</option>
-                                    <option value="2">Recebida</option>
-                                    <option value="3">Cancelada</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12">
-                                <label class='form-label ts-label'>condicao</label>
-                                <input type="text" class="form-control ts-input" name="condicao" autocomplete="off">
-                            </div>
-                        </div>
-                </div><!--modal body-->
-                <div class="modal-footer">
-                    <div class="text-end mt-4">
-                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                <br>
+                <br>
+                <div class="row mt-4">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Status</label>
+                    </div>
+                    <div class="col-md-7">
+                        <select class="form-select ts-input" name="idContratoStatus" autocomplete="off">
+                            <option value="<?php echo $contrato['idContratoStatus'] ?>"><?php echo $contrato['nomeContratoStatus'] ?></option>
+                            <?php
+                            foreach ($contratoStatusTodos as $contratoStatus) {
+                            ?>
+                                <option value="<?php echo $contratoStatus['idContratoStatus'] ?>"><?php echo $contratoStatus['nomeContratoStatus'] ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                 </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-    <!--------- MODAL ALTERAR NOTAS --------->
-    <div class="modal" id="alterarModalNotas" tabindex="-1" role="dialog" aria-labelledby="alterarModalNotasLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Alterar Nota</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" id="alterarFormNotaContrato">
-                        <div class="row mt-3">
-                            <div class="col-md-2">
-                                <label class="form-label ts-label">idNotaServico</label>
-                                <input type="text" class="form-control ts-input" id="idNotaServico" name="idNotaServico" readonly>
-                                <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label ts-label">Cliente</label>
-                                <input type="text" class="form-control ts-input" name="nomeCliente" id="nomeCliente" disabled>
-                                <input type="hidden" class="form-control ts-input" name="idCliente" id="idCliente" readonly>
-                            </div>
-                            <div class="col-md-3">
-                                <label class='form-label ts-label'>dataFaturamento</label>
-                                <input type="date" class="form-control ts-input" name="dataFaturamento" id="dataFaturamento" required>
-                            </div>
-                            <div class="col-md-3">
-                                <label class='form-label ts-label'>dataEmissao</label>
-                                <input type="date" class="form-control ts-input" name="dataEmissao" id="dataEmissao">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label class='form-label ts-label'>serieNota</label>
-                                <input type="text" class="form-control ts-input" name="serieNota" id="serieNota">
-                            </div>
-                            <div class="col-md-6">
-                                <label class='form-label ts-label'>numeroNota</label>
-                                <input type="text" class="form-control ts-input" name="numeroNota" id="numeroNotabd">
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-3">
-                                <label class='form-label ts-label'>serieRPS</label>
-                                <input type="text" class="form-control ts-input" name="serieRPS" id="serieRPS">
-                            </div>
-                            <div class="col-md-3">
-                                <label class='form-label ts-label'>numeroRPS</label>
-                                <input type="text" class="form-control ts-input" name="numeroRPS" id="numeroRPS">
-                            </div>
-                            <div class="col-md-3">
-                                <label class='form-label ts-label'>valorNota</label>
-                                <input type="text" class="form-control ts-input" name="valorNota" id="valorNota" required>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label class='form-label ts-label'>statusNota</label>
-                                <input type="text" class="form-control ts-input" name="statusNota" id="statusNota" required>
-                            </div>
-
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12">
-                                <label class='form-label ts-label'>condicao</label>
-                                <input type="text" class="form-control ts-input" name="condicao" id="condicao">
-                            </div>
-                        </div>
-                </div><!--modal body-->
-                <div class="modal-footer">
-                    <div class="text-end mt-4">
-                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Abertura</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control ts-input border-0" name="dataAbertura" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataAbertura'])) ?>" disabled>
                     </div>
                 </div>
-                </form>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Previsao</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="date" class="form-control ts-input border-0" name="dataPrevisao" value="<?php echo $contrato['dataPrevisao'] ?>">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Entrega</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="date" class="form-control ts-input border-0" name="dataEntrega" value="<?php echo $contrato['dataEntrega'] ?>">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Fechamento</label>
+                    </div>
+                    <div class="col-md-7">
+                        <?php if ($contrato['dataFechamento'] == null) { ?>
+                            <input type="text" class="form-control ts-input border-0" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] = '00/00/0000 00:00' ?>" disabled>
+                        <?php } else { ?>
+                            <input type="text" class="form-control ts-input border-0" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataFechamento'])) ?>" disabled>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Horas</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="number" class="form-control ts-input border-0" name="horas" value="<?php echo $contrato['horas'] ?>">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Valor Hora</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="number" class="form-control ts-input border-0" name="valorHora" value="<?php echo $contrato['valorHora'] ?>">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Valor Contrato</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="number" class="form-control ts-input border-0" name="valorContrato" value="<?php echo $contrato['valorContrato'] ?>">
+                    </div>
+                </div>
+
+                <hr class="mt-4">
+
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-success">Atualizar</button>
+                </div>
             </div>
+            </form>
+            <!-- /div> -->
         </div>
+
     </div>
+
 
     <!-- LOCAL PARA COLOCAR OS JS -->
 

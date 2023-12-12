@@ -10,7 +10,7 @@
                 </div>
             </div>
           
-            <div class="quill-textarea ts-displayDisable" style="height: 30vh!important;"><?php echo $demanda['descricao'] ?></div>
+            <div class="quill-textarea ts-displayDisable" style="height: auto!important;"><?php echo $demanda['descricao'] ?></div>
             <textarea style="display: none" id="quill-descricao" name="descricao"><?php echo $demanda['descricao'] ?></textarea>
             <input type="hidden" class="form-control ts-input" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
         </div>

@@ -12,7 +12,6 @@ if (isset($LOG_CAMINHO)) {
       $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
     }
   }
-
 }
 if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL == 1) {
@@ -21,7 +20,7 @@ if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
   }
-} 
+}
 //LOG
 
 $idEmpresa = null;
@@ -37,9 +36,11 @@ FROM (SELECT tarefa.*, demanda.idContrato, TIMEDIFF(tarefa.horaFinalReal, tarefa
 FROM tarefa 
 LEFT JOIN demanda ON tarefa.idDemanda = demanda.idDemanda ";
 
-
+if (isset($jsonEntrada["idDemanda"])) {
+  $sql = $sql . " where demanda.idDemanda = " . $jsonEntrada["idDemanda"] . ") AS subquery";
+}
 if (isset($jsonEntrada["idContrato"])) {
-$sql = $sql . " where demanda.idContrato = " . $jsonEntrada["idContrato"] . ") AS subquery";
+  $sql = $sql . " where demanda.idContrato = " . $jsonEntrada["idContrato"] . ") AS subquery";
 }
 
 //echo "-SQL->".json_encode($sql)."\n";
@@ -64,12 +65,13 @@ try {
     array_push($tarefa, $row);
     $rows = $rows + 1;
   }
+  if (isset($jsonEntrada["idDemanda"]) && $rows == 1) {
+    $tarefa = $tarefa[0];
+  }
   if (isset($jsonEntrada["idContrato"]) && $rows == 1) {
     $tarefa = $tarefa[0];
   }
   $jsonSaida = $tarefa;
-
-
 } catch (Exception $e) {
   $jsonSaida = array(
     "status" => 500,
@@ -78,7 +80,6 @@ try {
   if ($LOG_NIVEL >= 1) {
     fwrite($arquivo, $identificacao . "-ERRO->" . $e->getMessage() . "\n");
   }
-
 } finally {
   // ACAO EM CASO DE ERRO (CATCH), que mesmo assim precise
 }
@@ -94,4 +95,3 @@ if (isset($LOG_NIVEL)) {
   }
 }
 //LOG
-?>

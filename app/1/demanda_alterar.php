@@ -39,7 +39,6 @@ if (isset($jsonEntrada['idDemanda'])) {
     $tituloDemanda = "'" . $jsonEntrada['tituloDemanda'] . "'";
     // lucas 06122023 id715  - removido descricao
     $prioridade = $jsonEntrada['prioridade'];
-    $idContrato = isset($jsonEntrada['idContrato'])  && $jsonEntrada['idContrato'] !== "" ?  $jsonEntrada['idContrato']    : "null";
     //lucas 28112023 id706 - removido tipoOcorrencia 
     $idServico = $jsonEntrada['idServico'];
     $horasPrevisao  = isset($jsonEntrada['horasPrevisao'])  && $jsonEntrada['horasPrevisao'] !== "" && $jsonEntrada['horasPrevisao'] !== "null" ? "'". $jsonEntrada['horasPrevisao']."'"  : "null";
@@ -52,6 +51,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
     $buscar_consulta = mysqli_query($conexao, $sql_consulta);
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+    $idContrato = isset($row_consulta["idContrato"])  && $row_consulta["idContrato"] !== "" ?  $row_consulta["idContrato"]    : "null";
     $tempoCobradoAutal = $row_consulta["tempoCobrado"];
     $tempoCobradoAutal = "'". $tempoCobradoAutal . "'";
 

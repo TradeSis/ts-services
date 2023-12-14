@@ -178,6 +178,7 @@ if (isset($jsonEntrada['idTarefa'])) {
     if ($jsonEntrada['acao'] == "entregue") {
 
         $sql = "UPDATE tarefa SET horaFinalReal = $horaFinalReal  WHERE idTarefa = $idTarefa";
+        $atualizar = mysqli_query($conexao, $sql);
 
         if ($idDemanda !== "null") {
             $idTipoStatus = TIPOSTATUS_REALIZADO;
@@ -188,7 +189,18 @@ if (isset($jsonEntrada['idTarefa'])) {
             $posicao = $row_consulta["mudaPosicaoPara"];
             $statusDemanda = $row_consulta["mudaStatusPara"];
 
-            $sql_update_demanda = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), dataFechamento = CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+            $sql_update_demanda = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), dataFechamento = CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda ";
+            if ($tempoCobradoDigitado == "0") {
+                $totalHorasReal = buscaHorasRealizado($conexao, $idDemanda, $tempoCobradoDigitado);
+                $tempoCobrado = $totalHorasReal;
+                if (strtotime($totalHorasReal) < strtotime('00:30:00')) {
+                    $tempoCobrado = '00:30:00';
+                }
+                
+                $tempoCobrado = "'" . $tempoCobrado . "'";
+                $sql_update_demanda = $sql_update_demanda . ",tempoCobrado = $tempoCobrado ";
+            }
+            $sql_update_demanda = $sql_update_demanda . " WHERE idDemanda = $idDemanda";
         }
         
     }

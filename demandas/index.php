@@ -18,6 +18,7 @@ if (isset($_GET["tipo"])) {
 } else {
   $contratoTipo = buscaContratoTipos('contratos');
 }
+
 //Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
@@ -26,7 +27,7 @@ $atendentes = buscaAtendente();
 $usuarios = buscaUsuarios();
 $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
-$cards = buscaCardsDemanda();
+$cards = buscaCardsDemanda($contratoTipo['idContratoTipo']);
 $contratos = buscaContratosAbertos();
 $servicos = buscaServicos();
 

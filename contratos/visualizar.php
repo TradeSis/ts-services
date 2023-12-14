@@ -32,6 +32,7 @@ $servicos = buscaServicos();
 $atendentes = buscaAtendente();
 // Lucas 25102023 id643 ajustado variavel $tipoocorrencias para ficar igual de demanda
 $tipoocorrencias = buscaTipoOcorrencia();
+
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -41,19 +42,17 @@ $tipoocorrencias = buscaTipoOcorrencia();
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
 </head>
 
-<body>
+<body style="background: #F1F2F4;">
     <div class="container-fluid p-0 m-0">
+
         <div class="row p-0 m-0">
-            <!-- <div class="d-flex justify-content-between"> -->
             <div class="col-12 col-md-9 ">
                 <form action="../database/contratos.php?operacao=alterar" method="post">
                     <div class="row mt-1">
                         <div class="col-md-9 d-flex align-items-center">
-                            <!--     <h2 class="ts-tituloPrincipal"><?php echo $contrato['idContrato'] ?> -
-                                <?php echo $contrato['tituloContrato'] ?></h2> -->
                             <span class="ts-tituloPrincipalModal"><?php echo $contrato['idContrato'] ?></span>
                             <input type="hidden" class="form-control" name="idContrato" value="<?php echo $contrato['idContrato'] ?>">
-                            <input type="text" class="form-control ts-tituloPrincipalModal border-0" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>" style="z-index: 1;">
+                            <input type="text" class="form-control ts-inputSemBorda ts-tituloPrincipalModal border-0" name="tituloContrato" value="<?php echo $contrato['tituloContrato'] ?>" style="z-index: 1;">
                             <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contrato['idContratoTipo'] ?>">
                         </div>
                         <div class="col-md-3 d-flex align-items-center">
@@ -65,19 +64,19 @@ $tipoocorrencias = buscaTipoOcorrencia();
                     </div>
                     <div class="row mt-3">
                         <div id="ts-tabs">
-                            <div class="tab whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
-                            <div class="tab" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
-                            <div class="tab" id="tab-notascontrato">Notas</div>
+                            <div class="tab whiteborder aba1" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
+                            <div class="tab aba2" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
+                            <div class="tab aba3" id="tab-notascontrato">Notas</div>
                         </div>
                         <div id="ts-tabs">
                             <div class="line"></div>
-                            <div class="tabContent">
+                            <div class="tabContent aba1_conteudo">
                                 <?php include_once 'alterar.php'; ?>
                             </div>
-                            <div class="tabContent">
+                            <div class="tabContent aba2_conteudo" style="display: none;">
                                 <?php include_once 'demandascontrato.php'; ?>
                             </div>
-                            <div class="tabContent">
+                            <div class="tabContent aba3_conteudo" style="display: none;">
                                 <?php include_once 'notascontrato.php'; ?>
                             </div>
 
@@ -97,7 +96,7 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <label class="form-label ts-label">Status</label>
                     </div>
                     <div class="col-md-7">
-                        <select class="form-select ts-input" name="idContratoStatus" autocomplete="off">
+                        <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idContratoStatus" autocomplete="off">
                             <option value="<?php echo $contrato['idContratoStatus'] ?>"><?php echo $contrato['nomeContratoStatus'] ?></option>
                             <?php
                             foreach ($contratoStatusTodos as $contratoStatus) {
@@ -112,7 +111,7 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <label class="form-label ts-label">Abertura</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="text" class="form-control ts-input border-0" name="dataAbertura" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataAbertura'])) ?>" disabled>
+                        <input type="text" class="form-control ts-inputSemBorda" name="dataAbertura" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataAbertura'])) ?>" disabled>
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -120,7 +119,7 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <label class="form-label ts-label">Previsao</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="date" class="form-control ts-input border-0" name="dataPrevisao" value="<?php echo $contrato['dataPrevisao'] ?>">
+                        <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisao" value="<?php echo $contrato['dataPrevisao'] ?>">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -128,7 +127,7 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <label class="form-label ts-label">Entrega</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="date" class="form-control ts-input border-0" name="dataEntrega" value="<?php echo $contrato['dataEntrega'] ?>">
+                        <input type="date" class="form-control ts-inputSemBorda" name="dataEntrega" value="<?php echo $contrato['dataEntrega'] ?>">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -137,9 +136,9 @@ $tipoocorrencias = buscaTipoOcorrencia();
                     </div>
                     <div class="col-md-7">
                         <?php if ($contrato['dataFechamento'] == null) { ?>
-                            <input type="text" class="form-control ts-input border-0" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] = '00/00/0000 00:00' ?>" disabled>
+                            <input type="text" class="form-control ts-inputSemBorda" name="dataFechamento" value="<?php echo $contrato['dataFechamento'] = '00/00/0000 00:00' ?>" disabled>
                         <?php } else { ?>
-                            <input type="text" class="form-control ts-input border-0" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataFechamento'])) ?>" disabled>
+                            <input type="text" class="form-control ts-inputSemBorda" name="dataFechamento" value="<?php echo date('d/m/Y H:i', strtotime($contrato['dataFechamento'])) ?>" disabled>
                         <?php } ?>
                     </div>
                 </div>
@@ -148,7 +147,7 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <label class="form-label ts-label">Horas</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="number" class="form-control ts-input border-0" name="horas" value="<?php echo $contrato['horas'] ?>">
+                        <input type="number" class="form-control ts-inputSemBorda" name="horas" value="<?php echo $contrato['horas'] ?>">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -156,7 +155,7 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <label class="form-label ts-label">Valor Hora</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="number" class="form-control ts-input border-0" name="valorHora" value="<?php echo $contrato['valorHora'] ?>">
+                        <input type="number" class="form-control ts-inputSemBorda" name="valorHora" value="<?php echo $contrato['valorHora'] ?>">
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -164,7 +163,24 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <label class="form-label ts-label">Valor Contrato</label>
                     </div>
                     <div class="col-md-7">
-                        <input type="number" class="form-control ts-input border-0" name="valorContrato" value="<?php echo $contrato['valorContrato'] ?>">
+                        <input type="number" class="form-control ts-inputSemBorda" name="valorContrato" value="<?php echo $contrato['valorContrato'] ?>">
+                    </div>
+                </div>
+                <hr>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Total Cobrado:</label>
+                    </div>
+                    <div class="col-md-7 ps-4">
+                        <?php echo $totalHorasCobrado ?>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-5">
+                        <label class="form-label ts-label">Total Real:</label>
+                    </div>
+                    <div class="col-md-7 ps-4">
+                        <?php echo $totalHorasReal ?>
                     </div>
                 </div>
 
@@ -175,7 +191,6 @@ $tipoocorrencias = buscaTipoOcorrencia();
                 </div>
             </div>
             </form>
-            <!-- /div> -->
         </div>
 
     </div>
@@ -232,6 +247,24 @@ $tipoocorrencias = buscaTipoOcorrencia();
                 tabContent[b].classList.add('show');
             }
         }
+
+        $('.aba1').click(function() {
+            $('.aba1_conteudo').show();
+            $('.aba2_conteudo').hide();
+            $('.aba3_conteudo').hide();
+        });
+
+        $('.aba2').click(function() {
+            $('.aba2_conteudo').show();
+            $('.aba1_conteudo').hide();
+            $('.aba3_conteudo').hide();
+        });
+
+        $('.aba3').click(function() {
+            $('.aba3_conteudo').show();
+            $('.aba1_conteudo').hide();
+            $('.aba2_conteudo').hide();
+        });
     </script>
 
     <script>

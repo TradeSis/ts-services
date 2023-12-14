@@ -27,7 +27,7 @@ $atendentes = buscaAtendente();
 $usuarios = buscaUsuarios();
 $tiposstatus = buscaTipoStatus();
 $tipoocorrencias = buscaTipoOcorrencia();
-$cards = buscaCardsDemanda($contratoTipo['idContratoTipo']);
+$cards = buscaCardsDemanda();
 $contratos = buscaContratosAbertos();
 $servicos = buscaServicos();
 
@@ -382,6 +382,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           var linha = "";
           for (var $i = 0; $i < json.length; $i++) {
             var object = json[$i];
+                    
             var dataAbertura = new Date(object.dataAbertura);
             var dataAberturaFormatada = dataAbertura.toLocaleDateString("pt-BR");
            

@@ -64,7 +64,7 @@ $tipoocorrencias = buscaTipoOcorrencia();
                     </div>
                     <div class="row mt-3">
                         <div id="ts-tabs">
-                            <div class="tab whiteborder aba1" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
+                            <div class="tab aba1 whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
                             <div class="tab aba2" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
                             <div class="tab aba3" id="tab-notascontrato">Notas</div>
                         </div>
@@ -193,6 +193,10 @@ $tipoocorrencias = buscaTipoOcorrencia();
             </form>
         </div>
 
+        <!-- Lucas 25102023 id643 include de modalDemanda_inserir -->
+        <!--------- MODAL DEMANDA INSERIR --------->
+        <?php include_once '../demandas/modalDemanda_inserir.php' ?>
+
     </div>
 
 
@@ -250,18 +254,27 @@ $tipoocorrencias = buscaTipoOcorrencia();
 
         $('.aba1').click(function() {
             $('.aba1_conteudo').show();
+            $('.aba1').addClass('whiteborder');
+            $('.aba2').removeClass('whiteborder');
+            $('.aba3').removeClass('whiteborder');
             $('.aba2_conteudo').hide();
             $('.aba3_conteudo').hide();
         });
 
         $('.aba2').click(function() {
             $('.aba2_conteudo').show();
+            $('.aba2').addClass('whiteborder');
+            $('.aba1').removeClass('whiteborder');
+            $('.aba3').removeClass('whiteborder');
             $('.aba1_conteudo').hide();
             $('.aba3_conteudo').hide();
         });
 
         $('.aba3').click(function() {
             $('.aba3_conteudo').show();
+            $('.aba3').addClass('whiteborder');
+            $('.aba1').removeClass('whiteborder');
+            $('.aba2').removeClass('whiteborder');
             $('.aba1_conteudo').hide();
             $('.aba2_conteudo').hide();
         });

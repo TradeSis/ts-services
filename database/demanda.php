@@ -63,7 +63,7 @@ function buscaComentarios($idDemanda = null, $idComentario = null)
 	return $comentario;
 }
 
-function buscaCardsDemanda($idContratoTipo = null)
+function buscaCardsDemanda()
 {
 	$cards = array();
 
@@ -74,8 +74,7 @@ function buscaCardsDemanda($idContratoTipo = null)
 	}
 	
 	$apiEntrada = array(
-		'idEmpresa' => $idEmpresa,
-		'idContratoTipo' => $idContratoTipo
+		'idEmpresa' => $idEmpresa
 	);
 	$cards = chamaAPI(null, '/services/demandas/totais', json_encode($apiEntrada), 'GET');
 	return $cards;

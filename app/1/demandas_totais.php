@@ -42,10 +42,6 @@ $sql = "SELECT
         COUNT(demanda.idDemanda) AS totalDemandas
         FROM demanda";
 
-$where = " where ";
-if (isset($jsonEntrada["idContratoTipo"])) {
-  $sql = $sql . $where . " demanda.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
-}
 //echo "-SQL->".json_encode($sql)."\n";
 $rows = 0;
 

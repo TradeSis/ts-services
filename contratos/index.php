@@ -22,9 +22,6 @@
 // Lucas 31012023 20:53
 
 
-//
-//
-
 include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/contratos.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');
@@ -36,7 +33,8 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
-$cards = buscaCards("");
+$cards = buscaCards("", $urlContratoTipo);
+
 
 $idCliente = null;
 $idContratoStatus = null;

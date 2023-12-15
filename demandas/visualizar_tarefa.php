@@ -36,7 +36,15 @@ include_once '../header.php';
 
         <div class="table mt-2 ts-divTabela">
             <table class="table table-hover table-sm align-middle">
-            
+                <thead class="ts-headertabelafixo">
+                    <tr>
+                        <th class="col-5">Título</th>
+                        <th class="col-1">Atendente</th>
+                        <th class="col-1">Ocorrência</th>
+                        <th class="col-3">Datas</th>
+                        <th class="col-1" colspan="2"></th>
+                    </tr>
+                </thead>
                 <tbody class="fonteCorpo">
                     <?php
                     //Gabriel 1102023 ID 596 removido table duplicado desnecessário
@@ -44,13 +52,13 @@ include_once '../header.php';
                     foreach ($tarefas as $tarefa) { 
                     ?>
                         <tr class="mt-2" style="box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);">
-                            <td class='col-5 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['tituloTarefa'] ?>
                             </td>
-                            <td class='col-1 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['nomeUsuario'] ?>
                             </td>
-                            <td class='col-2 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
                                 <?php echo $tarefa['nomeTipoOcorrencia'] ?>
                             </td>
                             <?php
@@ -99,7 +107,7 @@ include_once '../header.php';
                                 $horasReal = "00:00";
                             } ?>
                             
-                            <td class='col-4 ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
+                            <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">   
                                 <?php 
                                 if($tarefa['Previsto'] !== null){  
                                     echo '<span class="ts-datas ts-previsto">Prev: ' . $Previsto . '</span>'; 

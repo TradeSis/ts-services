@@ -58,7 +58,7 @@ function buscaContratosAbertos($idCliente=null)
 }
 
 
-function buscaCards($where)
+function buscaCards($where, $idContratoTipo = null)
 {
 
 	$cards = array();
@@ -68,6 +68,7 @@ function buscaCards($where)
 	}
 	$apiEntrada = array(
 		'idEmpresa' => $idEmpresa,
+		'idContratoTipo' => $idContratoTipo
 	);
 	$cards = chamaAPI(null, '/services/contrato/totais', json_encode($apiEntrada), 'GET');
 

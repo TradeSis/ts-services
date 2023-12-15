@@ -36,14 +36,18 @@ SELECT  contrato.idContratoStatus,
         count(*) as 'qtdContratos' , 
         sum(contrato.valorContrato) as 'valorContratos'
 FROM contrato , contratostatus
-where 
-    contrato.idContratoStatus = contratostatus.idContratoStatus
-group BY 
+where  
+    contrato.idContratoStatus = contratostatus.idContratoStatus ";
+
+    if (isset($jsonEntrada["idContratoTipo"])) {
+      $sql = $sql . " and contrato.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
+    }
+
+$sql = $sql ."group BY 
     contrato.idContratoStatus, contratostatus.nomeContratoStatus
 ";
-/*if (isset($jsonEntrada["idContrato"])) {
-  $sql = $sql . " where contrato.idContrato = " . $jsonEntrada["idContrato"];
-}*/
+
+
 
 //echo "-SQL->".$sql."\n";
 

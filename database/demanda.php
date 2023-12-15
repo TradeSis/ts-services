@@ -74,7 +74,7 @@ function buscaCardsDemanda()
 	}
 	
 	$apiEntrada = array(
-		'idEmpresa' => $idEmpresa,
+		'idEmpresa' => $idEmpresa
 	);
 	$cards = chamaAPI(null, '/services/demandas/totais', json_encode($apiEntrada), 'GET');
 	return $cards;

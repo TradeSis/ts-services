@@ -196,7 +196,7 @@ $statusEncerrar = array(
                     <div class="container">
                         <?php if (isset($demanda['tituloContrato'])) { ?>
                             <div class="row pb-1">
-                                <span class="ts-subTitulo"><strong><?php echo $demanda['tituloContrato'] ?>: </strong> <?php echo $demanda['tituloContrato'] ?></span>
+                                <span class="ts-subTitulo"><strong><?php echo $demanda['nomeContrato'] ?>: </strong> <?php echo $demanda['tituloContrato'] ?></span>
                             </div>
                         <?php } ?>
                         <div class="row g-3">

@@ -18,6 +18,7 @@ if (isset($_GET["tipo"])) {
 } else {
   $contratoTipo = buscaContratoTipos('contratos');
 }
+
 //Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
@@ -381,6 +382,7 @@ if (isset($_SESSION['filtro_demanda'])) {
           var linha = "";
           for (var $i = 0; $i < json.length; $i++) {
             var object = json[$i];
+                    
             var dataAbertura = new Date(object.dataAbertura);
             var dataAberturaFormatada = dataAbertura.toLocaleDateString("pt-BR");
            

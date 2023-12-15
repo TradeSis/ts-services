@@ -1,39 +1,5 @@
-<?php
-// Lucas 30112023 id706 Melhorias Demandas 2
-// Lucas 25102023 id643 revisao geral
-// Lucas 13102023 novo padrao
-include_once '../header.php';
-include_once '../database/contratos.php';
-include_once '../database/demanda.php';
 
-$idContrato = $_GET['idContrato'];
-$demandas = buscaDemandas(null, null, $idContrato);
-$horasCobrado = buscaTotalHorasCobrada($idContrato);
-$horasReal = buscaTotalHorasReal($idContrato, null);
-//Remover os zeros de segundo de totalHorasCobrado
-if($horasCobrado['totalHorasCobrado'] !== null){
-	$totalHorasCobrado = date('H:i', strtotime($horasCobrado['totalHorasCobrado']));
-}else{
-	$totalHorasCobrado = "00:00";
-}
-//Remover os zeros de segundo de totalHorasReal
-if($horasReal['totalHorasReal'] !== null){
-	$totalHorasReal = date('H:i', strtotime($horasReal['totalHorasReal']));
-}else{
-	$totalHorasReal = "00:00";
-}
 
-?>
-<!doctype html>
-<html lang="pt-BR">
-
-<head>
-
-	<?php include_once ROOT . "/vendor/head_css.php"; ?>
-	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-</head>
-
-<body>
 	<div class="container-fluid m-0 p-0">
 
 		<div class="row">
@@ -126,21 +92,6 @@ if($horasReal['totalHorasReal'] !== null){
 
 	</div>
 
-	<!-- LOCAL PARA COLOCAR OS JS -->
 
-	<?php include_once ROOT . "/vendor/footer_js.php"; ?>
-    <!-- QUILL editor -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-	<script>
-		
-		 $(document).on('click', '.ts-click', function() {
-        	window.location.href='../demandas/visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
-    	});
+	
 
-	</script>
-
-	<!-- LOCAL PARA COLOCAR OS JS -FIM -->
-
-</body>
-
-</html>

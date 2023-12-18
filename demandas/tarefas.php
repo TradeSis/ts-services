@@ -490,7 +490,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
             }else{
               if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
               //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada 
-              if (object.idDemanda == null) {
+              if ((object.idDemanda == null) && (vdataReal == today)) {
                 linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-demanda='" + object.idDemanda + 
                 "'><i class='bi bi-stop-circle'></i></button>"
               } else {

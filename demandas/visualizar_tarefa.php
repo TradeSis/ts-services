@@ -3,6 +3,7 @@
 // Lucas 19102023 novo padrao
 //Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 include_once '../header.php';
+
 ?>
 
 <body>
@@ -50,6 +51,7 @@ include_once '../header.php';
                     //Gabriel 1102023 ID 596 removido table duplicado desnecessário
                     //Lucas 09112023 ID 965 Alterado TD
                     foreach ($tarefas as $tarefa) { 
+                        $dataAtual = date("d/m/Y");
                     ?>
                         <tr class="mt-2" style="box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);">
                             <td class='ts-click' data-bs-toggle="modal" data-bs-target="#alterarmodal" data-idTarefa="<?php echo $tarefa['idTarefa'] ?>">
@@ -133,7 +135,7 @@ include_once '../header.php';
                         
                             <!-- Lucas 09112023 ID 965 Alterado modelo de botões -->
                             <td>
-                                <?php if ($horaInicioReal != "00:00" && $horaFinalReal == "00:00") { ?>
+                                <?php if (($horaInicioReal != "00:00" && $horaFinalReal == "00:00") && ($dataAtual == $dataReal)) { ?>
                                     <button type="button" class="stopButton btn btn-danger btn-sm" value="Stop" data-bs-toggle="modal" data-bs-target="#stopmodal" 
                                         data-id="<?php echo $tarefa['idTarefa'] ?>"
                                         data-demanda="<?php echo $tarefa['idDemanda'] ?>">
@@ -145,7 +147,8 @@ include_once '../header.php';
                                         data-demanda="<?php echo $tarefa['idDemanda'] ?>">
                                     <i class="bi bi-play-circle"></i></button>
                                 <?php } ?>
-                                <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
+                                <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00") || 
+                                ($horaInicioReal != "00:00" && $horaFinalReal == "00:00" && $dataAtual != $dataReal)) { ?>
                                     <button type="button" class="novoStartButton btn btn-success btn-sm" value="Start" 
                                         data-id="<?php echo $tarefa['idTarefa'] ?>" 
                                         data-titulo="<?php echo $tarefa['tituloTarefa'] ?>" 

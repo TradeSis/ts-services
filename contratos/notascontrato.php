@@ -1,21 +1,4 @@
-<?php
-// Lucas 13102023 novo padrao
-include_once(__DIR__ . '/../header.php');
-$idContrato = $contrato['idContrato'];
-?>
-<!doctype html>
-<html lang="pt-BR">
-
-<head>
-
-    <?php include_once ROOT . "/vendor/head_css.php"; ?>
-
-</head>
-
-
-<body>
-
-    <div class="container-fluid">
+  <div class="container-fluid">
 
         <div class="row">
             <!-- MENSAGENS/ALERTAS -->

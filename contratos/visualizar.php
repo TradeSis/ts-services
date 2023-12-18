@@ -4,7 +4,7 @@
 include_once '../header.php';
 include_once '../database/contratos.php';
 include '../database/contratotipos.php';
-
+include_once '../database/demanda.php';
 $idContrato = $_GET['idContrato'];
 $contrato = buscaContratos($idContrato, null);
 $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
@@ -16,9 +16,8 @@ include_once '../database/contratos.php';
 include_once(ROOT . '/cadastros/database/servicos.php');
 include_once(ROOT . '/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
-
-/* $urlContratoTipo = $_GET["tipo"];
-$contratoTipo = buscaContratoTipos($urlContratoTipo); */
+include_once '../database/contratoStatus.php';
+include_once '../database/tarefas.php';
 
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
@@ -27,12 +26,27 @@ if (isset($_SESSION['idCliente'])) {
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $clientes = buscaClientes();
-//$contratos = buscaContratosAbertos();
 $servicos = buscaServicos();
 $atendentes = buscaAtendente();
 // Lucas 25102023 id643 ajustado variavel $tipoocorrencias para ficar igual de demanda
 $tipoocorrencias = buscaTipoOcorrencia();
+$contratoStatusTodos = buscaContratoStatus();
 
+$demandas = buscaDemandas(null, null, $idContrato);
+$horasCobrado = buscaTotalHorasCobrada($idContrato);
+$horasReal = buscaTotalHorasReal($idContrato, null);
+//Remover os zeros de segundo de totalHorasCobrado
+if ($horasCobrado['totalHorasCobrado'] !== null) {
+    $totalHorasCobrado = date('H:i', strtotime($horasCobrado['totalHorasCobrado']));
+} else {
+    $totalHorasCobrado = "00:00";
+}
+//Remover os zeros de segundo de totalHorasReal
+if ($horasReal['totalHorasReal'] !== null) {
+    $totalHorasRealizado = date('H:i', strtotime($horasReal['totalHorasReal']));
+} else {
+    $totalHorasRealizado = "00:00";
+}
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -40,9 +54,10 @@ $tipoocorrencias = buscaTipoOcorrencia();
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
-<body style="background: #F1F2F4;">
+<body class="ts-fundoVisualizar">
     <div class="container-fluid p-0 m-0">
 
         <div class="row p-0 m-0">
@@ -71,7 +86,13 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <div id="ts-tabs">
                             <div class="line"></div>
                             <div class="tabContent aba1_conteudo">
-                                <?php include_once 'alterar.php'; ?>
+                                <div class="container-fluid p-0 mt-3">
+                                    <div class="col">
+                                        <span class="tituloEditor">Descrição</span>
+                                    </div>
+                                    <div class="quill-contratoDescricao bg-white" style="height:300px!important"><?php echo $contrato['descricao'] ?></div>
+                                    <textarea style="display: none" id="quill-contratoDescricao" name="descricao"><?php echo $contrato['descricao'] ?></textarea>
+                                </div>
                             </div>
                             <div class="tabContent aba2_conteudo" style="display: none;">
                                 <?php include_once 'demandascontrato.php'; ?>
@@ -180,7 +201,7 @@ $tipoocorrencias = buscaTipoOcorrencia();
                         <label class="form-label ts-label">Total Real:</label>
                     </div>
                     <div class="col-md-7 ps-4">
-                        <?php echo $totalHorasReal ?>
+                        <?php echo $totalHorasRealizado ?>
                     </div>
                 </div>
 
@@ -203,132 +224,12 @@ $tipoocorrencias = buscaTipoOcorrencia();
     <!-- LOCAL PARA COLOCAR OS JS -->
 
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+    <!-- QUILL editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-    <script>
-        var tab;
-        var tabContent;
-
-        window.onload = function() {
-            tabContent = document.getElementsByClassName('tabContent');
-            tab = document.getElementsByClassName('tab');
-            hideTabsContent(1);
-
-            var urlParams = new URLSearchParams(window.location.search);
-            var id = urlParams.get('id');
-            if (id === 'demandacontrato') {
-                showTabsContent(1);
-            }
-            if (id === 'notascontrato') {
-                showTabsContent(2);
-            }
-        }
-
-        document.getElementById('ts-tabs').onclick = function(event) {
-            var target = event.target;
-            if (target.className == 'tab') {
-                for (var i = 0; i < tab.length; i++) {
-                    if (target == tab[i]) {
-                        showTabsContent(i);
-                        break;
-                    }
-                }
-            }
-        }
-
-        function hideTabsContent(a) {
-            for (var i = a; i < tabContent.length; i++) {
-                tabContent[i].classList.remove('show');
-                tabContent[i].classList.add("hide");
-                tab[i].classList.remove('whiteborder');
-            }
-        }
-
-        function showTabsContent(b) {
-            if (tabContent[b].classList.contains('hide')) {
-                hideTabsContent(0);
-                tab[b].classList.add('whiteborder');
-                tabContent[b].classList.remove('hide');
-                tabContent[b].classList.add('show');
-            }
-        }
-
-        $('.aba1').click(function() {
-            $('.aba1_conteudo').show();
-            $('.aba1').addClass('whiteborder');
-            $('.aba2').removeClass('whiteborder');
-            $('.aba3').removeClass('whiteborder');
-            $('.aba2_conteudo').hide();
-            $('.aba3_conteudo').hide();
-        });
-
-        $('.aba2').click(function() {
-            $('.aba2_conteudo').show();
-            $('.aba2').addClass('whiteborder');
-            $('.aba1').removeClass('whiteborder');
-            $('.aba3').removeClass('whiteborder');
-            $('.aba1_conteudo').hide();
-            $('.aba3_conteudo').hide();
-        });
-
-        $('.aba3').click(function() {
-            $('.aba3_conteudo').show();
-            $('.aba3').addClass('whiteborder');
-            $('.aba1').removeClass('whiteborder');
-            $('.aba2').removeClass('whiteborder');
-            $('.aba1_conteudo').hide();
-            $('.aba2_conteudo').hide();
-        });
-    </script>
-
-    <script>
-        var demandaContrato = new Quill('.quill-demandainserir', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    /*  [{
-                       'header': [1, 2, 3, 4, 5, 6, false]
-                     }], */
-                    ['link', 'image'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
-
-        demandaContrato.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-demandainserir').val(demandaContrato.container.firstChild.innerHTML);
-        });
-    </script>
-
+    <script src="contrato.js"></script>
     <!-- LOCAL PARA COLOCAR OS JS -FIM -->
-
+  
 </body>
 
 </html>

@@ -126,7 +126,6 @@
             <div class="modal-footer">
                 <a id="visualizarDemandaButton" class="btn btn-primary">Visualizar</a>
                 <button type="submit" id="stopButtonModal" class="btn btn-danger" data-toggle="modal"><i class="bi bi-stop-circle"></i> Stop</button>
-           
                 <button type="submit" id="startButtonModal" class="btn btn-success"><i class="bi bi-play-circle"></i> Start</button>
                 <button type="submit" id="realizadoButtonModal" class="btn btn-info"><i class="bi bi-check-circle"></i> Realizado</button>
                 <button type="submit" id="atualizarButtonModal" class="btn btn-warning"><i class='bi bi-pencil-square'></i> Atualizar</button>
@@ -222,6 +221,7 @@
                 vidContrato = data.idContrato;
                 quilldescricao.root.innerHTML = data.descricao;
 
+                //alert(data.tituloDemanda)
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
                     $("#visualizarDemandaButton").attr("href", visualizarDemandaUrl);
@@ -307,23 +307,6 @@
                     var tituloModal = $("#tituloDemandadeTarefas");
                     var text = vnomeDemanda + " :" + " " + vidDemanda + " - " + vtituloDemanda;
                     tituloModal.html(text);
-                }
-          
-                function dataAtual(){
-                    var data = new Date(),
-                        dia  = data.getDate().toString(),
-                        diaF = (dia.length == 1) ? '0'+dia : dia,
-                        mes  = (data.getMonth()+1).toString(), 
-                        mesF = (mes.length == 1) ? '0'+mes : mes,
-                        anoF = data.getFullYear();
-                    return anoF+"-"+mesF+"-"+diaF;
-                }
-                dataAtual_alterar = dataAtual();  
-    
-                if (data.dataReal == dataAtual_alterar) {
-                    $('#stopButtonModal').show();
-                }else{
-                    $('#stopButtonModal').hide();
                 }
                 
             }

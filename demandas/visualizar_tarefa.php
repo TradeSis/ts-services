@@ -147,7 +147,8 @@ include_once '../header.php';
                                         data-demanda="<?php echo $tarefa['idDemanda'] ?>">
                                     <i class="bi bi-play-circle"></i></button>
                                 <?php } ?>
-                                <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00")) { ?>
+                                <?php if (($horaInicioReal != "00:00" && $horaFinalReal != "00:00") || 
+                                ($horaInicioReal != "00:00" && $horaFinalReal == "00:00" && $dataAtual != $dataReal)) { ?>
                                     <button type="button" class="novoStartButton btn btn-success btn-sm" value="Start" 
                                         data-id="<?php echo $tarefa['idTarefa'] ?>" 
                                         data-titulo="<?php echo $tarefa['tituloTarefa'] ?>" 

@@ -31,11 +31,23 @@ $idEmpresa = null;
 $conexao = conectaMysql($idEmpresa);
 $demanda = array();
 
+$idTipoStatus = $jsonEntrada['idTipoStatus'];
+$idUsuario = $jsonEntrada['idUsuario'];
 
+$sql_consulta = "SELECT * FROM usuario WHERE idUsuario = " . $idUsuario ." ";
+$buscar_consulta = mysqli_query($conexao, $sql_consulta);
+$row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+$idCliente = $row_consulta['idCliente'];
 
-$sql = "SELECT * from demanda WHERE idTipoStatus= ". $jsonEntrada["idTipoStatus"]. " AND idSolicitante= " . $jsonEntrada["idSolicitante"] ." ";
+//echo "-ID CLIENTE->".json_encode($idCliente)."\n";
 
+$sql = "SELECT * from demanda WHERE ";
+    if($idCliente != null){
+        $sql = $sql . " idCliente= ". $idCliente. " AND ";
+    }
+$sql = $sql . " idTipoStatus= ". $idTipoStatus. " ";
 
+//echo "-SQL->".json_encode($sql)."\n";
   //LOG
   if(isset($LOG_NIVEL)) {
     if ($LOG_NIVEL>=3) {
@@ -43,7 +55,7 @@ $sql = "SELECT * from demanda WHERE idTipoStatus= ". $jsonEntrada["idTipoStatus"
     }
 }
 //LOG
-//echo "-SQL->".json_encode($sql)."\n";
+
 $rows = 0;
 $buscar = mysqli_query($conexao, $sql);
 while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {

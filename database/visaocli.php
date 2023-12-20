@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once __DIR__ . "/../conexao.php";
 
 
-function save_task($idTipoStatus, $tituloDemanda, $idSolicitante, $idContratoTipo, $idCliente)
+function save_task($idTipoStatus, $tituloDemanda, $idUsuario, $idContratoTipo, $idCliente)
 {
 	$visaocli = array();
 
@@ -19,7 +19,7 @@ function save_task($idTipoStatus, $tituloDemanda, $idSolicitante, $idContratoTip
 		'idEmpresa' => $idEmpresa,
 		'tituloDemanda' => $tituloDemanda,
 		'idTipoStatus' => $idTipoStatus,
-		'idSolicitante' => $idSolicitante,
+		'idUsuario' => $idUsuario,
 		'idContratoTipo' => $idContratoTipo,
 		'idCliente' => $idCliente
 	);
@@ -48,7 +48,7 @@ function move_task($idDemanda, $idTipoStatus)
 	return $visaocli;
 }
 
-function get_tasks($idTipoStatus, $idSolicitante)
+function get_tasks($idTipoStatus, $idUsuario)
 {
 	$visaocli = array();
 
@@ -60,7 +60,7 @@ function get_tasks($idTipoStatus, $idSolicitante)
 	$apiEntrada = array(
 		'idEmpresa' => $idEmpresa,
 		'idTipoStatus' => $idTipoStatus,
-		'idSolicitante' => $idSolicitante,
+		'idUsuario' => $idUsuario,
 	);
 	$visaocli = chamaAPI(null, '/services/visaocli', json_encode($apiEntrada), 'GET');
 
@@ -69,7 +69,7 @@ function get_tasks($idTipoStatus, $idSolicitante)
 
 function show_tile($kanbanDemanda)
 {
-	$baseUrl = $_SERVER["PHP_SELF"] . "?shift&idDemanda=" . $kanbanDemanda["idDemanda"] . "&idTipoStatus=";
+	//$baseUrl = $_SERVER["PHP_SELF"] . "?shift&idDemanda=" . $kanbanDemanda["idDemanda"] . "&idTipoStatus=";
 	$o = '<span class="card board mt-2 ts-click" id="kanbanCard" data-idDemanda="' .
 		$kanbanDemanda["idDemanda"] . '"  >' . $kanbanDemanda["tituloDemanda"] . '
      
@@ -117,11 +117,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if (isset($_POST['save-cartaoDemanda'])) {
 		$idTipoStatus = isset($_POST['idTipoStatus']) ? $_POST['idTipoStatus'] : 1;
 		$tituloDemanda = isset($_POST['tituloDemanda']) ? $_POST['tituloDemanda'] : null;
-		$idSolicitante = isset($_POST['idSolicitante']) ? $_POST['idSolicitante'] : null;
+		$idUsuario = isset($_POST['idUsuario']) ? $_POST['idUsuario'] : null;
 		$idContratoTipo = isset($_POST['idContratoTipo']) ? $_POST['idContratoTipo'] : null;
 		$idCliente = isset($_POST['idCliente']) ? $_POST['idCliente'] : null;
 
-		save_task($idTipoStatus, $tituloDemanda, $idSolicitante, $idContratoTipo, $idCliente);
+		save_task($idTipoStatus, $tituloDemanda, $idUsuario, $idContratoTipo, $idCliente);
 	}
 }
 

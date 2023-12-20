@@ -14,7 +14,10 @@ if (isset($_GET["tipo"])) {
 }
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
-
+$idCliente = $usuario['idCliente'];
+if($idCliente == null){
+    $idCliente = 1;
+}
 ?>
 
 <!doctype html>
@@ -63,9 +66,9 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
                 <div class="modal-content">
                     <form method="post">
                         <input type="hidden" class="form-control ts-input" name="idTipoStatus" value="<?php echo $contratoTipo['idTipoStatus_fila'] ?>">
-                        <input type="hidden" class="form-control ts-input" name="idSolicitante" value="<?php echo $usuario['idUsuario'] ?>">
+                        <input type="hidden" class="form-control ts-input" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>">
                         <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>">
-                        <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $usuario['idCliente'] ? null : 1 ?>">
+                        <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $idCliente ?>">
                         
                         <div class="modal-header">
                             <h1 class="modal-title fs-5">Adicionar <?php echo $contratoTipo['nomeDemanda'] ?></h1>
@@ -90,9 +93,8 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
                     <div class="text-xs fw-bold text-secondary border-bottom">
                         <h5>Aberto</h5>
                     </div>
-                    <?php foreach (get_tasks('1',$_SESSION['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (get_tasks(TIPOSTATUS_FILA,$usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo show_tile($kanbanDemanda); ?>
-                        
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -103,7 +105,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
                         <h5>Reaberto</h5>   
                     </div>
                 
-                    <?php foreach (get_tasks('5',$_SESSION['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (get_tasks(TIPOSTATUS_RETORNO,$usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo show_tile($kanbanDemanda); ?>
                     <?php endforeach; ?>
 
@@ -116,10 +118,10 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
                         <h5>Execução</h5>
                     </div>
                
-                    <?php foreach (get_tasks('3',$_SESSION['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (get_tasks(TIPOSTATUS_FAZENDO,$usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo show_tile($kanbanDemanda); ?>
                     <?php endforeach; ?>
-                    <?php foreach (get_tasks('2',$_SESSION['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (get_tasks(TIPOSTATUS_PAUSADO,$usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo show_tile($kanbanDemanda); ?>
                     <?php endforeach; ?>
                 </div>
@@ -131,7 +133,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
                         <h5>Devolvido</h5>
                     </div>
                  
-                    <?php foreach (get_tasks('7',$_SESSION['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (get_tasks(TIPOSTATUS_AGUARDANDOSOLICITANTE,$usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo show_tile($kanbanDemanda); ?>
                     <?php endforeach; ?>
 
@@ -144,7 +146,7 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
                         <h5>Entregue</h5>
                     </div>
                    
-                    <?php foreach (get_tasks('4',$_SESSION['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (get_tasks(TIPOSTATUS_REALIZADO,$usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo show_tile($kanbanDemanda); ?>
                     <?php endforeach; ?>
 

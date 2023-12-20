@@ -105,6 +105,11 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                             </li>
                         <?php } ?>
 
+                            <li class="nav-item mr-1"><!-- TEMPORARIA -->
+                                <a class="nav-link <?php if ($tab == "visaocli") {echo " active ";} ?>" 
+                                href="?tab=visaocli" role="tab">visaoCli</a>
+                            </li>
+
 
                     </ul>
                 </div>
@@ -194,6 +199,10 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
             if ($tab == "agenda") {
                 $src = "demandas/agenda.php";
                 $title = "Serviços/Agenda";
+            }
+            if ($tab == "visaocli") {
+                $src = "visaocli/";
+                $title = "Visao Cliente";
             }
             if ($tab == "configuracao") {
                 $src = "configuracao/";

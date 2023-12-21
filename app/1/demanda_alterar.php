@@ -65,8 +65,14 @@ if (isset($jsonEntrada['idDemanda'])) {
        $sql = $sql . ",tempoCobrado = $tempoCobrado, tempoCobradoDigitado = $tempoCobradoDigitado ";
     }
 
+    //VISAO CLIENTE
+    if ($jsonEntrada['acao'] == "visaocli") {
+        $sql = "UPDATE demanda SET prioridade = $prioridade";
+    }
+
     $sql = $sql . ", dataAtualizacaoAtendente=CURRENT_TIMESTAMP()  WHERE idDemanda = $idDemanda";
 
+    //echo 'SQL' . $sql;
   
     //LOG
     if (isset($LOG_NIVEL)) {

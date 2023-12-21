@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include_once __DIR__ . "/../conexao.php";
 
-function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = null)
+function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = null, $idUsuario = null)
 {
 
 	$demanda = array();
@@ -38,6 +38,7 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = nu
 		'idTipoStatus' => $idTipoStatus,
 		'idContrato' => $idContrato,
 		'idEmpresa' => $idEmpresa,
+		'idUsuario' => $idUsuario
 	);
 	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 
@@ -258,6 +259,12 @@ if (isset($_GET['operacao'])) {
 	}
 
 	if ($operacao == "alterar") {
+
+		$acao = "";
+        if (isset($_GET['acao'])) {
+            $acao = $_GET['acao'];
+        }
+
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -273,9 +280,13 @@ if (isset($_GET['operacao'])) {
 			'dataPrevisaoEntrega' => $_POST['dataPrevisaoEntrega'],
 			'dataPrevisaoInicio' => $_POST['dataPrevisaoInicio'],
 			'tempoCobrado' => $_POST['tempoCobrado'],
+			'acao' => $acao
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 
+		if($acao == "visaocli"){
+			header('Location: ../visaocli/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+		}
 		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 	

@@ -66,7 +66,7 @@ $statusEncerrar = array(
         <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-hidden="true" style="margin: 5px;">
             <div class="col-12 col-md-3 float-end ts-divLateralModalDemanda">
                 <div class="col ">
-                    <form id="my-form" action="../database/visaocli.php?operacao=demandacli" method="post">
+                    <form id="my-form" action="../database/demanda.php?operacao=alterar&acao=visaocli" method="post">
                         <div class="modal-header p-2 pe-3 border-start">
                             <div class="col-md-6 d-flex pt-1">
                                 <label class='form-label ts-label'>Prioridade</label>
@@ -81,9 +81,8 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Responsável:</label>
                             </div>
                             <div class="col-md-7">
-                                <!-- <input type="text" class="form-control ts-inputSemBorda" name="idAtendente" value="<?php echo $demanda['nomeAtendente'] ?>" readonly>
-                                <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $demanda['idCliente'] ?>"> -->
-                                <span><?php echo $demanda['nomeAtendente'] ?></span>
+                                <input type="text" class="form-control ts-inputSemBorda" name="idAtendente" value="<?php echo $demanda['nomeAtendente'] ?>" readonly>
+                                <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $demanda['idCliente'] ?>">
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -91,8 +90,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Data de Abertura:</label>
                             </div>
                             <div class="col-md-7">
-                                <!-- <input type="text" class="form-control ts-inputSemBorda" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly> -->
-                                <span><?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?></span>
+                                <input type="text" class="form-control ts-inputSemBorda" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
                             </div>
                         </div>
 
@@ -101,7 +99,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Inicio Previsto</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>">
+                                <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -117,7 +115,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Entrega Prevista</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>">
+                                <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -133,7 +131,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Previsão</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="time" class="form-control ts-inputSemBorda" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                                <input type="time" class="form-control ts-inputSemBorda" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -141,7 +139,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Cobrado</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="time" class="form-control ts-inputSemBorda" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
+                                <input type="time" class="form-control ts-inputSemBorda" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>" readonly>
                             </div>
                         </div>
 
@@ -210,7 +208,7 @@ $statusEncerrar = array(
 
                     <div class="row mt-1">
                         <div id="ts-tabs">
-                            <!-- <div class="tab whiteborder" id="tab-demanda">Demanda</div> -->
+                            <div class="tab whiteborder" id="tab-demanda">Demanda</div>
                             <div class="line"></div>
                         </div>
                     </div>

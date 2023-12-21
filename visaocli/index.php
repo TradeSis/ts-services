@@ -1,7 +1,8 @@
 <?php
 include_once(__DIR__ . '/../header.php');
 
-include_once "../database/visaocli.php";
+include_once "../database/demanda_visaocli.php";
+include_once "../database/demanda.php";
 include_once '../database/contratotipos.php';
 include_once(ROOT . '/cadastros/database/usuario.php');
 
@@ -76,7 +77,7 @@ if($idCliente == null){
                         </div>
                         <div class="modal-body">
                             <div class="input-group">
-                                <input value="<?php echo get_active_value("tituloDemanda", $kanbanAtivo); ?>" type="text" name="tituloDemanda" class="form-control" placeholder="Adicionar cartão" autocomplete="off" />
+                                <input value="<?php echo statuskanbanAtivo("tituloDemanda", $kanbanAtivo); ?>" type="text" name="tituloDemanda" class="form-control" placeholder="Adicionar cartão" autocomplete="off" />
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -93,8 +94,8 @@ if($idCliente == null){
                     <div class="text-xs fw-bold text-secondary border-bottom">
                         <h5>Aberto</h5>
                     </div>
-                    <?php foreach (get_tasks(TIPOSTATUS_FILA,$usuario['idUsuario']) as $kanbanDemanda) : ?>
-                        <?php echo show_tile($kanbanDemanda); ?>
+                    <?php foreach (buscaDemandas(null,TIPOSTATUS_FILA, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -105,8 +106,8 @@ if($idCliente == null){
                         <h5>Reaberto</h5>   
                     </div>
                 
-                    <?php foreach (get_tasks(TIPOSTATUS_RETORNO,$usuario['idUsuario']) as $kanbanDemanda) : ?>
-                        <?php echo show_tile($kanbanDemanda); ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_RETORNO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
 
                 </div>
@@ -118,11 +119,11 @@ if($idCliente == null){
                         <h5>Execução</h5>
                     </div>
                
-                    <?php foreach (get_tasks(TIPOSTATUS_FAZENDO,$usuario['idUsuario']) as $kanbanDemanda) : ?>
-                        <?php echo show_tile($kanbanDemanda); ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_FAZENDO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
-                    <?php foreach (get_tasks(TIPOSTATUS_PAUSADO,$usuario['idUsuario']) as $kanbanDemanda) : ?>
-                        <?php echo show_tile($kanbanDemanda); ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_PAUSADO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -133,8 +134,8 @@ if($idCliente == null){
                         <h5>Devolvido</h5>
                     </div>
                  
-                    <?php foreach (get_tasks(TIPOSTATUS_AGUARDANDOSOLICITANTE,$usuario['idUsuario']) as $kanbanDemanda) : ?>
-                        <?php echo show_tile($kanbanDemanda); ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_AGUARDANDOSOLICITANTE, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
 
                 </div>
@@ -146,8 +147,8 @@ if($idCliente == null){
                         <h5>Entregue</h5>
                     </div>
                    
-                    <?php foreach (get_tasks(TIPOSTATUS_REALIZADO,$usuario['idUsuario']) as $kanbanDemanda) : ?>
-                        <?php echo show_tile($kanbanDemanda); ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_REALIZADO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
 
                 </div>

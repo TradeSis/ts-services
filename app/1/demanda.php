@@ -39,6 +39,7 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 $demanda = array();
 
+
 $sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
         LEFT JOIN cliente ON demanda.idCliente = cliente.idCliente
         LEFT JOIN usuario AS atendente ON demanda.idAtendente = atendente.idUsuario
@@ -98,10 +99,24 @@ if (isset($jsonEntrada["idContratoTipo"])) {
   $where = " and ";
 }
 
-
-
-
 $sql = $sql . " order by ordem, prioridade, idDemanda";
+
+if(isset($jsonEntrada['idUsuario'])){
+  $idTipoStatus = $jsonEntrada['idTipoStatus'];
+  $idUsuario = $jsonEntrada['idUsuario'];
+    if ($idUsuario != null) { 
+      $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = " . $idUsuario ." ";
+      $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+      $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+      $idCliente = $row_consulta['idCliente'];
+  
+      $sql = "SELECT * from demanda WHERE ";
+        if($idCliente != null){
+            $sql = $sql . " idCliente= ". $idCliente. " AND ";
+        }
+    $sql = $sql . " idTipoStatus= ". $idTipoStatus. " ";
+    }
+  }
 //echo "-SQL->" . json_encode($sql) . "\n";
 $rows = 0;
 

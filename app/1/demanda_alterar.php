@@ -38,7 +38,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
 
     if ($jsonEntrada['acao'] == "visaocli") {  //VISAO CLIENTE
-        $sql = "UPDATE demanda SET prioridade = $prioridade";
+        $sql = "UPDATE demanda SET prioridade = " . $jsonEntrada['prioridade'] ." ";
     } 
     
     if ($jsonEntrada['acao'] == null) {  

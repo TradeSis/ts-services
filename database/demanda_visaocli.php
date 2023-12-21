@@ -32,9 +32,15 @@ function salvarKanban($idTipoStatus, $tituloDemanda, $idUsuario, $idContratoTipo
 function montaKanban($kanbanDemanda)
 {
 	$kanban = '<span class="card board mt-2 ts-click" id="kanbanCard" data-idDemanda="' .
-		$kanbanDemanda["idDemanda"] . '"  >' . $kanbanDemanda["tituloDemanda"] . '
-     
-      </span>';
+		$kanbanDemanda["idDemanda"] . '"  >';
+
+		if(isset($kanbanDemanda["idContrato"])){
+			$kanban = $kanban .$kanbanDemanda["nomeContrato"] . ':' . $kanbanDemanda["idContrato"] . ' ' . $kanbanDemanda["tituloContrato"]. '<br>' ;
+		}
+		
+		$kanban = $kanban .
+			$kanbanDemanda["idDemanda"] . ' ' . $kanbanDemanda["tituloDemanda"] .
+		'</span>';
 	return $kanban;
 }
 

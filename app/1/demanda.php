@@ -15,7 +15,7 @@ if (isset($LOG_CAMINHO)) {
   $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_select";
   if (isset($LOG_NIVEL)) {
     if ($LOG_NIVEL >= 1) {
-      $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
+      $arquivo = fopen(defineCaminhoLog() . "services_select_" . date("dmY") . ".log", "a");
     }
   }
 
@@ -99,24 +99,23 @@ if (isset($jsonEntrada["idContratoTipo"])) {
   $where = " and ";
 }
 
-$sql = $sql . " order by ordem, prioridade, idDemanda";
-
 if(isset($jsonEntrada['idUsuario'])){
-  $idTipoStatus = $jsonEntrada['idTipoStatus'];
   $idUsuario = $jsonEntrada['idUsuario'];
-    if ($idUsuario != null) { 
-      $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = " . $idUsuario ." ";
-      $buscar_consulta = mysqli_query($conexao, $sql_consulta);
-      $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-      $idCliente = $row_consulta['idCliente'];
-  
-      $sql = "SELECT * from demanda WHERE ";
-        if($idCliente != null){
-            $sql = $sql . " idCliente= ". $idCliente. " AND ";
-        }
-    $sql = $sql . " idTipoStatus= ". $idTipoStatus. " ";
+  if ($idUsuario != null) { 
+    $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = " . $idUsuario ." ";
+    $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+    $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+    $idCliente = $row_consulta['idCliente'];
+    if($idCliente != null){
+      $sql = $sql . $where . " idCliente= ". $idCliente . " ";
     }
   }
+}
+
+
+$sql = $sql . " order by ordem, prioridade, idDemanda";
+
+
 //echo "-SQL->" . json_encode($sql) . "\n";
 $rows = 0;
 

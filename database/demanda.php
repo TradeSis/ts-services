@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include_once __DIR__ . "/../conexao.php";
 
-function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = null)
+function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = null, $idUsuario = null)
 {
 
 	$demanda = array();
@@ -38,6 +38,7 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = nu
 		'idTipoStatus' => $idTipoStatus,
 		'idContrato' => $idContrato,
 		'idEmpresa' => $idEmpresa,
+		'idUsuario' => $idUsuario
 	);
 	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 
@@ -133,30 +134,64 @@ function buscaTotalHorasReal($idContrato=null, $idDemanda=null)
 	return $horas;
 }
 
+function montaKanban($kanbanDemanda)
+{
+	$kanban = '<span class="card-body border board mt-2 ts-click" id="kanbanCard" data-idDemanda="' .
+		$kanbanDemanda["idDemanda"] . '"  >';
+
+		if(isset($kanbanDemanda["idContrato"])){
+			$kanban = $kanban .$kanbanDemanda["nomeContrato"] . ':' . $kanbanDemanda["idContrato"] . ' ' . $kanbanDemanda["tituloContrato"]. '<br>' ;
+		}
+		
+		$kanban = $kanban .
+			$kanbanDemanda["idDemanda"] . ' ' . $kanbanDemanda["tituloDemanda"] .
+		'</span>';
+	return $kanban;
+}
+
+
 if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];
 
 	if ($operacao == "inserir") {
 
-		$apiEntrada = array(
-			'idEmpresa' => $_SESSION['idEmpresa'],
-			'idCliente' => $_POST['idCliente'],
-			'idSolicitante' => $_POST['idSolicitante'],
-			'tituloDemanda' => $_POST['tituloDemanda'],
-			'descricao' => $_POST['descricao'],
-			'idServico' => $_POST['idServico'], //SERVICOS_PADRAO,
-			'idTipoStatus' => $_POST['idTipoStatus'], //TIPOSTATUS_FILA,
-			'idContrato' => $_POST['idContrato'],
-			'idContratoTipo' => $_POST['idContratoTipo'],
-			'horasPrevisao' => $_POST['horasPrevisao'],
-			// lucas 21112023 - removido campo tamanho
-			'idAtendente' => $_POST['idAtendente'],
-			'dataPrevisaoEntrega' => $_POST['dataPrevisaoEntrega'],
-			'dataPrevisaoInicio' => $_POST['dataPrevisaoInicio'],
-			'tempoCobrado' => $_POST['tempoCobrado'],
-		);
-	
+		$acao = '';
+		if(isset($_GET['acao'])){
+			$acao = $_GET['acao'];
+		}
+		if($acao == ''){
+			$apiEntrada = array(
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'idCliente' => $_POST['idCliente'],
+				'idSolicitante' => $_POST['idSolicitante'],
+				'tituloDemanda' => $_POST['tituloDemanda'],
+				'descricao' => $_POST['descricao'],
+				'idServico' => $_POST['idServico'], //SERVICOS_PADRAO,
+				'idTipoStatus' => $_POST['idTipoStatus'], //TIPOSTATUS_FILA,
+				'idContrato' => $_POST['idContrato'],
+				'idContratoTipo' => $_POST['idContratoTipo'],
+				'horasPrevisao' => $_POST['horasPrevisao'],
+				// lucas 21112023 - removido campo tamanho
+				'idAtendente' => $_POST['idAtendente'],
+				'dataPrevisaoEntrega' => $_POST['dataPrevisaoEntrega'],
+				'dataPrevisaoInicio' => $_POST['dataPrevisaoInicio'],
+				'tempoCobrado' => $_POST['tempoCobrado'],
+			);
+		}
+
+		if($acao == 'visaocli'){
+			$apiEntrada = array(
+				'idEmpresa' => $_SESSION['idEmpresa'],
+				'tituloDemanda' => $_POST['tituloDemanda'],
+				'descricao' => $_POST['descricao'],
+				'idSolicitante' => $_POST['idSolicitante'], 
+				'idUsuario' => $_POST['idUsuario'],
+				'idContratoTipo' => $_POST['idContratoTipo'],
+				'idCliente' => $_POST['idCliente']
+			);
+		}
+		
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
 		
 		$tituloEmail = $_POST['tituloDemanda'];
@@ -177,8 +212,9 @@ if (isset($_GET['operacao'])) {
 
 		$envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 	
-		// Lucas 25102023 id643 removido header
-		/* header('Location: ../demandas/index.php?tipo='.$_POST['idContratoTipo']); */
+		if($acao == 'visaocli'){
+		 header('Location: ../visaocli/index.php');
+		}
 	}
 
 	//Gabriel 05102023 ID 575 inserir com mensagens do chat
@@ -258,6 +294,12 @@ if (isset($_GET['operacao'])) {
 	}
 
 	if ($operacao == "alterar") {
+
+		$acao = "";
+        if (isset($_GET['acao'])) {
+            $acao = $_GET['acao'];
+        }
+
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idDemanda' => $_POST['idDemanda'],
@@ -273,9 +315,13 @@ if (isset($_GET['operacao'])) {
 			'dataPrevisaoEntrega' => $_POST['dataPrevisaoEntrega'],
 			'dataPrevisaoInicio' => $_POST['dataPrevisaoInicio'],
 			'tempoCobrado' => $_POST['tempoCobrado'],
+			'acao' => $acao
 		);
 		$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'POST');
 
+		if($acao == "visaocli"){
+			header('Location: ../visaocli/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
+		}
 		header('Location: ../demandas/visualizar.php?idDemanda=' . $apiEntrada['idDemanda']);
 	}
 	

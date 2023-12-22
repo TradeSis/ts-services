@@ -43,14 +43,13 @@ if (isset($jsonEntrada['idDemanda'])) {
     
     if ($jsonEntrada['acao'] == null) {  
 
-
             $tituloDemanda = "'" . $jsonEntrada['tituloDemanda'] . "'";
             // lucas 06122023 id715  - removido descricao
             $prioridade = $jsonEntrada['prioridade'];
             //lucas 28112023 id706 - removido tipoOcorrencia 
             $idServico = $jsonEntrada['idServico'];
             $horasPrevisao  = isset($jsonEntrada['horasPrevisao'])  && $jsonEntrada['horasPrevisao'] !== "" && $jsonEntrada['horasPrevisao'] !== "null" ? "'". $jsonEntrada['horasPrevisao']."'"  : "null";
-            $idAtendente = $jsonEntrada['idAtendente'];
+            $idAtendente = isset($jsonEntrada['idAtendente'])  && $jsonEntrada['idAtendente'] !== "" ?  $jsonEntrada['idAtendente']    : "null";
             $dataPrevisaoEntrega  = isset($jsonEntrada['dataPrevisaoEntrega'])  && $jsonEntrada['dataPrevisaoEntrega'] !== "" && $jsonEntrada['dataPrevisaoEntrega'] !== "null" ? "'". $jsonEntrada['dataPrevisaoEntrega']."'"  : "null";
             $dataPrevisaoInicio  = isset($jsonEntrada['dataPrevisaoInicio'])  && $jsonEntrada['dataPrevisaoInicio'] !== "" && $jsonEntrada['dataPrevisaoInicio'] !== "null" ? "'". $jsonEntrada['dataPrevisaoInicio']."'"  : "null";
             $tempoCobradoEntrada = isset($jsonEntrada["tempoCobrado"])  && $jsonEntrada["tempoCobrado"] !== "" && $jsonEntrada["tempoCobrado"] !== "null" ? "'". $jsonEntrada["tempoCobrado"]."'"  : "null";

@@ -18,6 +18,8 @@ include_once(ROOT . '/cadastros/database/usuario.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
 include_once '../database/contratoStatus.php';
 include_once '../database/tarefas.php';
+// Gabriel 201223 id745 dados nota
+include_once(ROOT . '/cadastros/database/pessoas.php');
 
 $ClienteSession = null;
 if (isset($_SESSION['idCliente'])) {
@@ -28,6 +30,9 @@ $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $clientes = buscaClientes();
 $servicos = buscaServicos();
 $atendentes = buscaAtendente();
+// Gabriel 201223 id745 dados nota
+$pessoas = buscarPessoa();
+$cidades = buscarCidades();
 // Lucas 25102023 id643 ajustado variavel $tipoocorrencias para ficar igual de demanda
 $tipoocorrencias = buscaTipoOcorrencia();
 $contratoStatusTodos = buscaContratoStatus();
@@ -217,6 +222,8 @@ if ($horasReal['totalHorasReal'] !== null) {
         <!-- Lucas 25102023 id643 include de modalDemanda_inserir -->
         <!--------- MODAL DEMANDA INSERIR --------->
         <?php include_once '../demandas/modalDemanda_inserir.php' ?>
+        
+       
 
     </div>
 
@@ -229,7 +236,16 @@ if ($horasReal['totalHorasReal'] !== null) {
 
     <script src="contrato.js"></script>
     <!-- LOCAL PARA COLOCAR OS JS -FIM -->
-  
+
+
+    <!-- Gabriel 201223 id745 include de modalNotaContrato -->
+    <!--------- MODAL NOTA CONTRATO VISUALIZAR --------->
+    <?php include_once '../contratos/modalNotaContrato_visualizar.php' ?>
+    <!--------- MODAL NOTA CONTRATO INSERIR --------->
+    <?php include_once '../contratos/modalNotaContrato_inserir.php' ?>
+    <!--------- MODAL NOTA CONTRATO ALTERAR --------->
+    <?php include_once '../contratos/modalNotaContrato_alterar.php' ?>
+    
 </body>
 
 </html>

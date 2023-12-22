@@ -51,6 +51,7 @@ $sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeT
 $where = " where ";
 if (isset($jsonEntrada["idDemanda"]) && $jsonEntrada["idDemanda"] !== "") {
   $sql = $sql . $where . " demanda.idDemanda = " . $jsonEntrada["idDemanda"];
+  $where = " and ";
 }
 
 if (isset($jsonEntrada["idCliente"])) {
@@ -107,7 +108,7 @@ if(isset($jsonEntrada['idUsuario'])){
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
     $idCliente = $row_consulta['idCliente'];
     if($idCliente != null){
-      $sql = $sql . $where . " idCliente= ". $idCliente . " ";
+      $sql = $sql . $where . " demanda.idCliente= ". $idCliente . " ";
     }
   }
 }

@@ -33,7 +33,6 @@ if ($idDemanda !== "") {
 $servicos = buscaServicos();
 $idTipoStatus = $demanda['idTipoStatus'];
 $atendentes = buscaAtendente();
-$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $cliente = buscaClientes($demanda["idCliente"]);
 $clientes = buscaClientes();
 $contratos = buscaContratosAbertos($demanda["idCliente"]);

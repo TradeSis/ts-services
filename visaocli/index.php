@@ -71,7 +71,7 @@ if ($usuario["idCliente"] == null) {
         <div class="row d-flex align-items-center justify-content-center pt-1 ">
 
             <div class="col-6 col-md-6">
-                <h2 class="ts-tituloPrincipal">visao cliente</h2>
+                <h2 class="ts-tituloPrincipal">Fila de Atendimento</h2>
             </div>
             
             <div class="col-6 col-md-6 text-end">

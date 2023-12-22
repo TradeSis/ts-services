@@ -74,6 +74,12 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                                 href="?tab=demandas" role="tab">Demandas</a>
                             </li>
                         <?php }
+                        if ($nivelMenu >= 1) { ?>
+                            <li class="nav-item mr-1">
+                                <a class="nav-link <?php if ($tab == "fila") {echo " active ";} ?>" 
+                                href="?tab=fila" role="tab">Fila de Atendimento</a>
+                            </li>                            
+                        <?php }
                         if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
                                 <a class="nav-link <?php if ($tab == "contratos") {echo " active ";} ?>" 
@@ -103,14 +109,8 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                                 <a class="nav-link <?php if ($tab == "configuracao") {echo " active ";} ?>" 
                                 href="?tab=configuracao" role="tab" data-toggle="tooltip" data-placement="top" title="Configurações"><i class="bi bi-gear"></i> Configurações</a>
                             </li>
-                        <?php } ?>
-
-                            <li class="nav-item mr-1"><!-- TEMPORARIA -->
-                                <a class="nav-link <?php if ($tab == "visaocli") {echo " active ";} ?>" 
-                                href="?tab=visaocli" role="tab">visaoCli</a>
-                            </li>
-
-
+                        
+                            <?php } ?>
                     </ul>
                 </div>
                 <!--Essa coluna só vai aparecer em dispositivo mobile-->
@@ -200,9 +200,9 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                 $src = "demandas/agenda.php";
                 $title = "Serviços/Agenda";
             }
-            if ($tab == "visaocli") {
+            if ($tab == "fila") {
                 $src = "visaocli/";
-                $title = "Visao Cliente";
+                $title = "Fila";
             }
             if ($tab == "configuracao") {
                 $src = "configuracao/";

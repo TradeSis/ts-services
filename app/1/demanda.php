@@ -15,7 +15,7 @@ if (isset($LOG_CAMINHO)) {
   $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_select";
   if (isset($LOG_NIVEL)) {
     if ($LOG_NIVEL >= 1) {
-      $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
+      $arquivo = fopen(defineCaminhoLog() . "services_select_" . date("dmY") . ".log", "a");
     }
   }
 
@@ -39,6 +39,7 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 $demanda = array();
 
+
 $sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
         LEFT JOIN cliente ON demanda.idCliente = cliente.idCliente
         LEFT JOIN usuario AS atendente ON demanda.idAtendente = atendente.idUsuario
@@ -50,6 +51,7 @@ $sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeT
 $where = " where ";
 if (isset($jsonEntrada["idDemanda"]) && $jsonEntrada["idDemanda"] !== "") {
   $sql = $sql . $where . " demanda.idDemanda = " . $jsonEntrada["idDemanda"];
+  $where = " and ";
 }
 
 if (isset($jsonEntrada["idCliente"])) {
@@ -98,10 +100,23 @@ if (isset($jsonEntrada["idContratoTipo"])) {
   $where = " and ";
 }
 
-
+if(isset($jsonEntrada['idUsuario'])){
+  $idUsuario = $jsonEntrada['idUsuario'];
+  if ($idUsuario != null) { 
+    $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = " . $idUsuario ." ";
+    $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+    $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+    $idCliente = $row_consulta['idCliente'];
+    if($idCliente != null){
+      $sql = $sql . $where . " demanda.idCliente= ". $idCliente . " ";
+    }
+  }
+}
 
 
 $sql = $sql . " order by ordem, prioridade, idDemanda";
+
+
 //echo "-SQL->" . json_encode($sql) . "\n";
 $rows = 0;
 

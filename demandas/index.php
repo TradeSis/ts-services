@@ -22,7 +22,12 @@ if (isset($_GET["tipo"])) {
 //Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
-$clientes = buscaClientes();
+
+if ($usuario["idCliente"] == null) {
+  $clientes = buscaClientes($usuario["idCliente"]);
+} else {
+  $clientes = array(buscaClientes($usuario["idCliente"]));
+}
 $atendentes = buscaAtendente();
 $usuarios = buscaUsuarios();
 $tiposstatus = buscaTipoStatus();

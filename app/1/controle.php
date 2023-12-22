@@ -131,6 +131,11 @@ if ($metodo == "GET") {
     case "demanda_horasReal":
       include 'demanda_horasReal.php';
       break;
+
+      case "visaocli":
+        include 'visaocli.php';
+        break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -228,7 +233,7 @@ if ($metodo == "PUT") {
     case "chat":
       include 'chat_inserir.php';
       break;
-      
+     
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -328,6 +333,10 @@ if ($metodo == "POST") {
 
     case "demanda_descricao":
       include 'demanda_descricao.php';
+      break;
+
+    case "visaocli":
+      include 'visaocli_atualizar.php';
       break;
 
     default:

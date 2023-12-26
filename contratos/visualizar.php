@@ -42,13 +42,13 @@ $horasCobrado = buscaTotalHorasCobrada($idContrato);
 $horasReal = buscaTotalHorasReal($idContrato, null);
 //Remover os zeros de segundo de totalHorasCobrado
 if ($horasCobrado['totalHorasCobrado'] !== null) {
-    $totalHorasCobrado = date('H:i', strtotime($horasCobrado['totalHorasCobrado']));
+    $totalHorasCobrado = $horasCobrado['totalHorasCobrado'];
 } else {
     $totalHorasCobrado = "00:00";
 }
 //Remover os zeros de segundo de totalHorasReal
 if ($horasReal['totalHorasReal'] !== null) {
-    $totalHorasRealizado = date('H:i', strtotime($horasReal['totalHorasReal']));
+    $totalHorasRealizado = $horasReal['totalHorasReal']; 
 } else {
     $totalHorasRealizado = "00:00";
 }

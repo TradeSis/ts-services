@@ -20,6 +20,7 @@ include_once(ROOT . '/cadastros/database/servicos.php');
 
 $idDemanda = $_GET['idDemanda'];
 $idAtendente = $_SESSION['idLogin'];
+$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $ocorrencias = buscaTipoOcorrencia();
 $tiposstatus = buscaTipoStatus();
 $demanda = buscaDemandas($idDemanda);

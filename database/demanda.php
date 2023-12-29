@@ -350,13 +350,20 @@ if (isset($_GET['operacao'])) {
 
 	// lucas 22112023 id 688 - removido operação comentarioAtendente
 	if ($operacao == "comentar") {
+		/* echo json_encode($_POST);
+		return; */
+		$enviaEmailComentario = '';
+		if(isset($enviaEmailComentario)){
+			$enviaEmailComentario = $_POST['enviaEmailComentario'];
+		}
 
 		$apiEntrada = array(
 			'idEmpresa' => $_SESSION['idEmpresa'],
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'idDemanda' => $_POST['idDemanda'],
-			'comentario' => $_POST['comentario']
+			'comentario' => $_POST['comentario'],
+			'enviaEmailComentario' => $enviaEmailComentario
 
 		);
 

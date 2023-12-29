@@ -8,7 +8,7 @@ include_once '../header.php';
 </div>
 
 <div class="container-fluid mt-3 containerComentario ts-sumir">
-    <form method="post" id="form" enctype="multipart/form-data">
+    <form method="post" id="form-inserirComentario" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -48,6 +48,14 @@ include_once '../header.php';
                             <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-success" style="float: right;">Salvar</button>
                         </div>
                     </div>
+                    <div class="row">
+                        <!-- <div class="col-md-10">A</div> -->
+                        <div class="form-check form-switch d-flex gap-5 text-end">
+                        <div class="col-md-1"><label class="form-check-label" for="enviaEmailComentario">Enviar email?</label></div>
+                        <div class="col-md-1"><input class="form-check-input mt-1" type="checkbox" id="enviaEmailComentario" name="enviaEmailComentario"></div>
+                        </div>
+                    </div>
+                    
                     <p id="mostraNomeAnexo"></p>
                 </div>
 
@@ -109,6 +117,19 @@ include_once '../header.php';
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script>
+    /* $("#form-inserirComentario").submit(function(event) {
+                event.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: "../database/demanda.php?operacao=comentar",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: refreshPage,
+                });
+            }); */
+
     function myFunction() {
         var x = document.getElementById("myFile");
         var txt = "";

@@ -400,14 +400,20 @@ if (isset($_SESSION['filtro_demanda'])) {
             }
             var dataEntrega = new Date(dataPrevisaoEntrega);
             dataPrevisaoEntregaFormatada = (`${dataEntrega.getUTCDate().toString().padStart(2, '0')}/${(dataEntrega.getUTCMonth()+1).toString().padStart(2, '0')}/${dataEntrega.getUTCFullYear()}`);
-                       
+            //alert(dataPrevisaoEntregaFormatada)         
             if(object.prioridade == '99'){
               object.prioridade = ''
             }
 
             const date = new Date();
-            dataAtual = date.toLocaleDateString("pt-BR");
+            dataAtual = (`${date.getUTCDate().toString().padStart(2, '0')}/${(date.getUTCMonth()+1).toString().padStart(2, '0')}/${date.getUTCFullYear()}`);
+            //dataAtual = date.toLocaleDateString("pt-BR");
 
+            //var date = dataAtual.split('/').reverse().join('/');
+
+      
+           
+        
             linha += "<tr>";  
             /* helio 09112023 - classe ts-click para quando clicar,
                data-idDemanda para guardar o id da demanda */
@@ -428,9 +434,12 @@ if (isset($_SESSION['filtro_demanda'])) {
             datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeServico + "</td>";
             datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'" 
             
-            if((dataPrevisaoEntregaFormatada < dataAtual) && (object.dataFechamento == null)){
+            if(dataPrevisaoEntregaFormatada != "NaN/NaN/NaN"){
+              if((dataPrevisaoEntregaFormatada > dataAtual) && (object.dataFechamento == null)){
               datas += " style='background:firebrick;color:white'";
                 }
+            }
+            
                 
             datas += ">" + 'Abertura: ' + dataAberturaFormatada + '<br>' 
             if (object.dataPrevisaoEntrega == null) {

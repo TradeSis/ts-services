@@ -25,9 +25,18 @@ include_once '../header.php';
                 <div class="form-group">
 
                     <div class="container-fluid p-0">
-                        <div class="col">
-                            <span class="tituloEditor">Comentário</span>
+                        <div class="row">
+                            <div class="col">
+                                <span class="tituloEditor">Comentário</span>
+                            </div>
+                            <div class="col" >
+                                <div class="form-check form-switch d-flex gap-5" style="float: right;">
+                                    <label class="form-check-label" for="enviaEmailComentario">Enviar email?</label>
+                                    <input class="form-check-input mt-1" type="checkbox" id="enviaEmailComentario" name="enviaEmailComentario">
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="quill-comentario"></div>
                         <textarea style="display: none" id="quill-comentario" name="comentario"></textarea>
                     </div>
@@ -46,13 +55,6 @@ include_once '../header.php';
                         <div class="col-md">
                             <!-- Lucas 22112023 id 688 - Removido visão do cliente -->
                             <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-success" style="float: right;">Salvar</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <!-- <div class="col-md-10">A</div> -->
-                        <div class="form-check form-switch d-flex gap-5 text-end">
-                        <div class="col-md-1"><label class="form-check-label" for="enviaEmailComentario">Enviar email?</label></div>
-                        <div class="col-md-1"><input class="form-check-input mt-1" type="checkbox" id="enviaEmailComentario" name="enviaEmailComentario"></div>
                         </div>
                     </div>
                     

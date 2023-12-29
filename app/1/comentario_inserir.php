@@ -58,8 +58,8 @@ if (isset($jsonEntrada['idDemanda'])) {
 
     if ($enviaEmailComentario != '') {
         //Envio de Email
-        $tituloEmail = $nomeUsuario . ' adicionou um novo comentário em ' . $idContratoTipo . ' : ' . $tituloDemanda;
-        $corpoEmail = $comentario . '<br>';
+        $tituloEmail = $nomeUsuario . ' adicionou um novo comentário em ' . $idContratoTipo . ' : ' . $tituloDemanda . '.';
+        $corpoEmail = $comentario ;
 
         $arrayPara = array(
 

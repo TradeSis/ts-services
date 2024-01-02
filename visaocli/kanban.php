@@ -6,13 +6,13 @@ function montaKanban($kanbanDemanda)
     $dataNaTela = null;
 
     $dataFechamento = null;
-    if(isset($kanbanDemanda['dataFechamento'])){
-        $dataFechamento = date('d/m/Y', strtotime($kanbanDemanda["dataFechamento"]));
+    if(isset($kanbanDemanda['dataFechamentoFormatada'])){
+        $dataFechamento = $kanbanDemanda['dataFechamentoFormatada'];
     }
 
     $dataPrevisaoInicio = null;
     if(isset($kanbanDemanda['dataPrevisaoInicio'])){
-        $dataPrevisaoInicio = date('d/m/Y', strtotime($kanbanDemanda["dataPrevisaoInicio"])); 
+        $dataPrevisaoInicio = $kanbanDemanda['dataPrevisaoInicioFormatada']; 
     }
 
     if($dataFechamento != null){

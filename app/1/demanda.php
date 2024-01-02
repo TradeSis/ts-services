@@ -41,7 +41,7 @@ $demanda = array();
 
 
 $sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante 
-, '' AS dataPrevisaoEntregaFormatada, '' AS dataAberturaFormatada, '' AS 	dataFechamentoFormatada, '' AS atrasada FROM demanda
+, '' AS dataPrevisaoInicioFormatada, '' AS dataPrevisaoEntregaFormatada, '' AS dataAberturaFormatada, '' AS 	dataFechamentoFormatada, '' AS atrasada FROM demanda
         LEFT JOIN cliente ON demanda.idCliente = cliente.idCliente
         LEFT JOIN usuario AS atendente ON demanda.idAtendente = atendente.idUsuario
         LEFT JOIN usuario AS solicitante ON demanda.idSolicitante = solicitante.idUsuario
@@ -151,6 +151,11 @@ try {
       $dataFechamentoFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataFechamento"]));
     }
 
+    $dataPrevisaoInicioFormatada = null;
+    if(isset($demanda[$rows]["dataPrevisaoInicio"])){
+      $dataPrevisaoInicioFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataPrevisaoInicio"]));
+    }
+
     $dataPrevisaoEntregaFormatada = null;
     if(isset($demanda[$rows]["dataPrevisaoEntrega"])){
       $dataPrevisaoEntregaFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataPrevisaoEntrega"]));
@@ -165,8 +170,9 @@ try {
     }
 
     $demanda[$rows]["dataAberturaFormatada"] = $dataAberturaFormatada;
-    $demanda[$rows]["dataPrevisaoEntregaFormatada"] = $dataPrevisaoEntregaFormatada;
     $demanda[$rows]["dataFechamentoFormatada"] = $dataFechamentoFormatada;
+    $demanda[$rows]["dataPrevisaoInicioFormatada"] = $dataPrevisaoInicioFormatada;
+    $demanda[$rows]["dataPrevisaoEntregaFormatada"] = $dataPrevisaoEntregaFormatada;
     $demanda[$rows]["atrasada"] = $atrasada;
 
     $rows = $rows + 1;

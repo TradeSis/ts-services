@@ -134,22 +134,6 @@ function buscaTotalHorasReal($idContrato=null, $idDemanda=null)
 	return $horas;
 }
 
-function montaKanban($kanbanDemanda)
-{
-	$kanban = '<span class="card-body border board mt-2 ts-click" id="kanbanCard" data-idDemanda="' .
-		$kanbanDemanda["idDemanda"] . '"  >';
-
-		if(isset($kanbanDemanda["idContrato"])){
-			$kanban = $kanban .$kanbanDemanda["nomeContrato"] . ':' . $kanbanDemanda["idContrato"] . ' ' . $kanbanDemanda["tituloContrato"]. '<br>' ;
-		}
-		
-		$kanban = $kanban .
-			$kanbanDemanda["idDemanda"] . ' ' . $kanbanDemanda["tituloDemanda"] .
-		'</span>';
-	return $kanban;
-}
-
-
 if (isset($_GET['operacao'])) {
 
 	$operacao = $_GET['operacao'];

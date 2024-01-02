@@ -64,6 +64,16 @@ if ($usuario["idCliente"] == null) {
             padding: 3px;
             z-index: 2;
         }
+
+        .ts-cardAtrasado{
+            background-color: rgba(234, 64, 36, 0.7);
+           /*  border: 1px solid red!important; */
+        }
+
+        .ts-cardDataPrevisao{
+            font-size: 12px;
+            float: right;
+        }
     </style>
 
 
@@ -80,6 +90,8 @@ if ($usuario["idCliente"] == null) {
 
         </div>
 
+        <?php include_once 'kanban.php' ?>
+        
         <!-- Modal Inserir -->
         <?php include_once 'modalDemanda_inserir.php' ?>
 

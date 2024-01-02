@@ -139,7 +139,7 @@ try {
   
   while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
     array_push($demanda, $row);
-    $dataAtual = date("Y-m-d");
+    $today = date("Y-m-d");
 
     $dataAberturaFormatada = null;
     if(isset($demanda[$rows]["dataAbertura"])){
@@ -152,17 +152,17 @@ try {
     }
 
     $dataPrevisaoEntregaFormatada = null;
-    $dataPrevisaoEntregaComparacao = null;
     if(isset($demanda[$rows]["dataPrevisaoEntrega"])){
       $dataPrevisaoEntregaFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataPrevisaoEntrega"]));
-      $dataPrevisaoEntregaComparacao = date('Y-m-d', strtotime($demanda[$rows]["dataPrevisaoEntrega"]));
     }
-
-  if($dataPrevisaoEntregaComparacao < $dataAtual){
-    $atrasada = 'SIM';
-  }else{
-    $atrasada = 'Não';
-  } 
+    
+    $dataPrevisaoEntregaComparacao = date("Y-m-d",strtotime($demanda[$rows]["dataPrevisaoEntrega"])); 
+    
+    if($dataPrevisaoEntregaComparacao < $today){
+      $atrasada = true;
+    }else{
+      $atrasada = false;
+    }
 
     $demanda[$rows]["dataAberturaFormatada"] = $dataAberturaFormatada;
     $demanda[$rows]["dataPrevisaoEntregaFormatada"] = $dataPrevisaoEntregaFormatada;

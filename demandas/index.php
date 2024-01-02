@@ -388,11 +388,11 @@ if (isset($_SESSION['filtro_demanda'])) {
           for (var $i = 0; $i < json.length; $i++) {
             var object = json[$i];
                     
-            var dataAbertura = new Date(object.dataAbertura);
-            var dataAberturaFormatada = dataAbertura.toLocaleDateString("pt-BR");
+            //var dataAbertura = new Date(object.dataAbertura);
+            //var dataAberturaFormatada = dataAbertura.toLocaleDateString("pt-BR");
            
-            var dataFechamento = new Date(object.dataFechamento);
-            dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR");
+            //var dataFechamento = new Date(object.dataFechamento);
+            //dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR");
            
             dataPrevisaoEntrega = object.dataPrevisaoEntrega
             if(object.dataPrevisaoEntrega == null){
@@ -436,12 +436,16 @@ if (isset($_SESSION['filtro_demanda'])) {
             datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeServico + "</td>";
             datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'" 
             
-            if((datacomparacao == true) && (object.dataFechamento == null)){
+            /* if((datacomparacao == true) && (object.dataFechamento == null)){
+              datas += " style='background:firebrick;color:white'";
+            } */
+
+            if((object.atrasada == 'SIM') && (object.dataFechamento == null)){
               datas += " style='background:firebrick;color:white'";
             }
             
             
-            datas += ">" + 'Abertura: ' + dataAberturaFormatada + '<br>' 
+            datas += ">" + 'Abertura: ' + object.dataAberturaFormatada + '<br>' 
             if (object.dataPrevisaoEntrega == null) {
               datas += '';
             }else{
@@ -451,7 +455,7 @@ if (isset($_SESSION['filtro_demanda'])) {
             if (object.dataFechamento == null) {
               datas += '';
             }else{
-              datas += 'Entrega : ' + ' ' + dataFechamentoFormatada 
+              datas += 'Entrega : ' + ' ' + object.dataFechamentoFormatada 
             }
             
             linha += datas;

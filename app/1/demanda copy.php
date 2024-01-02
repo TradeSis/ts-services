@@ -40,8 +40,7 @@ $conexao = conectaMysql($idEmpresa);
 $demanda = array();
 
 
-$sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante 
-, '' AS dataPrevisaoEntregaFormatada, '' AS dataAberturaFormatada, '' AS 	dataFechamentoFormatada, '' AS atrasada FROM demanda
+$sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
         LEFT JOIN cliente ON demanda.idCliente = cliente.idCliente
         LEFT JOIN usuario AS atendente ON demanda.idAtendente = atendente.idUsuario
         LEFT JOIN usuario AS solicitante ON demanda.idSolicitante = solicitante.idUsuario
@@ -136,39 +135,9 @@ try {
   $buscar = mysqli_query($conexao, $sql);
   if (!$buscar)
     throw new Exception(mysqli_error($conexao));
-  
+
   while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
     array_push($demanda, $row);
-    $dataAtual = date("Y-m-d");
-
-    $dataAberturaFormatada = null;
-    if(isset($demanda[$rows]["dataAbertura"])){
-      $dataAberturaFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataAbertura"]));
-    }
-
-    $dataFechamentoFormatada = null;
-    if(isset($demanda[$rows]["dataFechamento"])){
-      $dataFechamentoFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataFechamento"]));
-    }
-
-    $dataPrevisaoEntregaFormatada = null;
-    $dataPrevisaoEntregaComparacao = null;
-    if(isset($demanda[$rows]["dataPrevisaoEntrega"])){
-      $dataPrevisaoEntregaFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataPrevisaoEntrega"]));
-      $dataPrevisaoEntregaComparacao = date('Y-m-d', strtotime($demanda[$rows]["dataPrevisaoEntrega"]));
-    }
-
-  if($dataPrevisaoEntregaComparacao < $dataAtual){
-    $atrasada = 'SIM';
-  }else{
-    $atrasada = 'Não';
-  } 
-
-    $demanda[$rows]["dataAberturaFormatada"] = $dataAberturaFormatada;
-    $demanda[$rows]["dataPrevisaoEntregaFormatada"] = $dataPrevisaoEntregaFormatada;
-    $demanda[$rows]["dataFechamentoFormatada"] = $dataFechamentoFormatada;
-    $demanda[$rows]["atrasada"] = $atrasada;
-
     $rows = $rows + 1;
   }
   if (isset($jsonEntrada["idDemanda"]) && $rows == 1) {

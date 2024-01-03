@@ -41,7 +41,8 @@ $demanda = array();
 
 
 $sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante 
-, '' AS dataPrevisaoInicioFormatada, '' AS dataPrevisaoEntregaFormatada, '' AS dataAberturaFormatada, '' AS 	dataFechamentoFormatada, '' AS atrasada FROM demanda
+, '' AS dataPrevisaoInicioFormatada, '' AS dataPrevisaoEntregaFormatada, '' AS dataAberturaFormatada,'' AS horaAberturaFormatada, '' AS 	dataFechamentoFormatada, '' AS horaFechamentoFormatada
+, '' AS atrasada FROM demanda
         LEFT JOIN cliente ON demanda.idCliente = cliente.idCliente
         LEFT JOIN usuario AS atendente ON demanda.idAtendente = atendente.idUsuario
         LEFT JOIN usuario AS solicitante ON demanda.idSolicitante = solicitante.idUsuario
@@ -142,13 +143,17 @@ try {
     $today = date("Y-m-d");
 
     $dataAberturaFormatada = null;
+    $horaAberturaFormatada = null;
     if(isset($demanda[$rows]["dataAbertura"])){
       $dataAberturaFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataAbertura"]));
+      $horaAberturaFormatada = date('H:i', strtotime($demanda[$rows]["dataAbertura"]));
     }
 
     $dataFechamentoFormatada = null;
+    $horaFechamentoFormatada = null;
     if(isset($demanda[$rows]["dataFechamento"])){
       $dataFechamentoFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataFechamento"]));
+      $horaFechamentoFormatada = date('H:i', strtotime($demanda[$rows]["dataFechamento"]));
     }
 
     $dataPrevisaoInicioFormatada = null;
@@ -170,7 +175,9 @@ try {
     }
 
     $demanda[$rows]["dataAberturaFormatada"] = $dataAberturaFormatada;
+    $demanda[$rows]["horaAberturaFormatada"] = $horaAberturaFormatada;
     $demanda[$rows]["dataFechamentoFormatada"] = $dataFechamentoFormatada;
+    $demanda[$rows]["horaFechamentoFormatada"] = $horaFechamentoFormatada;
     $demanda[$rows]["dataPrevisaoInicioFormatada"] = $dataPrevisaoInicioFormatada;
     $demanda[$rows]["dataPrevisaoEntregaFormatada"] = $dataPrevisaoEntregaFormatada;
     $demanda[$rows]["atrasada"] = $atrasada;

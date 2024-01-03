@@ -33,12 +33,11 @@ $clientes = buscaClientes();
 $contratos = buscaContratosAbertos($demanda["idCliente"]);
 
 
-
+$dataFechamento = $demanda['dataFechamentoFormatada'] . ' ' . $demanda['horaFechamentoFormatada'];
 if ($demanda['dataFechamento'] == null) {
     $dataFechamento =  'dd/mm/aaaa';
-} else {
-    $dataFechamento = date('d/m/Y H:i', strtotime($demanda['dataFechamento']));
-}
+} 
+
 $statusEncerrar = array(
     TIPOSTATUS_FILA,
     TIPOSTATUS_PAUSADO,
@@ -90,7 +89,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Data de Abertura:</label>
                             </div>
                             <div class="col-md-7">
-                                <input type="text" class="form-control ts-inputSemBorda" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
+                                <input type="text" class="form-control ts-inputSemBorda" name="dataabertura" value="<?php echo $demanda['dataAberturaFormatada'] . ' ' . $demanda['horaAberturaFormatada'] ?>" readonly>
                             </div>
                         </div>
 

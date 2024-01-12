@@ -100,10 +100,14 @@ if (isset($jsonEntrada['tituloDemanda'])) {
         array(
             'email' => 'tradesis@tradesis.com.br',
             'nome' => 'TradeSis'
+            /* 'email' => 'lucas.rosa@tradesis.com.br',
+            'nome' => 'Lucas teste' */
         ),
         array(
-            'email' => $_SESSION['email'],
-            'nome' => $_SESSION['usuario']
+            /* 'email' => $_SESSION['email'],
+            'nome' => $_SESSION['usuario'] */
+            'email' => 'lucas.rosa@tradesis.com.br',
+            'nome' => 'Lucas teste'
         ),
     );
 

@@ -49,11 +49,22 @@ if (isset($jsonEntrada['idDemanda'])) {
     $buscar_consulta = mysqli_query($conexao, $sql_consulta);
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
     $dataFechamento = isset($row_consulta["dataFechamento"])  && $row_consulta["dataFechamento"] !== "" && $row_consulta["dataFechamento"] !== "null" ? "'". $row_consulta["dataFechamento"]."'"  : "null";
+    $tituloDemanda = $row_consulta["tituloDemanda"];
+    $idContratoTipo = $row_consulta["idContratoTipo"];
+    $idAtendente = $row_consulta["idAtendente"];
+
+    //Busca dados de usuario
+    $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = $idAtendente";
+    $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+    $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+    $nomeUsuario = $row_consulta["nomeUsuario"];
+    $email = $row_consulta["email"] ;
 
     //REALIZADO
     if ($jsonEntrada['acao'] == "entregar") { 
         
         $idTipoStatus = TIPOSTATUS_REALIZADO;
+        $nomeStatusEmail = 'REALIZADO';
 
         //Busca dados tipostatus    
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -77,6 +88,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     if ($jsonEntrada['acao'] == "retornar") {
         
         $idTipoStatus = TIPOSTATUS_RETORNO;
+        $nomeStatusEmail = 'RETORNO';
 
         //Busca dados tipostatus     
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -94,6 +106,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     if ($jsonEntrada['acao'] == "validar") {
         
         $idTipoStatus = TIPOSTATUS_VALIDADO;
+        $nomeStatusEmail = 'VALIDADO';
 
         //Busca dados tipostatus    
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -113,6 +126,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     if ($jsonEntrada['acao'] == "solicitar") {
 
         $idTipoStatus = TIPOSTATUS_AGUARDANDOSOLICITANTE;
+        $nomeStatusEmail = 'AGUARDANDO SOLICITANTE';
 
         // busca dados tipostatus    
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
@@ -129,6 +143,25 @@ if (isset($jsonEntrada['idDemanda'])) {
     if ($comentario !== "null") {
         $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario ,$idUsuario,CURRENT_TIMESTAMP())";
     }
+
+    //Envio de Email
+    $tituloEmail = $tituloDemanda;
+    $corpoEmail = $idContratoTipo . ' : ' . $tituloDemanda. '<br>' .
+    ' entrou no status: ' . $nomeStatusEmail;
+
+    $arrayPara = array(
+
+        array(
+            'email' => 'tradesis@tradesis.com.br',
+            'nome' => 'TradeSis'
+        ),
+        array(
+        'email' => $email,
+        'nome' => $nomeUsuario 
+        ),
+    );
+
+    $envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 
     //LOG
     if (isset($LOG_NIVEL)) {

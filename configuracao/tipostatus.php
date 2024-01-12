@@ -1,56 +1,72 @@
 <?php
+// Lucas 17102023 novo padrao
 // helio 07082023 - Botao POPUP
 // helio 01022023 altereado para include_once
 // helio 26012023 16:16
-include_once(__DIR__ . '/../head.php');
-
+include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/tipostatus.php');
-
 $tiposstatus = buscaTipoStatus();
 ?>
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 
-<body class="bg-transparent">
-    <div class="container" style="margin-top:10px">
+<body>
+    <div class="container-fluid">
+        <div class="row">
+             <!-- MENSAGENS/ALERTAS -->
+        </div>
+        <div class="row">
+             <!-- BOTOES AUXILIARES -->
+        </div>
+        <div class="row align-items-center"> <!-- LINHA SUPERIOR A TABLE -->
+            <div class="col-3 text-start">
+                <!-- TITULO -->
+                <h2 class="ts-tituloPrincipal">Tipos de Status</h2>
+            </div>
+            <div class="col-7">
+                <!-- FILTROS -->
 
-        <div class="row mt-4">
-            <div class="col-sm-8">
-                <h2 class="tituloTabela">Tipos de Status</h2>
             </div>
 
-            <div class="col-sm-4" style="text-align:right">
+            <div class="col-2 text-end">
                 <a href="tipostatus_inserir.php" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
             </div>
-
         </div>
 
-        <div class="card mt-2 text-center">
-            <div class="table scrollbar-tabela">
-                <table class="table">
-                    <thead class="cabecalhoTabela">
-                        <tr>
-                            <th>Status</th>
-                            <th>Ação</th>
 
-                        </tr>
-                    </thead>
+        <div class="table mt-2 ts-divTabela">
+            <table class="table table-hover table-sm align-middle">
+                <thead class="ts-headertabelafixo">
+                    <tr>
+                        <th>Status</th>
+                        <th>Ação</th>
 
-                    <?php
-                    foreach ($tiposstatus as $tipostatus) {
-                    ?>
-                        <tr>
-                            <td><?php echo $tipostatus['nomeTipoStatus'] ?></td>
-                            <td>
-                                <a class="btn btn-warning btn-sm" href="tipostatus_alterar.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-pencil-square"></i></a>
-                                <a class="btn btn-danger btn-sm" href="tipostatus_excluir.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-trash3"></i></a>
+                    </tr>
+                </thead>
 
-                                <button id="<?php echo $tipostatus['idTipoStatus'] ?>" class='btn btn-outline-warning btn-sm' onclick="popTipoStatus(<?php echo $tipostatus['idTipoStatus'] ?>)">Editar</button>
-                            </td>
-                        </tr>
-                    <?php } ?>
+                <?php
+                foreach ($tiposstatus as $tipostatus) {
+                ?>
+                    <tr>
+                        <td><?php echo $tipostatus['nomeTipoStatus'] ?></td>
+                        <td>
+                            <a class="btn btn-warning btn-sm" href="tipostatus_alterar.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-pencil-square"></i></a>
+                            <a class="btn btn-danger btn-sm" href="tipostatus_excluir.php?idTipoStatus=<?php echo $tipostatus['idTipoStatus'] ?>" role="button"><i class="bi bi-trash3"></i></a>
+                            
+                            <button id="<?php echo $tipostatus['idTipoStatus'] ?>" class='btn btn-outline-warning btn-sm' onclick="popTipoStatus(<?php echo $tipostatus['idTipoStatus'] ?>)">Editar</button>
+                        </td>
+                       
+                    </tr>
+                <?php } ?>
 
-                </table>
-            </div>
+            </table>
         </div>
 
     </div>
@@ -103,64 +119,71 @@ $tiposstatus = buscaTipoStatus();
         </div>
     </div>
 
+    <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+    <script>
+
+        const editForm = document.getElementById("edit-form");
+        const popTipoStatusModal = new bootstrap.Modal(document.getElementById("popTipoStatus"));
+
+        // Logica para Visualizar via Modal
+        async function popTipoStatus(idTipoStatus) {
+
+            const dados = await fetch("<?php echo URLROOT ?>/services/database/tipostatus.php?operacao=GET_JSON&idTipoStatus=" + idTipoStatus);
+            const resposta = await dados.json();
+            alert(JSON.stringify(resposta, null, 2));
+            //const popTipoStatus = new bootstrap.Modal(document.getElementById("popTipoStatus"));
+            popTipoStatusModal.show();
+            document.getElementById("idTipoStatus").innerHTML = resposta.idTipoStatus;
+            //  document.getElementById("nomeTipoStatus").innerHTML = resposta.nomeTipoStatus;
+            // document.getElementById("mudaPosicaoPara").innerHTML = resposta.mudaPosicaoPara;
+
+            document.getElementById("idTipoStatus").value = resposta.idTipoStatus;
+            document.getElementById("nomeTipoStatus").value = resposta.nomeTipoStatus;
+            document.getElementById("mudaPosicaoPara").value = resposta.mudaPosicaoPara;
+            document.getElementById("mudaStatusPara").value = resposta.mudaStatusPara;
+
+        }
+
+
+
+        editForm.addEventListener("submit", async (e) => {
+
+            e.preventDefault();
+
+            document.getElementById("edit-btn").value = "Salvando...";
+
+            const dadosForm = new FormData(editForm);
+            var str = $("edit-form").serialize();
+            //console.log(str);
+            //console.log(editForm);
+            //console.log(dadosForm);
+
+            /*for (var dadosFormEdit of dadosForm.entries()){
+                console.log(dadosFormEdit[0] + " - " + dadosFormEdit[1]);
+            }*/
+
+            const dados = await fetch("<?php echo URLROOT ?>/services/database/tipostatus.php?operacao=JSON_alterar", {
+                method: "POST",
+                body: dadosForm
+            });
+
+            const resposta = await dados.json();
+            console.log(resposta);
+
+            document.getElementById("edit-btn").value = "Salvar";
+
+            editForm.reset();
+            popTipoStatusModal.hide();
+            top.window.location = "<?php echo URLROOT ?>/services/?tab=configuracao&stab=tipostatus";
+
+        });
+    </script>
+
+    <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
-
-<script>
-    const editForm = document.getElementById("edit-form");
-    const popTipoStatusModal = new bootstrap.Modal(document.getElementById("popTipoStatus"));
-
-    // Logica para Visualizar via Modal
-    async function popTipoStatus(idTipoStatus) {
-
-        const dados = await fetch("<?php echo URLROOT ?>/services/database/tipostatus.php?operacao=GET_JSON&idTipoStatus=" + idTipoStatus);
-        const resposta = await dados.json();
-        //const popTipoStatus = new bootstrap.Modal(document.getElementById("popTipoStatus"));
-        popTipoStatusModal.show();
-        document.getElementById("idTipoStatus").innerHTML = resposta.idTipoStatus;
-        //  document.getElementById("nomeTipoStatus").innerHTML = resposta.nomeTipoStatus;
-        // document.getElementById("mudaPosicaoPara").innerHTML = resposta.mudaPosicaoPara;
-
-        document.getElementById("idTipoStatus").value = resposta.idTipoStatus;
-        document.getElementById("nomeTipoStatus").value = resposta.nomeTipoStatus;
-        document.getElementById("mudaPosicaoPara").value = resposta.mudaPosicaoPara;
-        document.getElementById("mudaStatusPara").value = resposta.mudaStatusPara;
-
-    }
-
-
-
-    editForm.addEventListener("submit", async (e) => {
-
-        e.preventDefault();
-
-        document.getElementById("edit-btn").value = "Salvando...";
-
-        const dadosForm = new FormData(editForm);
-        var str = $("edit-form").serialize();
-        //console.log(str);
-        //console.log(editForm);
-        //console.log(dadosForm);
-
-        /*for (var dadosFormEdit of dadosForm.entries()){
-            console.log(dadosFormEdit[0] + " - " + dadosFormEdit[1]);
-        }*/
-
-        const dados = await fetch("<?php echo URLROOT ?>/services/database/tipostatus.php?operacao=JSON_alterar", {
-            method: "POST",
-            body: dadosForm
-        });
-
-        const resposta = await dados.json();
-        console.log(resposta);
-
-        document.getElementById("edit-btn").value = "Salvar";
-
-        editForm.reset();
-        popTipoStatusModal.hide();
-        top.window.location = "<?php echo URLROOT ?>/services/?tab=configuracao&stab=tipostatus";
-
-    });
-</script>
 
 </html>

@@ -1,11 +1,14 @@
 <?php
+//Lucas 07112023 id965 - Melhorias Tarefas 
+// lucas id654 - Melhorias Tarefas
+// Lucas 17102023 novo padrao
 //Gabriel 06102023 ID 596 mudanças em agenda e tarefas 
 //lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 // gabriel 04082023
 
 
-include_once(__DIR__ . '/../head.php');
+include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/tarefas.php');
 include_once(__DIR__ . '/../database/demanda.php');
 include_once(__DIR__ . '/../database/tipoocorrencia.php');
@@ -13,15 +16,12 @@ include_once(ROOT . '/cadastros/database/clientes.php');
 include_once(ROOT . '/cadastros/database/usuario.php');
 
 
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-  $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
 $ocorrencias = buscaTipoOcorrencia();
-$demandas = buscaDemandasAbertas();
+//Lucas 09112023 id965 - removido variavel $demandas
 //lucas 25092023 ID 358 Adicionado buscaUsuarios
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
@@ -38,13 +38,13 @@ if ($_SESSION['idCliente'] == null) {
 }
 $statusTarefa = "1"; //ABERTO
 
-$Periodo = null;
+//Lucas 07112023 id965 - removido variavel do filtro Periodo
 $filtroEntrada = null;
 $idTipoOcorrencia = null;
 $PeriodoInicio = null;
 $PeriodoFim = null;
-$PrevistoOrdem = null;
-$RealOrdem = null;
+ // lucas 07112023 id654 - Removido PrevistoOrderm e RealOrdem, e adicionado dataOrdem no lugar
+$dataOrdem = null;
 
 
 if (isset($_SESSION['filtro_tarefas'])) {
@@ -53,463 +53,229 @@ if (isset($_SESSION['filtro_tarefas'])) {
   $idAtendente = $filtroEntrada['idAtendente'];
   $idTipoOcorrencia = $filtroEntrada['idTipoOcorrencia'];
   $statusTarefa = $filtroEntrada['statusTarefa'];
-  $Periodo = $filtroEntrada['Periodo'];
+  //Lucas id965 - removido variavel do filtro Periodo
   $PeriodoInicio = $filtroEntrada['PeriodoInicio'];
   $PeriodoFim = $filtroEntrada['PeriodoFim'];
-  $PrevistoOrdem = $filtroEntrada['PrevistoOrdem'];
-  $RealOrdem = $filtroEntrada['RealOrdem'];
+   // lucas 07112023 id654 - Removido PrevistoOrderm e RealOrdem, e adicionado dataOrdem no lugar
+  $dataOrdem = $filtroEntrada['dataOrdem'];
+
 }
-$previsaoChecked = ($Periodo === '1') ? 'checked' : '';
-$realizadoChecked = ($Periodo === '0') ? 'checked' : '';
-$Checked = ($Periodo === null) ? 'checked' : '';
+//Lucas id965 - removido variaveis do filtro Periodo
+
 
 ?>
+<!doctype html>
+<html lang="pt-BR">
 
-</html>
+<head>
 
-<style>
-  .nav-link {
-        display: inline-block;
-        padding: 5px 10px;
-        cursor: pointer;
-        position: relative;
-        z-index: 5;
-        border-radius: 3px 3px 0 0;
-        background-color: #567381;
-        color: #EEEEEE;
-    }
-    .nav-link .active {
-        border: 1px solid #707070;
-        border-bottom: 1px solid #fff;
-        border-radius: 3px 3px 0 0;
-        background-color: #EEEEEE;
-        color: #567381;
-    }
-</style>
+  <?php include_once ROOT . "/vendor/head_css.php"; ?>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-<body class="bg-transparent">
+</head>
 
-  <nav id="menuFiltros" class="menuFiltros" style="width: 163px;margin-top:-58px;margin-left:40px">
-    <div class="titulo"><span>Filtrar por:</span></div>
-    <ul>
+<body>
+
+  <div class="container-fluid">
+
+    <div class="row">
+      <!--<BR>  MENSAGENS/ALERTAS -->
+    </div>
+    <div class="row mt-3">
+       <!-- <BR><BR><BR> BOTOES AUXILIARES -->
+    </div>
+
+    <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
+
+      <div class="col-2 col-lg-1 order-lg-1">
+        <button class="btn btn-outline-secondary ts-btnFiltros" type="button"><i class="bi bi-funnel"></i></button>
+      </div>
+
+      <div class="col-4 col-lg-3 order-lg-2" id="filtroh6">
+        <h2 class="ts-tituloPrincipal">Tarefas</h2>
+        <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
+      </div>
+
+      <div class="col-6 col-lg-2 order-lg-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i class="bi bi-calendar3"></i></button>
+      </div>
+
+      <div class="col-12 col-lg-6 order-lg-4">
+        <div class="input-group">
+          <input type="text" class="form-control ts-input" id="buscaTarefa" placeholder="Buscar por id ou titulo">
+          <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
+          <button type="button" class="ms-4 btn btn-success" data-bs-toggle="modal" data-bs-target="#inserirModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MENUFILTROS -->
+    <div class="ts-menuFiltros mt-2 px-3">
+      <label>Filtrar por:</label>
+
       <!-- Gabriel 06102023 ID 596 ajustado posiçao -->
-      <li class="ls-label col-sm-12 mr-1" style="list-style-type: none;"> <!-- ABERTO/FECHADO -->
-        <form class="d-flex" action="" method="post" style="text-align: right;">
-          <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa"
-            style="font-size: 14px; width: 150px; height: 35px">
+      <div class="ls-label col-sm-12"> <!-- ABERTO/FECHADO -->
+        <form class="d-flex" action="" method="post">
+          <select class="form-control" name="statusTarefa" id="FiltroStatusTarefa">
             <option value="<?php echo null ?>">
               <?php echo "Todos" ?>
             </option>
             <option <?php if ($statusTarefa == "1") {
-              echo "selected";
-            } ?> value="1">Aberto</option>
+                      echo "selected";
+                    } ?> value="1">Aberto</option>
             <option <?php if ($statusTarefa == "0") {
-              echo "selected";
-            } ?> value="0">Realizado</option>
+                      echo "selected";
+                    } ?> value="0">Realizado</option>
           </select>
         </form>
-      </li>
-    </ul>
-
-    <div class="col-sm" style="text-align:right; color: #fff">
-      <a onClick="limpar()" role=" button" class="btn btn-sm" style="background-color:#84bfc3; ">Limpar</a>
-    </div>
-  </nav>
-
-
-  <div class="container-fluid text-center mt-2">
-
-    <div class="row">
-      <div class="btnAbre" style="height:33px">
-        <span style="font-size: 25px;font-family: 'Material Symbols Outlined'!important;"
-          class="material-symbols-outlined">
-          filter_alt
-        </span>
-
       </div>
 
-      <div class="col-sm-3 ml-2">
-        <h2 class="tituloTabela">Tarefas</h2>
-        <!-- Gabriel 11102023 ID 596 removido, h6 agora preenche via script -->
-        <h6 style="font-size: 10px;font-style:italic;text-align:left;"></h6>
-      </div>
-
-      <!-- Gabriel 06102023 ID 596 removido buscar duplicado -->
-      <div class="col-sm-4">
-        <div class="input-group">
-          <input type="text" class="form-control" id="buscaTarefa" placeholder="Buscar por id ou titulo">
-          <span class="input-group-btn">
-            <button class="btn btn-primary mt-2" id="buscar" type="button">
-              <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
-                class="material-symbols-outlined">search</span>
-            </button>
-          </span>
-        </div>
-      </div>
-
-      <div class="col-sm-1">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#periodoModal"><i
-            class="bi bi-calendar3"></i></button>
-      </div>
-
-      <div class="col-sm" style="text-align:right">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inserirModal"><i
-            class="bi bi-plus-square"></i>&nbsp Novo</button>
+      <div class="col-sm text-end mt-2">
+        <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
       </div>
     </div>
 
+    <div class="table mt-2 ts-divTabela ts-tableFiltros">
+      <table class="table table-sm table-hover" id="tblEditavel">
+        <thead class="ts-headertabelafixo">
+          <tr class="ts-headerTabelaLinhaCima">
 
-    <div class="card mt-2 text-center">
-      <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
-        <table class="table">
-          <thead class="cabecalhoTabela">
-            <tr>
-              <th>ID</th>
-              <th>Tarefa</th>
-              <th>Responsável</th>
-              <th>Cliente</th>
-              <th>Ocorrência</th>
-              <th>Previsão</th>
-              <th>Real</th>
-              <th>Cobrado</th>
-              <th style="width: 17%;">Ação</th>
-            </tr>
-            <tr>
-              <th></th>
-              <th></th>
-              <th>
-                <form action="" method="post">
-                  <select class="form-control text-center" name="idAtendente" id="FiltroUsuario"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
+            <!-- Helio 071123 - Ajuste nas TD por col -->
+            <th class="col-5">Tarefa</th>
+            <th class="col-1">Responsável</th>
+            <th class="col-1">Cliente</th>
+            <th class="col-1">Ocorrência</th>
+            <th class="col-3">Datas</th>
+            <th class="col-1" colspan="2"></th>
+          </tr>
+          <tr class="ts-headerTabelaLinhaBaixo">
+            <th></th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idAtendente" id="FiltroUsuario">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Todos" ?>
+                  </option>
+                  <?php
+                  foreach ($atendentes as $atendente) {
+                  ?>
+                    <option <?php
+                            if ($atendente['idUsuario'] == $idAtendente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $atendente['idUsuario'] ?>">
+                      <?php echo $atendente['nomeUsuario'] ?>
                     </option>
-                    <?php
-                    foreach ($atendentes as $atendente) {
-                      ?>
-                      <option <?php
-                      if ($atendente['idUsuario'] == $idAtendente) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $atendente['idUsuario'] ?>">
-                        <?php echo $atendente['nomeUsuario'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th style="width: 10%;">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="idCliente" id="FiltroClientes"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Todos" ?> 
+                  </option>
+                  <?php
+                  foreach ($clientes as $cliente) {
+                  ?>
+                    <option <?php
+                            if ($cliente['idCliente'] == $idCliente) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $cliente['idCliente'] ?>">
+                      <?php echo $cliente['nomeCliente'] ?>
                     </option>
-                    <?php
-                    foreach ($clientes as $cliente) {
-                      ?>
-                      <option <?php
-                      if ($cliente['idCliente'] == $idCliente) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $cliente['idCliente'] ?>">
-                        <?php echo $cliente['nomeCliente'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th style="width: 10%;">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="idTipoOcorrencia" id="FiltroOcorrencia"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idTipoOcorrencia" id="FiltroOcorrencia">
+                  <option value="<?php echo null ?>">
+                    <?php echo "Todos" ?>
+                  </option>
+                  <?php
+                  foreach ($ocorrencias as $ocorrencia) {
+                  ?>
+                    <option <?php
+                            if ($ocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
+                              echo "selected";
+                            }
+                            ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
+                      <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
                     </option>
-                    <?php
-                    foreach ($ocorrencias as $ocorrencia) {
-                      ?>
-                      <option <?php
-                      if ($ocorrencia['idTipoOcorrencia'] == $idTipoOcorrencia) {
-                        echo "selected";
-                      }
-                      ?> value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                        <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                      </option>
-                    <?php } ?>
-                  </select>
-                </form>
-              </th>
-              <th style="width: 10%;">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="PrevistoOrdem" id="FiltroPrevistoOrdem"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <option <?php if ($PrevistoOrdem == "1") {
-                      echo "selected";
-                    } ?> value="1">DESC</option>
-                    <option <?php if ($PrevistoOrdem == "0") {
-                      echo "selected";
-                    } ?> value="0">ASC</option>
-                  </select>
-                </form>
-              </th>
-              <th style="width: 10%;">
-                <form action="" method="post">
-                  <select class="form-control text-center" name="RealOrdem" id="FiltroRealOrdem"
-                    style="font-size: 14px;color:#fff; font-style:italic; margin-top:-10px; margin-bottom:-6px;background-color:#13216A">
-                    <option value="<?php echo null ?>">
-                      <?php echo "Selecione" ?>
-                    </option>
-                    <option <?php if ($RealOrdem == "1") {
-                      echo "selected";
-                    } ?> value="1">DESC</option>
-                    <option <?php if ($RealOrdem == "0") {
-                      echo "selected";
-                    } ?> value="0">ASC</option>
-                  </select>
-                </form>
-              </th>
-              <th></th>
-              <th style="width: 10%;"></th>
-            </tr>
-          </thead>
+                  <?php } ?>
+                </select>
+              </form>
+            </th>
+             <!-- lucas id654 - Removido filtro RealOrdem e substituido filtro PrevistoOrdem por dataOrdem -->
+            <th>
+              <form action="" method="post">
+                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="dataOrdem" id="FiltrodataOrdem">
+                  <!-- Lucas 07112023 id965 - ajustado ordem do filtro -->
+                  <option <?php if ($dataOrdem == "0") {
+                            echo "selected";
+                          } ?> value="0">ASC</option>
+                  <option <?php if ($dataOrdem == "1") {
+                            echo "selected";
+                          } ?> value="1">DESC</option>
+                  
+                </select>
+              </form>
+            </th>
+            <!-- <th></th> -->
+            <th colspan="2"></th>
+          </tr>
+        </thead>
 
-          <tbody id='dados' class="fonteCorpo">
+        <tbody id='dados' class="fonteCorpo">
 
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
     </div>
+
   </div>
 
 
-<!--------- FILTRO PERIODO --------->
-<div class="modal fade bd-example-modal-lg" id="periodoModal" tabindex="-1" role="dialog"
-    aria-labelledby="periodoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Filtro Periodo</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="post">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="<?php echo null ?>" id="Radio" name="FiltroPeriodo"
-                <?php echo $Checked; ?> hidden>
-              <input class="form-check-input" type="radio" value="1" id="PrevisaoRadio" name="FiltroPeriodo" <?php echo $previsaoChecked; ?>>
-              <label class="form-check-label" for="PrevisaoRadio">
-                Previsão
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" value="0" id="RealizadoRadio" name="FiltroPeriodo" <?php echo $realizadoChecked; ?>>
-              <label class="form-check-label" for="RealizadoRadio">
-                Realizado
-              </label>
-            </div>
-            <div class="row" id="conteudoReal">
-              <div class="col">
-                <label class="labelForm">Começo</label>
-                <?php if ($PeriodoInicio != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoInicio"
-                  value="<?php echo $PeriodoInicio ?>" name="PeriodoInicio" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoInicio" name="PeriodoInicio"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-              <div class="col">
-                <label class="labelForm">Fim</label>
-                <?php if ($PeriodoFim != null) { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoFim"
-                  value="<?php echo $PeriodoFim ?>" name="PeriodoFim" autocomplete="off">
-                <?php } else { ?>
-                <input type="date" class="data select form-control" id="FiltroPeriodoFim" name="PeriodoFim"
-                  autocomplete="off">
-                <?php } ?>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col-sm" style="text-align:left;margin-left:10px">
-                <button type="button" class="btn btn-primary" onClick="limparPeriodo()">Limpar</button>
-              </div>
-              <div class="col-sm" style="text-align:right;margin-right:10px">
-                <button type="button" class="btn btn-success" id="filtrarButton" data-dismiss="modal">Filtrar</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!--------- FILTRO PERIODO --------->
+  <?php include_once 'modalTarefa_filtroPeriodo.php' ?>
 
   <!--------- MODAL STOP Tab EXECUCAO --------->
-  <div class="modal fade bd-example-modal-lg" id="stopexecucaomodal" tabindex="-1" role="dialog"
-    aria-labelledby="stopexecucaomodalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Stop Tarefa</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <!-- gabriel 13102023 id 596 adicionado id -->
-          <form method="post" id="stopForm">
-            <div class="container-fluid p-0">
-              <div class="col">
-                <span class="tituloEditor">Comentários</span>
-              </div>
-              <div class="quill-stop" style="height:20vh !important"></div>
-              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
-            </div>
-            <div class="col-md form-group" style="margin-top: 5px;">
-              <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>"
-                readonly>
-              <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>"
-                readonly>
-              <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stopexecucao" />
-              <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stopexecucao" />
-              <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stopexecucao" />
-              <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stopexecucao" step="2"
-                readonly style="display: none;" />
+  <?php include_once 'modalTarefa_stop.php' ?>
 
-            </div>
-        </div>
-        <div class="modal-footer">
-          <div class="col align-self-start pl-0">
-            <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
-            <button type="submit" id="realizadoFormbutton" class="btn btn-warning float-left">Entregar</button>
-          </div>
-          <!-- gabriel 13102023 id 596 fix ao dar stop vai para demanda -->
-          <button type="submit" id="stopFormbutton" class="btn btn-danger">Stop</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
   <!--------- INSERIR/AGENDAR --------->
-  <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog"
-    aria-labelledby="inserirModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="container">
-          <form method="post" id="inserirForm">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                <div class="for-group" style="margin-top: 22px;">
-                  <input type="text" class="form-control" name="tituloTarefa" id="newtitulo" autocomplete="off"
-                    required>
-                </div>
-                <input type="hidden" class="form-control" name="idDemanda" value="null" id="newidDemanda">
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Cliente</label>
-                  <div class="form-group" style="margin-top: 40px;">
-                    <select class="form-control" name="idCliente" id="newidCliente">
-                      <option value="null"></option>
-                      <?php
-                      foreach ($clientes as $cliente) {
-                        ?>
-                      <option value="<?php echo $cliente['idCliente'] ?>">
-                        <?php echo $cliente['nomeCliente'] ?>
-                      </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Reponsável</label>
-                  <div class="form-group" style="margin-top: 20px;">
-                    <select class="form-control" name="idAtendente" id="newidAtendente">
-                      <!-- gabriel 13102023 id596 removido a possibilidade de adicionar tarefa sem responsável -->
-                      <?php
-                      foreach ($atendentes as $atendente) {
-                        ?>
-                        <option value="<?php echo $atendente['idUsuario'] ?>">
-                          <?php echo $atendente['nomeUsuario'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class='control-label' for='inputNormal'>Ocorrência</label>
-                  <div class="form-group" style="margin-top: 20px;">
-                    <select class="form-control" name="idTipoOcorrencia" id="newidTipoOcorrencia">
-                      <option value="null">Selecione</option>
-                      <?php
-                      foreach ($ocorrencias as $ocorrencia) {
-                        ?>
-                        <option value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>">
-                          <?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                        </option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Data Previsão</label>
-                  <input type="date" class="data select form-control" name="Previsto" autocomplete="off" required>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Inicio</label>
-                  <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label class="labelForm">Fim</label>
-                  <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
-                </div>
-              </div>
-            </div>
-            <div class="card-footer bg-transparent" style="text-align:right">
-              <button type="submit" class="btn btn-warning" id="inserirStartBtn">Start</button>
-              <button type="submit" class="btn btn-success" id="inserirBtn">Inserir</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <?php include_once 'modalTarefa_inserirAgendar.php' ?>
 
-  <?php include 'alterarTarefaModal.php'; ?>
+  <!--------- TAREFAS ALTERAR--------->
+  <?php include 'modalTarefa_alterar.php'; ?>
+
+
+
+  <!-- LOCAL PARA COLOCAR OS JS -->
+
+  <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+  <!-- script para menu de filtros -->
+  <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+  <!-- QUILL editor -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+  <script src="<?php echo URLROOT ?>/services/demandas/tarefas.js"></script>
 
   <script>
-    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+    buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val() , $("#buscaTarefa").val());
+
     function limpar() {
-      buscar(null, null, null, null, null, null, null, null, null, null, function () {
-      //gabriel 13102023 id 596 fix atualizar pagina correta
-      refreshTab('execucao');
+      buscar(null, null, null, null, null, null, null, null, null, function() {
+        //gabriel 13102023 id 596 fix atualizar pagina correta
+        //window.location.reload();
       });
     }
+
     function limparPeriodo() {
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, null, function () {
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), null, null, null, null, function() {
         window.location.reload();
       });
     }
@@ -524,6 +290,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       }
       return "00/00/0000";
     }
+
     function formatTime(timeString) {
       if (timeString !== null) {
         var timeParts = timeString.split(':');
@@ -548,9 +315,9 @@ $Checked = ($Periodo === null) ? 'checked' : '';
     //Gabriel 16102023 id596 variavel dia/hora 
     var todayTime = today + " " + time;
 
-    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, Periodo, PeriodoInicio, PeriodoFim, PrevistoOrdem, RealOrdem, buscaTarefa, callback) {
+    function buscar(idCliente, idAtendente, tituloTarefa, idTipoOcorrencia, statusTarefa, PeriodoInicio, PeriodoFim, dataOrdem, buscaTarefa, callback) {
       //Gabriel 11102023 ID 596 utiliza valores do buscar para gravar no h6 da tabela filtros status e periodo
-      var h6Element = $(".col-sm-3 h6");
+      var h6Element = $("#filtroh6 h6");
       var text = "";
       if (statusTarefa === "1") {
         if (text) text += ", ";
@@ -559,13 +326,8 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         if (text) text += ", ";
         text += "Status = Realizado";
       }
-      if (Periodo === "1") {
-        if (text) text += ", ";
-        text += "Periodo = Previsão";
-      } else if (Periodo === "0") {
-        if (text) text += ", ";
-        text += "Periodo = Realizado";
-      }
+      /* Lucas 07112023 id965 - removido status de periodo */
+      
       if (PeriodoInicio !== "") {
         if (text) text += " em ";
         text += formatDate(PeriodoInicio);
@@ -580,7 +342,7 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         type: 'POST',
         dataType: 'html',
         url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=filtrar',
-        beforeSend: function () {
+        beforeSend: function() {
           $("#dados").html("Carregando...");
         },
         data: {
@@ -589,14 +351,13 @@ $Checked = ($Periodo === null) ? 'checked' : '';
           tituloTarefa: tituloTarefa,
           idTipoOcorrencia: idTipoOcorrencia,
           statusTarefa: statusTarefa,
-          Periodo: Periodo,
+          //Lucas 07112023 id965 - removido periodo
           PeriodoInicio: PeriodoInicio,
           PeriodoFim: PeriodoFim,
-          PrevistoOrdem: PrevistoOrdem,
-          RealOrdem: RealOrdem,
+          dataOrdem: dataOrdem,
           buscaTarefa: buscaTarefa
         },
-        success: function (msg) {
+        success: function(msg) {
 
           var json = JSON.parse(msg);
           var linha = "";
@@ -605,78 +366,175 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 
             var vPrevisto = formatDate(object.Previsto);
-            var vhoraInicioPrevisto = formatTime(object.horaInicioPrevisto);
+            var valorhoraInicioPrevisto = formatTime(object.horaInicioPrevisto); //criado
             var vhoraFinalPrevisto = formatTime(object.horaFinalPrevisto);
-            var vhorasPrevisto = formatTime(object.horasPrevisto);
+            var valorhorasPrevisto = formatTime(object.horasPrevisto); //criado
             //Gabriel 16102023 id596 ajustando if
-            var vhoraInicioPrevistoTime = vhoraInicioPrevisto.split(":");
-            var vhoraInicioPrevistoMinutes = parseInt(vhoraInicioPrevistoTime[0]) * 60 + parseInt(vhoraInicioPrevistoTime[1]);
+            var valorhoraInicioPrevistoTime = valorhoraInicioPrevisto.split(":");
+            var valorhoraInicioPrevistoMinutes = parseInt(valorhoraInicioPrevistoTime[0]) * 60 + parseInt(valorhoraInicioPrevistoTime[1]);
             var timeTime = time.split(":");
             var timeMinutes = parseInt(timeTime[0]) * 60 + parseInt(timeTime[1]);
-           
+
 
             var vdataReal = formatDate(object.dataReal);
-            var vhoraInicioReal = formatTime(object.horaInicioReal);
-            var vhoraFinalReal = formatTime(object.horaFinalReal);
-            var vhorasReal = formatTime(object.horasReal);
-            var vhoraCobrado = formatTime(object.horaCobrado);
-            linha += "<tr>";
-            linha += "<td>" + object.idTarefa + "</td>";
-            linha += "<td data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+            var valorhoraInicioReal = formatTime(object.horaInicioReal); //criado
+            var valorhoraFinalReal = formatTime(object.horaFinalReal); //criado
+            var valorhorasReal = formatTime(object.horasReal);//criado
+      
+            /* Helio 07112023 - Campos ficam em Branco quando Zerados */
+            if(vdataReal === "00/00/0000"){
+                vdataReal = '';
+            }
+            if(vPrevisto === "00/00/0000"){
+                vPrevisto = '';
+            }
 
-            if (object.tituloTarefa == "") {
-              linha += object.tituloDemanda;
+           if(valorhoraInicioPrevisto === '00:00'){
+              valorhoraInicioPrevisto = ''
+            }
+
+           if(vhoraFinalPrevisto === '00:00'){
+              vhoraFinalPrevisto = ''
+            }
+
+            if(valorhoraInicioReal === '00:00'){
+              valorhoraInicioReal = ''
+            }
+
+            if(valorhoraFinalReal === '00:00'){
+              valorhoraFinalReal = ''
+            }
+
+            if(valorhorasPrevisto === '00:00'){
+              valorhorasPrevisto = ''
             } else {
+              valorhorasPrevisto = '(' + valorhorasPrevisto + ')';
+            }
+
+           
+            if(valorhorasReal === '00:00'){
+              valorhorasReal = ''
+            } else {
+              valorhorasReal = '(' + valorhorasReal + ')';
+            }
+
+            vnomeTipoOcorrencia = object.nomeTipoOcorrencia;
+            if (vnomeTipoOcorrencia === null) {
+              vnomeTipoOcorrencia = '';
+            }
+
+            // lucas 23112023 - tratamento quando cliente vir null
+            if(object.nomeCliente === null){
+              object.nomeCliente = '';
+            }
+
+            linha += "<tr>";
+
+            linha += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+            if ((object.idDemanda !== null) && (object.idContrato !== null)) {
+              linha += object.nomeContrato + " : " + " " + object.idContrato + "  " + object.tituloContrato + " / ";
+              linha += object.idDemanda + "  " +  object.tituloDemanda + "<br>"; 
               linha += object.tituloTarefa;
             }
 
+            if((object.idDemanda !== null) && (object.idContrato === null)){
+              linha += object.nomeDemanda + " : " + " " + object.idDemanda + "  " +  object.tituloDemanda + "<br>";
+              linha += object.tituloTarefa;
+            }
+
+            if(object.tituloDemanda === null){
+              linha += object.tituloTarefa;
+            }
+            
             linha += "</td>";
-            linha += "<td>" + object.nomeUsuario + "</td>";
-            linha += "<td>" + object.nomeCliente + "</td>";
-            linha += "<td>" + object.nomeTipoOcorrencia + "</td>";
-            //Gabriel 16102023 id596 ajustando if
-            if (
-                (vPrevisto < today || (vPrevisto === today && vhoraInicioPrevistoMinutes > 0 && vhoraInicioPrevistoMinutes < timeMinutes)) &&
-                vdataReal === "00/00/0000" &&
-                vPrevisto !== "00/00/0000"
-              ) {
-              linha += "<td style='background:firebrick'>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
-            } else {
-              linha += "<td>" + vPrevisto + " " + vhoraInicioPrevisto + " " + vhoraFinalPrevisto + " (" + vhorasPrevisto + ")" + "</td>";
+
+
+            linha += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeUsuario + "</td>";
+            linha += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + object.nomeCliente + "</td>";
+            linha += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>" + vnomeTipoOcorrencia + "</td>";
+            /* Lucas 07112023 id965 - Reajustado condição para horas */
+            horas = '';
+            if(vdataReal !== ""){
+              horas += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'>";
+              if(vPrevisto !== ""){
+              horas += "<span class='ts-datas ts-previsto'>Prev: " + vPrevisto + "</span><span  class='ts-horas ts-previsto'>" + valorhoraInicioPrevisto + "</span><span class='ts-horas ts-previsto'>" + vhoraFinalPrevisto + "</span><span class='ts-horas ts-previsto'>" + valorhorasPrevisto + "</span>" + "<br>";
             }
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
-              var timeParts = time.split(':');
-              var vhoraInicioRealParts = vhoraInicioReal.split(':');
+              horas += "<span class='ts-datas'>Real: " + vdataReal + "</span><span class='ts-horas'>" + valorhoraInicioReal + "</span><span class='ts-horas'>" + valorhoraFinalReal + "</span><span class='ts-horas'>" + valorhorasReal + "</span>"  + "</td>";
+              //alert(horas)
+            }else{
 
-              var timeMinutes = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
-              var vhoraInicioRealMinutes = parseInt(vhoraInicioRealParts[0]) * 60 + parseInt(vhoraInicioRealParts[1]);
-
-              var differenceMinutes = timeMinutes - vhoraInicioRealMinutes;
-
-              var hours = Math.floor(differenceMinutes / 60);
-              var minutes = differenceMinutes % 60;
-
-              var vhorasReal = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
-            }
-            linha += "<td>" + vdataReal + " " + vhoraInicioReal + " " + vhoraFinalReal + " (" + vhorasReal + ")" + "</td>";
-            linha += "<td>" + vhoraCobrado + "</td>";
-            linha += "<td class='text-center' id='botao'>";
-            if (vhoraInicioReal != "00:00" && vhoraFinalReal == "00:00" && vdataReal == today) {
-              //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada
-              if (object.idDemanda == null) {
-                linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
-              } else {
-                linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-toggle='modal' data-target='#stopexecucaomodal' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-data-execucao='" + object.horaInicioReal + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+              if(vPrevisto !== ""){
+                horas += "<td class='ts-click' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'";
+                if(object.Atrasado == 'SIM'){
+                  horas += " style='background:firebrick;color:white'";
+                }
+                horas += ">";
+                horas += "<span class='ts-datas'>Prev: " + vPrevisto + "</span><span class='ts-horas'>" + valorhoraInicioPrevisto + "</span><span class='ts-horas'>" + vhoraFinalPrevisto + "</span><span class='ts-horas'>" + valorhorasPrevisto + "</span>" + "</td>";
+                //alert(horas)
               }
+          }
+          if((vdataReal === "") && (vPrevisto === "")){
+                horas += "<td></td> "
+              }
+          linha += horas;
+          
+          
+            // lucas id654 - Removido linha de dataReal
+          
+            linha += "<td>" ; 
+
+            linha += "<id='botao'>";
+            
+            if (valorhoraInicioReal == "") {
+              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "'><i class='bi bi-play-circle'></i></button>"
+            }else{
+              if (valorhoraInicioReal != "" && valorhoraFinalReal == "" && vdataReal == today) {
+              //lucas 25092023 ID 358 Adicionado condição para botão com demanda associada e sem demanda asssociada 
+              if ((object.idDemanda == null) && (vdataReal == today)) {
+                linha += "<button type='button' class='stopButton btn btn-danger btn-sm mr-1' data-id='" + object.idTarefa + "' data-demanda='" + object.idDemanda + 
+                "'><i class='bi bi-stop-circle'></i></button>"
+              } else {
+                linha += "<button type='button' class='btn btn-danger btn-sm mr-1' data-bs-toggle='modal' data-bs-target='#stopmodal' data-id='" + object.idTarefa + 
+                "' data-demanda='" + object.idDemanda + "'><i class='bi bi-stop-circle'></i></button>"
+              } 
+            }else {
+              linha += "<button type='button' class='novoStartButton btn btn-success btn-sm mr-1' "+ 
+                " data-id='" + object.idTarefa + 
+                "' data-titulo='" + object.tituloTarefa +
+                "' data-cliente='" + object.idCliente +
+                "' data-demanda='" + object.idDemanda +
+                "' data-atendente='" + object.idAtendente +
+                "' data-ocorrencia='" + object.idTipoOcorrencia +
+                "' data-previsto='" + object.Previsto +
+                "' data-horainicioprevisto='" + object.horaInicioPrevisto +
+                "' data-horafinalprevisto='" + object.horaFinalPrevisto +
+                "'><i class='bi bi-play-circle'></i></button>"
             }
-            if (vhoraInicioReal == "00:00") {
-              linha += "<button type='button' class='startButton btn btn-success btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-play-circle'></i></button>"
-              linha += "<button type='button' class='realizadoButton btn btn-info btn-sm mr-1' data-id='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i></button>"
-            }
-            linha += "<button type='button' class='clonarButton btn btn-success btn-sm mr-1' data-idtarefa='" + object.idTarefa + "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i></button>";
-            linha += "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#alterarmodal' data-idtarefa='" + object.idTarefa + "'><i class='bi bi-pencil-square'></i></button>"
+          }
 
             linha += "</td>";
+
+            linha += "<td>"; 
+            linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
+            " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
+
+            linha += "<id='botao'>";
+            
+            if (valorhoraInicioReal == "") {
+              linha += "<li class='ms-1 me-1 mt-1'><button type='button' id='realizadoButton' class='btn btn-info btn-sm w-100 text-start' data-id='" + object.idTarefa + 
+              "' data-demanda='" + object.idDemanda + "'><i class='bi bi-check-circle'></i> <span class='ts-btnAcoes' " + ">Realizado</span></button></li>"
+            }
+            linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='clonarButton btn btn-success btn-sm w-100 text-start'  data-idtarefa='" + object.idTarefa + 
+            "' data-status='" + object.idTipoStatus + "' data-demanda='" + object.idDemanda + "'><i class='bi bi-back'></i> <span class='ts-btnAcoes' " +
+            ">Clonar</span></button></li>";
+            linha += "<li class='ms-1 me-1 mt-1'><button type='button' class='btn btn-warning btn-sm w-100 text-start' data-bs-toggle='modal' data-bs-target='#alterarmodal' data-idtarefa='" + 
+            object.idTarefa + "'><i class='bi bi-pencil-square'></i> <span class='ts-btnAcoes'>Alterar</span></button></li>"
+            
+
+            linha +="</ul></div>"
+            linha += "</td>";
+
+
             linha += "</tr>";
           }
 
@@ -689,215 +547,204 @@ $Checked = ($Periodo === null) ? 'checked' : '';
       });
     }
 
-    $("#FiltroClientes").change(function () {
+    $("#FiltroClientes").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroUsuario").change(function () {
+    $("#FiltroUsuario").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#buscar").click(function () {
+    $("#buscar").click(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroOcorrencia").change(function () {
+    $("#FiltroOcorrencia").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroDemanda").click(function () {
+    $("#FiltroDemanda").click(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroStatusTarefa").change(function () {
+    $("#FiltroStatusTarefa").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroPrevistoOrdem").change(function () {
+    $("#FiltrodataOrdem").change(function() {
       //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
     });
 
-    $("#FiltroRealOrdem").change(function () {
-      //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-      buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
-    });
 
     //Gabriel 11102023 ID 596 adicionado document ready pois o modal está em indextarefa.php
-    $(document).ready(function () {
-      $("#filtrarButton").click(function () {
-        if (!$('#PrevisaoRadio').is(':checked') && !$('#RealizadoRadio').is(':checked')) {
-          alert("Por favor selecione uma opção.");
-          return false;
-        } else {
+    $(document).ready(function() {
+      $("#filtrarButton").click(function() {
+       
           //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+          buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
           $('#periodoModal').modal('hide');
-        }
+        
       });
     });
 
-    document.addEventListener("keypress", function (e) {
+    document.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
         //Gabriel 06102023 ID 596 ajustado #buscaTarefa
-        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("input[name='FiltroPeriodo']:checked").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltroPrevistoOrdem").val(), $("#FiltroRealOrdem").val(), $("#buscaTarefa").val());
+        buscar($("#FiltroClientes").val(), $("#FiltroUsuario").val(), $("#buscaTarefa").val(), $("#FiltroOcorrencia").val(), $("#FiltroStatusTarefa").val(), $("#FiltroPeriodoInicio").val(), $("#FiltroPeriodoFim").val(), $("#FiltrodataOrdem").val(), $("#buscaTarefa").val());
       }
     });
 
+  
 
-    //lucas 25092023 ID 358 Adicionado script para popup de stop
-    $(document).on('click', 'button[data-target="#stopexecucaomodal"]', function () {
-      var idTarefa = $(this).attr("data-id");
-      var idDemanda = $(this).attr("data-demanda");
-      var status = $(this).attr("data-status");
-      var horaInicioReal = $(this).attr("data-data-execucao");
-
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-        data: {
-          idTarefa: idTarefa
-        },
-        success: function (data) {
-          $('#idTarefa-stopexecucao').val(data.idTarefa);
-          $('#idDemanda-stopexecucao').val(idDemanda);
-          $('#status-stopexecucao').val(status);
-          $('#horaInicioReal-stopexecucao').val(horaInicioReal);
-
-          $('#stopexecucaomodal').modal('show');
-        }
-      });
-    });
-
-    $('.btnAbre').click(function () {
-      //Gabriel 06102023 ID 596 ajustado para ID ao invés de classe
-      $('#menuFiltros').toggleClass('mostra');
-      $('.diviFrame').toggleClass('mostra');
-    });
-
+    //lucas 17112023 ID 965 Removido script do botao stop, está no arquivo tarefas.js  
 
 
     var inserirModal = document.getElementById("inserirModal");
 
-    var inserirBtn = document.querySelector("button[data-target='#inserirModal']");
+    var inserirBtn = document.querySelector("button[data-bs-target='#inserirModal']");
 
-    inserirBtn.onclick = function () {
+    inserirBtn.onclick = function() {
       inserirModal.style.display = "block";
     };
 
-    window.onclick = function (event) {
+    window.onclick = function(event) {
       if (event.target == inserirModal) {
         inserirModal.style.display = "none";
       }
     };
 
-    $(document).ready(function () {
-      $(document).on('click', 'button.clonarButton', function () {
-        var idTarefa = $(this).data("idtarefa"); // Use data() to access the custom data attribute
-        $.ajax({
-          type: 'POST',
-          dataType: 'json',
-          url: '<?php echo URLROOT ?>/services/database/tarefas.php?operacao=buscar',
-          data: {
-            idTarefa: idTarefa
-          },
-          success: function (data) {
-            $('#newtitulo').val(data.tituloTarefa);
-            $('#newidCliente').val(data.idCliente);
-            $('#newidDemanda').val(data.idDemanda);
-            $('#newidAtendente').val(data.idAtendente);
-            $('#newidTipoOcorrencia').val(data.idTipoOcorrencia);
-            $('#newtipoStatusDemanda').val(data.idTipoStatus);
-            $('#newdescricao').val(data.descricao);
-
-            $('#inserirModal').modal('show');
-          }
-        });
-      });
-    });
+   
+    //lucas 17112023 ID 965 Removido script do botao clonarButton, está no arquivo tarefas.js 
 
 
-
-    $(document).on('click', '.stopButton', function () {
+    // Lucas 131123 ID 965 Adicionado script para botão de novoStart
+    $(document).on('click', '.novoStartButton', function() {
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
-      var horaInicioCobrado = $(this).data('data-execucao');
+      var tituloTarefa = $(this).data('titulo');
+      var idCliente = $(this).data('cliente');
+      var idDemanda = $(this).data('demanda');
+      var idAtendente = $(this).data('atendente');
+      var idTipoOcorrencia = $(this).data('ocorrencia');
+      var previsto = $(this).data('previsto');
+      var horaInicioPrevisto = $(this).data('horainicioprevisto');
+      var horaFinalPrevisto = $(this).data('horafinalprevisto');    
+
+        $.ajax({
+            url: "../database/tarefas.php?operacao=inserir&acao=start",
+            method: "POST",
+            dataType: "json",
+            data: {
+              tituloTarefa: tituloTarefa,
+              idCliente: idCliente,
+              idDemanda: idDemanda,
+              idAtendente: idAtendente,
+              idTipoOcorrencia: idTipoOcorrencia,
+              Previsto: previsto,
+              horaInicioPrevisto: horaInicioPrevisto,
+              horaFinalPrevisto: horaFinalPrevisto,
+
+              },
+              success: function(msg) {
+          //alert(JSON.stringify(msg));
+          if (msg.retorno == "ok") {
+            window.location.reload();
+          }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
+        }
+        });
+    
+    });
+    
+
+    //Lucas 17112023 ID 965 - removido variaveis
+    $(document).on('click', '.stopButton', function() {
+      
+      var idTarefa = $(this).data('id');
       var idDemanda = $(this).data('demanda');
       $.ajax({
         //lucas 25092023 ID 358 Modificado operação de tarefas
-        url: "../database/tarefas.php?operacao=stopsemdemanda",
+        url: "../database/tarefas.php?operacao=realizado&acao=stop",
         method: "POST",
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
-          horaInicioCobrado: horaInicioCobrado,
-          idDemanda: idDemanda
+          idDemanda: idDemanda,
+          comentario: null
         },
-        success: function (msg) {
+        success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
 
-    $(document).on('click', '.startButton', function () {
+    //Lucas 17112023 ID 965 - removido variaveis
+    $(document).on('click', '.startButton', function() {
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
-      var idDemanda = $(this).data('demanda');
       $.ajax({
-        url: "../database/tarefas.php?operacao=start",
+        url: "../database/tarefas.php?operacao=realizado&acao=start",
         method: "POST",
         dataType: "json",
         data: {
-          idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
-          idDemanda: idDemanda
+          idTarefa: idTarefa
         },
-        success: function (msg) {
+        success: function(msg) {
+          //alert(JSON.stringify(msg));
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
 
-    $(document).on('click', '.realizadoButton', function () {
+    //Lucas 17112023 ID 965 - substituido class por id (realizadoButton)
+    $(document).on('click', '#realizadoButton', function() {
       var idTarefa = $(this).data('id');
-      var tipoStatusDemanda = $(this).data('status');
       var idDemanda = $(this).data('demanda');
+
       $.ajax({
         url: "../database/tarefas.php?operacao=realizado",
         method: "POST",
         dataType: "json",
         data: {
           idTarefa: idTarefa,
-          tipoStatusDemanda: tipoStatusDemanda,
           idDemanda: idDemanda
         },
-        success: function (msg) {
+        success: function(msg) {
           if (msg.retorno == "ok") {
             window.location.reload();
           }
+        },
+        error: function(msg) {
+          alert(JSON.stringify(msg));
         }
       });
     });
 
-    $(document).ready(function () {
-      $("#inserirForm").submit(function (event) {
+    $(document).ready(function() {
+      $("#inserirForm").submit(function(event) {
         event.preventDefault();
         var formData = new FormData(this);
         var vurl;
         if ($("#inserirStartBtn").prop("clicked")) {
-          vurl = "../database/tarefas.php?operacao=inserirStart";
+          // Lucas 141123 ID 965 - Alterado url
+          vurl = "../database/tarefas.php?operacao=inserir&acao=start";
         } else {
           vurl = "../database/tarefas.php?operacao=inserir";
         }
@@ -912,22 +759,22 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         });
       });
 
-      $("#inserirStartBtn").click(function () {
+      $("#inserirStartBtn").click(function() {
         $("#inserirBtn").prop("clicked", false);
         $(this).prop("clicked", true);
       });
 
-      $("#inserirBtn").click(function () {
+      $("#inserirBtn").click(function() {
         $("#inserirStartBtn").prop("clicked", false);
         $(this).prop("clicked", true);
       });
 
-      $("#alterarForm").submit(function (event) {
+      $("#alterarForm").submit(function(event) {
         event.preventDefault();
         var formData = new FormData(this);
         for (var pair of formData.entries()) {
           console.log(pair[0] + ', ' + pair[1]);
-        }
+        } 
         var vurl;
         if ($("#stopButtonModal").is(":focus")) {
           vurl = "../database/tarefas.php?operacao=stop";
@@ -951,12 +798,13 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
         });
       });
+
       function refreshPage() {
         window.location.reload();
       }
 
       //gabriel 13102023 id 596 submit stopForm para evitar redirecionamento para demanda
-      $("#stopForm").submit(function (event) {
+      $("#stopForm").submit(function(event) {
         event.preventDefault();
         var formData = new FormData(this);
         for (var pair of formData.entries()) {
@@ -964,10 +812,11 @@ $Checked = ($Periodo === null) ? 'checked' : '';
         }
         var vurl;
         if ($("#realizadoFormbutton").is(":focus")) {
-          vurl = "../database/demanda.php?operacao=realizado";
+          vurl = "../database/tarefas.php?operacao=realizado&acao=entregue";
         }
         if ($("#stopFormbutton").is(":focus")) {
-          vurl = "../database/tarefas.php?operacao=stop";
+          vurl = "../database/tarefas.php?operacao=realizado&acao=stop";
+          
         }
         $.ajax({
           url: vurl,
@@ -982,70 +831,28 @@ $Checked = ($Periodo === null) ? 'checked' : '';
 
 
     //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
-    $("#visualizarDemandaButton").click(function () {
+    $("#visualizarDemandaButton").click(function() {
       var currentPath = window.location.pathname;
       $.ajax({
         type: 'POST',
         url: '../database/demanda.php?operacao=origem',
-        data: { origem: currentPath },
-        success: function (response) {
+        data: {
+          origem: currentPath
+        },
+        success: function(response) {
           console.log('Session variable set successfully.');
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error('An error occurred:', error);
         }
       });
     });
 
-
-
-    var quillstop = new Quill('.quill-stop', {
-      theme: 'snow',
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote'],
-          [{
-            'list': 'ordered'
-          }, {
-            'list': 'bullet'
-          }],
-          [{
-            'indent': '-1'
-          }, {
-            'indent': '+1'
-          }],
-          [{
-            'direction': 'rtl'
-          }],
-          [{
-            'size': ['small', false, 'large', 'huge']
-          }],
-          [{
-            'header': [1, 2, 3, 4, 5, 6, false]
-          }],
-          ['link', 'image', 'video', 'formula'],
-          [{
-            'color': []
-          }, {
-            'background': []
-          }],
-          [{
-            'font': []
-          }],
-          [{
-            'align': []
-          }],
-        ]
-      }
-    });
-
-    /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-    quillstop.on('text-change', function (delta, oldDelta, source) {
-      $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
-    });
-
+  //Lucas 10112023 ID 965 Removido script do editor de stop
   </script>
+
+
+  <!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

@@ -1,11 +1,12 @@
 <?php
+//Lucas 22112023 id 688 - Melhorias em Demandas
 //Gabriel 11102023 ID 596 mudanças em agenda e tarefas
 //Gabriel 26092023 ID 575 Demandas/Comentarios - Layout de chat
 //lucas 25092023 ID 358 Demandas/Comentarios
 // Gabriel 22092023 id 544 Demandas - Botão Voltar
 //lucas 22092023 ID 358 Demandas/Comentarios 
 
-include_once '../head.php';
+include_once '../header.php';
 include_once '../database/demanda.php';
 include_once '../database/contratos.php';
 include_once '../database/tarefas.php';
@@ -32,435 +33,267 @@ if ($idDemanda !== "") {
 $servicos = buscaServicos();
 $idTipoStatus = $demanda['idTipoStatus'];
 $atendentes = buscaAtendente();
-$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $cliente = buscaClientes($demanda["idCliente"]);
 $clientes = buscaClientes();
 $contratos = buscaContratosAbertos($demanda["idCliente"]);
-
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-    $ClienteSession = $_SESSION['idCliente'];
+$horasReal = buscaTotalHorasReal(null, $idDemanda);
+if($horasReal['totalHorasReal'] !== null){
+	$totalHorasReal = date('H:i', strtotime($horasReal['totalHorasReal']));
+}else{
+	$totalHorasReal = "00:00";
 }
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
+if ($demanda['dataFechamento'] == null) {
+    $dataFechamento =  'dd/mm/aaaa';
+} else {
+    $dataFechamento = date('d/m/Y H:i', strtotime($demanda['dataFechamento']));
+}
+$statusEncerrar = array(
+    TIPOSTATUS_FILA,
+    TIPOSTATUS_PAUSADO,
+    TIPOSTATUS_RETORNO,
+    TIPOSTATUS_RESPONDIDO,
+    TIPOSTATUS_AGENDADO
+);
 ?>
 
-<style>
-    body {
-        margin-bottom: 30px;
-    }
+<!doctype html>
+<html lang="pt-BR">
 
-    .line {
-        width: 100%;
-        border-bottom: 1px solid #707070;
-    }
+<head>
 
-    #tabs .tab {
-        display: inline-block;
-        padding: 5px 10px;
-        cursor: pointer;
-        position: relative;
-        z-index: 5;
-        border-radius: 3px 3px 0 0;
-        background-color: #567381;
-        color: #EEEEEE;
-    }
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-    #tabs .whiteborder {
-        border: 1px solid #707070;
-        border-bottom: 1px solid #fff;
-        border-radius: 3px 3px 0 0;
-        background-color: #EEEEEE;
-        color: #567381;
-    }
+</head>
 
-    #tabs .tabContent {
-        position: relative;
-        top: -1px;
-        z-index: 1;
-        padding: 10px;
-        border-radius: 0 0 3px 3px;
-        color: black;
-    }
-
-    #tabs .hide {
-        display: none;
-    }
-
-    #tabs .show {
-        display: block;
-    }
-
-    .modal-backdrop {
-        background-color: rgba(200, 200, 200, 0.5);
-    }
-</style>
-
-<body class="bg-transparent">
+<body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm mt-3" style="text-align:left;margin-left:50px;">
-                <span class="titulo">Chamado -
-                    <?php echo $idDemanda ?>
-                </span>
-            </div>
-            <div class="col-sm mt-3" style="text-align:right;margin-right:50px;">
-            <!-- Gabriel 22092023 id544 href dinâmico com session -->
-                <?php if (isset($_SESSION['origem'])) { ?>
-                    <a href="<?php echo $_SESSION['origem'] ?>" role="button" class="btn btn-primary"><i
-                            class="bi bi-arrow-left-square"></i></i>&#32;Voltar</a>
-                <?php } ?>
-            </div>
-        </div>
-        <div id="tabs">
-            <div class="tab whiteborder" id="tab-demanda">Demanda</div>
-            <div class="tab" id="tab-comentarios">Comentarios</div>
-            <?php if ($ClienteSession == NULL) { ?>
-                <div class="tab" id="tab-tarefas">Tarefas</div>
-            <?php } ?>
-            <div class="tab" id="tab-mensagem">mensagem</div>
-            <div class="line"></div>
-            <div class="tabContent">
-                <?php include_once 'visualizar_demanda.php'; ?>
-            </div>
-            <div class="tabContent">
-                <?php include_once 'comentarios.php'; ?>
-            </div>
-            <?php if ($ClienteSession == NULL) { ?>
-                <div class="tabContent">
-                    <?php include_once 'visualizar_tarefa.php'; ?>
-                </div>
-            <?php } ?>
-        <!-- Gabriel 26092023 ID 575 adicionado tab mensagens -->
-            <div class="tabContent">
-                <?php include_once 'mensagem.php'; ?>
-            </div>
-        </div>
-    </div>
 
-    <!--------- INSERIR/NOVA --------->
-    <div class="modal fade bd-example-modal-lg" id="inserirModal" tabindex="-1" role="dialog" aria-labelledby="inserirModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Inserir Tarefa1</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="container">
-                    <form method="post" id="form1">
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Tarefa</label>
-                                <div class="form-group" style="margin-top: 22px;">
-                                    <input type="text" class="form-control" name="tituloTarefa" autocomplete="off">
-                                    <input type="text" class="form-control" name="tituloDemanda"
-                                        value="<?php echo $demanda['tituloDemanda'] ?>" style="display: none;">
-                                </div>
+        <!-- Modal -->
+        <div class="modal" id="modalDemandaVizualizar" tabindex="-1" aria-hidden="true" style="margin: 5px;">
+            <div class="col-12 col-md-3 float-end ts-divLateralModalDemanda">
+                <div class="col ">
+                    <form id="my-form" action="../database/demanda.php?operacao=alterar" method="post">
+                        <div class="modal-header p-2 pe-3 border-start">
+                            <div class="col-md-6 d-flex pt-1">
+                                <label class='form-label ts-label'>Prioridade</label>
+                                <input type="number" min="1" max="99" class="form-control ts-inputSemBorda" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
                             </div>
-                            <div class="col-md-4 form-group">
-                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">ID/Demanda
-                                    Relacionada</label>
-                                <div class="form-group" style="margin-top: 22px;">
-                                    <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" style="margin-bottom: -20px;">
-                                    <input type="text" class="form-control" value="<?php echo $demanda['idDemanda'] ?> - <?php echo $demanda['tituloDemanda'] ?>" readonly>
-                                    <input type="hidden" name="tipoStatusDemanda" value="<?php echo $idTipoStatus ?>" />
-                                </div>
+                            <div class="col-md-2 border-start d-flex me-2">
+                                <a href="../demandas/" role="button" class="btn-close"></a>
                             </div>
-                            <div class="col-md-4 form-group">
-                                <label class='control-label' for='inputNormal' style="margin-top: 10px;">Cliente</label>
-                                <div class="form-group" style="margin-top: 22px;">
-                                    <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>">
-                                    <input type="text" class="form-control" value="<?php echo $cliente['nomeCliente'] ?>" readonly>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Responsável</label>
+                            </div>
+                            <div class="col-md-7">
+                                <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idAtendente">
+                                    <option value="<?php echo $demanda['idAtendente'] ?>"><?php echo $demanda['nomeAtendente'] ?></option>
+                                    <?php foreach ($atendentes as $atendente) { ?>
+                                        <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Data de Abertura</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control ts-inputSemBorda" name="dataabertura" value="<?php echo date('d/m/Y H:i', strtotime($demanda['dataAbertura'])) ?>" readonly>
+                            </div>
+                        </div>
 
-                                </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Inicio Previsto</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Inicio</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="date" class="form-control ts-inputSemBorda" value="<?php echo $demanda['dataInicio'] ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Entrega Prevista</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="date" class="form-control ts-inputSemBorda" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Entrega</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="datetime" class="form-control ts-inputSemBorda" name="dataFechamento" value="<?php echo $dataFechamento ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Previsão</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="time" class="form-control ts-inputSemBorda" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Realizado</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="time" class="form-control ts-inputSemBorda" name="realizado" value="<?php echo $totalHorasReal ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-5 ps-3">
+                                <label class="form-label ts-label">Cobrado</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="time" class="form-control ts-inputSemBorda" name="tempoCobrado" value="<?php echo $demanda['tempoCobrado'] ?>">
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <?php
+                            if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#encerrarModal" class="btn btn-sm btn-danger">Encerrar</button>
+                            <?php }
+                            if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#reabrirModal" class="btn btn-sm btn-warning">Reabrir</button>
+                            <?php } ?>
+
+                            <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#entregarModal" class="btn btn-sm btn-warning">Entregar</button>
+                            <?php } ?>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <div class="col align-self-start pl-0">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#encaminharModal" class="btn btn-warning">Encaminhar</button>
+                            </div>
+                            <button type="submit" form="my-form" class="btn btn-success">Atualizar</button>
+                        </div>
+                </div>
+            </div>
+
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen"> <!-- Modal 1 -->
+                <div class="modal-content" style="background-color: #F1F2F4;">
+                
+                    <div class="container">
+                        <?php if (isset($demanda['tituloContrato'])) { ?>
+                            <div class="row pb-1">
+                                <span class="ts-subTitulo"><strong><?php echo $demanda['nomeContrato'] ?>: </strong> <?php echo $demanda['tituloContrato'] ?></span>
+                            </div>
+                        <?php } ?>
+                        <div class="row g-3">
+                            <div class="col-md-9 d-flex">
+                                <span class="ts-tituloPrincipalModal"><?php echo $demanda['idDemanda'] ?></span>
+                                <input type="hidden" class="form-control ts-inputSemBorda" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>">
+                                <input type="text" class="form-control ts-inputSemBorda ts-tituloPrincipalModal" name="tituloDemanda" value="<?php echo $demanda['tituloDemanda'] ?>" style="z-index: 1;">
+                            </div>
+                            <div class="col-md-3 d-flex">
+                                <span class="ts-subTitulo"><strong>Status: </strong> <?php echo $demanda['nomeTipoStatus'] ?></span>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <input type="hidden" class="form-control ts-input" name="idCliente" value="<?php echo $demanda['idCliente'] ?>">
+                                <span class="ts-subTitulo"><strong>Cliente : </strong><span><?php echo $demanda['nomeCliente'] ?></span>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Reponsável</label>
-                                    <select class="form-control" name="idAtendente">
-                                        <?php
-                                        foreach ($atendentes as $atendente) {
+                                <input type="hidden" class="form-control ts-input" name="idSolicitante" id="idSolicitante" value="<?php echo $demanda['idSolicitante'] ?>" readonly>
+                                <span class="ts-subTitulo"><strong>Solicitante : </strong> <?php echo $demanda['nomeSolicitante'] ?></span>
+                            </div>
 
-                                            ?>
-                                        <option <?php
-                                        if ($atendente['idUsuario'] == $demanda['idAtendente']) {
-                                            echo "selected";
-                                        }
-                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?>
-                                        </option>
-
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class='control-label' for='inputNormal'>Ocorrência</label>
-                                    <select class="form-control" name="idTipoOcorrencia">
-                                        <?php
-                                        foreach ($ocorrencias as $ocorrencia) {
-                                            ?>
-                                        <option <?php
-                                        if ($ocorrencia['idTipoOcorrencia'] == $demanda['idTipoOcorrencia']) {
-                                            echo "selected";
-                                        } /*lucas 25092023 ID 358 indentado value de idTipoOcorrencia para não passar valor em branco*/  ?>
-                                            value="<?php echo $ocorrencia['idTipoOcorrencia'] ?>"><?php echo $ocorrencia['nomeTipoOcorrencia'] ?>
-                                        </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -14px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Horas Cobrado</label>
-                                    <input type="time" class="data select form-control" name="horaCobrado">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -20px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Data Previsão</label>
-                                    <input type="date" class="data select form-control" name="Previsto" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -20px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Inicio</label>
-                                    <input type="time" class="data select form-control" name="horaInicioPrevisto" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: -20px;">
-                                <div class="form-group">
-                                    <label class="labelForm">Fim</label>
-                                    <input type="time" class="data select form-control" name="horaFinalPrevisto" autocomplete="off">
-                                </div>
+                            <div class="col-md-5 d-flex">
+                                <span class="ts-subTitulo"><strong>Serviço: </strong></span>
+                                <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idServico" id="idServico" autocomplete="off">
+                                    <option value="<?php echo $demanda['idServico'] ?>"><?php echo $demanda['nomeServico'] ?>
+                                        <?php foreach ($servicos as $servico) { ?>
+                                    <option value="<?php echo $servico['idServico'] ?>"><?php echo $servico['nomeServico'] ?>
+                                    </option>
+                                <?php } ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="card-footer bg-transparent" style="text-align:right">
-                            <button type="submit" formaction="../database/tarefas.php?operacao=inserirStart"
-                                class="btn btn-warning">Start</button>
-                            <button type="submit" formaction="../database/tarefas.php?operacao=inserir"
-                                class="btn btn-success">Inserir</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Gabriel 11102023 ID 596 removido modal Alterar tarefa -->
-
-    <!--------- MODAL STOP --------->
-    <div class="modal fade bd-example-modal-lg" id="stopmodal" tabindex="-1" role="dialog" aria-labelledby="stopmodalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="container-fluid p-0">
-                            <div class="col">
-                                <span class="tituloEditor">Comentários</span>
-                            </div>
-                            <div class="quill-stop" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
-                        </div>
-                        <div class="col-md form-group" style="margin-top: 5px;">
-                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                            
-                            <input type="hidden" class="form-control" name="idTarefa" id="idTarefa-stop" />
-                            <input type="hidden" class="form-control" name="idDemanda" id="idDemanda-stop" />
-                            <input type="hidden" class="form-control" name="tipoStatusDemanda" id="status-stop" />
-                            <input type="time" class="form-control" name="horaInicioCobrado" id="horaInicioReal-stop" step="2" readonly style="display: none;" />
-                            
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="col align-self-start pl-0">
-                        <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning float-left" >Entregar</button>
                     </div>
-                    <button type="submit" formaction="../database/tarefas.php?operacao=stop" class="btn btn-danger">Stop</button>
-                    
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!--------- MODAL ENCERRAR --------->
-    <div class="modal fade bd-example-modal-lg" id="encerrarModal" tabindex="-1" role="dialog" aria-labelledby="encerrarModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
-                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="container-fluid p-0">
-                            <div class="col">
-                                <span class="tituloEditor">Comentários</span>
+
+                    </form>
+
+                    <!-- <hr style="border-top: 2px solid #000000;"> -->
+                    <div class="row mt-1">
+                        <div id="ts-tabs">
+                            <div class="tab whiteborder" id="tab-demanda">Demanda</div>
+                            <div class="tab" id="tab-tarefas">Tarefas</div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+
+                        <div id="ts-tabs">
+                            <div class="tabContent" style="margin-top: -10px;">
+                                <?php include_once 'demanda_descricao.php'; ?>
                             </div>
-                            <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
-                            <div class="quill-encerrar" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-encerrar" name="comentario"></textarea>
-                            <!-- -->
-                        </div>
-                        <div class="col-md form-group" style="margin-top: 5px;">
-                            <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <!-- lucas 22092023 ID 358 Modificado nome do botao-->
-                    <button type="submit" formaction="../database/demanda.php?operacao=validar" class="btn btn-danger">Encerrar</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal para reabrir-->
-    <!--------- MODAL REABRIR --------->
-    <div class="modal fade bd-example-modal-lg" id="reabrirModal" tabindex="-1" role="dialog" aria-labelledby="reabrirModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
-                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="container-fluid p-0">
-                            <div class="col">
-                                <span class="tituloEditor">Comentários</span>
+                            <div class="tabContent p-0" style="margin-top: -10px;">
+                                <?php include_once 'visualizar_tarefa.php'; ?>
                             </div>
-                            <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
-                            <div class="quill-reabrir" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-reabrir" name="comentario"></textarea>
-                            <!-- -->
+
                         </div>
-                        <div class="col-md form-group" style="margin-top: 5px;">
-                            <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
-                        </div>
+
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <!-- lucas 22092023 ID 358 Modificado nome do botao-->
-                    <button type="submit" formaction="../database/demanda.php?operacao=retornar" class="btn btn-warning">Reabrir</button>
-                </div>
-                </form>
-            </div>
+            </div><!-- Modal 1 -->
+
+
         </div>
-    </div>
+        <!--------- INSERIR/NOVA --------->
+        <?php include_once 'modalTarefa_inserirAgendar.php' ?>
 
-    <!--------- MODAL ENCAMINHAR --------->
-    <div class="modal fade bd-example-modal-lg" id="encaminharModal" tabindex="-1" role="dialog" aria-labelledby="encaminharModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
-                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="container-fluid p-0">
-                            <div class="col">
-                                <span class="tituloEditor">Comentários</span>
-                            </div>
-                            <div class="quill-encaminhar" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-encaminhar" name="comentario"></textarea>
-                        </div>
-                        <div class="col-md form-group" style="margin-top: 5px;">
-                            <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
-                        </div>
-                        <div class="col-md-3 mt-2">
-                        <label class='control-label' for='inputNormal' style="margin-top: -40px;">Reponsável</label>
-                                    <select class="form-control" name="idAtendente">
-                                        <?php
-                                        foreach ($atendentes as $atendente) {
-                                        ?>
-                                            <option <?php
-                                                    if ($atendente['idUsuario'] == $demanda['idAtendente']) {
-                                                        echo "selected";
-                                                    }
-                                                    ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>
-                                        <?php } ?>
-                                    </select>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" formaction="../database/demanda.php?operacao=solicitar" class="btn btn-warning">Encaminhar</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
+        <!--------- MODAL STOP --------->
+        <?php include_once 'modalTarefa_stop.php' ?>
 
-    <!-- lucas 22092023 ID 358 Modificado nome da chamada do modal para entregar-->
-<!--------- MODAL ENTREGAR --------->
-<div class="modal fade bd-example-modal-lg" id="entregarModal" tabindex="-1" role="dialog" aria-labelledby="entregarModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
-                    <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="container-fluid p-0">
-                            <div class="col">
-                                <span class="tituloEditor">Comentários</span>
-                            </div>
-                            <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
-                            <div class="quill-entregar" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-entregar" name="comentario"></textarea>
-                            <!-- -->
-                        </div>
-                        <div class="col-md form-group" style="margin-top: 5px;">
-                            <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-                            <input type="hidden" class="form-control" name="tipoStatusDemanda" value="<?php echo $demanda['idTipoStatus'] ?>" readonly>
-                        </div>
+        <!--------- MODAL ENCERRAR --------->
+        <?php include_once 'modalstatus_encerrar.php' ?>
 
-                </div>
-                <div class="modal-footer">
-                    <!-- lucas 22092023 ID 358 Modificado nome do botao-->
-                    <button type="submit" formaction="../database/demanda.php?operacao=realizado" class="btn btn-warning">Entregar</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--Gabriel 11102023 ID 596 modal Alterar tarefa via include -->
-    <?php include 'alterarTarefaModal.php'; ?>
+        <!--------- MODAL REABRIR --------->
+        <?php include_once 'modalstatus_reabrir.php' ?>
 
+        <!--------- MODAL ENCAMINHAR --------->
+        <?php include_once 'modalstatus_encaminhar.php' ?>
+
+        <!--------- MODAL ENTREGAR --------->
+        <?php include_once 'modalstatus_entregar.php' ?>
+
+        <!--Gabriel 11102023 ID 596 modal Alterar tarefa via include -->
+        <!--Lucas 18102023 ID 602 alterado nome do arquivo para modalTarefa_alterar -->
+        <?php include 'modalTarefa_alterar.php'; ?>
+    </div><!--container-fluid-->
+
+    <!-- LOCAL PARA COLOCAR OS JS -->
+
+    <?php include_once ROOT . "/vendor/footer_js.php"; ?>
+    <!-- QUILL editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <script>
+        var myModal = new bootstrap.Modal(document.getElementById("modalDemandaVizualizar"), {});
+        document.onreadystatechange = function() {
+            myModal.show();
+        };
+
         var tab;
         var tabContent;
 
@@ -477,13 +310,13 @@ if (isset($_SESSION['idCliente'])) {
             if (id === 'tarefas') {
                 showTabsContent(2);
             }
-        //Gabriel 26092023 ID 575 adicionado tab mensagens
+            //Gabriel 26092023 ID 575 adicionado tab mensagens
             if (id === 'mensagem') {
                 showTabsContent(3);
             }
         }
 
-        document.getElementById('tabs').onclick = function(event) {
+        document.getElementById('ts-tabs').onclick = function(event) {
             var target = event.target;
             if (target.className == 'tab') {
                 for (var i = 0; i < tab.length; i++) {
@@ -514,274 +347,93 @@ if (isset($_SESSION['idCliente'])) {
     </script>
 
     <script>
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        var quillencerrar = new Quill('.quill-encerrar', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
+        //Lucas 10112023 ID 965 Removido script  do editor - encerrado, reabrir, encaminhar e stop        
 
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        quillencerrar.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-encerrar').val(quillencerrar.container.firstChild.innerHTML);
-        });
+        //Gabriel 11102023 ID 596 script para tratar o envio e retorno do form alterar tarefa
+        $(document).ready(function() {
+            $("#alterarForm").submit(function(event) {
+                //alert('passou aqui')
+                event.preventDefault();
+                var formData = new FormData(this);
+                var vurl;
+                if ($("#stopButtonModal").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=stop";
+                }
+                if ($("#startButtonModal").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=start";
+                }
+                if ($("#realizadoButtonModal").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=realizado&acao=realizado";
+                }
+                if ($("#atualizarButtonModal").is(":focus")) {
+                    vurl = "../database/tarefas.php?operacao=alterar";
+                }
+                $.ajax({
+                    url: vurl,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: refreshPage('tarefas', <?php echo $idDemanda ?>)
 
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        var quillreabrir = new Quill('.quill-reabrir', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        quillreabrir.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-reabrir').val(quillreabrir.container.firstChild.innerHTML);
-        });
-
-        var quillencaminhar = new Quill('.quill-encaminhar', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
-
-        quillencaminhar.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-encaminhar').val(quillencaminhar.container.firstChild.innerHTML);
-        });
-
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        var quillentregar = new Quill('.quill-entregar', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
-
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        quillentregar.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-entregar').val(quillentregar.container.firstChild.innerHTML);
-        });
-
-        var quillstop = new Quill('.quill-stop', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
-
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        quillstop.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
-        });
-//Gabriel 11102023 ID 596 script para tratar o envio e retorno do form alterar tarefa
-    $(document).ready(function () {
-        $("#alterarForm").submit(function (event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            var vurl;
-            if ($("#stopButtonModal").is(":focus")) {
-                vurl = "../database/tarefas.php?operacao=stop";
-            } 
-            if ($("#startButtonModal").is(":focus")) {
-                vurl = "../database/tarefas.php?operacao=start";
-            } 
-            if ($("#realizadoButtonModal").is(":focus")) {
-                vurl = "../database/tarefas.php?operacao=realizado";
-            } 
-            if ($("#atualizarButtonModal").is(":focus")) {
-                vurl = "../database/tarefas.php?operacao=alterar";
-            }
-            $.ajax({
-                url: vurl,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: refreshPage('tarefas', <?php echo $idDemanda ?>)
-                
+                });
             });
         });
-    });
-    function refreshPage(tab, idDemanda) {
-        window.location.reload();
-        var url = window.location.href.split('?')[0];
-        var newUrl = url + '?id=' + tab + '&&idDemanda=' + idDemanda;
-        window.location.href = newUrl;
-    }
 
-    
+        function refreshPage(tab, idDemanda) {
+            window.location.reload();
+            var url = window.location.href.split('?')[0];
+            var newUrl = url + '?id=' + tab + '&&idDemanda=' + idDemanda;
+            window.location.href = newUrl;
+        }
+
+
+        var quilldescricao = new Quill('.quill-textarea', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{
+                        'list': 'ordered'
+                    }, {
+                        'list': 'bullet'
+                    }],
+                    [{
+                        'indent': '-1'
+                    }, {
+                        'indent': '+1'
+                    }],
+                    [{
+                        'direction': 'rtl'
+                    }],
+                    [{
+                        'size': ['small', false, 'large', 'huge']
+                    }],
+                    [{
+                        'header': [1, 2, 3, 4, 5, 6, false]
+                    }],
+                    [{
+                        'color': []
+                    }, {
+                        'background': []
+                    }],
+                    [{
+                        'font': []
+                    }],
+                    [{
+                        'align': []
+                    }],
+                ]
+            },
+            scrollingContainer: '#scrolling-container'
+        });
+
+        quilldescricao.on('text-change', function(delta, oldDelta, source) {
+            $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
+        });
     </script>
+
 </body>
 
 </html>

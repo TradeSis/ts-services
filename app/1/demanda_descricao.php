@@ -1,17 +1,23 @@
 <?php
+//lucas 22092023 ID 358 Demandas/Comentarios 
+//gabriel 220323
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
+
+/* 
+Exemplo de entrada :
+{"idEmpresa":"1","idDemanda":"749","idUsuario":"14","idCliente":"1","comentario":"<p>texto<\/p>","idAtendente":null,"acao":"entregar"}
+*/
 
 //LOG
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL = defineNivelLog();
-    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_retornar";
+    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_descricao";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
             $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
         }
     }
-
 }
 if (isset($LOG_NIVEL)) {
     if ($LOG_NIVEL == 1) {
@@ -29,38 +35,19 @@ if (isset($jsonEntrada["idEmpresa"])) {
 }
 $conexao = conectaMysql($idEmpresa);
 if (isset($jsonEntrada['idDemanda'])) {
+
     $idDemanda = $jsonEntrada['idDemanda'];
-    $idTipoStatus = $jsonEntrada['idTipoStatus'];
-    $comentario = $jsonEntrada['comentario'];
-    $idUsuario = $jsonEntrada['idUsuario'];
-    $idCliente = $jsonEntrada['idCliente'];
-    //$idAnexo = $jsonEntrada['idAnexo'];
-    //$pathAnexo = $jsonEntrada['pathAnexo'];
-    //$nomeAnexo = $jsonEntrada['nomeAnexo'];
+    $descricao = $jsonEntrada['descricao'];
+    $descricao = "'" . $descricao . "'";
+      
 
-    if ($comentario == '') {
-        $comentario = null;
-    }
-
-    // busca dados tipostatus    
-    $sql2 = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
-    $buscar2 = mysqli_query($conexao, $sql2);
-    $row = mysqli_fetch_array($buscar2, MYSQLI_ASSOC);
-    $posicao = $row["mudaPosicaoPara"];
-    $statusDemanda = $row["mudaStatusPara"];
-
-    $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataFechamento=NULL, statusDemanda=$statusDemanda, dataAtualizacaoCliente=CURRENT_TIMESTAMP(), QtdRetornos=QtdRetornos+1 WHERE idDemanda = $idDemanda;";
-
-    if ($comentario != null) {
-        $sql3 = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP())";
-    }
+    $sql = "UPDATE demanda SET descricao = $descricao  WHERE demanda.idDemanda = $idDemanda ";
 
 
     //LOG
     if (isset($LOG_NIVEL)) {
-        if ($LOG_NIVEL >= 2) {
+        if ($LOG_NIVEL >= 3) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-            fwrite($arquivo, $identificacao . "-SQL3->" . $sql3 . "\n");
         }
     }
     //LOG
@@ -69,15 +56,13 @@ if (isset($jsonEntrada['idDemanda'])) {
     try {
 
         $atualizar = mysqli_query($conexao, $sql);
-        $atualizar3 = mysqli_query($conexao, $sql3);
-        if (!$atualizar || !$atualizar3)
+        if (!$atualizar)
             throw new Exception(mysqli_error($conexao));
-
+    
         $jsonSaida = array(
             "status" => 200,
             "retorno" => "ok"
         );
-
     } catch (Exception $e) {
         $jsonSaida = array(
             "status" => 500,
@@ -86,7 +71,6 @@ if (isset($jsonEntrada['idDemanda'])) {
         if ($LOG_NIVEL >= 1) {
             fwrite($arquivo, $identificacao . "-ERRO->" . $e->getMessage() . "\n");
         }
-
     } finally {
         // ACAO EM CASO DE ERRO (CATCH), que mesmo assim precise
     }
@@ -98,7 +82,6 @@ if (isset($jsonEntrada['idDemanda'])) {
         "status" => 400,
         "retorno" => "Faltaram parametros"
     );
-
 }
 
 //LOG

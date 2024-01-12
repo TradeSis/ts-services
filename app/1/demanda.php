@@ -1,4 +1,5 @@
 <?php
+//Lucas 28112023 id706 Melhorias Demandas 2
 //lucas 26092023 ID 576 Demanda/BOTÕES de SITUACOES 
 // Lucas 19052023 adicionado if para filtro de tamanho
 // Lucas 22032023 adicionado if para filtro de tituloDemanda
@@ -14,7 +15,7 @@ if (isset($LOG_CAMINHO)) {
   $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "demanda_select";
   if (isset($LOG_NIVEL)) {
     if ($LOG_NIVEL >= 1) {
-      $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
+      $arquivo = fopen(defineCaminhoLog() . "services_select_" . date("dmY") . ".log", "a");
     }
   }
 
@@ -23,7 +24,7 @@ if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL == 1) {
     fwrite($arquivo, $identificacao . "\n");
   }
-  if ($LOG_NIVEL >= 2) {
+  if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
   }
 }
@@ -38,18 +39,21 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 $demanda = array();
 
-$sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipoocorrencia.nomeTipoOcorrencia, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante FROM demanda
+
+$sql = "SELECT demanda.*, contratotipos.*, cliente.nomeCliente, tipostatus.nomeTipoStatus, contrato.tituloContrato, servicos.nomeServico, atendente.nomeUsuario AS nomeAtendente, solicitante.nomeUsuario AS nomeSolicitante 
+, '' AS dataPrevisaoInicioFormatada, '' AS dataPrevisaoEntregaFormatada, '' AS dataAberturaFormatada,'' AS horaAberturaFormatada, '' AS 	dataFechamentoFormatada, '' AS horaFechamentoFormatada
+, '' AS atrasada FROM demanda
         LEFT JOIN cliente ON demanda.idCliente = cliente.idCliente
         LEFT JOIN usuario AS atendente ON demanda.idAtendente = atendente.idUsuario
         LEFT JOIN usuario AS solicitante ON demanda.idSolicitante = solicitante.idUsuario
         LEFT JOIN contrato ON demanda.idContrato = contrato.idContrato
         LEFT JOIN servicos ON demanda.idServico = servicos.idServico
-        LEFT JOIN tipoocorrencia ON demanda.idTipoOcorrencia = tipoocorrencia.idTipoOcorrencia
         LEFT JOIN tipostatus ON demanda.idTipoStatus = tipostatus.idTipoStatus
         LEFT JOIN contratotipos  on  demanda.idContratoTipo = contratotipos.idContratoTipo ";
 $where = " where ";
 if (isset($jsonEntrada["idDemanda"]) && $jsonEntrada["idDemanda"] !== "") {
   $sql = $sql . $where . " demanda.idDemanda = " . $jsonEntrada["idDemanda"];
+  $where = " and ";
 }
 
 if (isset($jsonEntrada["idCliente"])) {
@@ -67,8 +71,9 @@ if (isset($jsonEntrada["idTipoStatus"])) {
   $where = " and ";
 }
 
-if (isset($jsonEntrada["idTipoOcorrencia"])) {
-  $sql = $sql . $where . " demanda.idTipoOcorrencia = " . $jsonEntrada["idTipoOcorrencia"];
+//Lucas 28112023 id706 - removido idTipoOcorrencia e adicionado idServico
+if (isset($jsonEntrada["idServico"])) {
+  $sql = $sql . $where . " demanda.idServico = " . $jsonEntrada["idServico"];
   $where = " and ";
 }
 
@@ -86,11 +91,6 @@ if (isset($jsonEntrada["buscaDemanda"])) {
   $sql = $sql . $where . " demanda.idDemanda= " . "'" . $jsonEntrada["buscaDemanda"] . "'" . " or demanda.tituloDemanda like " . "'%" . $jsonEntrada["buscaDemanda"] . "%'";
   $where = " and ";
 }
-//lucas 26092023 ID 576 Substituido $jsonEntrada["tamanho"] para $jsonEntrada["posicao"], filtro tamanho foi removido 
-if (isset($jsonEntrada["posicao"])) {
-  $sql = $sql . $where . " demanda.posicao = " . $jsonEntrada["posicao"];
-  $where = " and ";
-}
 
 if (isset($jsonEntrada["idContrato"])) {
   $sql = $sql . $where . " demanda.idContrato = " . "'" . $jsonEntrada["idContrato"] . "'";
@@ -102,16 +102,29 @@ if (isset($jsonEntrada["idContratoTipo"])) {
   $where = " and ";
 }
 
-
+if(isset($jsonEntrada['idUsuario'])){
+  $idUsuario = $jsonEntrada['idUsuario'];
+  if ($idUsuario != null) { 
+    $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = " . $idUsuario ." ";
+    $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+    $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+    $idCliente = $row_consulta['idCliente'];
+    if($idCliente != null){
+      $sql = $sql . $where . " demanda.idCliente= ". $idCliente . " ";
+    }
+  }
+}
 
 
 $sql = $sql . " order by ordem, prioridade, idDemanda";
+
+
 //echo "-SQL->" . json_encode($sql) . "\n";
 $rows = 0;
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 3) {
+  if ($LOG_NIVEL >= 5) {
     fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
   }
 }
@@ -124,9 +137,51 @@ try {
   $buscar = mysqli_query($conexao, $sql);
   if (!$buscar)
     throw new Exception(mysqli_error($conexao));
-
+  
   while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
     array_push($demanda, $row);
+    $today = date("Y-m-d");
+
+    $dataAberturaFormatada = null;
+    $horaAberturaFormatada = null;
+    if(isset($demanda[$rows]["dataAbertura"])){
+      $dataAberturaFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataAbertura"]));
+      $horaAberturaFormatada = date('H:i', strtotime($demanda[$rows]["dataAbertura"]));
+    }
+
+    $dataFechamentoFormatada = null;
+    $horaFechamentoFormatada = null;
+    if(isset($demanda[$rows]["dataFechamento"])){
+      $dataFechamentoFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataFechamento"]));
+      $horaFechamentoFormatada = date('H:i', strtotime($demanda[$rows]["dataFechamento"]));
+    }
+
+    $dataPrevisaoInicioFormatada = null;
+    if(isset($demanda[$rows]["dataPrevisaoInicio"])){
+      $dataPrevisaoInicioFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataPrevisaoInicio"]));
+    }
+
+    $dataPrevisaoEntregaFormatada = null;
+    if(isset($demanda[$rows]["dataPrevisaoEntrega"])){
+      $dataPrevisaoEntregaFormatada = date('d/m/Y', strtotime($demanda[$rows]["dataPrevisaoEntrega"]));
+    }
+    
+    $dataPrevisaoEntregaComparacao = date("Y-m-d",strtotime($demanda[$rows]["dataPrevisaoEntrega"])); 
+    
+    if($dataPrevisaoEntregaComparacao < $today){
+      $atrasada = true;
+    }else{
+      $atrasada = false;
+    }
+
+    $demanda[$rows]["dataAberturaFormatada"] = $dataAberturaFormatada;
+    $demanda[$rows]["horaAberturaFormatada"] = $horaAberturaFormatada;
+    $demanda[$rows]["dataFechamentoFormatada"] = $dataFechamentoFormatada;
+    $demanda[$rows]["horaFechamentoFormatada"] = $horaFechamentoFormatada;
+    $demanda[$rows]["dataPrevisaoInicioFormatada"] = $dataPrevisaoInicioFormatada;
+    $demanda[$rows]["dataPrevisaoEntregaFormatada"] = $dataPrevisaoEntregaFormatada;
+    $demanda[$rows]["atrasada"] = $atrasada;
+
     $rows = $rows + 1;
   }
   if (isset($jsonEntrada["idDemanda"]) && $rows == 1) {
@@ -153,7 +208,7 @@ try {
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 3) {
+  if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
   }
 }

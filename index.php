@@ -16,7 +16,6 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
     
     <?php include_once ROOT. "/vendor/head_css.php";?>
     <!-- Gabriel 05102023 ID 575 removido style, formato arquivo /excluido style -->
-    <link href="chat.css" rel="stylesheet" type="text/css">
 
     <title>Serviços</title>
 
@@ -75,6 +74,12 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                                 href="?tab=demandas" role="tab">Demandas</a>
                             </li>
                         <?php }
+                        if ($nivelMenu >= 1) { ?>
+                            <li class="nav-item mr-1">
+                                <a class="nav-link <?php if ($tab == "fila") {echo " active ";} ?>" 
+                                href="?tab=fila" role="tab">Fila de Atendimento</a>
+                            </li>                            
+                        <?php }
                         if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
                                 <a class="nav-link <?php if ($tab == "contratos") {echo " active ";} ?>" 
@@ -93,14 +98,19 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                                 href="?tab=os" role="tab">O.S.</a>
                             </li>
                         <?php }
+                        if ($nivelMenu >= 2) { ?>
+                            <li class="nav-item mr-1">
+                                <a class="nav-link <?php if ($tab == "rotinas") {echo " active ";} ?>" 
+                                href="?tab=rotinas" role="tab">Rotinas</a>
+                            </li>
+                        <?php }
                         if ($nivelMenu >= 4) { ?>
                             <li class="nav-item mr-1">
                                 <a class="nav-link <?php if ($tab == "configuracao") {echo " active ";} ?>" 
                                 href="?tab=configuracao" role="tab" data-toggle="tooltip" data-placement="top" title="Configurações"><i class="bi bi-gear"></i> Configurações</a>
                             </li>
-                        <?php } ?>
-
-
+                        
+                            <?php } ?>
                     </ul>
                 </div>
                 <!--Essa coluna só vai aparecer em dispositivo mobile-->
@@ -133,6 +143,9 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         <option value="<?php echo URLROOT ?>/services/?tab=os" 
                         <?php if ($getTab == "os") {echo " selected ";} ?>>O.S.</option>
 
+                        <option value="<?php echo URLROOT ?>/services/?tab=rotinas" 
+                        <?php if ($getTab == "rotinas") {echo " selected ";} ?>>Rotinas</option>
+
                         <option value="<?php echo URLROOT ?>/services/?tab=configuracao" 
                         <?php if ($getTab == "configuracao") {echo " selected ";} ?>>Configurações</option>
                     </select>
@@ -162,6 +175,10 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                 $src = "contratos/?tipo=os";
                 $title = "Serviços/O.S.";
             }
+            if ($tab == "rotinas") {
+                $src = "contratos/?tipo=rotinas";
+                $title = "Serviços/Rotinas";
+            }
 
             if ($tab == "contratos") {
                 $src = "contratos/?tipo=contratos";
@@ -182,6 +199,10 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
             if ($tab == "agenda") {
                 $src = "demandas/agenda.php";
                 $title = "Serviços/Agenda";
+            }
+            if ($tab == "fila") {
+                $src = "visaocli/";
+                $title = "Fila";
             }
             if ($tab == "configuracao") {
                 $src = "configuracao/";

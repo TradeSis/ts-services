@@ -22,9 +22,6 @@
 // Lucas 31012023 20:53
 
 
-//
-//
-
 include_once(__DIR__ . '/../header.php');
 include_once(__DIR__ . '/../database/contratos.php');
 include_once(__DIR__ . '/../database/contratoStatus.php');
@@ -36,7 +33,8 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
-$cards = buscaCards("");
+$cards = buscaCards("", $urlContratoTipo);
+
 
 $idCliente = null;
 $idContratoStatus = null;
@@ -60,162 +58,147 @@ if (isset($_SESSION['filtro_contrato'])) {
 
 
 
-<body class="bg-transparent">
-    <div class="container-fluid py-1">
-        <div class="header-body">
-            <div class="row row-cols-6">
+<body>
+    <div class="container-fluid">
 
-                <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-12 col-md-12 col-lg p-1">
-                                <div class="text-xs font-weight-bold text-secondary text-uppercase ">
-                                    Total</div>
-
-                                <div class="h5 mb-0  text-gray-800"><?php
-                                                                    foreach ($cards as $card)
-                                                                        if ($card["idContratoStatus"] == "0") {
-                                                                            echo "(" . $card['qtdContratos'] . ") ";
-                                                                            if ("$logado" == "helio") {
-                                                                                echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                            }
-                                                                        }
-
-                                                                    ?>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-12 col-md-12 col-lg p-1">
-                                <div class="text-xs font-weight-bold text-success text-uppercase ">
-                                    Orçamento</div>
-                                <div class="h5 mb-0  text-gray-800"><?php
-                                                                    foreach ($cards as $card)
-                                                                        if ($card["idContratoStatus"] == "1") {
-                                                                            echo "(" . $card['qtdContratos'] . ") ";
-                                                                            if ("$logado" == "helio") {
-                                                                                echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                            }
-                                                                        }
-
-                                                                    ?>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-12 col-md-12 col-lg p-1 ">
-                                <div class="text-xs font-weight-bold text-success text-uppercase ">
-                                    Aprovação</div>
-                                <div class="h5 mb-0 text-gray-800"><?php
-                                                                    foreach ($cards as $card)
-                                                                        if ($card["idContratoStatus"] == "2") {
-                                                                            echo "(" . $card['qtdContratos'] . ") ";
-                                                                            if ("$logado" == "helio") {
-                                                                                echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                            }
-                                                                        }
-
-                                                                    ?>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-12 col-md-12 col-lg p-1">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase ">
-                                    Desenvolvimento</div>
-                                <div class="h5 mb-0  text-gray-800"><?php
-                                                                    foreach ($cards as $card)
-                                                                        if ($card["idContratoStatus"] == "3") {
-                                                                            echo "(" . $card['qtdContratos'] . ") ";
-                                                                            if ("$logado" == "helio") {
-                                                                                echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                            }
-                                                                        }
-
-                                                                    ?>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-12 col-md-12 col-lg p-1">
-                                <div class="text-xs font-weight-bold text-danger text-uppercase ">
-                                    Faturamento</div>
-                                <div class="h5 mb-0  text-gray-800"><?php
-                                                                    foreach ($cards as $card)
-                                                                        if ($card["idContratoStatus"] == "4") {
-                                                                            echo "(" . $card['qtdContratos'] . ") ";
-                                                                            if ("$logado" == "helio") {
-                                                                                echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                            }
-                                                                        }
-
-                                                                    ?>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-12 col-lg my-2">
-                    <div class="card border-left-success ts-shadow py-0 ts-cardsTotais">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-12 col-md-12 col-lg p-1">
-                                <div class="text-xs font-weight-bold text-danger text-uppercase ">
-                                    Recebimento</div>
-                                <div class="h5 mb-0  text-gray-800"><?php
-                                                                    foreach ($cards as $card)
-                                                                        if ($card["idContratoStatus"] == "5") {
-                                                                            echo "(" . $card['qtdContratos'] . ") ";
-                                                                            if ("$logado" == "helio") {
-                                                                                echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                            }
-                                                                        }
-
-                                                                    ?>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
+        <div class="row ">
+            <!-- <BR> MENSAGENS/ALERTAS -->
         </div>
-    </div>
+        <div class="row row-cols-1 row-cols-md-6 pt-2">
+            <!-- BOTOES AUXILIARES -->
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-secondary">TOTAL</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
+                                                                foreach ($cards as $card)
+                                                                    if ($card["idContratoStatus"] == "0") {
+                                                                        echo "(" . $card['qtdContratos'] . ") ";
+                                                                        if ("$logado" == "helio") {
+                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
+                                                                        }
+                                                                    }
 
+                                                                ?>
+                    </div>
+                </div>
+            </div>
 
-<!-- MENUFILTROS -->
-    <nav class="ts-menuFiltros" style="margin-top: 40px;"> 
-    <label class="pl-2" for="">Filtrar por:</label>
-       
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-success">ORÇAMENTO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
+                                                                foreach ($cards as $card)
+                                                                    if ($card["idContratoStatus"] == "1") {
+                                                                        echo "(" . $card['qtdContratos'] . ") ";
+                                                                        if ("$logado" == "helio") {
+                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
+                                                                        }
+                                                                    }
+
+                                                                ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-success">APROVAÇÂO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
+                                                                foreach ($cards as $card)
+                                                                    if ($card["idContratoStatus"] == "2") {
+                                                                        echo "(" . $card['qtdContratos'] . ") ";
+                                                                        if ("$logado" == "helio") {
+                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
+                                                                        }
+                                                                    }
+
+                                                                ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-warning">DESENVOLVIMENTO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
+                                                                foreach ($cards as $card)
+                                                                    if ($card["idContratoStatus"] == "3") {
+                                                                        echo "(" . $card['qtdContratos'] . ") ";
+                                                                        if ("$logado" == "helio") {
+                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
+                                                                        }
+                                                                    }
+
+                                                                ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-danger">FATURAMENTO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
+                                                                foreach ($cards as $card)
+                                                                    if ($card["idContratoStatus"] == "4") {
+                                                                        echo "(" . $card['qtdContratos'] . ") ";
+                                                                        if ("$logado" == "helio") {
+                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
+                                                                        }
+                                                                    }
+
+                                                                ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
+                    <div class="text-xs fw-bold text-danger">RECEBIMENTO</div>
+                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
+                                                                foreach ($cards as $card)
+                                                                    if ($card["idContratoStatus"] == "5") {
+                                                                        echo "(" . $card['qtdContratos'] . ") ";
+                                                                        if ("$logado" == "helio") {
+                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
+                                                                        }
+                                                                    }
+
+                                                                ?>
+                    </div>
+                </div>
+            </div>
+
+        </div><!--fim-  BOTOES AUXILIARES -->
+
+        <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
+
+            <div class="col-2 col-lg-1 order-lg-1">
+                <button class="btn btn-outline-secondary ts-btnFiltros" type="button"><i class="bi bi-funnel"></i></button>
+            </div>
+
+            <div class="col-4 col-lg-3 order-lg-2">
+                <h2 class="ts-tituloPrincipal"><?php echo $contratoTipo['nomeContrato'] ?></h2>
+                <span>Filtro Aplicado</span>
+            </div>
+
+            <div class="col-6 col-lg-2 order-lg-3">
+                <!-- BOTÂO OPCIONAL -->
+            </div>
+
+            <div class="col-12 col-lg-6 order-lg-4">
+                <div class="input-group">
+                    <input type="text" class="form-control ts-input" id="buscaContrato" placeholder="Buscar por id ou titulo">
+                    <button class="btn btn-primary rounded" type="button" id="buscar"><i class="bi bi-search"></i></button>
+                    <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="ms-4 btn btn-success ml-4"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MENUFILTROS -->
+        <div class="ts-menuFiltros mt-2 px-3">
+            <label>Filtrar por:</label>
+
             <div class="col-12"> <!-- ABERTO/FECHADO -->
                 <form class="d-flex" action="" method="post">
 
@@ -237,72 +220,34 @@ if (isset($_SESSION['filtro_contrato'])) {
                 </form>
             </div>
 
-      
-
-        <div class="col-sm text-end mt-2">
-            <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-        </div>
-    </nav>
-
-
-    <div class="container-fluid text-center ">
-
-
-        <!--INICIO-->
-        <!-- <div class="card-header"> -->
-
-        <div class="row align-items-center">
-            <div class="col-6 order-1 col-sm-6  col-md-6 order-md-1 col-lg-1 order-lg-1 mt-3" >
-                <button type="button" class="ts-btnFiltros btn btn-sm"><span class="material-symbols-outlined">
-                        filter_alt
-                    </span></button>
-
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-12 col-lg-2 order-lg-2 mt-4">
-                <h2 class="ts-tituloPrincipal"><?php echo $contratoTipo['nomeContrato'] ?></h2>
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-12 col-lg-5 order-lg-3">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="buscaContrato" placeholder="Buscar por id ou titulo">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary mt-2" id="buscar" type="button"><span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;" class="material-symbols-outlined">
-                                search
-                            </span></button>
-                    </span>
-                </div>
-            </div>
-
-
-            <div class="col-6 order-2 col-sm-6 col-md-6 order-md-2 col-lg-4 order-lg-4 mt-1" style="text-align: end; margin-left:-30px ">
-                <a href="inserir.php?tipo=<?php echo $contratoTipo['idContratoTipo'] ?>" role="button" class="btn btn-success"><i class="bi bi-plus-square"></i>&nbsp Novo</a>
+            <div class="col-sm text-end mt-2">
+                <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
             </div>
         </div>
 
-        <div class="table ts-divTabela ts-tableFiltros table-striped table-hover">
-            <table class="table table-sm">
+        <div class="table mt-2 ts-divTabela70 ts-tableFiltros">
+            <table class="table table-sm table-hover">
                 <thead class="ts-headertabelafixo">
                     <tr class="ts-headerTabelaLinhaCima">
-                        <th >ID</th>
-                        <th >Cliente</th>
-                        <th >Titulo</th>
-                        <th >Status</th>
-                        <th >Previsão</th>
-                        <th >Entrega</th>
-                        <th >Atualização</th>
-                        <th >Fechamento</th>
-                        <th >Horas</th>
-                        <th >hora</th>
-                        <th >Contrato</th>
-                        <th  colspan="2">Ação</th>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Titulo</th>
+                        <th>Status</th>
+                        <th>Previsão</th>
+                        <th>Entrega</th>
+                        <th>Atualização</th>
+                        <th>Fechamento</th>
+                        <th>Horas</th>
+                        <th>hora</th>
+                        <th>Contrato</th>
+                        <th colspan="2">Ação</th>
                     </tr>
-                    
+
                     <tr class="ts-headerTabelaLinhaBaixo">
-                        <th ></th>
-                        <th >
+                        <th></th>
+                        <th>
                             <form action="" method="post">
-                                <select class="form-control ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
+                                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idCliente" id="FiltroClientes">
                                     <option value="<?php echo null ?>"><?php echo "Selecione" ?></option>
                                     <?php
                                     foreach ($clientes as $cliente) {
@@ -316,10 +261,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                                 </select>
                             </form>
                         </th>
-                        <th ></th>
-                        <th >
+                        <th></th>
+                        <th>
                             <form action="" method="post">
-                                <select class="form-control ts-selectFiltrosHeaderTabela" name="idContratoStatus" id="FiltroContratoStatus">
+                                <select class="form-select ts-input ts-selectFiltrosHeaderTabela" name="idContratoStatus" id="FiltroContratoStatus">
                                     <option value="<?php echo null ?>"><?php echo "Status"  ?></option>
                                     <?php
 
@@ -335,14 +280,14 @@ if (isset($_SESSION['filtro_contrato'])) {
 
                             </form>
                         </th>
-                        <th ></th>
-                        <th ></th>
-                        <th ></th>
-                        <th ></th>
-                        <th ></th>
-                        <th ></th>
-                        <th ></th>
-                        <th ></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -358,7 +303,7 @@ if (isset($_SESSION['filtro_contrato'])) {
 
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
     <!-- script para menu de filtros -->
-    <script src= "<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+    <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
 
     <script>
         var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
@@ -434,18 +379,30 @@ if (isset($_SESSION['filtro_contrato'])) {
                         // alert("quarto alert: " + JSON.stringify(object))
                         /*  alert(object); */
                         linha = linha + "<tr>";
-                        linha = linha + "<td>" + object.idContrato + "</td>";
-                        linha = linha + "<td>" + object.nomeCliente + "</td>";
-                        linha = linha + "<td>" + object.tituloContrato + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.idContrato + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.nomeCliente + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.tituloContrato + "</td>";
                         linha = linha + "<td class='" + object.nomeContratoStatus + "' data-status='Finalizado' >" + object.nomeContratoStatus + " </td>";
-                        linha = linha + "<td>" + dataPrevisaoFormatada + "</td>";
-                        linha = linha + "<td>" + dataEntregaFormatada + "</td>";
-                        linha = linha + "<td>" + dataAtualizacaoFormatada + "</td>";
-                        linha = linha + "<td>" + dataFechamentoFormatada + "</td>";
-                        linha = linha + "<td>" + object.horas + "</td>";
-                        linha = linha + "<td>" + object.valorHora + "</td>";
-                        linha = linha + "<td>" + object.valorContrato + "</td>";
-                        linha = linha + "<td>" + "<a class='btn btn-warning btn-sm' href='visualizar.php?idContrato=" + object.idContrato + "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i></a>" + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + dataPrevisaoFormatada + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + dataEntregaFormatada + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + dataAtualizacaoFormatada + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + dataFechamentoFormatada + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.horas + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.valorHora + "</td>";
+                        linha = linha + "<td class='ts-click' data-idContrato='" + object.idContrato + "'>" + object.valorContrato + "</td>";
+                        
+                        linha += "<td>"; 
+                        linha += "<div class='btn-group dropstart'><button type='button' class='btn' data-toggle='tooltip' data-placement='left' title='Opções' data-bs-toggle='dropdown' " +
+                        " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
+
+                        linha += "<li class='ms-1 me-1 mt-1'><a class='btn btn-warning btn-sm w-100 text-start' href='visualizar.php?idContrato=" + object.idContrato + 
+                        "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i> Alterar</a></li>";
+
+                        linha += "</tr>";
+                        linha +="</ul></div>"
+                        linha += "</td>";
+                        
+                        
                         linha = linha + "</tr>";
                     }
 
@@ -503,6 +460,10 @@ if (isset($_SESSION['filtro_contrato'])) {
                 buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
             }
         });
+
+        $(document).on('click', '.ts-click', function() {
+        	window.location.href='visualizar.php?idContrato=' + $(this).attr('data-idContrato');
+    	});
 
     </script>
 

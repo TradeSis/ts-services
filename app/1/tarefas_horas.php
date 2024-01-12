@@ -1,4 +1,5 @@
 <?php
+//lucas 29112023 id706 - Melhorias Demandas 2
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 //LOG 
@@ -17,7 +18,7 @@ if (isset($LOG_NIVEL)) {
   if ($LOG_NIVEL == 1) {
     fwrite($arquivo, $identificacao . "\n");
   }
-  if ($LOG_NIVEL >= 2) {
+  if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
   }
 } 
@@ -30,8 +31,9 @@ if (isset($jsonEntrada["idEmpresa"])) {
 $conexao = conectaMysql($idEmpresa);
 
 $tarefa = array();
-$sql = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(subquery.horaCobrado))) AS totalHoraCobrado, SEC_TO_TIME(SUM(TIME_TO_SEC(subquery.horasReal))) AS totalHorasReal
-        FROM (SELECT TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal, tarefa.horaCobrado FROM tarefa";
+//lucas 29112023 id706 - Removido horaCobrado
+$sql = "SELECT  SEC_TO_TIME(SUM(TIME_TO_SEC(subquery.horasReal))) AS totalHorasReal
+        FROM (SELECT TIMEDIFF(tarefa.horaFinalReal, tarefa.horaInicioReal) AS horasReal FROM tarefa";
 
 if (isset($jsonEntrada["idDemanda"])) {
   $sql = $sql . " where tarefa.idDemanda = " . $jsonEntrada["idDemanda"] . ") AS subquery";
@@ -42,7 +44,7 @@ $rows = 0;
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 3) {
+  if ($LOG_NIVEL >= 5) {
     fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
   }
 }
@@ -84,7 +86,7 @@ try {
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 3) {
+  if ($LOG_NIVEL >= 4) {
     fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
   }
 }

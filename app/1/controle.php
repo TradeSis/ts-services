@@ -1,4 +1,5 @@
 <?php
+// lucas 22112023 id 688 - Melhoria em Demandas
 //Gabriel 26092023 ID 575 Demandas/Comentarios - Layout de chat
 // Lucas 05042023 - adicionado aplicativo, menu, menuPrograma e montaMenu
 // gabriel 200323 11:04 - demanda/retornar
@@ -123,6 +124,18 @@ if ($metodo == "GET") {
       include 'contratotipos.php';
       break;
 
+    case "demanda_horasCobrado":
+      include 'demanda_horasCobrado.php';
+      break;
+
+    case "demanda_horasReal":
+      include 'demanda_horasReal.php';
+      break;
+
+      case "visaocli":
+        include 'visaocli.php';
+        break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -138,15 +151,7 @@ if ($metodo == "GET") {
 }
 
 if ($metodo == "PUT") {
-
-  if ($funcao == "comentario" && $parametro == "cliente") {
-    $funcao = "comentario/cliente";
-    $parametro = null;
-  }
-  if ($funcao == "comentario" && $parametro == "atendente") {
-    $funcao = "comentario/atendente";
-    $parametro = null;
-  }
+  // lucas 22112023 id 688 - removido $função de comentario atendente e comentario cliente
   if ($funcao == "demanda" && $parametro == "validar") {
     $funcao = "demanda/validar";
     $parametro = null;
@@ -194,13 +199,9 @@ if ($metodo == "PUT") {
     case "previsao":
       include 'previsao_inserir.php';
       break;
-
-    case "comentario/cliente":
-      include 'comentario_cliente_inserir.php';
-      break;
-
-    case "comentario/atendente":
-      include 'comentario_atendente_inserir.php';
+// lucas 22112023 id 688 - removido comentarios atendente/cliente ficando apenas comentario_inserir
+    case "comentario":
+      include 'comentario_inserir.php';
       break;
 
     case "demanda/validar":
@@ -232,7 +233,7 @@ if ($metodo == "PUT") {
     case "chat":
       include 'chat_inserir.php';
       break;
-      
+     
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -254,8 +255,8 @@ if ($metodo == "POST") {
     $parametro = null;
   }
 
-  if ($funcao == "demanda" && $parametro == "realizado") {
-    $funcao = "demanda/realizado";
+  if ($funcao == "demanda" && $parametro == "atualizar") {
+    $funcao = "demanda/atualizar";
     $parametro = null;
   }
 
@@ -294,7 +295,7 @@ if ($metodo == "POST") {
       include 'demanda_alterar.php';
       break;
 
-    case "demanda/realizado":
+    case "demanda/atualizar":
       include 'demanda_atualizar.php';
       break;
 
@@ -329,6 +330,15 @@ if ($metodo == "POST") {
     case "contratotipos":
       include 'contratotipos_alterar.php';
       break;
+
+    case "demanda_descricao":
+      include 'demanda_descricao.php';
+      break;
+
+    case "visaocli":
+      include 'visaocli_atualizar.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(

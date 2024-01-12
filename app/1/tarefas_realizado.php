@@ -83,8 +83,16 @@ if (isset($jsonEntrada['idTarefa'])) {
         $tipoStatusDemanda = $row_consulta["idTipoStatus"];
         $idUsuario = $row_consulta["idAtendente"];
         $tempoCobradoDigitado = $row_consulta["tempoCobradoDigitado"];
+        $tituloDemanda = $row_consulta["tituloDemanda"];
+        $idContratoTipo = $row_consulta["idContratoTipo"];
+        $idAtendente = $row_consulta["idAtendente"];
 
-        
+        //Busca dados de usuario
+        $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = $idAtendente";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+        $nomeUsuario = $row_consulta["nomeUsuario"];
+        $email = $row_consulta["email"] ;
     }
 
     if (($idDemanda !== "null") && ($comentario !== "null")) {
@@ -98,6 +106,7 @@ if (isset($jsonEntrada['idTarefa'])) {
 
         if ($idDemanda !== "null") {
             $idTipoStatus = TIPOSTATUS_PAUSADO;
+            $nomeStatusEmail = 'PAUSADO';
             //Busca dados Tipostatus    
             $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
             $buscar_consulta = mysqli_query($conexao, $sql_consulta);
@@ -121,6 +130,7 @@ if (isset($jsonEntrada['idTarefa'])) {
         if ($idDemanda !== "null") {
 
             $idTipoStatus = TIPOSTATUS_FAZENDO;
+            $nomeStatusEmail = 'FAZENDO';
             //Busca dados Tipostatus    
             $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
             $buscar_consulta = mysqli_query($conexao, $sql_consulta);
@@ -146,6 +156,7 @@ if (isset($jsonEntrada['idTarefa'])) {
         if ($idDemanda !== "null") {
            
             $idTipoStatus = TIPOSTATUS_PAUSADO;
+            $nomeStatusEmail = 'PAUSADO';
             //Busca dados Tipostatus    
             $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
             $buscar_consulta = mysqli_query($conexao, $sql_consulta);
@@ -182,6 +193,7 @@ if (isset($jsonEntrada['idTarefa'])) {
 
         if ($idDemanda !== "null") {
             $idTipoStatus = TIPOSTATUS_REALIZADO;
+            $nomeStatusEmail = 'REALIZADO';
             //Busca dados Tipostatus    
             $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
             $buscar_consulta = mysqli_query($conexao, $sql_consulta);
@@ -204,6 +216,25 @@ if (isset($jsonEntrada['idTarefa'])) {
         }
         
     }
+
+     //Envio de Email
+     $tituloEmail = $tituloDemanda;
+     $corpoEmail = $idContratoTipo . ' : ' . $tituloDemanda. '<br>' .
+     ' entrou no status: ' . $nomeStatusEmail;
+
+     $arrayPara = array(
+
+         array(
+             'email' => 'tradesis@tradesis.com.br',
+             'nome' => 'TradeSis'
+         ),
+         array(
+         'email' => $email,
+         'nome' => $nomeUsuario 
+         ),
+     );
+
+     $envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
 
 
 

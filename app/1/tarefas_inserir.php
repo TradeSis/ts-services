@@ -103,7 +103,17 @@ if (isset($jsonEntrada['idEmpresa'])) {
         $buscar_consulta1 = mysqli_query($conexao, $sql_consulta1);
         $row_consulta1 = mysqli_fetch_array($buscar_consulta1, MYSQLI_ASSOC);
         $tipoStatusDemanda = $row_consulta1["idTipoStatus"]; 
-        
+        $tituloDemanda = $row_consulta1["tituloDemanda"];
+        $idContratoTipo = $row_consulta1["idContratoTipo"];
+        $idAtendente = $row_consulta1["idAtendente"];
+
+        //Busca dados de usuario
+        $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = $idAtendente";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+        $nomeUsuario = $row_consulta["nomeUsuario"];
+        $email = $row_consulta["email"] ;
+
         //Busca dados Tipostatus    
         $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
@@ -117,12 +127,33 @@ if (isset($jsonEntrada['idEmpresa'])) {
         if (($acao == 'start') && in_array($tipoStatusDemanda, $statusStart, true)) {
             $idTipoStatus = TIPOSTATUS_FAZENDO;
             $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), dataInicio = $dataInicio, statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+            $nomeStatusEmail = 'FAZENDO';
         } else {
             if ($jsonEntrada['Previsto'] != "" && in_array($tipoStatusDemanda, $statusAgendado, true)) {
                 $idTipoStatus = TIPOSTATUS_AGENDADO;
                 $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+                $nomeStatusEmail = 'AGENDADO';
             } 
         }
+
+        //Envio de Email
+        $tituloEmail = $tituloDemanda;
+        $corpoEmail = $idContratoTipo . ' : ' . $tituloDemanda. '<br>' .
+        ' entrou no status: ' . $nomeStatusEmail;
+
+        $arrayPara = array(
+
+            array(
+                'email' => 'tradesis@tradesis.com.br',
+                'nome' => 'TradeSis'
+            ),
+            array(
+            'email' => $email,
+            'nome' => $nomeUsuario 
+            ),
+        );
+
+        $envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
     }
     //LOG
     if (isset($LOG_NIVEL)) {

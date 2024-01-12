@@ -387,34 +387,6 @@ if (isset($_SESSION['filtro_demanda'])) {
           var linha = "";
           for (var $i = 0; $i < json.length; $i++) {
             var object = json[$i];
-                    
-            var dataAbertura = new Date(object.dataAbertura);
-            var dataAberturaFormatada = dataAbertura.toLocaleDateString("pt-BR");
-           
-            var dataFechamento = new Date(object.dataFechamento);
-            dataFechamentoFormatada = dataFechamento.toLocaleDateString("pt-BR");
-           
-            dataPrevisaoEntrega = object.dataPrevisaoEntrega
-            if(object.dataPrevisaoEntrega == null){
-              dataPrevisaoEntrega = "null"
-            }
-            var dataEntrega = new Date(dataPrevisaoEntrega);
-            dataPrevisaoEntregaFormatada = (`${dataEntrega.getUTCDate().toString().padStart(2, '0')}/${(dataEntrega.getUTCMonth()+1).toString().padStart(2, '0')}/${dataEntrega.getUTCFullYear()}`);
-      
-            if(object.prioridade == '99'){
-              object.prioridade = ''
-            }
-
-            function comparaDatas (date) {
-              let parts = date.split('/')
-              let today = new Date()     
-              date = new Date(parts[2], parts[1] - 1, parts[0]) 
-
-              return date < today ? true : false
-            }
-
-            datacomparacao =  comparaDatas (dataPrevisaoEntregaFormatada);
-
 
             linha += "<tr>";  
             /* helio 09112023 - classe ts-click para quando clicar,
@@ -435,23 +407,20 @@ if (isset($_SESSION['filtro_demanda'])) {
             datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeSolicitante + "</td>";
             datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'>" + object.nomeServico + "</td>";
             datas += "<td class='ts-click' data-idDemanda='" + object.idDemanda + "'" 
-            
-            if((datacomparacao == true) && (object.dataFechamento == null)){
+
+            if((object.atrasada == true) && (object.dataPrevisaoEntregaFormatada != null)){
               datas += " style='background:firebrick;color:white'";
             }
             
-            
-            datas += ">" + 'Abertura: ' + dataAberturaFormatada + '<br>' 
+            datas += ">" + 'Abertura: ' + object.dataAberturaFormatada + '<br>' 
             if (object.dataPrevisaoEntrega == null) {
-              datas += '';
             }else{
-              datas += 'Previsao : ' + ' ' + dataPrevisaoEntregaFormatada + '<br>' 
+              datas += 'Previsao : ' + ' ' + object.dataPrevisaoEntregaFormatada + '<br>' 
             }
 
             if (object.dataFechamento == null) {
-              datas += '';
             }else{
-              datas += 'Entrega : ' + ' ' + dataFechamentoFormatada 
+              datas += 'Entrega : ' + ' ' + object.dataFechamentoFormatada 
             }
             
             linha += datas;

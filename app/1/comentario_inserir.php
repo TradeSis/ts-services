@@ -34,7 +34,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
     $comentario = $jsonEntrada['comentario'];
     $idUsuario = $jsonEntrada['idUsuario'];
-    $idCliente = $jsonEntrada['idCliente'];
+    
     $enviaEmailComentario = $jsonEntrada['enviaEmailComentario'];
 
     //Busca dados Demanda
@@ -43,10 +43,10 @@ if (isset($jsonEntrada['idDemanda'])) {
     $row_consulta1 = mysqli_fetch_array($buscar_consulta1, MYSQLI_ASSOC);
     $tituloDemanda = $row_consulta1["tituloDemanda"];
     $idContratoTipo = $row_consulta1["idContratoTipo"];
-    $idAtendente = $row_consulta1["idAtendente"];
+    $idCliente = $row_consulta1['idCliente'];
 
     //Busca dados de usuario
-    $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = $idAtendente";
+    $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = $idUsuario";
     $buscar_consulta = mysqli_query($conexao, $sql_consulta);
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
     $nomeUsuario = $row_consulta["nomeUsuario"];

@@ -54,8 +54,6 @@ if (isset($jsonEntrada['idDemanda'])) {
 
     $sql = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario,nomeAnexo,pathAnexo) VALUES ($idDemanda,'$comentario',$idUsuario,CURRENT_TIMESTAMP(),'$nomeAnexo','$pathAnexo')";
 
-    $sql2 = "UPDATE demanda SET posicao=$posicao, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
-
     if ($enviaEmailComentario != '') {
         //Envio de Email
         $tituloEmail = $nomeUsuario . ' adicionou um novo comentário em ' . $idContratoTipo . ' : ' . $tituloDemanda . '.';
@@ -81,7 +79,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-            fwrite($arquivo, $identificacao . "-SQL 2->" . $sql2 . "\n");
+
         }
     }
     //LOG
@@ -89,8 +87,8 @@ if (isset($jsonEntrada['idDemanda'])) {
     //TRY-CATCH
     try {
         $atualizar = mysqli_query($conexao, $sql);
-        $atualizar2 = mysqli_query($conexao, $sql2);
-        if (!$atualizar && !$atualizar2)
+
+        if (!$atualizar )
             throw new Exception(mysqli_error($conexao));
 
 

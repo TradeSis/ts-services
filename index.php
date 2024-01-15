@@ -62,13 +62,13 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                             </li>
 
                         <?php }
-                        if ($nivelMenu >= 1) { ?>
+                        if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
                                 <a class="nav-link <?php if ($tab == "execucao") {echo " active ";} ?>"
                                 href="?tab=execucao" role="tab">Execução</a>
                             </li>
                         <?php }
-                        if ($nivelMenu >= 1) { ?>
+                        if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
                                 <a class="nav-link <?php if ($tab == "demandas") {echo " active ";} ?>" 
                                 href="?tab=demandas" role="tab">Demandas</a>

@@ -192,17 +192,24 @@
 
      //Envio form modalDemandaInserir
      $("#modalDemandaInserir").submit(function(event) {
-         event.preventDefault();
-         var formData = new FormData(this);
-         $.ajax({
-             url: "../database/demanda.php?operacao=inserir",
-             type: 'POST',
-             data: formData,
-             processData: false,
-             contentType: false,
-             success: refreshPage,
-         });
-     });
+        //gabriel 05022024 id738 - required para selectContratos 
+        var selectedContrato = $('#selectContratos').val();
+
+        if (selectedContrato === 'null' || selectedContrato === null) {
+            event.preventDefault(); 
+            alert('Selecione um contrato');
+        } else {
+            var formData = new FormData(this);
+            $.ajax({
+                url: "../database/demanda.php?operacao=inserir",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: refreshPage,
+            });
+        }
+    });
 
      function refreshPage() {
          window.location.reload();

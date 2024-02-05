@@ -201,5 +201,14 @@
          });
 
      });
+    //gabriel 05022024 id738 - required para selectContratos 
+     $('form').submit(function (e) {
+        var selectedContrato = $('#selectContratos').val();
+
+        if (selectedContrato === 'null' || selectedContrato === null) {
+            e.preventDefault(); 
+            alert('Selecione um contrato');
+        }
+    });
 
  </script>

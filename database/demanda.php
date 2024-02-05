@@ -171,6 +171,8 @@ if (isset($_GET['operacao'])) {
 				'descricao' => $_POST['descricao'],
 				'idSolicitante' => $_POST['idSolicitante'], 
 				'idUsuario' => $_POST['idUsuario'],
+				// gabriel 05022024 - adicionado campo idContrato
+				'idContrato' => $_POST['idContrato'],
 				'idContratoTipo' => $_POST['idContratoTipo'],
 				'idCliente' => $_POST['idCliente']
 			);

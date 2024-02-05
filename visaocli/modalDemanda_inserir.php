@@ -74,8 +74,7 @@
                                          <input type="text" class="form-control ts-input" value="<?php echo $contrato['tituloContrato'] ?>" readonly>
                                          <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly disabled>
                                      <?php } else { ?>
-                                        <select class="form-select ts-input" name="idContrato" id='selectContratos' 
-                                        <?php if ($contratoTipo['idContratoTipo'] == 'os') { echo 'required';} else {echo ' ';} ?> >
+                                        <select class="form-select ts-input" name="idContrato" id='selectContratos' required >
                                         <!-- gabriel 05022024 id738 - removido disabled seleciona contrato -->
                                              <!-- options montados via ajax -->
                                          </select>
@@ -186,7 +185,7 @@
              success: function(msg) {
                  var json = JSON.parse(msg);
                  var linha = "";
-                 linha = linha + "<option value='null'>Selecione</option>";
+                 linha = linha + "<option value=''>Selecione</option>";
                  for (var $i = 0; $i < json.length; $i++) {
                      var object = json[$i];
 
@@ -201,14 +200,5 @@
          });
 
      });
-    //gabriel 05022024 id738 - required para selectContratos 
-     $('form').submit(function (e) {
-        var selectedContrato = $('#selectContratos').val();
-
-        if (selectedContrato === 'null' || selectedContrato === null) {
-            e.preventDefault(); 
-            alert('Selecione um contrato');
-        }
-    });
 
  </script>

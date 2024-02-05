@@ -53,12 +53,13 @@ if (isset($jsonEntrada['idDemanda'])) {
             $dataPrevisaoEntrega  = isset($jsonEntrada['dataPrevisaoEntrega'])  && $jsonEntrada['dataPrevisaoEntrega'] !== "" && $jsonEntrada['dataPrevisaoEntrega'] !== "null" ? "'". $jsonEntrada['dataPrevisaoEntrega']."'"  : "null";
             $dataPrevisaoInicio  = isset($jsonEntrada['dataPrevisaoInicio'])  && $jsonEntrada['dataPrevisaoInicio'] !== "" && $jsonEntrada['dataPrevisaoInicio'] !== "null" ? "'". $jsonEntrada['dataPrevisaoInicio']."'"  : "null";
             $tempoCobradoEntrada = isset($jsonEntrada["tempoCobrado"])  && $jsonEntrada["tempoCobrado"] !== "" && $jsonEntrada["tempoCobrado"] !== "null" ? "'". $jsonEntrada["tempoCobrado"]."'"  : "null";
+            //gabriel 05022024 id738 - ajustado idcontrato
+            $idContrato = isset($jsonEntrada['idContrato'])  && $jsonEntrada['idContrato'] !== "" ?  $jsonEntrada['idContrato']    : "null";
 
             //Busca tempoCObrado de Demanda  
             $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
             $buscar_consulta = mysqli_query($conexao, $sql_consulta);
             $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-            $idContrato = isset($row_consulta["idContrato"])  && $row_consulta["idContrato"] !== "" ?  $row_consulta["idContrato"]    : "null";
             $tempoCobradoAutal = $row_consulta["tempoCobrado"];
             $tempoCobradoAutal = "'". $tempoCobradoAutal . "'";
 

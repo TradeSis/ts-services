@@ -43,7 +43,9 @@
                                      <?php
                                         foreach ($clientes as $cliente) {
                                         ?>
-                                         <option value="<?php echo $cliente['idCliente'] ?>">
+                                        <!-- gabriel 05022024 id738 - seleciona cliente automatico -->
+                                         <option <?php if ($_SESSION['idCliente'] == $cliente['idCliente']) { echo "selected"; }?>
+                                            value="<?php echo $cliente['idCliente'] ?>">
                                              <?php echo $cliente['nomeCliente'] ?>
                                          </option>
                                      <?php } ?>
@@ -72,8 +74,8 @@
                                          <input type="text" class="form-control ts-input" value="<?php echo $contrato['tituloContrato'] ?>" readonly>
                                          <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly disabled>
                                      <?php } else { ?>
-                                         <select class="form-select ts-input" name="idContrato" id='selectContratos' 
-                                         <?php if ($contratoTipo['idContratoTipo'] == 'os') { echo 'required';} else {echo ' ';} ?> disabled>
+                                        <select class="form-select ts-input" name="idContrato" id='selectContratos' required >
+                                        <!-- gabriel 05022024 id738 - removido disabled seleciona contrato -->
                                              <!-- options montados via ajax -->
                                          </select>
 
@@ -159,6 +161,13 @@
  <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
  <script>
+    //gabriel 05022024 id738 - trigger cliente automatico 
+    $(document).ready(function() {
+        var selectedPadrao = "<?php echo $_SESSION['idCliente'] ?>";
+        if (selectedPadrao !== null && selectedPadrao !== "") {
+            $('select[name="idCliente"]').val(selectedPadrao).trigger('change');
+        }
+    });
      //Select de Contrato Vinculado troca de acordo com o Select de Cliente
      $('select[name="idCliente"]').on('change', function() {
          var idCliente = this.value;
@@ -176,7 +185,7 @@
              success: function(msg) {
                  var json = JSON.parse(msg);
                  var linha = "";
-                 linha = linha + "<option value='null'>Selecione</option>";
+                 linha = linha + "<option value=''>Selecione</option>";
                  for (var $i = 0; $i < json.length; $i++) {
                      var object = json[$i];
 

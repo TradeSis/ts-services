@@ -70,8 +70,7 @@
                                          <input type="text" class="form-control ts-input" value="<?php echo $contrato['tituloContrato'] ?>" readonly>
                                          <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
                                      <?php } else { ?>
-                                         <select class="form-select ts-input" name="idContrato" id='selectContratos' 
-                                         <?php if ($contratoTipo['idContratoTipo'] == 'os') { echo 'required';} else {echo ' ';} ?>>
+                                         <select class="form-select ts-input" name="idContrato" id='selectContratos' required>
                                              <!-- options montados via ajax -->
                                          </select>
 
@@ -174,7 +173,7 @@
              success: function(msg) {
                  var json = JSON.parse(msg);
                  var linha = "";
-                 linha = linha + "<option value='null'>Selecione</option>";
+                 linha = linha + "<option value=''>Selecione</option>";
                  for (var $i = 0; $i < json.length; $i++) {
                      var object = json[$i];
 
@@ -192,7 +191,7 @@
 
      //Envio form modalDemandaInserir
      $("#modalDemandaInserir").submit(function(event) {
-         event.preventDefault();
+        event.preventDefault();
          var formData = new FormData(this);
          $.ajax({
              url: "../database/demanda.php?operacao=inserir",

@@ -195,7 +195,17 @@ $statusEncerrar = array(
                     <div class="container">
                         <?php if (isset($demanda['tituloContrato'])) { ?>
                             <div class="row pb-1">
-                                <span class="ts-subTitulo"><strong><?php echo $demanda['nomeContrato'] ?>: </strong> <?php echo $demanda['tituloContrato'] ?></span>
+                                <!-- gabriel 05022024 id738 - adicionado select para alterar contrato -->
+                                <div class="col-md-9 d-flex">
+                                    <span class="ts-subTitulo"><strong><?php echo $demanda['nomeContrato'] ?>: </strong></span>
+                                    <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idContrato" id="idContrato" autocomplete="off">
+                                        <option value="<?php echo $demanda['idContrato'] ?>"><?php echo $demanda['tituloContrato'] ?>
+                                            <?php foreach ($contratos as $contrato) { ?>
+                                        <option value="<?php echo $contrato['idContrato'] ?>"><?php echo $contrato['tituloContrato'] ?>
+                                        </option>
+                                    <?php } ?>
+                                    </select>
+                                </div>
                             </div>
                         <?php } ?>
                         <div class="row g-3">

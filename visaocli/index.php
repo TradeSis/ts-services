@@ -99,7 +99,7 @@ if ($usuario["idCliente"] == null) {
             <div class="col ps-1 pe-1">
                 <div class="card p-1">
                     <div class="card-header ts-kanbanTitulo">
-                        <?php $buscaTipoStatus = buscaTipoStatus(null, TIPOSTATUS_RESPONDIDO) ?>
+                        <?php $buscaTipoStatus = buscaTipoStatus(null, TIPOSTATUS_FILA) ?>
                         <h6><?php echo $buscaTipoStatus['nomeTipoStatus']; ?></h6>
                     </div>
                     <?php foreach (buscaDemandas(null, TIPOSTATUS_RESPONDIDO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>

@@ -119,7 +119,7 @@ $order = " order by ordem, prioridade, idDemanda";
 
 if(isset($jsonEntrada['idTipoStatus'])) {
   if ($jsonEntrada['idTipoStatus'] == TIPOSTATUS_REALIZADO) {
-    $order = " order by dataFechemento Desc, idDemanda";
+    $order = " order by dataFechamento Desc, idDemanda";
   }
 } 
 

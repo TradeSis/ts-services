@@ -115,8 +115,16 @@ if(isset($jsonEntrada['idUsuario'])){
   }
 }
 
+$order = " order by ordem, prioridade, idDemanda";
 
-$sql = $sql . " order by ordem, prioridade, idDemanda";
+if(isset($jsonEntrada['idTipoStatus'])) {
+  if ($jsonEntrada['idTipoStatus'] == TIPOSTATUS_REALIZADO) {
+    $order = " order by dataFechemento Desc, idDemanda";
+  }
+} 
+
+$sql = $sql . $order;
+
 
 
 //echo "-SQL->" . json_encode($sql) . "\n";

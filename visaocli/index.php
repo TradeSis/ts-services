@@ -99,9 +99,12 @@ if ($usuario["idCliente"] == null) {
             <div class="col ps-1 pe-1">
                 <div class="card p-1">
                     <div class="card-header ts-kanbanTitulo">
-                        <?php $buscaTipoStatus = buscaTipoStatus(null, TIPOSTATUS_FILA) ?>
+                        <?php $buscaTipoStatus = buscaTipoStatus(null, TIPOSTATUS_RESPONDIDO) ?>
                         <h6><?php echo $buscaTipoStatus['nomeTipoStatus']; ?></h6>
                     </div>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_RESPONDIDO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
+                    <?php endforeach; ?>
 
                     <?php foreach (buscaDemandas(null, TIPOSTATUS_FILA, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>

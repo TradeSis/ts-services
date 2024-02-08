@@ -109,6 +109,9 @@ if ($usuario["idCliente"] == null) {
                     <?php foreach (buscaDemandas(null, TIPOSTATUS_FILA, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_AGENDADO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
+                    <?php endforeach; ?>
 
                 </div>
             </div>

@@ -102,8 +102,14 @@ if ($usuario["idCliente"] == null) {
                         <?php $buscaTipoStatus = buscaTipoStatus(null, TIPOSTATUS_FILA) ?>
                         <h6><?php echo $buscaTipoStatus['nomeTipoStatus']; ?></h6>
                     </div>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_RESPONDIDO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
+                    <?php endforeach; ?>
 
                     <?php foreach (buscaDemandas(null, TIPOSTATUS_FILA, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                        <?php echo montaKanban($kanbanDemanda); ?>
+                    <?php endforeach; ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_AGENDADO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
 

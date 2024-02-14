@@ -42,7 +42,7 @@ if (isset($jsonEntrada['idDemanda'])) {
     $idDemanda = $jsonEntrada['idDemanda'];
     $idUsuario = $jsonEntrada['idUsuario'];
     $comentario = isset($jsonEntrada['comentario']) && $jsonEntrada['comentario'] !== "null" && $jsonEntrada['comentario'] !== "" ? "'" . $jsonEntrada['comentario'] . "'" : "null";
-    $idAtendente = $jsonEntrada['idAtendente']; // solicitar  
+    $idAtendenteEncaminhar = $jsonEntrada['idAtendente']; // Encaminhar  
 
     //Busca data de fechamento atual
     $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
@@ -123,20 +123,10 @@ if (isset($jsonEntrada['idDemanda'])) {
     }
 
     //RETORNAR
-    if ($jsonEntrada['acao'] == "solicitar") {
-
-        $idTipoStatus = TIPOSTATUS_AGUARDANDOSOLICITANTE;
-        $nomeStatusEmail = 'AGUARDANDO SOLICITANTE';
-
-        // busca dados tipostatus    
-        $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
-        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
-        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
-        $posicao = $row_consulta["mudaPosicaoPara"];
-        $statusDemanda = $row_consulta["mudaStatusPara"];
+    if ($jsonEntrada['acao'] == "encaminhar") {
 
         //lucas 22092023 ID 358 Adicionado idAtendente
-        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, idAtendente=$idAtendente , dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+        $sql = "UPDATE demanda SET idAtendente=$idAtendenteEncaminhar , dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda";
         
     }
 

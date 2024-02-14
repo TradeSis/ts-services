@@ -59,6 +59,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
 
         $idServicoPadrao = isset($row_consulta['idServicoPadrao'])  && $row_consulta['idServicoPadrao'] !== "" ?  $row_consulta['idServicoPadrao']    : "null";
         $idTipoStatus_fila = isset($row_consulta['idTipoStatus_fila'])  && $row_consulta['idTipoStatus_fila'] !== "" ?  $row_consulta['idTipoStatus_fila']    : "null";
+        $idUsuarioPadrao = isset($row_consulta['idUsuarioPadrao'])  && $row_consulta['idUsuarioPadrao'] !== "" ?  $row_consulta['idUsuarioPadrao']    : "null";
 
         $idServico  = isset($jsonEntrada['idServico'])  && $jsonEntrada['idServico'] !== "" ?  $jsonEntrada['idServico']    : "null";
         if($idServico === "null"){
@@ -66,6 +67,11 @@ if (isset($jsonEntrada['tituloDemanda'])) {
         }
  
         $idTipoStatus = $idTipoStatus_fila;
+        
+        if ( $idAtendente === "null") {
+            $idAtendente = $idUsuarioPadrao;
+        }
+        
 
 
     $idContrato = isset($jsonEntrada['idContrato'])  && $jsonEntrada['idContrato'] !== "" ?  $jsonEntrada['idContrato']    : "null";

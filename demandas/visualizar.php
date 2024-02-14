@@ -17,6 +17,7 @@ include_once(ROOT . '/cadastros/database/clientes.php');
 include_once(ROOT . '/cadastros/database/usuario.php');
 include_once(ROOT . '/cadastros/database/servicos.php');
 
+$usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
 $idDemanda = $_GET['idDemanda'];
 $idAtendente = $_SESSION['idLogin'];
@@ -90,7 +91,7 @@ $statusEncerrar = array(
                                 <label class="form-label ts-label">Responsável</label>
                             </div>
                             <div class="col-md-7">
-                                <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idAtendente">
+                                <select class="form-select ts-input ts-selectDemandaModalVisualizar" name="idAtendente" disabled>
                                     <option value="<?php echo $demanda['idAtendente'] ?>"><?php echo $demanda['nomeAtendente'] ?></option>
                                     <?php foreach ($atendentes as $atendente) { ?>
                                         <option value="<?php echo $atendente['idUsuario'] ?>"><?php echo $atendente['nomeUsuario'] ?></option>

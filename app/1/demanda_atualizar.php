@@ -45,13 +45,15 @@ if (isset($jsonEntrada['idDemanda'])) {
     $idAtendenteEncaminhar = $jsonEntrada['idAtendente']; // Encaminhar  
 
     //Busca data de fechamento atual
-    $sql_consulta = "SELECT * FROM demanda WHERE idDemanda = $idDemanda";
+    $sql_consulta = "SELECT idDemanda,dataFechamento,tituloDemanda,idContratoTipo,idAtendente FROM demanda WHERE idDemanda = $idDemanda";
     $buscar_consulta = mysqli_query($conexao, $sql_consulta);
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
     $dataFechamento = isset($row_consulta["dataFechamento"])  && $row_consulta["dataFechamento"] !== "" && $row_consulta["dataFechamento"] !== "null" ? "'". $row_consulta["dataFechamento"]."'"  : "null";
     $tituloDemanda = $row_consulta["tituloDemanda"];
     $idContratoTipo = $row_consulta["idContratoTipo"];
     $idAtendente = $row_consulta["idAtendente"];
+    
+    if ($idAtendente == null) { $idAtendente = $idAtendenteEncaminhar; }
 
     //Busca dados de usuario
     $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = $idAtendente";
@@ -134,34 +136,18 @@ if (isset($jsonEntrada['idDemanda'])) {
         $sql_insert_comentario = "INSERT INTO comentario(idDemanda, comentario, idUsuario, dataComentario) VALUES ($idDemanda, $comentario ,$idUsuario,CURRENT_TIMESTAMP())";
     }
 
-    //Envio de Email
-    $tituloEmail = $tituloDemanda;
-    $corpoEmail = $idContratoTipo . ' : ' . $tituloDemanda. '<br>' .
-    ' entrou no status: ' . $nomeStatusEmail;
-
-    $arrayPara = array(
-
-        array(
-            'email' => 'tradesis@tradesis.com.br',
-            'nome' => 'TradeSis'
-        ),
-        array(
-        'email' => $email,
-        'nome' => $nomeUsuario 
-        ),
-    );
-
-    $envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
-
     //LOG
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 3) {
             fwrite($arquivo, $identificacao . "-SQL->" . $sql . "\n");
-            if (isset($sql2)) {
+            if (isset($sql_insert_comentario)) {
                 fwrite($arquivo, $identificacao . "-SQL INSERT COMENTARIOS ->" . $sql_insert_comentario . "\n");
             }
         }
     }
+    
+
+    
     //LOG
 
     //TRY-CATCH
@@ -177,6 +163,24 @@ if (isset($jsonEntrada['idDemanda'])) {
                 throw new Exception(mysqli_error($conexao));
         }
     
+        //Envio de Email
+        $tituloEmail = $tituloDemanda;
+        $corpoEmail = $idContratoTipo . ' : ' . $tituloDemanda. '<br>' .
+        ' entrou no status: ' . $nomeStatusEmail;
+
+        $arrayPara = array(
+
+            array(
+                'email' => 'tradesis@tradesis.com.br',
+                'nome' => 'TradeSis'
+            ),
+            array(
+            'email' => $email,
+            'nome' => $nomeUsuario 
+            ),
+    );
+
+        $envio = emailEnviar(null,null,$arrayPara,$tituloEmail,$corpoEmail);
         $jsonSaida = array(
             "status" => 200,
             "retorno" => "ok"

@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <!-- lucas 22092023 ID 358 Modificado titulo do modal-->
-                <h5 class="modal-title" id="exampleModalLabel">Chamado - <?php echo $demanda['tituloDemanda'] ?></h5>
+                <h5 class="modal-title" id="exampleModalLabel"><?php echo $demanda['tituloDemanda'] ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -38,7 +38,7 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=solicitar" class="btn btn-warning">Encaminhar</button>
+                <button type="submit" formaction="../database/demanda.php?operacao=atualizar&acao=encaminhar" class="btn btn-warning">Encaminhar</button>
             </div>
             </form>
         </div>

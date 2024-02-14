@@ -3,7 +3,9 @@
 function montaKanban($kanbanDemanda)
 {
 	$dataAtual = date("d/m/Y"); 
-    $dataNaTela = null;
+    $hr = '';
+    $dataNaTela = '';
+    $atendenteNaTela = '';
 
     $dataFechamento = null;
     if(isset($kanbanDemanda['dataFechamentoFormatada'])){
@@ -14,13 +16,25 @@ function montaKanban($kanbanDemanda)
     if(isset($kanbanDemanda['dataPrevisaoInicio'])){
         $dataPrevisaoInicio = $kanbanDemanda['dataPrevisaoInicioFormatada']; 
     }
+    
+    if (isset($kanbanDemanda['idAtendente'])) {
+        $hr = '<hr class="mt-2 mb-0">';
+        $atendenteNaTela = '<span class="ts-cardDataPrevisao">' . ' ' . $kanbanDemanda['nomeAtendente'] . '</span>';
+    }
 
-    if($dataFechamento != null){
-        $dataNaTela= '<hr class="mt-2 mb-0">' . '<span class="ts-cardDataPrevisao">' . ' Entrega: ' . $dataFechamento . '</span>';
+    if ($kanbanDemanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $kanbanDemanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) {
+        if($dataFechamento != null){
+            $hr = '<hr class="mt-2 mb-0">';
+            $dataNaTela= '<span class="ts-cardDataPrevisao">' . ' Entrega: ' . $dataFechamento . '</span>';
+        }
+    } else {
+        if ($dataPrevisaoInicio != null) {
+            $hr = '<hr class="mt-2 mb-0">';
+            $dataNaTela= '<span class="ts-cardDataPrevisao">' . ' Previsão: ' . $dataPrevisaoInicio . '</span>';
+        }
+    
     }
-    if(($dataPrevisaoInicio != null) && $dataFechamento == null){
-        $dataNaTela= '<hr class="mt-2 mb-0">' . '<span class="ts-cardDataPrevisao">' . ' Previsão: ' . $dataPrevisaoInicio . '</span>';
-    }
+    
 	
 	$kanban = '<span class="card-body border board mt-2 ts-click';
 	if(($dataPrevisaoInicio != null) && ($dataPrevisaoInicio <= $dataAtual) && $kanbanDemanda['idTipoStatus'] != TIPOSTATUS_REALIZADO){
@@ -33,8 +47,8 @@ function montaKanban($kanbanDemanda)
 		}
 		
 		$kanban = $kanban .
-			$kanbanDemanda["idDemanda"] . ' ' . $kanbanDemanda["tituloDemanda"] . '<br>' .
-			' ' . $dataNaTela . 
+			$kanbanDemanda["idDemanda"] . ' ' . $kanbanDemanda["tituloDemanda"] . 
+            $hr . $atendenteNaTela . '<br>' . $dataNaTela . 
 		'</span>';
 		
 	return $kanban;

@@ -16,7 +16,7 @@ if (isset($_GET["tipo"])) {
 }
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
-
+//echo json_encode(buscaDemandas(null, TIPOSTATUS_FILA, null, $usuario['idUsuario']))."<HR>";
 if ($usuario["idCliente"] == null) {
     $clientes = buscaClientes($usuario["idCliente"]);
   } else {

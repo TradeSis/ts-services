@@ -324,7 +324,7 @@ if (isset($_GET['operacao'])) {
 			'idUsuario' => $_POST['idUsuario'],
 			'idCliente' => $_POST['idCliente'],
 			'comentario' => $_POST['comentario'],
-			'idAtendente' => $_POST['idAtendente'],//utilizado quando ação for solicitar
+			'idAtendente' => $_POST['idAtendente'],//utilizado quando ação for encaminhar
 			'acao' => $acao
 		);
 		

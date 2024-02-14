@@ -110,18 +110,25 @@ if(isset($jsonEntrada['idUsuario'])){
     $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
     $idCliente = $row_consulta['idCliente'];
     if($idCliente != null){
-      $sql = $sql . $where . " demanda.idCliente= ". $idCliente . " ";
+      $sql = $sql . $where . " demanda.idCliente = ". $idCliente . " ";
     }
   }
 }
 
 $order = " order by ordem, prioridade, idDemanda";
 
-if(isset($jsonEntrada['idTipoStatus'])||isset($jsonEntrada['statusDemanda'])) {
-  if ($jsonEntrada['idTipoStatus'] == TIPOSTATUS_REALIZADO || $jsonEntrada['statusDemanda'] == 3) {
-    $order = " order by dataFechamento Desc, idDemanda";
+  if(isset($jsonEntrada['idTipoStatus'])||isset($jsonEntrada['statusDemanda'])) {
+    if(isset($jsonEntrada['statusDemanda'])) {
+        if ($jsonEntrada['idTipoStatus'] == TIPOSTATUS_REALIZADO) {
+          $order = " order by dataFechamento Desc, idDemanda";
+        }
+    }
+   if(isset($jsonEntrada['statusDemanda'])) {
+       if ($jsonEntrada['statusDemanda'] == 3) {
+          $order = " order by dataFechamento Desc, idDemanda";
+        }
+      }
   }
-} 
 
 $sql = $sql . $order;
 

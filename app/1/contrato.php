@@ -52,10 +52,27 @@ if (isset($jsonEntrada["idContrato"])) {
   if (isset($jsonEntrada["idContratoStatus"])) {
     $sql = $sql . $where . " contrato.idContratoStatus = " . $jsonEntrada["idContratoStatus"];
     $where = " and ";
-  }
+  } 
 
   if (isset($jsonEntrada["statusContrato"])) {
-    $sql = $sql . $where . " contrato.statusContrato = " . $jsonEntrada["statusContrato"];
+    if($jsonEntrada["statusContrato"] == "orcamento") {
+      $sql = $sql . $where . " contrato.statusContrato = 2";
+    }
+    if($jsonEntrada["statusContrato"] == "desenvolvimento") {
+      $sql = $sql . $where . " contrato.statusContrato = 1 and contrato.idContratoStatus = 3";
+    }
+    if($jsonEntrada["statusContrato"] == "faturamento") {
+      $sql = $sql . $where . " contrato.statusContrato = 1 and contrato.idContratoStatus = 4";
+    }
+    if($jsonEntrada["statusContrato"] == "recebimento") {
+      $sql = $sql . $where . " contrato.statusContrato = 1 and contrato.idContratoStatus = 5";
+    }
+    if($jsonEntrada["statusContrato"] == "ativo") {
+      $sql = $sql . $where . " contrato.statusContrato = 1";
+    }
+    if($jsonEntrada["statusContrato"] == "encerrado") {
+      $sql = $sql . $where . " contrato.statusContrato = 3";
+    }
     $where = " and ";
   }
 

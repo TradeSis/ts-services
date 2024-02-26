@@ -37,15 +37,14 @@ $cards = buscaCardsContrato($urlContratoTipo);
 
 
 $idCliente = null;
-$idContratoStatus = null;
-$statusContrato =  "1"; //ABERTO
+$idContratoStatus = null; 
+$statusContrato = CONTRATOSTATUS_DESENVOLVIMENTO;
 if (isset($_SESSION['filtro_contrato'])) {
     $filtroEntrada = $_SESSION['filtro_contrato'];
     $idCliente = $filtroEntrada['idCliente'];
     $idContratoStatus = $filtroEntrada['idContratoStatus'];
     $statusContrato = $filtroEntrada['statusContrato'];
 }
-
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -73,7 +72,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalOrcamento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorOrcamento'], 2, ',', '');}?>
                 </div>
-                <button class="ts-cardLink" onClick="clickCard(this.value)" value="orcamento" id="1"></button>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_ORCAMENTO; ?>" id="<?php echo CONTRATOSTATUS_ORCAMENTO; ?>"></button>
                 </div>
             </div>
 
@@ -83,7 +82,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalDesenvolvimento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorDesenvolvimento'], 2, ',', '');}?>
                 </div>
-                <button class="ts-cardLink" onClick="clickCard(this.value)" value="desenvolvimento" id="2"></button>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_DESENVOLVIMENTO; ?>" id="<?php echo CONTRATOSTATUS_DESENVOLVIMENTO; ?>"></button>
                 </div>
             </div>
 
@@ -93,7 +92,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalFaturamento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorFaturamento'], 2, ',', '');}?>
                 </div>
-                <button class="ts-cardLink" onClick="clickCard(this.value)" value="faturamento" id="3"></button>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_FATURAMENTO; ?>" id="<?php echo CONTRATOSTATUS_FATURAMENTO; ?>"></button>
                 </div>
             </div>
 
@@ -103,7 +102,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalRecebimento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorRecebimento'], 2, ',', '');}?>
                 </div>
-                <button class="ts-cardLink" onClick="clickCard(this.value)" value="recebimento" id="4"></button>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_RECEBIMENTO; ?>" id="<?php echo CONTRATOSTATUS_RECEBIMENTO; ?>"></button>
                 </div>
             </div>
 
@@ -113,7 +112,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalAtivo'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorAtivo'], 2, ',', '');}?>
                 </div>
-                <button class="ts-cardLink" onClick="clickCard(this.value)" value="ativo" id="5"></button>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_ATIVO; ?>" id="<?php echo CONTRATOSTATUS_ATIVO; ?>"></button>
                 </div>
             </div>
 
@@ -123,7 +122,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalEncerrados'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorEncerrados'], 2, ',', '');}?>
                 </div>
-                <button class="ts-cardLink" onClick="clickCard(this.value)" value="encerrado" id="6"></button>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_ENCERRADOS; ?>" id="<?php echo CONTRATOSTATUS_ENCERRADOS; ?>"></button>
                 </div>
             </div>
 
@@ -160,30 +159,14 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         <div class="ls-label col-sm-12"> <!-- ABERTO/FECHADO -->
             <form class="d-flex" action="" method="post">
-
-            <select class="form-control" name="statusContrato" id="FiltroStatusContrato" onchange="mudarSelect(this.value)">
-                <option value="<?php echo null ?>">
-                            <?php echo "Todos" ?>
-                <option <?php if ($statusContrato == "1") {
-                        echo "selected";
-                        } ?> value="1">Orçamento</option>
-                <option <?php if ($statusContrato == "2") {
-                        echo "selected";
-                        } ?> value="2">Desenvolvimento</option>
-                <option <?php if ($statusContrato == "3") {
-                        echo "selected";
-                        } ?> value="3">Faturamento</option>
-                <option <?php if ($statusContrato == "4") {
-                        echo "selected";
-                        } ?> value="4">Recebimento</option>
-                <option <?php if ($statusContrato == "5") {
-                        echo "selected";
-                        } ?> value="5">Total Ativo</option>
-                <option <?php if ($statusContrato == "6") {
-                        echo "selected";
-                        } ?> value="6">Encerrados</option>
-            </select>
-
+                <select class="form-control" name="statusContrato" id="FiltroStatusContrato" onchange="mudarSelect(this.value)">
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_ORCAMENTO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_ORCAMENTO; ?>">Orçamento</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_DESENVOLVIMENTO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_DESENVOLVIMENTO; ?>">Desenvolvimento</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_FATURAMENTO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_FATURAMENTO; ?>">Faturamento</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_RECEBIMENTO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_RECEBIMENTO; ?>">Recebimento</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_ATIVO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_ATIVO; ?>">Ativo</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_ENCERRADOS) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_ENCERRADOS; ?>">Encerrados</option>
+                </select>
             </form>
         </div>
 
@@ -280,7 +263,6 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         function limpar() {
             buscar(null, null, null, null);
-            window.location.reload();
         }
 
         function clickCard(statusContrato) {
@@ -311,6 +293,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     //alert("terceiro alert: " + JSON.stringify(json));
                     /* alert(JSON.stringify(msg)); */
                     /* $("#dados").html(msg); */
+                    console.log(msg);
 
                     var linha = "";
                     // Loop over each object
@@ -405,7 +388,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
-        $("#FiltroStatusContrato").click(function() {
+        $("#FiltroStatusContrato").change(function() {
             buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 

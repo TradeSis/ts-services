@@ -1,57 +1,57 @@
  // Cards com Botões acionamento individual
- $('.ts-cardColor').click(function() {
-    $('.ts-cardColor').addClass('ts-cardColor-active');
-    $('.ts-cardColor').removeClass('ts-shadowOff');
-    $('.ts-cardColor1').removeClass('ts-cardColor-active');
-    $('.ts-cardColor2').removeClass('ts-cardColor-active');
-    $('.ts-cardColor3').removeClass('ts-cardColor-active');
-    $('.ts-cardColor4').removeClass('ts-cardColor-active');
-    $('.ts-cardColor5').removeClass('ts-cardColor-active');
-  });
-  $('.ts-cardColor1').click(function() {
+ $('.ts-cardColor1').click(function() {
     $('.ts-cardColor1').addClass('ts-cardColor-active');
     $('.ts-cardColor1').removeClass('ts-shadowOff');
-    $('.ts-cardColor').removeClass('ts-cardColor-active');
     $('.ts-cardColor2').removeClass('ts-cardColor-active');
     $('.ts-cardColor3').removeClass('ts-cardColor-active');
     $('.ts-cardColor4').removeClass('ts-cardColor-active');
     $('.ts-cardColor5').removeClass('ts-cardColor-active');
+    $('.ts-cardColor6').removeClass('ts-cardColor-active');
   });
   $('.ts-cardColor2').click(function() {
     $('.ts-cardColor2').addClass('ts-cardColor-active');
     $('.ts-cardColor2').removeClass('ts-shadowOff');
-    $('.ts-cardColor').removeClass('ts-cardColor-active');
     $('.ts-cardColor1').removeClass('ts-cardColor-active');
     $('.ts-cardColor3').removeClass('ts-cardColor-active');
     $('.ts-cardColor4').removeClass('ts-cardColor-active');
     $('.ts-cardColor5').removeClass('ts-cardColor-active');
+    $('.ts-cardColor6').removeClass('ts-cardColor-active');
   });
   $('.ts-cardColor3').click(function() {
     $('.ts-cardColor3').addClass('ts-cardColor-active');
     $('.ts-cardColor3').removeClass('ts-shadowOff');
-    $('.ts-cardColor').removeClass('ts-cardColor-active');
     $('.ts-cardColor1').removeClass('ts-cardColor-active');
     $('.ts-cardColor2').removeClass('ts-cardColor-active');
     $('.ts-cardColor4').removeClass('ts-cardColor-active');
     $('.ts-cardColor5').removeClass('ts-cardColor-active');
+    $('.ts-cardColor6').removeClass('ts-cardColor-active');
   });
   $('.ts-cardColor4').click(function() {
     $('.ts-cardColor4').addClass('ts-cardColor-active');
     $('.ts-cardColor4').removeClass('ts-shadowOff');
-    $('.ts-cardColor').removeClass('ts-cardColor-active');
     $('.ts-cardColor1').removeClass('ts-cardColor-active');
     $('.ts-cardColor2').removeClass('ts-cardColor-active');
     $('.ts-cardColor3').removeClass('ts-cardColor-active');
     $('.ts-cardColor5').removeClass('ts-cardColor-active');
+    $('.ts-cardColor6').removeClass('ts-cardColor-active');
   });
   $('.ts-cardColor5').click(function() {
     $('.ts-cardColor5').addClass('ts-cardColor-active');
     $('.ts-cardColor5').removeClass('ts-shadowOff');
-    $('.ts-cardColor').removeClass('ts-cardColor-active');
     $('.ts-cardColor1').removeClass('ts-cardColor-active');
     $('.ts-cardColor2').removeClass('ts-cardColor-active');
     $('.ts-cardColor3').removeClass('ts-cardColor-active');
     $('.ts-cardColor4').removeClass('ts-cardColor-active');
+    $('.ts-cardColor6').removeClass('ts-cardColor-active');
+  });
+  $('.ts-cardColor6').click(function() {
+    $('.ts-cardColor6').addClass('ts-cardColor-active');
+    $('.ts-cardColor6').removeClass('ts-shadowOff');
+    $('.ts-cardColor1').removeClass('ts-cardColor-active');
+    $('.ts-cardColor2').removeClass('ts-cardColor-active');
+    $('.ts-cardColor3').removeClass('ts-cardColor-active');
+    $('.ts-cardColor4').removeClass('ts-cardColor-active');
+    $('.ts-cardColor5').removeClass('ts-cardColor-active');
   });
   
   // Cards com Botões acionamento ligado ao Select de StatusDemanda
@@ -68,11 +68,12 @@
   })
   
   function mudarSelect(valor) {
-    $('.ts-cardColor').removeClass('ts-cardColor-active');
     $('.ts-cardColor1').removeClass('ts-cardColor-active');
     $('.ts-cardColor2').removeClass('ts-cardColor-active');
     $('.ts-cardColor3').removeClass('ts-cardColor-active');
-    $('.ts-cardColor0').removeClass('ts-cardColor-active');
+    $('.ts-cardColor4').removeClass('ts-cardColor-active');
+    $('.ts-cardColor5').removeClass('ts-cardColor-active');
+    $('.ts-cardColor6').removeClass('ts-cardColor-active');
     $('.ts-cardColor' + valor).addClass('ts-cardColor-active');
     $('.ts-cardColor' + valor).removeClass('ts-shadowOff');
   

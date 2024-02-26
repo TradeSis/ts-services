@@ -68,7 +68,7 @@ if (isset($_SESSION['filtro_contrato'])) {
         <div class="row row-cols-1 row-cols-md-6 pt-2">
             <!-- BOTOES AUXILIARES -->
             <div class="col">
-                <div class="ts-cardColor card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="ts-cardColor1 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-info">ORÇAMENTO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalOrcamento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorOrcamento'], 2, ',', '');}?>
@@ -78,7 +78,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
             <div class="col">
-                <div class="ts-cardColor1 ts-cardColor-active card border-left-success  ts-cardsTotais p-1">
+                <div class="ts-cardColor2 ts-cardColor-active card border-left-success  ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-success">DESENVOLVIMENTO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalDesenvolvimento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorDesenvolvimento'], 2, ',', '');}?>
@@ -88,7 +88,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
             <div class="col">
-                <div class="ts-cardColor2 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="ts-cardColor3 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-success">FATURAMENTO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalFaturamento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorFaturamento'], 2, ',', '');}?>
@@ -98,7 +98,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
             <div class="col">
-                <div class="ts-cardColor3 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="ts-cardColor4 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-warning">RECEBIMENTO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalRecebimento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorRecebimento'], 2, ',', '');}?>
@@ -108,7 +108,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
             <div class="col">
-                <div class="ts-cardColor4 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="ts-cardColor5 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-danger pl-4">TOTAL ATIVO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalAtivo'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorAtivo'], 2, ',', '');}?>
@@ -118,7 +118,7 @@ if (isset($_SESSION['filtro_contrato'])) {
             </div>
 
             <div class="col">
-                <div class="ts-cardColor5 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="ts-cardColor6 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-danger pl-4">ENCERRADOS</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
                     <?php echo "(" . $cards['totalEncerrados'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorEncerrados'], 2, ',', '');}?>
@@ -156,32 +156,38 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         <!-- MENUFILTROS -->
         <div class="ts-menuFiltros mt-2 px-3">
-            <label>Filtrar por:</label>
+        <label>Filtrar por:</label>
 
-            <div class="col-12"> <!-- ABERTO/FECHADO -->
-                <form class="d-flex" action="" method="post">
+        <div class="ls-label col-sm-12"> <!-- ABERTO/FECHADO -->
+            <form class="d-flex" action="" method="post">
 
-                    <select class="form-control" name="statusContrato" id="FiltroStatusContrato">
-                        <option value="<?php echo NULL ?>"><?php echo "Todos" ?></option>
-                        <option <?php if ($statusContrato == "2") {
-                                    echo "selected";
-                                } ?> value="2">Orçamento</option>
+            <select class="form-control" name="statusContrato" id="FiltroStatusContrato" onchange="mudarSelect(this.value)">
+                <option <?php if ($statusContrato == "1") {
+                        echo "selected";
+                        } ?> value="1">Orçamento</option>
+                <option <?php if ($statusContrato == "2") {
+                        echo "selected";
+                        } ?> value="2">Desenvolvimento</option>
+                <option <?php if ($statusContrato == "3") {
+                        echo "selected";
+                        } ?> value="3">Faturamento</option>
+                <option <?php if ($statusContrato == "4") {
+                        echo "selected";
+                        } ?> value="4">Recebimento</option>
+                <option <?php if ($statusContrato == "5") {
+                        echo "selected";
+                        } ?> value="5">Total Ativo</option>
+                <option <?php if ($statusContrato == "6") {
+                        echo "selected";
+                        } ?> value="6">Encerrados</option>
+            </select>
 
-                        <option <?php if ($statusContrato == "1") {
-                                    echo "selected";
-                                } ?> value="1">Ativo</option>
+            </form>
+        </div>
 
-                        <option <?php if ($statusContrato == "0") {
-                                    echo "selected";
-                                } ?> value="0">Encerrado</option>
-                    </select>
-
-                </form>
-            </div>
-
-            <div class="col-sm text-end mt-2">
-                <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-            </div>
+        <div class="col-sm text-end mt-2">
+            <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+        </div>
         </div>
 
         <div class="table mt-2 ts-divTabela70 ts-tableFiltros">

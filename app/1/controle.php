@@ -136,6 +136,14 @@ if ($metodo == "GET") {
         include 'visaocli.php';
         break;
 
+    case "orcamento":
+      include 'orcamento.php';
+      break;
+    
+    case "orcamentostatus":
+      include 'orcamentostatus.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -232,6 +240,14 @@ if ($metodo == "PUT") {
 
     case "chat":
       include 'chat_inserir.php';
+      break;
+
+    case "orcamento":
+      include 'orcamento_inserir.php';
+      break;
+      
+    case "orcamentostatus":
+      include 'orcamentostatus_inserir.php';
       break;
      
     default:
@@ -339,6 +355,14 @@ if ($metodo == "POST") {
       include 'visaocli_atualizar.php';
       break;
 
+    case "orcamento":
+      include 'orcamento_alterar.php';
+      break;
+      
+    case "orcamentostatus":
+      include 'orcamentostatus_alterar.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -372,6 +396,10 @@ if ($metodo == "DELETE") {
 
     case "contratotipos":
       include 'contratotipos_excluir.php';
+      break;
+
+    case "orcamentostatus":
+      include 'orcamentostatus_excluir.php';
       break;
 
     default:

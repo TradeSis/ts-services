@@ -94,6 +94,12 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         <?php }
                         if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
+                                <a class="nav-link <?php if ($tab == "orcamento") {echo " active ";} ?>" 
+                                href="?tab=orcamento" role="tab">Orçamentos</a>
+                            </li>
+                        <?php }
+                        if ($nivelMenu >= 2) { ?>
+                            <li class="nav-item mr-1">
                                 <a class="nav-link <?php if ($tab == "os") {echo " active ";} ?>" 
                                 href="?tab=os" role="tab">O.S.</a>
                             </li>
@@ -140,6 +146,9 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         <option value="<?php echo URLROOT ?>/services/?tab=projetos" 
                         <?php if ($getTab == "projetos") {echo " selected ";} ?>>Projetos</option>
 
+                        <option value="<?php echo URLROOT ?>/services/?tab=orcamentos" 
+                        <?php if ($getTab == "orcamentos") {echo " selected ";} ?>>Orçamentos</option>
+
                         <option value="<?php echo URLROOT ?>/services/?tab=os" 
                         <?php if ($getTab == "os") {echo " selected ";} ?>>O.S.</option>
 
@@ -170,6 +179,10 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
             if ($tab == "atividades") {
                 $src = "demandas/?tipo=projetos";
                 $title = "Serviços/Atividades";
+            }
+            if ($tab == "orcamento") {
+                $src = "orcamento/";
+                $title = "Serviços/Orçamentos";
             }
             if ($tab == "os") {
                 $src = "contratos/?tipo=os";

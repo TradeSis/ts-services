@@ -150,18 +150,15 @@ $statusEncerrar = array(
                             <?php }
                             if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#reabrirModal" class="btn btn-sm btn-warning">Reabrir</button>
+                            <?php } 
+                            if ($demanda['idTipoStatus'] == TIPOSTATUS_AGUARDANDOSOLICITANTE) { ?>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#responderModal" class="btn btn-sm btn-warning">Responder</button>
                             <?php } ?>
 
-                            <?php if (in_array($demanda['idTipoStatus'], $statusEncerrar)) { ?>
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#entregarModal" class="btn btn-sm btn-warning">Entregar</button>
-                            <?php } ?>
 
                         </div>
 
                         <div class="modal-footer">
-                            <div class="col align-self-start pl-0">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#encaminharModal" class="btn btn-warning">Encaminhar</button>
-                            </div>
                             <button type="submit" form="my-form" class="btn btn-success">Atualizar</button>
                         </div>
                 </div>
@@ -233,11 +230,8 @@ $statusEncerrar = array(
         <!--------- MODAL REABRIR --------->
         <?php include_once '../demandas/modalstatus_reabrir.php' ?>
 
-        <!--------- MODAL ENCAMINHAR --------->
-        <?php include_once '../demandas/modalstatus_encaminhar.php' ?>
-
-        <!--------- MODAL ENTREGAR --------->
-        <?php include_once '../demandas/modalstatus_entregar.php' ?>
+        <!--------- MODAL RESPONDER --------->
+        <?php include_once '../demandas/modalstatus_responder.php' ?>
 
     </div><!--container-fluid-->
 

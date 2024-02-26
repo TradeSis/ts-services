@@ -171,6 +171,9 @@ $statusEncerrar = array(
                             if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO) { ?>
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#encerrarModal" class="btn btn-sm btn-danger">Encerrar</button>
                             <?php }
+                            if ($demanda['idTipoStatus'] !== TIPOSTATUS_AGUARDANDOSOLICITANTE) { ?>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#devolverModal" class="btn btn-sm btn-primary">Devolver</button>
+                            <?php }
                             if ($demanda['idTipoStatus'] == TIPOSTATUS_REALIZADO || $demanda['idTipoStatus'] == TIPOSTATUS_VALIDADO) { ?>
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#reabrirModal" class="btn btn-sm btn-warning">Reabrir</button>
                             <?php } ?>
@@ -287,6 +290,9 @@ $statusEncerrar = array(
 
         <!--------- MODAL ENTREGAR --------->
         <?php include_once 'modalstatus_entregar.php' ?>
+
+        <!--------- MODAL DEVOLVER --------->
+        <?php include_once 'modalstatus_devolver.php' ?>
 
         <!--Gabriel 11102023 ID 596 modal Alterar tarefa via include -->
         <!--Lucas 18102023 ID 602 alterado nome do arquivo para modalTarefa_alterar -->

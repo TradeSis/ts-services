@@ -103,6 +103,40 @@ if (isset($jsonEntrada['idDemanda'])) {
 
     }
 
+    //RESPONDER
+    if ($jsonEntrada['acao'] == "responder") {
+        
+        $idTipoStatus = TIPOSTATUS_RESPONDIDO;
+        $nomeStatusEmail = 'RESPONDIDO';
+
+        //Busca dados tipostatus     
+        $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+        $posicao = $row_consulta["mudaPosicaoPara"];
+        $statusDemanda = $row_consulta["mudaStatusPara"];
+
+        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, statusDemanda=$statusDemanda, dataAtualizacaoCliente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda;";
+
+    }
+
+    //DEVOLVER
+    if ($jsonEntrada['acao'] == "devolver") {
+        
+        $idTipoStatus = TIPOSTATUS_AGUARDANDOSOLICITANTE;
+        $nomeStatusEmail = 'DEVOLVIDO';
+
+        //Busca dados tipostatus     
+        $sql_consulta = "SELECT * FROM tipostatus WHERE idTipoStatus = $idTipoStatus";
+        $buscar_consulta = mysqli_query($conexao, $sql_consulta);
+        $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
+        $posicao = $row_consulta["mudaPosicaoPara"];
+        $statusDemanda = $row_consulta["mudaStatusPara"];
+
+        $sql = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, statusDemanda=$statusDemanda, dataAtualizacaoAtendente=CURRENT_TIMESTAMP() WHERE idDemanda = $idDemanda;";
+
+    }
+
 
     //VALIDAR
     if ($jsonEntrada['acao'] == "validar") {

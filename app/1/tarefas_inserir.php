@@ -109,6 +109,7 @@ if (isset($jsonEntrada['idEmpresa'])) {
 
         //Busca dados de usuario
         $sql_consulta = "SELECT * FROM usuario WHERE idUsuario = $idAtendente";
+        echo json_encode($sql_consulta);
         $buscar_consulta = mysqli_query($conexao, $sql_consulta);
         $row_consulta = mysqli_fetch_array($buscar_consulta, MYSQLI_ASSOC);
         $nomeUsuario = $row_consulta["nomeUsuario"];
@@ -131,7 +132,7 @@ if (isset($jsonEntrada['idEmpresa'])) {
         } else {
             if ($jsonEntrada['Previsto'] != "" && in_array($tipoStatusDemanda, $statusAgendado, true)) {
                 $idTipoStatus = TIPOSTATUS_AGENDADO;
-                $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda WHERE idDemanda = $idDemanda";
+                $sql3 = "UPDATE demanda SET posicao=$posicao, idTipoStatus=$idTipoStatus, dataAtualizacaoAtendente=CURRENT_TIMESTAMP(), statusDemanda=$statusDemanda, dataPrevisaoInicio=$Previsto WHERE idDemanda = $idDemanda";
                 $nomeStatusEmail = 'AGENDADO';
             } 
         }

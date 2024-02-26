@@ -71,7 +71,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="ts-cardColor card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-info">ORÇAMENTO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                    <?php echo $cards['totalOrcamento'] ?>
+                    <?php echo "(" . $cards['totalOrcamento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorOrcamento'], 2, ',', '');}?>
                 </div>
                 <button class="ts-cardLink" onClick="clickCard(this.value)" value="orcamento" id="1"></button>
                 </div>
@@ -81,7 +81,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="ts-cardColor1 ts-cardColor-active card border-left-success  ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-success">DESENVOLVIMENTO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                    <?php echo $cards['totalDesenvolvimento'] ?>
+                    <?php echo "(" . $cards['totalDesenvolvimento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorDesenvolvimento'], 2, ',', '');}?>
                 </div>
                 <button class="ts-cardLink" onClick="clickCard(this.value)" value="desenvolvimento" id="2"></button>
                 </div>
@@ -91,7 +91,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="ts-cardColor2 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-success">FATURAMENTO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                    <?php echo $cards['totalFaturamento'] ?>
+                    <?php echo "(" . $cards['totalFaturamento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorFaturamento'], 2, ',', '');}?>
                 </div>
                 <button class="ts-cardLink" onClick="clickCard(this.value)" value="faturamento" id="3"></button>
                 </div>
@@ -101,7 +101,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="ts-cardColor3 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-warning">RECEBIMENTO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                    <?php echo $cards['totalRecebimento'] ?>
+                    <?php echo "(" . $cards['totalRecebimento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorRecebimento'], 2, ',', '');}?>
                 </div>
                 <button class="ts-cardLink" onClick="clickCard(this.value)" value="recebimento" id="4"></button>
                 </div>
@@ -111,7 +111,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="ts-cardColor4 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-danger pl-4">TOTAL ATIVO</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                    <?php echo $cards['totalAtivo'] ?>
+                    <?php echo "(" . $cards['totalAtivo'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorAtivo'], 2, ',', '');}?>
                 </div>
                 <button class="ts-cardLink" onClick="clickCard(this.value)" value="ativo" id="5"></button>
                 </div>
@@ -121,7 +121,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                 <div class="ts-cardColor5 card border-left-success ts-shadowOff ts-cardsTotais p-1">
                 <div class="text-xs fw-bold text-danger pl-4">ENCERRADOS</div>
                 <div class="h5 mb-0  text-gray-800 ml-1">
-                    <?php echo $cards['totalEncerrados'] ?>
+                    <?php echo "(" . $cards['totalEncerrados'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorEncerrados'], 2, ',', '');}?>
                 </div>
                 <button class="ts-cardLink" onClick="clickCard(this.value)" value="encerrado" id="6"></button>
                 </div>

@@ -32,11 +32,17 @@ $card = array();
 
 $sql = "SELECT
         SUM(CASE WHEN contrato.statusContrato = 2 THEN 1 ELSE 0 END) AS totalOrcamento,
+        SUM(CASE WHEN contrato.statusContrato = 2 THEN contrato.valorContrato ELSE 0 END) AS valorOrcamento,
         SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 3 THEN 1 ELSE 0 END) AS totalDesenvolvimento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 3 THEN contrato.valorContrato ELSE 0 END) AS valorDesenvolvimento,
         SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 4 THEN 1 ELSE 0 END) AS totalFaturamento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 4 THEN contrato.valorContrato ELSE 0 END) AS valorFaturamento,
         SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 5 THEN 1 ELSE 0 END) AS totalRecebimento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 5 THEN contrato.valorContrato ELSE 0 END) AS valorRecebimento,
         SUM(CASE WHEN contrato.statusContrato = 1 THEN 1 ELSE 0 END) AS totalAtivo,
-        SUM(CASE WHEN contrato.statusContrato = 3 THEN 1 ELSE 0 END) AS totalEncerrados FROM contrato 
+        SUM(CASE WHEN contrato.statusContrato = 1 THEN contrato.valorContrato ELSE 0 END) AS valorAtivo,
+        SUM(CASE WHEN contrato.statusContrato = 3 THEN 1 ELSE 0 END) AS totalEncerrados,
+        SUM(CASE WHEN contrato.statusContrato = 3 THEN contrato.valorContrato ELSE 0 END) AS valorEncerrados FROM contrato 
         INNER JOIN contratotipos  on  contrato.idContratoTipo = contratotipos.idContratoTipo ";
 if (isset($jsonEntrada["idContratoTipo"])) {
   $sql = $sql . " where contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";

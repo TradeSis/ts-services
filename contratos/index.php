@@ -162,6 +162,8 @@ if (isset($_SESSION['filtro_contrato'])) {
             <form class="d-flex" action="" method="post">
 
             <select class="form-control" name="statusContrato" id="FiltroStatusContrato" onchange="mudarSelect(this.value)">
+                <option value="<?php echo null ?>">
+                            <?php echo "Todos" ?>
                 <option <?php if ($statusContrato == "1") {
                         echo "selected";
                         } ?> value="1">Orçamento</option>

@@ -71,7 +71,7 @@ if (isset($jsonEntrada["idContrato"])) {
       $sql = $sql . $where . " contrato.statusContrato = 1";
     }
     if($jsonEntrada["statusContrato"] == "encerrado") {
-      $sql = $sql . $where . " contrato.statusContrato = 3";
+      $sql = $sql . $where . " contrato.statusContrato = 0";
     }
     $where = " and ";
   }

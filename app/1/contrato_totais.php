@@ -41,8 +41,8 @@ $sql = "SELECT
         SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 5 THEN contrato.valorContrato ELSE 0 END) AS valorRecebimento,
         SUM(CASE WHEN contrato.statusContrato = 1 THEN 1 ELSE 0 END) AS totalAtivo,
         SUM(CASE WHEN contrato.statusContrato = 1 THEN contrato.valorContrato ELSE 0 END) AS valorAtivo,
-        SUM(CASE WHEN contrato.statusContrato = 3 THEN 1 ELSE 0 END) AS totalEncerrados,
-        SUM(CASE WHEN contrato.statusContrato = 3 THEN contrato.valorContrato ELSE 0 END) AS valorEncerrados FROM contrato 
+        SUM(CASE WHEN contrato.statusContrato = 0 THEN 1 ELSE 0 END) AS totalEncerrados,
+        SUM(CASE WHEN contrato.statusContrato = 0 THEN contrato.valorContrato ELSE 0 END) AS valorEncerrados FROM contrato 
         INNER JOIN contratotipos  on  contrato.idContratoTipo = contratotipos.idContratoTipo ";
 if (isset($jsonEntrada["idContratoTipo"])) {
   $sql = $sql . " where contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";

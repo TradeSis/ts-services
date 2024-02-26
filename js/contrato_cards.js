@@ -57,7 +57,7 @@
   // Cards com Botões acionamento ligado ao Select de StatusDemanda
   let btn = document.querySelectorAll('button');
   /*   let select = document.querySelector('select'); */
-  let select = document.getElementById('FiltroStatusDemanda')
+  let select = document.getElementById('FiltroStatusContrato')
   
   function troca(e) {
     select.value = e.currentTarget.id;

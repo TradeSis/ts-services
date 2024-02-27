@@ -18,6 +18,18 @@
                             <textarea style="display: none" id="quill-responder" name="comentario"></textarea>
                             <!-- -->
                         </div>
+                        <div class="container-fluid p-0">
+                           <div id="ql-toolbarResponder">
+                               <?php include "quilljs/ql-toolbar-min.php"  ?>
+                               <input type="file" id="anexarResponder" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileResponder()" style=" display:none">
+                               <label for="anexarResponder">
+                                   <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                               </label>
+                           </div>
+                           <div id="ql-editorResponder" style="height:30vh !important">
+                           </div>
+                           <textarea style="display: none" id="quill-responder" name="comentario"></textarea>
+                       </div>
                         <div class="col-md">
                             <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
                             <input type="hidden" class="form-control" name="idCliente" value="<?php echo $demanda['idCliente'] ?>" readonly>
@@ -33,6 +45,8 @@
             </div>
         </div>
     </div>
+
+    <script src="modalstatus.js"></script>
 
     <script>
         var quillresponder = new Quill('.quill-responder', {

@@ -13,7 +13,15 @@
                         <div class="col">
                             <span class="tituloEditor">Comentários</span>
                         </div>
-                        <div class="quill-encaminhar" style="height:20vh !important"></div>
+                        <div id="ql-toolbarEncaminhar">
+                            <?php include "quilljs/ql-toolbar-min.php"  ?>
+                            <input type="file" id="anexarEncaminhar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileEncaminhar()" style=" display:none">
+                            <label for="anexarEncaminhar">
+                                <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                            </label>
+                        </div>
+                        <div id="ql-editorEncaminhar" style="height:30vh !important">
+                        </div>
                         <textarea style="display: none" id="quill-encaminhar" name="comentario"></textarea>
                     </div>
                     <div class="col-md">
@@ -45,49 +53,4 @@
     </div>
 </div>
 
-<script>
-    var quillencaminhar = new Quill('.quill-encaminhar', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote'],
-                [{
-                    'list': 'ordered'
-                }, {
-                    'list': 'bullet'
-                }],
-                [{
-                    'indent': '-1'
-                }, {
-                    'indent': '+1'
-                }],
-                [{
-                    'direction': 'rtl'
-                }],
-                [{
-                    'size': ['small', false, 'large', 'huge']
-                }],
-                [{
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-                ['link', 'image', 'video', 'formula'],
-                [{
-                    'color': []
-                }, {
-                    'background': []
-                }],
-                [{
-                    'font': []
-                }],
-                [{
-                    'align': []
-                }],
-            ]
-        }
-    });
-
-    quillencaminhar.on('text-change', function(delta, oldDelta, source) {
-        $('#quill-encaminhar').val(quillencaminhar.container.firstChild.innerHTML);
-    });
-</script>
+<script src="modalstatus.js"></script>

@@ -74,6 +74,8 @@ if (isset($_SESSION['filtro_demanda'])) {
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
+  <!-- NOVO QUILL -->
+  <link href="http://localhost/vendor/quilljs/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>

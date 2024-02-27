@@ -10,13 +10,16 @@
                 <div class="modal-body">
                     <form method="post">
                         <div class="container-fluid p-0">
-                            <div class="col">
-                                <span class="tituloEditor">Comentários</span>
+                            <div id="ql-toolbarEncerrar">
+                                <?php include "quilljs/ql-toolbar-min.php"  ?>
+                                <input type="file" id="anexarEncerrar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileEncerrar()" style=" display:none">
+                                <label for="anexarEncerrar">
+                                    <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                                </label>
                             </div>
-                            <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
-                            <div class="quill-encerrar" style="height:20vh !important"></div>
+                            <div id="ql-editorEncerrar" style="height:30vh !important">
+                            </div>
                             <textarea style="display: none" id="quill-encerrar" name="comentario"></textarea>
-                            <!-- -->
                         </div>
                         <div class="col-md">
                             <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
@@ -33,51 +36,4 @@
         </div>
     </div>
 
-    <script>
-                /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-                var quillencerrar = new Quill('.quill-encerrar', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
-
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        quillencerrar.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-encerrar').val(quillencerrar.container.firstChild.innerHTML);
-        });
-    </script>
+    <script src="modalstatus.js"></script>

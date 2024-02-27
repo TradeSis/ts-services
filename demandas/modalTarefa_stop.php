@@ -57,6 +57,10 @@
    </div>
  </div>
 
+  <!-- lucas 27022024 - id853 nova chamada editor quill -->
+  <!-- NOVO QUILL -->
+  <script src="http://localhost/vendor/quilljs/quill.min.js"></script>
+
  <!-- LOCAL PARA COLOCAR OS JS -->
  <!-- lucas 27022024 - id853 nova chamada editor quill -->
  <script>

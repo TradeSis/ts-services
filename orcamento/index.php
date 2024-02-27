@@ -196,9 +196,8 @@ if (isset($_SESSION['filtro_orcamento'])) {
                             var dataAprovacaoFormatada = "<p>---</p>";
                         } else {
                             var dataAprovacao = new Date(object.dataAprovacao);
-                            dataAprovacaoFormatada = dataAprovacao.toLocaleDateString("pt-BR") + " " + dataAprovacao.toLocaleTimeString("pt-BR");
+                            dataAprovacaoFormatada = dataAprovacao.toLocaleDateString("pt-BR");
                         }
-
                         // alert("quarto alert: " + JSON.stringify(object))
                         /*  alert(object); */
                         linha = linha + "<tr>";
@@ -249,7 +248,7 @@ if (isset($_SESSION['filtro_orcamento'])) {
             buscar($("#FiltroClientes").val(), $("#buscaOrcamento").val(), $("#FiltroStatusOrcamento").val());
         })
 
-        $("#FiltroStatusOrcamento").click(function() {
+        $("#FiltroStatusOrcamento").change(function() {
             buscar($("#FiltroClientes").val(), $("#buscaOrcamento").val(), $("#FiltroStatusOrcamento").val());
         })
 

@@ -1,4 +1,4 @@
- <!--------- MODAL DEMANDA INSERIR --------->
+ <!--------- MODAL ORCAMENTO INSERIR --------->
  <div class="modal" id="novoinserirOrcamentoModal" tabindex="-1" aria-labelledby="novoinserirOrcamentoModalLabel" aria-hidden="true">
      <div class="modal-dialog modal-xl modal-dialog-scrollable">
          <div class="modal-content">
@@ -11,8 +11,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label class='form-label ts-label'>Titulo</label>
-                            <input type="text" class="form-control ts-input" name="tituloContrato" required>
-                            <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>">
+                            <input type="text" class="form-control ts-input" name="tituloOrcamento" required>
                         </div>
                     </div>
 
@@ -27,34 +26,7 @@
                     </div><!--col-md-6-->
 
                     <div class="row mt-2">
-                        <div class="col-md-4 form-group-select">
-                            <label class="form-label ts-label">Status</label>
-                            <select class="form-select ts-input" name="idContratoStatus">
-                                <?php
-                                foreach ($orcamentosStatus as $orcamentoStatus) {
-                                ?>
-                                    <option <?php
-                                            if ($orcamentoStatus['idOrcamentoStatus'] == $statusOrcamento) {
-                                                echo "selected";
-                                            }
-                                            ?> value="<?php echo $orcamentoStatus['idOrcamentoStatus'] ?>"><?php echo $orcamentoStatus['nomeOrcamentoStatus']  ?></option>
-                                <?php  } ?>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label ts-label">Abertura</label>
-                            <input type="date" class="form-control ts-input" name="dataAbertura">
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label ts-label">Aprovação</label>
-                            <input type="date" class="form-control ts-input" name="dataAprovacao">
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-md-3 ">
+                        <div class="col-md">
                             <label class="form-label ts-label">Cliente</label>
                             <select class="form-select ts-input" name="idCliente">
                                 <?php
@@ -64,18 +36,17 @@
                                 <?php  } ?> <!--FECHA while-->
                             </select>
                         </div>
-
-                        <div class="col-md-3">
+                        <div class="col-md">
                             <label class='form-label ts-label'>Horas</label>
                             <input type="number" class="form-control ts-input" name="horas" autocomplete="off">
                         </div>
-
-                        <div class="col-md-3">
+    
+                        <div class="col-md">
                             <label class='form-label ts-label'>Valor Hora</label>
                             <input type="number" class="form-control ts-input" name="valorHora" autocomplete="off">
                         </div>
-
-                        <div class="col-md-3">
+    
+                        <div class="col-md">
                             <label class='form-label ts-label'>Valor Orçamento</label>
                             <input type="number" class="form-control ts-input" name="valorOrcamento" autocomplete="off">
                         </div>

@@ -1,9 +1,5 @@
 <?php
-// Lucas 22032023 adicionado if de tituloOrcamento
-// Lucas 21032023 ajustado estrutura dentro do else, adicionado $where;
-// Lucas 20032023 adicionar if de idCliente
-// Lucas 17022023 adicionado condição else para idOrcamentoStatus
-// Lucas 07022023 criacao
+// Gabriel 26022024 criacao
 
 //LOG
 $LOG_CAMINHO = defineCaminhoLog();
@@ -35,9 +31,9 @@ $conexao = conectaMysql($idEmpresa);
 
 $orcamento = array();
 
-$sql = "SELECT orcamento.*, cliente.*, orcamentostatus.* FROM orcamento				
-        INNER JOIN cliente on cliente.idCliente = orcamento.idcliente 
-        INNER JOIN orcamentostatus  on  orcamento.statusOrcamento = orcamentostatus.idOrcamentoStatus  ";
+$sql = "SELECT orcamento.*, cliente.nomeCliente, orcamentostatus.* FROM orcamento				
+        LEFT JOIN cliente on cliente.idCliente = orcamento.idcliente 
+        LEFT JOIN orcamentostatus  on  orcamento.statusOrcamento = orcamentostatus.idOrcamentoStatus  ";
 if (isset($jsonEntrada["idOrcamento"])) {
   $sql = $sql . " where orcamento.idOrcamento = " . $jsonEntrada["idOrcamento"];
 } else {

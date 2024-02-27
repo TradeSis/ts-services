@@ -37,7 +37,7 @@ $statusDemanda = null;
 
 if (isset($jsonEntrada['tituloDemanda'])) {
     $tituloDemanda = "'" . $jsonEntrada['tituloDemanda'] . "'";
-    $descricao = "'" . $jsonEntrada['descricao'] . "'";
+    $descricao  = isset($jsonEntrada['descricao'])  && $jsonEntrada['descricao'] !== "" && $jsonEntrada['descricao'] !== "null" ? "'". $jsonEntrada['descricao']."'"  : "''";
     $horasPrevisao  = isset($jsonEntrada['horasPrevisao'])  && $jsonEntrada['horasPrevisao'] !== "" && $jsonEntrada['horasPrevisao'] !== "null" ? "'". $jsonEntrada['horasPrevisao']."'"  : "0";
     $idSolicitante = isset($jsonEntrada['idSolicitante'])  && $jsonEntrada['idSolicitante'] !== "" ?  $jsonEntrada['idSolicitante']    : "null";
     $idAtendente = isset($jsonEntrada['idAtendente'])  && $jsonEntrada['idAtendente'] !== "" ?  $jsonEntrada['idAtendente']    : "null";
@@ -99,7 +99,7 @@ if (isset($jsonEntrada['tituloDemanda'])) {
     
     //Envio de Email
     $tituloEmail = $jsonEntrada['tituloDemanda'];
-    $corpoEmail = $jsonEntrada['descricao'];
+    $corpoEmail = isset($jsonEntrada['descricao']) ? $jsonEntrada['descricao']  : "";
 
     $arrayPara = array(
 

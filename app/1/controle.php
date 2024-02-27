@@ -144,6 +144,10 @@ if ($metodo == "GET") {
       include 'orcamentostatus.php';
       break;
 
+    case "orcamentoitens":
+      include 'orcamentoitens.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -249,6 +253,10 @@ if ($metodo == "PUT") {
     case "orcamentostatus":
       include 'orcamentostatus_inserir.php';
       break;
+
+    case "orcamentoitens":
+      include 'orcamentoitens_inserir.php';
+      break;
      
     default:
       $jsonSaida = json_decode(
@@ -288,6 +296,11 @@ if ($metodo == "POST") {
 
   if ($funcao == "tarefas" && $parametro == "start") {
     $funcao = "tarefas/start";
+    $parametro = null;
+  }
+  
+  if ($funcao == "orcamento" && $parametro == "contrato") {
+    $funcao = "orcamento/contrato";
     $parametro = null;
   }
 
@@ -363,6 +376,14 @@ if ($metodo == "POST") {
       include 'orcamentostatus_alterar.php';
       break;
 
+    case "orcamentoitens":
+      include 'orcamentoitens_alterar.php';
+      break;
+
+    case "orcamento/contrato":
+      include 'orcamento_gerarcontrato.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -400,6 +421,10 @@ if ($metodo == "DELETE") {
 
     case "orcamentostatus":
       include 'orcamentostatus_excluir.php';
+      break;
+    
+    case "orcamentoitens":
+      include 'orcamentoitens_excluir.php';
       break;
 
     default:

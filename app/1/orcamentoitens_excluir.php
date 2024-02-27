@@ -6,7 +6,7 @@
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL = defineNivelLog();
-    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "orcamentostatus_inserir";
+    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "orcamentoitens_excluir";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
             $arquivo = fopen(defineCaminhoLog() . "orcamento_" . date("dmY") . ".log", "a");
@@ -28,9 +28,10 @@ if (isset($jsonEntrada["idEmpresa"])) {
     $idEmpresa = $jsonEntrada["idEmpresa"];
 }
 $conexao = conectaMysql($idEmpresa);
-if (isset($jsonEntrada['nomeOrcamentoStatus'])) {
-    $nomeOrcamentoStatus = "'" . $jsonEntrada['nomeOrcamentoStatus'] . "'";
-    $sql = "INSERT INTO orcamentostatus (nomeOrcamentoStatus) values ($nomeOrcamentoStatus)";
+if (isset($jsonEntrada['idItemOrcamento'])) {
+    $idItemOrcamento = $jsonEntrada['idItemOrcamento'];
+    $idOrcamento = $jsonEntrada['idOrcamento'];
+    $sql = "DELETE FROM orcamentoitens WHERE idItemOrcamento = $idItemOrcamento AND idOrcamento = $idOrcamento";
 
     //LOG
     if (isset($LOG_NIVEL)) {
@@ -71,9 +72,9 @@ if (isset($jsonEntrada['nomeOrcamentoStatus'])) {
 }
 
 //LOG
-if (isset($LOG_NIVEL)) {
-    if ($LOG_NIVEL >= 2) {
-        fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
+if(isset($LOG_NIVEL)) {
+    if ($LOG_NIVEL>=2) {
+        fwrite($arquivo,$identificacao."-SAIDA->".json_encode($jsonSaida)."\n\n");
     }
 }
 //LOG

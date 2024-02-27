@@ -36,9 +36,9 @@ $conexao = conectaMysql($idEmpresa);
 $contrato = array();
 
 $sql = "SELECT contrato.*, cliente.*, contratostatus.*, contratotipos.* FROM contrato				
-        INNER JOIN cliente on cliente.idCliente = contrato.idcliente 
-        INNER JOIN contratostatus  on  contrato.idContratoStatus = contratostatus.idContratoStatus
-        INNER JOIN contratotipos  on  contrato.idContratoTipo = contratotipos.idContratoTipo  ";
+        LEFT JOIN cliente on cliente.idCliente = contrato.idcliente 
+        LEFT JOIN contratostatus  on  contrato.idContratoStatus = contratostatus.idContratoStatus
+        LEFT JOIN contratotipos  on  contrato.idContratoTipo = contratotipos.idContratoTipo  ";
 if (isset($jsonEntrada["idContrato"])) {
   $sql = $sql . " where contrato.idContrato = " . $jsonEntrada["idContrato"];
 } else {

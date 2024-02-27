@@ -1,5 +1,5 @@
 <?php
-// Lucas 07022023 criacao
+// Gabriel 26022024 criacao
 //echo "-ENTRADA->".json_encode($jsonEntrada)."\n";
 
 //LOG
@@ -9,7 +9,7 @@ if (isset($LOG_CAMINHO)) {
     $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "orcamentostatus_excluir";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
-            $arquivo = fopen(defineCaminhoLog() . "services_" . date("dmY") . ".log", "a");
+            $arquivo = fopen(defineCaminhoLog() . "orcamento_" . date("dmY") . ".log", "a");
         }
     }
 }

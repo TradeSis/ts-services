@@ -6,7 +6,7 @@
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL = defineNivelLog();
-    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "orcamentostatus_inserir";
+    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "orcamentoitens_alterar";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
             $arquivo = fopen(defineCaminhoLog() . "orcamento_" . date("dmY") . ".log", "a");
@@ -28,9 +28,12 @@ if (isset($jsonEntrada["idEmpresa"])) {
     $idEmpresa = $jsonEntrada["idEmpresa"];
 }
 $conexao = conectaMysql($idEmpresa);
-if (isset($jsonEntrada['nomeOrcamentoStatus'])) {
-    $nomeOrcamentoStatus = "'" . $jsonEntrada['nomeOrcamentoStatus'] . "'";
-    $sql = "INSERT INTO orcamentostatus (nomeOrcamentoStatus) values ($nomeOrcamentoStatus)";
+if (isset($jsonEntrada['idItemOrcamento'])) {
+    $idItemOrcamento = $jsonEntrada['idItemOrcamento'];
+    $idOrcamento = $jsonEntrada['idOrcamento'];
+    $tituloItemOrcamento = isset($jsonEntrada['tituloItemOrcamento']) && $jsonEntrada['tituloItemOrcamento'] !== "" ? "'" . $jsonEntrada['tituloItemOrcamento'] . "'" : "NULL";
+    $horas = isset($jsonEntrada['horas']) && $jsonEntrada['horas'] !== "" ? "'" . $jsonEntrada['horas'] . "'" : "NULL";
+    $sql = "UPDATE orcamentoitens SET tituloItemOrcamento=$tituloItemOrcamento, horas=$horas WHERE idItemOrcamento = $idItemOrcamento and idOrcamento = $idOrcamento";
 
     //LOG
     if (isset($LOG_NIVEL)) {

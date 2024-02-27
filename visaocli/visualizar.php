@@ -56,6 +56,9 @@ $statusEncerrar = array(
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
+    
+    <!-- NOVO QUILL -->
+    <link href="http://localhost/vendor/quilljs/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
@@ -240,6 +243,11 @@ $statusEncerrar = array(
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
     <!-- QUILL editor -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+     <!-- NOVO QUILL -->
+     <script src="http://localhost/vendor/quilljs/quill.min.js"></script>
+
+    <script src="../demandas/visualizar.js"></script>
 
     <script>
         var myModal = new bootstrap.Modal(document.getElementById("modalDemandaVizualizar"), {});

@@ -53,6 +53,9 @@
 
                     <div class="row mt-3">
                         <div class="col-md-6">
+                        <div class="col">
+                                     <span class="tituloEditor">Descrição</span>
+                                 </div>
                             <div id="ql-toolbar">
                                 <?php include "quilljs/ql-toolbar.php"  ?>
                             </div>

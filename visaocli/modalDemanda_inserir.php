@@ -56,14 +56,28 @@
 
                      <div class="row mt-3">
                          <div class="col-md-6">
-                             <div class="container-fluid p-0">
+                             <!-- <div class="container-fluid p-0">
                                  <div class="col">
-                                     <span class="tituloEditor">Descrição</span>
+                                     <span class="tituloEditor">Descrição1</span>
                                  </div>
                                  <div class="quill-descricaocliente" style="height:30vh !important"></div>
                                  <textarea style="display: none" id="quill-descricaocliente" name="descricao"></textarea>
-                             </div>
+                             </div -->
+
+                             <div class="container-fluid p-0">
+                             <div class="col">
+                                     <span class="tituloEditor">Descrição</span>
+                                 </div>
+                           <div id="ql-toolbar">
+                               <?php include "../demandas/quilljs/ql-toolbar.php"  ?>
+                           </div>
+                           <div id="ql-editor" style="height:30vh !important">
+                           </div>
+                           <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
+                       </div>
                          </div><!--col-md-6-->
+
+
 
                          <div class="col-md-6">
                              <div class="row">
@@ -160,6 +174,9 @@
 
  <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
+ <!-- NOVO QUILL -->
+<script src="http://localhost/vendor/quilljs/quill.min.js"></script>
+
  <script>
     //gabriel 05022024 id738 - trigger cliente automatico 
     $(document).ready(function() {
@@ -201,4 +218,19 @@
 
      });
 
- </script>
+    //lucas 27022024 - id853 nova chamada editor quill
+    var quill = new Quill('#ql-editor', {
+        modules: {
+            toolbar: '#ql-toolbar'
+        },
+        placeholder: 'Digite o texto...',
+        theme: 'snow'
+    });
+
+    quill.on('text-change', function(delta, oldDelta, source) {
+        $('#quill-demandainserir').val(quill.container.firstChild.innerHTML);
+    });
+</script>
+
+
+<script src="../demandas/quilljs/quill-uploadFile.js"></script>

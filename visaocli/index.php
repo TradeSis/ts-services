@@ -32,6 +32,7 @@ if ($usuario["idCliente"] == null) {
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
+    <!-- lucas 27022024 - id853 nova chamada editor quill -->
     <!-- NOVO QUILL -->
     <link href="http://localhost/vendor/quilljs/quill.snow.css" rel="stylesheet">
 </head>
@@ -182,9 +183,8 @@ if ($usuario["idCliente"] == null) {
     <!-- LOCAL PARA COLOCAR OS JS -->
 
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-    <!-- QUILL editor -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+    <!-- lucas 27022024 - id853 nova chamada editor quill -->
     <!-- NOVO QUILL -->
     <script src="http://localhost/vendor/quilljs/quill.min.js"></script>
 
@@ -193,43 +193,6 @@ if ($usuario["idCliente"] == null) {
             window.location.href = 'visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
         });
 
-        var descricaoCliente = new Quill('.quill-descricaocliente', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-             
-                [{
-                    'list': 'ordered'
-                }, {
-                    'list': 'bullet'
-                }],
-                [{
-                    'indent': '-1'
-                }, {
-                    'indent': '+1'
-                }],
-               
-                [{
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-                ['link', 'image'],
-                [{
-                    'color': []
-                }, {
-                    'background': []
-                }],
-               
-                [{
-                    'align': []
-                }],
-            ]
-            }
-        });
-
-        descricaoCliente.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-descricaocliente').val(descricaoCliente.container.firstChild.innerHTML);
-        });
     </script>
 </body>
 

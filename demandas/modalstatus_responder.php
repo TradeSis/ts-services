@@ -10,15 +10,7 @@
                 <div class="modal-body">
                     <form method="post">
                         <div class="container-fluid p-0">
-                            <div class="col">
-                                <span class="tituloEditor">Comentários</span>
-                            </div>
-                            <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
-                            <div class="quill-responder" style="height:20vh !important"></div>
-                            <textarea style="display: none" id="quill-responder" name="comentario"></textarea>
-                            <!-- -->
-                        </div>
-                        <div class="container-fluid p-0">
+                            <!-- lucas 27022024 - id853 nova chamada editor quill -->
                            <div id="ql-toolbarResponder">
                                <?php include "quilljs/ql-toolbar-min.php"  ?>
                                <input type="file" id="anexarResponder" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileResponder()" style=" display:none">
@@ -46,51 +38,5 @@
         </div>
     </div>
 
+    <!-- lucas 27022024 - id853 nova chamada editor quill -->
     <script src="modalstatus.js"></script>
-
-    <script>
-        var quillresponder = new Quill('.quill-responder', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    ['link', 'image', 'video', 'formula'],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            }
-        });
-        /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-        quillresponder.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-responder').val(quillresponder.container.firstChild.innerHTML);
-        });
-    </script>

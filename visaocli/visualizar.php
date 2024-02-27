@@ -56,7 +56,7 @@ $statusEncerrar = array(
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-    
+    <!-- lucas 27022024 - id853 nova chamada editor quill -->
     <!-- NOVO QUILL -->
     <link href="http://localhost/vendor/quilljs/quill.snow.css" rel="stylesheet">
 </head>
@@ -241,9 +241,8 @@ $statusEncerrar = array(
     <!-- LOCAL PARA COLOCAR OS JS -->
 
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-    <!-- QUILL editor -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+     <!-- lucas 27022024 - id853 nova chamada editor quill -->
      <!-- NOVO QUILL -->
      <script src="http://localhost/vendor/quilljs/quill.min.js"></script>
 
@@ -262,51 +261,6 @@ $statusEncerrar = array(
             window.location.href = newUrl;
         }
 
-
-        var quilldescricao = new Quill('.quill-textarea', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote'],
-                    [{
-                        'list': 'ordered'
-                    }, {
-                        'list': 'bullet'
-                    }],
-                    [{
-                        'indent': '-1'
-                    }, {
-                        'indent': '+1'
-                    }],
-                    [{
-                        'direction': 'rtl'
-                    }],
-                    [{
-                        'size': ['small', false, 'large', 'huge']
-                    }],
-                    [{
-                        'header': [1, 2, 3, 4, 5, 6, false]
-                    }],
-                    [{
-                        'color': []
-                    }, {
-                        'background': []
-                    }],
-                    [{
-                        'font': []
-                    }],
-                    [{
-                        'align': []
-                    }],
-                ]
-            },
-            scrollingContainer: '#scrolling-container'
-        });
-
-        quilldescricao.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-descricao').val(quilldescricao.container.firstChild.innerHTML);
-        });
     </script>
 
 </body>

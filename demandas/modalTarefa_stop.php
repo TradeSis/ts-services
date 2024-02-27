@@ -12,22 +12,29 @@
 
        <div class="modal-body">
          <form method="post" id="stopForm">
+           <!-- lucas 27022024 - id853 nova chamada editor quill -->
            <div class="container-fluid p-0">
-             <div class="col">
-               <span class="tituloEditor">Comentários</span>
+             <div id="ql-toolbarTarefaStop">
+               <?php include "quilljs/ql-toolbar-min.php"  ?>
+               <input type="file" id="anexarTarefaStop" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileTarefaStop()" style=" display:none">
+               <label for="anexarTarefaStop">
+                 <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+               </label>
              </div>
-             <div class="quill-stop" style="height:20vh !important"></div>
+             <div id="ql-editorTarefaStop" style="height:30vh !important">
+             </div>
              <textarea style="display: none" id="quill-stop" name="comentario"></textarea>
            </div>
+
            <div class="col-md">
-            <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
-            <input type="hidden" class="form-control" name="idTarefa" id="stopmodal_idTarefa" />
-            <input type="hidden" class="form-control" name="idDemanda" id="stopmodal_idDemanda" />
-            <input type="hidden" class="form-control" name="idCliente" id="stopmodal_idCliente" />
+             <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>" readonly>
+             <input type="hidden" class="form-control" name="idTarefa" id="stopmodal_idTarefa" />
+             <input type="hidden" class="form-control" name="idDemanda" id="stopmodal_idDemanda" />
+             <input type="hidden" class="form-control" name="idCliente" id="stopmodal_idCliente" />
            </div>
        </div>
        <div class="modal-footer">
-       
+
          <?php if (isset($demanda)) { ?>
            <div class="col align-self-start pl-0">
              <button type="submit" formaction="../database/tarefas.php?operacao=realizado&acao=entregue&redirecionarDemanda" class="btn btn-warning float-left">Entregar</button>
@@ -51,57 +58,48 @@
  </div>
 
  <!-- LOCAL PARA COLOCAR OS JS -->
- 
- <!-- QUILL editor -->
- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
-
+ <!-- lucas 27022024 - id853 nova chamada editor quill -->
  <script>
-   var quillstop = new Quill('.quill-stop', {
-     theme: 'snow',
+   var quillTarefaStop = new Quill('#ql-editorTarefaStop', {
      modules: {
-       toolbar: [
-         ['bold', 'italic', 'underline', 'strike'],
-         ['blockquote'],
-         [{
-           'list': 'ordered'
-         }, {
-           'list': 'bullet'
-         }],
-         [{
-           'indent': '-1'
-         }, {
-           'indent': '+1'
-         }],
-         [{
-           'direction': 'rtl'
-         }],
-         [{
-           'size': ['small', false, 'large', 'huge']
-         }],
-         [{
-           'header': [1, 2, 3, 4, 5, 6, false]
-         }],
-         ['link', 'image', 'video', 'formula'],
-         [{
-           'color': []
-         }, {
-           'background': []
-         }],
-         [{
-           'font': []
-         }],
-         [{
-           'align': []
-         }],
-       ]
-     }
+       toolbar: '#ql-toolbarTarefaStop'
+     },
+     placeholder: 'Digite o texto...',
+     theme: 'snow'
    });
 
-   /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-   quillstop.on('text-change', function(delta, oldDelta, source) {
-     $('#quill-stop').val(quillstop.container.firstChild.innerHTML);
+   quillTarefaStop.on('text-change', function() {
+     $('#quill-stop').val(quillTarefaStop.container.firstChild.innerHTML);
    });
+
+   async function uploadFileTarefaStop() {
+
+     let endereco = '/tmp/';
+     let formData = new FormData();
+     var custombutton = document.getElementById("anexarTarefaStop");
+     var arquivo = custombutton.files[0]["name"];
+
+     formData.append("arquivo", custombutton.files[0]);
+     formData.append("endereco", endereco);
+
+     destino = endereco + arquivo;
+
+     await fetch('quilljs/quill-uploadFile.php', {
+       method: "POST",
+       body: formData
+     });
+
+
+     const range = this.quillTarefaStop.getSelection(true)
+
+     this.quillTarefaStop.insertText(range.index, arquivo, 'user');
+     this.quillTarefaStop.setSelection(range.index, arquivo.length);
+     this.quillTarefaStop.theme.tooltip.edit('link', destino);
+     this.quillTarefaStop.theme.tooltip.save();
+
+     this.quillTarefaStop.setSelection(range.index + destino.length);
+
+   }
  </script>
 
  <!-- LOCAL PARA COLOCAR OS JS -FIM -->

@@ -53,9 +53,10 @@
 
                     <div class="row mt-3">
                         <div class="col-md-6">
-                        <div class="col">
-                                     <span class="tituloEditor">Descrição</span>
-                                 </div>
+                            <div class="col">
+                                <span class="tituloEditor">Descrição</span>
+                            </div>
+                            <!-- lucas 27022024 - id853 nova chamada editor quill -->
                             <div id="ql-toolbar">
                                 <?php include "quilljs/ql-toolbar.php"  ?>
                             </div>
@@ -158,6 +159,7 @@
 
 <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
+<!-- lucas 27022024 - id853 nova chamada editor quill -->
 <!-- NOVO QUILL -->
 <script src="http://localhost/vendor/quilljs/quill.min.js"></script>
 <!-- Initialize Quill editor -->
@@ -174,7 +176,6 @@
         $('#quill-demandainserir').val(quill.container.firstChild.innerHTML);
     });
 </script>
-
 
 <script src="quilljs/quill-uploadFile.js"></script>
 

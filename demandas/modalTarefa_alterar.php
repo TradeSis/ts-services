@@ -116,8 +116,17 @@
                         </div>
                         <div class="tab-pane fade" id="advanced" role="tabpanel" aria-labelledby="advanced-tab">
                             <div class="container">
-                                <div class="quill-descricao" style="height:20vh !important"></div>
-                                <textarea style="display: none" id="descricao" id="descricao" name="descricao"></textarea>
+                                <!-- lucas 27022024 - id853 nova chamada editor quill -->
+                                <div id="ql-toolbarTarefaAlterar">
+                                    <?php include "quilljs/ql-toolbar-min.php"  ?>
+                                    <input type="file" id="anexarTarefaAlterar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileTarefaAlterar()" style=" display:none">
+                                    <label for="anexarTarefaAlterar">
+                                        <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                                    </label>
+                                </div>
+                                <div id="ql-editorTarefaAlterar" style="height:30vh !important">
+                                </div>
+                            <textarea style="display: none" id="quill-tarefaAlterar" name="descricao"></textarea>
                             </div>
                         </div>
                     </div>
@@ -142,50 +151,46 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script>
-    var quilldescricao = new Quill('.quill-descricao', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote'],
-                [{
-                    'list': 'ordered'
-                }, {
-                    'list': 'bullet'
-                }],
-                [{
-                    'indent': '-1'
-                }, {
-                    'indent': '+1'
-                }],
-                [{
-                    'direction': 'rtl'
-                }],
-                [{
-                    'size': ['small', false, 'large', 'huge']
-                }],
-                [{
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-                ['link', 'image', 'video', 'formula'],
-                [{
-                    'color': []
-                }, {
-                    'background': []
-                }],
-                [{
-                    'font': []
-                }],
-                [{
-                    'align': []
-                }],
-            ]
-        }
+ var quillTarefaAlterar = new Quill('#ql-editorTarefaAlterar', {
+    modules: {
+        toolbar: '#ql-toolbarTarefaAlterar'
+    },
+    placeholder: 'Digite o texto...',
+    theme: 'snow'
+});
+
+quillTarefaAlterar.on('text-change', function () {
+    $('#quill-tarefaAlterar').val(quillTarefaAlterar.container.firstChild.innerHTML);
+});
+
+async function uploadFileTarefaAlterar() {
+
+    let endereco = '/tmp/';
+    let formData = new FormData();
+    var custombutton = document.getElementById("anexarTarefaAlterar");
+    var arquivo = custombutton.files[0]["name"];
+
+    formData.append("arquivo", custombutton.files[0]);
+    formData.append("endereco", endereco);
+
+    destino = endereco + arquivo;
+
+    await fetch('quilljs/quill-uploadFile.php', {
+        method: "POST",
+        body: formData
     });
 
-    quilldescricao.on('text-change', function(delta, oldDelta, source) {
-        $('#descricao').val(quilldescricao.container.firstChild.innerHTML);
-    });
+
+    const range = this.quillTarefaAlterar.getSelection(true)
+
+    this.quillTarefaAlterar.insertText(range.index, arquivo, 'user');
+    this.quillTarefaAlterar.setSelection(range.index, arquivo.length);
+    this.quillTarefaAlterar.theme.tooltip.edit('link', destino);
+    this.quillTarefaAlterar.theme.tooltip.save();
+
+    this.quillTarefaAlterar.setSelection(range.index + destino.length);
+
+}
 
     function BuscarAlterar(idTarefa) {
         $.ajax({

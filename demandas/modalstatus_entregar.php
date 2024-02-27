@@ -10,6 +10,7 @@
             <div class="modal-body">
                 <form method="post">
                     <div class="container-fluid p-0">
+                        <!-- lucas 27022024 - id853 nova chamada editor quill -->
                         <div id="ql-toolbarEntregar">
                             <?php include "quilljs/ql-toolbar-min.php"  ?>
                             <input type="file" id="anexarEntregar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileEntregar()" style=" display:none">
@@ -38,4 +39,5 @@
     </div>
 </div>
 
+<!-- lucas 27022024 - id853 nova chamada editor quill -->
 <script src="modalstatus.js"></script>

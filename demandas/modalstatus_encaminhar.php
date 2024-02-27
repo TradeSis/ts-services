@@ -13,6 +13,7 @@
                         <div class="col">
                             <span class="tituloEditor">Comentários</span>
                         </div>
+                        <!-- lucas 27022024 - id853 nova chamada editor quill -->
                         <div id="ql-toolbarEncaminhar">
                             <?php include "quilljs/ql-toolbar-min.php"  ?>
                             <input type="file" id="anexarEncaminhar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileEncaminhar()" style=" display:none">
@@ -53,4 +54,5 @@
     </div>
 </div>
 
+<!-- lucas 27022024 - id853 nova chamada editor quill -->
 <script src="modalstatus.js"></script>

@@ -48,10 +48,10 @@ if (isset($jsonEntrada['idOrcamento'])) {
     $statusContrato = "NULL";
     $idContratoTipo = "'" . $jsonEntrada['idContratoTipo'] . "'";
 
-    $sql = "INSERT INTO contrato (tituloContrato, descricao, dataAbertura, idContratoStatus, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) 
+    $sql2 = "INSERT INTO contrato (tituloContrato, descricao, dataAbertura, idContratoStatus, idCliente, statusContrato, horas, valorHora, valorContrato, idContratoTipo) 
                             values ($tituloOrcamento, $descricao, $dataAbertura, $idContratoStatus, $idCliente, $statusContrato, $horas, $valorHora, $valorOrcamento, $idContratoTipo)";
 
-    $atualizar = mysqli_query($conexao, $sql);
+    $atualizar2 = mysqli_query($conexao, $sql2);
 
     $idContratoInserido = mysqli_insert_id($conexao);
 
@@ -60,22 +60,20 @@ if (isset($jsonEntrada['idOrcamento'])) {
     while ($row_consulta2 = mysqli_fetch_array($buscar_consulta2, MYSQLI_ASSOC)) {
         $idItemOrcamento = isset($row_consulta2['idItemOrcamento']) && $row_consulta2['idItemOrcamento'] !== "" ? $row_consulta2['idItemOrcamento'] : "null";
         $tituloItemOrcamento = isset($row_consulta2['tituloItemOrcamento']) && $row_consulta2['tituloItemOrcamento'] !== "" ? $row_consulta2['tituloItemOrcamento'] : "null";
-        $horas = isset($row_consulta2['horas']) && $row_consulta2['horas'] !== "" ? $row_consulta2['horas'] : "null";
 
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
-            'idCliente' => $row_consulta['idCliente'],
-            'idSolicitante' => $jsonEntrada['idSolicitante'],
-            'tituloDemanda' => $row_consulta2['tituloItemOrcamento'],
             'idContrato' => $idContratoInserido,
-            'idContratoTipo' => $jsonEntrada['idContratoTipo'],
-            'horasPrevisao' => $row_consulta2['horas'],
-            'tempoCobrado' => $row_consulta2['horas'],
-        );  
-        echo json_encode($apiEntrada);
-        $demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'PUT');
+            'descricao' => $row_consulta2['tituloItemOrcamento']
+        );
 
+        $contratochecklist = chamaAPI(null, '/services/contratochecklist', json_encode($apiEntrada), 'PUT');
+
+        
+        
     }
+
+    $sql = "UPDATE orcamento SET idContrato=$idContratoInserido WHERE idOrcamento = $idOrcamento";
 
     //LOG
     if (isset($LOG_NIVEL)) {
@@ -85,18 +83,29 @@ if (isset($jsonEntrada['idOrcamento'])) {
     }
     //LOG
 
-    if ($atualizar) {
+    //TRY-CATCH
+    try {
+
+        $atualizar = mysqli_query($conexao, $sql);
+        if (!$atualizar)
+            throw new Exception(mysqli_error($conexao));
+
         $jsonSaida = array(
             "status" => 200,
             "retorno" => "ok"
         );
-    } else {
+    } catch (Exception $e) {
         $jsonSaida = array(
-            "status" => 501,
-            "retorno" => "erro no mysql"
+            "status" => 500,
+            "retorno" => $e->getMessage()
         );
+        if ($LOG_NIVEL >= 1) {
+            fwrite($arquivo, $identificacao . "-ERRO->" . $e->getMessage() . "\n");
+        }
+    } finally {
+        // ACAO EM CASO DE ERRO (CATCH), que mesmo assim precise
     }
-
+    //TRY-CATCH
 } else {
     $jsonSaida = array(
         "status" => 400,

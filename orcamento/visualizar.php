@@ -185,7 +185,7 @@ $orcamentosStatus = buscaOrcamentoStatus();
                 <hr class="mt-4">
 
                 <div class="modal-footer">
-                    <?php if ($orcamento['idOrcamentoStatus'] == 2) {  //Aprovado ?>
+                    <?php if ($orcamento['idContrato'] == NULL) {   ?>
                         <div class="col align-self-start pl-0">
                             <button type="button" data-bs-toggle="modal" data-bs-target="#gerarContratoModal"
                                 class="btn btn-warning">Gerar Contrato</button>

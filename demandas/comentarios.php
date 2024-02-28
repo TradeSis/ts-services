@@ -26,7 +26,7 @@ include_once '../header.php';
 
                     <div class="container-fluid p-0">
                         <div id="ql-toolbarComentario">
-                            <?php include "quilljs/ql-toolbar-min.php"  ?>
+                            <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
                             <input type="file" id="anexarComentario" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileComentario()" style=" display:none">
                             <label for="anexarComentario">
                                 <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>

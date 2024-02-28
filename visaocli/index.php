@@ -30,11 +30,7 @@ if ($usuario["idCliente"] == null) {
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-    <!-- lucas 27022024 - id853 nova chamada editor quill -->
-    <!-- NOVO QUILL -->
-    <link href="http://localhost/vendor/quilljs/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
@@ -183,10 +179,6 @@ if ($usuario["idCliente"] == null) {
     <!-- LOCAL PARA COLOCAR OS JS -->
 
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
-    <!-- lucas 27022024 - id853 nova chamada editor quill -->
-    <!-- NOVO QUILL -->
-    <script src="http://localhost/vendor/quilljs/quill.min.js"></script>
 
     <script>
         $(document).on('click', '#kanbanCard', function() {

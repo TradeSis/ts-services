@@ -15,7 +15,7 @@
            <!-- lucas 27022024 - id853 nova chamada editor quill -->
            <div class="container-fluid p-0">
              <div id="ql-toolbarTarefaStop">
-               <?php include "quilljs/ql-toolbar-min.php"  ?>
+               <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
                <input type="file" id="anexarTarefaStop" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileTarefaStop()" style=" display:none">
                <label for="anexarTarefaStop">
                  <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
@@ -57,10 +57,7 @@
    </div>
  </div>
 
-  <!-- lucas 27022024 - id853 nova chamada editor quill -->
-  <!-- NOVO QUILL -->
-  <script src="http://localhost/vendor/quilljs/quill.min.js"></script>
-
+ <?php include_once ROOT . "/vendor/footer_js.php"; ?>
  <!-- LOCAL PARA COLOCAR OS JS -->
  <!-- lucas 27022024 - id853 nova chamada editor quill -->
  <script>

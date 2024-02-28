@@ -57,12 +57,16 @@
                                 <span class="tituloEditor">Descrição</span>
                             </div>
                             <!-- lucas 27022024 - id853 nova chamada editor quill -->
-                            <div id="ql-toolbar">
-                                <?php include "quilljs/ql-toolbar.php"  ?>
+                            <div id="ql-toolbarDemandaInserir">
+                                <?php include ROOT . "/sistema/quilljs//ql-toolbar-min.php"  ?>
+                                <input type="file" id="anexarDemandaInserir" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileDemandaInserir()" style=" display:none">
+                                <label for="anexarDemandaInserir">
+                                    <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                                </label>
                             </div>
-                            <div id="ql-editor" style="height:30vh !important">
+                            <div id="ql-editorDemandaInserir" style="height:30vh !important">
                             </div>
-                            <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
+                            <textarea style="display: none" id="quill-demandaInserir" name="descricao"></textarea>
                         </div>
 
                         <div class="col-md-6">
@@ -160,24 +164,48 @@
 <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
 <!-- lucas 27022024 - id853 nova chamada editor quill -->
-<!-- NOVO QUILL -->
-<script src="http://localhost/vendor/quilljs/quill.min.js"></script>
-<!-- Initialize Quill editor -->
 <script>
-    var quill = new Quill('#ql-editor', {
+    //lucas 27022024 - id853 nova chamada editor quill
+    var quillDemandaInserir = new Quill('#ql-editorDemandaInserir', {
         modules: {
-            toolbar: '#ql-toolbar'
+            toolbar: '#ql-toolbarDemandaInserir'
         },
         placeholder: 'Digite o texto...',
         theme: 'snow'
     });
 
-    quill.on('text-change', function(delta, oldDelta, source) {
-        $('#quill-demandainserir').val(quill.container.firstChild.innerHTML);
+    quillDemandaInserir.on('text-change', function() {
+        $('#quill-demandaInserir').val(quillDemandaInserir.container.firstChild.innerHTML);
     });
-</script>
 
-<script src="quilljs/quill-uploadFile.js"></script>
+    async function uploadFileDemandaInserir() {
+
+        let endereco = '/tmp/';
+        let formData = new FormData();
+        var custombutton = document.getElementById("anexarDemandaInserir");
+        var arquivo = custombutton.files[0]["name"];
+
+        formData.append("arquivo", custombutton.files[0]);
+        formData.append("endereco", endereco);
+
+        destino = endereco + arquivo;
+
+        await fetch('quilljs/quill-uploadFile.php', {
+            method: "POST",
+            body: formData
+        });
+
+        const range = this.quillDemandaInserir.getSelection(true)
+
+        this.quillDemandaInserir.insertText(range.index, arquivo, 'user');
+        this.quillDemandaInserir.setSelection(range.index, arquivo.length);
+        this.quillDemandaInserir.theme.tooltip.edit('link', destino);
+        this.quillDemandaInserir.theme.tooltip.save();
+
+        this.quillDemandaInserir.setSelection(range.index + destino.length);
+
+    }
+</script>
 
 
 <script>

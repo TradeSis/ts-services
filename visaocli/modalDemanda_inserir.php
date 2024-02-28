@@ -62,12 +62,16 @@
                                     <span class="tituloEditor">Descrição</span>
                                 </div>
                                 <!-- lucas 27022024 - id853 nova chamada editor quill -->
-                                <div id="ql-toolbar">
-                                    <?php include "../demandas/quilljs/ql-toolbar.php"  ?>
+                                <div id="ql-toolbarClienteDemandaInserir">
+                                    <?php include ROOT . "/sistema/quilljs//ql-toolbar-min.php"  ?>
+                                    <input type="file" id="anexarClienteDemandaInserir" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileClienteDemandaInserir()" style=" display:none">
+                                    <label for="anexarClienteDemandaInserir">
+                                        <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                                    </label>
                                 </div>
-                                <div id="ql-editor" style="height:30vh !important">
+                                <div id="ql-editorClienteDemandaInserir" style="height:30vh !important">
                                 </div>
-                                <textarea style="display: none" id="quill-demandainserir" name="descricao"></textarea>
+                                <textarea style="display: none" id="quill-clienteDemandaInserir" name="descricao"></textarea>
                             </div>
                         </div>
 
@@ -165,9 +169,6 @@
 <!-- LOCAL PARA COLOCAR OS JS -->
 
 <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-<!-- lucas 27022024 - id853 nova chamada editor quill -->
-<!-- NOVO QUILL -->
-<script src="http://localhost/vendor/quilljs/quill.min.js"></script>
 
 <script>
     //gabriel 05022024 id738 - trigger cliente automatico 
@@ -211,18 +212,43 @@
     });
 
     //lucas 27022024 - id853 nova chamada editor quill
-    var quill = new Quill('#ql-editor', {
+    var quillClienteDemandaInserir = new Quill('#ql-editorClienteDemandaInserir', {
         modules: {
-            toolbar: '#ql-toolbar'
+            toolbar: '#ql-toolbarClienteDemandaInserir'
         },
         placeholder: 'Digite o texto...',
         theme: 'snow'
     });
 
-    quill.on('text-change', function(delta, oldDelta, source) {
-        $('#quill-demandainserir').val(quill.container.firstChild.innerHTML);
+    quillClienteDemandaInserir.on('text-change', function() {
+        $('#quill-clienteDemandaInserir').val(quillClienteDemandaInserir.container.firstChild.innerHTML);
     });
+
+    async function uploadFileClienteDemandaInserir() {
+
+        let endereco = '/tmp/';
+        let formData = new FormData();
+        var custombutton = document.getElementById("anexarClienteDemandaInserir");
+        var arquivo = custombutton.files[0]["name"];
+
+        formData.append("arquivo", custombutton.files[0]);
+        formData.append("endereco", endereco);
+
+        destino = endereco + arquivo;
+
+        await fetch('quilljs/quill-uploadFile.php', {
+            method: "POST",
+            body: formData
+        });
+
+        const range = this.quillClienteDemandaInserir.getSelection(true)
+
+        this.quillClienteDemandaInserir.insertText(range.index, arquivo, 'user');
+        this.quillClienteDemandaInserir.setSelection(range.index, arquivo.length);
+        this.quillClienteDemandaInserir.theme.tooltip.edit('link', destino);
+        this.quillClienteDemandaInserir.theme.tooltip.save();
+
+        this.quillClienteDemandaInserir.setSelection(range.index + destino.length);
+
+    }
 </script>
-
-
-<script src="../demandas/quilljs/quill-uploadFile.js"></script>

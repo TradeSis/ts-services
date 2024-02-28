@@ -12,7 +12,7 @@
                         <div class="container-fluid p-0">
                             <!-- lucas 27022024 - id853 nova chamada editor quill -->
                            <div id="ql-toolbarResponder">
-                               <?php include "quilljs/ql-toolbar-min.php"  ?>
+                               <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
                                <input type="file" id="anexarResponder" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileResponder()" style=" display:none">
                                <label for="anexarResponder">
                                    <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>

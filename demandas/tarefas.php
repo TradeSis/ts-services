@@ -259,8 +259,7 @@ if (isset($_SESSION['filtro_tarefas'])) {
   <?php include_once ROOT . "/vendor/footer_js.php"; ?>
   <!-- script para menu de filtros -->
   <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
-  <!-- QUILL editor -->
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  
 
   <script src="<?php echo URLROOT ?>/services/demandas/tarefas.js"></script>
 

@@ -66,8 +66,6 @@ $statusEncerrar = array(
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
 
-    <!-- NOVO QUILL -->
-    <link href="http://localhost/vendor/quilljs/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
@@ -303,9 +301,6 @@ $statusEncerrar = array(
     <!-- LOCAL PARA COLOCAR OS JS -->
 
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-
-    <!-- NOVO QUILL -->
-    <script src="http://localhost/vendor/quilljs/quill.min.js"></script>
 
     <script src="visualizar.js"></script>
 

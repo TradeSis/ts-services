@@ -124,7 +124,7 @@
                             <div class="container">
                                 <!-- lucas 27022024 - id853 nova chamada editor quill -->
                                 <div id="ql-toolbarTarefaAlterar">
-                                    <?php include "quilljs/ql-toolbar-min.php"  ?>
+                                    <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
                                     <input type="file" id="anexarTarefaAlterar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileTarefaAlterar()" style=" display:none">
                                     <label for="anexarTarefaAlterar">
                                         <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
@@ -155,9 +155,6 @@
 <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
 <!-- lucas 27022024 - id853 nova chamada editor quill -->
-<!-- NOVO QUILL -->
-<script src="http://localhost/vendor/quilljs/quill.min.js"></script>
-
 <script>
     var quillTarefaAlterar = new Quill('#ql-editorTarefaAlterar', {
         modules: {

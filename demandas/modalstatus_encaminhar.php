@@ -15,7 +15,7 @@
                         </div>
                         <!-- lucas 27022024 - id853 nova chamada editor quill -->
                         <div id="ql-toolbarEncaminhar">
-                            <?php include "quilljs/ql-toolbar-min.php"  ?>
+                            <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
                             <input type="file" id="anexarEncaminhar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileEncaminhar()" style=" display:none">
                             <label for="anexarEncaminhar">
                                 <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>

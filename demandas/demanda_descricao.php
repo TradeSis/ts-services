@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div id="ql-toolbarDescricao">
-                <?php include "quilljs/ql-toolbar-min.php"  ?>
+                <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
                 <input type="file" id="anexarDescricao" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileDescricao()" style=" display:none">
                 <label for="anexarDescricao">
                     <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>

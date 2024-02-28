@@ -72,10 +72,7 @@ if (isset($_SESSION['filtro_demanda'])) {
 <head>
 
   <?php include_once ROOT . "/vendor/head_css.php"; ?>
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-  <!-- NOVO QUILL -->
-  <link href="http://localhost/vendor/quilljs/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
@@ -344,8 +341,7 @@ if (isset($_SESSION['filtro_demanda'])) {
   <?php include_once ROOT . "/vendor/footer_js.php"; ?>
   <!-- script para menu de filtros -->
   <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
-  <!-- QUILL editor -->
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+ 
   <!-- Cards funcionado como botões -->
   <script src="../js/demanda_cards.js"></script>
 

@@ -58,7 +58,7 @@ function buscaContratosAbertos($idCliente=null)
 }
 
 
-function buscaCards($where, $idContratoTipo = null)
+function buscaCardsContrato($idContratoTipo = null)
 {
 
 	$cards = array();

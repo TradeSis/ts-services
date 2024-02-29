@@ -30,7 +30,6 @@ if ($usuario["idCliente"] == null) {
 <head>
 
     <?php include_once ROOT . "/vendor/head_css.php"; ?>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 </head>
 
@@ -180,51 +179,12 @@ if ($usuario["idCliente"] == null) {
     <!-- LOCAL PARA COLOCAR OS JS -->
 
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-    <!-- QUILL editor -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <script>
         $(document).on('click', '#kanbanCard', function() {
             window.location.href = 'visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
         });
 
-        var descricaoCliente = new Quill('.quill-descricaocliente', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-             
-                [{
-                    'list': 'ordered'
-                }, {
-                    'list': 'bullet'
-                }],
-                [{
-                    'indent': '-1'
-                }, {
-                    'indent': '+1'
-                }],
-               
-                [{
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-                ['link', 'image'],
-                [{
-                    'color': []
-                }, {
-                    'background': []
-                }],
-               
-                [{
-                    'align': []
-                }],
-            ]
-            }
-        });
-
-        descricaoCliente.on('text-change', function(delta, oldDelta, source) {
-            $('#quill-descricaocliente').val(descricaoCliente.container.firstChild.innerHTML);
-        });
     </script>
 </body>
 

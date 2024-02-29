@@ -4,7 +4,7 @@
 -->
 
 <!--------- ALTERAR --------->
-<div class="modal" id="alterarmodal" tabindex="-1"  aria-labelledby="alterarmodalLabel" aria-hidden="true">
+<div class="modal" id="alterarmodal" tabindex="-1" aria-labelledby="alterarmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,7 +24,7 @@
                         <a class="nav-link ts-tabModal" id="advanced-tab" data-bs-toggle="tab" href="#advanced" role="tab" aria-controls="advanced" aria-selected="false">Mais Opções</a>
                     </li>
                 </ul>
-                <form method="post"  id="alterarForm">
+                <form method="post" id="alterarForm">
                     <div class="tab-content" id="myTabsContent">
                         <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                             <div class="container">
@@ -32,10 +32,13 @@
                                 <div class="row mt-2">
                                     <div class="col-md-12">
                                         <label class='form-label ts-label'>Tarefa</label>
-                                        <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off"
-                                        <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
+                                        <input type="text" class="form-control ts-input" id="titulo" name="tituloTarefa" autocomplete="off" <?php if (isset($demanda)) {
+                                                                                                                                                echo ' ';
+                                                                                                                                            } else {
+                                                                                                                                                echo 'required';
+                                                                                                                                            } ?>>
                                     </div>
-                        
+
                                     <!-- Lucas 09112023 ID 965 Removido Select de demandaRelacionada -->
 
                                     <input type="hidden" class="form-control ts-input" name="idTarefa" id="idTarefa" />
@@ -83,8 +86,11 @@
                                 <div class="row mt-4">
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Data Prevista</label>
-                                        <input type="date" class="form-control ts-input" id="Previsto" name="Previsto" autocomplete="off"
-                                        <?php if(isset($demanda)){echo ' ';}else{ echo 'required';} ?> >
+                                        <input type="date" class="form-control ts-input" id="Previsto" name="Previsto" autocomplete="off" <?php if (isset($demanda)) {
+                                                                                                                                                echo ' ';
+                                                                                                                                            } else {
+                                                                                                                                                echo 'required';
+                                                                                                                                            } ?>>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label ts-label">Inicio</label>
@@ -116,8 +122,17 @@
                         </div>
                         <div class="tab-pane fade" id="advanced" role="tabpanel" aria-labelledby="advanced-tab">
                             <div class="container">
-                                <div class="quill-descricao" style="height:20vh !important"></div>
-                                <textarea style="display: none" id="descricao" id="descricao" name="descricao"></textarea>
+                                <!-- lucas 27022024 - id853 nova chamada editor quill -->
+                                <div id="ql-toolbarTarefaAlterar">
+                                    <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
+                                    <input type="file" id="anexarTarefaAlterar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileTarefaAlterar()" style=" display:none">
+                                    <label for="anexarTarefaAlterar">
+                                        <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                                    </label>
+                                </div>
+                                <div id="ql-editorTarefaAlterar" style="height:30vh !important">
+                                </div>
+                                <textarea style="display: none" id="quill-tarefaAlterar" name="descricao"></textarea>
                             </div>
                         </div>
                     </div>
@@ -126,7 +141,7 @@
             <div class="modal-footer">
                 <a id="visualizarDemandaButton" class="btn btn-primary">Visualizar</a>
                 <button type="submit" id="stopButtonModal" class="btn btn-danger" data-toggle="modal"><i class="bi bi-stop-circle"></i> Stop</button>
-           
+
                 <button type="submit" id="startButtonModal" class="btn btn-success"><i class="bi bi-play-circle"></i> Start</button>
                 <button type="submit" id="realizadoButtonModal" class="btn btn-info"><i class="bi bi-check-circle"></i> Realizado</button>
                 <button type="submit" id="atualizarButtonModal" class="btn btn-warning"><i class='bi bi-pencil-square'></i> Atualizar</button>
@@ -138,54 +153,48 @@
 <!-- LOCAL PARA COLOCAR OS JS -->
 
 <?php include_once ROOT . "/vendor/footer_js.php"; ?>
-<!-- QUILL editor -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+<!-- lucas 27022024 - id853 nova chamada editor quill -->
 <script>
-    var quilldescricao = new Quill('.quill-descricao', {
-        theme: 'snow',
+    var quillTarefaAlterar = new Quill('#ql-editorTarefaAlterar', {
         modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote'],
-                [{
-                    'list': 'ordered'
-                }, {
-                    'list': 'bullet'
-                }],
-                [{
-                    'indent': '-1'
-                }, {
-                    'indent': '+1'
-                }],
-                [{
-                    'direction': 'rtl'
-                }],
-                [{
-                    'size': ['small', false, 'large', 'huge']
-                }],
-                [{
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-                ['link', 'image', 'video', 'formula'],
-                [{
-                    'color': []
-                }, {
-                    'background': []
-                }],
-                [{
-                    'font': []
-                }],
-                [{
-                    'align': []
-                }],
-            ]
-        }
+            toolbar: '#ql-toolbarTarefaAlterar'
+        },
+        placeholder: 'Digite o texto...',
+        theme: 'snow'
     });
 
-    quilldescricao.on('text-change', function(delta, oldDelta, source) {
-        $('#descricao').val(quilldescricao.container.firstChild.innerHTML);
+    quillTarefaAlterar.on('text-change', function() {
+        $('#quill-tarefaAlterar').val(quillTarefaAlterar.container.firstChild.innerHTML);
     });
+
+    async function uploadFileTarefaAlterar() {
+
+        let endereco = '/tmp/';
+        let formData = new FormData();
+        var custombutton = document.getElementById("anexarTarefaAlterar");
+        var arquivo = custombutton.files[0]["name"];
+
+        formData.append("arquivo", custombutton.files[0]);
+        formData.append("endereco", endereco);
+
+        destino = endereco + arquivo;
+
+        await fetch('quilljs/quill-uploadFile.php', {
+            method: "POST",
+            body: formData
+        });
+
+        const range = this.quillTarefaAlterar.getSelection(true)
+
+        this.quillTarefaAlterar.insertText(range.index, arquivo, 'user');
+        this.quillTarefaAlterar.setSelection(range.index, arquivo.length);
+        this.quillTarefaAlterar.theme.tooltip.edit('link', destino);
+        this.quillTarefaAlterar.theme.tooltip.save();
+
+        this.quillTarefaAlterar.setSelection(range.index + destino.length);
+
+    }
 
     function BuscarAlterar(idTarefa) {
         $.ajax({
@@ -213,14 +222,14 @@
                 $('#dataReal').val(data.dataReal);
                 $('#horaInicioReal').val(data.horaInicioReal);
                 $('#horaFinalReal').val(data.horaFinalReal);
-             
+
                 vidDemanda = data.idDemanda;
                 vtituloDemanda = data.tituloDemanda;
-                vnomeDemanda= data.nomeDemanda;
+                vnomeDemanda = data.nomeDemanda;
                 vnomeContrato = data.nomeContrato;
                 vtituloContrato = data.tituloContrato;
                 vidContrato = data.idContrato;
-                quilldescricao.root.innerHTML = data.descricao;
+                quillTarefaAlterar.root.innerHTML = data.descricao;
 
                 if (data.idDemanda !== null) {
                     var visualizarDemandaUrl = "visualizar.php?idDemanda=" + data.idDemanda;
@@ -238,7 +247,7 @@
                     $("#titulo").prop('required', true);
                     $("#Previsto").prop('required', true);
                 }
-          
+
                 //condição para adicionar classe de required em titulo e Previsto
                 if (data.idDemanda !== null) {
                     $("#titulo").prop('required', false);
@@ -251,10 +260,10 @@
                 // lucas 22112023 id 688 - alterado condições do select
                 if (data.Previsto !== null || data.dataReal !== null) {
                     //se vier dataPrevisto ou dataReal o select vai estar desabilitado
-                    $( "#idAtendente" ).addClass( "ts-displayDisable" );
+                    $("#idAtendente").addClass("ts-displayDisable");
                 } else {
                     //senão vai habilitar o select
-                    $( "#idAtendente" ).removeClass( "ts-displayDisable" );
+                    $("#idAtendente").removeClass("ts-displayDisable");
                 }
 
                 if (data.horaInicioReal !== null) {
@@ -273,18 +282,18 @@
                     $('#stopButtonModal').hide();
                 }
                 // lucas 22112023 id 688 - alterado condições do select
-                if(data.idCliente == null){
+                if (data.idCliente == null) {
                     //se idCliente vier nulo o select vai estar habilitado
-                     $( "#idCliente" ).removeClass( "ts-displayDisable" );
-                }else{
+                    $("#idCliente").removeClass("ts-displayDisable");
+                } else {
                     //se idCliente vier Preenchido o select vai estar desabilitado
-                    $( "#idCliente" ).addClass( "ts-displayDisable" );
+                    $("#idCliente").addClass("ts-displayDisable");
                 }
-            
+
                 $('#alterarmodal').modal('show');
 
                 // Lucas 09112023 ID 965 informações da tarefa dinamica
-                if((vidContrato == null) && (vidDemanda == null)){
+                if ((vidContrato == null) && (vidDemanda == null)) {
                     var tituloModal = $("#tituloContratodeTarefas");
                     var text = ' ';
                     tituloModal.html(text);
@@ -292,7 +301,7 @@
                     var text = ' ';
                     tituloModal.html(text);
                 }
-                if((vidDemanda !== null) && (vidContrato == null)) { 
+                if ((vidDemanda !== null) && (vidContrato == null)) {
                     var tituloModal = $("#tituloContratodeTarefas");
                     var text = ' ';
                     tituloModal.html(text);
@@ -300,7 +309,7 @@
                     var text = vnomeDemanda + " :" + " " + vidDemanda + " - " + vtituloDemanda;
                     tituloModal.html(text);
                 }
-                if((vidDemanda !== null) && (vidContrato !== null)) { 
+                if ((vidDemanda !== null) && (vidContrato !== null)) {
                     var tituloModal = $("#tituloContratodeTarefas");
                     var text = vnomeContrato + " :" + " " + vidContrato + " - " + vtituloContrato + "<br>";
                     tituloModal.html(text);
@@ -308,30 +317,30 @@
                     var text = vnomeDemanda + " :" + " " + vidDemanda + " - " + vtituloDemanda;
                     tituloModal.html(text);
                 }
-          
-                function dataAtual(){
+
+                function dataAtual() {
                     var data = new Date(),
-                        dia  = data.getDate().toString(),
-                        diaF = (dia.length == 1) ? '0'+dia : dia,
-                        mes  = (data.getMonth()+1).toString(), 
-                        mesF = (mes.length == 1) ? '0'+mes : mes,
+                        dia = data.getDate().toString(),
+                        diaF = (dia.length == 1) ? '0' + dia : dia,
+                        mes = (data.getMonth() + 1).toString(),
+                        mesF = (mes.length == 1) ? '0' + mes : mes,
                         anoF = data.getFullYear();
-                    return anoF+"-"+mesF+"-"+diaF;
+                    return anoF + "-" + mesF + "-" + diaF;
                 }
-                dataAtual_alterar = dataAtual();  
-    
+                dataAtual_alterar = dataAtual();
+
                 if (data.dataReal == dataAtual_alterar) {
                     $('#stopButtonModal').show();
-                }else{
+                } else {
                     $('#stopButtonModal').hide();
                 }
-                
+
             }
-            
+
         });
     }
-    
-    
+
+
     $(document).on('click', 'button[data-bs-target="#alterarmodal"]', function() {
         var idTarefa = $(this).attr("data-idtarefa");
         BuscarAlterar(idTarefa);

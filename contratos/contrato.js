@@ -17,8 +17,11 @@ window.onload = function () {
     if (id === 'demandacontrato') {
         showTabsContent(1);
     }
-    if (id === 'notascontrato') {
+    if (id === 'contratochecklist') {
         showTabsContent(2);
+    }
+    if (id === 'notascontrato') {
+        showTabsContent(3);
     }
 }
 
@@ -57,8 +60,10 @@ $('.aba1').click(function () {
     $('.aba1').addClass('whiteborder');
     $('.aba2').removeClass('whiteborder');
     $('.aba3').removeClass('whiteborder');
+    $('.aba4').removeClass('whiteborder');
     $('.aba2_conteudo').hide();
     $('.aba3_conteudo').hide();
+    $('.aba4_conteudo').hide();
 });
 
 $('.aba2').click(function () {
@@ -66,8 +71,10 @@ $('.aba2').click(function () {
     $('.aba2').addClass('whiteborder');
     $('.aba1').removeClass('whiteborder');
     $('.aba3').removeClass('whiteborder');
+    $('.aba4').removeClass('whiteborder');
     $('.aba1_conteudo').hide();
     $('.aba3_conteudo').hide();
+    $('.aba4_conteudo').hide();
 });
 
 $('.aba3').click(function () {
@@ -75,8 +82,20 @@ $('.aba3').click(function () {
     $('.aba3').addClass('whiteborder');
     $('.aba1').removeClass('whiteborder');
     $('.aba2').removeClass('whiteborder');
+    $('.aba4').removeClass('whiteborder');
     $('.aba1_conteudo').hide();
     $('.aba2_conteudo').hide();
+    $('.aba4_conteudo').hide();
+});
+$('.aba4').click(function () {
+    $('.aba4_conteudo').show();
+    $('.aba4').addClass('whiteborder');
+    $('.aba1').removeClass('whiteborder');
+    $('.aba2').removeClass('whiteborder');
+    $('.aba3').removeClass('whiteborder');
+    $('.aba1_conteudo').hide();
+    $('.aba2_conteudo').hide();
+    $('.aba3_conteudo').hide();
 });
 
 // Editor Quill - demanda_inserir
@@ -154,4 +173,91 @@ var quill = new Quill('.quill-contratoDescricao', {
 
 quill.on('text-change', function(delta, oldDelta, source) {
     $('#quill-contratoDescricao').val(quill.container.firstChild.innerHTML);
+});
+
+
+$(document).ready(function () {
+
+    $(document).on('click', 'button[data-bs-target="#alterarChecklistModal"]', function () {
+        var idChecklist = $(this).attr("data-idChecklist");
+        var idContrato = $(this).attr("data-idContrato");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '../database/contratochecklist.php?operacao=buscar',
+            data: {
+                idChecklist: idChecklist,
+                idContrato: idContrato
+            },
+            success: function (data) {
+                $('#idChecklist').val(data.idChecklist);
+                $('#idContrato').val(data.idContrato);
+                $('#descricao').val(data.descricao);
+                $('#dataPrevisto').val(data.dataPrevisto);
+                $('#alterarChecklistModal').modal('show');
+            }
+        });
+    });
+
+    $(document).on('click', 'button[data-bs-target="#excluirChecklistModal"]', function () {
+        var idChecklist = $(this).attr("data-idChecklist");
+        var idContrato = $(this).attr("data-idContrato");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '../database/contratochecklist.php?operacao=buscar',
+            data: {
+                idChecklist: idChecklist,
+                idContrato: idContrato
+            },
+            success: function (data) {
+                $('#EXCidChecklist').val(data.idChecklist);
+                $('#EXCidContrato').val(data.idContrato);
+                $('#EXCdescricao').val(data.descricao);
+                $('#EXCdataPrevisto').val(data.dataPrevisto);
+                $('#excluirChecklistModal').modal('show');
+            }
+        });
+    });
+
+    $(document).on('click', 'button[data-bs-target="#tarefaChecklistModal"]', function () {
+        var idChecklist = $(this).attr("data-idChecklist");
+        var idContrato = $(this).attr("data-idContrato");
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '../database/contratochecklist.php?operacao=buscar',
+            data: {
+                idChecklist: idChecklist,
+                idContrato: idContrato
+            },
+            success: function (data) {
+                $('#NEWidChecklist').val(data.idChecklist);
+                $('#NEWidContrato').val(data.idContrato);
+                $('#NEWdescricao').val(data.descricao);
+                $('#NEWdataPrevisto').val(data.dataPrevisto);
+                $('#tarefaChecklistModal').modal('show');
+            }
+        });
+    });
+
+    $(document).on('click', '.ts-check', function () {
+        var idChecklist = $(this).find("input[type='checkbox']").attr("data-idChecklist");
+        var idContrato = $(this).find("input[type='checkbox']").attr("data-idContrato");
+        var statusCheck = $(this).find("input[type='checkbox']").is(":checked") ? 1 : 0;
+    
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "../database/contratochecklist.php?operacao=alterar",
+            data: {
+                statusCheck: statusCheck,
+                idChecklist: idChecklist,
+                idContrato: idContrato
+            },
+            success: function() { 
+                window.location.reload(); 
+            }
+        });
+    });
 });

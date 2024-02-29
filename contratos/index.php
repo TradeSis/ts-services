@@ -33,19 +33,18 @@ $contratoTipo = buscaContratoTipos($urlContratoTipo);
 
 $clientes = buscaClientes();
 $contratoStatusTodos = buscaContratoStatus();
-$cards = buscaCards("", $urlContratoTipo);
+$cards = buscaCardsContrato($urlContratoTipo);
 
 
 $idCliente = null;
-$idContratoStatus = null;
-$statusContrato =  "1"; //ABERTO
+$idContratoStatus = null; 
+$statusContrato = CONTRATOSTATUS_DESENVOLVIMENTO;
 if (isset($_SESSION['filtro_contrato'])) {
     $filtroEntrada = $_SESSION['filtro_contrato'];
     $idCliente = $filtroEntrada['idCliente'];
     $idContratoStatus = $filtroEntrada['idContratoStatus'];
     $statusContrato = $filtroEntrada['statusContrato'];
 }
-
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -64,111 +63,70 @@ if (isset($_SESSION['filtro_contrato'])) {
         <div class="row ">
             <!-- <BR> MENSAGENS/ALERTAS -->
         </div>
+
         <div class="row row-cols-1 row-cols-md-6 pt-2">
             <!-- BOTOES AUXILIARES -->
             <div class="col">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
-                    <div class="text-xs fw-bold text-secondary">TOTAL</div>
-                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
-                                                                foreach ($cards as $card)
-                                                                    if ($card["idContratoStatus"] == "0") {
-                                                                        echo "(" . $card['qtdContratos'] . ") ";
-                                                                        if ("$logado" == "helio") {
-                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                        }
-                                                                    }
-
-                                                                ?>
-                    </div>
+                <div class="ts-cardColor1 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="text-xs fw-bold text-info">ORÇAMENTO</div>
+                <div class="h5 mb-0  text-gray-800 ml-1">
+                    <?php echo "(" . $cards['totalOrcamento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorOrcamento'], 2, ',', '');}?>
+                </div>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_ORCAMENTO; ?>" id="<?php echo CONTRATOSTATUS_ORCAMENTO; ?>"></button>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
-                    <div class="text-xs fw-bold text-success">ORÇAMENTO</div>
-                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
-                                                                foreach ($cards as $card)
-                                                                    if ($card["idContratoStatus"] == "1") {
-                                                                        echo "(" . $card['qtdContratos'] . ") ";
-                                                                        if ("$logado" == "helio") {
-                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                        }
-                                                                    }
-
-                                                                ?>
-                    </div>
+                <div class="ts-cardColor2 ts-cardColor-active card border-left-success  ts-cardsTotais p-1">
+                <div class="text-xs fw-bold text-success">DESENVOLVIMENTO</div>
+                <div class="h5 mb-0  text-gray-800 ml-1">
+                    <?php echo "(" . $cards['totalDesenvolvimento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorDesenvolvimento'], 2, ',', '');}?>
+                </div>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_DESENVOLVIMENTO; ?>" id="<?php echo CONTRATOSTATUS_DESENVOLVIMENTO; ?>"></button>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
-                    <div class="text-xs fw-bold text-success">APROVAÇÂO</div>
-                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
-                                                                foreach ($cards as $card)
-                                                                    if ($card["idContratoStatus"] == "2") {
-                                                                        echo "(" . $card['qtdContratos'] . ") ";
-                                                                        if ("$logado" == "helio") {
-                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                        }
-                                                                    }
-
-                                                                ?>
-                    </div>
+                <div class="ts-cardColor3 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="text-xs fw-bold text-success">FATURAMENTO</div>
+                <div class="h5 mb-0  text-gray-800 ml-1">
+                    <?php echo "(" . $cards['totalFaturamento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorFaturamento'], 2, ',', '');}?>
+                </div>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_FATURAMENTO; ?>" id="<?php echo CONTRATOSTATUS_FATURAMENTO; ?>"></button>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
-                    <div class="text-xs fw-bold text-warning">DESENVOLVIMENTO</div>
-                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
-                                                                foreach ($cards as $card)
-                                                                    if ($card["idContratoStatus"] == "3") {
-                                                                        echo "(" . $card['qtdContratos'] . ") ";
-                                                                        if ("$logado" == "helio") {
-                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                        }
-                                                                    }
-
-                                                                ?>
-                    </div>
+                <div class="ts-cardColor4 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="text-xs fw-bold text-warning">RECEBIMENTO</div>
+                <div class="h5 mb-0  text-gray-800 ml-1">
+                    <?php echo "(" . $cards['totalRecebimento'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorRecebimento'], 2, ',', '');}?>
+                </div>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_RECEBIMENTO; ?>" id="<?php echo CONTRATOSTATUS_RECEBIMENTO; ?>"></button>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
-                    <div class="text-xs fw-bold text-danger">FATURAMENTO</div>
-                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
-                                                                foreach ($cards as $card)
-                                                                    if ($card["idContratoStatus"] == "4") {
-                                                                        echo "(" . $card['qtdContratos'] . ") ";
-                                                                        if ("$logado" == "helio") {
-                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                        }
-                                                                    }
-
-                                                                ?>
-                    </div>
+                <div class="ts-cardColor5 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="text-xs fw-bold text-danger pl-4">TOTAL ATIVO</div>
+                <div class="h5 mb-0  text-gray-800 ml-1">
+                    <?php echo "(" . $cards['totalAtivo'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorAtivo'], 2, ',', '');}?>
+                </div>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_ATIVO; ?>" id="<?php echo CONTRATOSTATUS_ATIVO; ?>"></button>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card border-left-success ts-shadow py-0 ts-cardsTotaisContrato p-1">
-                    <div class="text-xs fw-bold text-danger">RECEBIMENTO</div>
-                    <div class="h5 mb-0  text-gray-800 ml-1"><?php
-                                                                foreach ($cards as $card)
-                                                                    if ($card["idContratoStatus"] == "5") {
-                                                                        echo "(" . $card['qtdContratos'] . ") ";
-                                                                        if ("$logado" == "helio") {
-                                                                            echo "R$ " . number_format((float)$card['valorContratos'], 2, ',', '');
-                                                                        }
-                                                                    }
-
-                                                                ?>
-                    </div>
+                <div class="ts-cardColor6 card border-left-success ts-shadowOff ts-cardsTotais p-1">
+                <div class="text-xs fw-bold text-danger pl-4">ENCERRADOS</div>
+                <div class="h5 mb-0  text-gray-800 ml-1">
+                    <?php echo "(" . $cards['totalEncerrados'] . ") "; if ("$logado" == "helio") { echo "R$ " . number_format((float)$cards['valorEncerrados'], 2, ',', '');}?>
+                </div>
+                <button class="ts-cardLink" onClick="clickCard(this.value)" value="<?php echo CONTRATOSTATUS_ENCERRADOS; ?>" id="<?php echo CONTRATOSTATUS_ENCERRADOS; ?>"></button>
                 </div>
             </div>
 
-        </div><!--fim-  BOTOES AUXILIARES -->
+        </div> <!-- fim- BOTOES AUXILIARES -->
 
         <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
 
@@ -197,32 +155,24 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         <!-- MENUFILTROS -->
         <div class="ts-menuFiltros mt-2 px-3">
-            <label>Filtrar por:</label>
+        <label>Filtrar por:</label>
 
-            <div class="col-12"> <!-- ABERTO/FECHADO -->
-                <form class="d-flex" action="" method="post">
+        <div class="ls-label col-sm-12"> <!-- ABERTO/FECHADO -->
+            <form class="d-flex" action="" method="post">
+                <select class="form-control" name="statusContrato" id="FiltroStatusContrato" onchange="mudarSelect(this.value)">
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_ORCAMENTO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_ORCAMENTO; ?>">Orçamento</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_DESENVOLVIMENTO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_DESENVOLVIMENTO; ?>">Desenvolvimento</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_FATURAMENTO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_FATURAMENTO; ?>">Faturamento</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_RECEBIMENTO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_RECEBIMENTO; ?>">Recebimento</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_ATIVO) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_ATIVO; ?>">Ativo</option>
+                    <option <?php if ($statusContrato == CONTRATOSTATUS_ENCERRADOS) echo "selected"; ?> value="<?php echo CONTRATOSTATUS_ENCERRADOS; ?>">Encerrados</option>
+                </select>
+            </form>
+        </div>
 
-                    <select class="form-control" name="statusContrato" id="FiltroStatusContrato">
-                        <option value="<?php echo NULL ?>"><?php echo "Todos" ?></option>
-                        <option <?php if ($statusContrato == "2") {
-                                    echo "selected";
-                                } ?> value="2">Orçamento</option>
-
-                        <option <?php if ($statusContrato == "1") {
-                                    echo "selected";
-                                } ?> value="1">Ativo</option>
-
-                        <option <?php if ($statusContrato == "0") {
-                                    echo "selected";
-                                } ?> value="0">Encerrado</option>
-                    </select>
-
-                </form>
-            </div>
-
-            <div class="col-sm text-end mt-2">
-                <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
-            </div>
+        <div class="col-sm text-end mt-2">
+            <a onClick="limpar()" role=" button" class="btn btn-sm bg-info text-white">Limpar</a>
+        </div>
         </div>
 
         <div class="table mt-2 ts-divTabela70 ts-tableFiltros">
@@ -304,6 +254,8 @@ if (isset($_SESSION['filtro_contrato'])) {
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
     <!-- script para menu de filtros -->
     <script src="<?php echo URLROOT ?>/sistema/js/filtroTabela.js"></script>
+    <!-- Cards funcionado como botões -->
+    <script src="../js/contrato_cards.js"></script>
 
     <script>
         var urlContratoTipo = '<?php echo $urlContratoTipo ?>';
@@ -311,8 +263,11 @@ if (isset($_SESSION['filtro_contrato'])) {
 
         function limpar() {
             buscar(null, null, null, null);
-            window.location.reload();
         }
+
+        function clickCard(statusContrato) {
+            buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(),statusContrato)
+            }
 
         function buscar(idCliente, idContratoStatus, buscaContrato, statusContrato) {
 
@@ -338,6 +293,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                     //alert("terceiro alert: " + JSON.stringify(json));
                     /* alert(JSON.stringify(msg)); */
                     /* $("#dados").html(msg); */
+                    console.log(msg);
 
                     var linha = "";
                     // Loop over each object
@@ -396,7 +352,7 @@ if (isset($_SESSION['filtro_contrato'])) {
                         " aria-expanded='false' style='box-shadow:none'><i class='bi bi-three-dots-vertical'></i></button><ul class='dropdown-menu'>"
 
                         linha += "<li class='ms-1 me-1 mt-1'><a class='btn btn-warning btn-sm w-100 text-start' href='visualizar.php?idContrato=" + object.idContrato + 
-                        "' role='button' id='visualizarDemandaButton'><i class='bi bi-pencil-square'></i> Alterar</a></li>";
+                        "' role='button' id='visualizarContratoButton'><i class='bi bi-pencil-square'></i> Alterar</a></li>";
 
                         linha += "</tr>";
                         linha +="</ul></div>"
@@ -432,12 +388,12 @@ if (isset($_SESSION['filtro_contrato'])) {
             buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
-        $("#FiltroStatusContrato").click(function() {
+        $("#FiltroStatusContrato").change(function() {
             buscar($("#FiltroClientes").val(), $("#FiltroContratoStatus").val(), $("#buscaContrato").val(), $("#FiltroStatusContrato").val());
         })
 
         //Gabriel 22092023 id544 trocado setcookie por httpRequest enviado para gravar origem em session//ajax
-        $(document).on('click', '#visualizarDemandaButton', function() {
+        $(document).on('click', '#visualizarContratoButton', function() {
             var urlContratoTipo = '?tipo=<?php echo $urlContratoTipo ?>';
             var currentPath = window.location.pathname + urlContratoTipo;
             $.ajax({

@@ -35,10 +35,16 @@ $conexao = conectaMysql($idEmpresa);
 
 $contrato = array();
 
+$arrayStatus = array(
+  CONTRATOSTATUS_ORCAMENTO,
+  CONTRATOSTATUS_ATIVO,
+  CONTRATOSTATUS_ENCERRADOS
+);
+
 $sql = "SELECT contrato.*, cliente.*, contratostatus.*, contratotipos.* FROM contrato				
-        INNER JOIN cliente on cliente.idCliente = contrato.idcliente 
-        INNER JOIN contratostatus  on  contrato.idContratoStatus = contratostatus.idContratoStatus
-        INNER JOIN contratotipos  on  contrato.idContratoTipo = contratotipos.idContratoTipo  ";
+        LEFT JOIN cliente on cliente.idCliente = contrato.idcliente 
+        LEFT JOIN contratostatus  on  contrato.idContratoStatus = contratostatus.idContratoStatus
+        LEFT JOIN contratotipos  on  contrato.idContratoTipo = contratotipos.idContratoTipo  ";
 if (isset($jsonEntrada["idContrato"])) {
   $sql = $sql . " where contrato.idContrato = " . $jsonEntrada["idContrato"];
 } else {
@@ -49,13 +55,30 @@ if (isset($jsonEntrada["idContrato"])) {
     $where = " and ";
   }
 
-  if (isset($jsonEntrada["idContratoStatus"])) {
+  if (isset($jsonEntrada["idContratoStatus"]) && in_array($jsonEntrada["statusContrato"], $arrayStatus)) {
     $sql = $sql . $where . " contrato.idContratoStatus = " . $jsonEntrada["idContratoStatus"];
     $where = " and ";
-  }
+  } 
 
   if (isset($jsonEntrada["statusContrato"])) {
-    $sql = $sql . $where . " contrato.statusContrato = " . $jsonEntrada["statusContrato"];
+    if($jsonEntrada["statusContrato"] == CONTRATOSTATUS_ORCAMENTO) {
+      $sql = $sql . $where . " contrato.statusContrato = 2";
+    }
+    if($jsonEntrada["statusContrato"] == CONTRATOSTATUS_DESENVOLVIMENTO) {
+      $sql = $sql . $where . " contrato.statusContrato = 1 and contrato.idContratoStatus = 3";
+    }
+    if($jsonEntrada["statusContrato"] == CONTRATOSTATUS_FATURAMENTO) {
+      $sql = $sql . $where . " contrato.statusContrato = 1 and contrato.idContratoStatus = 4";
+    }
+    if($jsonEntrada["statusContrato"] == CONTRATOSTATUS_RECEBIMENTO) {
+      $sql = $sql . $where . " contrato.statusContrato = 1 and contrato.idContratoStatus = 5";
+    }
+    if($jsonEntrada["statusContrato"] == CONTRATOSTATUS_ATIVO) {
+      $sql = $sql . $where . " contrato.statusContrato = 1";
+    }
+    if($jsonEntrada["statusContrato"] == CONTRATOSTATUS_ENCERRADOS) {
+      $sql = $sql . $where . " contrato.statusContrato = 0";
+    }
     $where = " and ";
   }
 

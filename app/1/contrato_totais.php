@@ -28,28 +28,30 @@ if (isset($jsonEntrada["idEmpresa"])) {
 }
 
 $conexao = conectaMysql($idEmpresa);
-$totais = array();
+$card = array();
 
-$sql = "
-SELECT  contrato.idContratoStatus, 
-        contratostatus.nomeContratoStatus, 
-        count(*) as 'qtdContratos' , 
-        sum(contrato.valorContrato) as 'valorContratos'
-FROM contrato , contratostatus
-where  
-    contrato.idContratoStatus = contratostatus.idContratoStatus ";
+$sql = "SELECT
+        SUM(CASE WHEN contrato.statusContrato = 2 THEN 1 ELSE 0 END) AS totalOrcamento,
+        SUM(CASE WHEN contrato.statusContrato = 2 THEN contrato.valorContrato ELSE 0 END) AS valorOrcamento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 3 THEN 1 ELSE 0 END) AS totalDesenvolvimento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 3 THEN contrato.valorContrato ELSE 0 END) AS valorDesenvolvimento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 4 THEN 1 ELSE 0 END) AS totalFaturamento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 4 THEN contrato.valorContrato ELSE 0 END) AS valorFaturamento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 5 THEN 1 ELSE 0 END) AS totalRecebimento,
+        SUM(CASE WHEN contrato.statusContrato = 1 and contrato.idContratoStatus = 5 THEN contrato.valorContrato ELSE 0 END) AS valorRecebimento,
+        SUM(CASE WHEN contrato.statusContrato = 1 THEN 1 ELSE 0 END) AS totalAtivo,
+        SUM(CASE WHEN contrato.statusContrato = 1 THEN contrato.valorContrato ELSE 0 END) AS valorAtivo,
+        SUM(CASE WHEN contrato.statusContrato = 0 THEN 1 ELSE 0 END) AS totalEncerrados,
+        SUM(CASE WHEN contrato.statusContrato = 0 THEN contrato.valorContrato ELSE 0 END) AS valorEncerrados FROM contrato 
+        INNER JOIN contratotipos  on  contrato.idContratoTipo = contratotipos.idContratoTipo ";
+if (isset($jsonEntrada["idContratoTipo"])) {
+  $sql = $sql . " where contratotipos.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
+} 
 
-    if (isset($jsonEntrada["idContratoTipo"])) {
-      $sql = $sql . " and contrato.idContratoTipo = " . "'" . $jsonEntrada["idContratoTipo"] . "'";
-    }
-
-$sql = $sql ."group BY 
-    contrato.idContratoStatus, contratostatus.nomeContratoStatus
-";
 
 
-
-//echo "-SQL->".$sql."\n";
+//echo "-SQL->".json_encode($sql)."\n";
+$rows = 0;
 
 //LOG
 if (isset($LOG_NIVEL)) {
@@ -59,38 +61,40 @@ if (isset($LOG_NIVEL)) {
 }
 //LOG
 
-$total = array();
-$valorContratos = 0;
-$qtdContratos = 0;
 
-$rows = 0;
-$buscar = mysqli_query($conexao, $sql);
-while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
-  $valorContratos = $valorContratos + $row["valorContratos"];
-  $qtdContratos = $qtdContratos + $row["qtdContratos"];
-  array_push($totais, $row);
-  $rows = $rows + 1;
+//TRY-CATCH
+try {
+
+  $buscar = mysqli_query($conexao, $sql);
+  if (!$buscar)
+    throw new Exception(mysqli_error($conexao));
+
+  while ($row = mysqli_fetch_array($buscar, MYSQLI_ASSOC)) {
+    array_push($card, $row);
+    $rows = $rows + 1;
+  }
+
+  $jsonSaida = $card[0];
+} catch (Exception $e) {
+  $jsonSaida = array(
+    "status" => 500,
+    "retorno" => $e->getMessage()
+  );
+  if ($LOG_NIVEL >= 1) {
+    fwrite($arquivo, $identificacao . "-ERRO->" . $e->getMessage() . "\n");
+  }
+
+} finally {
+  // ACAO EM CASO DE ERRO (CATCH), que mesmo assim precise
 }
-$total = array(
-  "idContratoStatus" => "0",
-  "nomeContratoStatus" => "Total",
-  "qtdContratos" => $qtdContratos,
-  "valorContratos" => $valorContratos
-);
+//TRY-CATCH
 
-array_push($totais, $total);
-/*
-if (isset($jsonEntrada["idContrato"]) && $rows==1) {
-  $contrato = $contrato[0];
-}
-*/
-$jsonSaida = $totais;
 
-//echo "-SAIDA->".json_encode($jsonSaida)."\n";
+
 
 //LOG
 if (isset($LOG_NIVEL)) {
-  if ($LOG_NIVEL >= 2) {
+  if ($LOG_NIVEL >= 3) {
     fwrite($arquivo, $identificacao . "-SAIDA->" . json_encode($jsonSaida) . "\n\n");
   }
 }

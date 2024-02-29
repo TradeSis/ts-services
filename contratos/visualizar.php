@@ -5,6 +5,7 @@ include_once '../header.php';
 include_once '../database/contratos.php';
 include '../database/contratotipos.php';
 include_once '../database/demanda.php';
+include_once '../database/contratochecklist.php';
 $idContrato = $_GET['idContrato'];
 $contrato = buscaContratos($idContrato, null);
 $contratoTipo = buscaContratoTipos($contrato['idContratoTipo']);
@@ -37,6 +38,7 @@ $cidades = buscarCidades();
 $tipoocorrencias = buscaTipoOcorrencia();
 $contratoStatusTodos = buscaContratoStatus();
 
+$contratoschecklist = buscaChecklist($idContrato);
 $demandas = buscaDemandas(null, null, $idContrato);
 $horasCobrado = buscaTotalHorasCobrada($idContrato);
 $horasReal = buscaTotalHorasReal($idContrato, null);
@@ -86,7 +88,8 @@ if ($horasReal['totalHorasReal'] !== null) {
                         <div id="ts-tabs">
                             <div class="tab aba1 whiteborder" id="tab-contrato"><?php echo $contratoTipo['nomeContrato'] ?></div>
                             <div class="tab aba2" id="tab-demandasontrato"><?php echo $contratoTipo['nomeDemanda'] ?></div>
-                            <div class="tab aba3" id="tab-notascontrato">Notas</div>
+                            <div class="tab aba3" id="tab-contratochecklist">Checklist</div>
+                            <div class="tab aba4" id="tab-notascontrato">Notas</div>
                         </div>
                         <div id="ts-tabs">
                             <div class="line"></div>
@@ -103,6 +106,9 @@ if ($horasReal['totalHorasReal'] !== null) {
                                 <?php include_once 'demandascontrato.php'; ?>
                             </div>
                             <div class="tabContent aba3_conteudo" style="display: none;">
+                                <?php include_once 'contratochecklist.php'; ?>
+                            </div>
+                            <div class="tabContent aba4_conteudo" style="display: none;">
                                 <?php include_once 'notascontrato.php'; ?>
                             </div>
 
@@ -222,6 +228,14 @@ if ($horasReal['totalHorasReal'] !== null) {
         <!-- Lucas 25102023 id643 include de modalDemanda_inserir -->
         <!--------- MODAL DEMANDA INSERIR --------->
         <?php include_once '../demandas/modalDemanda_inserir.php' ?>
+        <!--------- MODAL CHECKLIST INSERIR --------->
+        <?php include_once '../contratos/modalChecklist_inserir.php' ?>
+        <!--------- MODAL CHECKLIST ALTERAR --------->
+        <?php include_once '../contratos/modalChecklist_alterar.php' ?>
+        <!--------- MODAL CHECKLIST EXCLUIR --------->
+        <?php include_once '../contratos/modalChecklist_excluir.php' ?>
+        <!--------- MODAL CHECKLIST TAREFA --------->
+        <?php include_once '../contratos/modalChecklist_tarefa.php' ?>
         
        
 

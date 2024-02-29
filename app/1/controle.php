@@ -136,6 +136,22 @@ if ($metodo == "GET") {
         include 'visaocli.php';
         break;
 
+    case "orcamento":
+      include 'orcamento.php';
+      break;
+    
+    case "orcamentostatus":
+      include 'orcamentostatus.php';
+      break;
+
+    case "orcamentoitens":
+      include 'orcamentoitens.php';
+      break;
+      
+      case "contratochecklist":
+        include 'contratochecklist.php';
+        break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -233,6 +249,21 @@ if ($metodo == "PUT") {
     case "chat":
       include 'chat_inserir.php';
       break;
+
+    case "orcamento":
+      include 'orcamento_inserir.php';
+      break;
+      
+    case "orcamentostatus":
+      include 'orcamentostatus_inserir.php';
+      break;
+
+    case "orcamentoitens":
+      include 'orcamentoitens_inserir.php';
+
+    case "contratochecklist":
+      include 'contratochecklist_inserir.php';
+      break;
      
     default:
       $jsonSaida = json_decode(
@@ -272,6 +303,16 @@ if ($metodo == "POST") {
 
   if ($funcao == "tarefas" && $parametro == "start") {
     $funcao = "tarefas/start";
+    $parametro =
+     null;
+  }
+  if ($funcao == "contratochecklist" && $parametro == "tarefa") {
+    $funcao = "contratochecklist/tarefa";
+    $parametro = null;
+  }
+  
+  if ($funcao == "orcamento" && $parametro == "contrato") {
+    $funcao = "orcamento/contrato";
     $parametro = null;
   }
 
@@ -339,6 +380,29 @@ if ($metodo == "POST") {
       include 'visaocli_atualizar.php';
       break;
 
+    case "orcamento":
+      include 'orcamento_alterar.php';
+      break;
+      
+    case "orcamentostatus":
+      include 'orcamentostatus_alterar.php';
+      break;
+
+    case "orcamentoitens":
+      include 'orcamentoitens_alterar.php';
+      break;
+
+    case "orcamento/contrato":
+      include 'orcamento_gerarcontrato.php';
+      
+    case "contratochecklist":
+      include 'contratochecklist_alterar.php';
+      break;
+
+    case "contratochecklist/tarefa":
+      include 'contratochecklist_tarefa.php';
+      break;
+
     default:
       $jsonSaida = json_decode(
         json_encode(
@@ -372,6 +436,17 @@ if ($metodo == "DELETE") {
 
     case "contratotipos":
       include 'contratotipos_excluir.php';
+      break;
+
+    case "orcamentostatus":
+      include 'orcamentostatus_excluir.php';
+      break;
+    
+    case "orcamentoitens":
+      include 'orcamentoitens_excluir.php';
+      
+    case "contratochecklist":
+      include 'contratochecklist_excluir.php';
       break;
 
     default:

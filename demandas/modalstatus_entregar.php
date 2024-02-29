@@ -10,13 +10,17 @@
             <div class="modal-body">
                 <form method="post">
                     <div class="container-fluid p-0">
-                        <div class="col">
-                            <span class="tituloEditor">Comentários</span>
+                        <!-- lucas 27022024 - id853 nova chamada editor quill -->
+                        <div id="ql-toolbarEntregar">
+                            <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
+                            <input type="file" id="anexarEntregar" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileEntregar()" style=" display:none">
+                            <label for="anexarEntregar">
+                                <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                            </label>
                         </div>
-                        <!-- lucas 22092023 ID 358 Modificado nome da classe do editor-->
-                        <div class="quill-entregar" style="height:20vh !important"></div>
+                        <div id="ql-editorEntregar" style="height:30vh !important">
+                        </div>
                         <textarea style="display: none" id="quill-entregar" name="comentario"></textarea>
-                        <!-- -->
                     </div>
                     <div class="col-md">
                         <input type="hidden" class="form-control" name="idDemanda" value="<?php echo $demanda['idDemanda'] ?>" readonly>
@@ -35,50 +39,5 @@
     </div>
 </div>
 
-<script>
-    var quillentregar = new Quill('.quill-entregar', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote'],
-                [{
-                    'list': 'ordered'
-                }, {
-                    'list': 'bullet'
-                }],
-                [{
-                    'indent': '-1'
-                }, {
-                    'indent': '+1'
-                }],
-                [{
-                    'direction': 'rtl'
-                }],
-                [{
-                    'size': ['small', false, 'large', 'huge']
-                }],
-                [{
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-                ['link', 'image', 'video', 'formula'],
-                [{
-                    'color': []
-                }, {
-                    'background': []
-                }],
-                [{
-                    'font': []
-                }],
-                [{
-                    'align': []
-                }],
-            ]
-        }
-    });
-
-    /* lucas 22092023 ID 358 Modificado nome da classe do editor */
-    quillentregar.on('text-change', function(delta, oldDelta, source) {
-        $('#quill-entregar').val(quillentregar.container.firstChild.innerHTML);
-    });
-</script>
+<!-- lucas 27022024 - id853 nova chamada editor quill -->
+<script src="modalstatus.js"></script>

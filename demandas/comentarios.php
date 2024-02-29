@@ -25,20 +25,17 @@ include_once '../header.php';
                 <div class="form-group">
 
                     <div class="container-fluid p-0">
-                        <div class="row">
-                            <div class="col">
-                                <span class="tituloEditor">Comentário</span>
-                            </div>
-                            <div class="col" >
-                                <div class="form-check form-switch d-flex gap-5" style="float: right;">
-                                    <label class="form-check-label" for="enviaEmailComentario">Enviar email?</label>
-                                    <input class="form-check-input mt-1" type="checkbox" id="enviaEmailComentario" name="enviaEmailComentario">
-                                </div>
-                            </div>
+                        <div id="ql-toolbarComentario">
+                            <?php include ROOT."/sistema/quilljs/ql-toolbar-min.php"  ?>
+                            <input type="file" id="anexarComentario" class="custom-file-upload" name="nomeAnexo" onchange="uploadFileComentario()" style=" display:none">
+                            <label for="anexarComentario">
+                                <a class="btn p-0 ms-1"><i class="bi bi-paperclip"></i></a>
+                            </label>
                         </div>
-                        
-                        <div class="quill-comentario"></div>
+                        <div id="ql-editorComentario" style="height:30vh !important">
+                        </div>
                         <textarea style="display: none" id="quill-comentario" name="comentario"></textarea>
+
                     </div>
 
                     <input type="hidden" name="idDemanda" value="<?php echo $idDemanda ?>" />
@@ -57,7 +54,7 @@ include_once '../header.php';
                             <button type="submit" formaction="../database/demanda.php?operacao=comentar" class="btn btn-success" style="float: right;">Salvar</button>
                         </div>
                     </div>
-                    
+
                     <p id="mostraNomeAnexo"></p>
                 </div>
 
@@ -78,7 +75,7 @@ include_once '../header.php';
                 <p class="mt-3 ms-0">
                     <span class="" style="font-style: italic;">
                         <strong><?php echo $comentario['nomeUsuario'] ?></strong> &#32;
-                      
+
                         &#32;<?php echo date('H:i d/m/Y', strtotime($comentario['dataComentario'])) ?>
                 </p>
             </div>
@@ -86,7 +83,7 @@ include_once '../header.php';
         <div class="card mb-3" style="border-radius: 15px;box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);">
             <div class="card-body p-1">
                 <div class="row">
-                    
+
                     <div class="col-md-11">
                         <div class="clearfix"></div>
                         <p>
@@ -114,9 +111,6 @@ include_once '../header.php';
 </div>
 
 <!-- LOCAL PARA COLOCAR OS JS -->
-
-<!-- QUILL editor -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script>
     /* $("#form-inserirComentario").submit(function(event) {
@@ -152,44 +146,7 @@ include_once '../header.php';
     }
 </script>
 
-<script>
-       var quillcomentario = new Quill('.quill-comentario', {
-        theme: 'snow',
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-             
-                [{
-                    'list': 'ordered'
-                }, {
-                    'list': 'bullet'
-                }],
-                [{
-                    'indent': '-1'
-                }, {
-                    'indent': '+1'
-                }],
-               
-                [{
-                    'header': [1, 2, 3, 4, 5, 6, false]
-                }],
-                ['link', 'image'],
-                [{
-                    'color': []
-                }, {
-                    'background': []
-                }],
-               
-                [{
-                    'align': []
-                }],
-            ]
-        }
-    });
 
-    quillcomentario.on('text-change', function(delta, oldDelta, source) {
-        $('#quill-comentario').val(quillcomentario.container.firstChild.innerHTML);
-    });
-</script>
+
 
 <!-- LOCAL PARA COLOCAR OS JS -FIM -->

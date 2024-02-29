@@ -48,6 +48,12 @@ include_once(__DIR__ . '/../header.php');
           } ?>"
             href="?tab=configuracao&stab=tipostatus" role="tab" >Tipo Status</a>
         </li>
+        <li class="nav-item ">
+          <a class="nav-link ts-tabConfig <?php if ($stab == "orcamentostatus") {
+            echo " active ";
+          } ?>"
+            href="?tab=configuracao&stab=orcamentostatus" role="tab" >Orçamento Status</a>
+        </li>
 
       </ul>
     </div>
@@ -66,6 +72,9 @@ include_once(__DIR__ . '/../header.php');
           }
           if ($stab == "contratotipos") {
             $ssrc = "contratotipos.php";
+          }
+          if ($stab == "orcamentostatus") {
+            $ssrc = "orcamentostatus.php";
           }
 
           if ($ssrc !== "") {

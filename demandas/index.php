@@ -36,14 +36,14 @@ $cards = buscaCardsDemanda();
 $contratos = buscaContratosAbertos();
 $servicos = buscaServicos();
 
-if ($_SESSION['idCliente'] == null) {
+if ($_SESSION['administradora'] == 1) {
   $idCliente = null;
 } else {
-  $idCliente = $_SESSION['idCliente'];
+  $idCliente = $usuario["idCliente"];
 }
 
-if ($_SESSION['idCliente'] == null) {
-  $idAtendente = $_SESSION['idUsuario'];
+if ($_SESSION['administradora'] == 1) {
+  $idAtendente = $usuario["idUsuario"];
 } else {
   $idAtendente = null;
 }
@@ -515,8 +515,8 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     //**************exporta excel 
     function exportToExcel() {
-      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
-      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
+      var idAtendenteValue = <?php echo $usuario["idCliente"] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $usuario["idCliente"] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -582,8 +582,8 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     //**************exporta csv
     function exportToCSV() {
-      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
-      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
+      var idAtendenteValue = <?php echo $usuario["idCliente"] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $usuario["idCliente"] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -636,8 +636,8 @@ if (isset($_SESSION['filtro_demanda'])) {
 
     //**************exporta PDF
     function exportToPDF() {
-      var idAtendenteValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
-      var tamanhoValue = <?php echo $_SESSION['idCliente'] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
+      var idAtendenteValue = <?php echo $usuario["idCliente"] === NULL ? '$("#FiltroUsuario").val()' : 'null' ?>;
+      var tamanhoValue = <?php echo $usuario["idCliente"] === NULL ? '$("#FiltroTamanho").val()' : 'null' ?>;
       $.ajax({
         type: 'POST',
         dataType: 'json',

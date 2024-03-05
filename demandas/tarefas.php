@@ -25,14 +25,14 @@ $ocorrencias = buscaTipoOcorrencia();
 //lucas 25092023 ID 358 Adicionado buscaUsuarios
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
-if ($_SESSION['idCliente'] == null) {
+if ($_SESSION['administradora'] == 1) {
   $idCliente = null;
 } else {
-  $idCliente = $_SESSION['idCliente'];
+  $idCliente = $usuario["idCliente"];
 }
 
-if ($_SESSION['idCliente'] == null) {
-  $idAtendente = $_SESSION['idUsuario'];
+if ($_SESSION['administradora'] == 1) {
+  $idAtendente = $usuario["idUsuario"];
 } else {
   $idAtendente = null;
 }

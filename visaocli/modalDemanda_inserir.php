@@ -44,7 +44,7 @@
                                     foreach ($clientes as $cliente) {
                                     ?>
                                         <!-- gabriel 05022024 id738 - seleciona cliente automatico -->
-                                        <option <?php if ($_SESSION['idCliente'] == $cliente['idCliente']) {
+                                        <option <?php if ($usuario["idCliente"] == $cliente['idCliente']) {
                                                     echo "selected";
                                                 } ?> value="<?php echo $cliente['idCliente'] ?>">
                                             <?php echo $cliente['nomeCliente'] ?>
@@ -173,7 +173,7 @@
 <script>
     //gabriel 05022024 id738 - trigger cliente automatico 
     $(document).ready(function() {
-        var selectedPadrao = "<?php echo $_SESSION['idCliente'] ?>";
+        var selectedPadrao = "<?php echo $usuario["idCliente"] ?>";
         if (selectedPadrao !== null && selectedPadrao !== "") {
             $('select[name="idCliente"]').val(selectedPadrao).trigger('change');
         }

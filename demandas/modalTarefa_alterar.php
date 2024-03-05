@@ -102,7 +102,7 @@
                                     </div>
                                 </div>
                                 <div class="row mt-4">
-                                    <?php if ($_SESSION['idCliente'] == null) { ?>
+                                    <?php if ($_SESSION['administradora'] == 1) { ?>
                                         <div class="col-md-4">
                                             <label class="form-label ts-label">Data Realizado</label>
                                             <input type="date" class="form-control ts-input" id="dataReal" name="dataReal" readonly>

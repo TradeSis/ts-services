@@ -22,10 +22,7 @@ include_once '../database/tarefas.php';
 // Gabriel 201223 id745 dados nota
 include_once(ROOT . '/cadastros/database/pessoas.php');
 
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-    $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 $clientes = buscaClientes();

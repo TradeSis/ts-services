@@ -8,11 +8,7 @@ include_once(__DIR__ . '/../database/tipoocorrencia.php');
 include_once(ROOT . '/cadastros/database/clientes.php');
 include_once(ROOT . '/cadastros/database/usuario.php');
 
-
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-    $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $clientes = buscaClientes();
 $atendentes = buscaAtendente();
@@ -20,14 +16,14 @@ $ocorrencias = buscaTipoOcorrencia();
 $demandas = buscaDemandasAbertas();
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
-if ($_SESSION['idCliente'] == null) {
+if ($_SESSION['administradora'] == 1) {
     $idCliente = null;
 } else {
-    $idCliente = $_SESSION['idCliente'];
+    $idCliente = $usuario["idCliente"];
 }
 
-if ($_SESSION['idCliente'] == null) {
-    $idAtendente = $_SESSION['idUsuario'];
+if ($_SESSION['administradora'] == 1) {
+    $idAtendente = $usuario["idUsuario"];
 } else {
     $idAtendente = null;
 }

@@ -12,10 +12,7 @@ $orcamento = buscaOrcamentos($idOrcamento);
 $orcamentoitens = buscaOrcamentoItens($idOrcamento);
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
-$ClienteSession = null;
-if (isset($_SESSION['idCliente'])) {
-    $ClienteSession = $_SESSION['idCliente'];
-}
+//Lucas 22112023 id 688 - Removido visão do cliente ($ClienteSession)
 
 $clientes = buscaClientes();
 $contratoTipos = buscaContratoTipos();

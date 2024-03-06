@@ -16,13 +16,21 @@ if (isset($_GET["tipo"])) {
 }
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
+
 //echo json_encode(buscaDemandas(null, TIPOSTATUS_FILA, null, $usuario['idUsuario']))."<HR>";
 if ($usuario["idCliente"] == null) {
     $clientes = buscaClientes($usuario["idCliente"]);
-  } else {
+} else {
     $clientes = array(buscaClientes($usuario["idCliente"]));
-  }
+}
+
+if(isset($_GET["idContratoTipo"])){
+    $idContratoTipo = $_GET["idContratoTipo"];
+}else{
+    $idContratoTipo = null;
+}
 ?>
+
 
 <!doctype html>
 <html lang="pt-BR">
@@ -64,12 +72,12 @@ if ($usuario["idCliente"] == null) {
             z-index: 2;
         }
 
-        .ts-cardAtrasado{
+        .ts-cardAtrasado {
             background-color: rgba(234, 64, 36, 0.7);
-           /*  border: 1px solid red!important; */
+            /*  border: 1px solid red!important; */
         }
 
-        .ts-cardDataPrevisao{
+        .ts-cardDataPrevisao {
             font-size: 12px;
             float: right;
         }
@@ -79,18 +87,40 @@ if ($usuario["idCliente"] == null) {
     <div class="container-fluid ">
         <div class="row d-flex align-items-center justify-content-center pt-1 ">
 
-            <div class="col-6 col-md-6">
+            <div class="col-2 col-md-2">
                 <h2 class="ts-tituloPrincipal">Fila de Atendimento</h2>
             </div>
-            
-            <div class="col-6 col-md-6 text-end">
+
+            <div class="col-2 col-md-2">
+                <form class="form-inline left" method="GET">
+                    <div class="form-group">
+                        <label class="form-label ts-label">Tipo Contrato</label>
+                        <select class="form-select ts-input" name="idContratoTipo" class="form-control" onchange="this.form.submit()">
+                            <option value=""></option>
+                            <option <?php
+                                        if ($idContratoTipo == $idContratoTipo) {
+                                            echo "selected";
+                                        }
+                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $idContratoTipo ?></option>
+                            <option value="contratos">Contrato</option>
+                            <option value="os">O.S.</option>
+                            <option value="projetos">Projeto</option>
+                            <option value="rotinas">Rotina</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+
+
+            <div class="col-8 col-md-8 text-end">
                 <button type="button" class="ms-4 btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaCliente"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
             </div>
 
         </div>
 
         <?php include_once 'kanban.php' ?>
-        
+
         <!-- Modal Inserir -->
         <?php include_once 'modalDemanda_inserir.php' ?>
 
@@ -101,14 +131,14 @@ if ($usuario["idCliente"] == null) {
                         <?php $buscaTipoStatus = buscaTipoStatus(null, TIPOSTATUS_FILA) ?>
                         <h6><?php echo $buscaTipoStatus['nomeTipoStatus']; ?></h6>
                     </div>
-                    <?php foreach (buscaDemandas(null, TIPOSTATUS_RESPONDIDO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_RESPONDIDO, null, $usuario['idUsuario'], $usuario["idCliente"], $idContratoTipo) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
 
-                    <?php foreach (buscaDemandas(null, TIPOSTATUS_FILA, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_FILA, null, $usuario['idUsuario'], $usuario["idCliente"], $idContratoTipo) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
-                    <?php foreach (buscaDemandas(null, TIPOSTATUS_AGENDADO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_AGENDADO, null, $usuario['idUsuario'], $usuario["idCliente"], $idContratoTipo) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
 
@@ -122,7 +152,7 @@ if ($usuario["idCliente"] == null) {
                         <h6><?php echo $buscaTipoStatus['nomeTipoStatus']; ?></h6>
                     </div>
 
-                    <?php foreach (buscaDemandas(null, TIPOSTATUS_RETORNO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_RETORNO, null, $usuario['idUsuario'], $usuario["idCliente"], $idContratoTipo) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
                 </div>
@@ -135,10 +165,10 @@ if ($usuario["idCliente"] == null) {
                         <h6><?php echo $buscaTipoStatus['nomeTipoStatus']; ?></h6>
                     </div>
 
-                    <?php foreach (buscaDemandas(null, TIPOSTATUS_FAZENDO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_FAZENDO, null, $usuario['idUsuario'], $usuario["idCliente"], $idContratoTipo) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
-                    <?php foreach (buscaDemandas(null, TIPOSTATUS_PAUSADO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_PAUSADO, null, $usuario['idUsuario'], $usuario["idCliente"], $idContratoTipo) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
                 </div>
@@ -151,7 +181,7 @@ if ($usuario["idCliente"] == null) {
                         <h6><?php echo $buscaTipoStatus['nomeTipoStatus']; ?></h6>
                     </div>
 
-                    <?php foreach (buscaDemandas(null, TIPOSTATUS_AGUARDANDOSOLICITANTE, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_AGUARDANDOSOLICITANTE, null, $usuario['idUsuario'], $usuario["idCliente"], $idContratoTipo) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
                 </div>
@@ -184,7 +214,6 @@ if ($usuario["idCliente"] == null) {
         $(document).on('click', '#kanbanCard', function() {
             window.location.href = 'visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
         });
-
     </script>
 </body>
 

@@ -32,6 +32,7 @@ if(isset($_GET["idContratoTipo"]) && $_GET["idContratoTipo"] != "null"){
 }else{
     $idContratoTipo = null;
 }
+if ($idContratoTipo=="") {$idContratoTipo=null;}
 
 ?>
 

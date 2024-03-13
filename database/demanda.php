@@ -23,7 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include_once __DIR__ . "/../conexao.php";
 
-function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = null, $idUsuario = null)
+function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = null, $idUsuario = null, $idCliente = null, $idContratoTipo = null)
 {
 
 	$demanda = array();
@@ -38,7 +38,9 @@ function buscaDemandas($idDemanda = null, $idTipoStatus = null, $idContrato = nu
 		'idTipoStatus' => $idTipoStatus,
 		'idContrato' => $idContrato,
 		'idEmpresa' => $idEmpresa,
-		'idUsuario' => $idUsuario
+		'idUsuario' => $idUsuario,
+		'idCliente' => $idCliente,
+		'idContratoTipo' => $idContratoTipo
 	);
 	$demanda = chamaAPI(null, '/services/demanda', json_encode($apiEntrada), 'GET');
 

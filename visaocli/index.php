@@ -24,11 +24,14 @@ if ($usuario["idCliente"] == null) {
     $clientes = array(buscaClientes($usuario["idCliente"]));
 }
 
-if(isset($_GET["idContratoTipo"])){
+if(isset($_GET["idContratoTipo"]) && $_GET["idContratoTipo"] != "null"){
     $idContratoTipo = $_GET["idContratoTipo"];
+}elseif(isset($_GET["idContratoTipo"]) && $_GET["idContratoTipo"] == "null"){
+    $idContratoTipo = null;
 }else{
     $idContratoTipo = null;
 }
+
 ?>
 
 
@@ -96,12 +99,14 @@ if(isset($_GET["idContratoTipo"])){
                     <div class="form-group">
                         <label class="form-label ts-label">Tipo Contrato</label>
                         <select class="form-select ts-input" name="idContratoTipo" class="form-control" onchange="this.form.submit()">
-                            <option value=""></option>
+                            
                             <option <?php
                                         if ($idContratoTipo == $idContratoTipo) {
                                             echo "selected";
                                         }
-                                        ?> value="<?php echo $atendente['idUsuario'] ?>"><?php echo $idContratoTipo ?></option>
+                                        ?> value="<?php echo $idContratoTipo ?>"><?php if($idContratoTipo == ""){echo "Todos";}else{echo $idContratoTipo;} ?></option>
+                            <hr>
+                            <option value="null">Todos</option>
                             <option value="contratos">Contrato</option>
                             <option value="os">O.S.</option>
                             <option value="projetos">Projeto</option>

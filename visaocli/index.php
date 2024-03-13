@@ -8,11 +8,12 @@ include_once(ROOT . '/cadastros/database/usuario.php');
 include_once(ROOT . '/cadastros/database/clientes.php');
 
 $urlContratoTipo = null;
+
 if (isset($_GET["tipo"])) {
     $urlContratoTipo = $_GET["tipo"];
     $contratoTipo = buscaContratoTipos($urlContratoTipo);
 } else {
-    $contratoTipo = buscaContratoTipos('contratos');
+    $contratoTipo = buscaContratoTipos();
 }
 
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
@@ -97,20 +98,24 @@ if(isset($_GET["idContratoTipo"]) && $_GET["idContratoTipo"] != "null"){
             <div class="col-2 col-md-2">
                 <form class="form-inline left" method="GET">
                     <div class="form-group">
-                        <label class="form-label ts-label">Tipo Contrato</label>
+                                              
                         <select class="form-select ts-input" name="idContratoTipo" class="form-control" onchange="this.form.submit()">
                             
-                            <option <?php
-                                        if ($idContratoTipo == $idContratoTipo) {
-                                            echo "selected";
-                                        }
-                                        ?> value="<?php echo $idContratoTipo ?>"><?php if($idContratoTipo == ""){echo "Todos";}else{echo $idContratoTipo;} ?></option>
-                            <hr>
-                            <option value="null">Todos</option>
-                            <option value="contratos">Contrato</option>
-                            <option value="os">O.S.</option>
-                            <option value="projetos">Projeto</option>
-                            <option value="rotinas">Rotina</option>
+                        <option value="<?php echo null ?>">
+                                <?php echo "Todos" ?>
+                            </option>
+                            <?php
+                            foreach ($contratoTipo as $tipo) {
+                               
+                                ?>
+                                <option <?php
+                                if ($tipo['idContratoTipo'] == $idContratoTipo) {
+                                    echo "selected";
+                                }
+                                ?> value="<?php echo $tipo['idContratoTipo'] ?>">
+                                    <?php echo $tipo['nomeContrato'] ?>
+                                </option>
+                            <?php } ?>
                         </select>
                     </div>
                 </form>
@@ -200,7 +205,7 @@ if(isset($_GET["idContratoTipo"]) && $_GET["idContratoTipo"] != "null"){
                         <h6><?php echo $buscaTipoStatus['nomeTipoStatus']; ?></h6>
                     </div>
 
-                    <?php foreach (buscaDemandas(null, TIPOSTATUS_REALIZADO, null, $usuario['idUsuario']) as $kanbanDemanda) : ?>
+                    <?php foreach (buscaDemandas(null, TIPOSTATUS_REALIZADO, null, $usuario['idUsuario'], $usuario["idCliente"], $idContratoTipo) as $kanbanDemanda) : ?>
                         <?php echo montaKanban($kanbanDemanda); ?>
                     <?php endforeach; ?>
                 </div>

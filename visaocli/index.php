@@ -11,11 +11,13 @@ $urlContratoTipo = null;
 
 if (isset($_GET["tipo"])) {
     $urlContratoTipo = $_GET["tipo"];
-    $contratoTipo = buscaContratoTipos($urlContratoTipo);
+    echo json_encode($urlContratoTipo);
+    $contratoDemanda = buscaContratoTipos($urlContratoTipo);
 } else {
-    $contratoTipo = buscaContratoTipos();
+    $contratoDemanda = buscaContratoTipos('contratos');
 }
-
+/*gabriel 14032024 - $contratotipo para ser usado no select e $contratoDemanda para ser usado no modal */
+$contratoTipo = buscaContratoTipos();
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
 
 //echo json_encode(buscaDemandas(null, TIPOSTATUS_FILA, null, $usuario['idUsuario']))."<HR>";

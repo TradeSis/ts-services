@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Inserir
-                    <?php echo $contratoTipo['nomeDemanda'] ?>
+                    <?php echo $contratoDemanda['nomeDemanda'] ?>
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -14,10 +14,10 @@
                     <div class="row mt-1">
 
                         <div class="col-sm-8 col-md">
-                            <label class='form-label ts-label'><?php echo $contratoTipo['nomeDemanda'] ?></label>
+                            <label class='form-label ts-label'><?php echo $contratoDemanda['nomeDemanda'] ?></label>
                             <input type="text" class="form-control ts-input" name="tituloDemanda" autocomplete="off" required>
                             <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
-                            <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" readonly>
+                            <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contratoDemanda['idContratoTipo'] ?>" readonly>
                             <input type="hidden" class="form-control ts-input" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>">
                         </div>
 
@@ -78,7 +78,7 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 mt-3">
-                                    <label class="form-label ts-label"><?php echo $contratoTipo['nomeContrato'] ?> Vinculado</label>
+                                    <label class="form-label ts-label"><?php echo $contratoDemanda['nomeContrato'] ?> Vinculado</label>
                                     <?php
                                     if (isset($contrato)) { ?>
                                         <input type="text" class="form-control ts-input" value="<?php echo $contrato['tituloContrato'] ?>" readonly>

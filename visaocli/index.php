@@ -7,15 +7,13 @@ include_once '../database/contratotipos.php';
 include_once(ROOT . '/cadastros/database/usuario.php');
 include_once(ROOT . '/cadastros/database/clientes.php');
 
-$urlContratoTipo = null;
+$idContratoTipo = null;
 
-if (isset($_GET["tipo"])) {
-    $urlContratoTipo = $_GET["tipo"];
-    echo json_encode($urlContratoTipo);
-    $contratoDemanda = buscaContratoTipos($urlContratoTipo);
-} else {
-    $contratoDemanda = buscaContratoTipos('contratos');
-}
+if (isset($_GET["idContratoTipo"])) {
+    $idContratoTipo = $_GET["idContratoTipo"];
+    $contratoDemanda = buscaContratoTipos($idContratoTipo);
+} 
+
 /*gabriel 14032024 - $contratotipo para ser usado no select e $contratoDemanda para ser usado no modal */
 $contratoTipo = buscaContratoTipos();
 $usuario = buscaUsuarios(null, $_SESSION['idLogin']);
@@ -27,14 +25,6 @@ if ($usuario["idCliente"] == null) {
     $clientes = array(buscaClientes($usuario["idCliente"]));
 }
 
-if(isset($_GET["idContratoTipo"]) && $_GET["idContratoTipo"] != "null"){
-    $idContratoTipo = $_GET["idContratoTipo"];
-}elseif(isset($_GET["idContratoTipo"]) && $_GET["idContratoTipo"] == "null"){
-    $idContratoTipo = null;
-}else{
-    $idContratoTipo = null;
-}
-if ($idContratoTipo=="") {$idContratoTipo=null;}
 
 ?>
 
@@ -124,12 +114,17 @@ if ($idContratoTipo=="") {$idContratoTipo=null;}
                 </form>
             </div>
 
-
-
+                                              
             <div class="col-8 col-md-8 text-end">
+                <?php 
+                    if ($idContratoTipo == "contratos" && $usuario["idCliente"] != null) {
+                ?> 
                 <button type="button" class="ms-4 btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#inserirDemandaCliente"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
+                <?php 
+                    }
+                ?> 
             </div>
-
+            
         </div>
 
         <?php include_once 'kanban.php' ?>

@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Inserir
-                    <?php echo $contratoTipo['nomeDemanda'] ?>
+                    <?php echo $contratoDemanda['nomeDemanda'] ?>
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -14,10 +14,10 @@
                     <div class="row mt-1">
 
                         <div class="col-sm-8 col-md">
-                            <label class='form-label ts-label'><?php echo $contratoTipo['nomeDemanda'] ?></label>
+                            <label class='form-label ts-label'><?php echo $contratoDemanda['nomeDemanda'] ?></label>
                             <input type="text" class="form-control ts-input" name="tituloDemanda" autocomplete="off" required>
                             <input type="hidden" class="form-control ts-input" name="idContrato" value="<?php echo $contrato['idContrato'] ?>" readonly>
-                            <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contratoTipo['idContratoTipo'] ?>" readonly>
+                            <input type="hidden" class="form-control ts-input" name="idContratoTipo" value="<?php echo $contratoDemanda['idContratoTipo'] ?>" readonly>
                             <input type="hidden" class="form-control ts-input" name="idUsuario" value="<?php echo $usuario['idUsuario'] ?>">
                         </div>
 
@@ -59,7 +59,7 @@
                         <div class="col-md-6">
                             <div class="container-fluid p-0">
                                 <div class="col">
-                                    <span class="tituloEditor">Descri√ß√£o</span>
+                                    <span class="tituloEditor">DescriÁ„o</span>
                                 </div>
                                 <!-- lucas 27022024 - id853 nova chamada editor quill -->
                                 <div id="ql-toolbarClienteDemandaInserir">
@@ -78,7 +78,7 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 mt-3">
-                                    <label class="form-label ts-label"><?php echo $contratoTipo['nomeContrato'] ?> Vinculado</label>
+                                    <label class="form-label ts-label"><?php echo $contratoDemanda['nomeContrato'] ?> Vinculado</label>
                                     <?php
                                     if (isset($contrato)) { ?>
                                         <input type="text" class="form-control ts-input" value="<?php echo $contrato['tituloContrato'] ?>" readonly>
@@ -96,7 +96,7 @@
 
                             <div class="row mt-4">
                                 <div class="col-sm-6 col-md-6">
-                                    <label class="form-label ts-label">Previs√£o</label>
+                                    <label class="form-label ts-label">Previs„o</label>
                                     <input type="time" class="form-control ts-input" name="horasPrevisao" value="<?php echo $demanda['horasPrevisao'] ?>" disabled>
                                 </div>
                                 <div class="col-sm-6 col-md-6">
@@ -108,11 +108,11 @@
 
                             <div class="row mt-3">
                                 <div class="col-sm-6 col-md-6">
-                                    <label class="form-label ts-label">Previs√£o Inicio</label>
+                                    <label class="form-label ts-label">Previs„o Inicio</label>
                                     <input type="date" class="form-control ts-input" name="dataPrevisaoInicio" value="<?php echo $demanda['dataPrevisaoInicio'] ?>" disabled>
                                 </div>
                                 <div class="col-sm-6 col-md-6">
-                                    <label class="form-label ts-label">Previs√£o Entrega</label>
+                                    <label class="form-label ts-label">Previs„o Entrega</label>
                                     <input type="date" class="form-control ts-input" name="dataPrevisaoEntrega" value="<?php echo $demanda['dataPrevisaoEntrega'] ?>" disabled>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
                             <div class="row mt-3">
                                 <!-- lucas 21112023 ID 688 - removido campo tamanho -->
                                 <div class="col-sm-6 col-md-6">
-                                    <label class="form-label ts-label">Servi√ßo</label>
+                                    <label class="form-label ts-label">ServiÁo</label>
                                     <select class="form-select ts-input" name="idServico" disabled>
                                         <option value="<?php echo null ?>">
                                             <?php echo "Selecione" ?>
@@ -134,7 +134,7 @@
                                 </div>
 
                                 <div class="col-sm-6 col-md-6">
-                                    <label class="form-label ts-label">Respons√°vel</label>
+                                    <label class="form-label ts-label">Respons·vel</label>
                                     <select class="form-select ts-input" name="idAtendente" disabled>
                                         <option value="<?php echo null ?>">
                                             <?php echo "Selecione" ?>

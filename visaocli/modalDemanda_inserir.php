@@ -181,6 +181,8 @@
     //Select de Contrato Vinculado troca de acordo com o Select de Cliente
     $('select[name="idCliente"]').on('change', function() {
         var idCliente = this.value;
+        //lucas 28032024 - adicionado idContratoTipo
+        var idContratoTipo = "<?php echo $_GET["idContratoTipo"] ?>";
 
         $.ajax({
             type: 'POST',
@@ -190,7 +192,8 @@
                 $("#selectContratos").html("Carregando...");
             },
             data: {
-                idCliente: idCliente
+                idCliente: idCliente,
+                idContratoTipo: idContratoTipo
             },
             success: function(msg) {
                 var json = JSON.parse(msg);

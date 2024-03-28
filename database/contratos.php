@@ -156,11 +156,15 @@ if (isset($_GET['operacao'])) {
         if ($idCliente == "") {
             $idCliente = null;
         }
+		//lucas 28032024 - adicionado idContratoTipo
+		$idContratoTipo = isset($_POST["idContratoTipo"]) && $_POST["idContratoTipo"] !== "null" ? $_POST["idContratoTipo"]  : null;
+
 		$statusContrato = CONTRATOSTATUS_ATIVO;
         $apiEntrada = array(
             'idEmpresa' => $idEmpresa,
             'idCliente' => $idCliente,
 			'statusContrato' => $statusContrato, 
+			'idContratoTipo' => $idContratoTipo
         );
         $contrato = chamaAPI(null, '/services/contrato', json_encode($apiEntrada), 'GET');
 

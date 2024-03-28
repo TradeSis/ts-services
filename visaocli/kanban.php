@@ -40,7 +40,8 @@ function montaKanban($kanbanDemanda)
 	if(($dataPrevisaoInicio != null) && ($dataPrevisaoInicio <= $dataAtual) && $kanbanDemanda['idTipoStatus'] != TIPOSTATUS_REALIZADO){
 		$kanban = $kanban . ' ts-cardAtrasado';
 	}
-	$kanban = $kanban . '" id="kanbanCard" data-idDemanda="' . $kanbanDemanda["idDemanda"] . '"  >';
+    //lucas 28032024 - adicionado na url idContratoTipo
+	$kanban = $kanban . '" id="kanbanCard" data-idDemanda="' . $kanbanDemanda["idDemanda"] .'" .  data-idContratoTipo="' . $kanbanDemanda["idContratoTipo"] .'"  >';
 
 		if(isset($kanbanDemanda["idContrato"])){
 			$kanban = $kanban .$kanbanDemanda["nomeContrato"] . ' : ' . $kanbanDemanda["idContrato"] . ' ' . $kanbanDemanda["tituloContrato"]. '<br>' ;

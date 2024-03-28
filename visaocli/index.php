@@ -11,6 +11,7 @@ $idContratoTipo = null;
 
 if (isset($_GET["idContratoTipo"])) {
     $idContratoTipo = $_GET["idContratoTipo"];
+   // echo json_encode($idContratoTipo);
     $contratoDemanda = buscaContratoTipos($idContratoTipo);
 } 
 
@@ -219,8 +220,9 @@ if ($usuario["idCliente"] == null) {
     <?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script>
+        //lucas 28032024 - adicionado na url idContratoTipo
         $(document).on('click', '#kanbanCard', function() {
-            window.location.href = 'visualizar.php?idDemanda=' + $(this).attr('data-idDemanda');
+            window.location.href = 'visualizar.php?idDemanda=' + $(this).attr('data-idDemanda') + '&&' + $(this).attr('data-idContratoTipo');
         });
     </script>
 </body>

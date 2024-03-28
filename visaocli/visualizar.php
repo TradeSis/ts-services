@@ -45,6 +45,10 @@ $statusEncerrar = array(
     TIPOSTATUS_RESPONDIDO,
     TIPOSTATUS_AGENDADO
 );
+//lucas 28032024 - adicionado na url idContratoTipo
+$URL_ATUAL = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$url_parametros = (parse_url($URL_ATUAL, PHP_URL_QUERY));
+$url_idTipoContrato = explode("&", $url_parametros);
 
 ?>
 
@@ -71,7 +75,7 @@ $statusEncerrar = array(
                                 <input type="number" min="1" max="99" class="form-control ts-inputSemBorda border-bottom" name="prioridade" value="<?php echo $demanda['prioridade'] ?>">
                             </div>
                             <div class="col-md-2 border-start d-flex me-2">
-                                <a href="index.php" role="button" class="btn-close"></a>
+                                <a href="index.php?idContratoTipo=<?php echo $url_idTipoContrato[2] ?>" role="button" class="btn-close"></a>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -165,7 +169,7 @@ $statusEncerrar = array(
 
             <div class="modal-dialog modal-dialog-scrollable modal-fullscreen"> <!-- Modal 1 -->
                 <div class="modal-content" style="background-color: #F1F2F4;">
-                
+
                     <div class="container">
                         <?php if (isset($demanda['tituloContrato'])) { ?>
                             <div class="row pb-1">

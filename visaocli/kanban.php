@@ -36,7 +36,7 @@ function montaKanban($kanbanDemanda)
     }
     
 	
-	$kanban = '<span class="card-body border board mt-2 ts-click';
+	$kanban = '<span class="card-body border ts-kanbanQuadro mt-2 ts-click';
 	if(($dataPrevisaoInicio != null) && ($dataPrevisaoInicio <= $dataAtual) && $kanbanDemanda['idTipoStatus'] != TIPOSTATUS_REALIZADO){
 		$kanban = $kanban . ' ts-cardAtrasado';
 	}

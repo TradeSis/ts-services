@@ -40,49 +40,8 @@ if ($usuario["idCliente"] == null) {
 </head>
 
 <body>
-    <style>
-        body {
-            background: #f1f1f1;
-        }
-
-        .board {
-            min-height: 30px;
-            padding: 10px;
-            background: white;
-            display: inline-block;
-            border-radius: 3px;
-            box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-            font-size: 13px;
-        }
-
-        .ts-kanban {
-            width: 100%;
-            height: 90vh;
-            overflow-y: scroll;
-            overflow-x: auto;
-        }
-
-        .ts-kanbanTitulo {
-            position: sticky;
-            top: -8px;
-            background-color: #fff;
-            padding: 3px;
-            z-index: 2;
-        }
-
-        .ts-cardAtrasado {
-            background-color: rgba(234, 64, 36, 0.7);
-            /*  border: 1px solid red!important; */
-        }
-
-        .ts-cardDataPrevisao {
-            font-size: 12px;
-            float: right;
-        }
-    </style>
-
-
-    <div class="container-fluid ">
+    
+    <div class="container-fluid ts-kanbanFundo">
         <div class="row d-flex align-items-center justify-content-center pt-1 ">
 
             <div class="col-2 col-md-2">
